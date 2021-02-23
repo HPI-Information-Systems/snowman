@@ -20,7 +20,7 @@
   },
   "build": {
     "asar": "true",
-    "appId": "com.sap.hpi-bp2020fn2.benchmark-tool",
+    "appId": "de.hpi.snowman-wrapper",
     "productName": "snowman",
     "files": [
       "./app",
