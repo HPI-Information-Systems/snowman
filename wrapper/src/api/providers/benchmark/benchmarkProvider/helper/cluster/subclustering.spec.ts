@@ -1,0 +1,28 @@
+import { Subclustering } from './subclustering';
+import { relaxedClusteringToClustering } from './test/relaxedClusterings';
+import { subclusteringTestCases } from './test/testCases';
+import {
+  expectClusteringsToEqual,
+  expectSubClusteringsToEqual,
+} from './test/utility';
+
+describe.each(subclusteringTestCases)(
+  'Subclustering',
+  ({ base, partition, expectedClustering, expectedSubclustering }) => {
+    let subclustering: Subclustering;
+    beforeAll(() => {
+      subclustering = new Subclustering(
+        relaxedClusteringToClustering(base),
+        relaxedClusteringToClustering(partition)
+      );
+    });
+
+    test('calculates correct clusters', () => {
+      expectClusteringsToEqual(subclustering, expectedClustering);
+    });
+
+    test('calculates correct subclusters', () => {
+      expectSubClusteringsToEqual(subclustering, expectedSubclustering);
+    });
+  }
+);

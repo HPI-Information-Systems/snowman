@@ -1,0 +1,63 @@
+{
+  "name": "snowman",
+  "author": "Snowman Team",
+  "description": "Compare data matching algorithms with each other",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "eslint": "eslint --ext .ts,.tsx .",
+    "csslint": "stylelint \"./app/src/**/*.css\"",
+    "lint": "npm run eslint && npm run csslint",
+    "lint-fix": "npm run eslint -- --fix && npm run csslint -- --fix",
+    "licenses": "node legal/crawler.js",
+    "start-app": "npm start --prefix ./app",
+    "build-app": "npm run build --prefix ./app",
+    "test-app": "npm test --prefix ./app",
+    "copy-app": "cpx -C \"./app/build/**/*\" ./wrapper/app/",
+    "deploy-app": "npm run build-app && npm run copy-app",
+    "build-wrapper": "npm run build --prefix ./wrapper",
+    "release-wrapper": "npm run release --prefix ./wrapper",
+    "start-api": "npm run start-api --prefix ./wrapper",
+    "start-wrapper": "npm start --prefix ./wrapper",
+    "start-stack": "npm run deploy-app && npm run start-wrapper",
+    "release": "npm run deploy-app && npm run release-wrapper",
+    "start": "npm run start-stack"
+  },
+  "devDependencies": {
+    "@types/react-dom": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
+    "cpx": "^1.5.0",
+    "electron-rebuild": "^2.3.5",
+    "eslint": "^7.15.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-config-react": "^1.1.7",
+    "eslint-plugin-prettier": "^3.3.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "npm-license-crawler": "^0.2.1",
+    "prettier": "^2.2.1",
+    "react": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "stylelint": "^13.8.0",
+    "stylelint-config-property-sort-order-smacss": "^7.0.0",
+    "stylelint-config-standard": "^20.0.0",
+    "typescript": "^4.1.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "react-dom": "^17.0.1"
+  }
+}

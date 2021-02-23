@@ -1,0 +1,66 @@
+{
+  "name": "snowman-app",
+  "author": "Snowman Team",
+  "description": "Compare data matching algorithms with each other",
+  "version": "1.0.0",
+  "license": "MIT",
+  "homepage": "./",
+  "private": true,
+  "dependencies": {
+    "@ionic/react": "^5.0.7",
+    "@ionic/react-router": "^5.0.7",
+    "immutable": "^4.0.0-rc.12",
+    "ionicons": "^5.0.0",
+    "lodash": "^4.17.20",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-elastic-carousel": "^0.11.0",
+    "react-redux": "^7.2.2",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "4.0.1",
+    "react-tooltip": "^4.2.14",
+    "react-virtualized": "^9.22.3",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "styled-components": "^5.2.1",
+    "ts-enum-util": "^4.0.2"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.6.0",
+    "@types/jest": "^26.0.19",
+    "@types/lodash": "^4.14.167",
+    "@types/papaparse": "^5.2.5",
+    "@types/react": "^16.14.2",
+    "@types/react-dom": "^16.9.10",
+    "@types/react-redux": "^7.1.14",
+    "@types/react-router": "^5.1.4",
+    "@types/react-router-dom": "^5.1.3",
+    "@types/react-virtualized": "^9.21.10",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
+    "typescript": "^4.1.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "postbuild": "node ./scripts/post-build.js",
+    "test": "react-scripts test --watchAll=false",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:8123"
+}

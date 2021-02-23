@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset="utf-8">
+  <title>Snowman - Launcher</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- load MUI -->
+  <link href="assets/custom.mui.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/main.css" rel="stylesheet" type="text/css">
+  <script src="assets/mui.min.js"></script>
+  <script src="assets/main.js"></script>
+</head>
+<body>
+<div class="mui-container-fluid">
+  <div class="mui-row mui-justify-content-center">
+    <div class="mui-col-xs-12 mui-col-sm-10 mui-col-md-8 mui-col-lg-6 mui-col-xl-4 mui-col-sm-offset-1 mui-col-md-offset-2 mui-col-lg-offset-3 mui-col-xl-offset-4">
+      <div class="mui-panel">
+        <div class="mui--text-center header">
+          <img src="assets/logo.png" alt="Snowman Logo" width="25%" />
+          <div class="mui--text-display2">Snowman Launcher</div>
+        </div>
+        <div class="mui--text-center">
+          <div class="mui-panel">
+            <p class="mui--text-headline">Failed to Connect!</p>
+            <p><b>The specified remote instance of snowman could not be reached! Please make sure to specify
+              the correct URL and that you are allowed to connect!</b></p>
+            <p>Additionally, check whether you are connected to the correct network or e.g. a VPN is required
+              by the organization running the remote instance. Opening the URL with a normal web browser may
+              yield additional insights about the issue.</p>
+          </div>
+          <button class="mui-btn mui-btn--primary btn-submit" onclick='resetLauncher()'>Retry</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

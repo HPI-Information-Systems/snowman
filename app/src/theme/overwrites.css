@@ -1,0 +1,33 @@
+/** Overwrite Ionic CSS Variables **/
+:root {
+  /** primary **/
+  --ion-color-primary: #4fc3f8;
+  --ion-color-primary-rgb: 79, 195, 248;
+  --ion-color-primary-contrast: #fff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #0093c5;
+  --ion-color-primary-tint: #8bf6ff;
+}
+
+@media (prefers-color-scheme: dark) {
+  /*
+   * Dark Colors
+   * -------------------------------------------
+   */
+  body {
+    /** primary **/
+    --ion-color-primary: #4fc3f8;
+    --ion-color-primary-rgb: 79, 195, 248;
+    --ion-color-primary-contrast: #fff;
+    --ion-color-primary-contrast-rgb: 255, 255, 255;
+    --ion-color-primary-shade: #0093c5;
+    --ion-color-primary-tint: #8bf6ff;
+  }
+}
+
+/** App.tsx Custom CSS **/
+.split-pane-fixed {
+  /** This should rather be --side-max-width,
+  but seems to be a bug in Ionic 5 for React **/
+  --side-width: 350px;
+}

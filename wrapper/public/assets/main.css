@@ -1,0 +1,82 @@
+.mui-container-fluid {
+  margin-top: 50px;
+}
+
+.mui-tabs__pane {
+  margin-top: 15px;
+}
+
+.mui-container {
+  margin-top: 25px;
+}
+
+.header {
+  padding-top: 25px;
+  padding-bottom: 35px;
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 30px;
+}
+
+.lds-ellipsis div {
+  position: absolute;
+  top: 12px;
+  width: 13px;
+  height: 13px;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  border-radius: 50%;
+  background: #fff;
+}
+
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+
+/* stylelint-disable */
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}

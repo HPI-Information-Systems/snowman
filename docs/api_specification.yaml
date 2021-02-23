@@ -1,0 +1,793 @@
+openapi: 3.0.0
+info:
+  description: >
+    _This document describes the REST API of the snowman data matching benchmark
+    tool._
+
+
+    Comparing data matching algorithms is still an unsolved topic in both industry and research. 
+    With snowman, developers and researchers will be able to compare the performance of different data matching 
+    solutions or improve new algorithms.
+  version: 1.0.0
+  title: Snowman API
+  contact:
+    email: snowman@groups.sap.com
+    url: https://github.com
+  license:
+    name: LICENSE (MIT)
+    url: https://github.com
+
+servers:
+  - url: "{protocol}://{server}/api/v1"
+    variables:
+      protocol:
+        default: http
+        enum: [http, https]
+      server:
+        default: localhost:8123
+
+tags:
+  - name: Algorithm
+    description: Operations about algorithms
+  - name: Datasets
+    description: Operations about datasets
+  - name: Experiments
+    description: Operations about experiments
+  - name: Benchmark
+    description: Operations about comparing multiple experiments
+
+paths:
+  #### ALGORITHM ####
+  /algorithms:
+    get:
+      tags:
+        - Algorithm
+      summary: Get all algorithms
+      operationId: getAlgorithms
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Algorithm"
+    post:
+      tags:
+        - Algorithm
+      summary: Creates a new algorithm
+      operationId: addAlgorithm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlgorithmValues"
+        description: Algorithm object which will be stored
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlgorithmId"
+        400:
+          description: Bad Request
+
+  /algorithms/{algorithmId}:
+    parameters:
+      - name: algorithmId
+        in: path
+        description: The id of an algorithm
+        required: true
+        schema:
+          $ref: "#/components/schemas/AlgorithmId"
+    get:
+      tags:
+        - Algorithm
+      summary: Gets an algorithm by id
+      operationId: getAlgorithm
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Algorithm"
+        404:
+          description: Not Found
+    put:
+      tags:
+        - Algorithm
+      summary: Updates or creates an algorithm
+      operationId: setAlgorithm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlgorithmValues"
+        description: updated Algorithm object
+        required: true
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+    delete:
+      tags:
+        - Algorithm
+      summary: Deletes an algorithm by id
+      operationId: deleteAlgorithm
+      responses:
+        204:
+          description: No Content
+
+    #### DATASET ####
+  /datasets:
+    get:
+      tags:
+        - Datasets
+      summary: Returns all Datasets
+      operationId: getDatasets
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Dataset"
+    post:
+      tags:
+        - Datasets
+      summary: Creates a new dataset with metainformation
+      operationId: addDataset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DatasetValues"
+        description: Metainformation of a dataset
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatasetId"
+        400:
+          description: Bad Request
+
+  /datasets/{datasetId}:
+    parameters:
+      - name: datasetId
+        in: path
+        description: The id of a dataset
+        required: true
+        schema:
+          $ref: "#/components/schemas/DatasetId"
+    get:
+      tags:
+        - Datasets
+      summary: Gets dataset by id
+      operationId: getDataset
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dataset"
+        404:
+          description: Not Found
+    put:
+      tags:
+        - Datasets
+      summary: Updates or creates a dataset
+      operationId: setDataset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DatasetValues"
+        description: updated Dataset object
+        required: true
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+    delete:
+      tags:
+        - Datasets
+      summary: Deletes a whole dataset by id
+      operationId: deleteDataset
+      responses:
+        204:
+          description: No Content
+
+  /datasets/{datasetId}/file:
+    parameters:
+      - name: datasetId
+        in: path
+        description: The id of a dataset file
+        required: true
+        schema:
+          $ref: "#/components/schemas/DatasetId"
+    get:
+      tags:
+        - Datasets
+      parameters:
+        - name: startAt
+          in: query
+          schema:
+            type: integer
+            default: 0
+          required: false
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: -1
+            description: -1 returns all remaining records
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+            example: first_name
+            description: guarantees same order of records even if not specified (startAt, limit can be used without specifying sortBy)
+          required: false
+      summary: Gets a dataset file by id
+      description: Always returns one row with column names followed by the requested amount of rows. To only return the column names, pass startAt=0 and limit=0.
+      operationId: getDatasetFile
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatasetFile"
+        404:
+          description: Not Found
+    put:
+      tags:
+        - Datasets
+      summary: Updates or creates a dataset file
+      operationId: setDatasetFile
+      parameters:
+        - name: idColumn
+          in: query
+          description: The name of the alphanumeric id column in the uploaded dataset.
+          schema:
+            type: string
+            example: id
+          required: true
+        - name: quote
+          in: query
+          description: The quote symbol used in the dataset
+          schema:
+            type: string
+            example: '"'
+          required: true
+        - name: escape
+          in: query
+          description: The escape symbol used in the dataset
+          schema:
+            type: string
+            example: "'"
+          required: true
+        - name: separator
+          in: query
+          description: The separator symbol used in the dataset
+          schema:
+            type: string
+            example: ","
+          required: true
+      requestBody:
+        content:
+          text/csv:
+            schema:
+              $ref: "#/components/schemas/DatasetFile"
+        description: updated DatasetFile-csv object
+        required: true
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+    delete:
+      tags:
+        - Datasets
+      summary: Deletes a dataset file (but not the dataset)
+      operationId: deleteDatasetFile
+      responses:
+        204:
+          description: No Content
+
+  #### EXPERIMENT ####
+  /experiments:
+    get:
+      tags:
+        - Experiments
+      summary: Get all experiments
+      operationId: getExperiments
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Experiment"
+    post:
+      tags:
+        - Experiments
+      summary: Creates a new Experiment
+      operationId: addExperiment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExperimentValues"
+        description: ExperimentObject which will be stored
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExperimentId"
+        400:
+          description: Bad Request
+
+  /experiments/{experimentId}:
+    parameters:
+      - name: experimentId
+        in: path
+        description: The id of an experiment
+        required: true
+        schema:
+          $ref: "#/components/schemas/ExperimentId"
+    get:
+      tags:
+        - Experiments
+      summary: Gets experiment by id
+      operationId: getExperiment
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Experiment"
+        404:
+          description: Not Found
+    put:
+      tags:
+        - Experiments
+      summary: Updates or creates an Experiment
+      operationId: setExperiment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExperimentValues"
+        description: updated Experiment object
+        required: true
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+    delete:
+      tags:
+        - Experiments
+      summary: Deletes an experiment (including experiment file)
+      operationId: deleteExperiment
+      responses:
+        204:
+          description: No Content
+
+  /experiments/{experimentId}/file:
+    parameters:
+      - name: experimentId
+        in: path
+        description: The id of an experiment
+        required: true
+        schema:
+          $ref: "#/components/schemas/ExperimentId"
+    get:
+      tags:
+        - Experiments
+      summary: Get an experiment file
+      operationId: getExperimentFile
+      parameters:
+        - name: startAt
+          in: query
+          schema:
+            type: integer
+            default: 0
+          required: false
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: -1
+            description: -1 returns all remaining records
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+            example: first_name
+            description: guarantees same order of records even if not specified (startAt, limit can be used without specifying sortBy)
+          required: false
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExperimentFile"
+        404:
+          description: Not Found
+    put:
+      tags:
+        - Experiments
+      summary: Updates or creates an experiment file
+      operationId: setExperimentFile
+      parameters:
+        - in: query
+          name: format
+          description: the format of the experiment file
+          schema:
+            type: string
+            enum:
+              - magellan
+              - clusterER
+              - pilot
+              - sigmod2021
+          required: true
+      requestBody:
+        content:
+          text/csv:
+            schema:
+              $ref: "#/components/schemas/ExperimentFile"
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExperimentFile"
+        description: updated experiment file
+        required: true
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+    delete:
+      tags:
+        - Experiments
+      summary: Deletes an experiment file
+      operationId: deleteExperimentFile
+      responses:
+        204:
+          description: No Content
+
+  #### BENCHMARK ####
+  /benchmark/{experimentId1}/{experimentId2}/metrics:
+    get:
+      tags:
+        - Benchmark
+      operationId: getBinaryMetrics
+      parameters:
+        - name: experimentId1
+          in: path
+          description: The id of the groundTruth
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+        - name: experimentId2
+          in: path
+          description: The id of the predicted Experiment
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+        - name: similarityThreshold_experiment1
+          in: query
+          schema:
+            type: number
+        - name: similarityAttribute_experiment1
+          in: query
+          schema:
+            type: string
+        - name: similarityThreshold_experiment2
+          in: query
+          schema:
+            type: number
+        - name: similarityAttribute_experiment2
+          in: query
+          schema:
+            type: string
+      summary: Compares two experiments and returns binary metrics
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Metrics"
+        403:
+          description: Forbidden
+        404:
+          description: Experiments not found
+
+  /benchmark/experiment-intersection/records:
+    post:
+      tags:
+        - Benchmark
+      description:
+        intersects multiple experiments and returns the resulting records. This
+        can be used to calculate the confusion-matrix.
+        Up to now exactly two experiment objects are required. The first one represents the groundTruth, the second one the predicted experiment.
+      operationId: calculateExperimentIntersectionRecords
+      parameters:
+        - name: startAt
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 500
+        - name: sortBy
+          in: query
+          schema:
+            type: string
+            example: similarity
+      requestBody:
+        $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
+      summary:
+        Triggers the comparison of multiple experiments and returns tuples
+        classified as false_negative, etc. and limited by limit
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExperimentIntersection"
+        403:
+          description: Forbidden
+        404:
+          description: Experiments not found
+
+  /benchmark/experiment-intersection/count:
+    post:
+      tags:
+        - Benchmark
+      description:
+        intersects multiple experiments and returns the counts of the number of
+        records. This can be used to calculate the confusion-matrix
+      operationId: calculateExperimentIntersectionCount
+      requestBody:
+        $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
+      summary:
+        Triggers the comparison of multiple experiments and returns tuples
+        classified as false_negative, etc. and limited by limit
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExperimentIntersectionCount"
+        403:
+          description: Forbidden
+        404:
+          description: Experiments not found
+
+components:
+  requestBodies:
+    ExperimentIntersectionConfiguration:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ExperimentIntersectionConfiguration"
+      required: true
+  schemas:
+    #### ALGORITHM ####
+    AlgorithmId:
+      type: integer
+      example: 1
+    AlgorithmValues:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          example: Magellan
+        description:
+          type: string
+          example: This is an open source python library
+    Algorithm:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              $ref: "#/components/schemas/AlgorithmId"
+        - $ref: "#/components/schemas/AlgorithmValues"
+
+    #### DATASET ####
+    DatasetId:
+      type: integer
+      example: 1
+    DatasetValues:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          example: Dataset1
+        description:
+          type: string
+          example: This is a dataset file about Restaurants.
+        numberOfRecords:
+          type: integer
+          example: 500
+        tags:
+          type: array
+          items:
+            type: string
+            example: restaurants
+    Dataset:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              $ref: "#/components/schemas/DatasetId"
+            numberOfUploadedRecords:
+              type: integer
+              example: 2005
+        - $ref: "#/components/schemas/DatasetValues"
+    DatasetFile:
+      type: string
+      format: binary
+      example: |
+        id,name
+        1, Ulf Restaurant
+        2, Ulfs Restaurant
+
+      #### EXPERIMENT ####
+    ExperimentId:
+      type: integer
+      example: 1
+    ExperimentValues:
+      type: object
+      required:
+        - name
+        - datasetId
+        - algorithmId
+      properties:
+        name:
+          type: string
+          minLength: 1
+          example: Experiment1
+        description:
+          type: string
+          example: This is an experiment using a fancy algorithm
+        datasetId:
+          $ref: "#/components/schemas/DatasetId"
+        algorithmId:
+          $ref: "#/components/schemas/AlgorithmId"
+    Experiment:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              $ref: "#/components/schemas/ExperimentId"
+            numberOfUploadedRecords:
+              type: integer
+              example: 2005
+        - $ref: "#/components/schemas/ExperimentValues"
+    ExperimentFile:
+      type: string
+      format: binary
+      example: |
+        p1,p2,prediction
+        1, 2, 1
+        2, 3, 0
+        ...
+
+    #### BENCHMARK ####
+    Metric:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "precision"
+        description:
+          type: string
+          example: "$truePositives / (truePositives + falsePositives)$"
+          description: can contain latex math expressions denoted by surrounding dollar symbols ($<math expression>$)
+        value:
+          type: number
+          example: 0.75
+        range:
+          type: array
+          items:
+            type: number
+          minItems: 2
+          maxItems: 2
+          example: [0, 1]
+      required:
+        - name
+        - description
+        - value
+        - range
+    Metrics:
+      type: array
+      items:
+        $ref: "#/components/schemas/Metric"
+    ExperimentIntersectionConfiguration:
+      items:
+        properties:
+          experimentId:
+            $ref: "#/components/schemas/ExperimentId"
+          predictedCondition:
+            type: boolean
+          similarityAttribute:
+            example: name_name_levenshtein
+            type: string
+          similarityScore:
+            example: 0.9
+            type: number
+        required:
+          - experimentId
+          - predictedCondition
+        type: object
+      type: array
+    ExperimentIntersection:
+      type: object
+      properties:
+        header:
+          type: array
+          items:
+            type: string
+          example: ["id", "testColumn1", "testColumn2"]
+        data:
+          type: array
+          items:
+            type: array
+            items:
+              type: array
+              example: ["1", "hallo"]
+              items:
+                type: string
+      required:
+        - header
+        - data
+    ExperimentIntersectionCount:
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 37
+      required:
+        - count

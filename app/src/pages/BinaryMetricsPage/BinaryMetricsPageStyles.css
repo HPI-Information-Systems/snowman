@@ -1,0 +1,16 @@
+.metric-number {
+  font-size: 2.5em;
+}
+
+.metric-name {
+  white-space: nowrap;
+}
+
+.card-fixed {
+  width: 200px;
+}
+
+.table-housing {
+  height: 500px;
+  padding-bottom: 20px;
+}

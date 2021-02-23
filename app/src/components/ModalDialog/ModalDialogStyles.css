@@ -1,0 +1,8 @@
+.center {
+  text-align: center;
+}
+
+.modal-content {
+  margin: 15px;
+  overflow-y: auto;
+}

@@ -1,0 +1,81 @@
+name: Docs & Release
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        # Semantic version range syntax or exact version of a Python version
+        python-version: '3.x'
+        # Optional - x64 or x86 architecture, defaults to x64
+        architecture: 'x64'
+    - name: Install pip dependencies
+      run: pip install -r requirements.txt
+    - name: Build and deploy docs
+      run: mkdocs gh-deploy --force
+  release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Select platform(s)
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 14.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v2
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Run (root) npm install
+        run: npm ci
+        working-directory: ./
+      - name: Run (app) npm install
+        run: npm ci
+        working-directory: ./app
+      - name: Run (wrapper) npm install
+        run: npm ci
+        working-directory: ./wrapper
+      - name: Release stack
+        run: npm run release
+        working-directory: ./
+      - name: Upload artifact (Windows)
+        uses: actions/upload-artifact@v2
+        with:
+          name: snowman-win.zip
+          path: ./wrapper/build/*.zip
+        if: matrix.os == 'windows-latest'
+      - name: Upload artifact (MacOS)
+        uses: actions/upload-artifact@v2
+        with:
+          name: snowman.dmg
+          path: ./wrapper/build/*.dmg
+        if: matrix.os == 'macos-latest'
+      - name: Upload artifact (Linux)
+        uses: actions/upload-artifact@v2
+        with:
+          name: snowman-lnx.zip
+          path: ./wrapper/build/*.zip
+        if: matrix.os == 'ubuntu-latest'

@@ -1,0 +1,24 @@
+.rec-arrow {
+  background-color: var(--ion-color-light) !important;
+  box-shadow: none !important;
+  color: var(--ion-color-primary) !important;
+}
+
+.rec-arrow:disabled {
+  color: #999 !important;
+}
+
+.rec-dot {
+  background-color: #999 !important;
+  box-shadow: none !important;
+}
+
+.rec-dot:hover {
+  background-color: #bbb !important;
+  box-shadow: none !important;
+}
+
+.rec-dot_active {
+  background-color: #4fc3f8 !important;
+  box-shadow: none !important;
+}

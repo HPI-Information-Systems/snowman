@@ -1,0 +1,25 @@
+.pane-container {
+  margin-bottom: 10px;
+}
+
+.pane-header {
+  border-bottom: solid var(--ion-color-medium) 2px;
+}
+
+.pane-header-active {
+  border-bottom-color: var(--ion-color-primary);
+}
+
+.pane-button {
+  margin: 0;
+  color: var(--ion-color-medium) !important;
+
+  --background-hover: transparent;
+  --background-focused: transparent;
+  --ripple-color: transparent;
+}
+
+.pane-button:hover,
+.pane-button-active {
+  color: var(--ion-color-primary) !important;
+}

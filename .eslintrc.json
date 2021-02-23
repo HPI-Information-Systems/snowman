@@ -1,0 +1,44 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended",
+    "prettier",
+    "prettier/react",
+    "react-app"
+  ],
+  "plugins": ["react", "@typescript-eslint", "prettier", "simple-import-sort"],
+  "env": {
+    "browser": true,
+    "jasmine": true,
+    "jest": true,
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    //"no-use-before-define": [
+    //  "error",
+    //  { "functions": true, "classes": true, "variables": false }
+    //],
+    "prettier/prettier": ["error", { "singleQuote": true, "endOfLine": "auto" }],
+    "react/prop-types": 0,
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    ],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "sort-imports": "off"
+  },
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  },
+  "parser": "@typescript-eslint/parser"
+}

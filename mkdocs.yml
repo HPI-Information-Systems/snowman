@@ -1,0 +1,26 @@
+site_name: Snowman
+
+nav:
+  - Home: index.md
+  - Showcase: showcase/main.md
+  - Basic usage:
+    - Introduction: basic_usage/introduction.md
+    - Matching solutions: basic_usage/matching_solutions.md
+    - Workflow: basic_usage/workflow.md
+    - Datasets: basic_usage/datasets.md
+    - Experiments: basic_usage/experiments.md
+    - Benchmark: basic_usage/benchmark.md
+  - Development setup:
+    - Introduction: dev_setup/introduction.md
+    - REST API: ./swagger
+
+extra_css:
+  - assets/extra.css
+
+theme:
+  name: material
+  logo: assets/V2-128.png
+  favicon: assets/V2-64.png
+
+plugins:
+  - search
