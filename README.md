@@ -9,7 +9,7 @@ Comparing data matching algorithms is still an unsolved topic in both industry a
 With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
 Besides traditional metrics, the tool will also consider economic aspects like Soft KPIs.
 
-_This tool is developed in cooperation with SAP SE._
+_This tool is developed as part of a bachelor's project in collaboration with SAP SE._
 
 ## Current state
 
