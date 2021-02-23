@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">Snowman</h1>
 
-#### [![Build Status]()]()
+#### [![General](https://github.com/HPI-Information-Systems/snowman/actions/workflows/general.yml/badge.svg)](https://github.com/HPI-Information-Systems/snowman/actions/workflows/general.yml)
 
 Comparing data matching algorithms is still an unsolved topic in both industry and research.
 With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
@@ -30,7 +30,7 @@ In case you want to contribute code, please first open an associated issue and a
 
 ## Documentation 
 
-Please see our documentation for further information: [Snowman Docs]()
+Please see our documentation for further information: [Snowman Docs](https://hpi-information-systems.github.io/snowman/)
 
 # Licenses
 
