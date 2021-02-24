@@ -14,3 +14,7 @@
   height: 500px;
   padding-bottom: 20px;
 }
+
+.tooltip-fixed {
+  max-width: 250px;
+}

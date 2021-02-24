@@ -29,6 +29,11 @@ export const BinaryMetricsPageView = ({
 }: BinaryMetricsPageProps): JSX.Element => {
   useEffect(() => loadMetrics(), [loadMetrics]);
   useEffect(() => loadTuples(), [loadTuples]);
+  useEffect(() => {
+    // Triggered on every component update!
+    ReactTooltip.rebuild();
+  });
+
   return (
     <PageStruct title="Benchmark - Binary Comparison" showNextFab={false}>
       <IonText color="primary">
@@ -42,13 +47,14 @@ export const BinaryMetricsPageView = ({
             <div key={name}>
               <IonCard class="card-fixed">
                 <IonCardHeader class="ion-text-center">
-                  <IonCardTitle class="metric-number" color="primary">
+                  <IonCardTitle
+                    class="metric-number"
+                    color="primary"
+                    data-tip={`Range: [${range.toString()}]`}
+                  >
                     {value !== undefined ? value.toPrecision(2) : '?'}
                   </IonCardTitle>
-                  <IonCardSubtitle
-                    class="metric-name"
-                    data-tip="This is a metric!"
-                  >
+                  <IonCardSubtitle class="metric-name" data-tip={description}>
                     {name}
                   </IonCardSubtitle>
                 </IonCardHeader>
@@ -73,7 +79,7 @@ export const BinaryMetricsPageView = ({
           />
         </IonCardContent>
       </IonCard>
-      <ReactTooltip />
+      <ReactTooltip className="tooltip-fixed" />
     </PageStruct>
   );
 };
