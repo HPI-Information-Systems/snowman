@@ -111,6 +111,12 @@ ipcMain.on('reset_launcher', (event) => {
   showLauncherPage();
 });
 
+app.on('activate', () => {
+  if (!mainWindow) {
+    createWindow();
+  }
+});
+
 app.on('ready', () => {
   if (app.commandLine.hasSwitch('headless')) {
     console.log(headlessMessage);
@@ -126,12 +132,6 @@ app.on('window-all-closed', async () => {
     setTimeout(() => {
       app.quit();
     }, 250);
-  }
-});
-
-app.on('activate', () => {
-  if (!mainWindow) {
-    createWindow();
   }
 });
 
