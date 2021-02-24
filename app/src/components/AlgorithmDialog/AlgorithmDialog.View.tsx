@@ -11,7 +11,11 @@ import {
 } from '@ionic/react';
 import { AddAlgorithmDialogProps } from 'components/AlgorithmDialog/AddAlgorithmDialogProps';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
-import { addCircleOutline, closeCircleOutline, pencil } from 'ionicons/icons';
+import {
+  addCircleOutline,
+  checkmarkCircleOutline,
+  closeCircleOutline,
+} from 'ionicons/icons';
 import React from 'react';
 
 const AlgorithmDialogView = ({
@@ -52,7 +56,10 @@ const AlgorithmDialogView = ({
     </IonList>
     <div className="center button-row">
       <IonButton className="button-hugh button-padding" onClick={clickOnAdd}>
-        <IonIcon slot="start" icon={isAddDialog ? addCircleOutline : pencil} />
+        <IonIcon
+          slot="start"
+          icon={isAddDialog ? addCircleOutline : checkmarkCircleOutline}
+        />
         {isAddDialog ? 'Add' : 'Update'}
       </IonButton>
       <IonButton
