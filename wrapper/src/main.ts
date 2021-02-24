@@ -49,6 +49,13 @@ function spawnLocalServer() {
   );
 }
 
+function killLocalServer() {
+  if (backend !== undefined) {
+    backend.kill('SIGINT');
+    backend = undefined;
+  }
+}
+
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -114,10 +121,7 @@ app.on('ready', () => {
 });
 
 app.on('window-all-closed', async () => {
-  if (backend !== undefined) {
-    backend.kill('SIGINT');
-    backend = undefined;
-  }
+  killLocalServer();
   if (process.platform !== 'darwin') {
     setTimeout(() => {
       app.quit();
@@ -129,4 +133,8 @@ app.on('activate', () => {
   if (!mainWindow) {
     createWindow();
   }
+});
+
+app.on('quit', () => {
+  killLocalServer();
 });
