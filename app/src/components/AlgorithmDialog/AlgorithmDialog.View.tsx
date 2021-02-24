@@ -1,4 +1,4 @@
-import 'components/AddAlgorithmDialog/AddAlgorithmDialogStyles.css';
+import 'components/AlgorithmDialog/AlgorithmDialog.css';
 
 import {
   IonButton,
@@ -9,12 +9,12 @@ import {
   IonList,
   IonTextarea,
 } from '@ionic/react';
-import { AddAlgorithmDialogProps } from 'components/AddAlgorithmDialog/AddAlgorithmDialogProps';
+import { AddAlgorithmDialogProps } from 'components/AlgorithmDialog/AddAlgorithmDialogProps';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
 import { addCircleOutline, closeCircleOutline, pencil } from 'ionicons/icons';
 import React from 'react';
 
-const AddAlgorithmDialogView = ({
+const AlgorithmDialogView = ({
   algorithmDescription,
   algorithmName,
   isOpen,
@@ -67,4 +67,4 @@ const AddAlgorithmDialogView = ({
   </ModalDialog>
 );
 
-export default AddAlgorithmDialogView;
+export default AlgorithmDialogView;

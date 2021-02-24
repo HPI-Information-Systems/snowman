@@ -1,19 +1,19 @@
 import { Algorithm } from 'api';
-import { AddAlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
+import { AlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
-import { AddAlgorithmDialogStore } from 'store/models';
+import { AlgorithmDialogStore } from 'store/models';
 
-const initialState: AddAlgorithmDialogStore = {
+const initialState: AlgorithmDialogStore = {
   isOpen: false,
   algorithmId: null,
   algorithmName: '',
   algorithmDescription: '',
 };
 
-export const AddAlgorithmDialogReducer = (
-  state: AddAlgorithmDialogStore = initialState,
+export const AlgorithmDialogReducer = (
+  state: AlgorithmDialogStore = initialState,
   action: SnowmanAction
-): AddAlgorithmDialogStore => {
+): AlgorithmDialogStore => {
   switch (action.type) {
     case DialogActions.OPEN_ADD_DIALOG:
       return {

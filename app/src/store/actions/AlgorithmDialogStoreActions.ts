@@ -1,5 +1,5 @@
 import { Algorithm, AlgorithmApi } from 'api';
-import { AddAlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
+import { AlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
 import { getAlgorithms } from 'store/actions/AlgorithmsStoreActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
@@ -77,8 +77,8 @@ const addAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
       new AlgorithmApi()
         .addAlgorithm({
           algorithmValues: {
-            name: store.getState().AddAlgorithmDialogStore.algorithmName,
-            description: store.getState().AddAlgorithmDialogStore
+            name: store.getState().AlgorithmDialogStore.algorithmName,
+            description: store.getState().AlgorithmDialogStore
               .algorithmDescription,
           },
         })
@@ -101,12 +101,12 @@ const updateAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
       new AlgorithmApi()
         .setAlgorithm({
           algorithmId:
-            store.getState().AddAlgorithmDialogStore.algorithmId ??
+            store.getState().AlgorithmDialogStore.algorithmId ??
             MagicNotPossibleId,
           algorithmValues: {
-            description: store.getState().AddAlgorithmDialogStore
+            description: store.getState().AlgorithmDialogStore
               .algorithmDescription,
-            name: store.getState().AddAlgorithmDialogStore.algorithmName,
+            name: store.getState().AlgorithmDialogStore.algorithmName,
           },
         })
         .then((): void => dispatch(resetDialog()))
@@ -121,7 +121,7 @@ const updateAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
 export const addOrUpdateAlgorithm = (): SnowmanThunkAction<
   Promise<void>
 > => async (dispatch: SnowmanDispatch): Promise<void> => {
-  if (store.getState().AddAlgorithmDialogStore.algorithmId === null) {
+  if (store.getState().AlgorithmDialogStore.algorithmId === null) {
     return dispatch(addAlgorithm());
   }
   return dispatch(updateAlgorithm());

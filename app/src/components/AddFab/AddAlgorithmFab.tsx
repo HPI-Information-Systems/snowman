@@ -1,7 +1,7 @@
 import AddFabView from 'components/AddFab/AddFab.View';
 import { AddFabDispatchProps } from 'components/AddFab/AddFabProps';
 import { connect } from 'react-redux';
-import { openAddDialog } from 'store/actions/AddAlgorithmDialogStoreActions';
+import { openAddDialog } from 'store/actions/AlgorithmDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 
 const mapDispatchToProps = (

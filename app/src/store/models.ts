@@ -9,7 +9,7 @@ import { DatasetTypes } from 'types/DatasetTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
-export interface AddAlgorithmDialogStore {
+export interface AlgorithmDialogStore {
   algorithmId: number | null;
   algorithmName: string;
   algorithmDescription: string;
@@ -80,7 +80,7 @@ export interface Store {
   AlgorithmsStore: AlgorithmsStore;
   AddDatasetDialogStore: AddDatasetDialogStore;
   AddExperimentDialogStore: AddExperimentDialogStore;
-  AddAlgorithmDialogStore: AddAlgorithmDialogStore;
+  AlgorithmDialogStore: AlgorithmDialogStore;
   GlobalIndicatorStore: GlobalIndicatorStore;
   MetricsStore: MetricsStore;
   InputChipStore: InputChipStore;
