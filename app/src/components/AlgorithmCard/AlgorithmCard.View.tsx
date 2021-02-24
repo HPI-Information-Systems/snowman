@@ -31,6 +31,7 @@ const AlgorithmCardView = ({
         <IonButton
           size="small"
           fill="clear"
+          color="dark"
           onClick={editAlgorithm}
           className="ion-float-right"
         >
