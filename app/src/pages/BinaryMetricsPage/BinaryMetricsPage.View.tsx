@@ -13,6 +13,7 @@ import DataViewer from 'components/DataViewer/DataViewer';
 import PageStruct from 'components/PageStruct/PageStruct';
 import PaneButtonRow from 'components/PaneButtonRow/PaneButtonRow';
 import StyledCarousel from 'components/StyledCarousel/StyledCarousel';
+import { renderToString } from 'katex';
 import { BinaryMetricsPageProps } from 'pages/BinaryMetricsPage/BinaryMetricsPageProps';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -54,7 +55,12 @@ export const BinaryMetricsPageView = ({
                   >
                     {value !== undefined ? value.toPrecision(2) : '?'}
                   </IonCardTitle>
-                  <IonCardSubtitle class="metric-name" data-tip={description}>
+                  <IonCardSubtitle
+                    class="metric-name"
+                    data-tip={renderToString(description.replaceAll('$', ''), {
+                      throwOnError: false,
+                    })}
+                  >
                     {name}
                   </IonCardSubtitle>
                 </IonCardHeader>
@@ -79,7 +85,7 @@ export const BinaryMetricsPageView = ({
           />
         </IonCardContent>
       </IonCard>
-      <ReactTooltip className="tooltip-fixed" />
+      <ReactTooltip className="tooltip-fixed" html={true} />
     </PageStruct>
   );
 };
