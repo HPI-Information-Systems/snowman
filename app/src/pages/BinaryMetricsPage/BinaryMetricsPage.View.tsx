@@ -59,6 +59,8 @@ export const BinaryMetricsPageView = ({
                     class="metric-name"
                     data-tip={renderToString(description.replaceAll('$', ''), {
                       throwOnError: false,
+                      displayMode: true,
+                      output: 'html',
                     })}
                   >
                     {name}
