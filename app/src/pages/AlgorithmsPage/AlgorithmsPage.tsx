@@ -1,3 +1,4 @@
+import { Algorithm } from 'api';
 import AlgorithmsPageView from 'pages/AlgorithmsPage/AlgorithmsPage.View';
 import {
   AlgorithmsDispatchProps,
@@ -7,9 +8,12 @@ import { connect } from 'react-redux';
 import { getAlgorithms } from 'store/actions/AlgorithmsStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
+import { FirstValidMatchingSolution } from 'utils/constants';
 
 const mapStateToProps = (state: Store): AlgorithmsPageStateProps => ({
-  algorithms: state.AlgorithmsStore.algorithms,
+  algorithms: state.AlgorithmsStore.algorithms.filter(
+    (anAlgorithm: Algorithm) => anAlgorithm.id >= FirstValidMatchingSolution
+  ),
 });
 
 const mapDispatchToProps = (

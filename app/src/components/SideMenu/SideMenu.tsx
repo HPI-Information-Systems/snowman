@@ -28,11 +28,11 @@ const getSelectedOptionsFromPathMapper = (
     }
     case pathMapperKeys.EXPERIMENTS:
       return state.ExperimentsStore.selectedExperiments.map(
-        (anExperimentId: number): string =>
-          getExperimentNameFromId(
+        (anExperimentId: number, index: number): string =>
+          `${index + 1}. ${getExperimentNameFromId(
             anExperimentId,
             state.ExperimentsStore.experiments
-          )
+          )}`
       );
     default:
       return [];
