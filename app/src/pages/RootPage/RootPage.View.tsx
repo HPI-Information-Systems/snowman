@@ -2,7 +2,6 @@ import 'pages/RootPage/RootPageStyle.css';
 
 import PageStruct from 'components/PageStruct/PageStruct';
 import React from 'react';
-import { toast } from 'react-toastify';
 
 const RootPageView = (): JSX.Element => (
   <PageStruct title="Home Page" showNextFab={true}>
@@ -21,7 +20,6 @@ const RootPageView = (): JSX.Element => (
         Contributions of all kinds are welcome - feel free to fork us on Github!
         :)
       </p>
-      <button onClick={() => toast('This is a normal toast!')}>Notify!</button>
     </div>
   </PageStruct>
 );
