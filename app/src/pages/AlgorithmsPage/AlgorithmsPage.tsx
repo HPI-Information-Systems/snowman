@@ -8,8 +8,12 @@ import { getAlgorithms } from 'store/actions/AlgorithmsStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 
+import { FirstValidMatchingSolution } from '../../utils/constants';
+
 const mapStateToProps = (state: Store): AlgorithmsPageStateProps => ({
-  algorithms: state.AlgorithmsStore.algorithms,
+  algorithms: state.AlgorithmsStore.algorithms.filter(
+    (value) => value.id >= FirstValidMatchingSolution
+  ),
 });
 
 const mapDispatchToProps = (
