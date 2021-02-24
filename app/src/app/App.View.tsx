@@ -69,9 +69,9 @@ const AppView = ({ loadInitialState, toastStack }: AppProps): JSX.Element => {
             )
           )}
           <GlobalLoading />
-          <ToastContainer />
         </IonSplitPane>
       </IonReactRouter>
+      <ToastContainer />
     </IonApp>
   );
 };
