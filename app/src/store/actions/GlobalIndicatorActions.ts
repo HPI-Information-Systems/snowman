@@ -7,13 +7,17 @@ import {
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 
+/*
+It is not a real redux action that influences the store.
+Moreover we want to dispatch opening a toast in context of redux actions
+ */
 export const showToast = (
   aMessage: string,
   aType: ToastType = ToastType.Normal
 ): SnowmanThunkAction<void> => (): void => {
   switch (aType) {
     case ToastType.Normal:
-      toast(aMessage);
+      toast.dark(aMessage);
       return;
     case ToastType.Success:
       toast.success(aMessage);

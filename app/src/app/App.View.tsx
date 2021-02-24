@@ -34,7 +34,7 @@ import {
   IPathMapper,
 } from 'utils/pathHandlers';
 
-const AppView = ({ loadInitialState, toastStack }: AppProps): JSX.Element => {
+const AppView = ({ loadInitialState }: AppProps): JSX.Element => {
   useEffect((): void => loadInitialState(), [loadInitialState]);
   return (
     <IonApp>
