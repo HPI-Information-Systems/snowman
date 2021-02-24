@@ -22,12 +22,10 @@ import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { AppProps } from 'app/AppProps';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
-import GlobalToast from 'components/GlobalToast/GlobalToast';
 import SideMenu from 'components/SideMenu/SideMenu';
 import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { ToastConfiguration } from 'types/ToastConfiguration';
 import history from 'utils/history';
 import {
   getEmptyPath,
@@ -56,21 +54,9 @@ const AppView = ({ loadInitialState, toastStack }: AppProps): JSX.Element => {
               />
             ))}
           </IonRouterOutlet>
-
-          {/* GlobalIndicators need to be view-independent. */}
-          {toastStack.map(
-            (aToastConfiguration: ToastConfiguration): JSX.Element => (
-              <GlobalToast
-                key={aToastConfiguration.id}
-                message={aToastConfiguration.message}
-                toastType={aToastConfiguration.type}
-                toastId={aToastConfiguration.id}
-              />
-            )
-          )}
-          <GlobalLoading />
         </IonSplitPane>
       </IonReactRouter>
+      <GlobalLoading />
       <ToastContainer />
     </IonApp>
   );
