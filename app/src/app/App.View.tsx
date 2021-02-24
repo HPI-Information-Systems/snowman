@@ -57,7 +57,15 @@ const AppView = ({ loadInitialState, toastStack }: AppProps): JSX.Element => {
         </IonSplitPane>
       </IonReactRouter>
       <GlobalLoading />
-      <ToastContainer />
+      <ToastContainer
+        autoClose={5000}
+        pauseOnHover={true}
+        pauseOnFocusLoss={true}
+        closeOnClick={true}
+        newestOnTop={true}
+        limit={5}
+        position={'top-right'}
+      />
     </IonApp>
   );
 };
