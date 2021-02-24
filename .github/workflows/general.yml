@@ -105,6 +105,6 @@ jobs:
     - name: Build app
       run: npm run build
       working-directory: ./app
-    - name: Build app
+    - name: Build wrapper
       run: npm run build
       working-directory: ./wrapper
