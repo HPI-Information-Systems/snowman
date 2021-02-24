@@ -2,12 +2,14 @@ import { Algorithm } from 'api';
 import { AlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { AlgorithmDialogStore } from 'store/models';
+import { DialogTypes } from 'types/DialogTypes';
 
 const initialState: AlgorithmDialogStore = {
   isOpen: false,
   algorithmId: null,
   algorithmName: '',
   algorithmDescription: '',
+  dialogType: DialogTypes.ADD_DIALOG,
 };
 
 export const AlgorithmDialogReducer = (
@@ -19,6 +21,7 @@ export const AlgorithmDialogReducer = (
       return {
         ...state,
         isOpen: true,
+        dialogType: DialogTypes.ADD_DIALOG,
       };
     case DialogActions.OPEN_CHANGE_DIALOG:
       return {
@@ -27,13 +30,17 @@ export const AlgorithmDialogReducer = (
         algorithmId: (action.payload as Algorithm).id,
         algorithmName: (action.payload as Algorithm).name,
         algorithmDescription: (action.payload as Algorithm).description ?? '',
+        dialogType: DialogTypes.CHANGE_DIALOG,
       };
     case DialogActions.CLOSE_DIALOG:
-      return {
-        ...state,
-        isOpen: false,
-        algorithmId: null,
-      };
+      if (state.dialogType === DialogTypes.ADD_DIALOG)
+        return {
+          ...state,
+          isOpen: false,
+        };
+      else {
+        return initialState;
+      }
     case DialogActions.CHANGE_ALGORITHM_NAME:
       return {
         ...state,

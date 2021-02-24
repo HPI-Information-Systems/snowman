@@ -6,6 +6,7 @@ import {
   Metric,
 } from 'api';
 import { DatasetTypes } from 'types/DatasetTypes';
+import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
@@ -14,6 +15,7 @@ export interface AlgorithmDialogStore {
   algorithmName: string;
   algorithmDescription: string;
   isOpen: boolean;
+  dialogType: DialogTypes;
 }
 
 export interface AddDatasetDialogStore {
