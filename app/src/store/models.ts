@@ -8,7 +8,6 @@ import {
 import { DatasetTypes } from 'types/DatasetTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
-import { ToastConfiguration } from 'types/ToastConfiguration';
 
 export interface AddAlgorithmDialogStore {
   algorithmName: string;
@@ -57,7 +56,6 @@ export interface ExperimentsStore {
 }
 
 export interface GlobalIndicatorStore {
-  currentToasts: ToastConfiguration[];
   showLoading: boolean;
   ongoingRequestsCount: number;
 }

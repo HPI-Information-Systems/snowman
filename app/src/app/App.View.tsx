@@ -13,6 +13,8 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 /* Theme variables */
 import 'theme/variables.css';
+/* Include toast styling */
+import 'react-toastify/dist/ReactToastify.css';
 /* Overwrite variables */
 import 'theme/overwrites.css';
 
@@ -20,11 +22,10 @@ import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { AppProps } from 'app/AppProps';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
-import GlobalToast from 'components/GlobalToast/GlobalToast';
 import SideMenu from 'components/SideMenu/SideMenu';
 import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { ToastConfiguration } from 'types/ToastConfiguration';
+import { ToastContainer } from 'react-toastify';
 import history from 'utils/history';
 import {
   getEmptyPath,
@@ -33,7 +34,7 @@ import {
   IPathMapper,
 } from 'utils/pathHandlers';
 
-const AppView = ({ loadInitialState, toastStack }: AppProps): JSX.Element => {
+const AppView = ({ loadInitialState }: AppProps): JSX.Element => {
   useEffect((): void => loadInitialState(), [loadInitialState]);
   return (
     <IonApp>
@@ -53,21 +54,18 @@ const AppView = ({ loadInitialState, toastStack }: AppProps): JSX.Element => {
               />
             ))}
           </IonRouterOutlet>
-
-          {/* GlobalIndicators need to be view-independent. */}
-          {toastStack.map(
-            (aToastConfiguration: ToastConfiguration): JSX.Element => (
-              <GlobalToast
-                key={aToastConfiguration.id}
-                message={aToastConfiguration.message}
-                toastType={aToastConfiguration.type}
-                toastId={aToastConfiguration.id}
-              />
-            )
-          )}
-          <GlobalLoading />
         </IonSplitPane>
       </IonReactRouter>
+      <GlobalLoading />
+      <ToastContainer
+        autoClose={5000}
+        pauseOnHover={true}
+        pauseOnFocusLoss={true}
+        closeOnClick={true}
+        newestOnTop={true}
+        limit={5}
+        position={'top-right'}
+      />
     </IonApp>
   );
 };

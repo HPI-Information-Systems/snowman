@@ -1,25 +1,35 @@
-import { ToastType } from 'components/GlobalToast/ToastTypes';
+import { toast } from 'react-toastify';
 import { GlobalIndicatorStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
+import { SnowmanThunkAction } from 'store/messages';
+import { ToastType } from 'types/ToastTypes';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 
-export const hideToast = (toastId: number): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
-    type: actionTypes.HIDE_TOAST,
-    payload: toastId,
-  });
-
+/*
+It is not a real redux action that influences the store.
+Moreover we want to dispatch opening a toast in context of redux actions
+ */
 export const showToast = (
   aMessage: string,
   aType: ToastType = ToastType.Normal
-): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
-    type: actionTypes.SHOW_TOAST,
-    // reducer ignores id field
-    payload: { id: -1, message: aMessage, type: aType },
-  });
+): SnowmanThunkAction<void> => (): void => {
+  switch (aType) {
+    case ToastType.Normal:
+      toast.dark(aMessage);
+      return;
+    case ToastType.Success:
+      toast.success(aMessage);
+      return;
+    case ToastType.Error:
+      toast.error(aMessage);
+      return;
+    case ToastType.Warning:
+      toast.warning(aMessage);
+      return;
+  }
+};
 
 export const hideLoading = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
