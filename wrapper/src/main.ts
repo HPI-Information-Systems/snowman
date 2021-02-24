@@ -49,6 +49,13 @@ function spawnLocalServer() {
   );
 }
 
+function killLocalServer() {
+  if (backend !== undefined) {
+    backend.kill('SIGINT');
+    backend = undefined;
+  }
+}
+
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
@@ -104,6 +111,12 @@ ipcMain.on('reset_launcher', (event) => {
   showLauncherPage();
 });
 
+app.on('activate', () => {
+  if (!mainWindow) {
+    createWindow();
+  }
+});
+
 app.on('ready', () => {
   if (app.commandLine.hasSwitch('headless')) {
     console.log(headlessMessage);
@@ -114,10 +127,7 @@ app.on('ready', () => {
 });
 
 app.on('window-all-closed', async () => {
-  if (backend !== undefined) {
-    backend.kill('SIGINT');
-    backend = undefined;
-  }
+  killLocalServer();
   if (process.platform !== 'darwin') {
     setTimeout(() => {
       app.quit();
@@ -125,8 +135,6 @@ app.on('window-all-closed', async () => {
   }
 });
 
-app.on('activate', () => {
-  if (!mainWindow) {
-    createWindow();
-  }
+app.on('quit', () => {
+  killLocalServer();
 });
