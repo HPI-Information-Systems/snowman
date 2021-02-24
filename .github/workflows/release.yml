@@ -1,4 +1,4 @@
-name: Docs & Release
+name: Release
 
 on:
   push:
@@ -9,42 +9,6 @@ on:
       - main
 
 jobs:
-  docs:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.x
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
-        architecture: 'x64'
-    - name: Install pip dependencies
-      run: pip install -r requirements.txt
-    - name: Use Node.js 14.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
-    - name: Get npm cache directory
-      id: npm-cache-dir
-      run: |
-        echo "::set-output name=dir::$(npm config get cache)"
-    - uses: actions/cache@v2
-      with:
-        path: ${{ steps.npm-cache-dir.outputs.dir }}
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: Run (root) npm install
-      run: npm ci
-      working-directory: ./
-    - name: Crawl all licenses
-      run: npm run licenses
-      working-directory: ./
-    - name: Build and deploy docs
-      run: mkdocs gh-deploy --force
-      working-directory: ./
   release:
     runs-on: ${{ matrix.os }}
     strategy:
