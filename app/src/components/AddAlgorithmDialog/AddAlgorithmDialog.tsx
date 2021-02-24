@@ -5,7 +5,7 @@ import {
 } from 'components/AddAlgorithmDialog/AddAlgorithmDialogProps';
 import { connect } from 'react-redux';
 import {
-  addAlgorithm,
+  addOrUpdateAlgorithm,
   changeAlgorithmDescription,
   changeAlgorithmName,
   closeDialog,
@@ -15,6 +15,7 @@ import { Store } from 'store/models';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
 const mapStateToProps = (state: Store): AddAlgorithmDialogStateProps => ({
+  isAddDialog: state.AddAlgorithmDialogStore.algorithmId === null,
   isOpen: state.AddAlgorithmDialogStore.isOpen,
   algorithmDescription: state.AddAlgorithmDialogStore.algorithmDescription,
   algorithmName: state.AddAlgorithmDialogStore.algorithmName,
@@ -30,7 +31,7 @@ const mapDispatchToProps = (
   changeAlgorithmDescription: (event: IonChangeEvent): void =>
     dispatch(changeAlgorithmDescription(event.detail.value as string)),
   clickOnAdd(): void {
-    dispatch(addAlgorithm()).then();
+    dispatch(addOrUpdateAlgorithm()).then();
   },
 });
 

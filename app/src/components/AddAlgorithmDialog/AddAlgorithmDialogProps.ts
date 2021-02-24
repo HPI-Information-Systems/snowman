@@ -4,6 +4,7 @@ export interface AddAlgorithmDialogStateProps {
   algorithmName: string;
   isOpen: boolean;
   algorithmDescription: string;
+  isAddDialog: boolean;
 }
 
 export interface AddAlgorithmDialogDispatchProps {

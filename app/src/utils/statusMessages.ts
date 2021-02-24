@@ -16,3 +16,4 @@ export const SUCCESS_LOAD_METRICS_TUPLES =
   'Successfully loaded metrics tuples!';
 export const SUCCESS_LOAD_BINARY_METRICS =
   'Successfully loaded binary metrics!';
+export const SUCCESS_UPDATE_ALGORITHM = 'Successfully updated algorithm';

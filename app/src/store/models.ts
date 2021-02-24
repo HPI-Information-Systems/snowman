@@ -10,6 +10,7 @@ import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
 export interface AddAlgorithmDialogStore {
+  algorithmId: number | null;
   algorithmName: string;
   algorithmDescription: string;
   isOpen: boolean;

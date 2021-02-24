@@ -7,12 +7,13 @@ import {
   IonIcon,
 } from '@ionic/react';
 import { AlgorithmCardProps } from 'components/AlgorithmCard/AlgorithmCardProps';
-import { trash } from 'ionicons/icons';
+import { pencil, trash } from 'ionicons/icons';
 import React from 'react';
 
 const AlgorithmCardView = ({
   algorithm,
   deleteAlgorithm,
+  editAlgorithm,
 }: AlgorithmCardProps): JSX.Element => (
   <IonCard button={false}>
     <IonCardHeader>
@@ -26,6 +27,14 @@ const AlgorithmCardView = ({
           className="ion-float-right"
         >
           <IonIcon icon={trash} />
+        </IonButton>
+        <IonButton
+          size="small"
+          fill="clear"
+          onClick={editAlgorithm}
+          className="ion-float-right"
+        >
+          <IonIcon icon={pencil} />
         </IonButton>
       </IonCardTitle>
     </IonCardHeader>

@@ -5,6 +5,7 @@ export interface AlgorithmCardOwnProps {
 }
 export interface AlgorithmCardDispatchProps {
   deleteAlgorithm(): void;
+  editAlgorithm(): void;
 }
 
 export type AlgorithmCardProps = AlgorithmCardOwnProps &
