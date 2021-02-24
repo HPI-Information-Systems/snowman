@@ -1,4 +1,3 @@
-import { ToastType } from 'components/GlobalToast/ToastTypes';
 import {
   hideLoading,
   registerOngoingRequest,
@@ -7,6 +6,7 @@ import {
   unregisterOngoingRequest,
 } from 'store/actions/GlobalIndicatorActions';
 import { SnowmanDispatch } from 'store/messages';
+import { ToastType } from 'types/ToastTypes';
 import { UNKNOWN_ERROR } from 'utils/statusMessages';
 
 const RequestHandler = async <T = void>(

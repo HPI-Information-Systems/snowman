@@ -1,4 +1,4 @@
-import { ToastType } from 'components/GlobalToast/ToastTypes';
+import { ToastType } from 'types/ToastTypes';
 
 export interface ToastConfiguration {
   // if id == -1, we assume that it is only a prototype of a toast

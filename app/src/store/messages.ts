@@ -10,7 +10,6 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { Store } from 'store/models';
 import { DatasetTypes } from 'types/DatasetTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
-import { ToastConfiguration } from 'types/ToastConfiguration';
 
 export interface SnowmanAction extends Action<string> {
   payload:
@@ -26,8 +25,7 @@ export interface SnowmanAction extends Action<string> {
     | Dataset
     | Dataset[]
     | number
-    | Experiment[]
-    | ToastConfiguration;
+    | Experiment[];
 }
 
 export type SnowmanThunkAction<R> = ThunkAction<R, Store, null, SnowmanAction>;
