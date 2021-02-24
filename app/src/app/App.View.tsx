@@ -13,6 +13,8 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 /* Theme variables */
 import 'theme/variables.css';
+/* Include toast styling */
+import 'react-toastify/dist/ReactToastify.css';
 /* Overwrite variables */
 import 'theme/overwrites.css';
 
@@ -24,6 +26,7 @@ import GlobalToast from 'components/GlobalToast/GlobalToast';
 import SideMenu from 'components/SideMenu/SideMenu';
 import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { ToastConfiguration } from 'types/ToastConfiguration';
 import history from 'utils/history';
 import {
@@ -66,6 +69,7 @@ const AppView = ({ loadInitialState, toastStack }: AppProps): JSX.Element => {
             )
           )}
           <GlobalLoading />
+          <ToastContainer />
         </IonSplitPane>
       </IonReactRouter>
     </IonApp>
