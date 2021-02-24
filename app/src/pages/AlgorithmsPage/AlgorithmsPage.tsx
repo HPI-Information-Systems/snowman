@@ -1,3 +1,4 @@
+import { Algorithm } from 'api';
 import AlgorithmsPageView from 'pages/AlgorithmsPage/AlgorithmsPage.View';
 import {
   AlgorithmsDispatchProps,
@@ -11,7 +12,7 @@ import { FirstValidMatchingSolution } from 'utils/constants';
 
 const mapStateToProps = (state: Store): AlgorithmsPageStateProps => ({
   algorithms: state.AlgorithmsStore.algorithms.filter(
-    (value) => value.id >= FirstValidMatchingSolution
+    (anAlgorithm: Algorithm) => anAlgorithm.id >= FirstValidMatchingSolution
   ),
 });
 
