@@ -60,7 +60,7 @@ export class AlgorithmProvider extends BaseAlgorithmProvider {
   getAlgorithm(id: AlgorithmId): Algorithm {
     const algorithm = this.getAlgorithmQuery.all(id);
     if (algorithm.length === 0) {
-      throw new Error(`An algorithm with the id ${id} does not exist.`);
+      throw new Error(`A matching solution with the id ${id} does not exist.`);
     }
     return algorithm[0];
   }
@@ -90,7 +90,7 @@ export class AlgorithmProvider extends BaseAlgorithmProvider {
         )
         .join(', ');
       throw new Error(
-        `The algorithm ${algorithm.name} (${algorithm.id}) is used by the experiments ${experiments}.`
+        `The matching solution ${algorithm.name} (${algorithm.id}) is used by the experiments ${experiments}.`
       );
     }
   }

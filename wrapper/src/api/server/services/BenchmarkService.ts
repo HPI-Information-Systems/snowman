@@ -34,9 +34,7 @@ export async function calculateExperimentIntersectionCount({
         ).data.length;
       } else {
         throw new Error(
-          'Intersection for' +
-            body.length +
-            'experiments is not supported so far! Please provide exactly two experiments'
+          `Intersection for ${body.length} experiments is not supported so far! Please provide exactly two experiments`
         );
       }
     },
@@ -82,9 +80,7 @@ export async function calculateExperimentIntersectionRecords({
         );
       } else {
         throw new Error(
-          'Intersection for' +
-            body.length +
-            'experiments is not supported so far! Please provide exactly two experiments'
+          `Intersection for ${body.length} experiments is not supported so far! Please provide exactly two experiments`
         );
       }
     },

@@ -26,7 +26,7 @@ export class ExperimentFileGetter {
   ): IterableIterator<string[]> {
     startAt = startAt ?? 0;
     limit = limit ?? -1;
-    if (sortBy && !(sortBy in this.table.schema.columns)) {
+    if (sortBy) {
       if (
         !(experimentCustomColumnPrefix + sortBy in this.table.schema.columns)
       ) {
@@ -37,7 +37,7 @@ export class ExperimentFileGetter {
         sortBy = experimentCustomColumnPrefix + sortBy;
       }
     } else {
-      sortBy = sortBy ?? this.table.schema.columns.id1.name;
+      sortBy = this.table.schema.columns.id1.name;
     }
     yield this.columns.map((column) =>
       column.name.startsWith(experimentCustomColumnPrefix)
