@@ -8,7 +8,7 @@ info:
     Comparing data matching algorithms is still an unsolved topic in both industry and research. 
     With snowman, developers and researchers will be able to compare the performance of different data matching 
     solutions or improve new algorithms.
-  version: 1.0.0
+  version: 2.0.0
   title: Snowman API
   contact:
     email: snowman@groups.sap.com
@@ -18,7 +18,7 @@ info:
     url: https://github.com
 
 servers:
-  - url: "{protocol}://{server}/api/v1"
+  - url: "{protocol}://{server}/api/v2"
     variables:
       protocol:
         default: http
@@ -74,7 +74,21 @@ paths:
                 $ref: "#/components/schemas/AlgorithmId"
         400:
           description: Bad Request
-
+  /algorithms/soft-kpi-questions:
+    get:
+      tags:
+        - Algorithm
+      summary: Returns all soft-kpi questions
+      operationId: getSoftKPIQuestions
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SoftKPIQuestion"
   /algorithms/{algorithmId}:
     parameters:
       - name: algorithmId
@@ -551,6 +565,10 @@ paths:
           schema:
             type: string
             example: similarity
+        - name: mode
+          in: query
+          schema:
+            $ref: "#/components/schemas/ExperimentIntersectionMode"
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       summary:
@@ -576,6 +594,11 @@ paths:
         intersects multiple experiments and returns the counts of the number of
         records. This can be used to calculate the confusion-matrix
       operationId: calculateExperimentIntersectionCount
+      parameters:
+        - name: mode
+          in: query
+          schema:
+            $ref: "#/components/schemas/ExperimentIntersectionMode"
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       summary:
@@ -602,6 +625,31 @@ components:
             $ref: "#/components/schemas/ExperimentIntersectionConfiguration"
       required: true
   schemas:
+    #### SOFTKPIS ####
+    SoftKPIQuestion:
+      type: object
+      properties:
+        id:
+          type: string
+          example: tco
+        question:
+          type: string
+          example: What is the total cost of ownership of this matching solution?
+        format:
+          type: string
+          enum: [string, number]
+    SoftKPIAnswer:
+      type: object
+      properties:
+        id:
+          type: string
+          example: tco
+        answer:
+          type: string
+      required:
+        - id
+        - answer
+
     #### ALGORITHM ####
     AlgorithmId:
       type: integer
@@ -618,6 +666,10 @@ components:
         description:
           type: string
           example: This is an open source python library
+        softKPIs:
+          type: array
+          items:
+            $ref: "#/components/schemas/SoftKPIAnswer"
     Algorithm:
       allOf:
         - type: object
@@ -780,19 +832,26 @@ components:
           type: array
           items:
             type: array
+            nullable: true
+            example: ["1", "test value 1", "test value 2"]
             items:
-              type: array
-              example: ["1", "hallo"]
-              items:
-                type: string
+              type: string
       required:
         - header
         - data
     ExperimentIntersectionCount:
       type: object
       properties:
-        count:
+        numberRows:
           type: integer
           example: 37
+        numberGroups:
+          type: integer
+          example: 10
       required:
-        - count
+        - numberRows
+        - numberGroups
+    ExperimentIntersectionMode:
+      type: string
+      enum: ["PAIRS", "CLUSTERS", "INVESTIGATIVE"]
+      default: "PAIRS"
