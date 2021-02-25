@@ -10,7 +10,7 @@ import {
   IonRow,
 } from '@ionic/react';
 import { AlgorithmCardProps } from 'components/AlgorithmCard/AlgorithmCardProps';
-import { pencil, trash } from 'ionicons/icons';
+import { create, trash } from 'ionicons/icons';
 import React from 'react';
 
 const AlgorithmCardView = ({
@@ -33,7 +33,7 @@ const AlgorithmCardView = ({
             onClick={editAlgorithm}
             className="ion-float-left"
           >
-            <IonIcon slot="start" icon={pencil} />
+            <IonIcon slot="start" icon={create} />
             Edit
           </IonButton>
         </IonCol>
