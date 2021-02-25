@@ -15,7 +15,6 @@ interface metaExperiment {
   name: string;
   data: { meta: ExperimentValues; file: string[][] };
 }
-//TODO make this util function
 function fileToReadable(file: string[][]) {
   return Readable.from(file.map((row) => row.join(',')).join('\n'));
 }
