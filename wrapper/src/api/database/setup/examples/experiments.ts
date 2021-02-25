@@ -75,4 +75,22 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       numberOfPairs: 100,
     },
   },
+  computersSigmodGoldstandard1: {
+    meta: {
+      name: 'goldstandard',
+      description:
+        'Complete list of all duplicate pairs found in the original datasets.',
+      algorithmId: exampleAlgorithms.gold.id,
+      datasetId: exampleDatasets.computers.id,
+    },
+    id: 3,
+    file: {
+      format: 'sigmod2021',
+      path: path.join(
+        EXAMPLE_EXPERIMENT_DIR,
+        'computers_sigmod_goldstandard.csv'
+      ),
+      numberOfPairs: 903,
+    },
+  },
 });
