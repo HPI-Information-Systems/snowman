@@ -17,7 +17,6 @@ import { renderToString } from 'katex';
 import { BinaryMetricsPageProps } from 'pages/BinaryMetricsPage/BinaryMetricsPageProps';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
-import { trimMathExpr } from 'utils/latex';
 
 export const BinaryMetricsPageView = ({
   loadMetrics,
@@ -39,7 +38,7 @@ export const BinaryMetricsPageView = ({
   return (
     <PageStruct title="Benchmark - Binary Comparison" showNextFab={false}>
       <IonText color="primary">
-        <h3 data-tip="Keep in mind that the first selected experiment is assumed to be the ground-truth which the second selected experiment is compared against!">
+        <h3 data-tip="Binary metrics are calculated based upon the count of false positives, false negatives, true negatives and true positives.">
           Binary Metrics
         </h3>
       </IonText>
@@ -58,7 +57,7 @@ export const BinaryMetricsPageView = ({
                   </IonCardTitle>
                   <IonCardSubtitle
                     class="metric-name"
-                    data-tip={renderToString(trimMathExpr(description), {
+                    data-tip={renderToString(description, {
                       throwOnError: false,
                       displayMode: true,
                       output: 'mathml',
@@ -88,7 +87,6 @@ export const BinaryMetricsPageView = ({
           />
         </IonCardContent>
       </IonCard>
-      <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
     </PageStruct>
   );
 };

@@ -26,6 +26,7 @@ import SideMenu from 'components/SideMenu/SideMenu';
 import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import ReactTooltip from 'react-tooltip';
 import history from 'utils/history';
 import {
   getEmptyPath,
@@ -56,6 +57,7 @@ const AppView = ({ loadInitialState }: AppProps): JSX.Element => {
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>
+      <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <GlobalLoading />
       <ToastContainer
         autoClose={5000}

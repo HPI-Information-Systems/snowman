@@ -56,3 +56,8 @@
 .Toastify__toast--error {
   background-color: var(--ion-color-danger);
 }
+
+/* Tooltip */
+.tooltip-fixed {
+  max-width: 350px;
+}
