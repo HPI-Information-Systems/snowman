@@ -85,12 +85,13 @@ const OptionCard = ({
           </IonRow>
         ) : null}
         <IonRow>
-          <IonCol size="12" class="ion-text-end">
+          <IonCol size="12">
             <IonButton
               size="small"
               fill="clear"
               color="danger"
               onClick={deleteCard}
+              className="ion-float-right"
             >
               <IonIcon slot="start" icon={trash} />
               Delete

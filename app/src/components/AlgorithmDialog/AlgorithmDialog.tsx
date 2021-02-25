@@ -1,28 +1,29 @@
-import AddAlgorithmDialogView from 'components/AddAlgorithmDialog/AddAlgorithmDialog.View';
 import {
-  AddAlgorithmDialogDispatchProps,
-  AddAlgorithmDialogStateProps,
-} from 'components/AddAlgorithmDialog/AddAlgorithmDialogProps';
+  AlgorithmDialogDispatchProps,
+  AlgorithmDialogStateProps,
+} from 'components/AlgorithmDialog/AddAlgorithmDialogProps';
+import AlgorithmDialogView from 'components/AlgorithmDialog/AlgorithmDialog.View';
 import { connect } from 'react-redux';
 import {
-  addAlgorithm,
+  addOrUpdateAlgorithm,
   changeAlgorithmDescription,
   changeAlgorithmName,
   closeDialog,
-} from 'store/actions/AddAlgorithmDialogStoreActions';
+} from 'store/actions/AlgorithmDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-const mapStateToProps = (state: Store): AddAlgorithmDialogStateProps => ({
-  isOpen: state.AddAlgorithmDialogStore.isOpen,
-  algorithmDescription: state.AddAlgorithmDialogStore.algorithmDescription,
-  algorithmName: state.AddAlgorithmDialogStore.algorithmName,
+const mapStateToProps = (state: Store): AlgorithmDialogStateProps => ({
+  isAddDialog: state.AlgorithmDialogStore.algorithmId === null,
+  isOpen: state.AlgorithmDialogStore.isOpen,
+  algorithmDescription: state.AlgorithmDialogStore.algorithmDescription,
+  algorithmName: state.AlgorithmDialogStore.algorithmName,
 });
 
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch
-): AddAlgorithmDialogDispatchProps => ({
+): AlgorithmDialogDispatchProps => ({
   clickOnCancel: (): void => dispatch(closeDialog()),
   closeDialog: (): void => dispatch(closeDialog()),
   changeAlgorithmName: (event: IonChangeEvent): void =>
@@ -30,13 +31,13 @@ const mapDispatchToProps = (
   changeAlgorithmDescription: (event: IonChangeEvent): void =>
     dispatch(changeAlgorithmDescription(event.detail.value as string)),
   clickOnAdd(): void {
-    dispatch(addAlgorithm()).then();
+    dispatch(addOrUpdateAlgorithm()).then();
   },
 });
 
-const AddAlgorithmDialog = connect(
+const AlgorithmDialog = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddAlgorithmDialogView);
+)(AlgorithmDialogView);
 
-export default AddAlgorithmDialog;
+export default AlgorithmDialog;

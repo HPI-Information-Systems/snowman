@@ -1,8 +1,8 @@
 import { IonCol, IonGrid, IonRow } from '@ionic/react';
 import { Algorithm } from 'api';
-import AddAlgorithmDialog from 'components/AddAlgorithmDialog/AddAlgorithmDialog';
 import AddAlgorithmFab from 'components/AddFab/AddAlgorithmFab';
 import AlgorithmCard from 'components/AlgorithmCard/AlgorithmCard';
+import AlgorithmDialog from 'components/AlgorithmDialog/AlgorithmDialog';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { AlgorithmsPageProps } from 'pages/AlgorithmsPage/AlgorithmsPageProps';
 import React, { useEffect } from 'react';
@@ -24,7 +24,7 @@ const AlgorithmsPageView = ({
         </IonRow>
       </IonGrid>
       <AddAlgorithmFab />
-      <AddAlgorithmDialog />
+      <AlgorithmDialog />
     </PageStruct>
   );
 };

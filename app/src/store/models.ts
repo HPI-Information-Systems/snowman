@@ -6,13 +6,16 @@ import {
   Metric,
 } from 'api';
 import { DatasetTypes } from 'types/DatasetTypes';
+import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
-export interface AddAlgorithmDialogStore {
+export interface AlgorithmDialogStore {
+  algorithmId: number | null;
   algorithmName: string;
   algorithmDescription: string;
   isOpen: boolean;
+  dialogType: DialogTypes;
 }
 
 export interface AddDatasetDialogStore {
@@ -79,7 +82,7 @@ export interface Store {
   AlgorithmsStore: AlgorithmsStore;
   AddDatasetDialogStore: AddDatasetDialogStore;
   AddExperimentDialogStore: AddExperimentDialogStore;
-  AddAlgorithmDialogStore: AddAlgorithmDialogStore;
+  AlgorithmDialogStore: AlgorithmDialogStore;
   GlobalIndicatorStore: GlobalIndicatorStore;
   MetricsStore: MetricsStore;
   InputChipStore: InputChipStore;
