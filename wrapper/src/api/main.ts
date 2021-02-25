@@ -1,5 +1,5 @@
 import { setupDatabase } from './database';
-import { ExpressServer as ApiServer } from './server/apiServer';
+import { APIServer } from './server/apiServer';
 import { cliArgs } from './tools/cli';
 import { logger } from './tools/logger';
 
@@ -16,7 +16,7 @@ async function launch(): Promise<void> {
     loadExampleEntries: true,
   });
   logger.info('Starting webserver...');
-  ApiServer.launch();
+  APIServer.launch();
   logger.info('Ready');
 }
 

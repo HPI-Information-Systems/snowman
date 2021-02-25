@@ -10,7 +10,7 @@ import { OPENAPI_YAML_PATH } from '../config';
 import { cliArgs } from '../tools/cli';
 import { identifyResponse } from './identifyResponse';
 
-export class ExpressServer {
+export class APIServer {
   protected readonly app: express.Express;
   protected server?: http.Server;
 
@@ -75,8 +75,8 @@ export class ExpressServer {
     }
   }
 
-  static launch(): ExpressServer {
-    const server = new ExpressServer();
+  static launch(): APIServer {
+    const server = new APIServer();
     try {
       server.launch();
       return server;
