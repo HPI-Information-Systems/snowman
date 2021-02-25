@@ -2,8 +2,7 @@ import { BaseMetric } from '../base';
 
 export class Accuracy extends BaseMetric {
   name = 'accuracy';
-  description =
-    '$(truePositives + trueNegatives)/(truePositives + trueNegatives + falsePositives + falseNegatives)$';
+  description = '\\frac{TPos + TNeg}{TPos + TNeg + FPos + FNeg}';
   range: [number, number] = [0, 1];
   get value(): number {
     return (

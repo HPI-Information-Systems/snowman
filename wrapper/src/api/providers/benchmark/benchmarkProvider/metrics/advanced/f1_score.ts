@@ -3,8 +3,7 @@ import { BaseMetric } from '../base';
 export class FMeasure extends BaseMetric {
   name = 'f1 score';
   range: [number, number] = [0, 1];
-  description =
-    '$(2*truePositives)/ (2*truePositives + falsePositives + falseNegatives)$';
+  description = '2 * \\frac{precision * recall}{precision + recall}';
   get value(): number {
     return (
       (2 * this.matrix.truePositives) /

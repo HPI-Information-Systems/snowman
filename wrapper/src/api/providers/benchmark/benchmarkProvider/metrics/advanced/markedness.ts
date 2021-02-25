@@ -5,7 +5,7 @@ import { Precision } from '../basic/precision';
 export class Markedness extends BaseMetric {
   name = 'markedness';
   range: [number, number] = [0, 1];
-  description = '$positivePredectiveValue + negativePredictiveValue - 1$';
+  description = 'PosPredictiveValue + NegPredictiveValue - 1';
   get value(): number {
     const ppv = new Precision(this.matrix).value;
     const npv = new NegativePredictiveValue(this.matrix).value;
