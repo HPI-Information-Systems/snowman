@@ -17,6 +17,7 @@ import { renderToString } from 'katex';
 import { BinaryMetricsPageProps } from 'pages/BinaryMetricsPage/BinaryMetricsPageProps';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
+import { trimMathExpr } from 'utils/latex';
 
 export const BinaryMetricsPageView = ({
   loadMetrics,
@@ -57,10 +58,10 @@ export const BinaryMetricsPageView = ({
                   </IonCardTitle>
                   <IonCardSubtitle
                     class="metric-name"
-                    data-tip={renderToString(description.replaceAll('$', ''), {
+                    data-tip={renderToString(trimMathExpr(description), {
                       throwOnError: false,
                       displayMode: true,
-                      output: 'html',
+                      output: 'mathml',
                     })}
                   >
                     {name}
@@ -87,7 +88,7 @@ export const BinaryMetricsPageView = ({
           />
         </IonCardContent>
       </IonCard>
-      <ReactTooltip className="tooltip-fixed" html={true} />
+      <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
     </PageStruct>
   );
 };
