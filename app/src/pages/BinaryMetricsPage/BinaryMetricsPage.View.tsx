@@ -1,4 +1,5 @@
 import 'pages/BinaryMetricsPage/BinaryMetricsPageStyles.css';
+import 'katex/dist/katex.min.css';
 
 import {
   IonCard,
@@ -67,7 +68,7 @@ export const BinaryMetricsPageView = ({
                     data-tip={renderToString(formula, {
                       throwOnError: false,
                       displayMode: true,
-                      output: 'mathml',
+                      output: 'html',
                     })}
                   >
                     {name}
