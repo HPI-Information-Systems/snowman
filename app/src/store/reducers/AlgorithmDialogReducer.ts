@@ -34,6 +34,7 @@ export const AlgorithmDialogReducer = (
       };
     case DialogActions.CLOSE_DIALOG:
       if (state.dialogType === DialogTypes.ADD_DIALOG)
+        // Only keep current state for add dialog
         return {
           ...state,
           isOpen: false,
