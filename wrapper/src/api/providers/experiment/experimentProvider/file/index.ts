@@ -28,7 +28,11 @@ export function getExperimentInserter(
 ): InstantiableExperimentInserter {
   const ExperimentLoader = experimentInserters.get(formatId);
   if (!ExperimentLoader) {
-    throw new Error('Unknown experiment format');
+    throw new Error(
+      `Unknown experiment file format: ${formatId}. Known formats are: ${experimentFormats
+        .map(([format]) => format)
+        .join(', ')}`
+    );
   }
   return ExperimentLoader;
 }

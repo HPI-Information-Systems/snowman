@@ -26,10 +26,15 @@ const RequestHandler = async <T = void>(
       }
     )
     .catch(
-      async (response: Response): Promise<never> => {
-        dispatch(
-          showToast((await response.text()) ?? UNKNOWN_ERROR, ToastType.Error)
-        );
+      async (result: unknown): Promise<never> => {
+        // If error occurred with HTTP - show text
+        if (result instanceof Response) {
+          dispatch(
+            showToast((await result.text()) ?? UNKNOWN_ERROR, ToastType.Error)
+          );
+        }
+        // Else - show generic error
+        dispatch(showToast(UNKNOWN_ERROR, ToastType.Error));
         throw Error;
       }
     )
