@@ -1,7 +1,7 @@
 import * as dashdash from 'dashdash';
 import path from 'path';
 
-interface IArgs extends dashdash.Results {
+interface CommandLineArguments extends dashdash.Results {
   storageDirectory: string;
   inMemory: boolean;
   hostname: string;
@@ -60,4 +60,6 @@ export const cliOptions: dashdash.OptionWithoutAliases[] = [
   },
 ];
 
-export const cliArgs = dashdash.parse({ options: cliOptions }) as IArgs;
+export const cliArgs = dashdash.parse({
+  options: cliOptions,
+}) as CommandLineArguments;
