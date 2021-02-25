@@ -96,12 +96,14 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
     ).confusionMatrixCounts;
     return metrics
       .map((Metric) => new Metric(matrix))
-      .map(({ value, name, description, range }) => {
+      .map(({ value, formula, name, range, info, infoLink }) => {
         return {
           value,
+          formula,
           name,
-          description,
           range,
+          info,
+          infoLink,
         };
       });
   }

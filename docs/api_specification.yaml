@@ -722,10 +722,15 @@ components:
         name:
           type: string
           example: "precision"
-        description:
+        formula:
           type: string
-          example: "$truePositives / (truePositives + falsePositives)$"
-          description: can contain latex math expressions denoted by surrounding dollar symbols ($<math expression>$)
+          example: "\\frac{truePositives}{truePositives + falsePositives}"
+        info:
+          type: string
+          example: The meaningfulness of the f1 score is debated in the research community.
+        infoLink:
+          type: string
+          example: https://link.springer.com/article/10.1007/s11222-017-9746-6
         value:
           type: number
           example: 0.75
@@ -738,7 +743,7 @@ components:
           example: [0, 1]
       required:
         - name
-        - description
+        - formula
         - value
         - range
     Metrics:

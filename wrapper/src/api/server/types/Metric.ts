@@ -25,11 +25,23 @@ export interface Metric {
      */
     name: string;
     /**
-     * can contain latex math expressions denoted by surrounding dollar symbols ($<math expression>$)
+     * 
      * @type {string}
      * @memberof Metric
      */
-    description: string;
+    formula: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Metric
+     */
+    info?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Metric
+     */
+    infoLink?: string;
     /**
      * 
      * @type {number}

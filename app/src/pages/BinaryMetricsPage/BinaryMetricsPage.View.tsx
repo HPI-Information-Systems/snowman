@@ -44,7 +44,14 @@ export const BinaryMetricsPageView = ({
       </IonText>
       <StyledCarousel itemsToShow={5} itemsToScroll={5}>
         {metrics.map(
-          ({ name, description, range, value }: Metric): JSX.Element => (
+          ({
+            name,
+            formula,
+            range,
+            value,
+            info,
+            infoLink,
+          }: Metric): JSX.Element => (
             <div key={name}>
               <IonCard class="card-fixed">
                 <IonCardHeader class="ion-text-center">
@@ -57,7 +64,7 @@ export const BinaryMetricsPageView = ({
                   </IonCardTitle>
                   <IonCardSubtitle
                     class="metric-name"
-                    data-tip={renderToString(description, {
+                    data-tip={renderToString(formula, {
                       throwOnError: false,
                       displayMode: true,
                       output: 'mathml',
@@ -72,7 +79,7 @@ export const BinaryMetricsPageView = ({
         )}
       </StyledCarousel>
       <IonText color="primary">
-        <h3>Example Pairs</h3>
+        <h3>Confusion Matrix</h3>
       </IonText>
       <IonCard>
         <PaneButtonRow
