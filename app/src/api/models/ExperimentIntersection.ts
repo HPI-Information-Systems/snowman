@@ -42,9 +42,9 @@ export function ExperimentIntersectionFromJSONTyped(json: any, ignoreDiscriminat
         return json;
     }
     return {
-        
-        'header': !exists(json, 'header') ? undefined : json['header'],
-        'data': !exists(json, 'data') ? undefined : json['data'],
+
+        'header': json['header'],
+        'data': json['data'],
     };
 }
 

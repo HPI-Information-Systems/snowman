@@ -26,11 +26,23 @@ export interface Metric {
      */
     name: string;
     /**
-     * can contain latex math expressions denoted by surrounding dollar symbols ($<math expression>$)
+     * 
      * @type {string}
      * @memberof Metric
      */
-    description: string;
+    formula: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Metric
+     */
+    info?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Metric
+     */
+    infoLink?: string;
     /**
      * 
      * @type {number}
@@ -56,7 +68,9 @@ export function MetricFromJSONTyped(json: any, ignoreDiscriminator: boolean): Me
     return {
         
         'name': json['name'],
-        'description': json['description'],
+        'formula': json['formula'],
+        'info': !exists(json, 'info') ? undefined : json['info'],
+        'infoLink': !exists(json, 'infoLink') ? undefined : json['infoLink'],
         'value': json['value'],
         'range': json['range'],
     };
@@ -72,7 +86,9 @@ export function MetricToJSON(value?: Metric | null): any {
     return {
         
         'name': value.name,
-        'description': value.description,
+        'formula': value.formula,
+        'info': value.info,
+        'infoLink': value.infoLink,
         'value': value.value,
         'range': value.range,
     };

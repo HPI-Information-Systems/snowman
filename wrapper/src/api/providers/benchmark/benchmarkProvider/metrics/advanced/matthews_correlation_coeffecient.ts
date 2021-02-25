@@ -1,10 +1,10 @@
 import { BaseMetric } from '../base';
 
 export class MatthewsCorrelationCoefficient extends BaseMetric {
-  name = 'matthews correlation coefficient';
+  name = 'matthews correlation coeff.';
   range: [number, number] = [0, 1];
-  description =
-    '$truePositives * trueNegatives - falsePositives * falseNegatives\\sqrt{(truePositives+falsePositives) * (truePositives+falseNegatives)*(trueNegatives + falsePositives)+(trueNegatives*falseNegatives)}$';
+  formula =
+    '\\frac{TPos * TNeg - FPos * FNeg}{\\sqrt{(TP + FP) * (TP + FN) * (TN + FP) * (TN + FN)}}';
 
   get value(): number {
     return (
