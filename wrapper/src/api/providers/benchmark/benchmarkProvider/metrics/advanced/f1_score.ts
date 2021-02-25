@@ -1,6 +1,6 @@
 import { BaseMetric } from '../base';
 
-export class FMeasure extends BaseMetric {
+export class F1Score extends BaseMetric {
   name = 'f1 score';
   range: [number, number] = [0, 1];
   description = '2 * \\frac{precision * recall}{precision + recall}';
