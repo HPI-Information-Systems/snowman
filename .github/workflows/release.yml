@@ -78,6 +78,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body: (to be manually added)
+          draft: true
           files: |
             ./artifacts/**/*
             ./LICENSE
