@@ -77,8 +77,6 @@ jobs:
       - name: Create & Upload Release
         uses: softprops/action-gh-release@v1
         with:
-          name: Release ${{ github.ref }}
-          tag_name: ${{ github.ref }}
           body: (to be manually added)
           draft: true
           prerelease: false
