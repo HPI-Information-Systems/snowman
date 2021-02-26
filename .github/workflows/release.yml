@@ -78,10 +78,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body: (to be manually added)
-          draft: true
-          prerelease: false
           files: |
-            ./artifacts/*
+            ./artifacts/**/*
             ./LICENSE
             ./README.md
         env:
