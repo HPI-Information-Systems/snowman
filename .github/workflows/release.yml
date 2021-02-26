@@ -2,14 +2,11 @@ name: Release
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    tags:
+      - '**'
 
 jobs:
-  release:
+  package:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -64,3 +61,61 @@ jobs:
           name: snowman-lnx.zip
           path: ./wrapper/build/*.zip
         if: matrix.os == 'ubuntu-latest'
+  release:
+    needs:
+      - package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact (MacOS)
+        uses: actions/download-artifact@v2
+        with:
+          name: snowman.dmg
+          path: /home/runner/snowman.dmg
+      - name: Download artifact (Windows)
+        uses: actions/download-artifact@v2
+        with:
+          name: snowman-win.zip
+          path: /home/runner/snowman-win.zip
+      - name: Download artifact (Linux)
+        uses: actions/download-artifact@v2
+        with:
+          name: snowman-lnx.zip
+          path: /home/runner/snowman-lnx.zip
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: (to be designated)
+          draft: true
+          prerelease: false
+      - name: Upload release asset (MacOS)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /home/runner/snowman.dmg
+          asset_name: snowman.dmg
+          asset_content_type: application/octet-stream
+      - name: Upload release asset (Windows)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /home/runner/snowman-win.zip
+          asset_name: snowman-win.zip
+          asset_content_type: application/zip
+      - name: Upload release asset (Linux)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /home/runner/snowman-lnx.zip
+          asset_name: snowman-lnx.zip
+          asset_content_type: application/zip
