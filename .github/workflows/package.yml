@@ -1,9 +1,12 @@
-name: Release
+name: Package
 
 on:
   push:
-    tags:
-      - '**'
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   package:
@@ -61,28 +64,3 @@ jobs:
           name: snowman-lnx.zip
           path: ./wrapper/build/*.zip
         if: matrix.os == 'ubuntu-latest'
-  release:
-    needs:
-      - package
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Create directory
-        shell: bash
-        run: |
-          mkdir ./artifacts/
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: ./artifacts/
-      - name: Create & Upload Release
-        uses: softprops/action-gh-release@v1
-        with:
-          body: (to be manually added)
-          draft: true
-          files: |
-            ./artifacts/**/*
-            ./LICENSE
-            ./README.md
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
