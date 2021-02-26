@@ -71,7 +71,8 @@ jobs:
         shell: bash
         run: |
           mkdir ./artifacts/
-      - uses: actions/download-artifact@v2
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
         with:
           path: ./artifacts/
       - name: Create & Upload Release
