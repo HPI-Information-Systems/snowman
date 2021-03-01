@@ -30,7 +30,7 @@ const mapDispatchToProps = (
     dispatch(changeAlgorithmName(event.detail.value as string)),
   changeAlgorithmDescription: (event: IonChangeEvent): void =>
     dispatch(changeAlgorithmDescription(event.detail.value as string)),
-  clickOnAdd(): void {
+  clickOnSubmit(): void {
     dispatch(addOrUpdateAlgorithm()).then();
   },
 });

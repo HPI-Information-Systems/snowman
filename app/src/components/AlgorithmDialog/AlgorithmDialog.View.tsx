@@ -24,7 +24,7 @@ const AlgorithmDialogView = ({
   isOpen,
   isAddDialog,
   clickOnCancel,
-  clickOnAdd,
+  clickOnSubmit,
   changeAlgorithmDescription,
   changeAlgorithmName,
   closeDialog,
@@ -55,7 +55,7 @@ const AlgorithmDialogView = ({
       </IonItem>
     </IonList>
     <div className="center button-row">
-      <IonButton className="button-hugh button-padding" onClick={clickOnAdd}>
+      <IonButton className="button-hugh button-padding" onClick={clickOnSubmit}>
         <IonIcon
           slot="start"
           icon={isAddDialog ? addCircleOutline : checkmarkCircleOutline}
