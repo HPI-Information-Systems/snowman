@@ -53,7 +53,7 @@ const DatasetDialogView = ({
   changeDatasetDescription,
   clickOnATag,
   addNewTagCallback,
-  addDataset,
+  clickOnSubmit,
 }: DatasetDialogProps): JSX.Element => (
   <ModalDialog
     heading={'Add New Dataset'}
@@ -190,7 +190,7 @@ const DatasetDialogView = ({
     <div className="center button-row">
       <IonButton
         className="button-hugh button-padding"
-        onClick={addDataset}
+        onClick={clickOnSubmit}
         disabled={!isValidForm}
       >
         <IonIcon slot="start" icon={addCircleOutline} />

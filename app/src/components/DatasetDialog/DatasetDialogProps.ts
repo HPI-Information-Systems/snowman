@@ -15,7 +15,7 @@ export interface DatasetDialogDispatchProps {
   changeCsvQuote(event: IonChangeEvent): void;
   changeCsvEscape(event: IonChangeEvent): void;
   clickOnATag(aTag: string): void;
-  addDataset(): void;
+  clickOnSubmit(): void;
   changeSelectedDatasetFiles(event: ChangeEvent<HTMLInputElement>): void;
 }
 

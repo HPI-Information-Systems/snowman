@@ -120,7 +120,8 @@ const mapDispatchToProps = (
   addNewTagCallback(newTagValue: string): void {
     (dispatch as SnowmanDispatch)(addNewTag(newTagValue));
   },
-  addDataset(): void {
+  clickOnSubmit(): void {
+    // Todo: Rather use addOrUpdateDataset()
     dispatch(addNewDataset()).then();
   },
 });
