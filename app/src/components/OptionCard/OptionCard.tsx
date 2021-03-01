@@ -34,6 +34,9 @@ const OptionCard = ({
   deleteCard = () => {
     console.log('Deletion requested');
   },
+  editCard = () => {
+    console.log('Edit requested');
+  },
   multiple = true,
 }: OptionCardProps): JSX.Element => {
   return (
@@ -91,7 +94,7 @@ const OptionCard = ({
               size="small"
               fill="clear"
               color="primary"
-              onClick={deleteCard}
+              onClick={editCard}
               className="ion-float-left"
             >
               <IonIcon slot="start" icon={create} />
