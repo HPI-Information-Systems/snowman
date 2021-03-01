@@ -1,4 +1,4 @@
-import 'components/AddDatasetDialog/AddDatasetDialogStyles.css';
+import 'components/DatasetDialog/AddDatasetDialogStyles.css';
 
 import {
   IonButton,
@@ -17,7 +17,7 @@ import {
   IonSelectOption,
   IonTextarea,
 } from '@ionic/react';
-import { AddDatasetDialogProps } from 'components/AddDatasetDialog/AddDatasetDialogProps';
+import { AddDatasetDialogProps } from 'components/DatasetDialog/AddDatasetDialogProps';
 import FileInput from 'components/FileInput/FileInput';
 import InputChip from 'components/InputChip/InputChip';
 import ModalDialog from 'components/ModalDialog/ModalDialog';

@@ -1,8 +1,8 @@
-import AddDatasetDialogView from 'components/AddDatasetDialog/AddDatasetDialog.View';
+import AddDatasetDialogView from 'components/DatasetDialog/AddDatasetDialog.View';
 import {
   AddDatasetDialogDispatchProps,
   AddDatasetDialogStateProps,
-} from 'components/AddDatasetDialog/AddDatasetDialogProps';
+} from 'components/DatasetDialog/AddDatasetDialogProps';
 import { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import {

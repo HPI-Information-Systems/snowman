@@ -1,6 +1,6 @@
 import { IonChip, IonLabel } from '@ionic/react';
-import AddDatasetDialog from 'components/AddDatasetDialog/AddDatasetDialog';
 import AddDatasetFab from 'components/AddFab/AddDatasetFab';
+import AddDatasetDialog from 'components/DatasetDialog/AddDatasetDialog';
 import OptionSelector from 'components/OptionSelector/OptionSelector';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { DatasetsPageProps } from 'pages/DatasetsPage/DatasetsPageProps';
