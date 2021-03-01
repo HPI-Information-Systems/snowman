@@ -33,7 +33,7 @@ export const DatasetDialogReducer = (
     case DialogActions.OPEN_ADD_DIALOG:
       return {
         ...state,
-        availableTags: action.payload as string[],
+        availableTags: action.payload as string[], // Todo: get this from root reducer?
         dialogType: DialogTypes.ADD_DIALOG,
         isOpen: true,
       };
@@ -45,12 +45,19 @@ export const DatasetDialogReducer = (
         datasetId: (action.payload as Dataset).id,
         datasetName: (action.payload as Dataset).name,
         datasetDescription: (action.payload as Dataset).description ?? '',
+        selectedTags: (action.payload as Dataset).tags ?? [],
+        availableTags: [], // Todo: get this from root reducer?
       };
     case DialogActions.CLOSE_DIALOG:
-      return {
-        ...state,
-        isOpen: false,
-      };
+      if (state.dialogType === DialogTypes.ADD_DIALOG)
+        // Only keep current state for add dialog
+        return {
+          ...state,
+          isOpen: false,
+        };
+      else {
+        return initialState;
+      }
     case DialogActions.RESET_DIALOG:
       return initialState;
     case DialogActions.CHANGE_DATASET_NAME:
