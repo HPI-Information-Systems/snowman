@@ -9,7 +9,7 @@ import {
   IonList,
   IonTextarea,
 } from '@ionic/react';
-import { AddAlgorithmDialogProps } from 'components/AlgorithmDialog/AddAlgorithmDialogProps';
+import { AlgorithmDialogProps } from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
 import {
   addCircleOutline,
@@ -28,7 +28,7 @@ const AlgorithmDialogView = ({
   changeAlgorithmDescription,
   changeAlgorithmName,
   closeDialog,
-}: AddAlgorithmDialogProps): JSX.Element => (
+}: AlgorithmDialogProps): JSX.Element => (
   <ModalDialog
     heading={`${isAddDialog ? 'Add New' : 'Update'} Matching Solution`}
     isOpen={isOpen}

@@ -15,5 +15,5 @@ export interface AlgorithmDialogDispatchProps {
   clickOnAdd(): void;
 }
 
-export type AddAlgorithmDialogProps = AlgorithmDialogStateProps &
+export type AlgorithmDialogProps = AlgorithmDialogStateProps &
   AlgorithmDialogDispatchProps;

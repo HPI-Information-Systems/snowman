@@ -1,8 +1,8 @@
+import AlgorithmDialogView from 'components/AlgorithmDialog/AlgorithmDialog.View';
 import {
   AlgorithmDialogDispatchProps,
   AlgorithmDialogStateProps,
-} from 'components/AlgorithmDialog/AddAlgorithmDialogProps';
-import AlgorithmDialogView from 'components/AlgorithmDialog/AlgorithmDialog.View';
+} from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import { connect } from 'react-redux';
 import {
   addOrUpdateAlgorithm,
