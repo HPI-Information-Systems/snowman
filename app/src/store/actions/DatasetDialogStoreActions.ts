@@ -1,5 +1,5 @@
 import { DatasetsApi } from 'api';
-import { AddDatasetDialogStoreActionTypes as DialogActionTypes } from 'store/actions/actionTypes';
+import { DatasetDialogStoreActionTypes as DialogActionTypes } from 'store/actions/actionTypes';
 import { getDatasets } from 'store/actions/DatasetsStoreActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
@@ -167,27 +167,26 @@ export const addNewDataset = (): SnowmanThunkAction<Promise<void>> => async (
 ): Promise<void> => {
   return dispatch(
     createNewDataset(
-      store.getState().AddDatasetDialogStore.datasetName,
-      store.getState().AddDatasetDialogStore.datasetDescription,
-      store.getState().AddDatasetDialogStore.datasetType ===
-        DatasetTypes.skeleton
-        ? store.getState().AddDatasetDialogStore.datasetLength
+      store.getState().DatasetDialogStore.datasetName,
+      store.getState().DatasetDialogStore.datasetDescription,
+      store.getState().DatasetDialogStore.datasetType === DatasetTypes.skeleton
+        ? store.getState().DatasetDialogStore.datasetLength
         : undefined,
-      store.getState().AddDatasetDialogStore.selectedTags
+      store.getState().DatasetDialogStore.selectedTags
     )
   )
     .then((id: number): void => {
       if (
-        store.getState().AddDatasetDialogStore.datasetType === DatasetTypes.full
+        store.getState().DatasetDialogStore.datasetType === DatasetTypes.full
       ) {
         dispatch(
           uploadDatasetFile(
             id,
-            store.getState().AddDatasetDialogStore.csvIdColumn,
-            store.getState().AddDatasetDialogStore.csvSeparator,
-            store.getState().AddDatasetDialogStore.csvQuote,
-            store.getState().AddDatasetDialogStore.csvEscape,
-            store.getState().AddDatasetDialogStore.selectedFiles[0]
+            store.getState().DatasetDialogStore.csvIdColumn,
+            store.getState().DatasetDialogStore.csvSeparator,
+            store.getState().DatasetDialogStore.csvQuote,
+            store.getState().DatasetDialogStore.csvEscape,
+            store.getState().DatasetDialogStore.selectedFiles[0]
           )
         );
       }

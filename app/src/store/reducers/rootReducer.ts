@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import { AddDatasetDialogReducer } from 'store/reducers/AddDatasetDialogReducer';
 import { AddExperimentDialogReducer } from 'store/reducers/AddExperimentDialogReducer';
 import { AlgorithmDialogReducer } from 'store/reducers/AlgorithmDialogReducer';
 import { AlgorithmsReducer } from 'store/reducers/AlgorithmsReducer';
+import { DatasetDialogReducer } from 'store/reducers/DatasetDialogReducer';
 import { DatasetsReducer } from 'store/reducers/DatasetsReducer';
 import { ExperimentsReducer } from 'store/reducers/ExperimentsReducer';
 import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
@@ -13,7 +13,7 @@ export const rootReducer = combineReducers({
   DatasetsStore: DatasetsReducer,
   ExperimentsStore: ExperimentsReducer,
   AlgorithmsStore: AlgorithmsReducer,
-  AddDatasetDialogStore: AddDatasetDialogReducer,
+  DatasetDialogStore: DatasetDialogReducer,
   AddExperimentDialogStore: AddExperimentDialogReducer,
   AlgorithmDialogStore: AlgorithmDialogReducer,
   GlobalIndicatorStore: GlobalIndicatorReducer,

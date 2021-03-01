@@ -1,11 +1,11 @@
 import { uniq } from 'lodash';
-import { AddDatasetDialogStoreActionTypes as DialogActionTypes } from 'store/actions/actionTypes';
+import { DatasetDialogStoreActionTypes as DialogActionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
-import { AddDatasetDialogStore } from 'store/models';
+import { DatasetDialogStore } from 'store/models';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
-const initialState: AddDatasetDialogStore = {
+const initialState: DatasetDialogStore = {
   isOpen: false,
   availableTags: [],
   datasetName: '',
@@ -20,10 +20,10 @@ const initialState: AddDatasetDialogStore = {
   selectedFiles: [],
 };
 
-export const AddDatasetDialogReducer = (
-  state: AddDatasetDialogStore = initialState,
+export const DatasetDialogReducer = (
+  state: DatasetDialogStore = initialState,
   action: SnowmanAction
-): AddDatasetDialogStore => {
+): DatasetDialogStore => {
   switch (action.type) {
     case DialogActionTypes.OPEN_DIALOG:
       return {

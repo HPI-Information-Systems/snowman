@@ -18,9 +18,8 @@ import {
   changeDatasetType,
   clickOnDatasetTag,
   closeDialog,
-  resetDialog,
   setSelectedFiles,
-} from 'store/actions/AddDatasetDialogStoreActions';
+} from 'store/actions/DatasetDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 import { DatasetTypes } from 'types/DatasetTypes';
@@ -29,34 +28,34 @@ import { convertFilesListToFilesArray } from 'utils/filesConverter';
 
 const isValidDatasetDialog = (state: Store): boolean => {
   // Dataset name shall not be empty
-  if (state.AddDatasetDialogStore.datasetName.length === 0) return false;
+  if (state.DatasetDialogStore.datasetName.length === 0) return false;
   // If dataset should be uploaded, select files
   if (
-    state.AddDatasetDialogStore.datasetType === DatasetTypes.full &&
-    state.AddDatasetDialogStore.selectedFiles.length === 0
+    state.DatasetDialogStore.datasetType === DatasetTypes.full &&
+    state.DatasetDialogStore.selectedFiles.length === 0
   ) {
     return false;
   }
   // If dataset not to be uploaded, specify its size
   return !(
-    state.AddDatasetDialogStore.datasetType === DatasetTypes.skeleton &&
-    state.AddDatasetDialogStore.datasetLength === 0
+    state.DatasetDialogStore.datasetType === DatasetTypes.skeleton &&
+    state.DatasetDialogStore.datasetLength === 0
   );
 };
 
 const mapStateToProps = (state: Store): DatasetDialogStateProps => ({
-  isOpen: state.AddDatasetDialogStore.isOpen,
-  datasetName: state.AddDatasetDialogStore.datasetName,
-  datasetDescription: state.AddDatasetDialogStore.datasetDescription,
-  datasetType: state.AddDatasetDialogStore.datasetType,
-  datasetLength: state.AddDatasetDialogStore.datasetLength,
-  tags: state.AddDatasetDialogStore.availableTags,
-  selectedTags: state.AddDatasetDialogStore.selectedTags,
-  selectedFiles: state.AddDatasetDialogStore.selectedFiles,
-  csvIdColumn: state.AddDatasetDialogStore.csvIdColumn,
-  csvSeparator: state.AddDatasetDialogStore.csvSeparator,
-  csvQuote: state.AddDatasetDialogStore.csvQuote,
-  csvEscape: state.AddDatasetDialogStore.csvEscape,
+  isOpen: state.DatasetDialogStore.isOpen,
+  datasetName: state.DatasetDialogStore.datasetName,
+  datasetDescription: state.DatasetDialogStore.datasetDescription,
+  datasetType: state.DatasetDialogStore.datasetType,
+  datasetLength: state.DatasetDialogStore.datasetLength,
+  tags: state.DatasetDialogStore.availableTags,
+  selectedTags: state.DatasetDialogStore.selectedTags,
+  selectedFiles: state.DatasetDialogStore.selectedFiles,
+  csvIdColumn: state.DatasetDialogStore.csvIdColumn,
+  csvSeparator: state.DatasetDialogStore.csvSeparator,
+  csvQuote: state.DatasetDialogStore.csvQuote,
+  csvEscape: state.DatasetDialogStore.csvEscape,
   isValidForm: isValidDatasetDialog(state),
 });
 
@@ -67,7 +66,6 @@ const mapDispatchToProps = (
     (dispatch as SnowmanDispatch)(closeDialog());
   },
   clickOnCancel(): void {
-    (dispatch as SnowmanDispatch)(resetDialog());
     (dispatch as SnowmanDispatch)(closeDialog());
   },
   changeDatasetName(event: IonChangeEvent): void {
