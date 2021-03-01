@@ -15,6 +15,7 @@ import {
 import { OptionCardProps } from 'components/OptionCard/OptionCardProps';
 import {
   checkboxOutline,
+  create,
   radioButtonOffOutline,
   radioButtonOnOutline,
   squareOutline,
@@ -85,7 +86,19 @@ const OptionCard = ({
           </IonRow>
         ) : null}
         <IonRow>
-          <IonCol size="12">
+          <IonCol size="6">
+            <IonButton
+              size="small"
+              fill="clear"
+              color="primary"
+              onClick={deleteCard}
+              className="ion-float-left"
+            >
+              <IonIcon slot="start" icon={create} />
+              Edit
+            </IonButton>
+          </IonCol>
+          <IonCol size="6">
             <IonButton
               size="small"
               fill="clear"
