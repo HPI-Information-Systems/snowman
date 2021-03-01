@@ -30,7 +30,7 @@ export const cliOptions: dashdash.OptionWithoutAliases[] = [
   {
     name: STORAGE_DIRECTORY_CLI_FLAG,
     type: 'string',
-    default: path.join(__dirname, '../../storage'),
+    default: path.join(__dirname, '../../../storage'),
     help: 'Where the database and configuration files live.',
   },
   {

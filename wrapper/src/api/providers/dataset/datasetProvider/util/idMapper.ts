@@ -1,11 +1,11 @@
 import { Statement } from 'better-sqlite3';
 
 import { databaseBackend, Table } from '../../../../database';
-import { tableSchemas } from '../../../../database/schemas';
+import { latest } from '../../../../database/schemas';
 
 export class DatasetIDMapper {
   private readonly schema: ReturnType<
-    typeof tableSchemas['dataset']['datasetIdMap']
+    typeof latest.tableSchemas['dataset']['datasetIdMap']
   >;
   private readonly table: Table<DatasetIDMapper['schema']>;
 
@@ -16,7 +16,7 @@ export class DatasetIDMapper {
   private firstMappingCreated = false;
 
   constructor(datasetId: number) {
-    this.schema = tableSchemas.dataset.datasetIdMap(datasetId);
+    this.schema = latest.tableSchemas.dataset.datasetIdMap(datasetId);
     this.table = new Table(this.schema);
     this.table.create(false);
     this.getMappingQuery = databaseBackend().prepare(`

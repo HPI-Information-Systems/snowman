@@ -1,10 +1,10 @@
 import { databaseBackend, Table } from '../../../../../database';
-import { tableSchemas } from '../../../../../database/schemas';
+import { latest } from '../../../../../database/schemas';
 import { ExperimentId } from '../../../../../server/types';
 
 export class EvaluatorQueries {
   experimentLinks(experiment: ExperimentId): [number, number][] {
-    const schema = tableSchemas.experiment.experiment(experiment);
+    const schema = latest.tableSchemas.experiment.experiment(experiment);
     const table = new Table(schema);
     const links = databaseBackend()
       .prepare(
