@@ -1,4 +1,6 @@
+import { setupDatabase } from '../setup';
 import { loadOrCreateMainDatabase } from '../setup/backend';
+import { latest } from '.';
 import { SchemaVersion } from './schemaVersion';
 
 abstract class TestSchemaVersion extends SchemaVersion {
@@ -27,11 +29,11 @@ const TestSchemaV2 = new (class extends TestSchemaVersion {
 })();
 
 describe('SchemaVersion', () => {
+  beforeEach(() => {
+    loadOrCreateMainDatabase(true);
+    TestSchemaV2.reset();
+  });
   describe('migrates correctly', () => {
-    beforeEach(() => {
-      loadOrCreateMainDatabase(true);
-      TestSchemaV2.reset();
-    });
     test('from v0', () => {
       TestSchemaV2.migrate(0);
       expect(TestSchemaV0.migrated).toBeFalsy();
@@ -52,10 +54,6 @@ describe('SchemaVersion', () => {
     });
   });
   describe('version stored correctly', () => {
-    beforeEach(() => {
-      loadOrCreateMainDatabase(true);
-      TestSchemaV2.reset();
-    });
     test('initial version is 0', () => {
       expect(TestSchemaVersion.getInstalledVersion()).toEqual(0);
     });
@@ -80,5 +78,17 @@ describe('SchemaVersion', () => {
   });
   test('throws error when cannot upgrade from version', () => {
     expect(() => TestSchemaV0.migrate(TestSchemaV2.version)).toThrowError();
+  });
+});
+
+describe('database setup', () => {
+  beforeEach(async () => {
+    await setupDatabase({
+      temporary: true,
+      loadExampleEntries: false,
+    });
+  });
+  test('sets latest database version', () => {
+    expect(SchemaVersion.getInstalledVersion()).toEqual(latest.version.version);
   });
 });
