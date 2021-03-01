@@ -8,6 +8,7 @@ const OptionSelector = ({
   optionsList,
   clickOnCard,
   deleteCardHandler,
+  editCardHandler,
   selected,
   title,
   multiple = true,
@@ -30,6 +31,7 @@ const OptionSelector = ({
                 clickCard={(): void => clickOnCard(anOption.id)}
                 isSelected={selected.includes(anOption.id)}
                 deleteCard={(): void => deleteCardHandler(anOption.id)}
+                editCard={(): void => editCardHandler(anOption.id)}
                 multiple={multiple}
               />
             </IonCol>

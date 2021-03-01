@@ -39,6 +39,7 @@ const ExperimentsPageView = ({
         clickOnCard={clickOnExperiment}
         selected={selectedExperiments}
         deleteCardHandler={deleteExperiment}
+        editCardHandler={(id: number) => console.log('Edit with id', id)}
         multiple={true}
       />
       <AddExperimentFab />

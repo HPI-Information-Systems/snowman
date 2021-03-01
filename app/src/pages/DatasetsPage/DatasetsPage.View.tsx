@@ -39,6 +39,7 @@ const DatasetsPageView = ({
         selected={selectedDataset}
         clickOnCard={clickOnDataset}
         deleteCardHandler={deleteDataset}
+        editCardHandler={(id: number) => console.log('Edit with id', id)}
         multiple={false}
       />
       <AddDatasetFab />
