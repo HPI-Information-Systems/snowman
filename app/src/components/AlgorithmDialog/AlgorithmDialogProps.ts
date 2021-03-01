@@ -12,7 +12,7 @@ export interface AlgorithmDialogDispatchProps {
   closeDialog(): void;
   changeAlgorithmName(event: IonChangeEvent): void;
   changeAlgorithmDescription(event: IonChangeEvent): void;
-  clickOnAdd(): void;
+  clickOnAdd(): void; //Todo: Rename
 }
 
 export type AlgorithmDialogProps = AlgorithmDialogStateProps &

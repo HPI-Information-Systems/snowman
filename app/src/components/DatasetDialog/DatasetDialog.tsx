@@ -44,6 +44,7 @@ const isValidDatasetDialog = (state: Store): boolean => {
 };
 
 const mapStateToProps = (state: Store): DatasetDialogStateProps => ({
+  isAddDialog: state.DatasetDialogStore.datasetId === null,
   isOpen: state.DatasetDialogStore.isOpen,
   datasetName: state.DatasetDialogStore.datasetName,
   datasetDescription: state.DatasetDialogStore.datasetDescription,

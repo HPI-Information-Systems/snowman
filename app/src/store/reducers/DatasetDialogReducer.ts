@@ -1,12 +1,17 @@
 import { uniq } from 'lodash';
-import { DatasetDialogStoreActionTypes as DialogActionTypes } from 'store/actions/actionTypes';
+import { DatasetDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { DatasetDialogStore } from 'store/models';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
+import { Dataset } from '../../api';
+import { DialogTypes } from '../../types/DialogTypes';
+
 const initialState: DatasetDialogStore = {
   isOpen: false,
+  datasetId: null,
+  dialogType: DialogTypes.ADD_DIALOG,
   availableTags: [],
   datasetName: '',
   datasetDescription: '',
@@ -25,65 +30,75 @@ export const DatasetDialogReducer = (
   action: SnowmanAction
 ): DatasetDialogStore => {
   switch (action.type) {
-    case DialogActionTypes.OPEN_DIALOG:
+    case DialogActions.OPEN_ADD_DIALOG:
       return {
         ...state,
         availableTags: action.payload as string[],
+        dialogType: DialogTypes.ADD_DIALOG,
         isOpen: true,
       };
-    case DialogActionTypes.CLOSE_DIALOG:
+    case DialogActions.OPEN_CHANGE_DIALOG:
+      return {
+        ...state,
+        isOpen: true,
+        dialogType: DialogTypes.CHANGE_DIALOG,
+        datasetId: (action.payload as Dataset).id,
+        datasetName: (action.payload as Dataset).name,
+        datasetDescription: (action.payload as Dataset).description ?? '',
+      };
+    case DialogActions.CLOSE_DIALOG:
       return {
         ...state,
         isOpen: false,
       };
-    case DialogActionTypes.RESET_DIALOG:
+    case DialogActions.RESET_DIALOG:
       return initialState;
-    case DialogActionTypes.CHANGE_DATASET_NAME:
+    case DialogActions.CHANGE_DATASET_NAME:
       return {
         ...state,
         datasetName: action.payload as string,
       };
-    case DialogActionTypes.CHANGE_DATASET_DESCRIPTION:
+    case DialogActions.CHANGE_DATASET_DESCRIPTION:
       return {
         ...state,
         datasetDescription: action.payload as string,
       };
-    case DialogActionTypes.CHANGE_DATASET_TYPE:
+    case DialogActions.CHANGE_DATASET_TYPE:
       return {
         ...state,
         datasetType: action.payload as DatasetTypes,
       };
-    case DialogActionTypes.CHANGE_DATASET_FILES:
+    case DialogActions.CHANGE_DATASET_FILES:
       return {
         ...state,
         selectedFiles: action.payload as File[],
       };
-    case DialogActionTypes.CHANGE_DATASET_LENGTH:
+    case DialogActions.CHANGE_DATASET_LENGTH:
       return {
         ...state,
         datasetLength: action.payload as number,
       };
-    case DialogActionTypes.CHANGE_CSV_ID_COLUMN:
+    case DialogActions.CHANGE_CSV_ID_COLUMN:
       return {
         ...state,
         csvIdColumn: action.payload as string,
       };
-    case DialogActionTypes.CHANGE_CSV_SEPARATOR:
+    case DialogActions.CHANGE_CSV_SEPARATOR:
       return {
         ...state,
         csvSeparator: action.payload as string,
       };
-    case DialogActionTypes.CHANGE_CSV_QUOTE:
+    case DialogActions.CHANGE_CSV_QUOTE:
       return {
         ...state,
         csvQuote: action.payload as string,
       };
-    case DialogActionTypes.CHANGE_CSV_ESCAPE:
+    case DialogActions.CHANGE_CSV_ESCAPE:
       return {
         ...state,
         csvEscape: action.payload as string,
       };
-    case DialogActionTypes.CLICK_ON_DATASET_TAG:
+    case DialogActions.CLICK_ON_DATASET_TAG:
       return {
         ...state,
         selectedTags: toggleSelectionArrayMultipleSelect(
@@ -91,7 +106,7 @@ export const DatasetDialogReducer = (
           action.payload as string
         ),
       };
-    case DialogActionTypes.ADD_DATASET_TAG:
+    case DialogActions.ADD_DATASET_TAG:
       return {
         ...state,
         availableTags: uniq([...state.availableTags, action.payload as string]),

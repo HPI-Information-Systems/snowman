@@ -14,6 +14,7 @@ const DatasetsPageView = ({
   clickOnTag,
   clickOnDataset,
   deleteDataset,
+  editDataset,
   loadDatasets,
 }: DatasetsPageProps): JSX.Element => {
   useEffect((): void => loadDatasets(), [loadDatasets]);
@@ -39,7 +40,7 @@ const DatasetsPageView = ({
         selected={selectedDataset}
         clickOnCard={clickOnDataset}
         deleteCardHandler={deleteDataset}
-        editCardHandler={(id: number) => console.log('Edit with id', id)}
+        editCardHandler={editDataset}
         multiple={false}
       />
       <AddDatasetFab />

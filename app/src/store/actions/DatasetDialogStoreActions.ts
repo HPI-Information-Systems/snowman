@@ -1,5 +1,5 @@
-import { DatasetsApi } from 'api';
-import { DatasetDialogStoreActionTypes as DialogActionTypes } from 'store/actions/actionTypes';
+import { Dataset, DatasetsApi } from 'api';
+import { DatasetDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
 import { getDatasets } from 'store/actions/DatasetsStoreActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
@@ -15,15 +15,35 @@ import {
 } from 'utils/statusMessages';
 import { getTagsFromDatasets } from 'utils/tagFactory';
 
-export const openDialog = (): easyPrimitiveActionReturn =>
+export const openAddDialog = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.OPEN_DIALOG,
+    type: DialogActions.OPEN_ADD_DIALOG,
     payload: getTagsFromDatasets(store.getState().DatasetsStore.datasets),
   });
 
+export const openChangeDialog = (
+  datasetId: number
+): SnowmanThunkAction<Promise<void>> => async (
+  dispatch: SnowmanDispatch
+): Promise<void> => {
+  return RequestHandler(
+    (): Promise<void> =>
+      new DatasetsApi()
+        .getDataset({ datasetId: datasetId })
+        .then((aDataset: Dataset) =>
+          dispatch({
+            type: DialogActions.OPEN_CHANGE_DIALOG,
+            payload: aDataset,
+          })
+        )
+        .then(),
+    dispatch
+  );
+};
+
 export const closeDialog = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.CLOSE_DIALOG,
+    type: DialogActions.CLOSE_DIALOG,
     // reducer ignores payload
     payload: false,
   });
@@ -32,7 +52,7 @@ export const changeDatasetName = (
   aDatasetName: string
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.CHANGE_DATASET_NAME,
+    type: DialogActions.CHANGE_DATASET_NAME,
     payload: aDatasetName,
   });
 
@@ -40,7 +60,7 @@ export const changeDatasetDescription = (
   aDescription: string
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.CHANGE_DATASET_DESCRIPTION,
+    type: DialogActions.CHANGE_DATASET_DESCRIPTION,
     payload: aDescription,
   });
 
@@ -48,7 +68,7 @@ export const changeDatasetType = (
   aType: DatasetTypes
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.CHANGE_DATASET_TYPE,
+    type: DialogActions.CHANGE_DATASET_TYPE,
     payload: aType,
   });
 
@@ -56,7 +76,7 @@ export const changeDatasetLength = (
   aLength: number
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.CHANGE_DATASET_LENGTH,
+    type: DialogActions.CHANGE_DATASET_LENGTH,
     payload: aLength,
   });
 
@@ -64,7 +84,7 @@ export const changeDatasetCSVIdColumn = (
   anIdColumn: string
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.CHANGE_CSV_ID_COLUMN,
+    type: DialogActions.CHANGE_CSV_ID_COLUMN,
     payload: anIdColumn,
   });
 
@@ -72,7 +92,7 @@ export const changeDatasetCSVSeparator = (
   aSeparator: string
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.CHANGE_CSV_SEPARATOR,
+    type: DialogActions.CHANGE_CSV_SEPARATOR,
     payload: aSeparator,
   });
 
@@ -80,7 +100,7 @@ export const changeDatasetCSVQuote = (
   aQuote: string
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.CHANGE_CSV_QUOTE,
+    type: DialogActions.CHANGE_CSV_QUOTE,
     payload: aQuote,
   });
 
@@ -88,32 +108,32 @@ export const changeDatasetCSVEscape = (
   anEscape: string
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.CHANGE_CSV_ESCAPE,
+    type: DialogActions.CHANGE_CSV_ESCAPE,
     payload: anEscape,
   });
 
 export const addNewTag = (aTag: string): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.ADD_DATASET_TAG,
+    type: DialogActions.ADD_DATASET_TAG,
     payload: aTag,
   });
 
 export const resetDialog = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.RESET_DIALOG,
+    type: DialogActions.RESET_DIALOG,
     // payload is not used
     payload: false,
   });
 
 export const setSelectedFiles = (files: File[]): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.CHANGE_DATASET_FILES,
+    type: DialogActions.CHANGE_DATASET_FILES,
     payload: files,
   });
 
 export const clickOnDatasetTag = (aTag: string): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActionTypes.CLICK_ON_DATASET_TAG,
+    type: DialogActions.CLICK_ON_DATASET_TAG,
     payload: aTag,
   });
 

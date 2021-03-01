@@ -21,7 +21,8 @@ export interface DatasetDialogDispatchProps {
 
 export interface DatasetDialogStateProps {
   isOpen: boolean;
-  isValidForm: boolean;
+  isAddDialog: boolean;
+  isValidForm: boolean; //Todo: Rename
   datasetName: string;
   datasetDescription: string;
   datasetType: DatasetTypes;

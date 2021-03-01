@@ -19,6 +19,8 @@ export interface AlgorithmDialogStore {
 }
 
 export interface DatasetDialogStore {
+  datasetId: number | null;
+  dialogType: DialogTypes;
   isOpen: boolean;
   datasetName: string;
   datasetDescription: string;
