@@ -45,6 +45,7 @@ export const DatasetDialogReducer = (
         datasetId: (action.payload as Dataset).id,
         datasetName: (action.payload as Dataset).name,
         datasetDescription: (action.payload as Dataset).description ?? '',
+        datasetLength: (action.payload as Dataset).numberOfRecords ?? 0,
         selectedTags: (action.payload as Dataset).tags ?? [],
         availableTags: [], // Todo: get this from root reducer?
       };
