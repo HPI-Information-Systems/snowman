@@ -1,4 +1,4 @@
-import 'components/DatasetDialog/AddDatasetDialogStyles.css';
+import 'components/DatasetDialog/DatasetDialogStyles.css';
 
 import {
   IonButton,
@@ -17,7 +17,7 @@ import {
   IonSelectOption,
   IonTextarea,
 } from '@ionic/react';
-import { AddDatasetDialogProps } from 'components/DatasetDialog/AddDatasetDialogProps';
+import { DatasetDialogProps } from 'components/DatasetDialog/DatasetDialogProps';
 import FileInput from 'components/FileInput/FileInput';
 import InputChip from 'components/InputChip/InputChip';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
@@ -26,7 +26,7 @@ import React from 'react';
 import { $enum } from 'ts-enum-util';
 import { DatasetTypes } from 'types/DatasetTypes';
 
-const AddDatasetDialogView = ({
+const DatasetDialogView = ({
   isOpen,
   isValidForm,
   closeDialog,
@@ -54,7 +54,7 @@ const AddDatasetDialogView = ({
   clickOnATag,
   addNewTagCallback,
   addDataset,
-}: AddDatasetDialogProps): JSX.Element => (
+}: DatasetDialogProps): JSX.Element => (
   <ModalDialog
     heading={'Add New Dataset'}
     isOpen={isOpen}
@@ -208,4 +208,4 @@ const AddDatasetDialogView = ({
   </ModalDialog>
 );
 
-export default AddDatasetDialogView;
+export default DatasetDialogView;

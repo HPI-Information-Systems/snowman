@@ -1,8 +1,8 @@
-import AddDatasetDialogView from 'components/DatasetDialog/AddDatasetDialog.View';
+import DatasetDialogView from 'components/DatasetDialog/DatasetDialog.View';
 import {
-  AddDatasetDialogDispatchProps,
-  AddDatasetDialogStateProps,
-} from 'components/DatasetDialog/AddDatasetDialogProps';
+  DatasetDialogDispatchProps,
+  DatasetDialogStateProps,
+} from 'components/DatasetDialog/DatasetDialogProps';
 import { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -44,7 +44,7 @@ const isValidDatasetDialog = (state: Store): boolean => {
   );
 };
 
-const mapStateToProps = (state: Store): AddDatasetDialogStateProps => ({
+const mapStateToProps = (state: Store): DatasetDialogStateProps => ({
   isOpen: state.AddDatasetDialogStore.isOpen,
   datasetName: state.AddDatasetDialogStore.datasetName,
   datasetDescription: state.AddDatasetDialogStore.datasetDescription,
@@ -62,7 +62,7 @@ const mapStateToProps = (state: Store): AddDatasetDialogStateProps => ({
 
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch
-): AddDatasetDialogDispatchProps => ({
+): DatasetDialogDispatchProps => ({
   closeDialog(): void {
     (dispatch as SnowmanDispatch)(closeDialog());
   },
@@ -126,9 +126,9 @@ const mapDispatchToProps = (
   },
 });
 
-const AddDatasetDialog = connect(
+const DatasetDialog = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddDatasetDialogView);
+)(DatasetDialogView);
 
-export default AddDatasetDialog;
+export default DatasetDialog;

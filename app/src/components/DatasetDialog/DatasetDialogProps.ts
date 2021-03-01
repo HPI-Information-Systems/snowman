@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-export interface AddDatasetDialogDispatchProps {
+export interface DatasetDialogDispatchProps {
   closeDialog(): void;
   clickOnCancel(): void;
   addNewTagCallback(newTagValue: string): void;
@@ -19,7 +19,7 @@ export interface AddDatasetDialogDispatchProps {
   changeSelectedDatasetFiles(event: ChangeEvent<HTMLInputElement>): void;
 }
 
-export interface AddDatasetDialogStateProps {
+export interface DatasetDialogStateProps {
   isOpen: boolean;
   isValidForm: boolean;
   datasetName: string;
@@ -35,5 +35,5 @@ export interface AddDatasetDialogStateProps {
   selectedFiles: File[];
 }
 
-export type AddDatasetDialogProps = AddDatasetDialogDispatchProps &
-  AddDatasetDialogStateProps;
+export type DatasetDialogProps = DatasetDialogDispatchProps &
+  DatasetDialogStateProps;

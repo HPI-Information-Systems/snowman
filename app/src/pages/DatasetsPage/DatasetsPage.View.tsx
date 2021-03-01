@@ -1,6 +1,6 @@
 import { IonChip, IonLabel } from '@ionic/react';
 import AddDatasetFab from 'components/AddFab/AddDatasetFab';
-import AddDatasetDialog from 'components/DatasetDialog/AddDatasetDialog';
+import DatasetDialog from 'components/DatasetDialog/DatasetDialog';
 import OptionSelector from 'components/OptionSelector/OptionSelector';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { DatasetsPageProps } from 'pages/DatasetsPage/DatasetsPageProps';
@@ -43,7 +43,7 @@ const DatasetsPageView = ({
         multiple={false}
       />
       <AddDatasetFab />
-      <AddDatasetDialog />
+      <DatasetDialog />
     </PageStruct>
   );
 };
