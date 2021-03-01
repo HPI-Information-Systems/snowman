@@ -1,4 +1,4 @@
-import { databaseBackend, loadOrCreateMainDatabase } from '../setup/backend';
+import { loadOrCreateMainDatabase } from '../setup/backend';
 import { SchemaVersion } from './schemaVersion';
 
 abstract class TestSchemaVersion extends SchemaVersion {
