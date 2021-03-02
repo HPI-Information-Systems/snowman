@@ -28,6 +28,7 @@ import { DatasetTypes } from 'types/DatasetTypes';
 
 const DatasetDialogView = ({
   isOpen,
+  isAddDialog,
   isValidForm,
   closeDialog,
   clickOnCancel,
@@ -56,7 +57,7 @@ const DatasetDialogView = ({
   clickOnSubmit,
 }: DatasetDialogProps): JSX.Element => (
   <ModalDialog
-    heading={'Add New Dataset'}
+    heading={isAddDialog ? 'Add New Dataset' : 'Update Existing Dataset'}
     isOpen={isOpen}
     closeDialog={closeDialog}
   >
@@ -194,7 +195,7 @@ const DatasetDialogView = ({
         disabled={!isValidForm}
       >
         <IonIcon slot="start" icon={addCircleOutline} />
-        Add
+        {isAddDialog ? 'Add' : 'Update'}
       </IonButton>
       <IonButton
         className="button-hugh button-padding"
