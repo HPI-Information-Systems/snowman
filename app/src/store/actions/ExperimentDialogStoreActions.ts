@@ -126,20 +126,23 @@ const uploadExperimentFile = (
 ): Promise<void> => {
   const willUpload =
     store.getState().ExperimentDialogStore.selectedFiles.length > 0;
-  return RequestHandler(
-    () =>
-      new ExperimentsApi().setExperimentFile({
-        experimentId:
-          id ??
-          store.getState().ExperimentDialogStore.experimentId ??
-          MagicNotPossibleId,
-        format: store.getState().ExperimentDialogStore.experimentFileFormat,
-        body: store.getState().ExperimentDialogStore.selectedFiles[0] as Blob,
-      }),
-    dispatch,
-    willUpload ? SUCCESS_TO_UPLOAD_EXPERIMENT_FILE : undefined,
-    true
-  );
+  if (willUpload) {
+    return RequestHandler(
+      () =>
+        new ExperimentsApi().setExperimentFile({
+          experimentId:
+            id ??
+            store.getState().ExperimentDialogStore.experimentId ??
+            MagicNotPossibleId,
+          format: store.getState().ExperimentDialogStore.experimentFileFormat,
+          body: store.getState().ExperimentDialogStore.selectedFiles[0] as Blob,
+        }),
+      dispatch,
+      willUpload ? SUCCESS_TO_UPLOAD_EXPERIMENT_FILE : undefined,
+      true
+    );
+  }
+  return Promise.resolve();
 };
 
 const editExistingExperiment = (): SnowmanThunkAction<Promise<void>> => async (
