@@ -12,6 +12,7 @@ import {
   IonItemGroup,
   IonLabel,
   IonList,
+  IonNote,
   IonRow,
   IonSelect,
   IonSelectOption,
@@ -188,6 +189,15 @@ const DatasetDialogView = ({
         addNewTag={addNewTagCallback}
       />
     </div>
+    {!isAddDialog ? (
+      <div className="center upload-notice">
+        <IonNote color="medium">
+          <b>Note: Uploading a file is optional here!</b>
+          <br />
+          If no file is selected, the stored records will remain unchanged.
+        </IonNote>
+      </div>
+    ) : null}
     <div className="center button-row">
       <IonButton
         className="button-hugh button-padding"

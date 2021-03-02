@@ -6,6 +6,7 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonNote,
   IonSelect,
   IonSelectOption,
   IonTextarea,
@@ -62,12 +63,6 @@ const ExperimentDialogView = ({
           placeholder="e.g. Randomly assigned pairs for testing purposes."
         />
       </IonItem>
-      {!isAddDialog ? (
-        <IonItem>
-          Note: If you do not give a new experiment file, we do not change the
-          existing one
-        </IonItem>
-      ) : null}
       <IonItem>
         <IonLabel position="fixed">File Format:</IonLabel>
         <IonSelect
@@ -106,6 +101,15 @@ const ExperimentDialogView = ({
         )
       )}
     </div>
+    {!isAddDialog ? (
+      <div className="center upload-notice">
+        <IonNote color="medium">
+          <b>Note: Uploading a file is optional here!</b>
+          <br />
+          If no file is selected, the stored records will remain unchanged.
+        </IonNote>
+      </div>
+    ) : null}
     <div className="center button-row">
       <IonButton
         className="button-hugh button-padding"
