@@ -41,7 +41,11 @@ const SideMenuView = ({ categoryStructure }: SideMenuProps): JSX.Element => (
                     disabled={!aCategoryItem.couldEnter}
                     onClick={aCategoryItem.enterItem}
                   >
-                    <IonIcon slot="start" icon={aCategoryItem.menuIcon} />
+                    <IonIcon
+                      color={aCategoryItem.couldEnter ? 'primary' : 'dark'}
+                      slot="start"
+                      icon={aCategoryItem.menuIcon}
+                    />
                     <IonLabel>
                       <h2>{aCategoryItem.key}</h2>
                       {aCategoryItem.selectedOptions.map(
