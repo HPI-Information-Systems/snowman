@@ -29,10 +29,10 @@ const isValidExperimentDialog = (state: Store): boolean => {
     state.ExperimentDialogStore.selectedTags.length !== 1
   )
     return false;
-  if (state.ExperimentDialogStore.dialogType === DialogTypes.ADD_DIALOG) {
-    if (state.ExperimentDialogStore.selectedFiles.length === 0) return false;
-  }
-  return true;
+  return !(
+    state.ExperimentDialogStore.dialogType === DialogTypes.ADD_DIALOG &&
+    state.ExperimentDialogStore.selectedFiles.length === 0
+  );
 };
 
 const mapStateToProps = (state: Store): ExperimentDialogStateProps => ({
