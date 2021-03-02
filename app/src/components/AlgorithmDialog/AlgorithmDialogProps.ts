@@ -1,18 +1,19 @@
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-export interface AddAlgorithmDialogStateProps {
+export interface AlgorithmDialogStateProps {
   algorithmName: string;
   isOpen: boolean;
   algorithmDescription: string;
+  isAddDialog: boolean;
 }
 
-export interface AddAlgorithmDialogDispatchProps {
+export interface AlgorithmDialogDispatchProps {
   clickOnCancel(): void;
   closeDialog(): void;
   changeAlgorithmName(event: IonChangeEvent): void;
   changeAlgorithmDescription(event: IonChangeEvent): void;
-  clickOnAdd(): void;
+  clickOnSubmit(): void;
 }
 
-export type AddAlgorithmDialogProps = AddAlgorithmDialogStateProps &
-  AddAlgorithmDialogDispatchProps;
+export type AlgorithmDialogProps = AlgorithmDialogStateProps &
+  AlgorithmDialogDispatchProps;

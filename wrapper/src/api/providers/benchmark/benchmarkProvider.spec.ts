@@ -15,7 +15,6 @@ interface metaExperiment {
   name: string;
   data: { meta: ExperimentValues; file: string[][] };
 }
-//TODO make this util function
 function fileToReadable(file: string[][]) {
   return Readable.from(file.map((row) => row.join(',')).join('\n'));
 }
@@ -176,7 +175,7 @@ describe('test benchmark functions', () => {
             { name: 'false positive rate', value: '0.0055' },
             { name: 'fowlkes mallows index', value: '0.2500' },
             { name: 'markedness', value: '0.4628' },
-            { name: 'matthews correlation coefficient', value: '0.2352' },
+            { name: 'matthews correlation coeff.', value: '0.2352' },
             { name: 'negative predictive value', value: '0.9628' },
             { name: 'precision', value: '0.5000' },
             { name: 'prevalence threshold', value: '0.1733' },

@@ -10,11 +10,14 @@ export function installTables(
 }
 
 class TableInstaller {
-  constructor(private readonly tables: readonly TableSchema[]) {}
+  constructor(
+    private readonly tables: readonly TableSchema[],
+    protected raiseIfExists = false
+  ) {}
 
   installTables(): void {
     for (const table of this.topologicallySortedTables) {
-      new Table(table).create(false);
+      new Table(table).create(this.raiseIfExists);
     }
   }
 

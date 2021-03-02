@@ -1,4 +1,4 @@
-import 'components/AddAlgorithmDialog/AddAlgorithmDialogStyles.css';
+import 'components/AlgorithmDialog/AlgorithmDialog.css';
 
 import {
   IonButton,
@@ -9,23 +9,28 @@ import {
   IonList,
   IonTextarea,
 } from '@ionic/react';
-import { AddAlgorithmDialogProps } from 'components/AddAlgorithmDialog/AddAlgorithmDialogProps';
+import { AlgorithmDialogProps } from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
-import { addCircleOutline, closeCircleOutline } from 'ionicons/icons';
+import {
+  addCircleOutline,
+  checkmarkCircleOutline,
+  closeCircleOutline,
+} from 'ionicons/icons';
 import React from 'react';
 
-const AddAlgorithmDialogView = ({
+const AlgorithmDialogView = ({
   algorithmDescription,
   algorithmName,
   isOpen,
+  isAddDialog,
   clickOnCancel,
-  clickOnAdd,
+  clickOnSubmit,
   changeAlgorithmDescription,
   changeAlgorithmName,
   closeDialog,
-}: AddAlgorithmDialogProps): JSX.Element => (
+}: AlgorithmDialogProps): JSX.Element => (
   <ModalDialog
-    heading={'Add New Matching Solution'}
+    heading={`${isAddDialog ? 'Add New' : 'Update'} Matching Solution`}
     isOpen={isOpen}
     closeDialog={closeDialog}
   >
@@ -50,9 +55,12 @@ const AddAlgorithmDialogView = ({
       </IonItem>
     </IonList>
     <div className="center button-row">
-      <IonButton className="button-hugh button-padding" onClick={clickOnAdd}>
-        <IonIcon slot="start" icon={addCircleOutline} />
-        Add
+      <IonButton className="button-hugh button-padding" onClick={clickOnSubmit}>
+        <IonIcon
+          slot="start"
+          icon={isAddDialog ? addCircleOutline : checkmarkCircleOutline}
+        />
+        {isAddDialog ? 'Add' : 'Update'}
       </IonButton>
       <IonButton
         className="button-hugh button-padding"
@@ -66,4 +74,4 @@ const AddAlgorithmDialogView = ({
   </ModalDialog>
 );
 
-export default AddAlgorithmDialogView;
+export default AlgorithmDialogView;

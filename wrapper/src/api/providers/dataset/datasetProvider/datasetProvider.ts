@@ -56,18 +56,20 @@ export class DatasetProvider extends BaseDatasetProvider {
     const priorStoredDataset = this.queries.getDatasetQuery.get(id) as
       | StoredDataset
       | undefined;
-    const storedDataset = this.converter.apiDatasetToStoredDataset({
+    const newStoredDataset = this.converter.apiDatasetToStoredDataset({
       id,
       ...dataset,
       numberOfUploadedRecords:
         priorStoredDataset?.numberOfUploadedRecords ?? undefined,
     });
+    newStoredDataset.numberOfRecords ??=
+      priorStoredDataset?.numberOfRecords ?? null;
     this.checks.throwIfNumberOfRecordsInvalid(
       id,
       priorStoredDataset?.numberOfRecords ?? null,
-      storedDataset.numberOfRecords
+      newStoredDataset.numberOfRecords
     );
-    this.queries.setDatasetQuery.run(storedDataset);
+    this.queries.setDatasetQuery.run(newStoredDataset);
   }
 
   deleteDataset(id: DatasetId): void {

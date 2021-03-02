@@ -2,22 +2,22 @@ import {
   Dataset,
   ExperimentId,
   ExperimentIntersection,
+  ExperimentIntersectionMode,
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
 import { getProviders } from '../..';
 import { BaseBenchmarkProvider } from '../baseBenchmarkProvider';
 import { EvaluatorCache } from './helper/evaluator';
-import { ConfusionTupleMode } from './helper/evaluator/confusionMatrix/modes';
 import { idClustersToRecordClusters } from './helper/idsToRecords';
 import {
   Accuracy,
   BalancedAccuracy,
   BookmakerInformedness,
+  F1Score,
   FalseDiscoveryRate,
   FalseNegativeRate,
   FalseOmissionRate,
   FalsePositiveRate,
-  FMeasure,
   FowlkesMallowsIndex,
   Markedness,
   MatthewsCorrelationCoefficient,
@@ -37,7 +37,7 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
     experimentId: number,
     goldStandardDuplicates: boolean,
     experimentDuplicates: boolean,
-    mode: ConfusionTupleMode = ConfusionTupleMode.PAIRS
+    mode: ExperimentIntersectionMode
   ): ExperimentIntersection {
     const dataset = this.getDatasetByExperimentIds(
       goldstandardId,
@@ -65,21 +65,23 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
   calculateMetrics(goldstandardId: number, experimentId: number): Metric[] {
     const metrics = [
       Accuracy,
+      Precision,
+      Recall,
+      F1Score,
+
+      FalsePositiveRate,
+      FalseNegativeRate,
+      FalseDiscoveryRate,
+      FalseOmissionRate,
+      NegativePredictiveValue,
+      Specificity,
+
       BalancedAccuracy,
       BookmakerInformedness,
-      FalseDiscoveryRate,
-      FalseNegativeRate,
-      FalseOmissionRate,
-      FalsePositiveRate,
-      FMeasure,
       FowlkesMallowsIndex,
       Markedness,
       MatthewsCorrelationCoefficient,
-      NegativePredictiveValue,
-      Precision,
       PrevalenceThreshold,
-      Recall,
-      Specificity,
       ThreatScore,
     ];
 
@@ -94,12 +96,14 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
     ).confusionMatrixCounts;
     return metrics
       .map((Metric) => new Metric(matrix))
-      .map(({ value, name, description, range }) => {
+      .map(({ value, formula, name, range, info, infoLink }) => {
         return {
           value,
+          formula,
           name,
-          description,
           range,
+          info,
+          infoLink,
         };
       });
   }

@@ -24,7 +24,13 @@ export interface ExperimentIntersectionCount {
      * @type {number}
      * @memberof ExperimentIntersectionCount
      */
-    count: number;
+    numberRows: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExperimentIntersectionCount
+     */
+    numberGroups: number;
 }
 
 export function ExperimentIntersectionCountFromJSON(json: any): ExperimentIntersectionCount {
@@ -37,7 +43,8 @@ export function ExperimentIntersectionCountFromJSONTyped(json: any, ignoreDiscri
     }
     return {
         
-        'count': json['count'],
+        'numberRows': json['numberRows'],
+        'numberGroups': json['numberGroups'],
     };
 }
 
@@ -50,7 +57,8 @@ export function ExperimentIntersectionCountToJSON(value?: ExperimentIntersection
     }
     return {
         
-        'count': value.count,
+        'numberRows': value.numberRows,
+        'numberGroups': value.numberGroups,
     };
 }
 

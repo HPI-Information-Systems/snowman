@@ -1,18 +1,22 @@
-import { STORAGE_DIR } from './config';
 import { setupDatabase } from './database';
-import { ExpressServer } from './server/expressServer';
+import { APIServer } from './server/apiServer';
+import { cliArgs } from './tools/cli';
 import { logger } from './tools/logger';
 
 async function launch(): Promise<void> {
-  logger.info(`Using storage directory ${STORAGE_DIR}`);
+  if (cliArgs.inMemory) {
+    logger.info(`Using in memory database`);
+  } else {
+    logger.info(`Using storage directory ${cliArgs.storageDirectory}`);
+  }
   logger.info('Preparing database...');
   await setupDatabase({
-    temporary: false,
-    appPath: STORAGE_DIR,
+    temporary: cliArgs.inMemory,
+    appPath: cliArgs.storageDirectory,
     loadExampleEntries: true,
   });
   logger.info('Starting webserver...');
-  await ExpressServer.launch();
+  APIServer.launch();
   logger.info('Ready');
 }
 

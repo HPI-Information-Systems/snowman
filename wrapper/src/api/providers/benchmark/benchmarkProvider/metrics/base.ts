@@ -6,6 +6,9 @@ export abstract class BaseMetric implements Metric {
 
   abstract name: string;
   abstract range: [number, number];
-  abstract description: string;
+  abstract formula: string;
   abstract value: number;
+
+  info?: string;
+  infoLink?: string;
 }

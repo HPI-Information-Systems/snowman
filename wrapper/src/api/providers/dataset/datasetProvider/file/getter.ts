@@ -1,10 +1,11 @@
 import { databaseBackend, Table } from '../../../../database';
-import { tableSchemas } from '../../../../database/schemas';
-import { datasetCustomColumnPrefix } from '../../../../database/schemas/dataset';
+import { latest } from '../../../../database/schemas';
 import { loadTableFromDatabase } from '../../../../database/table/loader';
 import { DatasetId } from '../../../../server/types';
 
-type DatasetSchema = ReturnType<typeof tableSchemas['dataset']['dataset']>;
+type DatasetSchema = ReturnType<
+  typeof latest.tableSchemas['dataset']['dataset']
+>;
 
 export class DatasetFileGetter {
   protected table: Table<DatasetSchema>;
@@ -17,17 +18,17 @@ export class DatasetFileGetter {
     sortBy?: string
   ) {
     this.table = loadTableFromDatabase<DatasetSchema>(
-      tableSchemas.dataset.dataset(id)
+      latest.tableSchemas.dataset.dataset(id)
     );
     this.customColumns = Object.values(this.table.schema.columns)
       .map((column) => column.name)
-      .filter((column) => column.startsWith(datasetCustomColumnPrefix));
+      .filter((column) => column.startsWith(latest.datasetCustomColumnPrefix));
     this.sortedColumn = this.getSortedColumn(sortBy);
   }
 
   *iterate(): IterableIterator<string[]> {
     yield this.customColumns.map((column) =>
-      column.substring(datasetCustomColumnPrefix.length)
+      column.substring(latest.datasetCustomColumnPrefix.length)
     );
     yield* databaseBackend()
       .prepare(
@@ -57,7 +58,7 @@ export class DatasetFileGetter {
   private getSortedColumn(sortBy?: string): string {
     let sortedColumn: string;
     if (sortBy) {
-      sortedColumn = datasetCustomColumnPrefix + sortBy;
+      sortedColumn = latest.datasetCustomColumnPrefix + sortBy;
       if (!this.customColumns.includes(sortedColumn)) {
         throw new Error(
           'Cannot sort by ' + sortBy + ' as this column does not exist.'

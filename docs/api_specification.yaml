@@ -551,6 +551,10 @@ paths:
           schema:
             type: string
             example: similarity
+        - name: mode
+          in: query
+          schema:
+            $ref: "#/components/schemas/ExperimentIntersectionMode"
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       summary:
@@ -576,6 +580,11 @@ paths:
         intersects multiple experiments and returns the counts of the number of
         records. This can be used to calculate the confusion-matrix
       operationId: calculateExperimentIntersectionCount
+      parameters:
+        - name: mode
+          in: query
+          schema:
+            $ref: "#/components/schemas/ExperimentIntersectionMode"
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       summary:
@@ -722,10 +731,15 @@ components:
         name:
           type: string
           example: "precision"
-        description:
+        formula:
           type: string
-          example: "$truePositives / (truePositives + falsePositives)$"
-          description: can contain latex math expressions denoted by surrounding dollar symbols ($<math expression>$)
+          example: "\\frac{truePositives}{truePositives + falsePositives}"
+        info:
+          type: string
+          example: The meaningfulness of the f1 score is debated in the research community.
+        infoLink:
+          type: string
+          example: https://link.springer.com/article/10.1007/s11222-017-9746-6
         value:
           type: number
           example: 0.75
@@ -738,7 +752,7 @@ components:
           example: [0, 1]
       required:
         - name
-        - description
+        - formula
         - value
         - range
     Metrics:
@@ -773,21 +787,34 @@ components:
           example: ["id", "testColumn1", "testColumn2"]
         data:
           type: array
+          example:
+            [
+              ["1", "test value 1", "test value 2"],
+              ["2", "test value 1", "test value 2"],
+              [],
+              ["3", "other", "group"],
+            ]
           items:
             type: array
+            example: ["1", "test value 1", "test value 2"]
             items:
-              type: array
-              example: ["1", "hallo"]
-              items:
-                type: string
+              type: string
       required:
         - header
         - data
     ExperimentIntersectionCount:
       type: object
       properties:
-        count:
+        numberRows:
           type: integer
           example: 37
+        numberGroups:
+          type: integer
+          example: 10
       required:
-        - count
+        - numberRows
+        - numberGroups
+    ExperimentIntersectionMode:
+      type: string
+      enum: ["PAIRS", "CLUSTERS", "INVESTIGATIVE"]
+      default: "PAIRS"

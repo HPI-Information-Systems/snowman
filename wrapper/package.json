@@ -2,9 +2,8 @@
   "name": "snowman-wrapper",
   "author": "Snowman Team",
   "description": "Compare data matching algorithms with each other",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
-  "private": true,
   "main": "dist/main.js",
   "scripts": {
     "erebuild": "run-script-os",

@@ -26,8 +26,8 @@ export interface ExperimentIntersection {
     header: Array<string>;
     /**
      * 
-     * @type {Array<Array<Array<string>>>}
+     * @type {Array<Array<string>>}
      * @memberof ExperimentIntersection
      */
-    data: Array<Array<Array<string>>>;
+    data: Array<Array<string>>;
 }

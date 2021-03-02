@@ -1,6 +1,6 @@
 import { IonChip, IonLabel } from '@ionic/react';
-import AddExperimentDialog from 'components/AddExperimentDialog/AddExperimentDialog';
 import AddExperimentFab from 'components/AddFab/AddExperimentFab';
+import ExperimentDialog from 'components/ExperimentDialog/ExperimentDialog';
 import OptionSelector from 'components/OptionSelector/OptionSelector';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { ExperimentsPageProps } from 'pages/ExperimentsPage/ExperimentsPageProps';
@@ -14,6 +14,7 @@ const ExperimentsPageView = ({
   clickOnTag,
   clickOnExperiment,
   deleteExperiment,
+  editExperiment,
   loadExperiments,
 }: ExperimentsPageProps): JSX.Element => {
   useEffect((): void => loadExperiments(), [loadExperiments]);
@@ -39,10 +40,11 @@ const ExperimentsPageView = ({
         clickOnCard={clickOnExperiment}
         selected={selectedExperiments}
         deleteCardHandler={deleteExperiment}
+        editCardHandler={editExperiment}
         multiple={true}
       />
       <AddExperimentFab />
-      <AddExperimentDialog />
+      <ExperimentDialog />
     </PageStruct>
   );
 };

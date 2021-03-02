@@ -23,28 +23,24 @@ export class ExecuteSynchronized {
     this.lockCounts.set(id, lockCount - 1);
   }
 
-  private setLock(lock: Promise<unknown>, id?: number) {
-    this.increaseLockCount(id);
-    this.locks.set(
-      id,
-      lock.then(() => this.decreaseLockCount(id))
-    );
-  }
-
   call<ResultType>(
     func: () => Promise<ResultType> | ResultType,
     lockId?: number
   ): Promise<ResultType> {
+    this.increaseLockCount(lockId);
     return new Promise<ResultType>((resolve, reject) => {
-      this.setLock(
+      this.locks.set(
+        lockId,
         this.waitForLock(lockId)
           .then(async () => {
-            resolve(await func());
+            const result = await func();
+            this.decreaseLockCount(lockId);
+            resolve(result);
           })
           .catch((e) => {
+            this.decreaseLockCount(lockId);
             reject(e);
-          }),
-        lockId
+          })
       );
     });
   }

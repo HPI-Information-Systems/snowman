@@ -2,10 +2,16 @@ import axios from 'axios';
 import * as proc from 'child_process';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
+import { argv } from 'process';
 import { URL } from 'url';
 import waitForLocalhost from 'wait-for-localhost';
 
 import { identifyResponse } from './api/server/identifyResponse';
+import {
+  cliArgs,
+  cliOptions,
+  STORAGE_DIRECTORY_CLI_FLAG,
+} from './api/tools/cli';
 import { headlessMessage } from './headlessMessage';
 
 let mainWindow: BrowserWindow;
@@ -42,9 +48,20 @@ function spawnLocalServer() {
   if (backend !== undefined) {
     console.error('Failed to start backend as it is already running.');
   }
+  // we do not have access to app in the subprocess and therefore need to overwrite the default storage directory from here.
+  if (!argv.includes('--' + STORAGE_DIRECTORY_CLI_FLAG)) {
+    cliArgs.storageDirectory = app.getPath('userData');
+  }
   backend = proc.fork(
     path.join(app.getAppPath(), './dist/api/main.js'),
-    ['--path', app.getPath('userData')],
+    // bool flags do not take a value and are true if present. Therefore we need to handle them differently.
+    cliOptions.flatMap((option) =>
+      option.type === 'bool'
+        ? cliArgs[option.name]
+          ? ['--' + option.name]
+          : []
+        : ['--' + option.name, cliArgs[option.name].toString()]
+    ),
     {}
   );
 }
@@ -57,7 +74,6 @@ function killLocalServer() {
 }
 
 function createWindow() {
-  // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 700,
@@ -106,7 +122,7 @@ ipcMain.on('open_benchmark', (event, url) => {
   }
 });
 
-ipcMain.on('reset_launcher', (event) => {
+ipcMain.on('reset_launcher', () => {
   initOccured = false;
   showLauncherPage();
 });
@@ -118,7 +134,7 @@ app.on('activate', () => {
 });
 
 app.on('ready', () => {
-  if (app.commandLine.hasSwitch('headless')) {
+  if (cliArgs.headless) {
     console.log(headlessMessage);
     spawnLocalServer();
   } else {

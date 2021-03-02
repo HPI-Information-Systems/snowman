@@ -10,8 +10,9 @@ nav:
     - Datasets: basic_usage/datasets.md
     - Experiments: basic_usage/experiments.md
     - Benchmark: basic_usage/benchmark.md
-  - Development setup:
-    - Introduction: dev_setup/introduction.md
+  - Development:
+    - Setup: dev_setup/introduction.md
+    - Contributing: contributing/knowledge.md
     - REST API: ./swagger
 
 extra_css:

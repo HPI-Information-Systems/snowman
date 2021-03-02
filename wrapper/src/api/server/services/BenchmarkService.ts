@@ -1,5 +1,11 @@
 import { getProviders } from '../../providers';
-import { ExperimentId, ExperimentIntersection, Metric } from '../types';
+import {
+  ExperimentId,
+  ExperimentIntersection,
+  ExperimentIntersectionCount,
+  ExperimentIntersectionMode,
+  Metric,
+} from '../types';
 import { Service, SuccessResponse } from './Service';
 
 function provider() {
@@ -15,6 +21,7 @@ function provider() {
  * */
 export async function calculateExperimentIntersectionCount({
   body,
+  mode = ExperimentIntersectionMode.Pairs,
 }: {
   body: {
     experimentId: ExperimentId;
@@ -22,21 +29,28 @@ export async function calculateExperimentIntersectionCount({
     similarityAttribute?: string;
     similarityScore?: number;
   }[];
-}): Promise<SuccessResponse<number>> {
+  mode?: ExperimentIntersectionMode;
+}): Promise<SuccessResponse<ExperimentIntersectionCount>> {
   return Service.response(
     () => {
       if (body.length === 2) {
-        return provider().getConfusionTuples(
+        const tuples = provider().getConfusionTuples(
           body[0].experimentId,
           body[1].experimentId,
           body[0].predictedCondition,
-          body[1].predictedCondition
-        ).data.length;
+          body[1].predictedCondition,
+          mode
+        ).data;
+        return {
+          numberGroups: tuples.reduce(
+            (prev, cur) => prev + (cur.length === 0 ? 1 : 0),
+            tuples.length === 0 ? 0 : 1
+          ),
+          numberRows: tuples.length,
+        };
       } else {
         throw new Error(
-          'Intersection for' +
-            body.length +
-            'experiments is not supported so far! Please provide exactly two experiments'
+          `Intersection for ${body.length} experiments is not supported so far! Please provide exactly two experiments`
         );
       }
     },
@@ -60,6 +74,7 @@ export async function calculateExperimentIntersectionRecords({
   startAt,
   limit,
   sortBy,
+  mode = ExperimentIntersectionMode.Pairs,
 }: {
   body: {
     experimentId: ExperimentId;
@@ -70,6 +85,7 @@ export async function calculateExperimentIntersectionRecords({
   startAt?: number;
   limit?: number;
   sortBy?: string;
+  mode?: ExperimentIntersectionMode;
 }): Promise<SuccessResponse<ExperimentIntersection>> {
   return Service.response(
     () => {
@@ -78,13 +94,12 @@ export async function calculateExperimentIntersectionRecords({
           body[0].experimentId,
           body[1].experimentId,
           body[0].predictedCondition,
-          body[1].predictedCondition
+          body[1].predictedCondition,
+          mode
         );
       } else {
         throw new Error(
-          'Intersection for' +
-            body.length +
-            'experiments is not supported so far! Please provide exactly two experiments'
+          `Intersection for ${body.length} experiments is not supported so far! Please provide exactly two experiments`
         );
       }
     },

@@ -27,10 +27,10 @@ export interface ExperimentIntersection {
     header: Array<string>;
     /**
      * 
-     * @type {Array<Array<Array<string>>>}
+     * @type {Array<Array<string>>}
      * @memberof ExperimentIntersection
      */
-    data: Array<Array<Array<string>>>;
+    data: Array<Array<string>>;
 }
 
 export function ExperimentIntersectionFromJSON(json: any): ExperimentIntersection {
@@ -43,8 +43,8 @@ export function ExperimentIntersectionFromJSONTyped(json: any, ignoreDiscriminat
     }
     return {
         
-        'header': !exists(json, 'header') ? undefined : json['header'],
-        'data': !exists(json, 'data') ? undefined : json['data'],
+        'header': json['header'],
+        'data': json['data'],
     };
 }
 

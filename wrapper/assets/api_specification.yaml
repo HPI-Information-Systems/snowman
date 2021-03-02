@@ -8,7 +8,7 @@ info:
 
     Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
   license:
-    name: LICENSE
+    name: LICENSE (MIT)
     url: https://github.com
   title: Snowman API
   version: 1.0.0
@@ -582,7 +582,7 @@ paths:
           required: true
           schema:
             enum:
-              - Magellan
+              - magellan
               - clusterER
               - pilot
               - sigmod2021
@@ -703,6 +703,13 @@ paths:
             example: similarity
             type: string
           style: form
+        - explode: true
+          in: query
+          name: mode
+          required: false
+          schema:
+            $ref: "#/components/schemas/ExperimentIntersectionMode"
+          style: form
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       responses:
@@ -728,6 +735,14 @@ paths:
         intersects multiple experiments and returns the counts of the number
         of records. This can be used to calculate the confusion-matrix
       operationId: calculateExperimentIntersectionCount
+      parameters:
+        - explode: true
+          in: query
+          name: mode
+          required: false
+          schema:
+            $ref: "#/components/schemas/ExperimentIntersectionMode"
+          style: form
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       responses:
@@ -853,20 +868,25 @@ components:
     Metric:
       example:
         name: precision
-        description: $truePositives / (truePositives + falsePositives)$
+        formula: \frac{truePositives}{truePositives + falsePositives}
         range:
           - 0
           - 1
         value: 0.75
+        info: The meaningfulness of the f1 score is debated in the research community.
+        infoLink: https://link.springer.com/article/10.1007/s11222-017-9746-6
       properties:
         name:
           example: precision
           type: string
-        description:
-          description:
-            can contain latex math expressions denoted by surrounding dollar
-            symbols ($<math expression>$)
-          example: $truePositives / (truePositives + falsePositives)$
+        formula:
+          example: \frac{truePositives}{truePositives + falsePositives}
+          type: string
+        info:
+          example: The meaningfulness of the f1 score is debated in the research community.
+          type: string
+        infoLink:
+          example: https://link.springer.com/article/10.1007/s11222-017-9746-6
           type: string
         value:
           example: 0.75
@@ -881,7 +901,7 @@ components:
           minItems: 2
           type: array
       required:
-        - description
+        - formula
         - name
         - range
         - value
@@ -909,41 +929,67 @@ components:
         type: object
       type: array
     ExperimentIntersection:
-      type: object
+      example:
+        data:
+          - - "1"
+            - test value 1
+            - test value 2
+          - - "2"
+            - test value 1
+            - test value 2
+          - []
+          - - "3"
+            - "other"
+            - "group"
+        header:
+          - id
+          - testColumn1
+          - testColumn2
       properties:
         header:
-          type: array
-          items:
-            type: string
           example:
             - id
-            - name
-            - telephone
-        data:
-          type: array
+            - testColumn1
+            - testColumn2
           items:
-            type: array
+            type: string
+          type: array
+        data:
+          items:
+            example:
+              - "1"
+              - test value 1
+              - test value 2
             items:
-              type: array
-              example:
-                - "1"
-                - "Ben"
-                - "+123 4567890"
-              items:
-                type: string
+              type: string
+            type: array
+          type: array
       required:
-        - header
         - data
+        - header
+      type: object
     ExperimentIntersectionCount:
       example:
-        count: 37
+        numberRows: 37
+        numberGroups: 10
       properties:
-        count:
+        numberRows:
           example: 37
           type: integer
+        numberGroups:
+          example: 10
+          type: integer
       required:
-        - count
+        - numberGroups
+        - numberRows
       type: object
+    ExperimentIntersectionMode:
+      default: PAIRS
+      enum:
+        - PAIRS
+        - CLUSTERS
+        - INVESTIGATIVE
+      type: string
     Algorithm_allOf:
       properties:
         id:
@@ -958,7 +1004,7 @@ components:
           example: 1
           type: integer
         numberOfUploadedRecords:
-          example: 2008
+          example: 2005
           type: integer
       required:
         - id

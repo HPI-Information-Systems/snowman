@@ -6,6 +6,7 @@ import {
   ExperimentsPageStateProps,
 } from 'pages/ExperimentsPage/ExperimentsPageProps';
 import { connect } from 'react-redux';
+import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
 import {
   clickOnExperiment,
   clickOnExperimentTag,
@@ -70,6 +71,9 @@ const mapDispatchToProps = (
   },
   deleteExperiment(anExperimentId: number): void {
     dispatch(deleteExperiment(anExperimentId)).then();
+  },
+  editExperiment(anExperimentId: number) {
+    dispatch(openChangeDialog(anExperimentId)).then();
   },
 });
 

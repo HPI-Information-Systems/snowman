@@ -1,7 +1,7 @@
 import { Readable } from 'stream';
 
 import { setupDatabase } from '../../database';
-import { tableSchemas } from '../../database/schemas';
+import { latest } from '../../database/schemas';
 import { throwIfTableNotExists } from '../../database/table/loader';
 import {
   AlgorithmValues,
@@ -192,7 +192,7 @@ describe('ExperimentProvider', () => {
   test('set file sets file', async () => {
     expect(() =>
       throwIfTableNotExists(
-        tableSchemas.experiment.experiment(addedExperimentIds[0])
+        latest.tableSchemas.experiment.experiment(addedExperimentIds[0])
       )
     ).toThrowError();
     const file = [
@@ -206,7 +206,7 @@ describe('ExperimentProvider', () => {
     );
     expect(() =>
       throwIfTableNotExists(
-        tableSchemas.experiment.experiment(addedExperimentIds[0])
+        latest.tableSchemas.experiment.experiment(addedExperimentIds[0])
       )
     ).not.toThrowError();
   });
@@ -214,13 +214,13 @@ describe('ExperimentProvider', () => {
   test('delete file deletes file', () => {
     expect(() =>
       throwIfTableNotExists(
-        tableSchemas.experiment.experiment(addedExperimentIds[1])
+        latest.tableSchemas.experiment.experiment(addedExperimentIds[1])
       )
     ).not.toThrowError();
     provider.deleteExperimentFile(addedExperimentIds[1]);
     expect(() =>
       throwIfTableNotExists(
-        tableSchemas.experiment.experiment(addedExperimentIds[1])
+        latest.tableSchemas.experiment.experiment(addedExperimentIds[1])
       )
     ).toThrowError();
   });

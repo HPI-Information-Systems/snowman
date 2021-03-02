@@ -7,16 +7,10 @@ Each workflow occurs upon a single dataset. As a first step, you'll have to spec
 ## Add a dataset
 
 1. Open page "Datasets" from the sidebar on the left.
-   
 2. Add a new dataset with the "+" button in the lower left corner of the screen.
-   
 3. Specify a short identifying name and a comprehensive description.
-   
-4. If you do not want to upload the complete dataset, select "Skeleton only" as contents and specify the total amount of tuples by
-hand. This is important to be able to still calculate metrics.
-
+4. If you do not want to upload the complete dataset, select "Skeleton only" as contents and specify the total amount of tuples by hand. This is important to be able to still calculate metrics.
 5. If you want to upload the dataset, select "Full upload" as contents, specify the csv parameters and select a file to upload.
-
 6. Click on "Add dataset" - this process may take several minutes to complete as indexes have to be created!
 
 ### Upload failed

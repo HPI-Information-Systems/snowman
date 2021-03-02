@@ -37,7 +37,9 @@ export abstract class CSVInserter
       throw new Error(
         `The uploaded experiment is invalid as it does not contain the required columns ${[
           ...unseenRequiredColumns.values(),
-        ].join(', ')}.`
+        ].join(
+          ', '
+        )}. Make sure you have selected the correct experiment file format.`
       );
     }
   }

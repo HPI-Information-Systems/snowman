@@ -1,10 +1,10 @@
 import { databaseBackend, Table } from '../../database';
-import { tableSchemas } from '../../database/schemas';
+import { latest } from '../../database/schemas';
 import { Algorithm, AlgorithmId, AlgorithmValues } from '../../server/types';
 import { BaseAlgorithmProvider } from './baseAlgorithmProvider';
 
 export class AlgorithmProvider extends BaseAlgorithmProvider {
-  protected readonly schema = tableSchemas.meta.algorithm;
+  protected readonly schema = latest.tableSchemas.meta.algorithm;
   protected readonly table = new Table(this.schema);
   protected readonly listAlgorithmsQuery = databaseBackend().prepare(
     `SELECT "${this.schema.columns.name.name}" as name,
@@ -33,11 +33,13 @@ export class AlgorithmProvider extends BaseAlgorithmProvider {
   );
   protected readonly algorithmUsagesQuery = databaseBackend().prepare(
     `SELECT "${
-      tableSchemas.meta.experiment.columns.name.name
+      latest.tableSchemas.meta.experiment.columns.name.name
     }" as experimentName,
-            "${tableSchemas.meta.experiment.columns.id.name}" as experimentId
-     FROM ${new Table(tableSchemas.meta.experiment)}
-     WHERE "${tableSchemas.meta.experiment.columns.algorithm.name}" = ?`
+            "${
+              latest.tableSchemas.meta.experiment.columns.id.name
+            }" as experimentId
+     FROM ${new Table(latest.tableSchemas.meta.experiment)}
+     WHERE "${latest.tableSchemas.meta.experiment.columns.algorithm.name}" = ?`
   );
 
   listAlgorithms(): Algorithm[] {
@@ -60,7 +62,7 @@ export class AlgorithmProvider extends BaseAlgorithmProvider {
   getAlgorithm(id: AlgorithmId): Algorithm {
     const algorithm = this.getAlgorithmQuery.all(id);
     if (algorithm.length === 0) {
-      throw new Error(`An algorithm with the id ${id} does not exist.`);
+      throw new Error(`A matching solution with the id ${id} does not exist.`);
     }
     return algorithm[0];
   }
@@ -90,7 +92,7 @@ export class AlgorithmProvider extends BaseAlgorithmProvider {
         )
         .join(', ');
       throw new Error(
-        `The algorithm ${algorithm.name} (${algorithm.id}) is used by the experiments ${experiments}.`
+        `The matching solution ${algorithm.name} (${algorithm.id}) is used by the experiments ${experiments}.`
       );
     }
   }

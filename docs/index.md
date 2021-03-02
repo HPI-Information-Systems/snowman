@@ -1,8 +1,7 @@
-# Welcome to Snowman!
-
-<figure>
+<p align="center">
   <img src="assets/V2-256.png" />
-</figure>
+</p>
+<h1 align="center">Welcome to Snowman</h1>
 
 Have you ever gotten a newsletter twice? Probably - finding duplicates in data is a pretty difficult problem. Many
 different algorithms exist with different approaches and tradeoffs. However, not only finding duplicates is difficult

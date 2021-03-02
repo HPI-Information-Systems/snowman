@@ -1,4 +1,5 @@
 import 'pages/BinaryMetricsPage/BinaryMetricsPageStyles.css';
+import 'katex/dist/katex.min.css';
 
 import {
   IonCard,
@@ -13,6 +14,7 @@ import DataViewer from 'components/DataViewer/DataViewer';
 import PageStruct from 'components/PageStruct/PageStruct';
 import PaneButtonRow from 'components/PaneButtonRow/PaneButtonRow';
 import StyledCarousel from 'components/StyledCarousel/StyledCarousel';
+import { renderToString } from 'katex';
 import { BinaryMetricsPageProps } from 'pages/BinaryMetricsPage/BinaryMetricsPageProps';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -29,25 +31,45 @@ export const BinaryMetricsPageView = ({
 }: BinaryMetricsPageProps): JSX.Element => {
   useEffect(() => loadMetrics(), [loadMetrics]);
   useEffect(() => loadTuples(), [loadTuples]);
+  useEffect(() => {
+    // Triggered on every component update!
+    ReactTooltip.rebuild();
+  });
+
   return (
     <PageStruct title="Benchmark - Binary Comparison" showNextFab={false}>
       <IonText color="primary">
-        <h3 data-tip="Keep in mind that the first selected experiment is assumed to be the ground-truth which the second selected experiment is compared against!">
+        <h3 data-tip="Binary metrics are calculated based upon the count of false positives, false negatives, true negatives and true positives.">
           Binary Metrics
         </h3>
       </IonText>
       <StyledCarousel itemsToShow={5} itemsToScroll={5}>
         {metrics.map(
-          ({ name, description, range, value }: Metric): JSX.Element => (
+          ({
+            name,
+            formula,
+            range,
+            value,
+            info,
+            infoLink,
+          }: Metric): JSX.Element => (
             <div key={name}>
               <IonCard class="card-fixed">
                 <IonCardHeader class="ion-text-center">
-                  <IonCardTitle class="metric-number" color="primary">
+                  <IonCardTitle
+                    class="metric-number"
+                    color="primary"
+                    data-tip={`Range: [${range.toString()}]`}
+                  >
                     {value !== undefined ? value.toPrecision(2) : '?'}
                   </IonCardTitle>
                   <IonCardSubtitle
                     class="metric-name"
-                    data-tip="This is a metric!"
+                    data-tip={renderToString(formula, {
+                      throwOnError: false,
+                      displayMode: true,
+                      output: 'html',
+                    })}
                   >
                     {name}
                   </IonCardSubtitle>
@@ -58,7 +80,7 @@ export const BinaryMetricsPageView = ({
         )}
       </StyledCarousel>
       <IonText color="primary">
-        <h3>Example Pairs</h3>
+        <h3>Confusion Matrix</h3>
       </IonText>
       <IonCard>
         <PaneButtonRow
@@ -73,7 +95,6 @@ export const BinaryMetricsPageView = ({
           />
         </IonCardContent>
       </IonCard>
-      <ReactTooltip />
     </PageStruct>
   );
 };

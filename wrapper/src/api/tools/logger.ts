@@ -1,7 +1,7 @@
 import path from 'path';
 import { createLogger, format, transports } from 'winston';
 
-import { STORAGE_DIR } from '../config';
+import { cliArgs } from './cli';
 
 export const logger = createLogger({
   level: 'info',
@@ -10,7 +10,7 @@ export const logger = createLogger({
       format: format.simple(),
     }),
     new transports.File({
-      filename: path.join(STORAGE_DIR, 'error.log'),
+      filename: path.join(cliArgs.storageDirectory, 'error.log'),
       level: 'error',
       format: format.combine(
         format.timestamp(),
@@ -24,7 +24,7 @@ export const logger = createLogger({
         format.metadata(),
         format.json()
       ),
-      filename: path.join(STORAGE_DIR, 'combined.log'),
+      filename: path.join(cliArgs.storageDirectory, 'combined.log'),
     }),
   ],
 });

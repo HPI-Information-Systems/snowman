@@ -1,6 +1,6 @@
 import { IonChip, IonLabel } from '@ionic/react';
-import AddDatasetDialog from 'components/AddDatasetDialog/AddDatasetDialog';
 import AddDatasetFab from 'components/AddFab/AddDatasetFab';
+import DatasetDialog from 'components/DatasetDialog/DatasetDialog';
 import OptionSelector from 'components/OptionSelector/OptionSelector';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { DatasetsPageProps } from 'pages/DatasetsPage/DatasetsPageProps';
@@ -14,6 +14,7 @@ const DatasetsPageView = ({
   clickOnTag,
   clickOnDataset,
   deleteDataset,
+  editDataset,
   loadDatasets,
 }: DatasetsPageProps): JSX.Element => {
   useEffect((): void => loadDatasets(), [loadDatasets]);
@@ -39,10 +40,11 @@ const DatasetsPageView = ({
         selected={selectedDataset}
         clickOnCard={clickOnDataset}
         deleteCardHandler={deleteDataset}
+        editCardHandler={editDataset}
         multiple={false}
       />
       <AddDatasetFab />
-      <AddDatasetDialog />
+      <DatasetDialog />
     </PageStruct>
   );
 };

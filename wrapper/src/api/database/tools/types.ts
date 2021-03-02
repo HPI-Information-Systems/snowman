@@ -1,4 +1,4 @@
-import type { schemas } from '../schemas';
+import type { latest } from '../schemas';
 
 type DataTypes = 'NULL' | 'INTEGER' | 'REAL' | 'TEXT' | 'BLOB';
 export declare interface Column<DataType extends DataTypes = DataTypes> {
@@ -23,7 +23,7 @@ export declare interface TableSchema<
 export type ForeignKeys = ReturnType<NonNullable<Column['foreignKeys']>>;
 export type Columns = TableSchema['columns'];
 
-export type Schema = typeof schemas[number];
+export type Schema = typeof latest.schemas[number];
 export type Schemas<
   SchemaT extends Schema = Schema,
   TableT extends string[] = string[]

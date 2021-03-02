@@ -1,4 +1,4 @@
 export enum DatasetTypes {
-  full = 'Full records',
-  skeleton = 'Skeleton only',
+  full = 'Actual data records',
+  skeleton = 'Record count only',
 }
