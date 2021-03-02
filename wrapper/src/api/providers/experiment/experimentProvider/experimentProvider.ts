@@ -1,7 +1,7 @@
 import { Readable } from 'stream';
 
 import { databaseBackend, Table } from '../../../database';
-import { tableSchemas } from '../../../database/schemas';
+import { latest } from '../../../database/schemas';
 import { ExperimentValues } from '../../../server/types';
 import {
   Experiment,
@@ -159,7 +159,7 @@ export class ExperimentProvider extends BaseExperimentProvider {
   }
 
   private deleteExperimentFileNoChecks(id: ExperimentId): void {
-    new Table(tableSchemas.experiment.experiment(id)).delete(false);
+    new Table(latest.tableSchemas.experiment.experiment(id)).delete(false);
     const storedExperiment = this.queries.getExperimentQuery.get(id) as
       | StoredExperiment
       | undefined;

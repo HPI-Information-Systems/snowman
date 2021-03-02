@@ -1,5 +1,5 @@
 import { databaseBackend, Table } from '../../../database';
-import { tableSchemas } from '../../../database/schemas';
+import { latest } from '../../../database/schemas';
 import { ExperimentId } from '../../../server/types';
 import { getProviders } from '../..';
 import { DatasetProviderQueries } from './queries';
@@ -21,7 +21,9 @@ export class DatasetDeleter {
   }
 
   deleteFile(): void {
-    new Table(tableSchemas.dataset.dataset(this.datasetId)).delete(false);
+    new Table(latest.tableSchemas.dataset.dataset(this.datasetId)).delete(
+      false
+    );
   }
 
   private deleteIDMap(): void {

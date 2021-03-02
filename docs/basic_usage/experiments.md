@@ -9,17 +9,12 @@ a list of configuration parameters, or the time spent labeling data.
 
 ## Add an experiment
 
-0. Select a dataset.
-
-1. Open page "Experiments" from the sidebar on the left.
-
-2. Add a new experiment with the "+" button in the lower left corner of the screen.
-
-3. Specify a short and concise name, as well as a detailed description.
-
-4. Select a file containing the result set and choose the correct import format. _(see below)_
-
-5. Click on "Add experiment" - this process may take several minutes to complete as indexes have to be created!
+1. Select a dataset.
+2. Open page "Experiments" from the sidebar on the left.
+3. Add a new experiment with the "+" button in the lower left corner of the screen.
+4. Specify a short and concise name, as well as a detailed description.
+5. Select a file containing the result set and choose the correct import format. _(see below)_
+6. Click on "Add experiment" - this process may take several minutes to complete as indexes have to be created!
 
 ### Upload failed
 
@@ -54,7 +49,7 @@ The csv optionally can have a column named "prediction" which contains a `1` in 
 
 Following this, more columns may be specified with arbitrary content. See the following example:
 
-``` csv
+```csv
 p1,p2,prediction,feat1,feat2,feat3,sum
 2,1,1,0.3,0.4,0.4,2
 1,2,1,0.3,0.4,0.4,2
