@@ -138,20 +138,6 @@ export const getPathResolution = (): IPathMapper[] => [
 export const navigateTo = (aRoute: string | undefined): void =>
   history.replace(aRoute ?? getPathToRootPage());
 
-export const navigateToRootPage = (): void => navigateTo(getPathToRootPage());
-
-export const navigateToDatasetsSelector = (): void =>
-  navigateTo(getPathToDatasetsSelector());
-
-export const navigateToExperimentsSelector = (): void =>
-  navigateTo(getPathToExperimentsSelector());
-
-export const navigateToAlgorithmsPage = (): void =>
-  navigateTo(getPathToAlgorithmsPage());
-
-export const navigateToMetricsViewer = (): void =>
-  navigateTo(getPathToMetricsViewer());
-
 const getCurrentPath = (): string => history.location.pathname;
 
 const getCurrentPathMapper = (currentPath: string): IPathMapper =>
