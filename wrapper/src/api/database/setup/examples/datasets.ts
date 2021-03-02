@@ -62,8 +62,8 @@ export const exampleDatasets = assertType<ExampleDatasets>()({
   },
   computers: {
     meta: {
-      name: 'computers-SIGMOD',
-      description: 'This is a dataset used for the SIGMOD-contest.',
+      name: 'SIGMOD-computers-X1',
+      description: 'This is the computers dataset (X1) of the SIGMOD-contest.',
       tags: ['SIGMOD'],
     },
     id: 2,
