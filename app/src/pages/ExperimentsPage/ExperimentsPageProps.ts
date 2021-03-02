@@ -12,6 +12,7 @@ export interface ExperimentsPageDispatchProps {
   clickOnExperiment(anExperimentId: number): void;
   loadExperiments(): void;
   deleteExperiment(anExperimentId: number): void;
+  editExperiment(anExperimentId: number): void;
 }
 
 export type ExperimentsPageProps = ExperimentsPageDispatchProps &

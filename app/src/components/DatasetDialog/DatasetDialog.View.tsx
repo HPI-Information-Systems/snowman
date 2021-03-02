@@ -12,6 +12,7 @@ import {
   IonItemGroup,
   IonLabel,
   IonList,
+  IonNote,
   IonRow,
   IonSelect,
   IonSelectOption,
@@ -160,7 +161,7 @@ const DatasetDialogView = ({
             </IonGrid>
           </IonItem>
           <IonItem>
-            <IonLabel position="fixed">Source File*:</IonLabel>
+            <IonLabel position="fixed">Source File:</IonLabel>
             <FileInput
               selectedFiles={selectedFiles}
               onChange={changeSelectedDatasetFiles}
@@ -169,6 +170,15 @@ const DatasetDialogView = ({
         </IonItemGroup>
       ) : null}
     </IonList>
+    {!isAddDialog ? (
+      <div className="center upload-notice">
+        <IonNote color="medium">
+          <b>Note: Uploading a file is optional here!</b>
+          <br />
+          If no file is selected, the stored records will remain unchanged.
+        </IonNote>
+      </div>
+    ) : null}
     <div className="center tag-view">
       {tags.map(
         (aTag: string): JSX.Element => (

@@ -12,8 +12,8 @@ import {
 import RequestHandler from 'utils/requestHandler';
 import {
   SUCCESS_TO_CREATE_NEW_DATASET,
+  SUCCESS_TO_UPDATE_DATASET,
   SUCCESS_TO_UPLOAD_DATASET_FILE,
-  SUCCESS_UPDATE_DATASET,
 } from 'utils/statusMessages';
 import { getTagsFromDatasets } from 'utils/tagFactory';
 
@@ -43,12 +43,12 @@ export const openChangeDialog = (
     (): Promise<void> =>
       new DatasetsApi()
         .getDataset({ datasetId: datasetId })
-        .then((aDataset: Dataset) =>
+        .then((aDataset: Dataset): void => {
           dispatch({
             type: DialogActionsTypes.OPEN_CHANGE_DIALOG,
             payload: aDataset,
-          })
-        )
+          });
+        })
         .then((): void => dispatch(loadAvailableTags())),
     dispatch
   );
@@ -187,7 +187,7 @@ const setExistingDataset = (): SnowmanThunkAction<Promise<void>> => async (
         },
       }),
     dispatch,
-    SUCCESS_UPDATE_DATASET
+    SUCCESS_TO_UPDATE_DATASET
   );
 
 const uploadDatasetFile = (

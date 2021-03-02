@@ -18,11 +18,15 @@ const FileInput = ({
       currentFileInput.click();
     }
   };
-  /* React.Fragment is required here to ensure the elements have correct parent! */
   return (
-    <React.Fragment>
-      <IonText color="primary" style={{ marginLeft: '8px' }}>
-        {selectedFiles.map((f: File): string => f.name).join(', ')}
+    <>
+      <IonText
+        color={selectedFiles.length > 0 ? 'primary' : 'medium'}
+        style={{ marginLeft: '8px' }}
+      >
+        {selectedFiles.length > 0
+          ? selectedFiles.map((f: File): string => f.name).join(', ')
+          : '(none selected)'}
       </IonText>
       <IonButton fill="outline" slot="end" onClick={openFileInput}>
         <IonIcon icon={cloudUploadOutline} slot="start" />
@@ -36,7 +40,7 @@ const FileInput = ({
         multiple={allowMultiple}
         ref={fileInput}
       />
-    </React.Fragment>
+    </>
   );
 };
 
