@@ -1,6 +1,6 @@
 import { IonChip, IonLabel } from '@ionic/react';
-import AddExperimentDialog from 'components/AddExperimentDialog/AddExperimentDialog';
 import AddExperimentFab from 'components/AddFab/AddExperimentFab';
+import ExperimentDialog from 'components/ExperimentDialog/ExperimentDialog';
 import OptionSelector from 'components/OptionSelector/OptionSelector';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { ExperimentsPageProps } from 'pages/ExperimentsPage/ExperimentsPageProps';
@@ -42,7 +42,7 @@ const ExperimentsPageView = ({
         multiple={true}
       />
       <AddExperimentFab />
-      <AddExperimentDialog />
+      <ExperimentDialog />
     </PageStruct>
   );
 };

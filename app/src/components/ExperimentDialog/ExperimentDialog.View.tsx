@@ -11,7 +11,7 @@ import {
   IonTextarea,
 } from '@ionic/react';
 import { SetExperimentFileFormatEnum } from 'api';
-import { AddExperimentDialogProps } from 'components/AddExperimentDialog/AddExperimentDialogProps';
+import { ExperimentDialogProps } from 'components/ExperimentDialog/ExperimentDialogProps';
 import FileInput from 'components/FileInput/FileInput';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
 import { addCircleOutline, closeCircleOutline } from 'ionicons/icons';
@@ -19,7 +19,7 @@ import React from 'react';
 import { $enum } from 'ts-enum-util';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 
-const AddExperimentDialogView = ({
+const ExperimentDialogView = ({
   isOpen,
   closeDialog,
   clickOnCancel,
@@ -36,7 +36,7 @@ const AddExperimentDialogView = ({
   isValidForm,
   selectedFiles,
   changeSelectedFiles,
-}: AddExperimentDialogProps): JSX.Element => (
+}: ExperimentDialogProps): JSX.Element => (
   <ModalDialog
     heading={'Add New Experiment'}
     isOpen={isOpen}
@@ -120,4 +120,4 @@ const AddExperimentDialogView = ({
   </ModalDialog>
 );
 
-export default AddExperimentDialogView;
+export default ExperimentDialogView;

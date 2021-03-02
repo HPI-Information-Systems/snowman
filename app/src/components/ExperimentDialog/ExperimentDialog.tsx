@@ -1,9 +1,10 @@
-import 'components/AddExperimentDialog/AddExperimentDialogStyles.css';
+import 'components/ExperimentDialog/ExperimentDialogStyles.css';
 
+import ExperimentDialogView from 'components/ExperimentDialog/ExperimentDialog.View';
 import {
-  AddExperimentDialogDispatchProps,
-  AddExperimentDialogStateProps,
-} from 'components/AddExperimentDialog/AddExperimentDialogProps';
+  ExperimentDialogDispatchProps,
+  ExperimentDialogStateProps,
+} from 'components/ExperimentDialog/ExperimentDialogProps';
 import { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -21,9 +22,7 @@ import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
 
-import AddExperimentDialogView from './AddExperimentDialog.View';
-
-const mapStateToProps = (state: Store): AddExperimentDialogStateProps => ({
+const mapStateToProps = (state: Store): ExperimentDialogStateProps => ({
   isOpen: state.AddExperimentDialogStore.isOpen,
   experimentName: state.AddExperimentDialogStore.experimentName,
   experimentDescription: state.AddExperimentDialogStore.experimentDescription,
@@ -41,7 +40,7 @@ const mapStateToProps = (state: Store): AddExperimentDialogStateProps => ({
 
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch
-): AddExperimentDialogDispatchProps => ({
+): ExperimentDialogDispatchProps => ({
   closeDialog: (): void => dispatch(closeDialog()),
   clickOnCancel: (): void => dispatch(closeDialog()),
   changeExperimentName: (event: IonChangeEvent): void =>
@@ -61,9 +60,9 @@ const mapDispatchToProps = (
     ),
 });
 
-const AddExperimentDialog = connect(
+const ExperimentDialog = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddExperimentDialogView);
+)(ExperimentDialogView);
 
-export default AddExperimentDialog;
+export default ExperimentDialog;
