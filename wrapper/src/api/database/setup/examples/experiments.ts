@@ -77,9 +77,9 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
   },
   computersSigmodGoldstandard1: {
     meta: {
-      name: 'goldstandard',
+      name: 'SIGMOD-goldstandard-Y1',
       description:
-        'Complete list of all duplicate pairs found in the original datasets.',
+        'Complete list of duplicate pairs in the computers dataset (X1) of the SIGMOD contest.',
       algorithmId: exampleAlgorithms.gold.id,
       datasetId: exampleDatasets.computers.id,
     },
