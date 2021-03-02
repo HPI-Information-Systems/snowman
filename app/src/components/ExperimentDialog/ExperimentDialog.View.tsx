@@ -46,7 +46,7 @@ const ExperimentDialogView = ({
   >
     <IonList>
       <IonItem>
-        <IonLabel position="fixed">Name/ID:</IonLabel>
+        <IonLabel position="fixed">Name/ID*:</IonLabel>
         <IonInput
           clearInput
           value={experimentName}
@@ -87,6 +87,15 @@ const ExperimentDialogView = ({
         />
       </IonItem>
     </IonList>
+    {!isAddDialog ? (
+      <div className="center upload-notice">
+        <IonNote color="medium">
+          <b>Note: Uploading a file is optional here!</b>
+          <br />
+          If no file is selected, the stored records will remain unchanged.
+        </IonNote>
+      </div>
+    ) : null}
     <div className="center tag-view">
       {tags.map(
         (aTag: string): JSX.Element => (
@@ -101,15 +110,6 @@ const ExperimentDialogView = ({
         )
       )}
     </div>
-    {!isAddDialog ? (
-      <div className="center upload-notice">
-        <IonNote color="medium">
-          <b>Note: Uploading a file is optional here!</b>
-          <br />
-          If no file is selected, the stored records will remain unchanged.
-        </IonNote>
-      </div>
-    ) : null}
     <div className="center button-row">
       <IonButton
         className="button-hugh button-padding"
