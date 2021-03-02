@@ -31,12 +31,8 @@ const OptionCard = ({
   tags,
   clickCard,
   isSelected,
-  deleteCard = () => {
-    console.log('Deletion requested');
-  },
-  editCard = () => {
-    console.log('Edit requested');
-  },
+  deleteCard,
+  editCard,
   multiple = true,
 }: OptionCardProps): JSX.Element => {
   return (
@@ -90,28 +86,32 @@ const OptionCard = ({
         ) : null}
         <IonRow>
           <IonCol size="6">
-            <IonButton
-              size="small"
-              fill="clear"
-              color="primary"
-              onClick={editCard}
-              className="ion-float-left"
-            >
-              <IonIcon slot="start" icon={create} />
-              Edit
-            </IonButton>
+            {editCard !== undefined ? (
+              <IonButton
+                size="small"
+                fill="clear"
+                color="primary"
+                onClick={editCard}
+                className="ion-float-left"
+              >
+                <IonIcon slot="start" icon={create} />
+                Edit
+              </IonButton>
+            ) : null}
           </IonCol>
           <IonCol size="6">
-            <IonButton
-              size="small"
-              fill="clear"
-              color="danger"
-              onClick={deleteCard}
-              className="ion-float-right"
-            >
-              <IonIcon slot="start" icon={trash} />
-              Delete
-            </IonButton>
+            {deleteCard !== undefined ? (
+              <IonButton
+                size="small"
+                fill="clear"
+                color="danger"
+                onClick={deleteCard}
+                className="ion-float-right"
+              >
+                <IonIcon slot="start" icon={trash} />
+                Delete
+              </IonButton>
+            ) : null}
           </IonCol>
         </IonRow>
       </IonGrid>
