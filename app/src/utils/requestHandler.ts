@@ -32,9 +32,10 @@ const RequestHandler = async <T = void>(
           dispatch(
             showToast((await result.text()) ?? UNKNOWN_ERROR, ToastType.Error)
           );
+        } else {
+          // Else - show generic error
+          dispatch(showToast(UNKNOWN_ERROR, ToastType.Error));
         }
-        // Else - show generic error
-        dispatch(showToast(UNKNOWN_ERROR, ToastType.Error));
         throw Error;
       }
     )
