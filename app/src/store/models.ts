@@ -18,7 +18,9 @@ export interface AlgorithmDialogStore {
   dialogType: DialogTypes;
 }
 
-export interface AddDatasetDialogStore {
+export interface DatasetDialogStore {
+  datasetId: number | null;
+  dialogType: DialogTypes;
   isOpen: boolean;
   datasetName: string;
   datasetDescription: string;
@@ -80,7 +82,7 @@ export interface Store {
   DatasetsStore: DatasetsStore;
   ExperimentsStore: ExperimentsStore;
   AlgorithmsStore: AlgorithmsStore;
-  AddDatasetDialogStore: AddDatasetDialogStore;
+  DatasetDialogStore: DatasetDialogStore;
   AddExperimentDialogStore: AddExperimentDialogStore;
   AlgorithmDialogStore: AlgorithmDialogStore;
   GlobalIndicatorStore: GlobalIndicatorStore;

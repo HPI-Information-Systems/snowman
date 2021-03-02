@@ -12,8 +12,8 @@ export interface AlgorithmDialogDispatchProps {
   closeDialog(): void;
   changeAlgorithmName(event: IonChangeEvent): void;
   changeAlgorithmDescription(event: IonChangeEvent): void;
-  clickOnAdd(): void;
+  clickOnSubmit(): void;
 }
 
-export type AddAlgorithmDialogProps = AlgorithmDialogStateProps &
+export type AlgorithmDialogProps = AlgorithmDialogStateProps &
   AlgorithmDialogDispatchProps;
