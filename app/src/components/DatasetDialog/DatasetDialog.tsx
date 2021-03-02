@@ -6,8 +6,8 @@ import {
 import { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import {
-  addNewDataset,
   addNewTag,
+  addOrUpdateDataset,
   changeDatasetCSVEscape,
   changeDatasetCSVIdColumn,
   changeDatasetCSVQuote,
@@ -32,7 +32,9 @@ const isValidDatasetDialog = (state: Store): boolean => {
   // If dataset should be uploaded, select files
   if (
     state.DatasetDialogStore.datasetType === DatasetTypes.full &&
-    state.DatasetDialogStore.selectedFiles.length === 0
+    state.DatasetDialogStore.selectedFiles.length === 0 &&
+    // rule applies only if AddDialog
+    state.DatasetDialogStore.datasetId === null
   ) {
     return false;
   }
@@ -121,8 +123,7 @@ const mapDispatchToProps = (
     (dispatch as SnowmanDispatch)(addNewTag(newTagValue));
   },
   clickOnSubmit(): void {
-    // Todo: Rather use addOrUpdateDataset()
-    dispatch(addNewDataset()).then();
+    dispatch(addOrUpdateDataset()).then();
   },
 });
 

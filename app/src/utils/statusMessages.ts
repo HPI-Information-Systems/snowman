@@ -18,3 +18,5 @@ export const SUCCESS_LOAD_BINARY_METRICS =
   'Successfully loaded binary metrics!';
 export const SUCCESS_UPDATE_ALGORITHM =
   'Successfully updated the designated matching solution!';
+export const SUCCESS_UPDATE_DATASET =
+  'Successfully updated the designated dataset!';

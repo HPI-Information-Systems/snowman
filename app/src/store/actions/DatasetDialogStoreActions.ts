@@ -1,9 +1,10 @@
 import { Dataset, DatasetsApi } from 'api';
-import { DatasetDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
+import { DatasetDialogStoreActionTypes as DialogActionsTypes } from 'store/actions/actionTypes';
 import { getDatasets } from 'store/actions/DatasetsStoreActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
 import { DatasetTypes } from 'types/DatasetTypes';
+import { MagicNotPossibleId } from 'utils/constants';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
@@ -12,14 +13,26 @@ import RequestHandler from 'utils/requestHandler';
 import {
   SUCCESS_TO_CREATE_NEW_DATASET,
   SUCCESS_TO_UPLOAD_DATASET_FILE,
+  SUCCESS_UPDATE_DATASET,
 } from 'utils/statusMessages';
 import { getTagsFromDatasets } from 'utils/tagFactory';
 
-export const openAddDialog = (): easyPrimitiveActionReturn =>
+const loadAvailableTags = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.OPEN_ADD_DIALOG,
+    type: DialogActionsTypes.LOAD_AVAILABLE_TAGS,
     payload: getTagsFromDatasets(store.getState().DatasetsStore.datasets),
   });
+
+export const openAddDialog = (): SnowmanThunkAction<void> => (
+  dispatch: SnowmanDispatch
+): void => {
+  dispatch({
+    type: DialogActionsTypes.OPEN_ADD_DIALOG,
+    // reducer ignores payload
+    payload: false,
+  });
+  dispatch(loadAvailableTags());
+};
 
 export const openChangeDialog = (
   datasetId: number
@@ -32,18 +45,18 @@ export const openChangeDialog = (
         .getDataset({ datasetId: datasetId })
         .then((aDataset: Dataset) =>
           dispatch({
-            type: DialogActions.OPEN_CHANGE_DIALOG,
+            type: DialogActionsTypes.OPEN_CHANGE_DIALOG,
             payload: aDataset,
           })
         )
-        .then(),
+        .then((): void => dispatch(loadAvailableTags())),
     dispatch
   );
 };
 
 export const closeDialog = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CLOSE_DIALOG,
+    type: DialogActionsTypes.CLOSE_DIALOG,
     // reducer ignores payload
     payload: false,
   });
@@ -52,7 +65,7 @@ export const changeDatasetName = (
   aDatasetName: string
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CHANGE_DATASET_NAME,
+    type: DialogActionsTypes.CHANGE_DATASET_NAME,
     payload: aDatasetName,
   });
 
@@ -60,7 +73,7 @@ export const changeDatasetDescription = (
   aDescription: string
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CHANGE_DATASET_DESCRIPTION,
+    type: DialogActionsTypes.CHANGE_DATASET_DESCRIPTION,
     payload: aDescription,
   });
 
@@ -68,7 +81,7 @@ export const changeDatasetType = (
   aType: DatasetTypes
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CHANGE_DATASET_TYPE,
+    type: DialogActionsTypes.CHANGE_DATASET_TYPE,
     payload: aType,
   });
 
@@ -76,7 +89,7 @@ export const changeDatasetLength = (
   aLength: number
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CHANGE_DATASET_LENGTH,
+    type: DialogActionsTypes.CHANGE_DATASET_LENGTH,
     payload: aLength,
   });
 
@@ -84,7 +97,7 @@ export const changeDatasetCSVIdColumn = (
   anIdColumn: string
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CHANGE_CSV_ID_COLUMN,
+    type: DialogActionsTypes.CHANGE_CSV_ID_COLUMN,
     payload: anIdColumn,
   });
 
@@ -92,7 +105,7 @@ export const changeDatasetCSVSeparator = (
   aSeparator: string
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CHANGE_CSV_SEPARATOR,
+    type: DialogActionsTypes.CHANGE_CSV_SEPARATOR,
     payload: aSeparator,
   });
 
@@ -100,7 +113,7 @@ export const changeDatasetCSVQuote = (
   aQuote: string
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CHANGE_CSV_QUOTE,
+    type: DialogActionsTypes.CHANGE_CSV_QUOTE,
     payload: aQuote,
   });
 
@@ -108,112 +121,134 @@ export const changeDatasetCSVEscape = (
   anEscape: string
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CHANGE_CSV_ESCAPE,
+    type: DialogActionsTypes.CHANGE_CSV_ESCAPE,
     payload: anEscape,
   });
 
 export const addNewTag = (aTag: string): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.ADD_DATASET_TAG,
+    type: DialogActionsTypes.ADD_DATASET_TAG,
     payload: aTag,
   });
 
 export const resetDialog = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.RESET_DIALOG,
+    type: DialogActionsTypes.RESET_DIALOG,
     // payload is not used
     payload: false,
   });
 
 export const setSelectedFiles = (files: File[]): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CHANGE_DATASET_FILES,
+    type: DialogActionsTypes.CHANGE_DATASET_FILES,
     payload: files,
   });
 
 export const clickOnDatasetTag = (aTag: string): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CLICK_ON_DATASET_TAG,
+    type: DialogActionsTypes.CLICK_ON_DATASET_TAG,
     payload: aTag,
   });
 
-export const createNewDataset = (
-  name: string,
-  description: string,
-  numberOfRecords = 0,
-  tags: string[]
-): SnowmanThunkAction<Promise<number>> => async (
+const createNewDataset = (): SnowmanThunkAction<Promise<number>> => async (
   dispatch: SnowmanDispatch
 ): Promise<number> =>
   RequestHandler<number>(
     (): Promise<number> =>
       new DatasetsApi().addDataset({
         datasetValues: {
-          name: name,
-          description: description,
-          numberOfRecords: numberOfRecords,
-          tags: tags,
+          name: store.getState().DatasetDialogStore.datasetName,
+          description: store.getState().DatasetDialogStore.datasetDescription,
+          numberOfRecords:
+            store.getState().DatasetDialogStore.datasetType ===
+            DatasetTypes.skeleton
+              ? store.getState().DatasetDialogStore.datasetLength
+              : undefined,
+          tags: store.getState().DatasetDialogStore.selectedTags,
         },
       }),
     dispatch,
     SUCCESS_TO_CREATE_NEW_DATASET
   );
 
-export const uploadDatasetFile = (
-  id: number,
-  idColumn: string,
-  separator: string,
-  quote: string,
-  escape: string,
-  file: File
-): SnowmanThunkAction<Promise<void>> => async (dispatch: SnowmanDispatch) =>
-  RequestHandler(
+const setExistingDataset = (): SnowmanThunkAction<Promise<void>> => async (
+  dispatch: SnowmanDispatch
+): Promise<void> =>
+  RequestHandler<void>(
     (): Promise<void> =>
-      new DatasetsApi().setDatasetFile({
-        datasetId: id,
-        idColumn: idColumn,
-        quote: quote,
-        escape: escape,
-        separator: separator,
-        body: file as Blob,
+      new DatasetsApi().setDataset({
+        datasetId:
+          store.getState().DatasetDialogStore.datasetId ?? MagicNotPossibleId,
+        datasetValues: {
+          name: store.getState().DatasetDialogStore.datasetName,
+          description: store.getState().DatasetDialogStore.datasetDescription,
+          tags: store.getState().DatasetDialogStore.selectedTags,
+          numberOfRecords: store.getState().DatasetDialogStore.datasetLength,
+        },
       }),
     dispatch,
-    SUCCESS_TO_UPLOAD_DATASET_FILE,
-    true
+    SUCCESS_UPDATE_DATASET
   );
 
-export const addNewDataset = (): SnowmanThunkAction<Promise<void>> => async (
+const uploadDatasetFile = (
+  id?: number
+): SnowmanThunkAction<Promise<void>> => async (dispatch: SnowmanDispatch) => {
+  const willUpload =
+    store.getState().DatasetDialogStore.selectedFiles.length > 0;
+  return RequestHandler(
+    (): Promise<void> => {
+      if (
+        store.getState().DatasetDialogStore.datasetType === DatasetTypes.full &&
+        willUpload
+      )
+        return new DatasetsApi().setDatasetFile({
+          datasetId:
+            id ??
+            store.getState().DatasetDialogStore.datasetId ??
+            MagicNotPossibleId,
+          idColumn: store.getState().DatasetDialogStore.csvIdColumn,
+          quote: store.getState().DatasetDialogStore.csvQuote,
+          escape: store.getState().DatasetDialogStore.csvEscape,
+          separator: store.getState().DatasetDialogStore.csvSeparator,
+          body: store.getState().DatasetDialogStore.selectedFiles[0] as Blob,
+        });
+      return Promise.resolve();
+    },
+    dispatch,
+    willUpload ? SUCCESS_TO_UPLOAD_DATASET_FILE : undefined,
+    true
+  );
+};
+
+const addNewDataset = (): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> => {
-  return dispatch(
-    createNewDataset(
-      store.getState().DatasetDialogStore.datasetName,
-      store.getState().DatasetDialogStore.datasetDescription,
-      store.getState().DatasetDialogStore.datasetType === DatasetTypes.skeleton
-        ? store.getState().DatasetDialogStore.datasetLength
-        : undefined,
-      store.getState().DatasetDialogStore.selectedTags
-    )
-  )
-    .then((id: number): void => {
-      if (
-        store.getState().DatasetDialogStore.datasetType === DatasetTypes.full
-      ) {
-        dispatch(
-          uploadDatasetFile(
-            id,
-            store.getState().DatasetDialogStore.csvIdColumn,
-            store.getState().DatasetDialogStore.csvSeparator,
-            store.getState().DatasetDialogStore.csvQuote,
-            store.getState().DatasetDialogStore.csvEscape,
-            store.getState().DatasetDialogStore.selectedFiles[0]
-          )
-        );
-      }
-    })
+  return dispatch(createNewDataset())
+    .then((id: number): Promise<void> => dispatch(uploadDatasetFile(id)))
     .then((): void => dispatch(resetDialog()))
     .finally((): void => {
       dispatch(getDatasets());
       dispatch(closeDialog());
     });
+};
+
+const updatedExistingDataset = (): SnowmanThunkAction<Promise<void>> => async (
+  dispatch: SnowmanDispatch
+): Promise<void> => {
+  return dispatch(setExistingDataset())
+    .then((): Promise<void> => dispatch(uploadDatasetFile()))
+    .then((): void => dispatch(resetDialog()))
+    .finally((): void => {
+      dispatch(getDatasets());
+      dispatch(closeDialog());
+    });
+};
+
+export const addOrUpdateDataset = (): SnowmanThunkAction<
+  Promise<void>
+> => async (dispatch: SnowmanDispatch): Promise<void> => {
+  if (store.getState().DatasetDialogStore.datasetId === null) {
+    return dispatch(addNewDataset());
+  }
+  return dispatch(updatedExistingDataset());
 };

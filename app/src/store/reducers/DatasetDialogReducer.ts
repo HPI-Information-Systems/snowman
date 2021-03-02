@@ -1,12 +1,11 @@
+import { Dataset } from 'api';
 import { uniq } from 'lodash';
 import { DatasetDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { DatasetDialogStore } from 'store/models';
 import { DatasetTypes } from 'types/DatasetTypes';
+import { DialogTypes } from 'types/DialogTypes';
 import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
-
-import { Dataset } from '../../api';
-import { DialogTypes } from '../../types/DialogTypes';
 
 const initialState: DatasetDialogStore = {
   isOpen: false,
@@ -33,7 +32,6 @@ export const DatasetDialogReducer = (
     case DialogActions.OPEN_ADD_DIALOG:
       return {
         ...state,
-        availableTags: action.payload as string[], // Todo: get this from root reducer?
         dialogType: DialogTypes.ADD_DIALOG,
         isOpen: true,
       };
@@ -47,7 +45,6 @@ export const DatasetDialogReducer = (
         datasetDescription: (action.payload as Dataset).description ?? '',
         datasetLength: (action.payload as Dataset).numberOfRecords ?? 0,
         selectedTags: (action.payload as Dataset).tags ?? [],
-        availableTags: [], // Todo: get this from root reducer?
       };
     case DialogActions.CLOSE_DIALOG:
       if (state.dialogType === DialogTypes.ADD_DIALOG)
@@ -61,6 +58,11 @@ export const DatasetDialogReducer = (
       }
     case DialogActions.RESET_DIALOG:
       return initialState;
+    case DialogActions.LOAD_AVAILABLE_TAGS:
+      return {
+        ...state,
+        availableTags: action.payload as string[],
+      };
     case DialogActions.CHANGE_DATASET_NAME:
       return {
         ...state,
