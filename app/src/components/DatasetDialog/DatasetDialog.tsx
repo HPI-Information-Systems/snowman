@@ -66,61 +66,47 @@ const mapDispatchToProps = (
   dispatch: SnowmanDispatch
 ): DatasetDialogDispatchProps => ({
   closeDialog(): void {
-    (dispatch as SnowmanDispatch)(closeDialog());
+    dispatch(closeDialog());
   },
   clickOnCancel(): void {
-    (dispatch as SnowmanDispatch)(closeDialog());
+    dispatch(closeDialog());
   },
   changeDatasetName(event: IonChangeEvent): void {
-    (dispatch as SnowmanDispatch)(
-      changeDatasetName(event.detail.value as string)
-    );
+    dispatch(changeDatasetName(event.detail.value as string));
   },
   changeDatasetDescription(event: IonChangeEvent): void {
-    (dispatch as SnowmanDispatch)(
-      changeDatasetDescription(event.detail.value as string)
-    );
+    dispatch(changeDatasetDescription(event.detail.value as string));
   },
   changeDatasetType(event: IonChangeEvent): void {
-    (dispatch as SnowmanDispatch)(
-      changeDatasetType(event.detail.value as DatasetTypes)
-    );
+    dispatch(changeDatasetType(event.detail.value as DatasetTypes));
   },
   changeDatasetLength(event: IonChangeEvent): void {
-    (dispatch as SnowmanDispatch)(
+    dispatch(
       changeDatasetLength(Math.abs(parseInt(event.detail.value as string)))
     );
   },
   changeCsvIdColumn(event: IonChangeEvent): void {
-    (dispatch as SnowmanDispatch)(
-      changeDatasetCSVIdColumn(event.detail.value as string)
-    );
+    dispatch(changeDatasetCSVIdColumn(event.detail.value as string));
   },
   changeCsvSeparator(event: IonChangeEvent): void {
-    (dispatch as SnowmanDispatch)(
-      changeDatasetCSVSeparator(event.detail.value as string)
-    );
+    dispatch(changeDatasetCSVSeparator(event.detail.value as string));
   },
   changeCsvQuote(event: IonChangeEvent): void {
-    (dispatch as SnowmanDispatch)(
-      changeDatasetCSVQuote(event.detail.value as string)
-    );
+    dispatch(changeDatasetCSVQuote(event.detail.value as string));
   },
   changeCsvEscape(event: IonChangeEvent): void {
-    (dispatch as SnowmanDispatch)(
-      changeDatasetCSVEscape(event.detail.value as string)
-    );
+    dispatch(changeDatasetCSVEscape(event.detail.value as string));
   },
   changeSelectedDatasetFiles(event: ChangeEvent<HTMLInputElement>): void {
-    (dispatch as SnowmanDispatch)(
+    dispatch(
       setSelectedFiles(convertFilesListToFilesArray(event.target.files))
     );
   },
   clickOnATag(aTag: string): void {
-    (dispatch as SnowmanDispatch)(clickOnDatasetTag(aTag));
+    dispatch(clickOnDatasetTag(aTag));
   },
   addNewTagCallback(newTagValue: string): void {
-    (dispatch as SnowmanDispatch)(addNewTag(newTagValue));
+    dispatch(addNewTag(newTagValue));
   },
   clickOnSubmit(): void {
     dispatch(addOrUpdateDataset()).then();
