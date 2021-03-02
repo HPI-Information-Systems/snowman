@@ -43,12 +43,12 @@ export const openChangeDialog = (
     (): Promise<void> =>
       new DatasetsApi()
         .getDataset({ datasetId: datasetId })
-        .then((aDataset: Dataset) =>
+        .then((aDataset: Dataset): void => {
           dispatch({
             type: DialogActionsTypes.OPEN_CHANGE_DIALOG,
             payload: aDataset,
-          })
-        )
+          });
+        })
         .then((): void => dispatch(loadAvailableTags())),
     dispatch
   );
