@@ -74,21 +74,7 @@ paths:
                 $ref: "#/components/schemas/AlgorithmId"
         400:
           description: Bad Request
-  /algorithms/soft-kpi-questions:
-    get:
-      tags:
-        - Algorithm
-      summary: Returns all soft-kpi questions
-      operationId: getSoftKPIQuestions
-      responses:
-        200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/SoftKPIQuestion"
+
   /algorithms/{algorithmId}:
     parameters:
       - name: algorithmId
@@ -625,31 +611,6 @@ components:
             $ref: "#/components/schemas/ExperimentIntersectionConfiguration"
       required: true
   schemas:
-    #### SOFTKPIS ####
-    SoftKPIQuestion:
-      type: object
-      properties:
-        id:
-          type: string
-          example: tco
-        question:
-          type: string
-          example: What is the total cost of ownership of this matching solution?
-        format:
-          type: string
-          enum: [string, number]
-    SoftKPIAnswer:
-      type: object
-      properties:
-        id:
-          type: string
-          example: tco
-        answer:
-          type: string
-      required:
-        - id
-        - answer
-
     #### ALGORITHM ####
     AlgorithmId:
       type: integer
@@ -666,10 +627,6 @@ components:
         description:
           type: string
           example: This is an open source python library
-        softKPIs:
-          type: array
-          items:
-            $ref: "#/components/schemas/SoftKPIAnswer"
     Algorithm:
       allOf:
         - type: object
