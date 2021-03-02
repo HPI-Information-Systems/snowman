@@ -787,9 +787,15 @@ components:
           example: ["id", "testColumn1", "testColumn2"]
         data:
           type: array
+          example:
+            [
+              ["1", "test value 1", "test value 2"],
+              ["2", "test value 1", "test value 2"],
+              [],
+              ["3", "other", "group"],
+            ]
           items:
             type: array
-            nullable: true
             example: ["1", "test value 1", "test value 2"]
             items:
               type: string

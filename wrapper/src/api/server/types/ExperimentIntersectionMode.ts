@@ -15,19 +15,10 @@
 /**
  * 
  * @export
- * @interface ExperimentIntersection
+ * @enum {string}
  */
-export interface ExperimentIntersection {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ExperimentIntersection
-     */
-    header: Array<string>;
-    /**
-     * 
-     * @type {Array<Array<string>>}
-     * @memberof ExperimentIntersection
-     */
-    data: Array<Array<string>>;
+export enum ExperimentIntersectionMode {
+    Pairs = 'PAIRS',
+    Clusters = 'CLUSTERS',
+    Investigative = 'INVESTIGATIVE'
 }

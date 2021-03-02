@@ -12,6 +12,7 @@ export * from './ExperimentFileFormat';
 export * from './ExperimentId';
 export * from './ExperimentIntersection';
 export * from './ExperimentIntersectionCount';
+export * from './ExperimentIntersectionMode';
 export * from './ExperimentValues';
 export * from './Metric';
 export * from './util';

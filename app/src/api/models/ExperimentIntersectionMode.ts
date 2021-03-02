@@ -15,19 +15,23 @@
 /**
  * 
  * @export
- * @interface ExperimentIntersection
+ * @enum {string}
  */
-export interface ExperimentIntersection {
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof ExperimentIntersection
-     */
-    header: Array<string>;
-    /**
-     * 
-     * @type {Array<Array<string>>}
-     * @memberof ExperimentIntersection
-     */
-    data: Array<Array<string>>;
+export enum ExperimentIntersectionMode {
+    Pairs = 'PAIRS',
+    Clusters = 'CLUSTERS',
+    Investigative = 'INVESTIGATIVE'
 }
+
+export function ExperimentIntersectionModeFromJSON(json: any): ExperimentIntersectionMode {
+    return ExperimentIntersectionModeFromJSONTyped(json, false);
+}
+
+export function ExperimentIntersectionModeFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExperimentIntersectionMode {
+    return json as ExperimentIntersectionMode;
+}
+
+export function ExperimentIntersectionModeToJSON(value?: ExperimentIntersectionMode | null): any {
+    return value as any;
+}
+

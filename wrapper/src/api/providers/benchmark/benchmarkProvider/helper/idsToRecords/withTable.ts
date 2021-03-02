@@ -60,9 +60,9 @@ class IdClustersToRecordClusters {
   }
 
   protected getRecordClusters(): ExperimentIntersection['data'] {
-    return this.idClusters.map((cluster) =>
-      cluster.map((id) => this.getRecord(id))
-    );
+    return this.idClusters
+      .flatMap((cluster) => [...cluster.map((id) => this.getRecord(id)), []])
+      .slice(0, -1);
   }
 
   protected getRecord(id: number): string[] {

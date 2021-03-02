@@ -5,6 +5,8 @@ export function idClustersToRecordClustersNoTable(
 ): ExperimentIntersection {
   return {
     header: ['id'],
-    data: idClusters.map((cluster) => cluster.map((id) => [id.toString()])),
+    data: idClusters
+      .flatMap((cluster) => [...cluster.map((id) => [id.toString()]), []])
+      .slice(0, -1),
   };
 }

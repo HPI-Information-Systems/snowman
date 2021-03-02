@@ -1,4 +1,7 @@
-import { ExperimentIntersection } from '../../server/types';
+import {
+  ExperimentIntersection,
+  ExperimentIntersectionMode,
+} from '../../server/types';
 import { Metric } from '../../server/types';
 export abstract class BaseBenchmarkProvider {
   abstract calculateMetrics(
@@ -9,6 +12,7 @@ export abstract class BaseBenchmarkProvider {
     goldStandardId: number,
     experimentId: number,
     goldStandardDuplicates: boolean,
-    experimentDuplicates: boolean
+    experimentDuplicates: boolean,
+    mode: ExperimentIntersectionMode
   ): ExperimentIntersection;
 }
