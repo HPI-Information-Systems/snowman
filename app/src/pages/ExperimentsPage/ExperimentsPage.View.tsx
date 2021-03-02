@@ -14,6 +14,7 @@ const ExperimentsPageView = ({
   clickOnTag,
   clickOnExperiment,
   deleteExperiment,
+  editExperiment,
   loadExperiments,
 }: ExperimentsPageProps): JSX.Element => {
   useEffect((): void => loadExperiments(), [loadExperiments]);
@@ -39,6 +40,7 @@ const ExperimentsPageView = ({
         clickOnCard={clickOnExperiment}
         selected={selectedExperiments}
         deleteCardHandler={deleteExperiment}
+        editCardHandler={editExperiment}
         multiple={true}
       />
       <AddExperimentFab />

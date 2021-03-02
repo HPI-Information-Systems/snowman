@@ -20,3 +20,5 @@ export const SUCCESS_UPDATE_ALGORITHM =
   'Successfully updated the designated matching solution!';
 export const SUCCESS_UPDATE_DATASET =
   'Successfully updated the designated dataset!';
+export const SUCCESS_TO_UPDATE_EXPERIMENT =
+  'Successfully updated the designated experiment!';

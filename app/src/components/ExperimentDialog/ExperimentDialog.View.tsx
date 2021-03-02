@@ -21,6 +21,7 @@ import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 
 const ExperimentDialogView = ({
   isOpen,
+  isAddDialog,
   closeDialog,
   clickOnCancel,
   experimentName,
@@ -32,13 +33,13 @@ const ExperimentDialogView = ({
   changeExperimentName,
   changeExperimentFileFormat,
   clickOnMatchingSolutionTag,
-  addExperiment,
+  clickOnSubmit,
   isValidForm,
   selectedFiles,
   changeSelectedFiles,
 }: ExperimentDialogProps): JSX.Element => (
   <ModalDialog
-    heading={'Add New Experiment'}
+    heading={isAddDialog ? 'Add New Experiment' : 'Update Existing Experiment'}
     isOpen={isOpen}
     closeDialog={closeDialog}
   >
@@ -61,6 +62,12 @@ const ExperimentDialogView = ({
           placeholder="e.g. Randomly assigned pairs for testing purposes."
         />
       </IonItem>
+      {!isAddDialog ? (
+        <IonItem>
+          Note: If you do not give a new experiment file, we do not change the
+          existing one
+        </IonItem>
+      ) : null}
       <IonItem>
         <IonLabel position="fixed">File Format:</IonLabel>
         <IonSelect
@@ -102,11 +109,11 @@ const ExperimentDialogView = ({
     <div className="center button-row">
       <IonButton
         className="button-hugh button-padding"
-        onClick={addExperiment}
+        onClick={clickOnSubmit}
         disabled={!isValidForm}
       >
         <IonIcon slot="start" icon={addCircleOutline} />
-        Add
+        {isAddDialog ? 'Add' : 'Update'}
       </IonButton>
       <IonButton
         className="button-hugh button-padding"

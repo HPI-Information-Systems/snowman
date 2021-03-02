@@ -8,34 +8,45 @@ import {
 import { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import {
-  addNewExperiment,
+  addOrUpdateExperiment,
   changeExperimentDescription,
   changeExperimentName,
   changeFileFormat,
   changeSelectedFiles,
   clickOnMatchingSolutionTag,
   closeDialog,
-} from 'store/actions/AddExperimentDialogStoreActions';
+} from 'store/actions/ExperimentDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
+import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
 
+const isValidExperimentDialog = (state: Store): boolean => {
+  if (
+    state.ExperimentDialogStore.experimentName.length < 1 ||
+    state.ExperimentDialogStore.selectedTags.length !== 1
+  )
+    return false;
+  if (state.ExperimentDialogStore.dialogType === DialogTypes.ADD_DIALOG) {
+    if (state.ExperimentDialogStore.selectedFiles.length === 0) return false;
+  }
+  return true;
+};
+
 const mapStateToProps = (state: Store): ExperimentDialogStateProps => ({
-  isOpen: state.AddExperimentDialogStore.isOpen,
-  experimentName: state.AddExperimentDialogStore.experimentName,
-  experimentDescription: state.AddExperimentDialogStore.experimentDescription,
+  isOpen: state.ExperimentDialogStore.isOpen,
+  isAddDialog: state.ExperimentDialogStore.experimentId === null,
+  experimentName: state.ExperimentDialogStore.experimentName,
+  experimentDescription: state.ExperimentDialogStore.experimentDescription,
   tags: state.AlgorithmsStore.algorithms.map(
     (anAlgorithm: Algorithm): string => anAlgorithm.name
   ),
-  selectedTags: state.AddExperimentDialogStore.selectedTags,
-  isValidForm:
-    state.AddExperimentDialogStore.experimentName.length > 0 &&
-    state.AddExperimentDialogStore.selectedTags.length === 1 &&
-    state.AddExperimentDialogStore.selectedFiles.length > 0,
-  selectedFiles: state.AddExperimentDialogStore.selectedFiles,
-  experimentFileFormat: state.AddExperimentDialogStore.experimentFileFormat,
+  selectedTags: state.ExperimentDialogStore.selectedTags,
+  isValidForm: isValidExperimentDialog(state),
+  selectedFiles: state.ExperimentDialogStore.selectedFiles,
+  experimentFileFormat: state.ExperimentDialogStore.experimentFileFormat,
 });
 
 const mapDispatchToProps = (
@@ -51,8 +62,8 @@ const mapDispatchToProps = (
     dispatch(changeFileFormat(event.detail.value as experimentFileFormatEnum)),
   clickOnMatchingSolutionTag: (aTag: string): void =>
     dispatch(clickOnMatchingSolutionTag(aTag)),
-  addExperiment: (): void => {
-    dispatch(addNewExperiment()).then();
+  clickOnSubmit: (): void => {
+    dispatch(addOrUpdateExperiment()).then();
   },
   changeSelectedFiles: (event: ChangeEvent<HTMLInputElement>): void =>
     dispatch(

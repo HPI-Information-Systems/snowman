@@ -9,12 +9,13 @@ export interface ExperimentDialogDispatchProps {
   changeExperimentDescription(event: IonChangeEvent): void;
   changeExperimentFileFormat(event: IonChangeEvent): void;
   clickOnMatchingSolutionTag(aTag: string): void;
-  addExperiment(): void;
+  clickOnSubmit(): void;
   changeSelectedFiles(event: ChangeEvent<HTMLInputElement>): void;
 }
 
 export interface ExperimentDialogStateProps {
   isOpen: boolean;
+  isAddDialog: boolean;
   experimentName: string;
   experimentDescription: string;
   experimentFileFormat: experimentFileFormatEnum;

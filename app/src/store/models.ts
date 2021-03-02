@@ -35,8 +35,10 @@ export interface DatasetDialogStore {
   selectedFiles: File[];
 }
 
-export interface AddExperimentDialogStore {
+export interface ExperimentDialogStore {
+  dialogType: DialogTypes;
   isOpen: boolean;
+  experimentId: number | null;
   experimentName: string;
   experimentDescription: string;
   experimentFileFormat: experimentFileFormatEnum;
@@ -83,7 +85,7 @@ export interface Store {
   ExperimentsStore: ExperimentsStore;
   AlgorithmsStore: AlgorithmsStore;
   DatasetDialogStore: DatasetDialogStore;
-  AddExperimentDialogStore: AddExperimentDialogStore;
+  ExperimentDialogStore: ExperimentDialogStore;
   AlgorithmDialogStore: AlgorithmDialogStore;
   GlobalIndicatorStore: GlobalIndicatorStore;
   MetricsStore: MetricsStore;

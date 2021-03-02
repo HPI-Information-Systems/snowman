@@ -1,11 +1,16 @@
-import { AddExperimentDialogStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
+import { Algorithm, Experiment } from 'api';
+import { ExperimentDialogStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
-import { AddExperimentDialogStore } from 'store/models';
+import { ExperimentDialogStore } from 'store/models';
+import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
+import { getAlgorithmTagFromId } from 'utils/algorithmHelpers';
 import { toggleSelectionArraySingleSelect } from 'utils/toggleSelectionArray';
 
-const initialState: AddExperimentDialogStore = {
+const initialState: ExperimentDialogStore = {
+  dialogType: DialogTypes.ADD_DIALOG,
   isOpen: false,
+  experimentId: null,
   experimentName: '',
   experimentDescription: '',
   experimentFileFormat: experimentFileFormatEnum.Pilot,
@@ -13,21 +18,42 @@ const initialState: AddExperimentDialogStore = {
   selectedFiles: [],
 };
 
-export const AddExperimentDialogReducer = (
-  state: AddExperimentDialogStore = initialState,
+export const ExperimentDialogReducer = (
+  state: ExperimentDialogStore = initialState,
   action: SnowmanAction
-): AddExperimentDialogStore => {
+): ExperimentDialogStore => {
   switch (action.type) {
-    case actionTypes.OPEN_DIALOG:
+    case actionTypes.OPEN_ADD_DIALOG:
       return {
         ...state,
+        dialogType: DialogTypes.ADD_DIALOG,
         isOpen: true,
       };
-    case actionTypes.CLOSE_DIALOG:
+    case actionTypes.OPEN_CHANGE_DIALOG:
       return {
         ...state,
-        isOpen: false,
+        dialogType: DialogTypes.CHANGE_DIALOG,
+        isOpen: true,
+        experimentId: (action.payload as Experiment).id,
+        experimentName: (action.payload as Experiment).name,
+        experimentDescription: (action.payload as Experiment).description ?? '',
+        selectedTags: [
+          getAlgorithmTagFromId(
+            (action.payload as Experiment).algorithmId,
+            action.optionalPayload as Algorithm[]
+          ),
+        ],
       };
+    case actionTypes.CLOSE_DIALOG:
+      if (state.dialogType === DialogTypes.ADD_DIALOG)
+        // Only keep current state for add dialog
+        return {
+          ...state,
+          isOpen: false,
+        };
+      else {
+        return initialState;
+      }
     case actionTypes.CHANGE_EXPERIMENT_NAME:
       return {
         ...state,
