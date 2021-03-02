@@ -2,14 +2,14 @@ import { databaseBackend } from '../setup/backend';
 
 export abstract class SchemaVersion {
   abstract readonly version: number;
-  abstract readonly successor?: SchemaVersion;
+  abstract readonly predecessor?: SchemaVersion;
   protected abstract migrateFromLastVersion(): void;
 
   migrate(fromVersion: number): void {
     if (this.version !== fromVersion) {
       databaseBackend().transaction(() => {
-        if (this.successor) {
-          this.successor.migrate(fromVersion);
+        if (this.predecessor) {
+          this.predecessor.migrate(fromVersion);
           this.migrateFromLastVersion();
           this.setVersion();
         } else {

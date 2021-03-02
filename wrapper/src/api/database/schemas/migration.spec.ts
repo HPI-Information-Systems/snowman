@@ -4,28 +4,28 @@ import { latest } from '.';
 import { SchemaVersion } from './schemaVersion';
 
 abstract class TestSchemaVersion extends SchemaVersion {
-  abstract successor?: TestSchemaVersion;
+  abstract predecessor?: TestSchemaVersion;
   migrated = false;
   protected migrateFromLastVersion(): void {
     this.migrated = true;
   }
   reset() {
     this.migrated = false;
-    this.successor?.reset();
+    this.predecessor?.reset();
   }
 }
 
 const TestSchemaV0 = new (class extends TestSchemaVersion {
   version = 0;
-  successor = undefined;
+  predecessor = undefined;
 })();
 const TestSchemaV1 = new (class extends TestSchemaVersion {
   version = 1;
-  successor = TestSchemaV0;
+  predecessor = TestSchemaV0;
 })();
 const TestSchemaV2 = new (class extends TestSchemaVersion {
   version = 2;
-  successor = TestSchemaV1;
+  predecessor = TestSchemaV1;
 })();
 
 describe('SchemaVersion', () => {
