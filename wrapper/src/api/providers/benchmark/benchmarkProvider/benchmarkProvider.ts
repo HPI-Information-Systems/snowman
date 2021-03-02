@@ -2,12 +2,12 @@ import {
   Dataset,
   ExperimentId,
   ExperimentIntersection,
+  ExperimentIntersectionMode,
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
 import { getProviders } from '../..';
 import { BaseBenchmarkProvider } from '../baseBenchmarkProvider';
 import { EvaluatorCache } from './helper/evaluator';
-import { ConfusionTupleMode } from './helper/evaluator/confusionMatrix/modes';
 import { idClustersToRecordClusters } from './helper/idsToRecords';
 import {
   Accuracy,
@@ -37,7 +37,7 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
     experimentId: number,
     goldStandardDuplicates: boolean,
     experimentDuplicates: boolean,
-    mode: ConfusionTupleMode = ConfusionTupleMode.PAIRS
+    mode: ExperimentIntersectionMode
   ): ExperimentIntersection {
     const dataset = this.getDatasetByExperimentIds(
       goldstandardId,

@@ -1,8 +1,8 @@
+import { ExperimentIntersectionMode } from '../../../../../../../server/types';
 import { RelaxedClustering } from '../../../cluster/test/relaxedClusterings';
-import { ConfusionTupleMode } from '../modes';
 
 type Clusters = number[][];
-type ClustersOfModes = { [key in ConfusionTupleMode]: Clusters };
+type ClustersOfModes = { [key in ExperimentIntersectionMode]: Clusters };
 
 export const confusionTuplesTestCases: {
   goldStandard: RelaxedClustering;
@@ -16,14 +16,14 @@ export const confusionTuplesTestCases: {
     experiment: [],
     expectedTruePositives: [],
     expectedFalseNegatives: {
-      [ConfusionTupleMode.PAIRS]: [],
-      [ConfusionTupleMode.CLUSTERS]: [],
-      [ConfusionTupleMode.INVESTIGATIVE]: [],
+      [ExperimentIntersectionMode.Pairs]: [],
+      [ExperimentIntersectionMode.Clusters]: [],
+      [ExperimentIntersectionMode.Investigative]: [],
     },
     expectedFalsePositives: {
-      [ConfusionTupleMode.PAIRS]: [],
-      [ConfusionTupleMode.CLUSTERS]: [],
-      [ConfusionTupleMode.INVESTIGATIVE]: [],
+      [ExperimentIntersectionMode.Pairs]: [],
+      [ExperimentIntersectionMode.Clusters]: [],
+      [ExperimentIntersectionMode.Investigative]: [],
     },
   },
   {
@@ -39,7 +39,7 @@ export const confusionTuplesTestCases: {
       [4, 5],
     ],
     expectedFalseNegatives: {
-      [ConfusionTupleMode.PAIRS]: [
+      [ExperimentIntersectionMode.Pairs]: [
         [0, 2],
         [0, 3],
         [0, 4],
@@ -53,7 +53,7 @@ export const confusionTuplesTestCases: {
         [3, 4],
         [3, 5],
       ],
-      [ConfusionTupleMode.CLUSTERS]: [
+      [ExperimentIntersectionMode.Clusters]: [
         [0, 2, 4],
         [0, 2, 5],
         [0, 3, 4],
@@ -63,7 +63,7 @@ export const confusionTuplesTestCases: {
         [1, 3, 4],
         [1, 3, 5],
       ],
-      [ConfusionTupleMode.INVESTIGATIVE]: [
+      [ExperimentIntersectionMode.Investigative]: [
         [0, 2, 3, 4, 5],
         [1, 2, 3, 4, 5],
         [2, 0, 1, 4, 5],
@@ -73,9 +73,9 @@ export const confusionTuplesTestCases: {
       ],
     },
     expectedFalsePositives: {
-      [ConfusionTupleMode.PAIRS]: [],
-      [ConfusionTupleMode.CLUSTERS]: [],
-      [ConfusionTupleMode.INVESTIGATIVE]: [],
+      [ExperimentIntersectionMode.Pairs]: [],
+      [ExperimentIntersectionMode.Clusters]: [],
+      [ExperimentIntersectionMode.Investigative]: [],
     },
   },
   {
@@ -91,12 +91,12 @@ export const confusionTuplesTestCases: {
       [4, 5],
     ],
     expectedFalseNegatives: {
-      [ConfusionTupleMode.PAIRS]: [],
-      [ConfusionTupleMode.CLUSTERS]: [],
-      [ConfusionTupleMode.INVESTIGATIVE]: [],
+      [ExperimentIntersectionMode.Pairs]: [],
+      [ExperimentIntersectionMode.Clusters]: [],
+      [ExperimentIntersectionMode.Investigative]: [],
     },
     expectedFalsePositives: {
-      [ConfusionTupleMode.PAIRS]: [
+      [ExperimentIntersectionMode.Pairs]: [
         [0, 2],
         [0, 3],
         [0, 4],
@@ -110,7 +110,7 @@ export const confusionTuplesTestCases: {
         [3, 4],
         [3, 5],
       ],
-      [ConfusionTupleMode.CLUSTERS]: [
+      [ExperimentIntersectionMode.Clusters]: [
         [0, 2, 4],
         [0, 2, 5],
         [0, 3, 4],
@@ -120,7 +120,7 @@ export const confusionTuplesTestCases: {
         [1, 3, 4],
         [1, 3, 5],
       ],
-      [ConfusionTupleMode.INVESTIGATIVE]: [
+      [ExperimentIntersectionMode.Investigative]: [
         [0, 2, 3, 4, 5],
         [1, 2, 3, 4, 5],
         [2, 0, 1, 4, 5],
@@ -145,19 +145,19 @@ export const confusionTuplesTestCases: {
       [4, 5],
     ],
     expectedFalseNegatives: {
-      [ConfusionTupleMode.PAIRS]: [
+      [ExperimentIntersectionMode.Pairs]: [
         [0, 2],
         [1, 2],
         [3, 4],
         [3, 5],
       ],
-      [ConfusionTupleMode.CLUSTERS]: [
+      [ExperimentIntersectionMode.Clusters]: [
         [0, 2],
         [1, 2],
         [3, 4],
         [3, 5],
       ],
-      [ConfusionTupleMode.INVESTIGATIVE]: [
+      [ExperimentIntersectionMode.Investigative]: [
         [0, 2],
         [1, 2],
         [2, 0, 1],
@@ -167,9 +167,9 @@ export const confusionTuplesTestCases: {
       ],
     },
     expectedFalsePositives: {
-      [ConfusionTupleMode.PAIRS]: [[2, 3]],
-      [ConfusionTupleMode.CLUSTERS]: [[2, 3]],
-      [ConfusionTupleMode.INVESTIGATIVE]: [
+      [ExperimentIntersectionMode.Pairs]: [[2, 3]],
+      [ExperimentIntersectionMode.Clusters]: [[2, 3]],
+      [ExperimentIntersectionMode.Investigative]: [
         [2, 3],
         [3, 2],
       ],

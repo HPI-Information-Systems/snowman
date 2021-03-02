@@ -1,6 +1,5 @@
 import { ExperimentIntersection } from 'api';
 import { ColumnDescriptor } from 'components/DataViewer/ColumnDescriptor';
-import { flattenDeep } from 'lodash';
 import { BinaryMetricsPageView } from 'pages/BinaryMetricsPage/BinaryMetricsPage.View';
 import {
   BinaryMetricsDispatchProps,
@@ -39,24 +38,19 @@ const mapStateToProps = (state: Store): BinaryMetricsDispatchProps => ({
   ],
   selectedMetricsTuplesCategory: state.MetricsStore.selectedDataView,
   dataViewerTuples: ((): unknown[] => {
-    const group = getTuplesByTuplesCategory(
+    const tuples = getTuplesByTuplesCategory(
       state.MetricsStore,
       state.MetricsStore.selectedDataView
     );
-    if (group !== undefined) {
-      return flattenDeep(
-        group.data.map((aCluster: string[][]): unknown[] => [
-          ...aCluster.map((aRow: string[]): unknown => {
-            const rowObject: Record<string, string> = {};
-            aRow.forEach((value: string, index: number): void => {
-              rowObject[group.header[index]] = value;
-            });
-            return rowObject;
-          }),
-          // we insert an empty line at the end of a cluster
-          {},
-        ])
-      );
+    if (tuples !== undefined) {
+      const { header, data: rows } = tuples;
+      return rows.map((row) => {
+        const rowObject: Record<string, string> = {};
+        row.forEach((value: string, index: number): void => {
+          rowObject[header[index]] = value;
+        });
+        return rowObject;
+      });
     }
     return [];
   })(),

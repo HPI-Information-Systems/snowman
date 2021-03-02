@@ -1,6 +1,7 @@
+import { ExperimentIntersectionMode } from '../../../../../../server/types';
 import { relaxedClusteringToArray } from '../../cluster/test/relaxedClusterings';
 import { NodeID, Subclustering } from '../../cluster/types';
-import { applySubclusteringTransformation, ConfusionTupleMode } from './modes';
+import { applySubclusteringTransformation } from './modes';
 
 export interface ConfusionMatrixTuples {
   truePositives: NodeID[][];
@@ -11,7 +12,7 @@ export interface ConfusionMatrixTuples {
 export function calculateConfusionMatrixTuples(
   goldSubclustering: Subclustering,
   experimentSubclustering: Subclustering,
-  mode: ConfusionTupleMode
+  mode: ExperimentIntersectionMode
 ): ConfusionMatrixTuples {
   return {
     truePositives: relaxedClusteringToArray(goldSubclustering).filter(

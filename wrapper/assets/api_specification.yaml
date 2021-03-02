@@ -703,6 +703,13 @@ paths:
             example: similarity
             type: string
           style: form
+        - explode: true
+          in: query
+          name: mode
+          required: false
+          schema:
+            $ref: "#/components/schemas/ExperimentIntersectionMode"
+          style: form
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       responses:
@@ -728,6 +735,14 @@ paths:
         intersects multiple experiments and returns the counts of the number
         of records. This can be used to calculate the confusion-matrix
       operationId: calculateExperimentIntersectionCount
+      parameters:
+        - explode: true
+          in: query
+          name: mode
+          required: false
+          schema:
+            $ref: "#/components/schemas/ExperimentIntersectionMode"
+          style: form
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       responses:
@@ -858,7 +873,7 @@ components:
           - 0
           - 1
         value: 0.75
-        info: The meaningfulness of this metric is discussed in the research community.
+        info: The meaningfulness of the f1 score is debated in the research community.
         infoLink: https://link.springer.com/article/10.1007/s11222-017-9746-6
       properties:
         name:
@@ -868,9 +883,7 @@ components:
           example: \frac{truePositives}{truePositives + falsePositives}
           type: string
         info:
-          example:
-            The meaningfulness of this metric is discussed in the research
-            community.
+          example: The meaningfulness of the f1 score is debated in the research community.
           type: string
         infoLink:
           example: https://link.springer.com/article/10.1007/s11222-017-9746-6
@@ -918,14 +931,16 @@ components:
     ExperimentIntersection:
       example:
         data:
-          - - - "1"
-              - hallo
-            - - "1"
-              - hallo
-          - - - "1"
-              - hallo
-            - - "1"
-              - hallo
+          - - "1"
+            - test value 1
+            - test value 2
+          - - "2"
+            - test value 1
+            - test value 2
+          - []
+          - - "3"
+            - "other"
+            - "group"
         header:
           - id
           - testColumn1
@@ -941,13 +956,12 @@ components:
           type: array
         data:
           items:
+            example:
+              - "1"
+              - test value 1
+              - test value 2
             items:
-              example:
-                - "1"
-                - hallo
-              items:
-                type: string
-              type: array
+              type: string
             type: array
           type: array
       required:
@@ -956,14 +970,26 @@ components:
       type: object
     ExperimentIntersectionCount:
       example:
-        count: 37
+        numberRows: 37
+        numberGroups: 10
       properties:
-        count:
+        numberRows:
           example: 37
           type: integer
+        numberGroups:
+          example: 10
+          type: integer
       required:
-        - count
+        - numberGroups
+        - numberRows
       type: object
+    ExperimentIntersectionMode:
+      default: PAIRS
+      enum:
+        - PAIRS
+        - CLUSTERS
+        - INVESTIGATIVE
+      type: string
     Algorithm_allOf:
       properties:
         id:

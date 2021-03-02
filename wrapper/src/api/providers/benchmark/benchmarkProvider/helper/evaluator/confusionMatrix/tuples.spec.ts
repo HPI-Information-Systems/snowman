@@ -1,7 +1,7 @@
+import { ExperimentIntersectionMode } from '../../../../../../server/types';
 import { Subclustering } from '../../cluster/subclustering';
 import { relaxedClusteringToClustering } from '../../cluster/test/relaxedClusterings';
 import { expectClusteringsToEqual } from '../../cluster/test/utility';
-import { ConfusionTupleMode } from './modes';
 import { confusionTuplesTestCases } from './test/testCases';
 import {
   calculateConfusionMatrixTuples,
@@ -32,9 +32,9 @@ describe.each(confusionTuplesTestCases)(
       );
     });
     describe.each(
-      Object.values(ConfusionTupleMode).filter(
-        (mode) => typeof mode === 'number'
-      ) as ConfusionTupleMode[]
+      Object.values(ExperimentIntersectionMode).filter(
+        (mode) => typeof mode === 'string'
+      ) as ExperimentIntersectionMode[]
     )('mode', (mode) => {
       let confusionMatrixTuples: ConfusionMatrixTuples;
       beforeAll(() => {

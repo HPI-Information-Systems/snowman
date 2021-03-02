@@ -1,3 +1,4 @@
+import { ExperimentIntersectionMode } from '../../../../../server/types';
 import { LazyProperty } from '../../../../../tools/lazyProperty';
 import { Subclustering } from '../cluster/subclustering';
 import {
@@ -10,7 +11,6 @@ import {
   ConfusionMatrixCounts,
   ConfusionMatrixTuples,
 } from './confusionMatrix';
-import { ConfusionTupleMode } from './confusionMatrix/modes';
 
 export class Evaluator {
   protected goldSubclustering: LazyProperty<SubclusteringSpec>;
@@ -37,10 +37,12 @@ export class Evaluator {
   }
 
   protected _confusionMatrixTuples = new Map<
-    ConfusionTupleMode,
+    ExperimentIntersectionMode,
     ConfusionMatrixTuples
   >();
-  confusionMatrixTuples(mode: ConfusionTupleMode): ConfusionMatrixTuples {
+  confusionMatrixTuples(
+    mode: ExperimentIntersectionMode
+  ): ConfusionMatrixTuples {
     let tuples = this._confusionMatrixTuples.get(mode);
     if (!tuples) {
       tuples = calculateConfusionMatrixTuples(
