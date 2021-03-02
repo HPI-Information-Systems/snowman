@@ -46,9 +46,7 @@ const SideMenuView = ({ categoryStructure }: SideMenuProps): JSX.Element => (
                       <h2>{aCategoryItem.key}</h2>
                       {aCategoryItem.selectedOptions.map(
                         (anOption: string): JSX.Element => (
-                          <>
-                            <p key={anOption}>{anOption}</p>
-                          </>
+                          <p key={anOption}>{anOption}</p>
                         )
                       )}
                     </IonLabel>
