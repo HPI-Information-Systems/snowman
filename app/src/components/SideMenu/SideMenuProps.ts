@@ -5,6 +5,7 @@ export interface CategoryItem {
   enterItem(): void;
   selectedOptions: string[];
   menuIcon: string;
+  isActive: boolean;
 }
 
 export interface SideMenuCategory {

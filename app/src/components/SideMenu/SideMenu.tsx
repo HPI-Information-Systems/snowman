@@ -5,11 +5,12 @@ import {
   SideMenuProps,
 } from 'components/SideMenu/SideMenuProps';
 import { skull } from 'ionicons/icons';
-import { difference, sortBy } from 'lodash';
+import { difference, isEqual, sortBy } from 'lodash';
 import { connect } from 'react-redux';
 import { Store } from 'store/models';
 import { getExperimentNameFromId } from 'utils/experimentsHelpers';
 import {
+  getCurrentPathMapper,
   getPathResolution,
   IPathMapper,
   menuCategories,
@@ -51,6 +52,7 @@ const getCategoryItemFromPathMapper = (
     navigateTo(aPathMapper.path);
   },
   selectedOptions: getSelectedOptionsFromPathMapper(aPathMapper, state),
+  isActive: isEqual(aPathMapper, getCurrentPathMapper()),
 });
 
 const getCategories = (): string[] =>

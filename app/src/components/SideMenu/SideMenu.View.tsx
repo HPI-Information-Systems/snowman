@@ -42,7 +42,7 @@ const SideMenuView = ({ categoryStructure }: SideMenuProps): JSX.Element => (
                     onClick={aCategoryItem.enterItem}
                   >
                     <IonIcon
-                      color={aCategoryItem.couldEnter ? 'primary' : 'dark'}
+                      color={aCategoryItem.isActive ? 'primary' : 'dark'}
                       slot="start"
                       icon={aCategoryItem.menuIcon}
                     />
