@@ -18,7 +18,6 @@ const FileInput = ({
       currentFileInput.click();
     }
   };
-  /* React.Fragment is required here to ensure the elements have correct parent! */
   return (
     <>
       <IonText
