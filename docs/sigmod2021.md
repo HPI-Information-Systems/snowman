@@ -3,7 +3,7 @@
 Welcome participants of the [ACM SIGMOD 2021 programming contest](https://dbgroup.ing.unimore.it/sigmod21contest/)! This page contains some special information for you to get
 started more easily with our tool.
 
-Feel free to open an issue in case you find a bug or see space for improvement :)
+Feel free to open an [issue](https://github.com/HPI-Information-Systems/snowman/issues/new/choose) in case you find a bug or see space for improvement :)
 
 ## Introduction
 
