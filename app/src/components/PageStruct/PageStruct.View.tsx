@@ -29,7 +29,7 @@ const PageStructView = ({
           </IonButtons>
           <IonTitle>{title}</IonTitle>
           <div slot="end" className="spinner-container">
-            {showIndicator ? <IonSpinner color="light" /> : null}
+            {showIndicator ? <IonSpinner className="spinner-white" /> : null}
           </div>
         </IonToolbar>
       </IonHeader>
