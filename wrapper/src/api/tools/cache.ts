@@ -1,27 +1,30 @@
 import { LazyProperty } from './lazyProperty';
 import { Primitive } from './types';
 
-export class Cache<KeyItemT extends Primitive, T> {
+export class Cache<KeyItemT extends Primitive, T, KeyT extends KeyItemT[][]> {
   protected value?: T;
-  protected readonly directSubcaches = new Map<KeyItemT, Cache<KeyItemT, T>>();
-  protected readonly nestedSubcache: LazyProperty<Cache<KeyItemT, T>>;
+  protected readonly directSubcaches = new Map<
+    KeyItemT,
+    Cache<KeyItemT, T, KeyT>
+  >();
+  protected readonly nestedSubcache: LazyProperty<Cache<KeyItemT, T, KeyT>>;
 
-  constructor(protected readonly create: (...key: KeyItemT[][]) => T) {
+  constructor(protected readonly create: (...key: KeyT) => T) {
     this.nestedSubcache = new LazyProperty(
-      () => new Cache<KeyItemT, T>(this.create)
+      () => new Cache<KeyItemT, T, KeyT>(this.create)
     );
   }
 
-  protected getOrAddDirectSubcache(key: KeyItemT): Cache<KeyItemT, T> {
+  protected getOrAddDirectSubcache(key: KeyItemT): Cache<KeyItemT, T, KeyT> {
     let subcache = this.directSubcaches.get(key);
     if (!subcache) {
-      subcache = new Cache<KeyItemT, T>(this.create);
+      subcache = new Cache<KeyItemT, T, KeyT>(this.create);
       this.directSubcaches.set(key, subcache);
     }
     return subcache;
   }
 
-  protected getSorted(key: KeyItemT[][], xOffset = 0, yOffset = 0): T {
+  protected getSorted(key: KeyT, xOffset = 0, yOffset = 0): T {
     if (xOffset === key.length) {
       if (!this.value) {
         this.value = this.create(...key);
@@ -41,7 +44,7 @@ export class Cache<KeyItemT extends Primitive, T> {
     }
   }
 
-  get(...key: KeyItemT[][]): T {
+  get(...key: KeyT): T {
     key.forEach((subKey) => subKey.sort());
     return this.getSorted(key);
   }
