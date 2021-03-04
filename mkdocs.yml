@@ -19,6 +19,9 @@ nav:
 extra_css:
   - assets/extra.css
 
+repo_url: https://github.com/HPI-Information-Systems/snowman
+repo_name: snowman (GitHub)
+
 theme:
   name: material
   logo: assets/V2-128.png
