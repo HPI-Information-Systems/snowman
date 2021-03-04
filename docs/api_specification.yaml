@@ -453,6 +453,8 @@ paths:
               - clusterER
               - pilot
               - sigmod2021
+              - BHANA
+              - BPIES
           required: true
       requestBody:
         content:

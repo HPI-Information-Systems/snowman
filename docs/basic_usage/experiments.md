@@ -95,6 +95,10 @@ The open-source matching solution Magellan is widely used in research. We suppor
 
 See [here](https://dbgroup.ing.unimore.it/sigmod21contest/task.shtml).
 
-### ClusterER
+### Proprietary Formats
 
-This is an internal file format.
+We support a range of proprietary experiment formats. A list of those can be found here:
+
+- BHANA
+- BPIES
+- ClusterER

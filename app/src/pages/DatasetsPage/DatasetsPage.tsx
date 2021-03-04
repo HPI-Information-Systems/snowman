@@ -34,8 +34,8 @@ const mapStateToProps = (state: Store): DatasetsPageStateProps => ({
         description: aDataset.description,
         subtitle: (aDataset?.tags ?? []).join(', ').toUpperCase(),
         tags: [
-          `Total: ${aDataset.numberOfRecords}`,
-          `Uploaded: ${aDataset.numberOfUploadedRecords}`,
+          `Total: ${aDataset.numberOfRecords ?? 'unknown'}`,
+          `Uploaded: ${aDataset.numberOfUploadedRecords ?? 'none'}`,
         ],
       })
     ),

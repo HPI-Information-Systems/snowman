@@ -341,5 +341,7 @@ export enum SetExperimentFileFormatEnum {
     Magellan = 'magellan',
     ClusterEr = 'clusterER',
     Pilot = 'pilot',
-    Sigmod2021 = 'sigmod2021'
+    Sigmod2021 = 'sigmod2021',
+    Bhana = 'BHANA',
+    Bpies = 'BPIES'
 }
