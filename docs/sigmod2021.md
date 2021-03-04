@@ -32,6 +32,9 @@ out of the box. More datasets will be added as soon as they are released by the 
 
 1. **Computers**: prepackaged dataset X1 and gold standard Y1
 
+If you want to upload further datasets which have the same format as the SIGMOD-datasets, you will have to change some default settings 
+in the dataset-uploader-dialog: Set the ```ID Column``` from ```id``` to ```instance_id``` and set the ```Escape character``` to ```"```. You can then select the dataset file and click on ```ADD```.
+
 ## Appendix
 
 We wish all participants best of luck!
