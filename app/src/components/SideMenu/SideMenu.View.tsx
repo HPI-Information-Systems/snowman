@@ -18,7 +18,10 @@ import {
 } from 'components/SideMenu/SideMenuProps';
 import React from 'react';
 
-const SideMenuView = ({ categoryStructure }: SideMenuProps): JSX.Element => (
+const SideMenuView = ({
+  categoryStructure,
+  enterView,
+}: SideMenuProps): JSX.Element => (
   <IonMenu contentId="main">
     <IonHeader>
       <IonToolbar color="primary">
@@ -39,7 +42,7 @@ const SideMenuView = ({ categoryStructure }: SideMenuProps): JSX.Element => (
                     key={aCategoryItem.key}
                     button
                     disabled={!aCategoryItem.couldEnter}
-                    onClick={aCategoryItem.enterItem}
+                    onClick={(): void => enterView(aCategoryItem.key)}
                   >
                     <IonIcon
                       color={aCategoryItem.isActive ? 'primary' : 'dark'}
@@ -47,7 +50,7 @@ const SideMenuView = ({ categoryStructure }: SideMenuProps): JSX.Element => (
                       icon={aCategoryItem.menuIcon}
                     />
                     <IonLabel>
-                      <h2>{aCategoryItem.key}</h2>
+                      <h2>{aCategoryItem.name}</h2>
                       {aCategoryItem.selectedOptions.map(
                         (anOption: string): JSX.Element => (
                           <p key={anOption}>{anOption}</p>

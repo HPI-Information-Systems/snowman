@@ -2,32 +2,31 @@ import SideMenuView from 'components/SideMenu/SideMenu.View';
 import {
   CategoryItem,
   SideMenuCategory,
-  SideMenuProps,
+  SideMenuDispatchProps,
+  SideMenuStateProps,
 } from 'components/SideMenu/SideMenuProps';
 import { skull } from 'ionicons/icons';
-import { difference, isEqual, sortBy } from 'lodash';
+import { difference, sortBy } from 'lodash';
 import { connect } from 'react-redux';
+import { navigateTo } from 'store/actions/RouterStoreActions';
+import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
+import { ViewMetaInformationCollection } from 'store/reducers/rootReducer';
+import { ViewIDs } from 'store/reducers/rootReducer';
+import { menuCategories } from 'types/MenuCategories';
+import { ViewMetaInformation } from 'types/ViewMetaInformation';
 import { getExperimentNameFromId } from 'utils/experimentsHelpers';
-import {
-  getCurrentPathMapper,
-  getPathResolution,
-  IPathMapper,
-  menuCategories,
-  navigateTo,
-  pathMapperKeys,
-} from 'utils/pathHandlers';
 
 const getSelectedOptionsFromPathMapper = (
-  aPathMapper: IPathMapper,
+  aViewMetaInfo: ViewMetaInformation,
   state: Store
 ): string[] => {
-  switch (aPathMapper.key) {
-    case pathMapperKeys.DATASETS: {
+  switch (aViewMetaInfo.key) {
+    case ViewIDs.DATASETS: {
       if (state.DatasetsStore.selectedDataset === null) return [];
       return [state.DatasetsStore.selectedDataset.name];
     }
-    case pathMapperKeys.EXPERIMENTS:
+    case ViewIDs.EXPERIMENTS:
       return state.ExperimentsStore.selectedExperiments.map(
         (anExperimentId: number, index: number): string =>
           `${index + 1}. ${getExperimentNameFromId(
@@ -40,45 +39,51 @@ const getSelectedOptionsFromPathMapper = (
   }
 };
 
-const getCategoryItemFromPathMapper = (
-  aPathMapper: IPathMapper,
+const getCategoryItemFromViewMetaInfo = (
+  aViewMetaInfo: ViewMetaInformation,
   state: Store
 ): CategoryItem => ({
-  name: aPathMapper.key,
-  key: aPathMapper.key,
-  menuIcon: aPathMapper.menuIcon ?? skull,
-  couldEnter: aPathMapper.accessGuard(state),
-  enterItem() {
-    navigateTo(aPathMapper.path);
-  },
-  selectedOptions: getSelectedOptionsFromPathMapper(aPathMapper, state),
-  isActive: isEqual(aPathMapper, getCurrentPathMapper()),
+  name: aViewMetaInfo.menuName,
+  key: aViewMetaInfo.key,
+  menuIcon: aViewMetaInfo.menuIcon ?? skull,
+  couldEnter: aViewMetaInfo.accessGuard(state),
+  selectedOptions: getSelectedOptionsFromPathMapper(aViewMetaInfo, state),
+  isActive: aViewMetaInfo.key === state.RenderLogicStore.currentViewID,
 });
 
 const getCategories = (): string[] =>
   difference(Object.values(menuCategories), [menuCategories.UNCATEGORIZED]);
 
-const getPathMappersOfCategory = (aCategory: string): IPathMapper[] =>
+const getViewMetaInfoOfCategory = (aCategory: string): ViewMetaInformation[] =>
   sortBy(
-    getPathResolution().filter(
-      (aPathMapper: IPathMapper): boolean =>
-        aPathMapper.shouldShowInMenu && aPathMapper.menuCategory === aCategory
+    ViewMetaInformationCollection.filter(
+      (aViewMetaInfo: ViewMetaInformation): boolean =>
+        aViewMetaInfo.shouldShowInMenu &&
+        aViewMetaInfo.menuCategory === aCategory
     ),
     ['menuSortKey', 'key']
   );
 
-const mapStateToProps = (state: Store): SideMenuProps => ({
+const mapStateToProps = (state: Store): SideMenuStateProps => ({
   categoryStructure: getCategories().map(
     (aCategory: string): SideMenuCategory => ({
       name: aCategory,
-      categoryItems: getPathMappersOfCategory(aCategory).map(
-        (aPathMapper: IPathMapper): CategoryItem =>
-          getCategoryItemFromPathMapper(aPathMapper, state)
+      categoryItems: getViewMetaInfoOfCategory(aCategory).map(
+        (aPathMapper: ViewMetaInformation): CategoryItem =>
+          getCategoryItemFromViewMetaInfo(aPathMapper, state)
       ),
     })
   ),
 });
 
-const SideMenu = connect(mapStateToProps)(SideMenuView);
+const mapDispatchToProps = (
+  dispatch: SnowmanDispatch
+): SideMenuDispatchProps => ({
+  enterView(aViewId: ViewIDs): void {
+    dispatch(navigateTo(aViewId));
+  },
+});
+
+const SideMenu = connect(mapStateToProps, mapDispatchToProps)(SideMenuView);
 
 export default SideMenu;
