@@ -1,4 +1,6 @@
 import type { ExperimentInserter } from './experimentInserter';
+import { B_HANAExperimentInserter } from './formats/b_hana';
+import { B_PIESExperimentInserter } from './formats/b_pies';
 import { ClusterERExperimentInserter } from './formats/clusterER';
 import { MagellanExperimentInserter } from './formats/magellan';
 import { PilotExperimentInserter } from './formats/pilot';
@@ -18,6 +20,8 @@ export const experimentFormats = [
   ['clusterER', ClusterERExperimentInserter],
   ['pilot', PilotExperimentInserter],
   ['sigmod2021', Sigmod2021ExperimentInserter],
+  ['BHANA', B_HANAExperimentInserter],
+  ['BPIES', B_PIESExperimentInserter],
 ] as const;
 const experimentInserters = new Map<string, InstantiableExperimentInserter>(
   experimentFormats
