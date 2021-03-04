@@ -48,4 +48,10 @@ export class Cache<KeyItemT extends Primitive, T, KeyT extends KeyItemT[][]> {
     key.forEach((subKey) => subKey.sort());
     return this.getSorted(key);
   }
+
+  clear(): void {
+    this.value = undefined;
+    this.directSubcaches.clear();
+    this.nestedSubcache.clear();
+  }
 }
