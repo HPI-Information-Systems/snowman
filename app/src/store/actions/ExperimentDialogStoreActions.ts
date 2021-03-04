@@ -177,9 +177,11 @@ const addNewExperiment = (): SnowmanThunkAction<Promise<void>> => async (
 ): Promise<void> => {
   dispatch(createNewExperiment())
     .then((id: number): Promise<void> => dispatch(uploadExperimentFile(id)))
-    .then((): Promise<void> => dispatch(getExperiments()))
     .then((): void => dispatch(resetDialog()))
-    .finally((): void => dispatch(closeDialog()));
+    .finally((): void => {
+      dispatch(getExperiments());
+      dispatch(closeDialog());
+    });
 };
 
 const updateExistingExperiment = (): SnowmanThunkAction<
@@ -187,9 +189,11 @@ const updateExistingExperiment = (): SnowmanThunkAction<
 > => async (dispatch: SnowmanDispatch): Promise<void> => {
   dispatch(editExistingExperiment())
     .then((): Promise<void> => dispatch(uploadExperimentFile()))
-    .then((): Promise<void> => dispatch(getExperiments()))
     .then((): void => dispatch(resetDialog()))
-    .finally((): void => dispatch(closeDialog()));
+    .finally((): void => {
+      dispatch(getExperiments());
+      dispatch(closeDialog());
+    });
 };
 
 export const addOrUpdateExperiment = (): SnowmanThunkAction<

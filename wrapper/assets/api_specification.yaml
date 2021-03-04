@@ -586,6 +586,8 @@ paths:
               - clusterER
               - pilot
               - sigmod2021
+              - BHANA
+              - BPIES
             type: string
           style: form
       requestBody:

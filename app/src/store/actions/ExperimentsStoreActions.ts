@@ -10,6 +10,7 @@ import {
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
+import { SUCCESS_DELETE_EXPERIMENT } from 'utils/statusMessages';
 
 export const clickOnExperimentTag = (aTag: string): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
@@ -59,6 +60,7 @@ export const deleteExperiment = (
   return RequestHandler(
     (): Promise<void> =>
       new ExperimentsApi().deleteExperiment({ experimentId: id }),
-    dispatch
+    dispatch,
+    SUCCESS_DELETE_EXPERIMENT
   ).then((): Promise<void> => dispatch(getExperiments()));
 };

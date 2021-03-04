@@ -33,6 +33,9 @@ Within the side menu on the left, you can then see the order in which the experi
 
 To ease the import process, Snowman understands several file formats out of the box. Those include:
 
+**Attention:** The tool only accepts source files in **csv** format at the moment - so in case your source file is a Microsoft Excel file,
+you'll first have to export it to csv!
+
 ### Pilot
 
 This file format was introduced with the initial prototype and is the easiest available format.
@@ -88,10 +91,14 @@ The open-source matching solution Magellan is widely used in research. We suppor
 ...
 ```
 
-### Sigmod2021
+### SIGMOD2021
 
-See [here](https://dbgroup.ing.unimore.it/sigmod21contest/task.shtml).
+For more information, see [here](/sigmod2021).
 
-### ClusterER
+### Proprietary Formats
 
-This is an internal file format.
+We support a range of proprietary experiment formats. A list of those can be found here:
+
+- BHANA
+- BPIES
+- ClusterER
