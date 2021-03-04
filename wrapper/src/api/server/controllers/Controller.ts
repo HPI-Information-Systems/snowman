@@ -1,6 +1,7 @@
 import stringify from 'csv-stringify';
 import { Response } from 'express';
 
+import { logger } from '../../tools/logger';
 import { ErrorResponse, SuccessResponse } from '../services/Service';
 import { Request } from '../types/util';
 
@@ -49,6 +50,7 @@ export class Controller {
     if (typeof payload === 'number') {
       payload = payload.toString();
     }
+    logger.error((payload as string).toString());
     response.status(error.code || 500).send(payload);
   }
 
