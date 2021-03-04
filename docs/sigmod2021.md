@@ -7,7 +7,7 @@ Feel free to open an [issue](https://github.com/HPI-Information-Systems/snowman/
 
 ## Introduction
 
-...
+This tool will help you to compare and evaluate your data matching solutions. You can upload experiment results from your data matching solution and then compare it with a goldstandard, compare two experiment runs with each other or calculate binary metrics like the precision or recall.
 
 ## Setup
 
