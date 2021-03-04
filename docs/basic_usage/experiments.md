@@ -91,7 +91,7 @@ The open-source matching solution Magellan is widely used in research. We suppor
 ...
 ```
 
-### Sigmod2021
+### SIGMOD2021
 
 For more information, see [here](/sigmod2021).
 

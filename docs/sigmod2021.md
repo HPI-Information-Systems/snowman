@@ -18,9 +18,9 @@ We are working closely with the contest team to allow for a seamless experience.
 To use snowman, you'll have to download the latest [release (Github Releases)](https://github.com/HPI-Information-Systems/snowman/releases) of
 snowman for your specific os. After that you are able to start snowman!  
 As a first step, we'd suggest for you to start with our section [Basic Usage](/basic_usage/introduction)
-for a guide of how to benchmark and evaluate with snowman.
+for a guide of how to benchmark and evaluate matching solutions with snowman.
 
-Some contest datasets are already bundled with the release. Select on of them, upload your own experiment result and
+Some contest datasets are already bundled with the release. Select one of them, upload your own experiment result and
 start benchmarking!
 
 In case you'll want to upgrade later on, simply download the newest release and you're ready to go!
@@ -28,7 +28,7 @@ In case you'll want to upgrade later on, simply download the newest release and 
 ## Datasets
 
 We've included an automatic importer for the gold standard format and validated that the below datasets can be imported
-out of the box. More datasets will be added as soon as they were released by the contest team.
+out of the box. More datasets will be added as soon as they are released by the contest team.
 
 1. **Computers**: prepackaged dataset X1 and gold standard Y1
 
