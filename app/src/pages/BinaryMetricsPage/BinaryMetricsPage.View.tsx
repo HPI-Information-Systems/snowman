@@ -93,7 +93,7 @@ export const BinaryMetricsPageView = ({
       </IonText>
       <div>
         {confusionMatrix.totalCount !== undefined ? (
-          <IonChip outline={true} color="primary">
+          <IonChip outline={true} color="dark">
             Total Count: {confusionMatrix.totalCount}
           </IonChip>
         ) : null}
