@@ -4,6 +4,9 @@ import {
   ExperimentIntersection,
   ExperimentIntersectionCount,
   ExperimentIntersectionMode,
+  ExperimentIntersectionPairCountsItem,
+  ExperimentIntersectionPairCountsRequestExperiments,
+  ExperimentIntersectionRequestExperiments,
   Metric,
 } from '../types';
 import { Service, SuccessResponse } from './Service';
@@ -20,40 +23,18 @@ function provider() {
  * returns ExperimentIntersectionCount
  * */
 export async function calculateExperimentIntersectionCount({
-  body,
+  body: config,
   mode = ExperimentIntersectionMode.Pairs,
 }: {
-  body: {
-    experimentId: ExperimentId;
-    predictedCondition: boolean;
-    similarityAttribute?: string;
-    similarityScore?: number;
-  }[];
+  body: ExperimentIntersectionRequestExperiments[];
   mode?: ExperimentIntersectionMode;
 }): Promise<SuccessResponse<ExperimentIntersectionCount>> {
   return Service.response(
-    () => {
-      if (body.length === 2) {
-        const tuples = provider().getConfusionTuples(
-          body[0].experimentId,
-          body[1].experimentId,
-          body[0].predictedCondition,
-          body[1].predictedCondition,
-          mode
-        ).data;
-        return {
-          numberGroups: tuples.reduce(
-            (prev, cur) => prev + (cur.length === 0 ? 1 : 0),
-            tuples.length === 0 ? 0 : 1
-          ),
-          numberRows: tuples.length,
-        };
-      } else {
-        throw new Error(
-          `Intersection for ${body.length} experiments is not supported so far! Please provide exactly two experiments`
-        );
-      }
-    },
+    () =>
+      provider().calculateExperimentIntersectionCount({
+        config,
+        mode,
+      }),
     200,
     404
   );
@@ -70,39 +51,39 @@ export async function calculateExperimentIntersectionCount({
  * returns String
  * */
 export async function calculateExperimentIntersectionRecords({
-  body,
+  body: config,
   startAt,
   limit,
   sortBy,
   mode = ExperimentIntersectionMode.Pairs,
 }: {
-  body: {
-    experimentId: ExperimentId;
-    predictedCondition: boolean;
-    similarityAttribute?: string;
-    similarityScore?: number;
-  }[];
+  body: ExperimentIntersectionRequestExperiments[];
   startAt?: number;
   limit?: number;
   sortBy?: string;
   mode?: ExperimentIntersectionMode;
 }): Promise<SuccessResponse<ExperimentIntersection>> {
   return Service.response(
-    () => {
-      if (body.length === 2) {
-        return provider().getConfusionTuples(
-          body[0].experimentId,
-          body[1].experimentId,
-          body[0].predictedCondition,
-          body[1].predictedCondition,
-          mode
-        );
-      } else {
-        throw new Error(
-          `Intersection for ${body.length} experiments is not supported so far! Please provide exactly two experiments`
-        );
-      }
-    },
+    () =>
+      provider().calculateExperimentIntersectionRecords({
+        config,
+        startAt,
+        limit,
+        sortBy,
+        mode,
+      }),
+    200,
+    404
+  );
+}
+
+export async function calculateExperimentIntersectionPairCounts({
+  body: config,
+}: {
+  body: ExperimentIntersectionPairCountsRequestExperiments[];
+}): Promise<SuccessResponse<ExperimentIntersectionPairCountsItem[]>> {
+  return Service.response(
+    () => provider().calculateExperimentIntersectionPairCounts(config),
     200,
     404
   );
@@ -135,7 +116,7 @@ export async function getBinaryMetrics({
   similarityAttributeUnderscoreexperiment2?: string;
 }): Promise<SuccessResponse<Array<Metric>>> {
   return Service.response(
-    () => provider().calculateMetrics(experimentId1, experimentId2),
+    () => provider().getBinaryMetrics(experimentId1, experimentId2),
     200,
     400
   );

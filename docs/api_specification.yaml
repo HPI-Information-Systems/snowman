@@ -530,10 +530,9 @@ paths:
     post:
       tags:
         - Benchmark
-      description:
+      summary:
         intersects multiple experiments and returns the resulting records. This
         can be used to calculate the confusion-matrix.
-        Up to now exactly two experiment objects are required. The first one represents the groundTruth, the second one the predicted experiment.
       operationId: calculateExperimentIntersectionRecords
       parameters:
         - name: startAt
@@ -557,9 +556,6 @@ paths:
             $ref: "#/components/schemas/ExperimentIntersectionMode"
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
-      summary:
-        Triggers the comparison of multiple experiments and returns tuples
-        classified as false_negative, etc. and limited by limit
       responses:
         200:
           description: OK
@@ -576,7 +572,7 @@ paths:
     post:
       tags:
         - Benchmark
-      description:
+      summary:
         intersects multiple experiments and returns the counts of the number of
         records. This can be used to calculate the confusion-matrix
       operationId: calculateExperimentIntersectionCount
@@ -587,9 +583,6 @@ paths:
             $ref: "#/components/schemas/ExperimentIntersectionMode"
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
-      summary:
-        Triggers the comparison of multiple experiments and returns tuples
-        classified as false_negative, etc. and limited by limit
       responses:
         200:
           description: OK
@@ -597,6 +590,30 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ExperimentIntersectionCount"
+        403:
+          description: Forbidden
+        404:
+          description: Experiments not found
+
+  /benchmark/experiment-intersection/pair-counts:
+    post:
+      tags:
+        - Benchmark
+      description: returns the count of pairs of all possible intersections of the given experiments
+      operationId: calculateExperimentIntersectionPairCounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExperimentIntersectionPairCountsConfiguration"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExperimentIntersectionPairCounts"
         403:
           description: Forbidden
         404:
@@ -761,21 +778,7 @@ components:
         $ref: "#/components/schemas/Metric"
     ExperimentIntersectionConfiguration:
       items:
-        properties:
-          experimentId:
-            $ref: "#/components/schemas/ExperimentId"
-          predictedCondition:
-            type: boolean
-          similarityAttribute:
-            example: name_name_levenshtein
-            type: string
-          similarityScore:
-            example: 0.9
-            type: number
-        required:
-          - experimentId
-          - predictedCondition
-        type: object
+        $ref: "#/components/schemas/ExperimentIntersectionRequestExperiments"
       type: array
     ExperimentIntersection:
       type: object
@@ -818,3 +821,63 @@ components:
       type: string
       enum: ["PAIRS", "CLUSTERS", "INVESTIGATIVE"]
       default: "PAIRS"
+    ExperimentIntersectionPairCountsConfiguration:
+      items:
+        $ref: "#/components/schemas/ExperimentIntersectionPairCountsRequestExperiments"
+      type: array
+    ExperimentIntersectionPairCounts:
+      items:
+        $ref: "#/components/schemas/ExperimentIntersectionPairCountsItem"
+      type: array
+    ExperimentIntersectionPairCountsExperiments:
+      properties:
+        experimentId:
+          $ref: "#/components/schemas/ExperimentId"
+        predictedCondition:
+          type: boolean
+      required:
+        - experimentId
+        - predictedCondition
+      type: object
+    ExperimentIntersectionPairCountsRequestExperiments:
+      properties:
+        experimentId:
+          $ref: "#/components/schemas/ExperimentId"
+        similarityAttribute:
+          example: name_name_levenshtein
+          type: string
+        similarityScore:
+          example: 0.9
+          type: number
+      required:
+        - experimentId
+      type: object
+    ExperimentIntersectionRequestExperiments:
+      properties:
+        experimentId:
+          $ref: "#/components/schemas/ExperimentId"
+        predictedCondition:
+          type: boolean
+        similarityAttribute:
+          example: name_name_levenshtein
+          type: string
+        similarityScore:
+          example: 0.9
+          type: number
+      required:
+        - experimentId
+        - predictedCondition
+      type: object
+    ExperimentIntersectionPairCountsItem:
+      properties:
+        experiments:
+          items:
+            $ref: "#/components/schemas/ExperimentIntersectionPairCountsExperiments"
+          type: array
+        pairCount:
+          type: integer
+          minimum: 0
+      required:
+        - experiments
+        - pairCount
+      type: object

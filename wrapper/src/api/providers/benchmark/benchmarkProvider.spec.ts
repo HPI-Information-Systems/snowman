@@ -155,7 +155,7 @@ describe('test benchmark functions', () => {
     test('test metrics calculation', () => {
       expect(
         benchmarkProvider
-          .calculateMetrics(
+          .getBinaryMetrics(
             experimentIds.goldstandard,
             experimentIds.experiment1
           )
@@ -188,7 +188,7 @@ describe('test benchmark functions', () => {
     });
     test('throw error at empty datasetAmount', () => {
       expect(() =>
-        benchmarkProvider.calculateMetrics(
+        benchmarkProvider.getBinaryMetrics(
           experimentIds.goldstandard,
           experimentIds.experiment2
         )
@@ -196,7 +196,7 @@ describe('test benchmark functions', () => {
     });
     test('throw error when tests belong to different datasets', () => {
       expect(() =>
-        benchmarkProvider.calculateMetrics(
+        benchmarkProvider.getBinaryMetrics(
           experimentIds.experiment2,
           experimentIds.experiment_dataset2
         )
