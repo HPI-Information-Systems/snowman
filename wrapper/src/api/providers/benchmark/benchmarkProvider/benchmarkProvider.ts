@@ -1,14 +1,12 @@
 import {
-  Dataset,
-  ExperimentId,
   ExperimentIntersection,
   ExperimentIntersectionCount,
   ExperimentIntersectionMode,
   ExperimentIntersectionRequestExperiments,
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
-import { getProviders } from '../..';
 import { BaseBenchmarkProvider } from '../baseBenchmarkProvider';
+import { datasetFromExperimentIds } from './helper/datasetFromExperiments';
 import { EvaluatorCache } from './helper/evaluator';
 import { idClustersToRecordClusters } from './helper/idsToRecords';
 import {
@@ -56,10 +54,7 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
     sortBy?: string;
     mode: ExperimentIntersectionMode;
   }): ExperimentIntersection {
-    const dataset = this.getDatasetByExperimentIds(
-      goldstandardId,
-      experimentId
-    );
+    const dataset = datasetFromExperimentIds([goldstandardId, experimentId]);
     const tuples = this.evaluatorCache
       .evaluate(goldstandardId, experimentId, dataset.numberOfRecords)
       .confusionMatrixTuples(mode);
@@ -102,10 +97,7 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
       ThreatScore,
     ];
 
-    const dataset = this.getDatasetByExperimentIds(
-      goldstandardId,
-      experimentId
-    );
+    const dataset = datasetFromExperimentIds([goldstandardId, experimentId]);
     const matrix = this.evaluatorCache.evaluate(
       goldstandardId,
       experimentId,
@@ -123,24 +115,5 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
           infoLink,
         };
       });
-  }
-
-  protected getDatasetByExperimentIds(
-    ...experimentIds: ExperimentId[]
-  ): Dataset & { numberOfRecords: number } {
-    const datasetProvider = getProviders().dataset;
-    const experimentProvider = getProviders().experiment;
-    const datasetIds = experimentIds.map(
-      (experimentId) => experimentProvider.getExperiment(experimentId).datasetId
-    );
-    const dataset = datasetProvider.getDataset(datasetIds[0]);
-
-    if (!datasetIds.every((datasetId) => datasetId === dataset.id)) {
-      throw new Error('The given experiments belong to different datasets.');
-    }
-    if (dataset.numberOfRecords === undefined) {
-      throw new Error('The dataset does not specify a number of records.');
-    }
-    return dataset as Dataset & { numberOfRecords: number };
   }
 }
