@@ -7,6 +7,7 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
+  IonChip,
   IonText,
 } from '@ionic/react';
 import { Metric } from 'api';
@@ -28,6 +29,7 @@ export const BinaryMetricsPageView = ({
   metricsTuplesCategories,
   dataViewerHeader,
   dataViewerTuples,
+  confusionMatrix,
 }: BinaryMetricsPageProps): JSX.Element => {
   useEffect(() => loadMetrics(), [loadMetrics]);
   useEffect(() => loadTuples(), [loadTuples]);
@@ -84,6 +86,33 @@ export const BinaryMetricsPageView = ({
       <IonText color="primary">
         <h3>Confusion Matrix</h3>
       </IonText>
+      <div>
+        {confusionMatrix.totalCount !== undefined ? (
+          <IonChip outline={true} color="primary">
+            Total Count: {confusionMatrix.totalCount}
+          </IonChip>
+        ) : null}
+        {confusionMatrix.trueNegatives !== undefined ? (
+          <IonChip outline={true} color="success">
+            True Negatives: {confusionMatrix.trueNegatives}
+          </IonChip>
+        ) : null}
+        {confusionMatrix.falsePositives !== undefined ? (
+          <IonChip outline={true} color="danger">
+            False Positives: {confusionMatrix.falsePositives}
+          </IonChip>
+        ) : null}
+        {confusionMatrix.falseNegatives !== undefined ? (
+          <IonChip outline={true} color="danger">
+            False Negatives: {confusionMatrix.falseNegatives}
+          </IonChip>
+        ) : null}
+        {confusionMatrix.truePositives !== undefined ? (
+          <IonChip outline={true} color="success">
+            True Positives: {confusionMatrix.truePositives}
+          </IonChip>
+        ) : null}
+      </div>
       <IonCard>
         <PaneButtonRow
           paneTitles={metricsTuplesCategories}
