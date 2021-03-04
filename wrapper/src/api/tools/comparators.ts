@@ -1,4 +1,4 @@
-import { NestedArray } from '../types';
+import { NestedArray } from './types';
 
 export function compareArrays(
   array1: NestedArray<number>,
@@ -23,4 +23,8 @@ export function compareArrays(
   } else {
     return array1 - array2;
   }
+}
+
+export function compareNumbers(n1: number, n2: number): number {
+  return n1 - n2;
 }

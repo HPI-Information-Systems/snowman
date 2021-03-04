@@ -1,5 +1,5 @@
 import { Cache } from '../cache';
-import { compareArrays } from './compareArrays';
+import { compareArrays } from '../comparators';
 import { shuffleArray } from './shuffleArray';
 
 type CacheTestCase = number[][][];
@@ -38,7 +38,7 @@ describe.each([
     [[1], [1, 5, 2, 8]],
   ],
 ] as CacheTestCase[])('Cache', (...testCase: CacheTestCase) => {
-  let cache: Cache<number, number>;
+  let cache: Cache<number, number, number[][]>;
   let created: CacheTestCase;
 
   function cacheTestCase(_testCase = testCase) {
@@ -49,7 +49,9 @@ describe.each([
 
   beforeEach(() => {
     created = [];
-    cache = new Cache<number, number>((...key) => created.push(key));
+    cache = new Cache<number, number, number[][]>((...key) =>
+      created.push(key)
+    );
     cacheTestCase();
   });
 

@@ -1,3 +1,4 @@
+import { LazyProperty } from '../../../../../tools/lazyProperty';
 import { List } from '../../../../../tools/list';
 import {
   Cluster,
@@ -14,8 +15,12 @@ class ClusterList extends List<NodeID> implements Cluster {
 }
 
 export class Subclustering implements SubclusteringSpec {
-  protected readonly nodeToSubcluster: ClusterList[];
-  protected readonly clusterIdToSubcluster: ClusterList[];
+  protected readonly nodeToSubcluster = new LazyProperty(() =>
+    this.createNodeToSubcluster()
+  );
+  protected readonly clusterIdToSubcluster = new LazyProperty(() =>
+    this.createClusterIdToSubcluster()
+  );
   protected readonly subclusterList: List<List<ClusterList>>;
 
   readonly numberNodes: number;
@@ -27,8 +32,6 @@ export class Subclustering implements SubclusteringSpec {
       base,
       partition
     );
-    this.nodeToSubcluster = this.createNodeToSubcluster();
-    this.clusterIdToSubcluster = this.createClusterIdToSubcluster();
   }
 
   subclusters(): Iterable<Iterable<Cluster>> {
@@ -36,15 +39,15 @@ export class Subclustering implements SubclusteringSpec {
   }
 
   clusters(): Iterable<Cluster> {
-    return this.clusterIdToSubcluster;
+    return this.clusterIdToSubcluster.value;
   }
 
   clusterFromNodeId(nodeId: NodeID): Cluster {
-    return this.nodeToSubcluster[nodeId];
+    return this.nodeToSubcluster.value[nodeId];
   }
 
   clusterFromClusterId(clusterId: number): Cluster {
-    return this.clusterIdToSubcluster[clusterId];
+    return this.clusterIdToSubcluster.value[clusterId];
   }
 
   protected createSubclusterList(

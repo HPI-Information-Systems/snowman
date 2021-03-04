@@ -1,4 +1,4 @@
-import { compareArrays } from '../../../../../../tools/test/compareArrays';
+import { compareArrays } from '../../../../../../tools/comparators';
 import { NodeID } from '../types';
 import {
   RelaxedClustering,
