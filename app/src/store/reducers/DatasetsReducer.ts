@@ -59,6 +59,7 @@ export const DatasetsReducer = (
           : null,
       };
     }
+    default:
+      return state;
   }
-  return state;
 };
