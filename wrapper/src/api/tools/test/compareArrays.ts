@@ -1,8 +1,8 @@
-type NestedArray = number | NestedArray[];
+import { NestedArray } from '../types';
 
 export function compareArrays(
-  array1: NestedArray,
-  array2: NestedArray
+  array1: NestedArray<number>,
+  array2: NestedArray<number>
 ): number {
   if (Array.isArray(array1) && Array.isArray(array2)) {
     if (array1.length === array2.length) {
