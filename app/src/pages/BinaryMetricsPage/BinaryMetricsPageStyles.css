@@ -10,6 +10,11 @@
   width: 200px;
 }
 
+.card-placeholder {
+  height: 120px;
+  width: 200px;
+}
+
 .table-housing {
   height: 500px;
   padding-bottom: 20px;

@@ -44,40 +44,42 @@ export const BinaryMetricsPageView = ({
         </h3>
       </IonText>
       <StyledCarousel itemsToShow={5} itemsToScroll={5}>
-        {metrics.map(
-          ({
-            name,
-            formula,
-            range,
-            value,
-            info,
-            infoLink,
-          }: Metric): JSX.Element => (
-            <div key={name}>
-              <IonCard class="card-fixed">
-                <IonCardHeader class="ion-text-center">
-                  <IonCardTitle
-                    class="metric-number"
-                    color="primary"
-                    data-tip={`Range: [${range.toString()}]`}
-                  >
-                    {value !== undefined ? value.toPrecision(2) : '?'}
-                  </IonCardTitle>
-                  <IonCardSubtitle
-                    class="metric-name"
-                    data-tip={renderToString(formula, {
-                      throwOnError: false,
-                      displayMode: true,
-                      output: 'html',
-                    })}
-                  >
-                    {name}
-                  </IonCardSubtitle>
-                </IonCardHeader>
-              </IonCard>
-            </div>
-          )
-        )}
+        {metrics.length > 0
+          ? metrics.map(
+              ({
+                name,
+                formula,
+                range,
+                value,
+                info,
+                infoLink,
+              }: Metric): JSX.Element => (
+                <div key={name}>
+                  <IonCard class="card-fixed">
+                    <IonCardHeader class="ion-text-center">
+                      <IonCardTitle
+                        class="metric-number"
+                        color="primary"
+                        data-tip={`Range: [${range.toString()}]`}
+                      >
+                        {value !== undefined ? value.toPrecision(2) : '?'}
+                      </IonCardTitle>
+                      <IonCardSubtitle
+                        class="metric-name"
+                        data-tip={renderToString(formula, {
+                          throwOnError: false,
+                          displayMode: true,
+                          output: 'html',
+                        })}
+                      >
+                        {name}
+                      </IonCardSubtitle>
+                    </IonCardHeader>
+                  </IonCard>
+                </div>
+              )
+            )
+          : [<div key="empty-demo-metric" className="card-placeholder"></div>]}
       </StyledCarousel>
       <IonText color="primary">
         <h3>Confusion Matrix</h3>
