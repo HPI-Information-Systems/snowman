@@ -1,5 +1,13 @@
-import { albums, documents, home, rocket, speedometer } from 'ionicons/icons';
+import {
+  albums,
+  documents,
+  extensionPuzzle,
+  home,
+  rocket,
+  speedometer,
+} from 'ionicons/icons';
 import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
+import BenchmarkConfiguratorPage from 'pages/BenchmarkConfiguratorPage/BenchmarkConfiguratorPage';
 import BinaryMetricsPage from 'pages/BinaryMetricsPage/BinaryMetricsPage';
 import DatasetsPage from 'pages/DatasetsPage/DatasetsPage';
 import ExperimentsPage from 'pages/ExperimentsPage/ExperimentsPage';
@@ -31,7 +39,8 @@ export enum pathMapperKeys {
   DATASETS = 'Datasets',
   EXPERIMENTS = 'Experiments',
   ALGORITHMS = 'Matching Solutions',
-  BENCHMARK = 'Benchmark',
+  BENCHMARK_CONFIGURATOR = 'Benchmark Configurator',
+  BINARY_METRICS = 'Binary Metrics',
 }
 
 export interface IPathMapper {
@@ -55,7 +64,8 @@ export const getPathToRootPage = (): string => '/home';
 const getPathToDatasetsSelector = (): string => '/datasets';
 const getPathToExperimentsSelector = (): string => '/experiments';
 const getPathToAlgorithmsPage = (): string => '/algorithms';
-const getPathToMetricsViewer = (): string => '/metrics';
+const getPathToBinaryMetricsViewer = (): string => '/binary-metrics';
+const getPathToBenchmarkConfigurator = (): string => '/benchmark-configuration';
 
 const getDefaultPathMapper = (): IPathMapper => ({
   key: pathMapperKeys.HOME,
@@ -101,7 +111,7 @@ export const getPathResolution = (): IPathMapper[] => [
     key: pathMapperKeys.EXPERIMENTS,
     path: getPathToExperimentsSelector(),
     component: ExperimentsPage,
-    nextPath: getPathToMetricsViewer(),
+    nextPath: getPathToBenchmarkConfigurator(),
     accessGuard: accessGuards.couldEnterExperimentsSelector,
     shouldShowInMenu: true,
     menuCategory: menuCategories.WORKFLOW,
@@ -122,15 +132,27 @@ export const getPathResolution = (): IPathMapper[] => [
     selectedOptionsReminder: emptySelectedOptions,
   },
   {
-    key: pathMapperKeys.BENCHMARK,
-    path: getPathToMetricsViewer(),
+    key: pathMapperKeys.BENCHMARK_CONFIGURATOR,
+    path: getPathToBenchmarkConfigurator(),
+    component: BenchmarkConfiguratorPage,
+    nextPath: getPathToBinaryMetricsViewer(),
+    accessGuard: accessGuards.couldEnterMetricsViewer,
+    shouldShowInMenu: true,
+    menuCategory: menuCategories.WORKFLOW,
+    menuIcon: extensionPuzzle,
+    menuSortKey: 5,
+    selectedOptionsReminder: emptySelectedOptions,
+  },
+  {
+    key: pathMapperKeys.BINARY_METRICS,
+    path: getPathToBinaryMetricsViewer(),
     component: BinaryMetricsPage,
     nextPath: null,
     accessGuard: accessGuards.couldEnterMetricsViewer,
     shouldShowInMenu: true,
     menuCategory: menuCategories.WORKFLOW,
     menuIcon: speedometer,
-    menuSortKey: 5,
+    menuSortKey: 6,
     selectedOptionsReminder: selectedMetrics,
   },
 ];
