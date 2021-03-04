@@ -81,7 +81,7 @@ export const BinaryMetricsPageView = ({
                 </div>
               )
             )
-          : [<div key="empty-demo-metric" className="card-placeholder"></div>]}
+          : [<div key="empty-placeholder-metric" className="card-placeholder" />]}
       </StyledCarousel>
       <IonText color="primary">
         <h3>Confusion Matrix</h3>
