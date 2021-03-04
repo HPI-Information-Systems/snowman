@@ -2,15 +2,15 @@ import { Readable } from 'stream';
 
 import { CSVInserter } from '../csvInserter';
 
-type B_PIESRow = {
+type BPIESRow = {
   Partner?: string;
   Customer?: string;
   Relevance?: string;
 };
 
-const B_PIES_MIN_MATCH_PERCENT = 90;
+const BPIES_MIN_MATCH_PERCENT = 90;
 
-export class B_PIESExperimentInserter extends CSVInserter {
+export class BPIESExperimentInserter extends CSVInserter {
   protected readonly separator: string = ';';
   protected readonly quote: string = '"';
   protected readonly escape: string = '\\';
@@ -20,8 +20,8 @@ export class B_PIESExperimentInserter extends CSVInserter {
     'Relevance',
   ];
 
-  protected lastClusterHeader?: B_PIESRow;
-  protected lastClusterRows: B_PIESRow[] = [];
+  protected lastClusterHeader?: BPIESRow;
+  protected lastClusterRows: BPIESRow[] = [];
 
   protected processLastCluster(): void {
     if (this.lastClusterHeader && this.lastClusterRows.length >= 1) {
@@ -35,7 +35,7 @@ export class B_PIESExperimentInserter extends CSVInserter {
           `external${parseInt(this.lastClusterHeader!['Partner']!)}`,
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           `customer${parseInt(row['Customer']!)}`,
-          relevance >= B_PIES_MIN_MATCH_PERCENT,
+          relevance >= BPIES_MIN_MATCH_PERCENT,
           { relevance }
         );
       }
@@ -43,7 +43,7 @@ export class B_PIESExperimentInserter extends CSVInserter {
     }
   }
 
-  protected addRow(row: B_PIESRow): void {
+  protected addRow(row: BPIESRow): void {
     if (!row['Customer']) {
       this.processLastCluster();
       this.lastClusterHeader = row;

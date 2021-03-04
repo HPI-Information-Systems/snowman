@@ -2,15 +2,15 @@ import { Readable } from 'stream';
 
 import { CSVInserter } from '../csvInserter';
 
-type B_HANARow = {
+type BHANARow = {
   'External ID'?: string;
   Customer?: string;
   'Fuzzy Match Percent'?: string;
 };
 
-const B_HANA_MIN_MATCH_PERCENT = 90;
+const BHANA_MIN_MATCH_PERCENT = 90;
 
-export class B_HANAExperimentInserter extends CSVInserter {
+export class BHANAExperimentInserter extends CSVInserter {
   protected readonly separator: string = ';';
   protected readonly quote: string = '"';
   protected readonly escape: string = '\\';
@@ -20,8 +20,8 @@ export class B_HANAExperimentInserter extends CSVInserter {
     'Fuzzy Match Percent',
   ];
 
-  protected lastClusterHeader?: B_HANARow;
-  protected lastClusterRows: B_HANARow[] = [];
+  protected lastClusterHeader?: BHANARow;
+  protected lastClusterRows: BHANARow[] = [];
 
   protected processLastCluster(): void {
     if (this.lastClusterHeader && this.lastClusterRows.length >= 1) {
@@ -35,7 +35,7 @@ export class B_HANAExperimentInserter extends CSVInserter {
           `external${parseInt(this.lastClusterHeader['External ID']!)}`,
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           `customer${parseInt(row['Customer']!)}`,
-          fuzzyMatchPercent >= B_HANA_MIN_MATCH_PERCENT,
+          fuzzyMatchPercent >= BHANA_MIN_MATCH_PERCENT,
           { fuzzyMatchPercent }
         );
       }
@@ -43,7 +43,7 @@ export class B_HANAExperimentInserter extends CSVInserter {
     }
   }
 
-  protected addRow(row: B_HANARow): void {
+  protected addRow(row: BHANARow): void {
     if (row['External ID']) {
       this.processLastCluster();
       this.lastClusterHeader = row;
