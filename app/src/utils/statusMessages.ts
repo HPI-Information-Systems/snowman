@@ -22,3 +22,5 @@ export const SUCCESS_TO_UPDATE_DATASET =
   'Successfully updated the designated dataset!';
 export const SUCCESS_TO_UPDATE_EXPERIMENT =
   'Successfully updated the designated experiment!';
+export const SUCCESS_DELETE_DATASET = 'Successfully deleted the dataset!';
+export const SUCCESS_DELETE_EXPERIMENT = 'Successfully deleted the experiment!';
