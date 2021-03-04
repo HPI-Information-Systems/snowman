@@ -17,7 +17,7 @@ We are working closely with the contest team to allow for a seamless experience.
 
 To use snowman, you'll have to download the latest [release (Github Releases)](https://github.com/HPI-Information-Systems/snowman/releases) of
 snowman for your specific os. After that you are able to start snowman!  
-As a first step, we'd suggest for you to start with our section [Basic Usage](/basic_usage/introduction)
+As a first step, we'd suggest for you to start with our section [Basic Usage](/basic_usage/introduction) or take a look at our [intoductory video](https://www.youtube.com/watch?v=wuJkkIByXjw)
 for a guide of how to benchmark and evaluate matching solutions with snowman.
 
 Some contest datasets are already bundled with the release. Select one of them, upload your own experiment result and
