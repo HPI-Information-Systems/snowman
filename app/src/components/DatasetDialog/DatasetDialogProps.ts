@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-export interface AddDatasetDialogDispatchProps {
+export interface DatasetDialogDispatchProps {
   closeDialog(): void;
   clickOnCancel(): void;
   addNewTagCallback(newTagValue: string): void;
@@ -15,13 +15,14 @@ export interface AddDatasetDialogDispatchProps {
   changeCsvQuote(event: IonChangeEvent): void;
   changeCsvEscape(event: IonChangeEvent): void;
   clickOnATag(aTag: string): void;
-  addDataset(): void;
+  clickOnSubmit(): void;
   changeSelectedDatasetFiles(event: ChangeEvent<HTMLInputElement>): void;
 }
 
-export interface AddDatasetDialogStateProps {
+export interface DatasetDialogStateProps {
   isOpen: boolean;
-  isValidForm: boolean;
+  isAddDialog: boolean;
+  isValidForm: boolean; //Todo: Rename
   datasetName: string;
   datasetDescription: string;
   datasetType: DatasetTypes;
@@ -35,5 +36,5 @@ export interface AddDatasetDialogStateProps {
   selectedFiles: File[];
 }
 
-export type AddDatasetDialogProps = AddDatasetDialogDispatchProps &
-  AddDatasetDialogStateProps;
+export type DatasetDialogProps = DatasetDialogDispatchProps &
+  DatasetDialogStateProps;

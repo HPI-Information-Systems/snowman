@@ -12,6 +12,7 @@ export interface DatasetsPageDispatchProps {
   clickOnDataset(aDatasetId: number): void;
   loadDatasets(): void;
   deleteDataset(aDatasetId: number): void;
+  editDataset(aDatasetId: number): void;
 }
 
 export type DatasetsPageProps = DatasetsPageDispatchProps &

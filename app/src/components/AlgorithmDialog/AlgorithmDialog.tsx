@@ -1,8 +1,8 @@
+import AlgorithmDialogView from 'components/AlgorithmDialog/AlgorithmDialog.View';
 import {
   AlgorithmDialogDispatchProps,
   AlgorithmDialogStateProps,
-} from 'components/AlgorithmDialog/AddAlgorithmDialogProps';
-import AlgorithmDialogView from 'components/AlgorithmDialog/AlgorithmDialog.View';
+} from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import { connect } from 'react-redux';
 import {
   addOrUpdateAlgorithm,
@@ -30,7 +30,7 @@ const mapDispatchToProps = (
     dispatch(changeAlgorithmName(event.detail.value as string)),
   changeAlgorithmDescription: (event: IonChangeEvent): void =>
     dispatch(changeAlgorithmDescription(event.detail.value as string)),
-  clickOnAdd(): void {
+  clickOnSubmit(): void {
     dispatch(addOrUpdateAlgorithm()).then();
   },
 });

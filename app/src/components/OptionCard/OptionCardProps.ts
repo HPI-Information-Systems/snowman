@@ -8,6 +8,7 @@ export interface OptionCardProps {
   tags?: string[];
   clickCard(): void;
   deleteCard?(): void;
+  editCard?(): void;
   isSelected?: boolean;
   multiple?: boolean;
 }

@@ -138,40 +138,25 @@ export const getPathResolution = (): IPathMapper[] => [
 export const navigateTo = (aRoute: string | undefined): void =>
   history.replace(aRoute ?? getPathToRootPage());
 
-export const navigateToRootPage = (): void => navigateTo(getPathToRootPage());
-
-export const navigateToDatasetsSelector = (): void =>
-  navigateTo(getPathToDatasetsSelector());
-
-export const navigateToExperimentsSelector = (): void =>
-  navigateTo(getPathToExperimentsSelector());
-
-export const navigateToAlgorithmsPage = (): void =>
-  navigateTo(getPathToAlgorithmsPage());
-
-export const navigateToMetricsViewer = (): void =>
-  navigateTo(getPathToMetricsViewer());
-
 const getCurrentPath = (): string => history.location.pathname;
 
-const getCurrentPathMapper = (currentPath: string): IPathMapper =>
+export const getCurrentPathMapper = (): IPathMapper =>
   getPathResolution().find(
-    (aPathMapper: IPathMapper): boolean => aPathMapper.path === currentPath
+    (aPathMapper: IPathMapper): boolean => aPathMapper.path === getCurrentPath()
   ) ?? getDefaultPathMapper();
 
-const getNextPathMapper = (currentPath: string): IPathMapper =>
+const getNextPathMapper = (): IPathMapper =>
   getPathResolution().find(
     (aPathMapper: IPathMapper): boolean =>
-      aPathMapper.path === getCurrentPathMapper(currentPath).nextPath
+      aPathMapper.path === getCurrentPathMapper().nextPath
   ) ?? getDefaultPathMapper();
 
-const getNextPath = (currentPathName: string): string =>
-  getNextPathMapper(currentPathName).path ?? getPathToRootPage();
+const getNextPath = (): string =>
+  getNextPathMapper().path ?? getPathToRootPage();
 
-export const navigateToNextPage = (): void =>
-  navigateTo(getNextPath(getCurrentPath()));
+export const navigateToNextPage = (): void => navigateTo(getNextPath());
 
-const existsNextPage = (): boolean => getNextPath(getCurrentPath()) !== null;
+const existsNextPage = (): boolean => getNextPath() !== null;
 
 export const couldNavigateToNextPage = (aState: Store): boolean =>
-  existsNextPage() && getNextPathMapper(getCurrentPath()).accessGuard(aState);
+  existsNextPage() && getNextPathMapper().accessGuard(aState);

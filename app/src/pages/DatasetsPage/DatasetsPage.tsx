@@ -18,6 +18,8 @@ import { Option } from 'types/Option';
 import { MagicNotPossibleId } from 'utils/constants';
 import { getTagsFromDatasets } from 'utils/tagFactory';
 
+import { openChangeDialog } from '../../store/actions/DatasetDialogStoreActions';
+
 const mapStateToProps = (state: Store): DatasetsPageStateProps => ({
   selectedTags: state.DatasetsStore.selectedDatasetTags,
   tags: getTagsFromDatasets(state.DatasetsStore.datasets),
@@ -32,8 +34,8 @@ const mapStateToProps = (state: Store): DatasetsPageStateProps => ({
         description: aDataset.description,
         subtitle: (aDataset?.tags ?? []).join(', ').toUpperCase(),
         tags: [
-          `Total: ${aDataset.numberOfRecords}`,
-          `Uploaded: ${aDataset.numberOfUploadedRecords}`,
+          `Total: ${aDataset.numberOfRecords ?? 'unknown'}`,
+          `Uploaded: ${aDataset.numberOfUploadedRecords ?? 'none'}`,
         ],
       })
     ),
@@ -54,8 +56,11 @@ const mapDispatchToProps = (
   loadDatasets() {
     dispatch(getDatasets()).then();
   },
-  deleteDataset(id: number) {
-    dispatch(deleteDataset(id)).then();
+  deleteDataset(aDatasetId: number) {
+    dispatch(deleteDataset(aDatasetId)).then();
+  },
+  editDataset(aDatasetId: number) {
+    dispatch(openChangeDialog(aDatasetId)).then();
   },
 });
 

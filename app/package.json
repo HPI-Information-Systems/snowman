@@ -2,10 +2,9 @@
   "name": "snowman-app",
   "author": "Snowman Team",
   "description": "Compare data matching algorithms with each other",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "license": "MIT",
   "homepage": "./",
-  "private": true,
   "dependencies": {
     "@ionic/react": "^5.0.7",
     "@ionic/react-router": "^5.0.7",

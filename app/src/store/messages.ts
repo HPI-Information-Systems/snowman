@@ -11,21 +11,25 @@ import { Store } from 'store/models';
 import { DatasetTypes } from 'types/DatasetTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 
+type ActionPayload =
+  | Metric[]
+  | ExperimentIntersection
+  | string
+  | string[]
+  | boolean
+  | File[]
+  | DatasetTypes
+  | experimentFileFormatEnum
+  | Algorithm[]
+  | Dataset
+  | Dataset[]
+  | number
+  | Experiment[]
+  | Experiment;
+
 export interface SnowmanAction extends Action<string> {
-  payload:
-    | Metric[]
-    | ExperimentIntersection
-    | string
-    | string[]
-    | boolean
-    | File[]
-    | DatasetTypes
-    | experimentFileFormatEnum
-    | Algorithm[]
-    | Dataset
-    | Dataset[]
-    | number
-    | Experiment[];
+  payload: ActionPayload;
+  optionalPayload?: ActionPayload;
 }
 
 export type SnowmanThunkAction<R> = ThunkAction<R, Store, null, SnowmanAction>;

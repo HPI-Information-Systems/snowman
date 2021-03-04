@@ -1,4 +1,4 @@
-import 'components/AddDatasetDialog/AddDatasetDialogStyles.css';
+import 'components/DatasetDialog/DatasetDialogStyles.css';
 
 import {
   IonButton,
@@ -12,12 +12,13 @@ import {
   IonItemGroup,
   IonLabel,
   IonList,
+  IonNote,
   IonRow,
   IonSelect,
   IonSelectOption,
   IonTextarea,
 } from '@ionic/react';
-import { AddDatasetDialogProps } from 'components/AddDatasetDialog/AddDatasetDialogProps';
+import { DatasetDialogProps } from 'components/DatasetDialog/DatasetDialogProps';
 import FileInput from 'components/FileInput/FileInput';
 import InputChip from 'components/InputChip/InputChip';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
@@ -26,8 +27,9 @@ import React from 'react';
 import { $enum } from 'ts-enum-util';
 import { DatasetTypes } from 'types/DatasetTypes';
 
-const AddDatasetDialogView = ({
+const DatasetDialogView = ({
   isOpen,
+  isAddDialog,
   isValidForm,
   closeDialog,
   clickOnCancel,
@@ -53,10 +55,10 @@ const AddDatasetDialogView = ({
   changeDatasetDescription,
   clickOnATag,
   addNewTagCallback,
-  addDataset,
-}: AddDatasetDialogProps): JSX.Element => (
+  clickOnSubmit,
+}: DatasetDialogProps): JSX.Element => (
   <ModalDialog
-    heading={'Add New Dataset'}
+    heading={isAddDialog ? 'Add New Dataset' : 'Update Existing Dataset'}
     isOpen={isOpen}
     closeDialog={closeDialog}
   >
@@ -159,7 +161,7 @@ const AddDatasetDialogView = ({
             </IonGrid>
           </IonItem>
           <IonItem>
-            <IonLabel position="fixed">Source File*:</IonLabel>
+            <IonLabel position="fixed">Source File:</IonLabel>
             <FileInput
               selectedFiles={selectedFiles}
               onChange={changeSelectedDatasetFiles}
@@ -168,6 +170,15 @@ const AddDatasetDialogView = ({
         </IonItemGroup>
       ) : null}
     </IonList>
+    {!isAddDialog ? (
+      <div className="center upload-notice">
+        <IonNote color="medium">
+          <b>Note: Uploading a file is optional here!</b>
+          <br />
+          If no file is selected, the stored records will remain unchanged.
+        </IonNote>
+      </div>
+    ) : null}
     <div className="center tag-view">
       {tags.map(
         (aTag: string): JSX.Element => (
@@ -190,11 +201,11 @@ const AddDatasetDialogView = ({
     <div className="center button-row">
       <IonButton
         className="button-hugh button-padding"
-        onClick={addDataset}
+        onClick={clickOnSubmit}
         disabled={!isValidForm}
       >
         <IonIcon slot="start" icon={addCircleOutline} />
-        Add
+        {isAddDialog ? 'Add' : 'Update'}
       </IonButton>
       <IonButton
         className="button-hugh button-padding"
@@ -208,4 +219,4 @@ const AddDatasetDialogView = ({
   </ModalDialog>
 );
 
-export default AddDatasetDialogView;
+export default DatasetDialogView;

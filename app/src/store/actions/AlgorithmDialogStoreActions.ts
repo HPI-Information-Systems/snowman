@@ -11,7 +11,7 @@ import {
 import RequestHandler from 'utils/requestHandler';
 import {
   SUCCESS_TO_ADD_NEW_ALGORITHM,
-  SUCCESS_UPDATE_ALGORITHM,
+  SUCCESS_TO_UPDATE_ALGORITHM,
 } from 'utils/statusMessages';
 
 export const openAddDialog = (): easyPrimitiveActionReturn =>
@@ -115,7 +115,7 @@ const updateAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
           dispatch(getAlgorithms());
         }),
     dispatch,
-    SUCCESS_UPDATE_ALGORITHM
+    SUCCESS_TO_UPDATE_ALGORITHM
   );
 
 export const addOrUpdateAlgorithm = (): SnowmanThunkAction<
