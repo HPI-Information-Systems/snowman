@@ -36,6 +36,8 @@ import {
 } from 'utils/optionReminders';
 import { couldNavigateToView, getNextViewId } from 'utils/viewMetaInfoHandlers';
 
+// TODO: fix chunking and move parts to its related area
+
 export enum ViewIDs {
   HOME,
   DATASETS,
