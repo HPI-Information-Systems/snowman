@@ -2,7 +2,9 @@ import {
   Dataset,
   ExperimentId,
   ExperimentIntersection,
+  ExperimentIntersectionCount,
   ExperimentIntersectionMode,
+  ExperimentIntersectionRequestExperiments,
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
 import { getProviders } from '../..';
@@ -32,13 +34,28 @@ import {
 export class BenchmarkProvider extends BaseBenchmarkProvider {
   protected readonly evaluatorCache = new EvaluatorCache();
 
-  getConfusionTuples(
-    goldstandardId: number,
-    experimentId: number,
-    goldStandardDuplicates: boolean,
-    experimentDuplicates: boolean,
-    mode: ExperimentIntersectionMode
-  ): ExperimentIntersection {
+  calculateExperimentIntersectionCount(args: {
+    config: ExperimentIntersectionRequestExperiments[];
+    mode: ExperimentIntersectionMode;
+  }): ExperimentIntersectionCount {}
+
+  calculateExperimentIntersectionPairCounts(
+    config: ExperimentIntersectionPairCountsRequestExperiments[]
+  ): ExperimentIntersectionPairCountsItem[] {}
+
+  calculateExperimentIntersectionRecords({
+    config,
+    startAt,
+    limit,
+    sortBy,
+    mode,
+  }: {
+    config: ExperimentIntersectionRequestExperiments[];
+    startAt?: number;
+    limit?: number;
+    sortBy?: string;
+    mode: ExperimentIntersectionMode;
+  }): ExperimentIntersection {
     const dataset = this.getDatasetByExperimentIds(
       goldstandardId,
       experimentId
@@ -62,7 +79,7 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
     return idClustersToRecordClusters(idClusters, dataset.id);
   }
 
-  calculateMetrics(goldstandardId: number, experimentId: number): Metric[] {
+  getBinaryMetrics(goldstandardId: number, experimentId: number): Metric[] {
     const metrics = [
       Accuracy,
       Precision,
