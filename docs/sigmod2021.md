@@ -11,7 +11,8 @@ This tool will help you to compare and evaluate your data matching solutions. Yo
 
 ## Setup
 
-...
+To use snowman you have to download the latest [release](https://github.com/HPI-Information-Systems/snowman/releases) of snowman for your specific os. After that you are able to start snowman! You can click [here](https://hpi-information-systems.github.io/snowman/basic_usage/workflow/) for a guide of the default workflow of snowman. 
+We already integrated the ```Computers```-dataset with a goldstandard of the SIGMOD-contest. Select it, upload your own experiment result and start benchmarking!
 
 ## Datasets
 
