@@ -40,14 +40,14 @@ const InputChipView = ({
         {value !== '' ? (
           <IonIcon
             key="inputchip-submit"
-            color="dark"
+            color="success"
             icon={checkmarkCircleOutline}
             onClick={onSubmit}
           />
         ) : (
           <IonIcon
             key="inputchip-cancel"
-            color="dark"
+            color="danger"
             icon={closeCircleOutline}
             onClick={hideInput}
           />
