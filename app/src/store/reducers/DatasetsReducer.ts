@@ -11,7 +11,7 @@ const initialState: DatasetsStore = {
   selectedDataset: null,
 };
 
-export const doesDatasetMatchesTags = (
+export const doesDatasetMatchTags = (
   aDataset: Dataset | null,
   selectedTags: string[]
 ): boolean =>
@@ -51,7 +51,7 @@ export const DatasetsReducer = (
       return {
         ...state,
         selectedDatasetTags: resultingTags,
-        selectedDataset: doesDatasetMatchesTags(
+        selectedDataset: doesDatasetMatchTags(
           state.selectedDataset,
           resultingTags
         )
