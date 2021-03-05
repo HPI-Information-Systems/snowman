@@ -6,6 +6,11 @@ a dataset, multiple experiments as well as a benchmark option.
 Workflows are managed implicitly, so you do not need to create a new one each time you want to reconfigure the
 comparison setup.
 
+## Introduction video
+
+[![Snowman Introduction Video](https://img.youtube.com/vi/wuJkkIByXjw/0.jpg)](https://www.youtube.com/watch?v=wuJkkIByXjw)  
+_(Video hosted by YouTube)_
+
 ## Basic setup
 
 1. Select a dataset.
