@@ -8,8 +8,7 @@ comparison setup.
 
 ## Introduction video
 
-[![Snowman Introduction Video](https://img.youtube.com/vi/wuJkkIByXjw/0.jpg)](https://www.youtube.com/watch?v=wuJkkIByXjw)  
-_(Video hosted by YouTube)_
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wuJkkIByXjw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Basic setup
 

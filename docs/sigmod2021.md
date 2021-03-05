@@ -20,8 +20,7 @@ snowman for your specific os. After that you are able to start snowman!
 As a first step, we'd suggest for you to start with our section [Basic Usage](/basic_usage/introduction) or take a look at our intoductory video below
 for a guide on how to benchmark and evaluate matching solutions with snowman.
 
-[![Snowman Introduction Video](https://img.youtube.com/vi/wuJkkIByXjw/0.jpg)](https://www.youtube.com/watch?v=wuJkkIByXjw)  
-_(Video hosted by YouTube)_
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wuJkkIByXjw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 **Some contest datasets are already bundled with the release. Select one of them, upload your own experiment result and
 start benchmarking!**
