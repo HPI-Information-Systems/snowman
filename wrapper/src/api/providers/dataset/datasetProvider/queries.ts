@@ -1,5 +1,6 @@
 import { databaseBackend, Table } from '../../../database';
 import { latest } from '../../../database/schemas';
+import { DatasetId, ExperimentId } from '../../../server/types';
 
 export class DatasetProviderQueries {
   readonly schema = latest.tableSchemas.meta.dataset;
@@ -40,9 +41,15 @@ export class DatasetProviderQueries {
   private readonly experimentsTable = new Table(
     latest.tableSchemas.meta.experiment
   );
-  readonly listExperimentsUsingDatasetQuery = databaseBackend().prepare(`
+  protected readonly listExperimentsUsingDatasetQuery = databaseBackend()
+    .prepare(`
     SELECT "${this.experimentsTable.schema.columns.id.name}" as id
       FROM ${this.experimentsTable}
      WHERE "${this.experimentsTable.schema.columns.dataset.name}" = ?
   `);
+  listExperimentsUsingThisDataset(datasetId: DatasetId): ExperimentId[] {
+    return this.listExperimentsUsingDatasetQuery
+      .all(datasetId)
+      .map(({ id }: { id: ExperimentId }) => id);
+  }
 }

@@ -1,6 +1,7 @@
 import { Readable } from 'stream';
 
 import { Dataset, DatasetId, DatasetValues } from '../../../server/types';
+import { IntersectionCache } from '../../benchmark/benchmarkProvider/intersection/cache';
 import { BaseDatasetProvider } from '../baseDatasetProvider';
 import { DatasetDeleter } from './deleter';
 import { DatasetFileGetter } from './file/getter';
@@ -70,6 +71,7 @@ export class DatasetProvider extends BaseDatasetProvider {
       newStoredDataset.numberOfRecords
     );
     this.queries.setDatasetQuery.run(newStoredDataset);
+    this.invalidateConnectedCaches(id);
   }
 
   deleteDataset(id: DatasetId): void {
@@ -112,7 +114,7 @@ export class DatasetProvider extends BaseDatasetProvider {
       storedDataset.numberOfRecords = datasetIDMapper.numberMappedIds();
       storedDataset.numberOfUploadedRecords = insertedRowCount;
       this.queries.setDatasetQuery.run(storedDataset);
-
+      this.invalidateConnectedCaches(id);
       if (
         storedDataset.numberOfRecords !== null &&
         insertedRowCount < storedDataset.numberOfRecords
@@ -138,12 +140,20 @@ export class DatasetProvider extends BaseDatasetProvider {
     this.deleteDatasetFileNoChecks(id);
   }
 
-  private deleteDatasetFileNoChecks(id: DatasetId): void {
+  protected deleteDatasetFileNoChecks(id: DatasetId): void {
     new DatasetDeleter(id, this.queries).deleteFile();
     const dataset = this.queries.getDatasetQuery.get(id) as StoredDataset;
     if (dataset) {
       dataset.numberOfUploadedRecords = null;
       this.queries.setDatasetQuery.run(dataset);
+    }
+  }
+
+  protected invalidateConnectedCaches(datasetId: DatasetId): void {
+    for (const experimentId of this.queries.listExperimentsUsingThisDataset(
+      datasetId
+    )) {
+      IntersectionCache.invalidate(experimentId);
     }
   }
 }
