@@ -6,13 +6,14 @@ import { loadTableFromDatabase } from '../../../../../database/table/loader';
 import { Column } from '../../../../../database/tools/types';
 import { DatasetId, ExperimentIntersection } from '../../../../../server/types';
 import { DatasetIDMapper } from '../../../../dataset/datasetProvider/util/idMapper';
+import { NodeID } from '../cluster/types';
 
 type DatasetSchema = ReturnType<
   typeof latest.tableSchemas['dataset']['dataset']
 >;
 
 export function idClustersToRecordClustersWithTable(
-  idClusters: number[][],
+  idClusters: (NodeID | undefined)[],
   schema: DatasetSchema,
   datasetId: DatasetId
 ): ExperimentIntersection {
@@ -33,7 +34,7 @@ class IdClustersToRecordClusters {
   protected readonly getRecordByIdQuery: Statement<number>;
 
   constructor(
-    protected readonly idClusters: number[][],
+    protected readonly idClusters: (NodeID | undefined)[],
     protected readonly table: Table<DatasetSchema>,
     protected readonly idMapper: DatasetIDMapper
   ) {
@@ -61,9 +62,7 @@ class IdClustersToRecordClusters {
   }
 
   protected getRecordClusters(): ExperimentIntersection['data'] {
-    return this.idClusters
-      .flatMap((cluster) => [...cluster.map((id) => this.getRecord(id)), []])
-      .slice(0, -1);
+    return this.idClusters.map((id) => (id ? this.getRecord(id) : []));
   }
 
   protected getRecord(id: number): string[] {

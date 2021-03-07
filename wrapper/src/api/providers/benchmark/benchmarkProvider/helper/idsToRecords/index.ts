@@ -6,13 +6,13 @@ import { idClustersToRecordClustersNoTable } from './noTable';
 import { idClustersToRecordClustersWithTable } from './withTable';
 
 export function idClustersToRecordClusters(
-  idClusters: NodeID[][],
+  idClusters: (NodeID | undefined)[],
   datasetId: DatasetId
 ): ExperimentIntersection {
   const schema = latest.tableSchemas.dataset.dataset(datasetId);
   if (tableExists(schema)) {
     return idClustersToRecordClustersWithTable(idClusters, schema, datasetId);
   } else {
-    return idClustersToRecordClustersNoTable(idClusters);
+    return idClustersToRecordClustersNoTable(idClusters, datasetId);
   }
 }

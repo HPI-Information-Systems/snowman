@@ -2,6 +2,7 @@ import { latest } from '../../../../database/schemas';
 import { tableExists } from '../../../../database/table/loader';
 import { DatasetId } from '../../../../server/types';
 import { ExecuteSynchronized } from '../../../../tools/executeSynchronized';
+import { logger } from '../../../../tools/logger';
 import { DatasetIDMapper } from './idMapper';
 
 export class DatasetConsistencyChecks {
@@ -42,7 +43,8 @@ export class DatasetConsistencyChecks {
 
   throwIfLocked(datasetId: DatasetId): void {
     if (this.sync.isLocked(datasetId)) {
-      throw new Error(
+      // TODO some times the lock does not release? -> removed throw until fixed
+      logger.error(
         `Somebody else is currently editing the dataset ${datasetId}. Please try again later.`
       );
     }

@@ -1,11 +1,21 @@
 import binarySearch from 'binary-search';
 
 import { compareNumbers } from '../../../../tools/comparators';
-import { ClusterID, NodeID, Subclustering } from '../helper/cluster/types';
+import { LazyProperty } from '../../../../tools/lazyProperty';
+import { Subclustering } from '../helper/cluster/subclustering';
+import { ClusterID, NodeID } from '../helper/cluster/types';
 import { IntersectionCache } from './cache';
 import { IntersectionCounts } from './counts';
 
 export class IntersectionClusters extends IntersectionCounts {
+  protected subclustering = new LazyProperty(
+    () =>
+      new Subclustering(
+        IntersectionCache.get(this.predictedConditionPositive, []).clustering,
+        IntersectionCache.get(this.predictedConditionNegative, []).clustering
+      )
+  );
+
   clusters(startAt = 0, limit?: number): (NodeID | undefined)[] {
     let clusterId = this.findCluster(startAt);
     let startCluster: undefined | (NodeID | undefined)[] = undefined;
@@ -21,7 +31,9 @@ export class IntersectionClusters extends IntersectionCounts {
     );
     while (
       (!limit || clusters.length < limit) &&
-      ++clusterId < this.clustering.numberClusters
+      ++clusterId <
+        IntersectionCache.get(this.predictedConditionPositive, []).clustering
+          .numberClusters
     ) {
       if (this.isUnknownCluster(clusterId)) {
         clusters.push(...this.calculateNextUnknownCluster());
@@ -81,14 +93,9 @@ export class IntersectionClusters extends IntersectionCounts {
       return [...this.clustering.clusterFromClusterId(clusterId), undefined];
     } else if (this.predictedConditionNegative.length === 1) {
       const pairs = [];
-      const subclustering = IntersectionCache.get(
-        [
-          ...this.predictedConditionPositive,
-          ...this.predictedConditionNegative,
-        ],
-        []
-      ).clustering as Subclustering;
-      const subclusters = subclustering.subclustersFromClusterId(clusterId);
+      const subclusters = this.subclustering.value.subclustersFromClusterId(
+        clusterId
+      );
       for (let lower = 0; lower < subclusters.length; lower++) {
         const lowerSubcluster = subclusters[lower];
         for (const lowerId of lowerSubcluster) {

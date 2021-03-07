@@ -804,12 +804,12 @@ components:
         numberRows:
           type: integer
           example: 37
-        numberGroups:
+        numberPairs:
           type: integer
           example: 10
       required:
         - numberRows
-        - numberGroups
+        - numberPairs
     ExperimentIntersectionPairCountsConfiguration:
       items:
         $ref: "#/components/schemas/ExperimentIntersectionPairCountsRequestExperiments"

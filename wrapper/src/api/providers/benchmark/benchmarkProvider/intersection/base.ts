@@ -23,7 +23,7 @@ export class IntersectionBase {
     protected readonly predictedConditionNegative: ExperimentId[]
   ) {}
 
-  protected createClustering(): Clustering | Subclustering {
+  protected createClustering(): Clustering {
     if (this.predictedConditionNegative.length > 0) {
       throw new Error(
         'Creating a clustering which excludes experiments is not supported.'
@@ -39,14 +39,18 @@ export class IntersectionBase {
         ).numberOfRecords
       ).link(this.queries.experimentLinks(this.predictedConditionPositive[0]));
     } else {
-      // !Must be subclustering in this order -> this is used in IntersectionClusters
       return new Subclustering(
         IntersectionCache.get(
-          this.predictedConditionPositive.slice(0, 1),
+          this.predictedConditionPositive.slice(
+            0,
+            this.predictedConditionPositive.length - 1
+          ),
           []
         ).clustering,
         IntersectionCache.get(
-          this.predictedConditionPositive.slice(1),
+          this.predictedConditionPositive.slice(
+            this.predictedConditionPositive.length - 1
+          ),
           []
         ).clustering
       );

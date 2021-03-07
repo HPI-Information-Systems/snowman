@@ -973,16 +973,16 @@ components:
     ExperimentIntersectionCount:
       example:
         numberRows: 37
-        numberGroups: 10
+        numberPairs: 10
       properties:
         numberRows:
           example: 37
           type: integer
-        numberGroups:
+        numberPairs:
           example: 10
           type: integer
       required:
-        - numberGroups
+        - numberPairs
         - numberRows
       type: object
     ExperimentIntersectionPairCountsConfiguration:
