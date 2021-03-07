@@ -1,8 +1,4 @@
-import {
-  ExperimentId,
-  ExperimentIntersectionMode,
-} from '../../../../../server/types';
-import { Subclustering } from '../cluster/subclustering';
+import { ExperimentId } from '../../../../../server/types';
 import { Clustering } from '../cluster/types';
 
 function getClusterings(experiments: ExperimentId[]): Clustering[] {
@@ -29,7 +25,6 @@ export function getIntersection({
   startAt?: number;
   limit?: number;
   sortBy?: string;
-  mode: ExperimentIntersectionMode;
 }): void {
   const clusterings = getClusterings(
     config.map(({ experimentId }) => experimentId)

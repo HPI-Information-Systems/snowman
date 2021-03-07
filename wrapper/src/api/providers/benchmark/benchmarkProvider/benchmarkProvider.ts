@@ -1,7 +1,6 @@
 import {
   ExperimentIntersection,
   ExperimentIntersectionCount,
-  ExperimentIntersectionMode,
   ExperimentIntersectionRequestExperiments,
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
@@ -34,7 +33,6 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
 
   calculateExperimentIntersectionCount(args: {
     config: ExperimentIntersectionRequestExperiments[];
-    mode: ExperimentIntersectionMode;
   }): ExperimentIntersectionCount {}
 
   calculateExperimentIntersectionPairCounts(
@@ -46,18 +44,16 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
     startAt,
     limit,
     sortBy,
-    mode,
   }: {
     config: ExperimentIntersectionRequestExperiments[];
     startAt?: number;
     limit?: number;
     sortBy?: string;
-    mode: ExperimentIntersectionMode;
   }): ExperimentIntersection {
     const dataset = datasetFromExperimentIds([goldstandardId, experimentId]);
     const tuples = this.evaluatorCache
       .evaluate(goldstandardId, experimentId, dataset.numberOfRecords)
-      .confusionMatrixTuples(mode);
+      .confusionMatrixTuples();
 
     let idClusters: number[][];
     if (goldStandardDuplicates && experimentDuplicates) {

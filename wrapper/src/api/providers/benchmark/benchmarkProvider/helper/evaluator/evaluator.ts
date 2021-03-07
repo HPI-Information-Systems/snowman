@@ -1,4 +1,3 @@
-import { ExperimentIntersectionMode } from '../../../../../server/types';
 import { LazyProperty } from '../../../../../tools/lazyProperty';
 import { Subclustering } from '../cluster/subclustering';
 import {
@@ -29,6 +28,12 @@ export class Evaluator {
         this.experimentSubclustering.value
       )
     );
+    this._confusionMatrixTuples = new LazyProperty(() =>
+      calculateConfusionMatrixTuples(
+        this.goldSubclustering.value,
+        this.experimentSubclustering.value
+      )
+    );
   }
 
   protected _confusionMatrixCounts: LazyProperty<ConfusionMatrixCounts>;
@@ -36,22 +41,8 @@ export class Evaluator {
     return this._confusionMatrixCounts.value;
   }
 
-  protected _confusionMatrixTuples = new Map<
-    ExperimentIntersectionMode,
-    ConfusionMatrixTuples
-  >();
-  confusionMatrixTuples(
-    mode: ExperimentIntersectionMode
-  ): ConfusionMatrixTuples {
-    let tuples = this._confusionMatrixTuples.get(mode);
-    if (!tuples) {
-      tuples = calculateConfusionMatrixTuples(
-        this.goldSubclustering.value,
-        this.experimentSubclustering.value,
-        mode
-      );
-      this._confusionMatrixTuples.set(mode, tuples);
-    }
-    return tuples;
+  protected _confusionMatrixTuples: LazyProperty<ConfusionMatrixTuples>;
+  confusionMatrixTuples(): ConfusionMatrixTuples {
+    return this._confusionMatrixTuples.value;
   }
 }

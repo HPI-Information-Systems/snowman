@@ -700,13 +700,6 @@ paths:
             example: similarity
             type: string
           style: form
-        - explode: true
-          in: query
-          name: mode
-          required: false
-          schema:
-            $ref: "#/components/schemas/ExperimentIntersectionMode"
-          style: form
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       responses:
@@ -729,14 +722,6 @@ paths:
   /benchmark/experiment-intersection/count:
     post:
       operationId: calculateExperimentIntersectionCount
-      parameters:
-        - explode: true
-          in: query
-          name: mode
-          required: false
-          schema:
-            $ref: "#/components/schemas/ExperimentIntersectionMode"
-          style: form
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       responses:
@@ -1000,13 +985,6 @@ components:
         - numberGroups
         - numberRows
       type: object
-    ExperimentIntersectionMode:
-      default: PAIRS
-      enum:
-        - PAIRS
-        - CLUSTERS
-        - INVESTIGATIVE
-      type: string
     ExperimentIntersectionPairCountsConfiguration:
       items:
         $ref: "#/components/schemas/ExperimentIntersectionPairCountsRequestExperiments"

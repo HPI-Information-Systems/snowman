@@ -3,7 +3,6 @@ import {
   ExperimentId,
   ExperimentIntersection,
   ExperimentIntersectionCount,
-  ExperimentIntersectionMode,
   ExperimentIntersectionPairCountsItem,
   ExperimentIntersectionPairCountsRequestExperiments,
   ExperimentIntersectionRequestExperiments,
@@ -24,16 +23,13 @@ function provider() {
  * */
 export async function calculateExperimentIntersectionCount({
   body: config,
-  mode = ExperimentIntersectionMode.Pairs,
 }: {
   body: ExperimentIntersectionRequestExperiments[];
-  mode?: ExperimentIntersectionMode;
 }): Promise<SuccessResponse<ExperimentIntersectionCount>> {
   return Service.response(
     () =>
       provider().calculateExperimentIntersectionCount({
         config,
-        mode,
       }),
     200,
     404
@@ -55,13 +51,11 @@ export async function calculateExperimentIntersectionRecords({
   startAt,
   limit,
   sortBy,
-  mode = ExperimentIntersectionMode.Pairs,
 }: {
   body: ExperimentIntersectionRequestExperiments[];
   startAt?: number;
   limit?: number;
   sortBy?: string;
-  mode?: ExperimentIntersectionMode;
 }): Promise<SuccessResponse<ExperimentIntersection>> {
   return Service.response(
     () =>
@@ -70,7 +64,6 @@ export async function calculateExperimentIntersectionRecords({
         startAt,
         limit,
         sortBy,
-        mode,
       }),
     200,
     404

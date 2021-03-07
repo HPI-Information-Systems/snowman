@@ -21,9 +21,6 @@ import {
     ExperimentIntersectionCount,
     ExperimentIntersectionCountFromJSON,
     ExperimentIntersectionCountToJSON,
-    ExperimentIntersectionMode,
-    ExperimentIntersectionModeFromJSON,
-    ExperimentIntersectionModeToJSON,
     ExperimentIntersectionPairCountsItem,
     ExperimentIntersectionPairCountsItemFromJSON,
     ExperimentIntersectionPairCountsItemToJSON,
@@ -40,7 +37,6 @@ import {
 
 export interface CalculateExperimentIntersectionCountRequest {
     experimentIntersectionRequestExperiments: Array<ExperimentIntersectionRequestExperiments>;
-    mode?: ExperimentIntersectionMode;
 }
 
 export interface CalculateExperimentIntersectionPairCountsRequest {
@@ -52,7 +48,6 @@ export interface CalculateExperimentIntersectionRecordsRequest {
     startAt?: number;
     limit?: number;
     sortBy?: string;
-    mode?: ExperimentIntersectionMode;
 }
 
 export interface GetBinaryMetricsRequest {
@@ -78,10 +73,6 @@ export class BenchmarkApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.mode !== undefined) {
-            queryParameters['mode'] = requestParameters.mode;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -159,10 +150,6 @@ export class BenchmarkApi extends runtime.BaseAPI {
 
         if (requestParameters.sortBy !== undefined) {
             queryParameters['sortBy'] = requestParameters.sortBy;
-        }
-
-        if (requestParameters.mode !== undefined) {
-            queryParameters['mode'] = requestParameters.mode;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

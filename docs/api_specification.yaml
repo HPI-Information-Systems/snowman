@@ -552,10 +552,6 @@ paths:
           schema:
             type: string
             example: similarity
-        - name: mode
-          in: query
-          schema:
-            $ref: "#/components/schemas/ExperimentIntersectionMode"
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       responses:
@@ -578,11 +574,6 @@ paths:
         intersects multiple experiments and returns the counts of the number of
         records. This can be used to calculate the confusion-matrix
       operationId: calculateExperimentIntersectionCount
-      parameters:
-        - name: mode
-          in: query
-          schema:
-            $ref: "#/components/schemas/ExperimentIntersectionMode"
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       responses:
@@ -819,10 +810,6 @@ components:
       required:
         - numberRows
         - numberGroups
-    ExperimentIntersectionMode:
-      type: string
-      enum: ["PAIRS", "CLUSTERS", "INVESTIGATIVE"]
-      default: "PAIRS"
     ExperimentIntersectionPairCountsConfiguration:
       items:
         $ref: "#/components/schemas/ExperimentIntersectionPairCountsRequestExperiments"

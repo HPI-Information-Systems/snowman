@@ -1,7 +1,6 @@
 import {
   ExperimentIntersection,
   ExperimentIntersectionCount,
-  ExperimentIntersectionMode,
   ExperimentIntersectionPairCountsItem,
   ExperimentIntersectionPairCountsRequestExperiments,
   ExperimentIntersectionRequestExperiments,
@@ -15,7 +14,6 @@ export abstract class BaseBenchmarkProvider {
 
   abstract calculateExperimentIntersectionCount(args: {
     config: ExperimentIntersectionRequestExperiments[];
-    mode: ExperimentIntersectionMode;
   }): ExperimentIntersectionCount;
 
   abstract calculateExperimentIntersectionPairCounts(
@@ -27,6 +25,5 @@ export abstract class BaseBenchmarkProvider {
     startAt?: number;
     limit?: number;
     sortBy?: string;
-    mode: ExperimentIntersectionMode;
   }): ExperimentIntersection;
 }

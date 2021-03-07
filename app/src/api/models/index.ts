@@ -8,7 +8,6 @@ export * from './Experiment';
 export * from './ExperimentAllOf';
 export * from './ExperimentIntersection';
 export * from './ExperimentIntersectionCount';
-export * from './ExperimentIntersectionMode';
 export * from './ExperimentIntersectionPairCountsExperiments';
 export * from './ExperimentIntersectionPairCountsItem';
 export * from './ExperimentIntersectionPairCountsRequestExperiments';
