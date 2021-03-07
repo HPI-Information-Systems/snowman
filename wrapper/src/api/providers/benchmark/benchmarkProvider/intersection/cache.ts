@@ -1,5 +1,5 @@
 import { Cache } from '../../../../tools/cache';
-import { Intersection } from './intersection';
+import { Intersection } from '.';
 
 export const IntersectionCache = new Cache(
   (...args: ConstructorParameters<typeof Intersection>) =>

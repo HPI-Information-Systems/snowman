@@ -25,5 +25,6 @@ export interface Subclustering extends Clustering {
   /**
    * guaranteed to return clusters in order (their cluster id is strict monotonically increasing)
    */
-  subclusters(): Iterable<Iterable<Cluster>>;
+  subclusters(): readonly (readonly Cluster[])[];
+  subclustersFromClusterId(clusterId: ClusterID): readonly Cluster[];
 }
