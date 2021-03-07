@@ -17,25 +17,27 @@ function expectTestCasesEqual(
   );
 }
 
+const ONE_TEST_ID = 1;
+
 describe.each([
   [],
   [
     [],
     [[]],
     [[], []],
-    [[1]],
-    [[1, 2]],
+    [[ONE_TEST_ID]],
+    [[ONE_TEST_ID, 2]],
     [[-100]],
-    [[1, 1, 1]],
+    [[ONE_TEST_ID, ONE_TEST_ID, ONE_TEST_ID]],
     [
-      [1, 2, 3, 4],
-      [1, 2, 3, 4],
+      [ONE_TEST_ID, 2, 3, 4],
+      [ONE_TEST_ID, 2, 3, 4],
     ],
   ],
   [[[14235424]], [[21233665784567]], [[123123], [], [1534573], [], []]],
   [
-    [[], [1, 5, 2, 8]],
-    [[1], [1, 5, 2, 8]],
+    [[], [ONE_TEST_ID, 5, 2, 8]],
+    [[ONE_TEST_ID], [ONE_TEST_ID, 5, 2, 8]],
   ],
 ] as CacheTestCase[])('Cache', (...testCase: CacheTestCase) => {
   let cache: Cache<number, number, number[][]>;
@@ -73,5 +75,22 @@ describe.each([
       );
       expect(created.length).toBe(0);
     }
+  });
+
+  test('clear resets cache', () => {
+    cache.clear();
+    created = [];
+    cacheTestCase();
+    expectTestCasesEqual(testCase, created);
+  });
+
+  test('invalidate clears all and only required caches', () => {
+    cache.invalidate(ONE_TEST_ID);
+    created = [];
+    cacheTestCase();
+    const toBeRecreated = testCase.filter((keys) =>
+      keys.flat().includes(ONE_TEST_ID)
+    );
+    expectTestCasesEqual(toBeRecreated, created);
   });
 });

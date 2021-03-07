@@ -139,7 +139,7 @@ export class ExperimentProvider extends BaseExperimentProvider {
         storedExperiment.numberOfUploadedRecords = numberOfUploadedRecords;
         this.queries.setExperimentQuery.run(storedExperiment);
       }
-      IntersectionCache.clear();
+      IntersectionCache.invalidate(id);
 
       const mappedIdCount = datasetIDMapper.numberMappedIds();
       if (numberOfRecords !== undefined && numberOfRecords < mappedIdCount) {
@@ -169,6 +169,6 @@ export class ExperimentProvider extends BaseExperimentProvider {
       storedExperiment.numberOfUploadedRecords = null;
       this.queries.setExperimentQuery.run(storedExperiment);
     }
-    IntersectionCache.clear();
+    IntersectionCache.invalidate(id);
   }
 }

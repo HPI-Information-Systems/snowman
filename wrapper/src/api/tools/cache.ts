@@ -9,7 +9,10 @@ export class Cache<KeyItemT extends Primitive, T, KeyT extends KeyItemT[][]> {
   >();
   protected readonly nestedSubcache: LazyProperty<Cache<KeyItemT, T, KeyT>>;
 
-  constructor(protected readonly create: (...key: KeyT) => T) {
+  constructor(
+    protected readonly create: (...key: KeyT) => T,
+    protected readonly key?: KeyItemT
+  ) {
     this.nestedSubcache = new LazyProperty(
       () => new Cache<KeyItemT, T, KeyT>(this.create)
     );
@@ -18,7 +21,7 @@ export class Cache<KeyItemT extends Primitive, T, KeyT extends KeyItemT[][]> {
   protected getOrAddDirectSubcache(key: KeyItemT): Cache<KeyItemT, T, KeyT> {
     let subcache = this.directSubcaches.get(key);
     if (!subcache) {
-      subcache = new Cache<KeyItemT, T, KeyT>(this.create);
+      subcache = new Cache<KeyItemT, T, KeyT>(this.create, key);
       this.directSubcaches.set(key, subcache);
     }
     return subcache;
@@ -53,5 +56,15 @@ export class Cache<KeyItemT extends Primitive, T, KeyT extends KeyItemT[][]> {
     this.value = undefined;
     this.directSubcaches.clear();
     this.nestedSubcache.clear();
+  }
+  invalidate(key: KeyItemT): void {
+    if (this.key === key) {
+      this.clear();
+    } else {
+      this.nestedSubcache.valueNoCreate?.invalidate(key);
+      for (const directSubCache of this.directSubcaches.values()) {
+        directSubCache.invalidate(key);
+      }
+    }
   }
 }

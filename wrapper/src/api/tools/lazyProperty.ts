@@ -9,6 +9,10 @@ export class LazyProperty<T> {
     return this._value;
   }
 
+  get valueNoCreate(): T | undefined {
+    return this._value;
+  }
+
   clear(): void {
     this._value = undefined;
   }
