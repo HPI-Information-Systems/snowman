@@ -25,6 +25,7 @@ export class EvaluatorCache {
       evaluator = this.createEvaluator(goldStandard, experiment, recordCount);
       goldCache.set(experiment, evaluator);
     }
+    this.cache.clear();
     return evaluator;
   }
 
