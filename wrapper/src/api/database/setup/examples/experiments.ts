@@ -75,13 +75,13 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       numberOfPairs: 100,
     },
   },
-  computersSigmodGoldstandard1: {
+  notebookToySigmodGoldstandard1: {
     meta: {
-      name: 'SIGMOD-goldstandard-Y1',
+      name: 'SIGMOD-notebookToy-goldstandard-Y1',
       description:
         'Complete list of duplicate pairs in the NotebookToy dataset (X1) of the SIGMOD contest.',
       algorithmId: exampleAlgorithms.gold.id,
-      datasetId: exampleDatasets.computers.id,
+      datasetId: exampleDatasets.notebookToy.id,
     },
     id: 3,
     file: {
@@ -91,6 +91,24 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
         'sigmod_notebooktoy_goldstandard.csv'
       ),
       numberOfPairs: 903,
+    },
+  },
+  notebookSigmodGoldstandard: {
+    meta: {
+      name: 'SIGMOD-notebook-goldstandard-Y2',
+      description:
+        'Complete list of duplicate pairs in the notebook dataset (X2) of the SIGMOD contest.',
+      algorithmId: exampleAlgorithms.gold.id,
+      datasetId: exampleDatasets.notebook.id,
+    },
+    id: 4,
+    file: {
+      format: 'sigmod2021',
+      path: path.join(
+        EXAMPLE_EXPERIMENT_DIR,
+        'sigmod_notebook_goldstandard.csv'
+      ),
+      numberOfPairs: 58653,
     },
   },
 });
