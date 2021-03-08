@@ -62,13 +62,14 @@ export const exampleDatasets = assertType<ExampleDatasets>()({
   },
   computers: {
     meta: {
-      name: 'SIGMOD-computers-X1',
-      description: 'This is the computers dataset (X1) of the SIGMOD-contest.',
+      name: 'SIGMOD-NotebookToy-X1',
+      description:
+        'This is the NotebookToy dataset (X1) of the SIGMOD-contest.',
       tags: ['SIGMOD'],
     },
     id: 2,
     file: {
-      path: path.join(EXAMPLE_DATASET_DIR, 'computers_sigmod.csv'),
+      path: path.join(EXAMPLE_DATASET_DIR, 'sigmod_notebooktoy_X1.csv'),
       idColumn: 'instance_id',
       separator: ',',
       quote: '"',

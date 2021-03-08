@@ -79,7 +79,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     meta: {
       name: 'SIGMOD-goldstandard-Y1',
       description:
-        'Complete list of duplicate pairs in the computers dataset (X1) of the SIGMOD contest.',
+        'Complete list of duplicate pairs in the NotebookToy dataset (X1) of the SIGMOD contest.',
       algorithmId: exampleAlgorithms.gold.id,
       datasetId: exampleDatasets.computers.id,
     },
@@ -88,7 +88,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       format: 'sigmod2021',
       path: path.join(
         EXAMPLE_EXPERIMENT_DIR,
-        'computers_sigmod_goldstandard.csv'
+        'sigmod_notebooktoy_goldstandard.csv'
       ),
       numberOfPairs: 903,
     },
