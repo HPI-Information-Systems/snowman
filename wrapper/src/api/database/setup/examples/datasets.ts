@@ -60,7 +60,7 @@ export const exampleDatasets = assertType<ExampleDatasets>()({
       numberOfRecords: 863,
     },
   },
-  computers: {
+  notebookToy: {
     meta: {
       name: 'SIGMOD-NotebookToy-X1',
       description:
@@ -75,6 +75,22 @@ export const exampleDatasets = assertType<ExampleDatasets>()({
       quote: '"',
       escape: '"',
       numberOfRecords: 43,
+    },
+  },
+  notebook: {
+    meta: {
+      name: 'SIGMOD-Notebook-X2',
+      description: 'This is the notebook dataset (X2) of the SIGMOD-contest.',
+      tags: ['SIGMOD'],
+    },
+    id: 3,
+    file: {
+      path: path.join(EXAMPLE_DATASET_DIR, 'sigmod_notebook_X2.csv'),
+      idColumn: 'instance_id',
+      separator: ',',
+      quote: '"',
+      escape: '"',
+      numberOfRecords: 343,
     },
   },
 });
