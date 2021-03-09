@@ -14,9 +14,9 @@ import {
 } from 'store/actions/DatasetsStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-import { doesDatasetMatchTags } from 'store/reducers/DatasetsReducer';
 import { Option } from 'types/Option';
 import { MagicNotPossibleId } from 'utils/constants';
+import { doesDatasetMatchTags } from 'utils/datasetHelper';
 import { getTagsFromDatasets } from 'utils/tagFactory';
 
 const mapStateToProps = (state: Store): DatasetsPageStateProps => ({
