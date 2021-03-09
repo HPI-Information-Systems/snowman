@@ -17,7 +17,7 @@ We are working closely with the contest team to allow for a seamless experience.
 
 To use snowman, you'll have to download the latest [release (Github Releases)](https://github.com/HPI-Information-Systems/snowman/releases) of
 snowman for your specific os. After that you are able to start snowman!  
-As a first step, we'd suggest for you to start with our section [Basic Usage](/basic_usage/introduction) or take a look at our intoductory video below
+As a first step, we'd suggest for you to start with our section [Basic Usage](../basic_usage/introduction) or take a look at our intoductory video below
 for a guide on how to benchmark and evaluate matching solutions with snowman. You can find an explanation of a basic workflow [here](../basic_usage/workflow/) or in the video below.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wuJkkIByXjw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
