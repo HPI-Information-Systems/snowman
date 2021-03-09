@@ -87,3 +87,7 @@ export const MetricsStoreActionTypes = {
   RESET_METRICS: 'METRICS_STORE-RESET_METRICS',
   RESET_TUPLES: 'METRICS_STORE-RESET_TUPLES',
 };
+
+export const DataViewerStoreActionTypes = {
+  RESET_DATA_VIEWER: 'DATA_VIEWER_STORE-RESET_DATA_VIEWER',
+};

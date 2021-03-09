@@ -3,6 +3,7 @@ import { AlgorithmDialogReducer } from 'store/reducers/AlgorithmDialogReducer';
 import { AlgorithmsReducer } from 'store/reducers/AlgorithmsReducer';
 import { DatasetDialogReducer } from 'store/reducers/DatasetDialogReducer';
 import { DatasetsReducer } from 'store/reducers/DatasetsReducer';
+import { DataViewerReducer } from 'store/reducers/DataViewerReducer';
 import { ExperimentDialogReducer } from 'store/reducers/ExperimentDialogReducer';
 import { ExperimentsReducer } from 'store/reducers/ExperimentsReducer';
 import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
@@ -19,4 +20,5 @@ export const rootReducer = combineReducers({
   GlobalIndicatorStore: GlobalIndicatorReducer,
   MetricsStore: MetricsReducer,
   InputChipStore: InputChipReducer,
+  DataViewerStore: DataViewerReducer,
 });

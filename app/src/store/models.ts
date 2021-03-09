@@ -80,6 +80,10 @@ export interface MetricsStore {
   selectedDataView: MetricsTuplesCategories;
 }
 
+export interface DataViewerStore {
+  dataToShow: ExperimentIntersection | undefined;
+}
+
 export interface Store {
   DatasetsStore: DatasetsStore;
   ExperimentsStore: ExperimentsStore;
@@ -90,4 +94,5 @@ export interface Store {
   GlobalIndicatorStore: GlobalIndicatorStore;
   MetricsStore: MetricsStore;
   InputChipStore: InputChipStore;
+  DataViewerStore: DataViewerStore;
 }
