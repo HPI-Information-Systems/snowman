@@ -1,7 +1,7 @@
 import { FC, LazyExoticComponent } from 'react';
 import { ImmediateStore } from 'store/models';
-import { ViewIDs } from 'store/reducers/rootReducer';
 import { menuCategories } from 'types/MenuCategories';
+import { ViewIDs } from 'types/ViewIDs';
 import { ISelectedOptionsMap } from 'utils/optionReminders';
 
 export type ViewComponent = LazyExoticComponent<FC<unknown>> | FC;

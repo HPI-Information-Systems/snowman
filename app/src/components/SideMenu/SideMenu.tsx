@@ -11,11 +11,11 @@ import { connect } from 'react-redux';
 import { navigateTo } from 'store/actions/RouterStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-import { ViewMetaInformationCollection } from 'store/reducers/rootReducer';
-import { ViewIDs } from 'store/reducers/rootReducer';
 import { menuCategories } from 'types/MenuCategories';
+import { ViewIDs } from 'types/ViewIDs';
 import { ViewMetaInformation } from 'types/ViewMetaInformation';
 import { getExperimentNameFromId } from 'utils/experimentsHelpers';
+import { ViewMetaInformationCollection } from 'utils/ViewMetaInformationCollection';
 
 const getSelectedOptionsFromPathMapper = (
   aViewMetaInfo: ViewMetaInformation,

@@ -5,11 +5,11 @@ import {
   ExperimentIntersection,
   Metric,
 } from 'api';
-import { ViewIDs } from 'store/reducers/rootReducer';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
+import { ViewIDs } from 'types/ViewIDs';
 
 export interface RenderLogicStore {
   currentViewID: ViewIDs;

@@ -1,5 +1,5 @@
 import { RouterStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
-import { ViewIDs } from 'store/reducers/rootReducer';
+import { ViewIDs } from 'types/ViewIDs';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,

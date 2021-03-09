@@ -1,11 +1,11 @@
 import { ImmediateStore, RenderLogicStore } from 'store/models';
+import { store } from 'store/store';
+import { ViewIDs } from 'types/ViewIDs';
+import { ViewComponent, ViewMetaInformation } from 'types/ViewMetaInformation';
 import {
   PrimaryViewMetaInformation,
   ViewMetaInformationCollection,
-} from 'store/reducers/rootReducer';
-import { ViewIDs } from 'store/reducers/rootReducer';
-import { store } from 'store/store';
-import { ViewComponent, ViewMetaInformation } from 'types/ViewMetaInformation';
+} from 'utils/ViewMetaInformationCollection';
 
 const getMetaInfoOfViewId = (aViewId: ViewIDs): ViewMetaInformation =>
   ViewMetaInformationCollection.find(

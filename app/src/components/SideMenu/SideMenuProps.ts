@@ -1,4 +1,4 @@
-import { ViewIDs } from 'store/reducers/rootReducer';
+import { ViewIDs } from 'types/ViewIDs';
 
 export interface CategoryItem {
   name: string;
