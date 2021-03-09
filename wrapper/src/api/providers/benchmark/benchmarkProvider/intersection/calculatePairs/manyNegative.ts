@@ -1,6 +1,6 @@
 import { LazyProperty } from '../../../../../tools/lazyProperty';
-import { Subclustering } from '../../helper/cluster/subclustering';
-import { Cluster, ClusterID, Clustering } from '../../helper/cluster/types';
+import { Subclustering } from '../../cluster/subclustering';
+import { Cluster, ClusterID, Clustering } from '../../cluster/types';
 import { IntersectionCache, SubclusterCache } from '../cache';
 import { CalculatePairs } from './base';
 

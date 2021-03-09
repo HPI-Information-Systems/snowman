@@ -2,7 +2,7 @@ import binarySearch from 'binary-search';
 
 import { compareNumbers } from '../../../../tools/comparators';
 import { LazyProperty } from '../../../../tools/lazyProperty';
-import { ClusterID, NodeID } from '../helper/cluster/types';
+import { ClusterID, NodeID } from '../cluster/types';
 import {
   CalculatePairs1Negative,
   CalculatePairsManyNegative,

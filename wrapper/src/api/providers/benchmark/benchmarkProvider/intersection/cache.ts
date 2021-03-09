@@ -1,7 +1,7 @@
 import { ExperimentId } from '../../../../server/types';
 import { Cache } from '../../../../tools/cache';
 import { Intersection } from '.';
-import { CachedSubclusting } from './CachedSubcluster';
+import { CachedSubclusting } from './cachedSubclustering';
 
 export const IntersectionCache = new Cache(
   (...args: ConstructorParameters<typeof Intersection>) =>

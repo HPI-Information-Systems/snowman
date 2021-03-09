@@ -1,6 +1,6 @@
-import { latest } from '../../../../../database/schemas';
-import { tableExists } from '../../../../../database/table/loader';
-import { DatasetId, ExperimentIntersection } from '../../../../../server/types';
+import { latest } from '../../../../database/schemas';
+import { tableExists } from '../../../../database/table/loader';
+import { DatasetId, ExperimentIntersection } from '../../../../server/types';
 import { NodeID } from '../cluster/types';
 import { idClustersToRecordClustersNoTable } from './noTable';
 import { idClustersToRecordClustersWithTable } from './withTable';

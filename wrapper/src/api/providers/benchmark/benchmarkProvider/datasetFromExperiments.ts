@@ -1,5 +1,5 @@
-import { Dataset, ExperimentId } from '../../../../server/types';
-import { getProviders } from '../../..';
+import { Dataset, ExperimentId } from '../../../server/types';
+import { getProviders } from '../..';
 
 export function datasetFromExperimentIds(
   experimentIds: ExperimentId[]

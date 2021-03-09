@@ -1,8 +1,8 @@
 import { ExperimentId } from '../../../../server/types';
 import { LazyProperty } from '../../../../tools/lazyProperty';
-import { Clustering } from '../helper/cluster/types';
-import { UnionFind } from '../helper/cluster/unionFind';
-import { datasetFromExperimentIds } from '../helper/datasetFromExperiments';
+import { Clustering } from '../cluster/types';
+import { UnionFind } from '../cluster/unionFind';
+import { datasetFromExperimentIds } from '../datasetFromExperiments';
 import type { Intersection as IntersectionSubclass } from '.';
 import { IntersectionCache, SubclusterCache } from './cache';
 import { IntersectionQueries } from './queries';

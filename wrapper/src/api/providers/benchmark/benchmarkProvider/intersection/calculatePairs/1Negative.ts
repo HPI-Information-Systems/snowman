@@ -1,4 +1,4 @@
-import { Cluster, ClusterID } from '../../helper/cluster/types';
+import { Cluster, ClusterID } from '../../cluster/types';
 import { SubclusterCache } from '../cache';
 import { CalculatePairs } from './base';
 

@@ -1,5 +1,5 @@
-import { CSVReader, CSVRow } from '../../../../../../tools/csvReader';
-import { readFile } from '../../../../../../tools/readFile';
+import { CSVReader, CSVRow } from '../../../../../tools/csvReader';
+import { readFile } from '../../../../../tools/readFile';
 import { Clustering } from '../types';
 import { UnionFind } from '../unionFind';
 

@@ -1,4 +1,4 @@
-import { Cluster } from '../../helper/cluster/types';
+import { Cluster } from '../../cluster/types';
 import { CalculatePairs } from './base';
 
 export class CalculatePairsNoNegative extends CalculatePairs {

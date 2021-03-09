@@ -1,11 +1,11 @@
 import { Statement } from 'better-sqlite3';
 
-import { databaseBackend, Table } from '../../../../../database';
-import { latest } from '../../../../../database/schemas';
-import { loadTableFromDatabase } from '../../../../../database/table/loader';
-import { Column } from '../../../../../database/tools/types';
-import { DatasetId, ExperimentIntersection } from '../../../../../server/types';
-import { DatasetIDMapper } from '../../../../dataset/datasetProvider/util/idMapper';
+import { databaseBackend, Table } from '../../../../database';
+import { latest } from '../../../../database/schemas';
+import { loadTableFromDatabase } from '../../../../database/table/loader';
+import { Column } from '../../../../database/tools/types';
+import { DatasetId, ExperimentIntersection } from '../../../../server/types';
+import { DatasetIDMapper } from '../../../dataset/datasetProvider/util/idMapper';
 import { NodeID } from '../cluster/types';
 
 type DatasetSchema = ReturnType<

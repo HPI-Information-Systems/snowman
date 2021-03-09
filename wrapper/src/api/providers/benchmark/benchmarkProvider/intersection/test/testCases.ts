@@ -8,8 +8,8 @@ import { getProviders } from '../../../..';
 import {
   RelaxedClustering,
   relaxedClusteringToArray,
-} from '../../helper/cluster/test/relaxedClusterings';
-import { NodeID } from '../../helper/cluster/types';
+} from '../../cluster/test/relaxedClusterings';
+import { NodeID } from '../../cluster/types';
 
 type Clusters = number[][];
 

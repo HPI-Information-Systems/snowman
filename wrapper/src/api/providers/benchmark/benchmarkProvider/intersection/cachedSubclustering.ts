@@ -1,6 +1,6 @@
 import { ExperimentId } from '../../../../server/types';
 import { LazyProperty } from '../../../../tools/lazyProperty';
-import { Subclustering } from '../helper/cluster/subclustering';
+import { Subclustering } from '../cluster/subclustering';
 import { IntersectionCache } from './cache';
 
 export class CachedSubclusting {

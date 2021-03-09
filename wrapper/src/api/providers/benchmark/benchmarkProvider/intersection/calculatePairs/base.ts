@@ -1,4 +1,4 @@
-import { ClusterID } from '../../helper/cluster/types';
+import { ClusterID } from '../../cluster/types';
 import type { Intersection } from '..';
 
 export abstract class CalculatePairs {

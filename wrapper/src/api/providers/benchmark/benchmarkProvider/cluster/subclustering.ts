@@ -1,4 +1,4 @@
-import { LazyProperty } from '../../../../../tools/lazyProperty';
+import { LazyProperty } from '../../../../tools/lazyProperty';
 import {
   Cluster,
   ClusterID,

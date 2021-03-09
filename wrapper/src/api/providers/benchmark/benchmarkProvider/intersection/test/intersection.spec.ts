@@ -1,7 +1,7 @@
 import { setupDatabase } from '../../../../../database';
 import { ExperimentId } from '../../../../../server/types';
-import { expectClusteringsToEqual } from '../../helper/cluster/test/utility';
-import { ClusterID } from '../../helper/cluster/types';
+import { expectClusteringsToEqual } from '../../cluster/test/utility';
+import { ClusterID } from '../../cluster/types';
 import { Intersection } from '..';
 import { IntersectionCache } from '../cache';
 import { confusionTuplesTestCases, loadTestCase } from './testCases';

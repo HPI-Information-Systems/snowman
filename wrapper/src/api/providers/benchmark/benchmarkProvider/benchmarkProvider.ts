@@ -9,8 +9,8 @@ import {
 import { Metric } from '../../../server/types';
 import { numberOfPairs } from '../../../tools/numberOfPairs';
 import { BaseBenchmarkProvider } from '../baseBenchmarkProvider';
-import { datasetFromExperimentIds } from './helper/datasetFromExperiments';
-import { idClustersToRecordClusters } from './helper/idsToRecords';
+import { datasetFromExperimentIds } from './datasetFromExperiments';
+import { idClustersToRecordClusters } from './idsToRecords';
 import { Intersection, IntersectionCache } from './intersection';
 import {
   Accuracy,
