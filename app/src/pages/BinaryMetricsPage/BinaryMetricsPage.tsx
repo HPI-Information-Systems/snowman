@@ -70,8 +70,11 @@ const mapStateToProps = (state: Store): BinaryMetricsDispatchProps => ({
       state.DatasetsStore.selectedDataset?.numberOfRecords ?? 0,
       2
     ),
-    falseNegatives: state.MetricsStore.falseNegatives?.data.length ?? undefined,
-    falsePositives: state.MetricsStore.falsePositives?.data.length ?? undefined,
+    // Todo: Replace with API value in later PR
+    falseNegatives: state.MetricsStore.falseNegatives?.data.length,
+    // Todo: Replace with API value in later PR
+    falsePositives: state.MetricsStore.falsePositives?.data.length,
+    // Todo: Replace with API value in later PR
     trueNegatives:
       state.MetricsStore.falseNegatives !== undefined &&
       state.MetricsStore.falsePositives !== undefined &&
@@ -84,7 +87,8 @@ const mapStateToProps = (state: Store): BinaryMetricsDispatchProps => ({
             (state.MetricsStore.falsePositives?.data.length ?? 0) +
             (state.MetricsStore.truePositives?.data.length ?? 0))
         : undefined,
-    truePositives: state.MetricsStore.truePositives?.data.length ?? undefined,
+    // Todo: Replace with API value in later PR
+    truePositives: state.MetricsStore.truePositives?.data.length, // incorrect value
   },
 });
 
