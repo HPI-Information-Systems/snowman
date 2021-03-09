@@ -32,6 +32,8 @@ const DataViewerView = ({
               rowCount={tuplesCount}
               rowGetter={({ index }: { index: number }): unknown => {
                 const dataRow: Record<string, string> = {};
+                // Todo: Evaluate whether this is a proper fix
+                if (data.data[index] === undefined) return dataRow;
                 data.header.forEach((_: string, headerIndex: number): void => {
                   dataRow[headerIndex] = data.data[index][headerIndex];
                 });
