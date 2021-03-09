@@ -1,72 +1,36 @@
-import 'react-virtualized/styles.css';
-import 'components/DataViewer/DataViewerStyles.css';
+import DataViewerView from 'components/DataViewer/DataViewer.View';
+import {
+  DataViewerDispatchProps,
+  DataViewerOwnProps,
+  DataViewerStateProps,
+} from 'components/DataViewer/DataViewerProps';
+import { connect } from 'react-redux';
+import { reloadTuples, resetDataViewer } from 'store/actions/DataViewerActions';
+import { SnowmanDispatch } from 'store/messages';
+import { Store } from 'store/models';
 
-import { AutoSizerParams } from 'components/DataViewer/AutoSizerParams';
-import { ColumnDescriptor } from 'components/DataViewer/ColumnDescriptor';
-import { DataViewerProps } from 'components/DataViewer/DataViewerProps';
-import { RowGetterParams } from 'components/DataViewer/RowGetterParams';
-import { SortConfiguration } from 'components/DataViewer/SortConfiguration';
-import * as lodash from 'lodash';
-import React, { useState } from 'react';
-import { AutoSizer, Column, SortDirection, Table } from 'react-virtualized';
+const mapStateToProps = (state: Store): DataViewerStateProps => ({
+  data: state.DataViewerStore.dataToShow,
+});
 
-const DataViewer = ({
-  tuples,
-  columnHeaders,
-}: DataViewerProps): JSX.Element => {
-  const [list, setList] = useState(tuples);
+const mapDispatchToProps = (
+  dispatch: SnowmanDispatch,
+  ownProps: DataViewerOwnProps
+): DataViewerDispatchProps => ({
+  resetDataViewer() {
+    dispatch(resetDataViewer());
+  },
+  handleLoadTuples({
+    startIndex,
+    stopIndex,
+  }: {
+    startIndex: number;
+    stopIndex: number;
+  }): Promise<void> {
+    return dispatch(reloadTuples(startIndex, stopIndex, ownProps.loadTuples));
+  },
+});
 
-  React.useEffect(() => {
-    setList(tuples);
-  }, [tuples]);
-
-  const [sortConfiguration, setSortConfiguration] = useState<SortConfiguration>(
-    {
-      sortBy: '',
-      sortDirection: SortDirection.ASC,
-    }
-  );
-
-  const _sortList = ({ sortBy, sortDirection }: SortConfiguration) => {
-    const newList = lodash.sortBy(list, [sortBy]);
-    if (sortDirection === SortDirection.DESC) {
-      newList.reverse();
-    }
-    return newList;
-  };
-
-  const _sort = ({ sortBy, sortDirection }: SortConfiguration): void => {
-    setSortConfiguration({ sortBy: sortBy, sortDirection: sortDirection });
-    setList(_sortList({ sortBy, sortDirection }));
-  };
-
-  return (
-    <AutoSizer>
-      {({ height, width }: AutoSizerParams) => (
-        <Table
-          width={width}
-          height={height}
-          rowClassName="table-row"
-          headerHeight={20}
-          rowHeight={30}
-          sort={_sort}
-          sortBy={sortConfiguration.sortBy}
-          sortDirection={sortConfiguration.sortDirection}
-          rowCount={list.length}
-          rowGetter={({ index }: RowGetterParams) => list[index]}
-        >
-          {columnHeaders.map((aColumnHeader: ColumnDescriptor) => (
-            <Column
-              key={aColumnHeader.objKey}
-              label={aColumnHeader.label}
-              dataKey={aColumnHeader.objKey}
-              width={width}
-            />
-          ))}
-        </Table>
-      )}
-    </AutoSizer>
-  );
-};
+const DataViewer = connect(mapStateToProps, mapDispatchToProps)(DataViewerView);
 
 export default DataViewer;

@@ -90,4 +90,5 @@ export const MetricsStoreActionTypes = {
 
 export const DataViewerStoreActionTypes = {
   RESET_DATA_VIEWER: 'DATA_VIEWER_STORE-RESET_DATA_VIEWER',
+  RELOAD_TUPLES: 'DATA_VIEWER_STORE-RELOAD_TUPLES',
 };
