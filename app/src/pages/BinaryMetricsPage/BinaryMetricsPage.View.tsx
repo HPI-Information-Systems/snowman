@@ -62,9 +62,9 @@ export const BinaryMetricsPageView = ({
                       <IonCardTitle
                         class="metric-number"
                         color="primary"
-                        data-tip={`Range: [${range.toString()}]`}
+                        data-tip={`${value.toString()} &isin; [${range.toString()}]`}
                       >
-                        {value !== undefined ? value.toPrecision(2) : '?'}
+                        {value.toPrecision(2)}
                       </IonCardTitle>
                       <IonCardSubtitle
                         class="metric-name"
