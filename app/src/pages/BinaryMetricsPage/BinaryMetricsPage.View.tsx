@@ -21,16 +21,16 @@ import ReactTooltip from 'react-tooltip';
 
 export const BinaryMetricsPageView = ({
   loadMetrics,
-  loadTuples,
+  preloadTuplesCounts,
   metrics,
   selectedMetricsTuplesCategory,
   selectPane,
   metricsTuplesCategories,
-  dataViewerHeader,
-  dataViewerTuples,
+  tuplesCount,
+  tuplesLoader,
 }: BinaryMetricsPageProps): JSX.Element => {
   useEffect(() => loadMetrics(), [loadMetrics]);
-  useEffect(() => loadTuples(), [loadTuples]);
+  useEffect(() => preloadTuplesCounts(), [preloadTuplesCounts]);
   useEffect(() => {
     // Triggered on every component update!
     ReactTooltip.rebuild();
@@ -89,10 +89,7 @@ export const BinaryMetricsPageView = ({
           selectedPaneTitle={selectedMetricsTuplesCategory}
         />
         <IonCardContent class="table-housing">
-          <DataViewer
-            columnHeaders={dataViewerHeader}
-            tuples={dataViewerTuples}
-          />
+          <DataViewer tuplesCount={tuplesCount} loadTuples={tuplesLoader} />
         </IonCardContent>
       </IonCard>
     </PageStruct>

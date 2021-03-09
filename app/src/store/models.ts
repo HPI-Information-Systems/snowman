@@ -73,10 +73,10 @@ export interface InputChipStore {
 }
 
 export interface MetricsStore {
+  falseNegativesCount: number;
+  falsePositivesCount: number;
+  truePositivesCount: number;
   metrics: Metric[];
-  falsePositives: ExperimentIntersection | undefined;
-  falseNegatives: ExperimentIntersection | undefined;
-  truePositives: ExperimentIntersection | undefined;
   selectedDataView: MetricsTuplesCategories;
 }
 

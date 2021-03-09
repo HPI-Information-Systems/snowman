@@ -30,7 +30,7 @@ const DataViewerView = ({
               rowClassName="table-row"
               headerHeight={20}
               rowHeight={30}
-              rowCount={data.data.length}
+              rowCount={tuplesCount}
               rowGetter={({ index }: { index: number }): unknown => {
                 const dataRow: Record<string, string> = {};
                 data.header.forEach((_: string, headerIndex: number): void => {

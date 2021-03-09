@@ -1,4 +1,4 @@
-import { ExperimentIntersection, Metric } from 'api';
+import { Metric } from 'api';
 import { MetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { MetricsStore } from 'store/models';
@@ -6,9 +6,9 @@ import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
 const initialState: MetricsStore = {
   metrics: [],
-  falseNegatives: undefined,
-  falsePositives: undefined,
-  truePositives: undefined,
+  falseNegativesCount: 0,
+  falsePositivesCount: 0,
+  truePositivesCount: 0,
   selectedDataView: MetricsTuplesCategories.falsePositives,
 };
 
@@ -22,32 +22,25 @@ export const MetricsReducer = (
         ...state,
         metrics: [],
       };
-    case actionTypes.RESET_TUPLES:
-      return {
-        ...state,
-        falseNegatives: undefined,
-        falsePositives: undefined,
-        truePositives: undefined,
-      };
     case actionTypes.SET_ALL_METRICS:
       return {
         ...state,
         metrics: action.payload as Metric[],
       };
-    case actionTypes.SET_TRUE_POSITIVES_TUPLES:
+    case actionTypes.SET_TRUE_POSITIVES_COUNT:
       return {
         ...state,
-        truePositives: action.payload as ExperimentIntersection,
+        truePositivesCount: action.payload as number,
       };
-    case actionTypes.SET_FALSE_POSITIVES_TUPLES:
+    case actionTypes.SET_FALSE_POSITIVES_COUNT:
       return {
         ...state,
-        falsePositives: action.payload as ExperimentIntersection,
+        falsePositivesCount: action.payload as number,
       };
-    case actionTypes.SET_FALSE_NEGATIVES_TUPLES:
+    case actionTypes.SET_FALSE_NEGATIVES_COUNT:
       return {
         ...state,
-        falseNegatives: action.payload as ExperimentIntersection,
+        falseNegativesCount: action.payload as number,
       };
     case actionTypes.CLICK_ON_PANE:
       return {

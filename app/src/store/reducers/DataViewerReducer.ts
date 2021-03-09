@@ -20,6 +20,7 @@ export const DataViewerReducer = (
         ...state,
         dataToShow: {
           ...state.dataToShow,
+          header: (action.payload as ExperimentIntersection).header,
           data: [
             ...state.dataToShow.data,
             ...(action.payload as ExperimentIntersection).data,

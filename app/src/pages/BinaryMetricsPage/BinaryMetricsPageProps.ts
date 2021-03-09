@@ -1,20 +1,20 @@
 import { Metric } from 'api';
-import { ColumnDescriptor } from 'components/DataViewer/ColumnDescriptor';
+import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
-export interface BinaryMetricsPageStateProps {
+export interface BinaryMetricsPageDispatchProps {
   loadMetrics(): void;
-  loadTuples(): void;
+  preloadTuplesCounts(): void;
   selectPane(aMetricsTuplesCategory: MetricsTuplesCategories): void;
 }
 
-export interface BinaryMetricsDispatchProps {
+export interface BinaryMetricsPageStateProps {
+  tuplesCount: number;
   metrics: Metric[];
   selectedMetricsTuplesCategory: MetricsTuplesCategories;
   metricsTuplesCategories: MetricsTuplesCategories[];
-  dataViewerHeader: ColumnDescriptor[];
-  dataViewerTuples: unknown[];
+  tuplesLoader: TuplesLoader;
 }
 
 export type BinaryMetricsPageProps = BinaryMetricsPageStateProps &
-  BinaryMetricsDispatchProps;
+  BinaryMetricsPageDispatchProps;
