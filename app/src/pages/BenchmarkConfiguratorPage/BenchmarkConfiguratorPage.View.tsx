@@ -7,15 +7,21 @@ import {
   IonItem,
   IonItemDivider,
   IonLabel,
+  IonNote,
   IonReorder,
   IonReorderGroup,
   IonRow,
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import NextFab from 'components/NextFab/NextFab';
 import PageStruct from 'components/PageStruct/PageStruct';
-import { menuOutline } from 'ionicons/icons';
+import {
+  calculatorOutline,
+  chevronForwardOutline,
+  colorFilterOutline,
+  pauseOutline,
+  reorderThreeOutline,
+} from 'ionicons/icons';
 import React from 'react';
 import { IonReorderEvent } from 'types/IonReorderEvent';
 
@@ -23,11 +29,11 @@ const BenchmarkConfiguratorPageView = (): JSX.Element => (
   <PageStruct title="Benchmark Configurator">
     <IonGrid>
       <IonRow>
-        <IonCol size="3">
+        <IonCol sizeSm="12" sizeMd="6" sizeLg="6" sizeXl="6">
           <IonCard>
             <IonHeader>
               <IonToolbar>
-                <IonTitle>Benchmark</IonTitle>
+                <IonTitle>Experiments</IonTitle>
               </IonToolbar>
             </IonHeader>
             <IonReorderGroup
@@ -37,74 +43,110 @@ const BenchmarkConfiguratorPageView = (): JSX.Element => (
               }
             >
               <IonItemDivider>
-                <IonLabel>Selected Experiments</IonLabel>
+                <IonLabel>Selected Gold Standard</IonLabel>
               </IonItemDivider>
 
               <IonReorder>
                 <IonItem>
-                  <IonIcon icon={menuOutline} slot="start" />
-                  <IonLabel>Item 1</IonLabel>
-                </IonItem>
-              </IonReorder>
-
-              <IonReorder>
-                <IonItem>
-                  <IonIcon icon={menuOutline} slot="start" />
-                  <IonLabel>Item 2</IonLabel>
+                  <IonIcon icon={reorderThreeOutline} slot="start" />
+                  <IonLabel>goldstandard1</IonLabel>
                 </IonItem>
               </IonReorder>
 
               <IonItemDivider>
-                <IonLabel>All Experiments</IonLabel>
+                <IonLabel>Selected Matching Result</IonLabel>
               </IonItemDivider>
 
               <IonReorder>
                 <IonItem>
-                  <IonIcon icon={menuOutline} slot="start" />
-                  <IonLabel>Item 3</IonLabel>
+                  <IonIcon icon={reorderThreeOutline} slot="start" />
+                  <IonLabel>magellan-20200707</IonLabel>
                 </IonItem>
               </IonReorder>
 
               <IonReorder>
                 <IonItem>
-                  <IonIcon icon={menuOutline} slot="start" />
-                  <IonLabel>Item 4</IonLabel>
+                  <IonIcon icon={reorderThreeOutline} slot="start" />
+                  <IonLabel>magellan-20200708</IonLabel>
+                </IonItem>
+              </IonReorder>
+
+              <IonItemDivider>
+                <IonLabel>Available Experiments</IonLabel>
+              </IonItemDivider>
+
+              <IonReorder>
+                <IonItem>
+                  <IonIcon icon={reorderThreeOutline} slot="start" />
+                  <IonLabel>magellan-20200709</IonLabel>
                 </IonItem>
               </IonReorder>
 
               <IonReorder>
                 <IonItem>
-                  <IonIcon icon={menuOutline} slot="start" />
-                  <IonLabel>Item 5</IonLabel>
-                </IonItem>
-              </IonReorder>
-
-              <IonReorder>
-                <IonItem>
-                  <IonIcon icon={menuOutline} slot="start" />
-                  <IonLabel>Item 6</IonLabel>
-                </IonItem>
-              </IonReorder>
-
-              <IonReorder>
-                <IonItem>
-                  <IonIcon icon={menuOutline} slot="start" />
-                  <IonLabel>Item 7</IonLabel>
-                </IonItem>
-              </IonReorder>
-
-              <IonReorder>
-                <IonItem>
-                  <IonIcon icon={menuOutline} slot="start" />
-                  <IonLabel>Item 8</IonLabel>
+                  <IonIcon icon={reorderThreeOutline} slot="start" />
+                  <IonLabel>magellan-20200710</IonLabel>
                 </IonItem>
               </IonReorder>
             </IonReorderGroup>
           </IonCard>
         </IonCol>
+
+        <IonCol sizeSm="12" sizeMd="6" sizeLg="6" sizeXl="6">
+          <IonCard>
+            <IonHeader>
+              <IonToolbar>
+                <IonTitle>Actions</IonTitle>
+              </IonToolbar>
+            </IonHeader>
+            <IonItem button disabled>
+              <IonIcon icon={pauseOutline} slot="start" />
+              <IonLabel>
+                <h2>Binary comparison (two only)</h2>
+                <p className="ion-text-wrap">
+                  Evaluate a single experiment run against a gold standard in a
+                  traditional binary comparison.
+                </p>
+              </IonLabel>
+              <IonIcon icon={chevronForwardOutline} slot="end" />
+            </IonItem>
+            <IonItem button>
+              <IonIcon icon={colorFilterOutline} slot="start" />
+              <IonLabel>
+                <h2>Visually compare all pairs</h2>
+                <p className="ion-text-wrap">
+                  Use a visual representation to investigate which pairs were
+                  detected as duplicates within each experiment. Selecting one
+                  experiment as a gold standard is optional.
+                </p>
+              </IonLabel>
+              <IonIcon icon={chevronForwardOutline} slot="end" />
+            </IonItem>
+            <IonItem button>
+              <IonIcon icon={calculatorOutline} slot="start" />
+              <IonLabel>
+                <h2>Compare binary metrics for all</h2>
+                <p className="ion-text-wrap">
+                  Select multiple experiments and a single gold standard.
+                  You&apos;ll be able to compare all experiments&apos; metrics
+                  against each other in a table.
+                </p>
+              </IonLabel>
+              <IonIcon icon={chevronForwardOutline} slot="end" />
+            </IonItem>
+          </IonCard>
+        </IonCol>
+      </IonRow>
+      <IonRow>
+        <IonCol size="12" className="ion-text-center">
+          <IonNote>
+            Actions may become unavailable in case too many or not enough
+            experiments were selected. See the action&apos;s description for
+            more details.
+          </IonNote>
+        </IonCol>
       </IonRow>
     </IonGrid>
-    <NextFab />
   </PageStruct>
 );
 
