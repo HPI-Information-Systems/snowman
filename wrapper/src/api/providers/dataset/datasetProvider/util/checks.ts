@@ -43,8 +43,7 @@ export class DatasetConsistencyChecks {
 
   throwIfLocked(datasetId: DatasetId): void {
     if (this.sync.isLocked(datasetId)) {
-      // TODO some times the lock does not release? -> removed throw until fixed
-      logger.error(
+      throw new Error(
         `Somebody else is currently editing the dataset ${datasetId}. Please try again later.`
       );
     }
