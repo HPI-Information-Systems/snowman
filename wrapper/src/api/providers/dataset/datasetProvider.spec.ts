@@ -1,7 +1,6 @@
-import { Readable } from 'stream';
-
 import { setupDatabase } from '../../database';
 import { DatasetId, DatasetValues } from '../../server/types';
+import { fileToReadable } from '../../tools/test/filtToReadable';
 import { DatasetProvider } from './datasetProvider';
 
 function getNumberOfColumns(file: string[][]) {
@@ -48,10 +47,6 @@ function assertFilesMatch(file1: string[][], file2: string[][]) {
   expect(file1.slice(1).sort(rowsSorter)).toMatchObject(
     file2.slice(1).sort(rowsSorter)
   );
-}
-
-function fileToReadable(file: string[][]) {
-  return Readable.from(file.map((row) => row.join(',')).join('\n'));
 }
 
 describe('DatasetProvider', () => {

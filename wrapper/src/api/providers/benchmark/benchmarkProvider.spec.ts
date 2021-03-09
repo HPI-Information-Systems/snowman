@@ -1,7 +1,6 @@
-import { Readable } from 'stream';
-
 import { setupDatabase } from '../../database';
 import { DatasetValues, ExperimentValues } from '../../server/types';
+import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
 import { DatasetProvider } from '../dataset/datasetProvider';
 import { ExperimentProvider } from '../experiment/experimentProvider';
@@ -14,9 +13,6 @@ interface metaDataset {
 interface metaExperiment {
   name: string;
   data: { meta: ExperimentValues; file: string[][] };
-}
-function fileToReadable(file: string[][]) {
-  return Readable.from(file.map((row) => row.join(',')).join('\n'));
 }
 
 let datasetProvider: DatasetProvider;

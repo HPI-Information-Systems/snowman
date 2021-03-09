@@ -1,5 +1,5 @@
 import { LazyProperty } from '../../../../tools/lazyProperty';
-import { numberOfPairs } from '../helper/evaluator/util';
+import { numberOfPairs } from '../../../../tools/numberOfPairs';
 import { IntersectionBase } from './base';
 import { IntersectionCache } from './cache';
 

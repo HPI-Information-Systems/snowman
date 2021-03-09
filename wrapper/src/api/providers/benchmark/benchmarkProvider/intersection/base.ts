@@ -1,6 +1,5 @@
 import { ExperimentId } from '../../../../server/types';
 import { LazyProperty } from '../../../../tools/lazyProperty';
-import { Subclustering } from '../helper/cluster/subclustering';
 import { Clustering } from '../helper/cluster/types';
 import { UnionFind } from '../helper/cluster/unionFind';
 import { datasetFromExperimentIds } from '../helper/datasetFromExperiments';

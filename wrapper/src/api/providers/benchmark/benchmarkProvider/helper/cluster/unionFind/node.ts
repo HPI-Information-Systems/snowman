@@ -1,8 +1,7 @@
-import { List } from '../../../../../../tools/list';
 import { Cluster, ClusterID, NodeID } from '../types';
 
 export class Node implements Cluster {
-  private readonly children = new List<Node>();
+  private readonly children: Node[] = [];
   private parent: Node = this;
   private rank = 0;
   private _length = 1;
@@ -53,11 +52,11 @@ export class Node implements Cluster {
   union(otherRoot: Node): boolean {
     if (this !== otherRoot) {
       if (this.rank > otherRoot.rank) {
-        this.children.insertFront(otherRoot);
+        this.children.push(otherRoot);
         otherRoot.parent = this;
         this._length += otherRoot.length;
       } else {
-        otherRoot.children.insertFront(this);
+        otherRoot.children.push(this);
         this.parent = otherRoot;
         otherRoot._length += this.length;
         if (this.rank === otherRoot.rank) {

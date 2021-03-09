@@ -1,6 +1,3 @@
-import { count } from 'console';
-import { config } from 'winston';
-
 import {
   ExperimentId,
   ExperimentIntersection,
@@ -10,11 +7,9 @@ import {
   ExperimentIntersectionRequestExperiments,
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
+import { numberOfPairs } from '../../../tools/numberOfPairs';
 import { BaseBenchmarkProvider } from '../baseBenchmarkProvider';
 import { datasetFromExperimentIds } from './helper/datasetFromExperiments';
-import { EvaluatorCache } from './helper/evaluator';
-import { ConfusionMatrixCounts } from './helper/evaluator/confusionMatrix';
-import { numberOfPairs } from './helper/evaluator/util';
 import { idClustersToRecordClusters } from './helper/idsToRecords';
 import { Intersection, IntersectionCache } from './intersection';
 import {
@@ -36,10 +31,9 @@ import {
   Specificity,
   ThreatScore,
 } from './metrics';
+import { ConfusionMatrix } from './metrics/confusionMatrix';
 
 export class BenchmarkProvider extends BaseBenchmarkProvider {
-  protected readonly evaluatorCache = new EvaluatorCache();
-
   calculateExperimentIntersectionCount({
     config,
   }: {
@@ -165,7 +159,7 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
       PrevalenceThreshold,
       ThreatScore,
     ];
-    const matrix: ConfusionMatrixCounts = {
+    const matrix: ConfusionMatrix = {
       truePositives: IntersectionCache.get([goldstandardId, experimentId], [])
         .pairCount,
       falsePositives: IntersectionCache.get([experimentId], [goldstandardId])
