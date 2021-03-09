@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const webpack = require('webpack');
 
+// https://github.com/facebook/create-react-app/blob/v4.0.1/packages/react-scripts/config/webpack.config.js
 module.exports = {
   webpack: {
     configure: {
