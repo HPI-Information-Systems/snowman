@@ -4,6 +4,7 @@ import { Subclustering } from '../helper/cluster/subclustering';
 import { Clustering } from '../helper/cluster/types';
 import { UnionFind } from '../helper/cluster/unionFind';
 import { datasetFromExperimentIds } from '../helper/datasetFromExperiments';
+import type { Intersection as IntersectionSubclass } from '.';
 import { IntersectionCache } from './cache';
 import { IntersectionQueries } from './queries';
 
@@ -19,9 +20,17 @@ export class IntersectionBase {
   protected readonly queries = new IntersectionQueries();
 
   constructor(
-    protected readonly predictedConditionPositive: ExperimentId[],
-    protected readonly predictedConditionNegative: ExperimentId[]
+    public readonly predictedConditionPositive: ExperimentId[],
+    public readonly predictedConditionNegative: ExperimentId[]
   ) {}
+
+  get positiveIntersection(): IntersectionSubclass {
+    return IntersectionCache.get(this.predictedConditionPositive, []);
+  }
+
+  get negativeIntersection(): IntersectionSubclass {
+    return IntersectionCache.get(this.predictedConditionNegative, []);
+  }
 
   protected createClustering(): Clustering {
     if (this.predictedConditionNegative.length > 0) {

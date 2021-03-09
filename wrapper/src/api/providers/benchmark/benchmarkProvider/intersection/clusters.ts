@@ -2,49 +2,54 @@ import binarySearch from 'binary-search';
 
 import { compareNumbers } from '../../../../tools/comparators';
 import { LazyProperty } from '../../../../tools/lazyProperty';
-import { Subclustering } from '../helper/cluster/subclustering';
 import { ClusterID, NodeID } from '../helper/cluster/types';
-import { IntersectionCache } from './cache';
+import {
+  CalculatePairs1Negative,
+  CalculatePairsManyNegative,
+  CalculatePairsNoNegative,
+} from './calculatePairs';
+import { CalculatePairs } from './calculatePairs/base';
 import { IntersectionCounts } from './counts';
 
 export class IntersectionClusters extends IntersectionCounts {
-  protected subclustering = new LazyProperty(
-    () =>
-      new Subclustering(
-        IntersectionCache.get(this.predictedConditionPositive, []).clustering,
-        IntersectionCache.get(this.predictedConditionNegative, []).clustering
-      )
-  );
-
-  clusters(startAt = 0, limit?: number): (NodeID | undefined)[] {
-    let clusterId = this.findCluster(startAt);
-    let startCluster: undefined | (NodeID | undefined)[] = undefined;
-    while (this.isUnknownCluster(clusterId)) {
-      startCluster = this.calculateNextUnknownCluster();
-      clusterId = this.findCluster(startAt, clusterId);
-    }
-    if (!startCluster) {
-      startCluster = this.calculateCluster(clusterId);
-    }
-    const clusters = startCluster.slice(
-      this.numberRowsToSkipInStartCluster(clusterId, startAt)
-    );
-    while (
-      (!limit || clusters.length < limit) &&
-      ++clusterId <
-        IntersectionCache.get(this.predictedConditionPositive, []).clustering
-          .numberClusters
-    ) {
-      if (this.isUnknownCluster(clusterId)) {
-        clusters.push(...this.calculateNextUnknownCluster());
+  protected readonly accumulatedRowCounts: number[] = [];
+  protected readonly calculatePairs = new LazyProperty(
+    (): CalculatePairs => {
+      if (this.predictedConditionNegative.length === 0) {
+        return new CalculatePairsNoNegative(this);
+      } else if (this.predictedConditionNegative.length === 1) {
+        return new CalculatePairs1Negative(this);
       } else {
-        clusters.push(...this.calculateCluster(clusterId));
+        return new CalculatePairsManyNegative(this);
       }
     }
-    return clusters.slice(0, limit);
+  );
+
+  clusters(
+    startAt = 0,
+    limit: number = Number.POSITIVE_INFINITY
+  ): (NodeID | undefined)[] {
+    let clusterId = this.findCluster(startAt);
+    const resultRows = [];
+    while (this.hasCluster(clusterId) && limit > 0) {
+      const [skipped, rows] = this.calculatePairs.value.at(
+        clusterId,
+        startAt,
+        limit
+      );
+      resultRows.push(...rows);
+      startAt -= skipped;
+      limit -= rows.length;
+      if (this.isUnknownCluster(clusterId)) {
+        this.accumulatedRowCounts.push(
+          this.numberKnownRows + skipped + rows.length
+        );
+      }
+      clusterId++;
+    }
+    return resultRows;
   }
 
-  protected accumulatedRowCounts: number[] = [];
   protected get numberKnownRows(): number {
     return this.accumulatedRowCounts.length === 0
       ? 0
@@ -71,52 +76,7 @@ export class IntersectionClusters extends IntersectionCounts {
     return startCluster >= this.accumulatedRowCounts.length;
   }
 
-  protected numberRowsToSkipInStartCluster(
-    startCluster: ClusterID,
-    startAt: number
-  ): number {
-    if (startCluster === 0) {
-      return startAt;
-    } else {
-      return startAt - this.accumulatedRowCounts[startCluster - 1];
-    }
-  }
-
-  protected calculateNextUnknownCluster(): (NodeID | undefined)[] {
-    const cluster = this.calculateCluster(this.accumulatedRowCounts.length);
-    this.accumulatedRowCounts.push(this.numberKnownRows + cluster.length);
-    return cluster;
-  }
-
-  protected calculateCluster(clusterId: ClusterID): (NodeID | undefined)[] {
-    if (this.predictedConditionNegative.length === 0) {
-      const cluster = this.clustering.clusterFromClusterId(clusterId);
-      if (cluster.length > 1) {
-        return [...this.clustering.clusterFromClusterId(clusterId), undefined];
-      } else {
-        return [];
-      }
-    } else if (this.predictedConditionNegative.length === 1) {
-      const pairs = [];
-      const subclusters = this.subclustering.value.subclustersFromClusterId(
-        clusterId
-      );
-      for (let lower = 0; lower < subclusters.length; lower++) {
-        const lowerSubcluster = subclusters[lower];
-        for (const lowerId of lowerSubcluster) {
-          for (let upper = lower + 1; upper < subclusters.length; upper++) {
-            const upperSubcluster = subclusters[upper];
-            for (const upperId of upperSubcluster) {
-              pairs.push(lowerId, upperId, undefined);
-            }
-          }
-        }
-      }
-      return pairs;
-    } else {
-      throw new Error(
-        'Calculating clusters with more than one predicted condition negative is not supported yet.'
-      );
-    }
+  protected hasCluster(clusterId: number): boolean {
+    return this.positiveIntersection.clustering.numberClusters > clusterId;
   }
 }

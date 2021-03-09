@@ -27,8 +27,7 @@ export class IntersectionCounts extends IntersectionBase {
       return pairCount;
     } else {
       // |A without B without C without D ...| = |A| - |A intersected B|  - |A without B intersected C| - |A without B without C intersected D| - ...
-      let pairCount = IntersectionCache.get(this.predictedConditionPositive, [])
-        .pairCount;
+      let pairCount = this.positiveIntersection.pairCount;
       for (
         let index = 0;
         index < this.predictedConditionNegative.length;
