@@ -13,8 +13,9 @@ comparison setup.
 ## Basic setup
 
 1. Select a dataset.
-2. Select multiple experiments.
-3. Decide upon a benchmark to run.  
+2. Select a goldstandard in the experiment section.
+3. Select an result set (the benchmark will then compare the goldstandard with this result set).
+4. Benchmark your matching solution!  
    _(Currently "Binary Comparison" is the only option and therefore selected by default!)_
 
 ## Assumptions
