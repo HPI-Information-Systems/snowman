@@ -6,11 +6,16 @@ a dataset, multiple experiments as well as a benchmark option.
 Workflows are managed implicitly, so you do not need to create a new one each time you want to reconfigure the
 comparison setup.
 
+## Introduction video
+
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wuJkkIByXjw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Basic setup
 
 1. Select a dataset.
-2. Select multiple experiments.
-3. Decide upon a benchmark to run.  
+2. Select a goldstandard in the experiment section.
+3. Select an result set (the benchmark will then compare the goldstandard with this result set).
+4. Benchmark your matching solution!  
    _(Currently "Binary Comparison" is the only option and therefore selected by default!)_
 
 ## Assumptions

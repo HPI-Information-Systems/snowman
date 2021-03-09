@@ -65,6 +65,31 @@ const mapStateToProps = (state: Store): BinaryMetricsDispatchProps => ({
       objKey: aTitle,
     })
   ),
+  confusionMatrix: {
+    totalCount: Math.pow(
+      state.DatasetsStore.selectedDataset?.numberOfRecords ?? 0,
+      2
+    ),
+    // Todo: Replace with API value in later PR
+    falseNegatives: state.MetricsStore.falseNegatives?.data.length,
+    // Todo: Replace with API value in later PR
+    falsePositives: state.MetricsStore.falsePositives?.data.length,
+    // Todo: Replace with API value in later PR
+    trueNegatives:
+      state.MetricsStore.falseNegatives !== undefined &&
+      state.MetricsStore.falsePositives !== undefined &&
+      state.MetricsStore.truePositives?.data.length !== undefined
+        ? Math.pow(
+            state.DatasetsStore.selectedDataset?.numberOfRecords ?? 0,
+            2
+          ) -
+          ((state.MetricsStore.falseNegatives?.data.length ?? 0) +
+            (state.MetricsStore.falsePositives?.data.length ?? 0) +
+            (state.MetricsStore.truePositives?.data.length ?? 0))
+        : undefined,
+    // Todo: Replace with API value in later PR
+    truePositives: state.MetricsStore.truePositives?.data.length, // incorrect value
+  },
 });
 
 const mapDispatchToProps = (

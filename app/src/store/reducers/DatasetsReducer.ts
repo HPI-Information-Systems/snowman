@@ -1,8 +1,9 @@
 import { Dataset } from 'api';
-import { intersection, isEqual } from 'lodash';
+import { isEqual } from 'lodash';
 import { DatasetStoreActionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { DatasetsStore } from 'store/models';
+import { doesDatasetMatchTags } from 'utils/datasetHelper';
 import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: DatasetsStore = {
@@ -10,13 +11,6 @@ const initialState: DatasetsStore = {
   selectedDatasetTags: [],
   selectedDataset: null,
 };
-
-export const doesDatasetMatchesTags = (
-  aDataset: Dataset | null,
-  selectedTags: string[]
-): boolean =>
-  intersection(selectedTags, aDataset?.tags ?? []).length > 0 ||
-  selectedTags.length === 0;
 
 export const DatasetsReducer = (
   state: DatasetsStore = initialState,
@@ -51,7 +45,7 @@ export const DatasetsReducer = (
       return {
         ...state,
         selectedDatasetTags: resultingTags,
-        selectedDataset: doesDatasetMatchesTags(
+        selectedDataset: doesDatasetMatchTags(
           state.selectedDataset,
           resultingTags
         )
