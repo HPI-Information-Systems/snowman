@@ -81,7 +81,7 @@ export interface MetricsStore {
 }
 
 export interface DataViewerStore {
-  dataToShow: ExperimentIntersection | undefined;
+  dataToShow: ExperimentIntersection;
 }
 
 export interface Store {
