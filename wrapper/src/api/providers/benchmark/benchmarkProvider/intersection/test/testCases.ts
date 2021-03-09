@@ -107,7 +107,130 @@ export const confusionTuplesTestCases: {
   },
 ];
 
-export async function loadExperiment(
+export const multiIntersectinTestCases: {
+  positive: RelaxedClustering[];
+  negative: RelaxedClustering[];
+  pairs: NodeID[][];
+}[] = [
+  {
+    positive: [[[0, 1, 2, 3, 4, 5]]],
+    negative: [
+      [
+        [0, 1, 2],
+        [3, 4, 5],
+      ],
+      [
+        [0, 1],
+        [2, 3],
+        [4, 5],
+      ],
+    ],
+    pairs: [
+      [0, 3],
+      [0, 4],
+      [0, 5],
+      [1, 3],
+      [1, 4],
+      [1, 5],
+      [2, 4],
+      [2, 5],
+    ],
+  },
+  {
+    positive: [
+      [
+        [0, 1, 4],
+        [2, 3, 5],
+      ],
+    ],
+    negative: [
+      [
+        [0, 1, 2],
+        [3, 4, 5],
+      ],
+      [
+        [0, 1],
+        [2, 3],
+        [4, 5],
+      ],
+    ],
+    pairs: [
+      [0, 4],
+      [1, 4],
+      [2, 5],
+    ],
+  },
+  {
+    positive: [
+      [
+        [0, 1, 4],
+        [2, 3, 5],
+      ],
+      [
+        [0, 1, 4],
+        [2, 3, 5],
+      ],
+      [
+        [0, 1, 4],
+        [2, 3, 5],
+      ],
+      [
+        [0, 1, 4],
+        [2, 3, 5],
+      ],
+      [
+        [0, 1, 4],
+        [2, 3, 5],
+      ],
+    ],
+    negative: [
+      [
+        [0, 1, 2],
+        [3, 4, 5],
+      ],
+      [
+        [0, 1, 2],
+        [3, 4, 5],
+      ],
+      [
+        [0, 1, 2],
+        [3, 4, 5],
+      ],
+      [
+        [0, 1],
+        [2, 3],
+        [4, 5],
+      ],
+      [
+        [0, 1],
+        [2, 3],
+        [4, 5],
+      ],
+      [
+        [0, 1],
+        [2, 3],
+        [4, 5],
+      ],
+      [
+        [0, 1],
+        [2, 3],
+        [4, 5],
+      ],
+      [
+        [0, 1],
+        [2, 3],
+        [4, 5],
+      ],
+    ],
+    pairs: [
+      [0, 4],
+      [1, 4],
+      [2, 5],
+    ],
+  },
+];
+
+async function loadExperiment(
   datasetId: DatasetId,
   algorithmId: AlgorithmId,
   experiment: NodeID[][]
@@ -137,16 +260,13 @@ export async function loadExperiment(
   return experimentId;
 }
 
-export async function loadTestCase({
-  goldStandard,
-  experiment,
-}: typeof confusionTuplesTestCases[number]): Promise<{
-  goldStandard: ExperimentId;
-  experiment: ExperimentId;
-}> {
-  goldStandard = relaxedClusteringToArray(goldStandard);
-  experiment = relaxedClusteringToArray(experiment);
-  const numberOfRecords = goldStandard.reduce(
+export async function loadTestCase(
+  experiments: RelaxedClustering[]
+): Promise<ExperimentId[]> {
+  const experimentArrays = experiments.map(
+    relaxedClusteringToArray
+  ) as NodeID[][][];
+  const numberOfRecords = experimentArrays[0].reduce(
     (prev, cur) => prev + cur.length,
     0
   );
@@ -157,8 +277,9 @@ export async function loadTestCase({
   const algorithmId = getProviders().algorithm.addAlgorithm({
     name: '',
   });
-  return {
-    experiment: await loadExperiment(datasetId, algorithmId, experiment),
-    goldStandard: await loadExperiment(datasetId, algorithmId, goldStandard),
-  };
+  return await Promise.all(
+    experimentArrays.map((experimentArray) =>
+      loadExperiment(datasetId, algorithmId, experimentArray)
+    )
+  );
 }

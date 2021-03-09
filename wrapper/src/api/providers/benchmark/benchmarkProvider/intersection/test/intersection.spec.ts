@@ -5,7 +5,11 @@ import { expectClusteringsToEqual } from '../../cluster/test/utility';
 import { ClusterID, NodeID } from '../../cluster/types';
 import { Intersection } from '..';
 import { IntersectionCache } from '../cache';
-import { confusionTuplesTestCases, loadTestCase } from './testCases';
+import {
+  confusionTuplesTestCases,
+  loadTestCase,
+  multiIntersectinTestCases,
+} from './testCases';
 
 function getClustering(...args: ConstructorParameters<typeof Intersection>) {
   return IntersectionCache.get(...args)
@@ -42,9 +46,15 @@ function testConfig(
   const expectedClusters = IntersectionCache.get(pos, neg).clusters();
   expect(result).toEqual(expectedClusters);
 }
+beforeAll(async () => {
+  await setupDatabase({
+    temporary: true,
+    loadExampleEntries: false,
+  });
+});
 
 describe.each(confusionTuplesTestCases)(
-  'confusion tuples',
+  '2 experiment intersection',
   function (testCase) {
     const {
       expectedTruePositives,
@@ -55,13 +65,10 @@ describe.each(confusionTuplesTestCases)(
     let experimentId: ExperimentId;
 
     beforeAll(async () => {
-      await setupDatabase({
-        temporary: true,
-        loadExampleEntries: false,
-      });
-      const experimentIds = await loadTestCase(testCase);
-      goldStandardId = experimentIds.goldStandard;
-      experimentId = experimentIds.experiment;
+      [goldStandardId, experimentId] = await loadTestCase([
+        testCase.goldStandard,
+        testCase.experiment,
+      ]);
     });
 
     test('calculates true positives correctly', () => {
@@ -77,6 +84,28 @@ describe.each(confusionTuplesTestCases)(
     test('calculates false negatives correctly', () => {
       testConfig([goldStandardId], [experimentId], expectedFalseNegatives);
       testConfig([goldStandardId], [experimentId], expectedFalseNegatives);
+    });
+  }
+);
+
+describe.each(multiIntersectinTestCases)(
+  'n experiment intersection',
+  ({ negative, positive, pairs }) => {
+    let experimentIds: ExperimentId[];
+    beforeAll(async () => {
+      experimentIds = await loadTestCase([...positive, ...negative]);
+    });
+    test('calculates test case correctly', () => {
+      testConfig(
+        experimentIds.slice(0, positive.length),
+        experimentIds.slice(positive.length),
+        pairs
+      );
+      testConfig(
+        experimentIds.slice(0, positive.length),
+        experimentIds.slice(positive.length),
+        pairs
+      );
     });
   }
 );

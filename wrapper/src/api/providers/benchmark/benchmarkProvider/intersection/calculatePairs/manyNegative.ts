@@ -105,7 +105,7 @@ export class CalculatePairsManyNegative extends CalculatePairs {
         )
       ) {
         const rowCount = 3;
-        if (this.skipRemains > rowCount) {
+        if (this.skipRemains >= rowCount) {
           this.skipRemains -= rowCount;
         } else {
           const addedRows = [lowerId, upperId, undefined].slice(
