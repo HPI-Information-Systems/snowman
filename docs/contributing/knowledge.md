@@ -21,3 +21,11 @@ This document contains information about how to extend the codebase in specific 
    - make sure the `version` is unique
    - `migrateFromLastVersion` contains the migration logic
 5. update `api/database/schemas/index.ts` and export the new version as `latest`
+
+## Creating a release
+
+1. update version numbers in `./package.json`, `./app/package.json` and `./wrapper/package.json` to the new target version.
+2. merge all changes in to the `main` branch with a PR "Release "vX.x.x".
+3. tag the latest commit on `main` in git with `vX.x.x`  according to the version number.
+4. wait for the CI to finish releasing the tag.
+5. edit the release draft (Github Release): add a changelog and change the artifact names accordingly.
