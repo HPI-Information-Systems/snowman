@@ -21,7 +21,7 @@ If you select local usage, a folder will be created within your home directory w
 | Platform | Folder                                              |
 | -------- | --------------------------------------------------- |
 | macOS    | ~/Library/Application Support/snowman-wrapper       |
-| Windows  | C:\\Users\\\<you\>\\AppData\\Local\\snowman-wrapper |
+| Windows  | C:\\Users\\<you\>\\AppData\\Local\\snowman-wrapper |
 | Linux    | ~/.config/snowman-wrapper                           |
 
 If you changed something about your environment, these paths may be different. Rest assured that Snowman will not touch any other folders or files :)

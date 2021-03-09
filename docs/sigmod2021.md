@@ -17,8 +17,8 @@ We are working closely with the contest team to allow for a seamless experience.
 
 To use snowman, you'll have to download the latest [release (Github Releases)](https://github.com/HPI-Information-Systems/snowman/releases) of
 snowman for your specific os. After that you are able to start snowman!  
-As a first step, we'd suggest for you to start with our section [Basic Usage](/basic_usage/introduction) or take a look at our intoductory video below
-for a guide on how to benchmark and evaluate matching solutions with snowman.
+As a first step, we'd suggest for you to start with our section [Basic Usage](../basic_usage/introduction) or take a look at our intoductory video below
+for a guide on how to benchmark and evaluate matching solutions with snowman. You can find an explanation of a basic workflow [here](../basic_usage/workflow/) or in the video below.
 
 <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wuJkkIByXjw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -32,7 +32,8 @@ In case you'll want to upgrade later on, simply download the newest release and 
 We've included an automatic importer for the gold standard format and validated that the below datasets can be imported
 out of the box. More datasets will be added as soon as they are released by the contest team.
 
-1. **Computers**: prepackaged dataset X1 and gold standard Y1
+1. **NotebookToy**: prepackaged dataset X1 and gold standard Y1
+2. **Notebook**: prepackaged dataset X2 and gold standard Y2
 
 If you want to upload further datasets which have the same format as the SIGMOD-datasets, you will have to change some default settings 
 in the dataset-uploader-dialog: Set the ```ID Column``` from ```id``` to ```instance_id``` and set the ```Escape character``` to ```"```. You can then select the dataset file and click on ```ADD```.
