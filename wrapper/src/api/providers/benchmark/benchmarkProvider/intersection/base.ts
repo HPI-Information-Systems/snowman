@@ -5,7 +5,7 @@ import { Clustering } from '../helper/cluster/types';
 import { UnionFind } from '../helper/cluster/unionFind';
 import { datasetFromExperimentIds } from '../helper/datasetFromExperiments';
 import type { Intersection as IntersectionSubclass } from '.';
-import { IntersectionCache } from './cache';
+import { IntersectionCache, SubclusterCache } from './cache';
 import { IntersectionQueries } from './queries';
 
 export class IntersectionBase {
@@ -48,21 +48,11 @@ export class IntersectionBase {
         ).numberOfRecords
       ).link(this.queries.experimentLinks(this.predictedConditionPositive[0]));
     } else {
-      return new Subclustering(
-        IntersectionCache.get(
-          this.predictedConditionPositive.slice(
-            0,
-            this.predictedConditionPositive.length - 1
-          ),
-          []
-        ).clustering,
-        IntersectionCache.get(
-          this.predictedConditionPositive.slice(
-            this.predictedConditionPositive.length - 1
-          ),
-          []
-        ).clustering
-      );
+      const splitIndex = Math.floor(this.predictedConditionPositive.length / 2);
+      return SubclusterCache.get(
+        this.predictedConditionPositive.slice(0, splitIndex),
+        this.predictedConditionPositive.slice(splitIndex)
+      ).clustering;
     }
   }
 }

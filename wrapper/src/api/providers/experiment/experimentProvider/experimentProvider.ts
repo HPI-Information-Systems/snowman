@@ -9,7 +9,10 @@ import {
   ExperimentId,
 } from '../../../server/types';
 import { getProviders } from '../..';
-import { IntersectionCache } from '../../benchmark/benchmarkProvider/intersection/cache';
+import {
+  IntersectionCache,
+  invalidateCaches,
+} from '../../benchmark/benchmarkProvider/intersection/cache';
 import { DatasetIDMapper } from '../../dataset/datasetProvider/util/idMapper';
 import { ExperimentFileGetter } from '../../experiment/experimentProvider/file/getter';
 import { BaseExperimentProvider } from '../baseExperimentProvider';
@@ -139,7 +142,7 @@ export class ExperimentProvider extends BaseExperimentProvider {
         storedExperiment.numberOfUploadedRecords = numberOfUploadedRecords;
         this.queries.setExperimentQuery.run(storedExperiment);
       }
-      IntersectionCache.invalidate(id);
+      invalidateCaches(id);
 
       const mappedIdCount = datasetIDMapper.numberMappedIds();
       if (numberOfRecords !== undefined && numberOfRecords < mappedIdCount) {
@@ -169,6 +172,6 @@ export class ExperimentProvider extends BaseExperimentProvider {
       storedExperiment.numberOfUploadedRecords = null;
       this.queries.setExperimentQuery.run(storedExperiment);
     }
-    IntersectionCache.invalidate(id);
+    invalidateCaches(id);
   }
 }

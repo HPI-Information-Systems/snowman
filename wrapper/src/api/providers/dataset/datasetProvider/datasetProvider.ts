@@ -1,7 +1,10 @@
 import { Readable } from 'stream';
 
 import { Dataset, DatasetId, DatasetValues } from '../../../server/types';
-import { IntersectionCache } from '../../benchmark/benchmarkProvider/intersection/cache';
+import {
+  IntersectionCache,
+  invalidateCaches,
+} from '../../benchmark/benchmarkProvider/intersection/cache';
 import { BaseDatasetProvider } from '../baseDatasetProvider';
 import { DatasetDeleter } from './deleter';
 import { DatasetFileGetter } from './file/getter';
@@ -153,7 +156,7 @@ export class DatasetProvider extends BaseDatasetProvider {
     for (const experimentId of this.queries.listExperimentsUsingThisDataset(
       datasetId
     )) {
-      IntersectionCache.invalidate(experimentId);
+      invalidateCaches(experimentId);
     }
   }
 }

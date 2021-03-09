@@ -1,27 +1,19 @@
-import { LazyProperty } from '../../../../../tools/lazyProperty';
-import { Subclustering } from '../../helper/cluster/subclustering';
 import { Cluster, ClusterID } from '../../helper/cluster/types';
+import { SubclusterCache } from '../cache';
 import { CalculatePairs } from './base';
 
 export class CalculatePairs1Negative extends CalculatePairs {
   protected subclusters: Cluster[] = [];
   protected skipRemains = 0;
   protected rows: (ClusterID | undefined)[] = [];
-  // TODO better caching for this -> maybe subclustering cache **with** order?
-  protected subclustering = new LazyProperty(
-    () =>
-      new Subclustering(
-        this.intersection.positiveIntersection.clustering,
-        this.intersection.negativeIntersection.clustering
-      )
-  );
 
   protected calculatePairs(): ReturnType<CalculatePairs['calculatePairs']> {
     this.rows = [];
     this.skipRemains = this.skip;
-    this.subclusters = this.subclustering.value.subclustersFromClusterId(
-      this.clusterId
-    );
+    this.subclusters = SubclusterCache.get(
+      this.intersection.predictedConditionPositive,
+      this.intersection.predictedConditionNegative
+    ).clustering.subclustersFromClusterId(this.clusterId);
     this.calculatePairsPrepared();
     return [this.skip - this.skipRemains, this.rows];
   }
