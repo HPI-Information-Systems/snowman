@@ -2,7 +2,7 @@ import { setupDatabase } from '../../../../../database';
 import { ExperimentId } from '../../../../../server/types';
 import { numberOfPairs } from '../../../../../tools/numberOfPairs';
 import { expectClusteringsToEqual } from '../../cluster/test/utility';
-import { ClusterID } from '../../cluster/types';
+import { ClusterID, NodeID } from '../../cluster/types';
 import { Intersection } from '..';
 import { IntersectionCache } from '../cache';
 import { confusionTuplesTestCases, loadTestCase } from './testCases';
@@ -24,6 +24,25 @@ function getClustering(...args: ConstructorParameters<typeof Intersection>) {
     .slice(0, -1);
 }
 
+function testConfig(
+  pos: ExperimentId[],
+  neg: ExperimentId[],
+  expected: NodeID[][]
+) {
+  expectClusteringsToEqual(getClustering(pos, neg), expected);
+  expect(IntersectionCache.get(pos, neg).pairCount).toBe(
+    expected.reduce((prev, cur) => prev + numberOfPairs(cur.length), 0)
+  );
+  const result = [
+    ...IntersectionCache.get(pos, neg).clusters(0, 1),
+    ...IntersectionCache.get(pos, neg).clusters(1, 2),
+    ...IntersectionCache.get(pos, neg).clusters(3, 97),
+    ...IntersectionCache.get(pos, neg).clusters(100),
+  ];
+  const expectedClusters = IntersectionCache.get(pos, neg).clusters();
+  expect(result).toEqual(expectedClusters);
+}
+
 describe.each(confusionTuplesTestCases)(
   'confusion tuples',
   function (testCase) {
@@ -35,7 +54,7 @@ describe.each(confusionTuplesTestCases)(
     let goldStandardId: ExperimentId;
     let experimentId: ExperimentId;
 
-    beforeEach(async () => {
+    beforeAll(async () => {
       await setupDatabase({
         temporary: true,
         loadExampleEntries: false,
@@ -46,38 +65,18 @@ describe.each(confusionTuplesTestCases)(
     });
 
     test('calculates true positives correctly', () => {
-      expectClusteringsToEqual(
-        getClustering([goldStandardId, experimentId], []),
-        expectedTruePositives
-      );
-      expect(
-        IntersectionCache.get([goldStandardId, experimentId], []).pairCount
-      ).toBe(
-        expectedTruePositives.reduce(
-          (prev, cur) => prev + numberOfPairs(cur.length),
-          0
-        )
-      );
+      testConfig([goldStandardId, experimentId], [], expectedTruePositives);
+      testConfig([goldStandardId, experimentId], [], expectedTruePositives);
     });
 
     test('calculates false positives correctly', () => {
-      expectClusteringsToEqual(
-        getClustering([experimentId], [goldStandardId]),
-        expectedFalsePositives
-      );
-      expect(
-        IntersectionCache.get([experimentId], [goldStandardId]).pairCount
-      ).toBe(expectedFalsePositives.length);
+      testConfig([experimentId], [goldStandardId], expectedFalsePositives);
+      testConfig([experimentId], [goldStandardId], expectedFalsePositives);
     });
 
     test('calculates false negatives correctly', () => {
-      expectClusteringsToEqual(
-        getClustering([goldStandardId], [experimentId]),
-        expectedFalseNegatives
-      );
-      expect(
-        IntersectionCache.get([goldStandardId], [experimentId]).pairCount
-      ).toBe(expectedFalseNegatives.length);
+      testConfig([goldStandardId], [experimentId], expectedFalseNegatives);
+      testConfig([goldStandardId], [experimentId], expectedFalseNegatives);
     });
   }
 );

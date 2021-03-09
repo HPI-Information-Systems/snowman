@@ -30,6 +30,9 @@ export class IntersectionClusters extends IntersectionCounts {
     limit: number = Number.POSITIVE_INFINITY
   ): (NodeID | undefined)[] {
     let clusterId = this.findCluster(startAt);
+    if (clusterId > 0) {
+      startAt -= this.accumulatedRowCounts[clusterId - 1];
+    }
     const resultRows = [];
     while (this.hasCluster(clusterId) && limit > 0) {
       const [skipped, rows] = this.calculatePairs.value.at(
@@ -40,7 +43,7 @@ export class IntersectionClusters extends IntersectionCounts {
       resultRows.push(...rows);
       startAt -= skipped;
       limit -= rows.length;
-      if (this.isUnknownCluster(clusterId)) {
+      if (this.isUnknownCluster(clusterId) && limit > 0) {
         this.accumulatedRowCounts.push(
           this.numberKnownRows + skipped + rows.length
         );

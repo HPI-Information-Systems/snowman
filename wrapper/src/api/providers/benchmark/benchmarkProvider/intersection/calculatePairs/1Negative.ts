@@ -82,13 +82,12 @@ export class CalculatePairs1Negative extends CalculatePairs {
       if (this.skipRemains >= numberRows) {
         this.skipRemains -= numberRows;
       } else {
-        this.rows.push(
-          ...[lowerId, upperId, undefined].slice(
-            this.skipRemains,
-            this.skipRemains + this.limit
-          )
+        const addedRows = [lowerId, upperId, undefined].slice(
+          this.skipRemains,
+          this.skipRemains + this.limit
         );
-        this.limit -= this.skipRemains;
+        this.rows.push(...addedRows);
+        this.limit -= addedRows.length;
         this.skipRemains = 0;
         if (this.limit === 0) {
           return true;
