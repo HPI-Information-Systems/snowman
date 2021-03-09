@@ -90,7 +90,12 @@ export class IntersectionClusters extends IntersectionCounts {
 
   protected calculateCluster(clusterId: ClusterID): (NodeID | undefined)[] {
     if (this.predictedConditionNegative.length === 0) {
-      return [...this.clustering.clusterFromClusterId(clusterId), undefined];
+      const cluster = this.clustering.clusterFromClusterId(clusterId);
+      if (cluster.length > 1) {
+        return [...this.clustering.clusterFromClusterId(clusterId), undefined];
+      } else {
+        return [];
+      }
     } else if (this.predictedConditionNegative.length === 1) {
       const pairs = [];
       const subclusters = this.subclustering.value.subclustersFromClusterId(
