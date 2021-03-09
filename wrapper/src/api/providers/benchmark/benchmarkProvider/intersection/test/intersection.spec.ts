@@ -1,5 +1,6 @@
 import { setupDatabase } from '../../../../../database';
 import { ExperimentId } from '../../../../../server/types';
+import { numberOfPairs } from '../../../../../tools/numberOfPairs';
 import { expectClusteringsToEqual } from '../../cluster/test/utility';
 import { ClusterID } from '../../cluster/types';
 import { Intersection } from '..';
@@ -49,6 +50,14 @@ describe.each(confusionTuplesTestCases)(
         getClustering([goldStandardId, experimentId], []),
         expectedTruePositives
       );
+      expect(
+        IntersectionCache.get([goldStandardId, experimentId], []).pairCount
+      ).toBe(
+        expectedTruePositives.reduce(
+          (prev, cur) => prev + numberOfPairs(cur.length),
+          0
+        )
+      );
     });
 
     test('calculates false positives correctly', () => {
@@ -56,6 +65,9 @@ describe.each(confusionTuplesTestCases)(
         getClustering([experimentId], [goldStandardId]),
         expectedFalsePositives
       );
+      expect(
+        IntersectionCache.get([experimentId], [goldStandardId]).pairCount
+      ).toBe(expectedFalsePositives.length);
     });
 
     test('calculates false negatives correctly', () => {
@@ -63,6 +75,9 @@ describe.each(confusionTuplesTestCases)(
         getClustering([goldStandardId], [experimentId]),
         expectedFalseNegatives
       );
+      expect(
+        IntersectionCache.get([goldStandardId], [experimentId]).pairCount
+      ).toBe(expectedFalseNegatives.length);
     });
   }
 );
