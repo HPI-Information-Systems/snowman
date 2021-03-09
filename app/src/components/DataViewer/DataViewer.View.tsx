@@ -3,8 +3,7 @@ import 'components/DataViewer/DataViewerStyles.css';
 
 import { DataViewerProps } from 'components/DataViewer/DataViewerProps';
 import React, { useEffect } from 'react';
-import { InfiniteLoader } from 'react-virtualized';
-import { AutoSizer, Column, Table } from 'react-virtualized';
+import { AutoSizer, Column, InfiniteLoader, Table } from 'react-virtualized';
 
 const DataViewerView = ({
   tuplesCount,
