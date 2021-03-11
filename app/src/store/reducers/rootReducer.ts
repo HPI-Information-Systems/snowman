@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { SnowmanAction } from 'store/messages';
 import { ImmediateStore, Store } from 'store/models';
 import { AddExperimentDialogReducer } from 'store/reducers/AddExperimentDialogReducer';
@@ -13,16 +12,25 @@ import { MetricsReducer } from 'store/reducers/MetricsReducer';
 import { RenderLogicReducer } from 'store/reducers/RenderLogicReducer';
 
 export const rootReducer = (state: Store, action: SnowmanAction): Store => {
-  const immediateState: ImmediateStore = combineReducers({
-    DatasetsStore: DatasetsReducer,
-    ExperimentsStore: ExperimentsReducer,
-    AlgorithmsStore: AlgorithmsReducer,
-    DatasetDialogStore: DatasetDialogReducer,
-    AddExperimentDialogStore: AddExperimentDialogReducer,
-    AlgorithmDialogStore: AlgorithmDialogReducer,
-    GlobalIndicatorStore: GlobalIndicatorReducer,
-    MetricsStore: MetricsReducer,
-    InputChipStore: InputChipReducer,
-  })(state, action);
+  const immediateState: ImmediateStore = {
+    DatasetsStore: DatasetsReducer(state?.DatasetsStore, action),
+    ExperimentsStore: ExperimentsReducer(state?.ExperimentsStore, action),
+    AlgorithmsStore: AlgorithmsReducer(state?.AlgorithmsStore, action),
+    DatasetDialogStore: DatasetDialogReducer(state?.DatasetDialogStore, action),
+    AddExperimentDialogStore: AddExperimentDialogReducer(
+      state?.AddExperimentDialogStore,
+      action
+    ),
+    AlgorithmDialogStore: AlgorithmDialogReducer(
+      state?.AlgorithmDialogStore,
+      action
+    ),
+    GlobalIndicatorStore: GlobalIndicatorReducer(
+      state?.GlobalIndicatorStore,
+      action
+    ),
+    MetricsStore: MetricsReducer(state?.MetricsStore, action),
+    InputChipStore: InputChipReducer(state?.InputChipStore, action),
+  };
   return RenderLogicReducer(state?.RenderLogicStore, immediateState, action);
 };
