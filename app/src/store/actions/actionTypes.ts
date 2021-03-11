@@ -1,6 +1,6 @@
-export const RouterStoreActionTypes = {
-  NAVIGATE_TO: 'ROUTER_STORE_ACTION-NAVIGATE_TO',
-  NAVIGATE_NEXT: 'ROUTER_STORE_ACTION-NAVIGATE_NEXT',
+export const RenderStoreActionTypes = {
+  NAVIGATE_TO: 'RENDER_STORE_ACTION-NAVIGATE_TO',
+  NAVIGATE_NEXT: 'RENDER_STORE_ACTION-NAVIGATE_NEXT',
 };
 
 export const DatasetStoreActionTypes = {

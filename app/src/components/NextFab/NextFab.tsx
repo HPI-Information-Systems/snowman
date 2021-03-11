@@ -4,7 +4,7 @@ import {
   NextFabStateProps,
 } from 'components/NextFab/NextFabProps';
 import { connect } from 'react-redux';
-import { navigateToNextPage } from 'store/actions/RouterStoreActions';
+import { navigateToNextPage } from 'store/actions/RenderStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 

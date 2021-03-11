@@ -8,7 +8,7 @@ import {
 import { skull } from 'ionicons/icons';
 import { difference, sortBy } from 'lodash';
 import { connect } from 'react-redux';
-import { navigateTo } from 'store/actions/RouterStoreActions';
+import { navigateTo } from 'store/actions/RenderStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 import { ViewMetaInformationCollection } from 'structs/viewMetaInfoCollection';

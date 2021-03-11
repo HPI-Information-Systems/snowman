@@ -1,4 +1,4 @@
-import { RouterStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
+import { RenderStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { ViewIDs } from 'types/ViewIDs';
 import {
   easyPrimitiveAction,

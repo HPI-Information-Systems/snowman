@@ -1,4 +1,4 @@
-import { RouterStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
+import { RenderStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { ImmediateStore, RenderLogicStore, Store } from 'store/models';
 import { ViewIDs } from 'types/ViewIDs';
