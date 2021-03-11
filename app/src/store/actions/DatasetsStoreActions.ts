@@ -7,7 +7,7 @@ import {
   SnowmanThunkAction,
 } from 'store/messages';
 import { store } from 'store/store';
-import { MagicNotPossibleId } from 'utils/constants';
+import { MagicNotPossibleId } from 'structs/constants';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,

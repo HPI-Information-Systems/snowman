@@ -5,6 +5,10 @@ import { AddExperimentDialogStoreActionTypes as actionTypes } from 'store/action
 import { getExperiments } from 'store/actions/ExperimentsStoreActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
+import {
+  SUCCESS_TO_ADD_NEW_EXPERIMENT,
+  SUCCESS_TO_UPLOAD_EXPERIMENT_FILE,
+} from 'structs/statusMessages';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { getAlgorithmIdFromTag } from 'utils/algorithmHelpers';
 import {
@@ -12,10 +16,6 @@ import {
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
-import {
-  SUCCESS_TO_ADD_NEW_EXPERIMENT,
-  SUCCESS_TO_UPLOAD_EXPERIMENT_FILE,
-} from 'utils/statusMessages';
 
 export const openDialog = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({

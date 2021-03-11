@@ -6,8 +6,8 @@ import {
   SnowmanDispatch,
   SnowmanThunkAction,
 } from 'store/messages';
+import { SUCCESS_DELETE_ALGORITHM } from 'structs/statusMessages';
 import RequestHandler from 'utils/requestHandler';
-import { SUCCESS_DELETE_ALGORITHM } from 'utils/statusMessages';
 
 export const getAlgorithms = (): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
