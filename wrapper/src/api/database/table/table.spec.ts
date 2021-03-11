@@ -1,6 +1,6 @@
 import { assertType } from '../../tools/types';
 import { attachDatabases } from '../setup';
-import { databaseBackend, loadOrCreateMainDatabase } from '../setup/backend';
+import { loadOrCreateMainDatabase } from '../setup/backend';
 import { installTables } from '../setup/install';
 import { TableSchema } from '../tools/types';
 import { loadTableFromDatabase, throwIfTableNotExists } from './loader';
@@ -63,35 +63,25 @@ describe('Table', () => {
     const nonnull1 = 'sdfsdfsd';
     const nonnull2 = 'sssss';
     const canbenull2 = 'gggg';
-    function getInsertedValues(): Set<{ nonnull: string; canbenull: string }> {
-      return new Set(
-        databaseBackend()
-          .prepare(
-            `SELECT "${mountedTable.columns.nonnull.name}" as nonnull, "${mountedTable.columns.canbenull.name}" as canbenull
-             FROM ${table}`
-          )
-          .all()
-      );
-    }
+    expect(table.all().length).toBe(0);
 
-    expect(getInsertedValues().size).toBe(0);
-
-    table.insert([
+    const [id] = table.insert([
       {
         column: table.schema.columns.nonnull,
         value: nonnull1,
       },
     ]);
-    expect(getInsertedValues()).toMatchObject(
+    expect(new Set(table.all())).toMatchObject(
       new Set([
         {
           nonnull: nonnull1,
           canbenull: null,
+          id,
         },
       ])
     );
 
-    table.insert([
+    const [id2] = table.insert([
       {
         column: table.schema.columns.nonnull,
         value: nonnull2,
@@ -101,17 +91,97 @@ describe('Table', () => {
         value: canbenull2,
       },
     ]);
-    expect(getInsertedValues()).toMatchObject(
+    expect(new Set(table.all())).toMatchObject(
       new Set([
         {
           nonnull: nonnull1,
           canbenull: null,
+          id,
         },
         {
           nonnull: nonnull2,
           canbenull: canbenull2,
+          id: id2,
         },
       ])
     );
+  });
+
+  test('getter gets rows', () => {
+    const table = new Table(mountedTable);
+    const nonnull1 = 'sdfsdfsd';
+    const nonnull2 = 'sssss';
+    const canbenull2 = 'gggg';
+    expect(table.all().length).toBe(0);
+    expect(table.get()).toBe(undefined);
+    const [id] = table.insert([
+      {
+        column: table.schema.columns.nonnull,
+        value: nonnull1,
+      },
+    ]);
+    expect(new Set(table.all())).toMatchObject(
+      new Set([
+        {
+          nonnull: nonnull1,
+          canbenull: null,
+          id,
+        },
+      ])
+    );
+    expect(table.get()).toMatchObject({
+      nonnull: nonnull1,
+      canbenull: null,
+      id,
+    });
+    expect(
+      table.get({
+        nonnull: 'not' + nonnull1,
+      })
+    ).toBe(undefined);
+    expect(
+      table.all({
+        nonnull: 'not' + nonnull1,
+      }).length
+    ).toBe(0);
+
+    const [id2] = table.insert([
+      {
+        column: table.schema.columns.nonnull,
+        value: nonnull2,
+      },
+      {
+        column: table.schema.columns.canbenull,
+        value: canbenull2,
+      },
+    ]);
+    expect(new Set(table.all())).toMatchObject(
+      new Set([
+        {
+          nonnull: nonnull1,
+          canbenull: null,
+          id,
+        },
+        {
+          nonnull: nonnull2,
+          canbenull: canbenull2,
+          id: id2,
+        },
+      ])
+    );
+    expect(new Set(table.all({ id }))).toMatchObject(
+      new Set([
+        {
+          nonnull: nonnull1,
+          canbenull: null,
+          id,
+        },
+      ])
+    );
+    expect(table.get({ id: id2 })).toMatchObject({
+      nonnull: nonnull2,
+      canbenull: canbenull2,
+      id: id2,
+    });
   });
 });

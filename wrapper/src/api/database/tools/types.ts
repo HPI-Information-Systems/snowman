@@ -1,6 +1,13 @@
 import type { schemas } from '../schemas';
 
 type DataTypes = 'NULL' | 'INTEGER' | 'REAL' | 'TEXT' | 'BLOB';
+export type TSDataType<DataType extends DataTypes> = DataType extends 'NULL'
+  ? null
+  : DataType extends 'INTEGER'
+  ? number
+  : DataType extends 'REAL'
+  ? number
+  : string;
 export declare interface Column<DataType extends DataTypes = DataTypes> {
   readonly name: string;
   readonly dataType: DataType;

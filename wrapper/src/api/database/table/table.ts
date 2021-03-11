@@ -1,36 +1,44 @@
+import { LazyProperty } from '../../tools/lazyProperty';
 import { TableSchema } from '../tools/types';
 import { TableCreator } from './creator';
 import { TableDeleter } from './deleter';
+import { TableGetter } from './getter';
 import { InsertParameters, TableInserter } from './inserter';
 
 export class Table<Schema extends TableSchema> {
-  private _inserter?: TableInserter<Schema>;
-
-  private get inserter(): TableInserter<Schema> {
-    if (!this._inserter) {
-      this._inserter = new TableInserter(this);
-    }
-    return this._inserter;
-  }
+  protected inserter = new LazyProperty(() => new TableInserter<Schema>(this));
+  protected getter = new TableGetter<Schema>(this);
 
   constructor(public readonly schema: Schema) {}
 
+  get(
+    ...args: Parameters<TableGetter<Schema>['get']>
+  ): ReturnType<TableGetter<Schema>['get']> {
+    return this.getter.get(...args);
+  }
+
+  all(
+    ...args: Parameters<TableGetter<Schema>['all']>
+  ): ReturnType<TableGetter<Schema>['all']> {
+    return this.getter.all(...args);
+  }
+
   insert(
-    ...rows: InsertParameters<Schema>
+    ...args: InsertParameters<Schema>
   ): ReturnType<TableInserter<Schema>['insert']> {
-    return this.inserter.insert(...rows);
+    return this.inserter.value.insert(...args);
   }
 
   batchInsert(
     ...args: Parameters<TableInserter<Schema>['batchInsert']>
   ): ReturnType<TableInserter<Schema>['batchInsert']> {
-    return this.inserter.batchInsert(...args);
+    return this.inserter.value.batchInsert(...args);
   }
 
   flushBatchInsert(
     ...args: Parameters<TableInserter<Schema>['flushBatchInsert']>
   ): ReturnType<TableInserter<Schema>['flushBatchInsert']> {
-    return this.inserter.flushBatchInsert(...args);
+    return this.inserter.value.flushBatchInsert(...args);
   }
 
   create(
