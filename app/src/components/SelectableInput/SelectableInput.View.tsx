@@ -16,7 +16,7 @@ import {
   radioButtonOnOutline,
 } from 'ionicons/icons';
 import React, { useEffect } from 'react';
-import { IonInputMouseEvent } from 'types/IonChangeEvent';
+import { IonInputMouseEvent } from 'types/IonInputMouseEvent';
 import { fuzzyStringIncludes } from 'utils/fuzzyStringIncludes';
 
 export const SelectableInputView = ({
