@@ -32,7 +32,10 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
     ),
     MetricsStore: MetricsReducer(state?.MetricsStore, action),
     InputChipStore: InputChipReducer(state?.InputChipStore, action),
-    SelectableInputStore: SelectableInputReducer(state?.SelectableInputStore, action),
+    SelectableInputStore: SelectableInputReducer(
+      state?.SelectableInputStore,
+      action
+    ),
   };
   return RenderLogicReducer(state?.RenderLogicStore, immediateState, action);
 };
