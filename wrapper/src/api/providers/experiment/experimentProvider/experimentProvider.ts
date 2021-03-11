@@ -37,24 +37,12 @@ export class ExperimentProvider extends BaseExperimentProvider {
     const storedExperimentValues = this.converter.apiExperimentValuesToStoredExperimentValues(
       experiment
     );
-    return this.queries.table.insert([
-      {
-        column: this.queries.schema.columns.name,
-        value: storedExperimentValues.name,
-      },
-      {
-        column: this.queries.schema.columns.description,
-        value: storedExperimentValues.description,
-      },
-      {
-        column: this.queries.schema.columns.algorithm,
-        value: storedExperimentValues.algorithmId,
-      },
-      {
-        column: this.queries.schema.columns.dataset,
-        value: storedExperimentValues.datasetId,
-      },
-    ])[0];
+    return this.queries.table.insert({
+      name: storedExperimentValues.name,
+      description: storedExperimentValues.description,
+      algorithm: storedExperimentValues.algorithmId,
+      dataset: storedExperimentValues.datasetId,
+    })[0];
   }
 
   getExperiment(id: ExperimentId): Experiment {

@@ -7,7 +7,7 @@ import {
   tableSchemas,
 } from '../../../../database/schemas';
 import { escapeColumnName } from '../../../../database/tools/escapeColumnNames';
-import { Column } from '../../../../database/tools/types';
+import { Column, NullableColumnValues } from '../../../../database/tools/types';
 import { DatasetIDMapper } from '../../../dataset/datasetProvider/util/idMapper';
 
 type ExperimentSchema = ReturnType<
@@ -50,14 +50,15 @@ export abstract class ExperimentInserter {
     [id1, id2] = [id1, id2].sort();
     const table = this.getOrCreateTable(similarityScores);
     table.batchInsert(
-      () =>
-        this.rowToInsertParameters(
-          table.schema.columns,
-          id1,
-          id2,
-          detectedAsDuplicate,
-          similarityScores
-        ),
+      [
+        () =>
+          this.rowToInsertParameters(
+            id1,
+            id2,
+            detectedAsDuplicate,
+            similarityScores
+          ),
+      ],
       INSERT_BATCH_SIZE
     );
   }
@@ -91,44 +92,21 @@ export abstract class ExperimentInserter {
   }
 
   private rowToInsertParameters(
-    columns: ReturnType<
-      typeof tableSchemas['experiment']['experiment']
-    >['columns'],
     id1: string,
     id2: string,
     detectedAsDuplicate: boolean,
     similarityScores: { [name: string]: number }
-  ) {
-    const inserts: Parameters<
-      Table<
-        ReturnType<typeof tableSchemas['experiment']['experiment']>
-      >['insert']
-    > = [
-      [
-        {
-          column: columns.id1,
-          value: this.idMapper.map(id1),
-        },
-        {
-          column: columns.id2,
-          value: this.idMapper.map(id2),
-        },
-        {
-          column: columns.isDuplicate,
-          value: detectedAsDuplicate ? 1 : 0,
-        },
-        ...Object.entries(similarityScores).map(([score, value]) => {
-          return {
-            column: columns[
-              escapeColumnName(score, experimentCustomColumnPrefix)
-            ] as Column<'REAL'> & {
-              autoIncrement: false;
-            },
-            value,
-          };
-        }),
-      ],
-    ];
-    return inserts;
+  ): NullableColumnValues<ExperimentSchema['columns']> {
+    return {
+      id1: this.idMapper.map(id1),
+      id2: this.idMapper.map(id2),
+      isDuplicate: detectedAsDuplicate ? 1 : 0,
+      ...Object.fromEntries(
+        Object.entries(similarityScores).map(([score, value]) => [
+          escapeColumnName(score, experimentCustomColumnPrefix),
+          value,
+        ])
+      ),
+    };
   }
 }

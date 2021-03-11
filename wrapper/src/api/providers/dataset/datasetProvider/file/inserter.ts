@@ -6,9 +6,8 @@ import {
   datasetCustomColumnPrefix,
   tableSchemas,
 } from '../../../../database/schemas';
-import { InsertParameters } from '../../../../database/table/inserter';
 import { escapeColumnName } from '../../../../database/tools/escapeColumnNames';
-import { Column } from '../../../../database/tools/types';
+import { Column, NullableColumnValues } from '../../../../database/tools/types';
 import { DatasetId } from '../../../../server/types';
 import {
   CSVColumn,
@@ -70,32 +69,25 @@ export class DatasetInserter implements CSVReaderStrategy {
 
   async readRow(row: CSVRow): Promise<void> {
     if (this.table) {
-      const columns = this.table.schema.columns;
       this.table.batchInsert(
-        () => [this.rowToInsertParameters(columns, row)],
+        [() => this.rowToInsertParameters(row)],
         INSERT_BATCH_SIZE
       );
     }
   }
 
   private rowToInsertParameters(
-    columns: DatasetFileSchema['columns'],
     row: CSVRow
-  ): InsertParameters<DatasetFileSchema>[number] {
-    return [
-      ...Object.entries(row).map(([header, value]) => {
-        return {
-          column: columns[
-            escapeColumnName(header, datasetCustomColumnPrefix)
-          ] as Column<'TEXT'>,
+  ): NullableColumnValues<DatasetFileSchema['columns']> {
+    return {
+      ...Object.fromEntries(
+        Object.entries(row).map(([header, value]) => [
+          escapeColumnName(header, datasetCustomColumnPrefix),
           value,
-        };
-      }),
-      {
-        column: columns.id,
-        value: this.idMapper.map(row[this.fileIdColumn]),
-      },
-    ];
+        ])
+      ),
+      id: this.idMapper.map(row[this.fileIdColumn]),
+    };
   }
 
   async finish(): Promise<void> {

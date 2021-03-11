@@ -27,24 +27,12 @@ export class DatasetProvider extends BaseDatasetProvider {
 
   addDataset(dataset: DatasetValues): DatasetId {
     const storedDataset = this.converter.apiDatasetToStoredDataset(dataset);
-    return this.queries.table.insert([
-      {
-        column: this.queries.schema.columns.name,
-        value: storedDataset.name,
-      },
-      {
-        column: this.queries.schema.columns.description,
-        value: storedDataset.description,
-      },
-      {
-        column: this.queries.schema.columns.tags,
-        value: storedDataset.tags,
-      },
-      {
-        column: this.queries.schema.columns.numberOfRecords,
-        value: storedDataset.numberOfRecords,
-      },
-    ])[0];
+    return this.queries.table.insert({
+      name: storedDataset.name,
+      description: storedDataset.description,
+      tags: storedDataset.tags,
+      numberOfRecords: storedDataset.numberOfRecords,
+    })[0];
   }
 
   getDataset(id: DatasetId): Dataset {

@@ -1,13 +1,30 @@
 import type { schemas } from '../schemas';
 
-type DataTypes = 'NULL' | 'INTEGER' | 'REAL' | 'TEXT' | 'BLOB';
-export type TSDataType<DataType extends DataTypes> = DataType extends 'NULL'
+export type DataTypes = 'NULL' | 'INTEGER' | 'REAL' | 'TEXT' | 'BLOB';
+export type BasicDataType<
+  DataType extends DataTypes = DataTypes
+> = DataType extends 'NULL'
   ? null
   : DataType extends 'INTEGER'
   ? number
   : DataType extends 'REAL'
   ? number
   : string;
+
+export type ColumnDataType<
+  ColumnT extends Column
+> = ColumnT['notNull'] extends true
+  ? BasicDataType<ColumnT['dataType']>
+  : BasicDataType<ColumnT['dataType']> | null;
+
+export type ColumnValues<Columns extends TableSchema['columns']> = {
+  [key in keyof Columns]: ColumnDataType<Columns[key]>;
+};
+
+export type NullableColumnValues<Columns extends TableSchema['columns']> = {
+  [key in keyof Columns]?: ColumnDataType<Columns[key]>;
+};
+
 export declare interface Column<DataType extends DataTypes = DataTypes> {
   readonly name: string;
   readonly dataType: DataType;

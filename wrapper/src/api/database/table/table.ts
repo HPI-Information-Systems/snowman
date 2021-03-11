@@ -3,7 +3,7 @@ import { TableSchema } from '../tools/types';
 import { TableCreator } from './creator';
 import { TableDeleter } from './deleter';
 import { TableGetter } from './getter';
-import { InsertParameters, TableInserter } from './inserter';
+import { TableInserter } from './inserter';
 
 export class Table<Schema extends TableSchema> {
   protected inserter = new LazyProperty(() => new TableInserter<Schema>(this));
@@ -24,7 +24,7 @@ export class Table<Schema extends TableSchema> {
   }
 
   insert(
-    ...args: InsertParameters<Schema>
+    ...args: Parameters<TableInserter<Schema>['insert']>
   ): ReturnType<TableInserter<Schema>['insert']> {
     return this.inserter.value.insert(...args);
   }

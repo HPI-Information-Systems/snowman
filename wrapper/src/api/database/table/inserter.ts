@@ -1,57 +1,37 @@
 import { Statement } from 'better-sqlite3';
 
-import { ValueOf } from '../../tools/types';
+import { Cache } from '../../tools/cache';
 import { databaseBackend } from '../setup/backend';
-import { Column, TableSchema } from '../tools/types';
+import type {
+  BasicDataType,
+  DataTypes,
+  NullableColumnValues,
+  TableSchema,
+} from '../tools/types';
 import type { Table } from './table';
 
-export type InsertParameters<Schema extends TableSchema> = ({
-  column: Schema['columns'][string];
-  value: null | string | number;
-} & (
-  | { column: { dataType: 'NULL' }; value: null }
-  | {
-      column: { dataType: 'REAL' | 'INTEGER' };
-      value: number;
-    }
-  | {
-      column: { dataType: 'BLOB' | 'TEXT' };
-      value: string;
-    }
-  | {
-      column: { dataType: 'REAL' | 'INTEGER'; notNull?: false };
-      value: number | null;
-    }
-  | {
-      column: { dataType: 'BLOB' | 'TEXT'; notNull?: false };
-      value: string | null;
-    }
-) & { column: { autoIncrement?: false } })[][];
-
-type InsertableType = string | number | null;
-
 export class TableInserter<Schema extends TableSchema> {
-  private readonly insertStatement: Statement<InsertableType[]>;
-  private readonly columnsArray: ValueOf<Schema['columns']>[];
-  private readonly columnNamesToInsertPlaces: Map<string, number>;
-  private readonly cachedRows: (() => InsertParameters<Schema>)[] = [];
+  protected readonly statementCache = new Cache((columns: string[]) =>
+    this.createInsertStatement(columns)
+  );
+  protected readonly cachedRows: (() => NullableColumnValues<
+    Schema['columns']
+  >)[] = [];
 
-  constructor(private readonly table: Table<Schema>) {
-    this.columnsArray = this.createColumnsArray();
-    this.columnNamesToInsertPlaces = this.createColumnNamesToInsertPlaces();
-    this.insertStatement = this.createInsertStatement();
-  }
+  constructor(protected readonly table: Table<Schema>) {}
 
-  insert(...rows: InsertParameters<Schema>): number[] {
-    this.batchInsert(() => rows);
-    return this.flushBatchInsert();
+  insert(...rows: NullableColumnValues<Schema['columns']>[]): number[] {
+    return this.batchInsert(
+      rows.map((row) => () => row),
+      1
+    );
   }
 
   batchInsert(
-    rows: () => InsertParameters<Schema>,
+    rows: (() => NullableColumnValues<Schema['columns']>)[],
     commitAfterBatchSize?: number
   ): number[] {
-    this.cachedRows.push(rows);
+    this.cachedRows.push(...rows);
     if (
       typeof commitAfterBatchSize === 'number' &&
       this.cachedRows.length >= commitAfterBatchSize
@@ -65,13 +45,19 @@ export class TableInserter<Schema extends TableSchema> {
   flushBatchInsert(): number[] {
     const insertedRowIds: number[] = [];
     databaseBackend().transaction(() => {
-      for (const row of this.cachedRows.flatMap((cachedRow) => cachedRow())) {
-        const insertArgs: InsertableType[] = this.columnsArray.map((_) => null);
-        for (const datapoint of row) {
-          insertArgs[this.insertPlace(datapoint.column)] = datapoint.value;
-        }
+      for (const rowGetter of this.cachedRows) {
+        const row = rowGetter();
+        const columns = Object.keys(row).sort();
         insertedRowIds.push(
-          +this.insertStatement.run(...insertArgs).lastInsertRowid
+          +this.statementCache
+            .get(columns)
+            .run(
+              ...(columns
+                .map((column) => row[column])
+                .filter(
+                  (value) => value !== undefined
+                ) as BasicDataType<DataTypes>[])
+            ).lastInsertRowid
         );
       }
     })();
@@ -79,48 +65,12 @@ export class TableInserter<Schema extends TableSchema> {
     return insertedRowIds;
   }
 
-  private insertPlace(column: Column): number {
-    const insertPlace = this.columnNamesToInsertPlaces.get(column.name);
-    if (insertPlace === undefined) {
-      if (
-        Object.values(this.table.schema.columns).find(
-          (_column) => _column.name === column.name
-        )
-      ) {
-        throw new Error(
-          `The column ${column.name} in the table ${this.table} cannot be manually inserted as it is autoincremented.`
-        );
-      } else {
-        throw new Error(
-          `The table ${this.table} does not have a ${column.name} column.`
-        );
-      }
-    }
-    return insertPlace;
-  }
-
-  private createColumnsArray(): ValueOf<Schema['columns']>[] {
-    return Object.values(this.table.schema.columns).filter(
-      (column) => !column.autoIncrement
-    ) as ValueOf<Schema['columns']>[];
-  }
-
-  private createColumnNamesToInsertPlaces(): Map<string, number> {
-    const columnNamesToInsertPlaces = new Map<string, number>();
-    this.columnsArray.forEach((column, index) =>
-      columnNamesToInsertPlaces.set(column.name, index)
-    );
-    return columnNamesToInsertPlaces;
-  }
-
-  private createInsertStatement(): Statement<InsertableType[]> {
-    return databaseBackend().prepare<InsertableType[]>(`
+  private createInsertStatement(
+    columns: string[]
+  ): Statement<BasicDataType<DataTypes>[]> {
+    return databaseBackend().prepare<BasicDataType[]>(`
           INSERT OR REPLACE INTO ${this.table}
-                 (${this.columnsToString((column) => '"' + column.name + '"')})
-          VALUES (${this.columnsToString(() => '?')})`);
-  }
-
-  private columnsToString(mapper: (column: Column) => string) {
-    return Object.values(this.columnsArray).map(mapper).join(',');
+                 (${columns.map((column) => '"' + column + '"')})
+          VALUES (${columns.map(() => '?')})`);
   }
 }

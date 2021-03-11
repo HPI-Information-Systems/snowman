@@ -45,16 +45,10 @@ export class AlgorithmProvider extends BaseAlgorithmProvider {
   }
 
   addAlgorithm(algorithm: AlgorithmValues): AlgorithmId {
-    return this.table.insert([
-      {
-        column: this.schema.columns.name,
-        value: algorithm.name,
-      },
-      {
-        column: this.schema.columns.description,
-        value: algorithm.description || null,
-      },
-    ])[0];
+    return this.table.insert({
+      name: algorithm.name,
+      description: algorithm.description || null,
+    })[0];
   }
 
   getAlgorithm(id: AlgorithmId): Algorithm {
