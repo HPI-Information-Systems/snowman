@@ -12,13 +12,14 @@ import { getProviders } from '../..';
 import { invalidateCaches } from '../../benchmark/benchmarkProvider/intersection/cache';
 import { DatasetIDMapper } from '../../dataset/datasetProvider/util/idMapper';
 import { ExperimentFileGetter } from '../../experiment/experimentProvider/file/getter';
-import { BaseExperimentProvider } from '../baseExperimentProvider';
 import { getExperimentInserter } from './file';
 import { ExperimentProviderQueries } from './queries';
 import { ExperimentConsistencyChecks } from './util/checks';
 import { ExperimentConverter, StoredExperiment } from './util/converter';
 
-export class ExperimentProvider extends BaseExperimentProvider {
+export class ExperimentProvider {
+  readonly schema = tableSchemas.meta.experiment;
+  readonly table = new Table(this.schema);
   private readonly queries = new ExperimentProviderQueries();
   private readonly checks = new ExperimentConsistencyChecks();
   private readonly converter = new ExperimentConverter();

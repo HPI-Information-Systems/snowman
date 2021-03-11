@@ -8,7 +8,6 @@ import {
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
 import { numberOfPairs } from '../../../tools/numberOfPairs';
-import { BaseBenchmarkProvider } from '../baseBenchmarkProvider';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
 import { idClustersToRecordClusters } from './idsToRecords';
 import { Intersection, IntersectionCache } from './intersection';
@@ -33,7 +32,7 @@ import {
 } from './metrics';
 import { ConfusionMatrix } from './metrics/confusionMatrix';
 
-export class BenchmarkProvider extends BaseBenchmarkProvider {
+export class BenchmarkProvider {
   calculateExperimentIntersectionCount({
     config,
   }: {

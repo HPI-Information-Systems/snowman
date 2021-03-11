@@ -1,11 +1,7 @@
 import { Readable } from 'stream';
 
 import { Dataset, DatasetId, DatasetValues } from '../../../server/types';
-import {
-  IntersectionCache,
-  invalidateCaches,
-} from '../../benchmark/benchmarkProvider/intersection/cache';
-import { BaseDatasetProvider } from '../baseDatasetProvider';
+import { invalidateCaches } from '../../benchmark/benchmarkProvider/intersection/cache';
 import { DatasetDeleter } from './deleter';
 import { DatasetFileGetter } from './file/getter';
 import { DatasetInserter } from './file/inserter';
@@ -14,7 +10,7 @@ import { DatasetConsistencyChecks } from './util/checks';
 import { DatasetConverter, StoredDataset } from './util/converter';
 import { DatasetIDMapper } from './util/idMapper';
 
-export class DatasetProvider extends BaseDatasetProvider {
+export class DatasetProvider {
   protected readonly queries = new DatasetProviderQueries();
   protected readonly converter = new DatasetConverter();
   protected readonly checks = new DatasetConsistencyChecks();
@@ -27,12 +23,14 @@ export class DatasetProvider extends BaseDatasetProvider {
 
   addDataset(dataset: DatasetValues): DatasetId {
     const storedDataset = this.converter.apiDatasetToStoredDataset(dataset);
-    return this.queries.table.insert({
-      name: storedDataset.name,
-      description: storedDataset.description,
-      tags: storedDataset.tags,
-      numberOfRecords: storedDataset.numberOfRecords,
-    })[0];
+    return this.queries.table
+      .insert({
+        name: storedDataset.name,
+        description: storedDataset.description,
+        tags: storedDataset.tags,
+        numberOfRecords: storedDataset.numberOfRecords,
+      })
+      .slice(-1)[0];
   }
 
   getDataset(id: DatasetId): Dataset {
