@@ -6,7 +6,7 @@ import { store } from 'store/store';
 import { MagicNotPossibleId } from 'structs/constants';
 import {
   SUCCESS_TO_ADD_NEW_ALGORITHM,
-  SUCCESS_UPDATE_ALGORITHM,
+  SUCCESS_TO_UPDATE_ALGORITHM,
 } from 'structs/statusMessages';
 import {
   easyPrimitiveAction,
@@ -115,7 +115,7 @@ const updateAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
           dispatch(getAlgorithms());
         }),
     dispatch,
-    SUCCESS_UPDATE_ALGORITHM
+    SUCCESS_TO_UPDATE_ALGORITHM
   );
 
 export const addOrUpdateAlgorithm = (): SnowmanThunkAction<

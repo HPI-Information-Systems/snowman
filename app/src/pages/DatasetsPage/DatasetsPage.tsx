@@ -5,6 +5,7 @@ import {
   DatasetsPageStateProps,
 } from 'pages/DatasetsPage/DatasetsPageProps';
 import { connect } from 'react-redux';
+import { openChangeDialog } from 'store/actions/DatasetDialogStoreActions';
 import {
   clickOnDataset,
   clickOnDatasetTag,
@@ -13,19 +14,17 @@ import {
 } from 'store/actions/DatasetsStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-import { doesDatasetMatchesTags } from 'store/reducers/DatasetsReducer';
-import { MagicNotPossibleId } from 'structs/constants';
 import { Option } from 'types/Option';
+import { MagicNotPossibleId } from 'utils/constants';
+import { doesDatasetMatchTags } from 'utils/datasetHelper';
 import { getTagsFromDatasets } from 'utils/tagFactory';
-
-import { openChangeDialog } from '../../store/actions/DatasetDialogStoreActions';
 
 const mapStateToProps = (state: Store): DatasetsPageStateProps => ({
   selectedTags: state.DatasetsStore.selectedDatasetTags,
   tags: getTagsFromDatasets(state.DatasetsStore.datasets),
   datasets: state.DatasetsStore.datasets
     .filter((aDataset: Dataset): boolean =>
-      doesDatasetMatchesTags(aDataset, state.DatasetsStore.selectedDatasetTags)
+      doesDatasetMatchTags(aDataset, state.DatasetsStore.selectedDatasetTags)
     )
     .map(
       (aDataset: Dataset): Option => ({
@@ -34,8 +33,8 @@ const mapStateToProps = (state: Store): DatasetsPageStateProps => ({
         description: aDataset.description,
         subtitle: (aDataset?.tags ?? []).join(', ').toUpperCase(),
         tags: [
-          `Total: ${aDataset.numberOfRecords}`,
-          `Uploaded: ${aDataset.numberOfUploadedRecords}`,
+          `Total: ${aDataset.numberOfRecords ?? 'unknown'}`,
+          `Uploaded: ${aDataset.numberOfUploadedRecords ?? 'none'}`,
         ],
       })
     ),

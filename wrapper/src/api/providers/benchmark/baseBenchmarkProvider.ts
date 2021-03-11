@@ -1,18 +1,29 @@
 import {
   ExperimentIntersection,
-  ExperimentIntersectionMode,
+  ExperimentIntersectionCount,
+  ExperimentIntersectionPairCountsItem,
+  ExperimentIntersectionPairCountsRequestExperiments,
+  ExperimentIntersectionRequestExperiments,
 } from '../../server/types';
 import { Metric } from '../../server/types';
 export abstract class BaseBenchmarkProvider {
-  abstract calculateMetrics(
+  abstract getBinaryMetrics(
     goldstandardId: number,
     experimentId: number
   ): Metric[];
-  abstract getConfusionTuples(
-    goldStandardId: number,
-    experimentId: number,
-    goldStandardDuplicates: boolean,
-    experimentDuplicates: boolean,
-    mode: ExperimentIntersectionMode
-  ): ExperimentIntersection;
+
+  abstract calculateExperimentIntersectionCount(args: {
+    config: ExperimentIntersectionRequestExperiments[];
+  }): ExperimentIntersectionCount;
+
+  abstract calculateExperimentIntersectionPairCounts(
+    config: ExperimentIntersectionPairCountsRequestExperiments[]
+  ): ExperimentIntersectionPairCountsItem[];
+
+  abstract calculateExperimentIntersectionRecords(args: {
+    config: ExperimentIntersectionRequestExperiments[];
+    startAt?: number;
+    limit?: number;
+    sortBy?: string;
+  }): ExperimentIntersection;
 }

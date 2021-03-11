@@ -26,6 +26,17 @@ export async function calculateExperimentIntersectionRecords(
   );
 }
 
+export async function calculateExperimentIntersectionPairCounts(
+  request: Request,
+  response: Response
+): Promise<void> {
+  await Controller.handleRequest(
+    request,
+    response,
+    service.calculateExperimentIntersectionPairCounts
+  );
+}
+
 export async function getBinaryMetrics(
   request: Request,
   response: Response

@@ -14,9 +14,13 @@ nav:
     - Setup: dev_setup/introduction.md
     - Contributing: contributing/knowledge.md
     - REST API: ./swagger
+  - SIGMOD2021: sigmod2021.md
 
 extra_css:
   - assets/extra.css
+
+repo_url: https://github.com/HPI-Information-Systems/snowman
+repo_name: snowman (GitHub)
 
 theme:
   name: material

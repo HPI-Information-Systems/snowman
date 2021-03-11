@@ -57,6 +57,11 @@
   background-color: var(--ion-color-danger);
 }
 
+.Toastify__body-wrap {
+  width: 100%;
+  overflow-wrap: break-word !important;
+}
+
 /* Tooltip */
 .tooltip-fixed {
   max-width: 450px;

@@ -2,9 +2,8 @@
   "name": "snowman-wrapper",
   "author": "Snowman Team",
   "description": "Compare data matching algorithms with each other",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "license": "MIT",
-  "private": true,
   "main": "dist/main.js",
   "scripts": {
     "erebuild": "run-script-os",
@@ -52,6 +51,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "better-sqlite3": "git+https://github.com/phpfs/better-sqlite3.git",
+    "binary-search": "^1.3.6",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "csv-parse": "^4.15.1",

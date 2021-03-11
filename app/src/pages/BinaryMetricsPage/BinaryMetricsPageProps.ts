@@ -1,5 +1,6 @@
 import { Metric } from 'api';
 import { ColumnDescriptor } from 'components/DataViewer/ColumnDescriptor';
+import { ConfusionMatrix } from 'types/ConfusionMatrix';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
 export interface BinaryMetricsPageStateProps {
@@ -14,6 +15,7 @@ export interface BinaryMetricsDispatchProps {
   metricsTuplesCategories: MetricsTuplesCategories[];
   dataViewerHeader: ColumnDescriptor[];
   dataViewerTuples: unknown[];
+  confusionMatrix: ConfusionMatrix;
 }
 
 export type BinaryMetricsPageProps = BinaryMetricsPageStateProps &

@@ -13,6 +13,7 @@ import {
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
+import { SUCCESS_DELETE_DATASET } from 'utils/statusMessages';
 
 export const clickOnDataset = (
   aDatasetId: number
@@ -77,6 +78,7 @@ export const deleteDataset = (
   dispatch(resetSelectedDataset());
   return RequestHandler(
     (): Promise<void> => new DatasetsApi().deleteDataset({ datasetId: id }),
-    dispatch
+    dispatch,
+    SUCCESS_DELETE_DATASET
   ).then((): Promise<void> => dispatch(getDatasets()));
 };

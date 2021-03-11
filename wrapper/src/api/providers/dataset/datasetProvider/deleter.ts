@@ -1,6 +1,5 @@
 import { databaseBackend, Table } from '../../../database';
 import { latest } from '../../../database/schemas';
-import { ExperimentId } from '../../../server/types';
 import { getProviders } from '../..';
 import { DatasetProviderQueries } from './queries';
 import { DatasetIDMapper } from './util/idMapper';
@@ -36,14 +35,10 @@ export class DatasetDeleter {
 
   private deleteExperimentsUsingThisDataset(): void {
     const experimentProvider = getProviders().experiment;
-    for (const experimentId of this.listExperimentsUsingThisDataset()) {
+    for (const experimentId of this.queries.listExperimentsUsingThisDataset(
+      this.datasetId
+    )) {
       experimentProvider.deleteExperiment(experimentId);
     }
-  }
-
-  private listExperimentsUsingThisDataset(): ExperimentId[] {
-    return this.queries.listExperimentsUsingDatasetQuery
-      .all(this.datasetId)
-      .map(({ id }: { id: ExperimentId }) => id);
   }
 }

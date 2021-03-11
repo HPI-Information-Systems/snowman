@@ -30,5 +30,5 @@ export interface ExperimentIntersectionCount {
      * @type {number}
      * @memberof ExperimentIntersectionCount
      */
-    numberGroups: number;
+    numberPairs: number;
 }

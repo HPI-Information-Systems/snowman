@@ -1,10 +1,10 @@
 import { SnowmanAction } from 'store/messages';
 import { ImmediateStore, Store } from 'store/models';
-import { AddExperimentDialogReducer } from 'store/reducers/AddExperimentDialogReducer';
 import { AlgorithmDialogReducer } from 'store/reducers/AlgorithmDialogReducer';
 import { AlgorithmsReducer } from 'store/reducers/AlgorithmsReducer';
 import { DatasetDialogReducer } from 'store/reducers/DatasetDialogReducer';
 import { DatasetsReducer } from 'store/reducers/DatasetsReducer';
+import { ExperimentDialogReducer } from 'store/reducers/ExperimentDialogReducer';
 import { ExperimentsReducer } from 'store/reducers/ExperimentsReducer';
 import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
 import { InputChipReducer } from 'store/reducers/InputChipReducer';
@@ -17,8 +17,8 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
     ExperimentsStore: ExperimentsReducer(state?.ExperimentsStore, action),
     AlgorithmsStore: AlgorithmsReducer(state?.AlgorithmsStore, action),
     DatasetDialogStore: DatasetDialogReducer(state?.DatasetDialogStore, action),
-    AddExperimentDialogStore: AddExperimentDialogReducer(
-      state?.AddExperimentDialogStore,
+    AddExperimentDialogStore: ExperimentDialogReducer(
+      state?.ExperimentDialogStore,
       action
     ),
     AlgorithmDialogStore: AlgorithmDialogReducer(

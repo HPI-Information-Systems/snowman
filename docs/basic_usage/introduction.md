@@ -4,11 +4,15 @@ Welcome to the Snowman Data Matching Benchmark - this guide aims to help you get
 
 ## Setup
 
-1. Download the latest artifact for you platform from the Github Releases page.
+1. Download the latest artifact for you platform from the [Github Releases](https://github.com/HPI-Information-Systems/snowman/releases) page.
 
 2. Extract the zip somewhere safe (e.g. your Documents folder) and run `snowman.exe`, `snowman.app` or `snowman` according to the platform you are on.
 
 3. The benchmark will now start and ask you whether you want to spin up a local instance or connect to a remote.
+
+The benchmark software is completely self-contained within the extracted directory (or .app file on macOS). Upgrading
+is as easy as to download and use the newer version. Necessary migration steps will be applied to the stored data upon
+the first start. See the following section on where data is persisted.
 
 ### Local usage
 
@@ -17,7 +21,7 @@ If you select local usage, a folder will be created within your home directory w
 | Platform | Folder                                              |
 | -------- | --------------------------------------------------- |
 | macOS    | ~/Library/Application Support/snowman-wrapper       |
-| Windows  | C:\\Users\\\<you\>\\AppData\\Local\\snowman-wrapper |
+| Windows  | C:\\Users\\<you\>\\AppData\\Local\\snowman-wrapper |
 | Linux    | ~/.config/snowman-wrapper                           |
 
 If you changed something about your environment, these paths may be different. Rest assured that Snowman will not touch any other folders or files :)

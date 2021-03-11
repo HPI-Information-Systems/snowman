@@ -46,12 +46,14 @@ const AppView = ({
       <GlobalLoading />
       <ToastContainer
         autoClose={5000}
+        closeButton={false}
         pauseOnHover={true}
         pauseOnFocusLoss={true}
         closeOnClick={true}
         newestOnTop={true}
         limit={5}
         position={'top-right'}
+        bodyClassName="Toastify__body-wrap"
       />
     </IonApp>
   );

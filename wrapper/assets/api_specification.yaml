@@ -586,6 +586,8 @@ paths:
               - clusterER
               - pilot
               - sigmod2021
+              - BHANA
+              - BPIES
             type: string
           style: form
       requestBody:
@@ -672,11 +674,6 @@ paths:
       x-eov-operation-handler: controllers/BenchmarkController
   /benchmark/experiment-intersection/records:
     post:
-      description:
-        intersects multiple experiments and returns the resulting records.
-        This can be used to calculate the confusion-matrix. Up to now exactly two
-        experiment objects are required. The first one represents the groundTruth,
-        the second one the predicted experiment.
       operationId: calculateExperimentIntersectionRecords
       parameters:
         - explode: true
@@ -703,13 +700,6 @@ paths:
             example: similarity
             type: string
           style: form
-        - explode: true
-          in: query
-          name: mode
-          required: false
-          schema:
-            $ref: "#/components/schemas/ExperimentIntersectionMode"
-          style: form
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       responses:
@@ -724,25 +714,14 @@ paths:
         "404":
           description: Experiments not found
       summary:
-        Triggers the comparison of multiple experiments and returns tuples
-        classified as false_negative, etc. and limited by limit
+        intersects multiple experiments and returns the resulting records.
+        This can be used to calculate the confusion-matrix.
       tags:
         - Benchmark
       x-eov-operation-handler: controllers/BenchmarkController
   /benchmark/experiment-intersection/count:
     post:
-      description:
-        intersects multiple experiments and returns the counts of the number
-        of records. This can be used to calculate the confusion-matrix
       operationId: calculateExperimentIntersectionCount
-      parameters:
-        - explode: true
-          in: query
-          name: mode
-          required: false
-          schema:
-            $ref: "#/components/schemas/ExperimentIntersectionMode"
-          style: form
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       responses:
@@ -757,8 +736,34 @@ paths:
         "404":
           description: Experiments not found
       summary:
-        Triggers the comparison of multiple experiments and returns tuples
-        classified as false_negative, etc. and limited by limit
+        intersects multiple experiments and returns the counts of the number
+        of records. This can be used to calculate the confusion-matrix
+      tags:
+        - Benchmark
+      x-eov-operation-handler: controllers/BenchmarkController
+  /benchmark/experiment-intersection/pair-counts:
+    post:
+      description:
+        returns the count of pairs of all possible intersections of the
+        given experiments
+      operationId: calculateExperimentIntersectionPairCounts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExperimentIntersectionPairCountsConfiguration"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExperimentIntersectionPairCounts"
+          description: OK
+        "403":
+          description: Forbidden
+        "404":
+          description: Experiments not found
       tags:
         - Benchmark
       x-eov-operation-handler: controllers/BenchmarkController
@@ -912,21 +917,7 @@ components:
       type: array
     ExperimentIntersectionConfiguration:
       items:
-        properties:
-          experimentId:
-            $ref: "#/components/schemas/ExperimentId"
-          predictedCondition:
-            type: boolean
-          similarityAttribute:
-            example: name_name_levenshtein
-            type: string
-          similarityScore:
-            example: 0.9
-            type: number
-        required:
-          - experimentId
-          - predictedCondition
-        type: object
+        $ref: "#/components/schemas/ExperimentIntersectionRequestExperiments"
       type: array
     ExperimentIntersection:
       example:
@@ -939,8 +930,8 @@ components:
             - test value 2
           - []
           - - "3"
-            - "other"
-            - "group"
+            - other
+            - group
         header:
           - id
           - testColumn1
@@ -955,6 +946,17 @@ components:
             type: string
           type: array
         data:
+          example:
+            - - "1"
+              - test value 1
+              - test value 2
+            - - "2"
+              - test value 1
+              - test value 2
+            - []
+            - - "3"
+              - other
+              - group
           items:
             example:
               - "1"
@@ -971,25 +973,100 @@ components:
     ExperimentIntersectionCount:
       example:
         numberRows: 37
-        numberGroups: 10
+        numberPairs: 10
       properties:
         numberRows:
           example: 37
           type: integer
-        numberGroups:
+        numberPairs:
           example: 10
           type: integer
       required:
-        - numberGroups
+        - numberPairs
         - numberRows
       type: object
-    ExperimentIntersectionMode:
-      default: PAIRS
-      enum:
-        - PAIRS
-        - CLUSTERS
-        - INVESTIGATIVE
-      type: string
+    ExperimentIntersectionPairCountsConfiguration:
+      items:
+        $ref: "#/components/schemas/ExperimentIntersectionPairCountsRequestExperiments"
+      type: array
+    ExperimentIntersectionPairCounts:
+      items:
+        $ref: "#/components/schemas/ExperimentIntersectionPairCountsItem"
+      type: array
+    ExperimentIntersectionPairCountsExperiments:
+      example:
+        predictedCondition: true
+        experimentId: 1
+      properties:
+        experimentId:
+          example: 1
+          type: integer
+        predictedCondition:
+          type: boolean
+      required:
+        - experimentId
+        - predictedCondition
+      type: object
+    ExperimentIntersectionPairCountsRequestExperiments:
+      example:
+        similarityAttribute: name_name_levenshtein
+        experimentId: 1
+        similarityScore: 0.9
+      properties:
+        experimentId:
+          example: 1
+          type: integer
+        similarityAttribute:
+          example: name_name_levenshtein
+          type: string
+        similarityScore:
+          example: 0.9
+          type: number
+      required:
+        - experimentId
+      type: object
+    ExperimentIntersectionRequestExperiments:
+      example:
+        predictedCondition: true
+        similarityAttribute: name_name_levenshtein
+        experimentId: 1
+        similarityScore: 0.9
+      properties:
+        experimentId:
+          example: 1
+          type: integer
+        predictedCondition:
+          type: boolean
+        similarityAttribute:
+          example: name_name_levenshtein
+          type: string
+        similarityScore:
+          example: 0.9
+          type: number
+      required:
+        - experimentId
+        - predictedCondition
+      type: object
+    ExperimentIntersectionPairCountsItem:
+      example:
+        experiments:
+          - predictedCondition: true
+            experimentId: 1
+          - predictedCondition: true
+            experimentId: 1
+        pairCount: 0
+      properties:
+        experiments:
+          items:
+            $ref: "#/components/schemas/ExperimentIntersectionPairCountsExperiments"
+          type: array
+        pairCount:
+          minimum: 0
+          type: integer
+      required:
+        - experiments
+        - pairCount
+      type: object
     Algorithm_allOf:
       properties:
         id:
