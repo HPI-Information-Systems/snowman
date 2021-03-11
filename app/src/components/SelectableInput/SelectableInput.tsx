@@ -23,16 +23,16 @@ const mapStateToProps = (state: Store): SelectableInputStateProps => ({
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch
 ): SelectableInputDispatchProps => ({
-  showPopover: (anEvent: Event) => {
+  showPopover: (anEvent: Event): void => {
     dispatch(showPopover(anEvent));
   },
-  closePopover: () => {
+  closePopover: (): void => {
     dispatch(closePopover());
   },
-  setSearchString: (anEvent: IonChangeEvent) => {
+  changeSearchString: (anEvent: IonChangeEvent): void => {
     dispatch(setSearchString(anEvent.detail.value ?? ''));
   },
-  resetElement: () => {
+  resetElement: (): void => {
     dispatch(resetElement());
   },
 });

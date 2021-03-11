@@ -24,7 +24,7 @@ export const SelectableInputView = ({
   allOptions,
   setOption,
   searchString,
-  setSearchString,
+  changeSearchString,
   shouldShowPopover,
   eventPopover,
   showPopover,
@@ -42,7 +42,7 @@ export const SelectableInputView = ({
         onDidDismiss={closePopover}
       >
         <IonList inset={false} lines="none">
-          <IonSearchbar value={searchString} onIonChange={setSearchString} />
+          <IonSearchbar value={searchString} onIonChange={changeSearchString} />
           <div className="selectable-popover-list">
             {allOptions.map((anOption: string) =>
               fuzzyStringIncludes(anOption, searchString) ? (

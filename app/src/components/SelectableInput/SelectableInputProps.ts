@@ -15,7 +15,7 @@ export interface SelectableInputStateProps {
 export interface SelectableInputDispatchProps {
   showPopover(anEvent: Event): void;
   closePopover(): void;
-  setSearchString(anEvent: IonChangeEvent): void;
+  changeSearchString(anEvent: IonChangeEvent): void;
   resetElement(): void;
 }
 
