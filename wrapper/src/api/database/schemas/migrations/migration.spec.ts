@@ -1,5 +1,5 @@
-import { setupDatabase } from '../setup';
-import { loadOrCreateMainDatabase } from '../setup/backend';
+import { setupDatabase } from '../../setup';
+import { loadOrCreateMainDatabase } from '../../setup/backend';
 import { latest } from '.';
 import { SchemaVersion } from './schemaVersion';
 
@@ -89,6 +89,6 @@ describe('database setup', () => {
     });
   });
   test('sets latest database version', () => {
-    expect(SchemaVersion.getInstalledVersion()).toEqual(latest.version.version);
+    expect(SchemaVersion.getInstalledVersion()).toEqual(latest.version);
   });
 });

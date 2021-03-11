@@ -2,7 +2,10 @@ import { Readable } from 'stream';
 
 import { INSERT_BATCH_SIZE } from '../../../../config';
 import { Table } from '../../../../database';
-import { latest } from '../../../../database/schemas';
+import {
+  datasetCustomColumnPrefix,
+  tableSchemas,
+} from '../../../../database/schemas';
 import { InsertParameters } from '../../../../database/table/inserter';
 import { escapeColumnName } from '../../../../database/tools/escapeColumnNames';
 import { Column } from '../../../../database/tools/types';
@@ -16,9 +19,7 @@ import {
 } from '../../../../tools/csvReader';
 import { DatasetIDMapper } from '../util/idMapper';
 
-type DatasetFileSchema = ReturnType<
-  typeof latest.tableSchemas['dataset']['dataset']
->;
+type DatasetFileSchema = ReturnType<typeof tableSchemas['dataset']['dataset']>;
 
 export class DatasetInserter implements CSVReaderStrategy {
   private table?: Table<DatasetFileSchema>;
@@ -55,7 +56,7 @@ export class DatasetInserter implements CSVReaderStrategy {
   }
 
   private getTableSchema(columns: string[]): DatasetFileSchema {
-    return latest.tableSchemas.dataset.dataset(
+    return tableSchemas.dataset.dataset(
       this.datasetId,
       columns.map((column) => {
         return {
@@ -85,7 +86,7 @@ export class DatasetInserter implements CSVReaderStrategy {
       ...Object.entries(row).map(([header, value]) => {
         return {
           column: columns[
-            escapeColumnName(header, latest.datasetCustomColumnPrefix)
+            escapeColumnName(header, datasetCustomColumnPrefix)
           ] as Column<'TEXT'>,
           value,
         };

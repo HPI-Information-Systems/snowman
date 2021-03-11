@@ -2,13 +2,16 @@ import { Readable } from 'stream';
 
 import { INSERT_BATCH_SIZE } from '../../../../config';
 import { Table } from '../../../../database';
-import { latest } from '../../../../database/schemas';
+import {
+  experimentCustomColumnPrefix,
+  tableSchemas,
+} from '../../../../database/schemas';
 import { escapeColumnName } from '../../../../database/tools/escapeColumnNames';
 import { Column } from '../../../../database/tools/types';
 import { DatasetIDMapper } from '../../../dataset/datasetProvider/util/idMapper';
 
 type ExperimentSchema = ReturnType<
-  typeof latest.tableSchemas['experiment']['experiment']
+  typeof tableSchemas['experiment']['experiment']
 >;
 type ExperimentTable = Table<ExperimentSchema>;
 
@@ -72,7 +75,7 @@ export abstract class ExperimentInserter {
   }
 
   private getTableSchema(columns: string[]): ExperimentSchema {
-    return latest.tableSchemas.experiment.experiment(
+    return tableSchemas.experiment.experiment(
       this.experimentId,
       this.columnsFromNames(columns)
     );
@@ -89,7 +92,7 @@ export abstract class ExperimentInserter {
 
   private rowToInsertParameters(
     columns: ReturnType<
-      typeof latest.tableSchemas['experiment']['experiment']
+      typeof tableSchemas['experiment']['experiment']
     >['columns'],
     id1: string,
     id2: string,
@@ -98,7 +101,7 @@ export abstract class ExperimentInserter {
   ) {
     const inserts: Parameters<
       Table<
-        ReturnType<typeof latest.tableSchemas['experiment']['experiment']>
+        ReturnType<typeof tableSchemas['experiment']['experiment']>
       >['insert']
     > = [
       [
@@ -117,7 +120,7 @@ export abstract class ExperimentInserter {
         ...Object.entries(similarityScores).map(([score, value]) => {
           return {
             column: columns[
-              escapeColumnName(score, latest.experimentCustomColumnPrefix)
+              escapeColumnName(score, experimentCustomColumnPrefix)
             ] as Column<'REAL'> & {
               autoIncrement: false;
             },

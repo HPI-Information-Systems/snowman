@@ -1,7 +1,7 @@
 import { Readable } from 'stream';
 
 import { databaseBackend, Table } from '../../../database';
-import { latest } from '../../../database/schemas';
+import { tableSchemas } from '../../../database/schemas';
 import { ExperimentValues } from '../../../server/types';
 import {
   Experiment,
@@ -9,10 +9,7 @@ import {
   ExperimentId,
 } from '../../../server/types';
 import { getProviders } from '../..';
-import {
-  IntersectionCache,
-  invalidateCaches,
-} from '../../benchmark/benchmarkProvider/intersection/cache';
+import { invalidateCaches } from '../../benchmark/benchmarkProvider/intersection/cache';
 import { DatasetIDMapper } from '../../dataset/datasetProvider/util/idMapper';
 import { ExperimentFileGetter } from '../../experiment/experimentProvider/file/getter';
 import { BaseExperimentProvider } from '../baseExperimentProvider';
@@ -164,7 +161,7 @@ export class ExperimentProvider extends BaseExperimentProvider {
   }
 
   private deleteExperimentFileNoChecks(id: ExperimentId): void {
-    new Table(latest.tableSchemas.experiment.experiment(id)).delete(false);
+    new Table(tableSchemas.experiment.experiment(id)).delete(false);
     const storedExperiment = this.queries.getExperimentQuery.get(id) as
       | StoredExperiment
       | undefined;

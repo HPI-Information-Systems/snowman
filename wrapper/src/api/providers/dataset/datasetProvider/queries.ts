@@ -1,9 +1,9 @@
 import { databaseBackend, Table } from '../../../database';
-import { latest } from '../../../database/schemas';
+import { tableSchemas } from '../../../database/schemas';
 import { DatasetId, ExperimentId } from '../../../server/types';
 
 export class DatasetProviderQueries {
-  readonly schema = latest.tableSchemas.meta.dataset;
+  readonly schema = tableSchemas.meta.dataset;
   readonly table = new Table(this.schema);
   readonly listDatasetsQuery = databaseBackend().prepare(
     `SELECT "${this.schema.columns.name.name}" as name,
@@ -38,9 +38,7 @@ export class DatasetProviderQueries {
         WHERE "${this.schema.columns.id.name}" = ?`
   );
 
-  private readonly experimentsTable = new Table(
-    latest.tableSchemas.meta.experiment
-  );
+  private readonly experimentsTable = new Table(tableSchemas.meta.experiment);
   protected readonly listExperimentsUsingDatasetQuery = databaseBackend()
     .prepare(`
     SELECT "${this.experimentsTable.schema.columns.id.name}" as id

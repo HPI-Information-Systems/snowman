@@ -1,7 +1,8 @@
 import { existsSync } from 'fs';
 
-import { latest } from '../schemas';
-import { SchemaVersion } from '../schemas/schemaVersion';
+import { schemas, tableSchemas } from '../schemas';
+import { latest } from '../schemas/migrations';
+import { SchemaVersion } from '../schemas/migrations/schemaVersion';
 import { mainDatabaseFile } from '../tools/storageStructure';
 import { Schema, Schemas, TableSchema } from '../tools/types';
 import { attachDatabases } from './attachDatabases';
@@ -20,18 +21,18 @@ export async function setupDatabase({
 }): Promise<void> {
   const isInitialSetup = temporary || !existsSync(mainDatabaseFile(appPath));
   loadOrCreateMainDatabase(temporary, appPath);
-  attachDatabases(latest.schemas, temporary, appPath);
+  attachDatabases(schemas, temporary, appPath);
   if (isInitialSetup) {
     await initialDatabaseSetup(loadExampleEntries);
   } else {
-    latest.version.migrate(SchemaVersion.getInstalledVersion());
+    latest.migrate(SchemaVersion.getInstalledVersion());
   }
 }
 
 async function initialDatabaseSetup(loadExampleEntries: boolean) {
   databaseBackend().transaction(() => {
     installTables(getTablesToBeAutoInstalled(), true);
-    latest.version.setVersion();
+    latest.setVersion();
   })();
   if (loadExampleEntries) {
     await loadExamples();
@@ -39,7 +40,7 @@ async function initialDatabaseSetup(loadExampleEntries: boolean) {
 }
 
 function getTablesToBeAutoInstalled(): TableSchema[] {
-  return Object.values(latest.tableSchemas).flatMap(
+  return Object.values(tableSchemas).flatMap(
     (schema) =>
       (Object.values(schema) as Schemas[Schema][string][]).filter(
         (table) => typeof table !== 'function' && table.autoInstall

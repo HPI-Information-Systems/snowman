@@ -1,10 +1,10 @@
 import { databaseBackend, Table } from '../../database';
-import { latest } from '../../database/schemas';
+import { tableSchemas } from '../../database/schemas';
 import { Algorithm, AlgorithmId, AlgorithmValues } from '../../server/types';
 import { BaseAlgorithmProvider } from './baseAlgorithmProvider';
 
 export class AlgorithmProvider extends BaseAlgorithmProvider {
-  protected readonly schema = latest.tableSchemas.meta.algorithm;
+  protected readonly schema = tableSchemas.meta.algorithm;
   protected readonly table = new Table(this.schema);
   protected readonly listAlgorithmsQuery = databaseBackend().prepare(
     `SELECT "${this.schema.columns.name.name}" as name,
@@ -33,13 +33,11 @@ export class AlgorithmProvider extends BaseAlgorithmProvider {
   );
   protected readonly algorithmUsagesQuery = databaseBackend().prepare(
     `SELECT "${
-      latest.tableSchemas.meta.experiment.columns.name.name
+      tableSchemas.meta.experiment.columns.name.name
     }" as experimentName,
-            "${
-              latest.tableSchemas.meta.experiment.columns.id.name
-            }" as experimentId
-     FROM ${new Table(latest.tableSchemas.meta.experiment)}
-     WHERE "${latest.tableSchemas.meta.experiment.columns.algorithm.name}" = ?`
+            "${tableSchemas.meta.experiment.columns.id.name}" as experimentId
+     FROM ${new Table(tableSchemas.meta.experiment)}
+     WHERE "${tableSchemas.meta.experiment.columns.algorithm.name}" = ?`
   );
 
   listAlgorithms(): Algorithm[] {

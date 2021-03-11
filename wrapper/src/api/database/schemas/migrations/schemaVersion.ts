@@ -1,4 +1,4 @@
-import { databaseBackend } from '../setup/backend';
+import { databaseBackend } from '../../setup/backend';
 
 export abstract class SchemaVersion {
   abstract readonly version: number;

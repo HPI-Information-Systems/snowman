@@ -1,5 +1,5 @@
-import { assertType } from '../../../tools/types';
-import { ForeignKeys, Schemas } from '../../tools/types';
+import { assertType } from '../../tools/types';
+import { ForeignKeys, Schemas } from '../tools/types';
 
 export const metaSchemas = assertType<
   Schemas<'meta', ['algorithm', 'dataset', 'experiment']>

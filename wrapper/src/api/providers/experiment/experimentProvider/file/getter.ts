@@ -1,11 +1,14 @@
 import { databaseBackend, Table } from '../../../../database';
-import { latest } from '../../../../database/schemas';
+import {
+  experimentCustomColumnPrefix,
+  tableSchemas,
+} from '../../../../database/schemas';
 import { loadTableFromDatabase } from '../../../../database/table/loader';
 import { Column } from '../../../../database/tools/types';
 import { ExperimentId } from '../../../../server/types';
 
 type ExperimentSchema = ReturnType<
-  typeof latest.tableSchemas['experiment']['experiment']
+  typeof tableSchemas['experiment']['experiment']
 >;
 
 export class ExperimentFileGetter {
@@ -13,7 +16,7 @@ export class ExperimentFileGetter {
   protected columns: Column[];
   constructor(private readonly id: ExperimentId) {
     this.table = loadTableFromDatabase<ExperimentSchema>(
-      latest.tableSchemas.experiment.experiment(id)
+      tableSchemas.experiment.experiment(id)
     );
     this.columns = Object.values(this.table.schema.columns);
   }
@@ -27,23 +30,20 @@ export class ExperimentFileGetter {
     limit = limit ?? -1;
     if (sortBy) {
       if (
-        !(
-          latest.experimentCustomColumnPrefix + sortBy in
-          this.table.schema.columns
-        )
+        !(experimentCustomColumnPrefix + sortBy in this.table.schema.columns)
       ) {
         throw new Error(
           `Cannot sort by ${sortBy} as this column does not exist.`
         );
       } else {
-        sortBy = latest.experimentCustomColumnPrefix + sortBy;
+        sortBy = experimentCustomColumnPrefix + sortBy;
       }
     } else {
       sortBy = this.table.schema.columns.id1.name;
     }
     yield this.columns.map((column) =>
-      column.name.startsWith(latest.experimentCustomColumnPrefix)
-        ? column.name.substring(latest.experimentCustomColumnPrefix.length)
+      column.name.startsWith(experimentCustomColumnPrefix)
+        ? column.name.substring(experimentCustomColumnPrefix.length)
         : column.name
     );
     yield* databaseBackend()

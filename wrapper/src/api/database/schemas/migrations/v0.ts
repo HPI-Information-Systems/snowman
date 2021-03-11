@@ -1,4 +1,4 @@
-import { SchemaVersion } from '../schemaVersion';
+import { SchemaVersion } from './schemaVersion';
 
 export class SchemaV0 extends SchemaVersion {
   readonly version = 0;

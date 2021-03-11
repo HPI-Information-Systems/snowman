@@ -1,8 +1,8 @@
 import { databaseBackend, Table } from '../../../database';
-import { latest } from '../../../database/schemas';
+import { tableSchemas } from '../../../database/schemas';
 
 export class ExperimentProviderQueries {
-  readonly schema = latest.tableSchemas.meta.experiment;
+  readonly schema = tableSchemas.meta.experiment;
   readonly table = new Table(this.schema);
 
   readonly listExperimentsQuery = databaseBackend().prepare(
@@ -38,7 +38,7 @@ export class ExperimentProviderQueries {
       WHERE "${this.schema.columns.id.name}" = ?`
   );
 
-  readonly datasetSchema = latest.tableSchemas.meta.dataset;
+  readonly datasetSchema = tableSchemas.meta.dataset;
   readonly datasetTable = new Table(this.datasetSchema);
   readonly updateDatasetNumberRecords = databaseBackend().prepare(
     `UPDATE ${this.datasetTable}

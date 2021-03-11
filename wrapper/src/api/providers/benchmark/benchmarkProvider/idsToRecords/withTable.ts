@@ -1,16 +1,17 @@
 import { Statement } from 'better-sqlite3';
 
 import { databaseBackend, Table } from '../../../../database';
-import { latest } from '../../../../database/schemas';
+import {
+  datasetCustomColumnPrefix,
+  tableSchemas,
+} from '../../../../database/schemas';
 import { loadTableFromDatabase } from '../../../../database/table/loader';
 import { Column } from '../../../../database/tools/types';
 import { DatasetId, ExperimentIntersection } from '../../../../server/types';
 import { DatasetIDMapper } from '../../../dataset/datasetProvider/util/idMapper';
 import { NodeID } from '../cluster/types';
 
-type DatasetSchema = ReturnType<
-  typeof latest.tableSchemas['dataset']['dataset']
->;
+type DatasetSchema = ReturnType<typeof tableSchemas['dataset']['dataset']>;
 
 export function idClustersToRecordClustersWithTable(
   idClusters: (NodeID | undefined)[],
@@ -39,7 +40,7 @@ class IdClustersToRecordClusters {
     protected readonly idMapper: DatasetIDMapper
   ) {
     this.columns = Object.values(this.table.schema.columns).filter((column) =>
-      column.name.startsWith(latest.datasetCustomColumnPrefix)
+      column.name.startsWith(datasetCustomColumnPrefix)
     );
     this.getRecordByIdQuery = databaseBackend().prepare(`
       SELECT ${this.getColumnsString()}
@@ -57,7 +58,7 @@ class IdClustersToRecordClusters {
 
   protected getHeader() {
     return this.columns.map((column) =>
-      column.name.substring(latest.datasetCustomColumnPrefix.length)
+      column.name.substring(datasetCustomColumnPrefix.length)
     );
   }
 
