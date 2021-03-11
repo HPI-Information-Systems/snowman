@@ -25,7 +25,7 @@ export async function setupDatabase({
   if (isInitialSetup) {
     await initialDatabaseSetup(loadExampleEntries);
   } else {
-    latest.migrate(SchemaVersion.getInstalledVersion());
+    await latest.migrate(SchemaVersion.getInstalledVersion());
   }
 }
 

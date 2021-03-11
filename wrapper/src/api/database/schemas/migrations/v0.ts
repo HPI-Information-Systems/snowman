@@ -1,10 +1,9 @@
 import { SchemaVersion } from './schemaVersion';
 
 export class SchemaV0 extends SchemaVersion {
-  readonly version = 0;
-  readonly predecessor?: SchemaVersion | undefined = undefined;
+  readonly predecessor = undefined;
 
-  protected migrateFromLastVersion(): void {
+  protected async migrateFromLastVersion(): Promise<void> {
     throw new Error(
       'Cannot migrate to database schema version v1 as this is the first schema version.'
     );
