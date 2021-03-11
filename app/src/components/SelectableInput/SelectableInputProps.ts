@@ -2,7 +2,7 @@ import { IonChangeEvent } from 'types/IonChangeEvent';
 
 export interface SelectableInputOwnProps {
   currentOption: string;
-  setOption: (anOption: string) => void;
+  setOption(anOption: string): void;
   allOptions: string[];
 }
 
@@ -13,9 +13,9 @@ export interface SelectableInputStateProps {
 }
 
 export interface SelectableInputDispatchProps {
-  showPopover: (anEvent: Event) => void;
-  closePopover: () => void;
-  setSearchString: (anEvent: IonChangeEvent) => void;
+  showPopover(anEvent: Event): void;
+  closePopover(): void;
+  setSearchString(anEvent: IonChangeEvent): void;
   resetElement(): void;
 }
 
