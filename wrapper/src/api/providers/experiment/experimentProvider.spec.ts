@@ -1,5 +1,3 @@
-import { Readable } from 'stream';
-
 import { setupDatabase } from '../../database';
 import { latest } from '../../database/schemas';
 import { throwIfTableNotExists } from '../../database/table/loader';
@@ -8,13 +6,11 @@ import {
   DatasetValues,
   ExperimentValues,
 } from '../../server/types';
+import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
 import { DatasetProvider } from '../dataset/datasetProvider';
 import { ExperimentProvider } from './experimentProvider/experimentProvider';
 
-function fileToReadable(file: string[][]) {
-  return Readable.from(file.map((row) => row.join(',')).join('\n'));
-}
 describe('ExperimentProvider', () => {
   let provider: ExperimentProvider;
 

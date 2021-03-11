@@ -30,6 +30,9 @@ export abstract class ExperimentInserter {
   public async insert(file: Readable): Promise<number> {
     await this.insert_internal(file);
     this.table && this.table.flushBatchInsert();
+    if (!this.table) {
+      this.getOrCreateTable({});
+    }
     this.table && this.table.createIndices(true);
     return this.numberOfUploadedRecords;
   }

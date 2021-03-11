@@ -1,8 +1,8 @@
 import { Metric } from '../../../../server/types';
-import { ConfusionMatrixCounts } from '../helper/evaluator/confusionMatrix';
+import { ConfusionMatrix } from './confusionMatrix';
 
 export abstract class BaseMetric implements Metric {
-  constructor(protected readonly matrix: ConfusionMatrixCounts) {}
+  constructor(protected readonly matrix: ConfusionMatrix) {}
 
   abstract name: string;
   abstract range: [number, number];

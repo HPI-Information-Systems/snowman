@@ -55,7 +55,7 @@ const getRequestBodyForTruePositives = (
   experimentId1: number,
   experimentId2: number
 ) => ({
-  requestBody: [
+  experimentIntersectionRequestExperiments: [
     {
       experimentId: experimentId1,
       predictedCondition: true,
@@ -71,7 +71,7 @@ const getRequestBodyForFalsePositives = (
   experimentId1: number,
   experimentId2: number
 ) => ({
-  requestBody: [
+  experimentIntersectionRequestExperiments: [
     {
       experimentId: experimentId1,
       predictedCondition: false,
@@ -87,7 +87,7 @@ const getRequestBodyForFalseNegatives = (
   experimentId1: number,
   experimentId2: number
 ) => ({
-  requestBody: [
+  experimentIntersectionRequestExperiments: [
     {
       experimentId: experimentId1,
       predictedCondition: true,
