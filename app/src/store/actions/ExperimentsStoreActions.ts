@@ -5,12 +5,12 @@ import {
   SnowmanDispatch,
   SnowmanThunkAction,
 } from 'store/messages';
+import { SUCCESS_TO_DELETE_EXPERIMENT } from 'structs/statusMessages';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
-import { SUCCESS_DELETE_EXPERIMENT } from 'utils/statusMessages';
 
 export const clickOnExperimentTag = (aTag: string): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
@@ -61,6 +61,6 @@ export const deleteExperiment = (
     (): Promise<void> =>
       new ExperimentsApi().deleteExperiment({ experimentId: id }),
     dispatch,
-    SUCCESS_DELETE_EXPERIMENT
+    SUCCESS_TO_DELETE_EXPERIMENT
   ).then((): Promise<void> => dispatch(getExperiments()));
 };

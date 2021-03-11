@@ -48,6 +48,7 @@ export const ExperimentsReducer = (
           return multipleSelected.slice(1, undefined);
         })(),
       };
+    default:
+      return state;
   }
-  return state;
 };

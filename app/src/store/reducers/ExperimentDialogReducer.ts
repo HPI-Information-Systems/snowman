@@ -84,6 +84,7 @@ export const ExperimentDialogReducer = (
           action.payload as string
         ),
       };
+    default:
+      return state;
   }
-  return state;
 };

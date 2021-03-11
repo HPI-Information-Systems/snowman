@@ -6,12 +6,12 @@ import {
   SnowmanThunkAction,
 } from 'store/messages';
 import { store } from 'store/store';
-import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
-import RequestHandler from 'utils/requestHandler';
 import {
   SUCCESS_LOAD_BINARY_METRICS,
   SUCCESS_LOAD_METRICS_TUPLES,
-} from 'utils/statusMessages';
+} from 'structs/statusMessages';
+import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
+import RequestHandler from 'utils/requestHandler';
 
 const getGroundTruthId = (): number => {
   const selectedExperiments = store.getState().ExperimentsStore

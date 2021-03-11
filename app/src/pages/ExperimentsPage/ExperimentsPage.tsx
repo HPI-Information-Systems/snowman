@@ -50,7 +50,6 @@ const mapStateToProps = (state: Store): ExperimentsPageStateProps => ({
           anExperiment.algorithmId,
           state.AlgorithmsStore.algorithms
         ).toUpperCase(),
-        // ToDo: Fix bug that causes -1 (undefined)
         tags: [`Count: ${anExperiment.numberOfUploadedRecords}`],
       })
     ),

@@ -9,6 +9,12 @@ import { DatasetTypes } from 'types/DatasetTypes';
 import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
+import { ViewIDs } from 'types/ViewIDs';
+
+export interface RenderLogicStore {
+  currentViewID: ViewIDs;
+  couldGoNext: boolean;
+}
 
 export interface AlgorithmDialogStore {
   algorithmId: number | null;
@@ -86,7 +92,7 @@ export interface MetricsStore {
   selectedDataView: MetricsTuplesCategories;
 }
 
-export interface Store {
+export interface ImmediateStore {
   DatasetsStore: DatasetsStore;
   ExperimentsStore: ExperimentsStore;
   AlgorithmsStore: AlgorithmsStore;
@@ -97,4 +103,8 @@ export interface Store {
   MetricsStore: MetricsStore;
   InputChipStore: InputChipStore;
   SelectableInputStore: SelectableInputStore;
+}
+
+export interface Store extends ImmediateStore {
+  RenderLogicStore: RenderLogicStore;
 }
