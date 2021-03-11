@@ -13,9 +13,9 @@ export const SelectableInputReducer = (
   action: SnowmanAction
 ): SelectableInputStore => {
   switch (action.type) {
-    case SelectableInputStoreActionTypes.RESET_ELEMENT:
+    case SelectableInputStoreActionTypes.RESET_COMPONENT:
       return initialValues;
-    case SelectableInputStoreActionTypes.SET_SEARCH_STRING:
+    case SelectableInputStoreActionTypes.CHANGE_SEARCH_STRING:
       return { ...state, searchString: action.payload as string };
     case SelectableInputStoreActionTypes.SHOW_POPOVER:
       return {

@@ -18,12 +18,12 @@ export const closePopover = (): easyPrimitiveActionReturn =>
 
 export const setSearchString = (aString: string): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: SelectableInputStoreActionTypes.SET_SEARCH_STRING,
+    type: SelectableInputStoreActionTypes.CHANGE_SEARCH_STRING,
     payload: aString,
   });
 
 export const resetElement = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: SelectableInputStoreActionTypes.RESET_ELEMENT,
+    type: SelectableInputStoreActionTypes.RESET_COMPONENT,
     payload: false,
   });
