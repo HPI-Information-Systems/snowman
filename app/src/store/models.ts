@@ -78,6 +78,12 @@ export interface InputChipStore {
   shouldShowInput: boolean;
 }
 
+export interface SelectableInputStore {
+  shouldShowPopover: boolean;
+  eventPopover: Event | undefined;
+  searchString: string;
+}
+
 export interface MetricsStore {
   metrics: Metric[];
   falsePositives: ExperimentIntersection | undefined;
@@ -96,6 +102,7 @@ export interface ImmediateStore {
   GlobalIndicatorStore: GlobalIndicatorStore;
   MetricsStore: MetricsStore;
   InputChipStore: InputChipStore;
+  SelectableInputStore: SelectableInputStore;
 }
 
 export interface Store extends ImmediateStore {

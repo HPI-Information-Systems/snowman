@@ -10,6 +10,7 @@ import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
 import { InputChipReducer } from 'store/reducers/InputChipReducer';
 import { MetricsReducer } from 'store/reducers/MetricsReducer';
 import { RenderLogicReducer } from 'store/reducers/RenderLogicReducer';
+import { SelectableInputReducer } from 'store/reducers/SelectableInputReducer';
 
 export const rootReducer = (state: Store, action: SnowmanAction): Store => {
   const immediateState: ImmediateStore = {
@@ -31,6 +32,7 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
     ),
     MetricsStore: MetricsReducer(state?.MetricsStore, action),
     InputChipStore: InputChipReducer(state?.InputChipStore, action),
+    SelectableInputStore: SelectableInputReducer(state?.SelectableInputStore, action),
   };
   return RenderLogicReducer(state?.RenderLogicStore, immediateState, action);
 };
