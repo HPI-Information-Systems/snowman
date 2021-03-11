@@ -31,10 +31,7 @@ export const SelectableInputView = ({
   closePopover,
   resetElement,
 }: SelectableInputProps): JSX.Element => {
-  useEffect(() => {
-    // Reset the element on mount
-    resetElement();
-  }, [resetElement]);
+  useEffect(resetElement, [resetElement]);
 
   return (
     <>
@@ -42,7 +39,7 @@ export const SelectableInputView = ({
         cssClass="selectable-popover"
         event={eventPopover}
         isOpen={shouldShowPopover}
-        onDidDismiss={() => closePopover()}
+        onDidDismiss={closePopover}
       >
         <IonList inset={false} lines="none">
           <IonSearchbar value={searchString} onIonChange={setSearchString} />
@@ -52,7 +49,7 @@ export const SelectableInputView = ({
                 <IonItem
                   button
                   key={'selectable-option-' + anOption}
-                  onClick={() => setOption(anOption)}
+                  onClick={(): void => setOption(anOption)}
                 >
                   <IonIcon
                     icon={
@@ -75,7 +72,7 @@ export const SelectableInputView = ({
         value={currentOption}
         readonly
         placeholder="nothing selected"
-        onClick={(e: IonInputMouseEvent) => {
+        onClick={(e: IonInputMouseEvent): void => {
           // This required to solve type inconsistency
           showPopover((e as unknown) as Event);
         }}
