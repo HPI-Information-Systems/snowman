@@ -10,10 +10,7 @@ import { ExperimentsReducer } from 'store/reducers/ExperimentsReducer';
 import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
 import { InputChipReducer } from 'store/reducers/InputChipReducer';
 import { MetricsReducer } from 'store/reducers/MetricsReducer';
-import {
-  initialRenderLogicState,
-  RenderLogicReducer,
-} from 'store/reducers/RenderLogicReducer';
+import { RenderLogicReducer } from 'store/reducers/RenderLogicReducer';
 
 export const rootReducer = (state: Store, action: SnowmanAction): Store => {
   const immediateState: ImmediateStore = combineReducers({
@@ -27,9 +24,5 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
     MetricsStore: MetricsReducer,
     InputChipStore: InputChipReducer,
   })(state, action);
-  return RenderLogicReducer(
-    state?.RenderLogicStore ?? initialRenderLogicState,
-    immediateState,
-    action
-  );
+  return RenderLogicReducer(state?.RenderLogicStore, immediateState, action);
 };

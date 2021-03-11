@@ -23,7 +23,7 @@ import {
   selectedMetrics,
 } from 'utils/optionReminders';
 
-export const PrimaryViewMetaInformation = {
+export const PrimaryViewMetaInformation: ViewMetaInformation = {
   key: ViewIDs.HOME,
   component: RootPage,
   nextView: ViewIDs.DATASETS,

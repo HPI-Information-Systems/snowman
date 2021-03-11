@@ -11,7 +11,7 @@ export const initialRenderLogicState: RenderLogicStore = {
 
 const handleNavigateToViewId = (
   targetViewID: ViewIDs,
-  baseline: RenderLogicStore,
+  baseline: RenderLogicStore = initialRenderLogicState,
   immediateState: ImmediateStore
 ): Store => {
   if (couldNavigateToView(targetViewID, immediateState)) {
@@ -54,16 +54,30 @@ export const RenderLogicReducer = (
         baseline,
         immediateState
       );
-    default:
+    /*
+      Related to javascript import routines,
+      helper functions are not fully initialized when the reducer is called the first time.
+      It is the default path that is evaluated the first time.
+      To allow a basic default path as well as a structured initialization,
+      we catch possible errors thrown by uninitialized helpers and return a default value.
+       */
+    default: {
+      let couldGoNext: boolean;
+      try {
+        couldGoNext = couldNavigateToView(
+          getNextViewId(baseline),
+          immediateState
+        );
+      } catch {
+        couldGoNext = true;
+      }
       return {
         ...immediateState,
         RenderLogicStore: {
           ...baseline,
-          couldGoNext: couldNavigateToView(
-            getNextViewId(baseline),
-            immediateState
-          ),
+          couldGoNext: couldGoNext,
         },
       };
+    }
   }
 };

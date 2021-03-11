@@ -15,7 +15,7 @@ import { menuCategories } from 'types/MenuCategories';
 import { ViewIDs } from 'types/ViewIDs';
 import { ViewMetaInformation } from 'types/ViewMetaInformation';
 import { getExperimentNameFromId } from 'utils/experimentsHelpers';
-import { ViewMetaInformationCollection } from 'utils/ViewMetaInformationCollection';
+import { ViewMetaInformationCollection } from 'utils/ViewMetaInfoCollection';
 
 const getSelectedOptionsFromPathMapper = (
   aViewMetaInfo: ViewMetaInformation,
