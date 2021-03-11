@@ -65,6 +65,6 @@ export class DatasetIDMapper {
   }
 
   deleteAll(): void {
-    this.table.delete(false);
+    this.table.dropTable(false);
   }
 }

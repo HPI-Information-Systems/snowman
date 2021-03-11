@@ -8,6 +8,7 @@ import { TableInserter } from './inserter';
 export class Table<Schema extends TableSchema> {
   protected inserter = new LazyProperty(() => new TableInserter<Schema>(this));
   protected getter = new TableGetter<Schema>(this);
+  protected deleter = new TableDeleter<Schema>(this);
 
   constructor(public readonly schema: Schema) {}
 
@@ -53,10 +54,16 @@ export class Table<Schema extends TableSchema> {
     return new TableCreator(this).createIndices(...args);
   }
 
+  dropTable(
+    ...args: Parameters<TableDeleter<Schema>['dropTable']>
+  ): ReturnType<TableDeleter<Schema>['dropTable']> {
+    return this.deleter.dropTable(...args);
+  }
+
   delete(
-    ...args: Parameters<TableDeleter<Schema>['deleteTable']>
-  ): ReturnType<TableDeleter<Schema>['deleteTable']> {
-    return new TableDeleter(this).deleteTable(...args);
+    ...args: Parameters<TableDeleter<Schema>['delete']>
+  ): ReturnType<TableDeleter<Schema>['delete']> {
+    return this.deleter.delete(...args);
   }
 
   toString(): string {

@@ -20,7 +20,7 @@ export class DatasetDeleter {
   }
 
   deleteFile(): void {
-    new Table(tableSchemas.dataset.dataset(this.datasetId)).delete(false);
+    new Table(tableSchemas.dataset.dataset(this.datasetId)).dropTable(false);
   }
 
   private deleteIDMap(): void {

@@ -54,7 +54,7 @@ describe('Table', () => {
 
   test('delete deletes table', () => {
     expect(() => throwIfTableNotExists(mountedTable)).not.toThrow();
-    new Table(mountedTable).delete();
+    new Table(mountedTable).dropTable();
     expect(() => throwIfTableNotExists(mountedTable)).toThrow();
   });
 
@@ -165,5 +165,74 @@ describe('Table', () => {
       canbenull: canbenull2,
       id: id2,
     });
+  });
+
+  test('deleter deletes rows', () => {
+    const table = new Table(mountedTable);
+    const nonnull1 = 'sdfsdfsd';
+    const nonnull2 = 'sssss';
+    const canbenull2 = 'gggg';
+    expect(table.all().length).toBe(0);
+    const [id] = table.insert({
+      nonnull: nonnull1,
+    });
+    expect(new Set(table.all())).toMatchObject(
+      new Set([
+        {
+          nonnull: nonnull1,
+          canbenull: null,
+          id,
+        },
+      ])
+    );
+
+    const [id2] = table.insert({
+      nonnull: nonnull2,
+      canbenull: canbenull2,
+    });
+    expect(new Set(table.all())).toMatchObject(
+      new Set([
+        {
+          nonnull: nonnull1,
+          canbenull: null,
+          id,
+        },
+        {
+          nonnull: nonnull2,
+          canbenull: canbenull2,
+          id: id2,
+        },
+      ])
+    );
+    table.delete({
+      id: id2,
+    });
+    expect(new Set(table.all())).toMatchObject(
+      new Set([
+        {
+          nonnull: nonnull1,
+          canbenull: null,
+          id,
+        },
+      ])
+    );
+
+    table.delete({
+      id: id2,
+    });
+    expect(new Set(table.all())).toMatchObject(
+      new Set([
+        {
+          nonnull: nonnull1,
+          canbenull: null,
+          id,
+        },
+      ])
+    );
+
+    table.delete({
+      nonnull: nonnull1,
+    });
+    expect(table.all().length).toBe(0);
   });
 });

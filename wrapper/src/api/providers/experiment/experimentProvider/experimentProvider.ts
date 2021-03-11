@@ -149,7 +149,7 @@ export class ExperimentProvider extends BaseExperimentProvider {
   }
 
   private deleteExperimentFileNoChecks(id: ExperimentId): void {
-    new Table(tableSchemas.experiment.experiment(id)).delete(false);
+    new Table(tableSchemas.experiment.experiment(id)).dropTable(false);
     const storedExperiment = this.queries.getExperimentQuery.get(id) as
       | StoredExperiment
       | undefined;
