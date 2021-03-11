@@ -8,12 +8,12 @@ import {
 } from 'store/messages';
 import { store } from 'store/store';
 import { MagicNotPossibleId } from 'structs/constants';
+import { SUCCESS_TO_DELETE_DATASET } from 'structs/statusMessages';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
-import { SUCCESS_DELETE_DATASET } from 'utils/statusMessages';
 
 export const clickOnDataset = (
   aDatasetId: number
@@ -79,6 +79,6 @@ export const deleteDataset = (
   return RequestHandler(
     (): Promise<void> => new DatasetsApi().deleteDataset({ datasetId: id }),
     dispatch,
-    SUCCESS_DELETE_DATASET
+    SUCCESS_TO_DELETE_DATASET
   ).then((): Promise<void> => dispatch(getDatasets()));
 };

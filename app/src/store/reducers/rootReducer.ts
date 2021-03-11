@@ -17,7 +17,7 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
     ExperimentsStore: ExperimentsReducer(state?.ExperimentsStore, action),
     AlgorithmsStore: AlgorithmsReducer(state?.AlgorithmsStore, action),
     DatasetDialogStore: DatasetDialogReducer(state?.DatasetDialogStore, action),
-    AddExperimentDialogStore: ExperimentDialogReducer(
+    ExperimentDialogStore: ExperimentDialogReducer(
       state?.ExperimentDialogStore,
       action
     ),

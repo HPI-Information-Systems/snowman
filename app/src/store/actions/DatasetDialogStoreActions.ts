@@ -3,18 +3,18 @@ import { DatasetDialogStoreActionTypes as DialogActionsTypes } from 'store/actio
 import { getDatasets } from 'store/actions/DatasetsStoreActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
-import { DatasetTypes } from 'types/DatasetTypes';
-import { MagicNotPossibleId } from 'utils/constants';
-import {
-  easyPrimitiveAction,
-  easyPrimitiveActionReturn,
-} from 'utils/easyActionsFactory';
-import RequestHandler from 'utils/requestHandler';
+import { MagicNotPossibleId } from 'structs/constants';
 import {
   SUCCESS_TO_CREATE_NEW_DATASET,
   SUCCESS_TO_UPDATE_DATASET,
   SUCCESS_TO_UPLOAD_DATASET_FILE,
 } from 'structs/statusMessages';
+import { DatasetTypes } from 'types/DatasetTypes';
+import {
+  easyPrimitiveAction,
+  easyPrimitiveActionReturn,
+} from 'utils/easyActionsFactory';
+import RequestHandler from 'utils/requestHandler';
 import { getTagsFromDatasets } from 'utils/tagFactory';
 
 const loadAvailableTags = (): easyPrimitiveActionReturn =>
