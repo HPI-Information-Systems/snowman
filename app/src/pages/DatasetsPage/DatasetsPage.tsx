@@ -14,8 +14,8 @@ import {
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 import { doesDatasetMatchesTags } from 'store/reducers/DatasetsReducer';
+import { MagicNotPossibleId } from 'structs/constants';
 import { Option } from 'types/Option';
-import { MagicNotPossibleId } from 'utils/constants';
 import { getTagsFromDatasets } from 'utils/tagFactory';
 
 import { openChangeDialog } from '../../store/actions/DatasetDialogStoreActions';

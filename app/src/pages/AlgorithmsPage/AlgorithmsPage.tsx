@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { getAlgorithms } from 'store/actions/AlgorithmsStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-import { FirstValidMatchingSolution } from 'utils/constants';
+import { FirstValidMatchingSolution } from 'structs/constants';
 
 const mapStateToProps = (state: Store): AlgorithmsPageStateProps => ({
   algorithms: state.AlgorithmsStore.algorithms.filter(

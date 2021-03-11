@@ -6,8 +6,8 @@ import {
   unregisterOngoingRequest,
 } from 'store/actions/GlobalIndicatorActions';
 import { SnowmanDispatch } from 'store/messages';
+import { UNKNOWN_ERROR } from 'structs/statusMessages';
 import { ToastType } from 'types/ToastTypes';
-import { UNKNOWN_ERROR } from 'utils/statusMessages';
 
 const RequestHandler = async <T = void>(
   wrapped: () => Promise<T>,

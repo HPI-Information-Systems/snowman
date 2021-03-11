@@ -1,10 +1,10 @@
 import { ImmediateStore, RenderLogicStore } from 'store/models';
-import { ViewIDs } from 'types/ViewIDs';
-import { ViewComponent, ViewMetaInformation } from 'types/ViewMetaInformation';
 import {
   PrimaryViewMetaInformation,
   ViewMetaInformationCollection,
-} from 'utils/ViewMetaInfoCollection';
+} from 'structs/viewMetaInfoCollection';
+import { ViewIDs } from 'types/ViewIDs';
+import { ViewComponent, ViewMetaInformation } from 'types/ViewMetaInformation';
 
 const getMetaInfoOfViewId = (aViewId: ViewIDs): ViewMetaInformation =>
   ViewMetaInformationCollection.find(
