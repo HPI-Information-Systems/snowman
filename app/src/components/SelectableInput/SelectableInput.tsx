@@ -1,82 +1,45 @@
-import './SelectableInput.Styles.css';
-
+import { SelectableInputView } from 'components/SelectableInput/SelectableInput.View';
 import {
-  IonIcon,
-  IonInput,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonPopover,
-  IonSearchbar,
-} from '@ionic/react';
-import { SelectableInputProps } from 'components/SelectableInput/SelectableInputProps';
-import { radioButtonOffOutline, radioButtonOnOutline } from 'ionicons/icons';
-import React, { useState } from 'react';
+  SelectableInputDispatchProps,
+  SelectableInputStateProps,
+} from 'components/SelectableInput/SelectableInputProps';
+import { connect } from 'react-redux';
+import {
+  closePopover,
+  resetElement,
+  setSearchString,
+  showPopover,
+} from 'store/actions/SelectableInputStoreActions';
+import { SnowmanDispatch } from 'store/messages';
+import { Store } from 'store/models';
 import { IonChangeEvent } from 'types/IonChangeEvent';
-import { fuzzyStringIncludes } from 'utils/fuzzyStringIncludes';
 
-export const SelectableInput = ({
-  currentOption,
-  allOptions,
-  setOption,
-}: SelectableInputProps): JSX.Element => {
-  const [popoverState, setShowPopover] = useState({
-    showPopover: false,
-    event: undefined,
-  });
-  const [searchText, setSearchText] = useState('');
+const mapStateToProps = (state: Store): SelectableInputStateProps => ({
+  shouldShowPopover: state.SelectableInputStore.shouldShowPopover,
+  eventPopover: state.SelectableInputStore.eventPopover,
+  searchString: state.SelectableInputStore.searchString,
+});
 
-  return (
-    <>
-      <IonPopover
-        cssClass="selectable-popover"
-        event={popoverState.event}
-        isOpen={popoverState.showPopover}
-        onDidDismiss={() =>
-          setShowPopover({ showPopover: false, event: undefined })
-        }
-      >
-        <IonList inset={false} lines="none">
-          <IonSearchbar
-            value={searchText}
-            onIonChange={(e: IonChangeEvent) =>
-              setSearchText(e.detail.value ?? '')
-            }
-          />
-          <div className="selectable-popover-list">
-            {allOptions.map((anOption: string) =>
-              fuzzyStringIncludes(anOption, searchText) ? (
-                <IonItem
-                  button
-                  key={'selectable-option-' + anOption}
-                  onClick={() => setOption(anOption)}
-                >
-                  <IonIcon
-                    icon={
-                      anOption === currentOption
-                        ? radioButtonOnOutline
-                        : radioButtonOffOutline
-                    }
-                    color={anOption === currentOption ? 'primary' : 'medium'}
-                    slot="start"
-                  />
-                  <IonLabel>{anOption}</IonLabel>
-                </IonItem>
-              ) : null
-            )}
-          </div>
-        </IonList>
-      </IonPopover>
-      <IonInput
-        clearInput
-        value={currentOption}
-        readonly
-        placeholder="nothing selected"
-        onClick={(e: any) => {
-          e.persist();
-          setShowPopover({ showPopover: true, event: e });
-        }}
-      />
-    </>
-  );
-};
+const mapDispatchToProps = (
+  dispatch: SnowmanDispatch
+): SelectableInputDispatchProps => ({
+  showPopover: (anEvent: Event) => {
+    dispatch(showPopover(anEvent));
+  },
+  closePopover: () => {
+    dispatch(closePopover());
+  },
+  setSearchString: (anEvent: IonChangeEvent) => {
+    dispatch(setSearchString(anEvent.detail.value ?? ''));
+  },
+  resetElement: () => {
+    dispatch(resetElement());
+  },
+});
+
+const SelectableInput = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SelectableInputView);
+
+export default SelectableInput;

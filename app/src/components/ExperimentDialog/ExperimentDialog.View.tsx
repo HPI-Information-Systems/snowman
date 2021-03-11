@@ -12,7 +12,7 @@ import {
 import { ExperimentDialogProps } from 'components/ExperimentDialog/ExperimentDialogProps';
 import FileInput from 'components/FileInput/FileInput';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
-import { SelectableInput } from 'components/SelectableInput/SelectableInput';
+import SelectableInput from 'components/SelectableInput/SelectableInput';
 import { addCircleOutline, closeCircleOutline } from 'ionicons/icons';
 import React from 'react';
 import { $enum } from 'ts-enum-util';

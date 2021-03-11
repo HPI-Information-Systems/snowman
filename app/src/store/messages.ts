@@ -25,7 +25,8 @@ type ActionPayload =
   | Dataset[]
   | number
   | Experiment[]
-  | Experiment;
+  | Experiment
+  | Event;
 
 export interface SnowmanAction extends Action<string> {
   payload: ActionPayload;
