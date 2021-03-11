@@ -58,8 +58,8 @@ const mapDispatchToProps = (
     dispatch(changeExperimentName(event.detail.value as string)),
   changeExperimentDescription: (event: IonChangeEvent): void =>
     dispatch(changeExperimentDescription(event.detail.value as string)),
-  changeExperimentFileFormat: (event: IonChangeEvent): void =>
-    dispatch(changeFileFormat(event.detail.value as experimentFileFormatEnum)),
+  changeExperimentFileFormat: (anOption: string): void =>
+    dispatch(changeFileFormat(anOption as experimentFileFormatEnum)),
   clickOnMatchingSolutionTag: (aTag: string): void =>
     dispatch(clickOnMatchingSolutionTag(aTag)),
   clickOnSubmit: (): void => {
