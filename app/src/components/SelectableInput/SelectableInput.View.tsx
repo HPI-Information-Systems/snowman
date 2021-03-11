@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 import { SelectableInputProps } from 'components/SelectableInput/SelectableInputProps';
 import {
-  appsOutline,
+  ellipsisVerticalCircle,
   radioButtonOffOutline,
   radioButtonOnOutline,
 } from 'ionicons/icons';
@@ -80,7 +80,7 @@ export const SelectableInputView = ({
           showPopover((e as unknown) as Event);
         }}
       />
-      <IonIcon icon={appsOutline} slot="end" />
+      <IonIcon icon={ellipsisVerticalCircle} slot="end" color="medium" />
     </>
   );
 };
