@@ -32,7 +32,8 @@ const BenchmarkConfiguratorPageView = ({
   selectedExperiments,
   selectedGoldstandards,
   handleReorder,
-  openBinaryMetricsPage,
+  enterBinaryMetricsPage,
+  couldEnterBinaryMetricsPage,
 }: BenchmarkConfiguratorPageProps): JSX.Element => {
   useEffect(() => {
     // Triggered on every component update!
@@ -110,7 +111,11 @@ const BenchmarkConfiguratorPageView = ({
                 </IonToolbar>
               </IonHeader>
               {/* Todo: Simulate disabled with CSS so we can use data-tip */}
-              <IonItem button onClick={() => openBinaryMetricsPage()}>
+              <IonItem
+                button
+                onClick={() => enterBinaryMetricsPage()}
+                disabled={!couldEnterBinaryMetricsPage}
+              >
                 <IonIcon icon={pauseOutline} slot="start" />
                 <IonLabel>
                   <h2>Binary comparison (two only)</h2>

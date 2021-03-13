@@ -29,12 +29,15 @@ const mapStateToProps = (
   availableExperiments: state.BenchmarkConfigStore.availableExperiments,
   selectedExperiments: state.BenchmarkConfigStore.selectedExperiments,
   selectedGoldstandards: state.BenchmarkConfigStore.selectedGoldstandards,
+  couldEnterBinaryMetricsPage:
+    state.BenchmarkConfigStore.selectedGoldstandards.length === 1 &&
+    state.BenchmarkConfigStore.selectedExperiments.length === 1,
 });
 
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch
 ): BenchmarkConfiguratorPageDispatchProps => ({
-  openBinaryMetricsPage: () => {
+  enterBinaryMetricsPage: () => {
     dispatch(navigateTo(ViewIDs.BINARY_METRICS));
   },
   resetReorder: () => {
