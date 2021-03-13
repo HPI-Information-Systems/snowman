@@ -126,7 +126,7 @@ const BenchmarkConfiguratorPageView = ({
                 </IonLabel>
                 <IonIcon icon={chevronForwardOutline} slot="end" />
               </IonItem>
-              <IonItem button>
+              <IonItem button disabled={true}>
                 <IonIcon icon={colorFilterOutline} slot="start" />
                 <IonLabel>
                   <h2>Visually compare all pairs</h2>
@@ -138,7 +138,7 @@ const BenchmarkConfiguratorPageView = ({
                 </IonLabel>
                 <IonIcon icon={chevronForwardOutline} slot="end" />
               </IonItem>
-              <IonItem button>
+              <IonItem button disabled={true}>
                 <IonIcon icon={calculatorOutline} slot="start" />
                 <IonLabel>
                   <h2>Compare binary metrics for all</h2>
