@@ -84,7 +84,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuIcon: extensionPuzzle,
     menuName: 'Benchmark Configurator',
     menuSortKey: 5,
-    selectedOptionsReminder: emptySelectedOptions,
+    selectedOptionsReminder: selectedMetrics,
   },
   {
     key: ViewIDs.BINARY_METRICS,
@@ -96,6 +96,6 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuName: 'Binary Metrics',
     menuIcon: speedometer,
     menuSortKey: 6,
-    selectedOptionsReminder: selectedMetrics,
+    selectedOptionsReminder: emptySelectedOptions,
   },
 ];

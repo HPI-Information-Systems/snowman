@@ -1,20 +1,14 @@
-import { Dataset } from 'api';
-
-export interface ISelectedOptionsMap {
-  dataset: Dataset | null;
-  experiments: string[];
-}
+import { ImmediateStore } from 'store/models';
+import { getExperimentNameFromId } from 'utils/experimentsHelpers';
 
 export const emptySelectedOptions = (): string[] => [];
-export const selectedDataset = (
-  selectedOptions: ISelectedOptionsMap
-): string[] =>
-  selectedOptions.dataset === null ? [] : [selectedOptions.dataset.name];
-export const selectedExperiments = (
-  selectedOptions: ISelectedOptionsMap
-): string[] =>
-  selectedOptions.experiments.map(
-    (value: string, index: number) => `${index + 1}. ${value}`
+export const selectedDataset = (aState: ImmediateStore): string[] =>
+  aState.DatasetsStore.selectedDataset === null
+    ? []
+    : [aState.DatasetsStore.selectedDataset.name];
+export const selectedExperiments = (aState: ImmediateStore): string[] =>
+  aState.ExperimentsStore.selectedExperiments.map((expId: number) =>
+    getExperimentNameFromId(expId, aState.ExperimentsStore.experiments)
   );
 
 export const selectedMetrics = (): string[] => ['Binary Comparison'];
