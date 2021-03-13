@@ -11,4 +11,6 @@ export const selectedExperiments = (aState: ImmediateStore): string[] =>
     getExperimentNameFromId(expId, aState.ExperimentsStore.experiments)
   );
 
-export const selectedMetrics = (): string[] => ['Binary Comparison'];
+export const selectedBenchmarkConfiguration = (): string[] => [
+  'to be designated',
+];

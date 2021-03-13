@@ -18,9 +18,9 @@ import { ViewMetaInformation } from 'types/ViewMetaInformation';
 import * as accessGuards from 'utils/navigationGuards';
 import {
   emptySelectedOptions,
+  selectedBenchmarkConfiguration,
   selectedDataset,
   selectedExperiments,
-  selectedMetrics,
 } from 'utils/optionReminders';
 
 export const PrimaryViewMetaInformation: ViewMetaInformation = {
@@ -84,7 +84,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuIcon: extensionPuzzle,
     menuName: 'Benchmark Configurator',
     menuSortKey: 5,
-    selectedOptionsReminder: selectedMetrics,
+    selectedOptionsReminder: selectedBenchmarkConfiguration,
   },
   {
     key: ViewIDs.BINARY_METRICS,
