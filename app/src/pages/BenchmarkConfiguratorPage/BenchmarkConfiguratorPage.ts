@@ -51,12 +51,10 @@ const mapDispatchToProps = (
       event.detail.complete(false);
       return;
     }
-    event.detail.complete();
+    console.log(event.detail.from, event.detail.to);
 
-    const from = event.detail.from;
-    const to = event.detail.to;
     const spacer = -100;
-    const list = [
+    let list = [
       spacer,
       ...store.getState().BenchmarkConfigStore.selectedGoldstandards,
       spacer,
@@ -65,14 +63,9 @@ const mapDispatchToProps = (
       ...store.getState().BenchmarkConfigStore.availableExperiments,
     ];
 
-    const element = list[from];
-    if (from < to) {
-      list.splice(from, 1);
-      list.splice(to - 1, 0, element);
-    } else if (to < from) {
-      list.splice(from, 1);
-      list.splice(to, 0, element);
-    }
+    console.log(list);
+    list = event.detail.complete(list);
+    console.log(list);
 
     const splitPoints = list.reduce(
       (output: number[], element: number, index: number) => {
