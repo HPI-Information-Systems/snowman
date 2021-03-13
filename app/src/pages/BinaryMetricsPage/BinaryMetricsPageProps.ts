@@ -3,13 +3,13 @@ import { ColumnDescriptor } from 'components/DataViewer/ColumnDescriptor';
 import { ConfusionMatrix } from 'types/ConfusionMatrix';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
-export interface BinaryMetricsPageStateProps {
+export interface BinaryMetricsPageDispatchProps {
   loadMetrics(): void;
   loadTuples(): void;
   selectPane(aMetricsTuplesCategory: MetricsTuplesCategories): void;
 }
 
-export interface BinaryMetricsDispatchProps {
+export interface BinaryMetricsPageStateProps {
   metrics: Metric[];
   selectedMetricsTuplesCategory: MetricsTuplesCategories;
   metricsTuplesCategories: MetricsTuplesCategories[];
@@ -19,4 +19,4 @@ export interface BinaryMetricsDispatchProps {
 }
 
 export type BinaryMetricsPageProps = BinaryMetricsPageStateProps &
-  BinaryMetricsDispatchProps;
+  BinaryMetricsPageDispatchProps;

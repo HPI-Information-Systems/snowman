@@ -2,7 +2,7 @@ import { ExperimentIntersection } from 'api';
 import { ColumnDescriptor } from 'components/DataViewer/ColumnDescriptor';
 import { BinaryMetricsPageView } from 'pages/BinaryMetricsPage/BinaryMetricsPage.View';
 import {
-  BinaryMetricsDispatchProps,
+  BinaryMetricsPageDispatchProps,
   BinaryMetricsPageStateProps,
 } from 'pages/BinaryMetricsPage/BinaryMetricsPageProps';
 import { connect } from 'react-redux';
@@ -29,7 +29,7 @@ const getTuplesByTuplesCategory = (
   }
 };
 
-const mapStateToProps = (state: Store): BinaryMetricsDispatchProps => ({
+const mapStateToProps = (state: Store): BinaryMetricsPageStateProps => ({
   metrics: state.MetricsStore.metrics,
   metricsTuplesCategories: [
     MetricsTuplesCategories.falseNegatives,
@@ -94,7 +94,7 @@ const mapStateToProps = (state: Store): BinaryMetricsDispatchProps => ({
 
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch
-): BinaryMetricsPageStateProps => ({
+): BinaryMetricsPageDispatchProps => ({
   loadMetrics() {
     dispatch(loadMetrics()).then();
   },
