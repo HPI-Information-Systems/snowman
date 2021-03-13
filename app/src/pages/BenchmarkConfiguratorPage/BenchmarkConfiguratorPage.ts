@@ -55,7 +55,7 @@ const mapDispatchToProps = (
       event.detail.complete(false);
       return;
     }
-    console.log(event.detail.from, event.detail.to);
+    //console.log(event.detail.from, event.detail.to);
 
     const spacer = MagicNotPossibleId;
     let list = [
@@ -67,9 +67,9 @@ const mapDispatchToProps = (
       ...store.getState().BenchmarkConfigStore.availableExperiments,
     ];
 
-    console.log(list);
+    //console.log(list);
     list = event.detail.complete(list);
-    console.log(list);
+    //console.log(list);
 
     const splitPoints = list.reduce(
       (output: number[], element: number, index: number) => {
@@ -80,7 +80,7 @@ const mapDispatchToProps = (
     );
     if (splitPoints.length !== 3)
       // this is impossible
-      throw Error('unexpected split count - it should be spacer counter');
+      throw Error('unexpected split count - it should be spacer count');
 
     dispatch(
       setSelectedGoldstandards(list.slice(splitPoints[0] + 1, splitPoints[1]))

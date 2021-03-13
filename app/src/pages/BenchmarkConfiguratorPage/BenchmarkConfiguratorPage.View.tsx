@@ -105,7 +105,7 @@ const BenchmarkConfiguratorPageView = ({
 
           <IonCol sizeSm="12" sizeMd="6" sizeLg="6" sizeXl="6">
             <IonCard>
-              <IonHeader data-tip="Error: More than one matching result selected!">
+              <IonHeader>
                 <IonToolbar>
                   <IonTitle>Actions</IonTitle>
                 </IonToolbar>
@@ -126,7 +126,11 @@ const BenchmarkConfiguratorPageView = ({
                 </IonLabel>
                 <IonIcon icon={chevronForwardOutline} slot="end" />
               </IonItem>
-              <IonItem button disabled={true}>
+              <IonItem
+                button
+                disabled={true}
+                data-tip="Error: Not implemented yet!"
+              >
                 <IonIcon icon={colorFilterOutline} slot="start" />
                 <IonLabel>
                   <h2>Visually compare all pairs</h2>
@@ -138,7 +142,11 @@ const BenchmarkConfiguratorPageView = ({
                 </IonLabel>
                 <IonIcon icon={chevronForwardOutline} slot="end" />
               </IonItem>
-              <IonItem button disabled={true}>
+              <IonItem
+                button
+                disabled={true}
+                data-tip="Error: Not implemented yet!"
+              >
                 <IonIcon icon={calculatorOutline} slot="start" />
                 <IonLabel>
                   <h2>Compare binary metrics for all</h2>
