@@ -24,6 +24,7 @@ type ActionPayload =
   | Dataset
   | Dataset[]
   | number
+  | number[]
   | Experiment[]
   | Experiment
   | Event;

@@ -22,15 +22,26 @@ import {
   pauseOutline,
   reorderThreeOutline,
 } from 'ionicons/icons';
+import { BenchmarkConfiguratorPageProps } from 'pages/BenchmarkConfiguratorPage/BenchmarkConfiguratorPageProps';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
-import { IonReorderEvent } from 'types/IonReorderEvent';
 
-const BenchmarkConfiguratorPageView = (): JSX.Element => {
+const BenchmarkConfiguratorPageView = ({
+  availableExperiments,
+  experimentResolution,
+  selectedExperiments,
+  selectedGoldstandards,
+  handleReorder,
+  resetReorder,
+}: BenchmarkConfiguratorPageProps): JSX.Element => {
   useEffect(() => {
     // Triggered on every component update!
     ReactTooltip.rebuild();
   });
+
+  useEffect(() => {
+    resetReorder();
+  }, [resetReorder]);
 
   return (
     <PageStruct title="Benchmark Configurator">
@@ -45,56 +56,52 @@ const BenchmarkConfiguratorPageView = (): JSX.Element => {
               </IonHeader>
               <IonReorderGroup
                 disabled={false}
-                onIonItemReorder={(e: IonReorderEvent): void =>
-                  e.detail.complete()
-                }
+                onIonItemReorder={handleReorder}
               >
                 <IonItemDivider>
                   <IonLabel>Selected Gold Standard</IonLabel>
                 </IonItemDivider>
 
-                <IonReorder>
-                  <IonItem>
-                    <IonIcon icon={reorderThreeOutline} slot="start" />
-                    <IonLabel>goldstandard1</IonLabel>
-                  </IonItem>
-                </IonReorder>
+                {selectedGoldstandards.map(
+                  (expId: number): JSX.Element => (
+                    <IonReorder key={`bc-exp-${expId}`}>
+                      <IonItem>
+                        <IonIcon icon={reorderThreeOutline} slot="start" />
+                        <IonLabel>{experimentResolution.get(expId)}</IonLabel>
+                      </IonItem>
+                    </IonReorder>
+                  )
+                )}
 
                 <IonItemDivider>
                   <IonLabel>Selected Matching Result</IonLabel>
                 </IonItemDivider>
 
-                <IonReorder>
-                  <IonItem>
-                    <IonIcon icon={reorderThreeOutline} slot="start" />
-                    <IonLabel>magellan-20200707</IonLabel>
-                  </IonItem>
-                </IonReorder>
-
-                <IonReorder>
-                  <IonItem>
-                    <IonIcon icon={reorderThreeOutline} slot="start" />
-                    <IonLabel>magellan-20200708</IonLabel>
-                  </IonItem>
-                </IonReorder>
+                {selectedExperiments.map(
+                  (expId: number): JSX.Element => (
+                    <IonReorder key={`bc-exp-${expId}`}>
+                      <IonItem>
+                        <IonIcon icon={reorderThreeOutline} slot="start" />
+                        <IonLabel>{experimentResolution.get(expId)}</IonLabel>
+                      </IonItem>
+                    </IonReorder>
+                  )
+                )}
 
                 <IonItemDivider>
                   <IonLabel>Available Experiments</IonLabel>
                 </IonItemDivider>
 
-                <IonReorder>
-                  <IonItem>
-                    <IonIcon icon={reorderThreeOutline} slot="start" />
-                    <IonLabel>magellan-20200709</IonLabel>
-                  </IonItem>
-                </IonReorder>
-
-                <IonReorder>
-                  <IonItem>
-                    <IonIcon icon={reorderThreeOutline} slot="start" />
-                    <IonLabel>magellan-20200710</IonLabel>
-                  </IonItem>
-                </IonReorder>
+                {availableExperiments.map(
+                  (expId: number): JSX.Element => (
+                    <IonReorder key={`bc-exp-${expId}`}>
+                      <IonItem>
+                        <IonIcon icon={reorderThreeOutline} slot="start" />
+                        <IonLabel>{experimentResolution.get(expId)}</IonLabel>
+                      </IonItem>
+                    </IonReorder>
+                  )
+                )}
               </IonReorderGroup>
             </IonCard>
           </IonCol>

@@ -40,12 +40,12 @@ export const ExperimentsReducer = (
       return {
         ...state,
         selectedExperiments: (() => {
-          const multipleSelected = toggleSelectionArrayMultipleSelect<number>(
+          //if (multipleSelected.length < 3)
+          return toggleSelectionArrayMultipleSelect<number>(
             state.selectedExperiments,
             action.payload as number
           );
-          if (multipleSelected.length < 3) return multipleSelected;
-          return multipleSelected.slice(1, undefined);
+          //return multipleSelected.slice(1, undefined);
         })(),
       };
     default:

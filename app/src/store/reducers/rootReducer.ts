@@ -2,6 +2,7 @@ import { SnowmanAction } from 'store/messages';
 import { ImmediateStore, Store } from 'store/models';
 import { AlgorithmDialogReducer } from 'store/reducers/AlgorithmDialogReducer';
 import { AlgorithmsReducer } from 'store/reducers/AlgorithmsReducer';
+import { BenchmarkConfigReducer } from 'store/reducers/BenchmarkConfigReducer';
 import { DatasetDialogReducer } from 'store/reducers/DatasetDialogReducer';
 import { DatasetsReducer } from 'store/reducers/DatasetsReducer';
 import { ExperimentDialogReducer } from 'store/reducers/ExperimentDialogReducer';
@@ -31,6 +32,10 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
       action
     ),
     MetricsStore: MetricsReducer(state?.MetricsStore, action),
+    BenchmarkConfigStore: BenchmarkConfigReducer(
+      state?.BenchmarkConfigStore,
+      action
+    ),
     InputChipStore: InputChipReducer(state?.InputChipStore, action),
     SelectableInputStore: SelectableInputReducer(
       state?.SelectableInputStore,
