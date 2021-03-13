@@ -14,6 +14,7 @@ import { navigateTo } from 'store/actions/RenderStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 import { store } from 'store/store';
+import { MagicNotPossibleId } from 'structs/constants';
 import { IonReorderEvent } from 'types/IonReorderEvent';
 import { ViewIDs } from 'types/ViewIDs';
 
@@ -56,7 +57,7 @@ const mapDispatchToProps = (
     }
     console.log(event.detail.from, event.detail.to);
 
-    const spacer = -100;
+    const spacer = MagicNotPossibleId;
     let list = [
       spacer,
       ...store.getState().BenchmarkConfigStore.selectedGoldstandards,
