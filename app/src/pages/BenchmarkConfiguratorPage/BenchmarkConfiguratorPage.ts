@@ -10,10 +10,12 @@ import {
   setSelectedExperiments,
   setSelectedGoldstandards,
 } from 'store/actions/BenchmarkConfigActions';
+import { navigateTo } from 'store/actions/RenderStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 import { store } from 'store/store';
 import { IonReorderEvent } from 'types/IonReorderEvent';
+import { ViewIDs } from 'types/ViewIDs';
 
 const mapStateToProps = (
   state: Store
@@ -32,6 +34,9 @@ const mapStateToProps = (
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch
 ): BenchmarkConfiguratorPageDispatchProps => ({
+  openBinaryMetricsPage: () => {
+    dispatch(navigateTo(ViewIDs.BINARY_METRICS));
+  },
   resetReorder: () => {
     dispatch(setSelectedExperiments([]));
     dispatch(setSelectedGoldstandards([]));

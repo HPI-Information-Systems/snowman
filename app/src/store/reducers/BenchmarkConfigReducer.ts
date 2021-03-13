@@ -19,6 +19,11 @@ export const BenchmarkConfigReducer = (
       return { ...state, selectedGoldstandards: action.payload as number[] };
     case BenchmarkConfigActionTypes.SET_AVAILABLE_EXPERIMENTS:
       return { ...state, availableExperiments: action.payload as number[] };
+    case BenchmarkConfigActionTypes.RESET_CONFIGURATOR:
+      return {
+        ...initialState,
+        availableExperiments: action.payload as number[],
+      };
     default:
       return state;
   }

@@ -10,6 +10,7 @@ export interface BenchmarkConfiguratorPageStateProps {
 export interface BenchmarkConfiguratorPageDispatchProps {
   handleReorder(event: IonReorderEvent): void;
   resetReorder(): void;
+  openBinaryMetricsPage(): void;
 }
 
 export type BenchmarkConfiguratorPageProps = BenchmarkConfiguratorPageStateProps &

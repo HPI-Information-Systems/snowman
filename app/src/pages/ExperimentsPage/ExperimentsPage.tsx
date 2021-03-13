@@ -6,6 +6,7 @@ import {
   ExperimentsPageStateProps,
 } from 'pages/ExperimentsPage/ExperimentsPageProps';
 import { connect } from 'react-redux';
+import { resetConfigurator } from 'store/actions/BenchmarkConfigActions';
 import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
 import {
   clickOnExperiment,
@@ -15,6 +16,7 @@ import {
 } from 'store/actions/ExperimentsStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
+import { store } from 'store/store';
 import { Option } from 'types/Option';
 import { getAlgorithmTagFromId } from 'utils/algorithmHelpers';
 
@@ -64,12 +66,19 @@ const mapDispatchToProps = (
   },
   clickOnExperiment(anExperimentId: number): void {
     dispatch(clickOnExperiment(anExperimentId));
+    dispatch(
+      resetConfigurator(store.getState().ExperimentsStore.selectedExperiments)
+    );
   },
   loadExperiments(): void {
     dispatch(getExperiments()).then();
+    // Todo: Decide whether to call resetConfigurator() here too
   },
   deleteExperiment(anExperimentId: number): void {
     dispatch(deleteExperiment(anExperimentId)).then();
+    dispatch(
+      resetConfigurator(store.getState().ExperimentsStore.selectedExperiments)
+    );
   },
   editExperiment(anExperimentId: number) {
     dispatch(openChangeDialog(anExperimentId)).then();
