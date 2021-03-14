@@ -1,4 +1,4 @@
-import { remove } from 'lodash';
+import { difference, xor } from 'lodash';
 import { BenchmarkConfigActionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { BenchmarkConfigStore } from 'store/models';
@@ -29,17 +29,24 @@ export const BenchmarkConfigReducer = (
       // Remove all experiments that are not selected anymore
       return {
         ...state,
-        availableExperiments: remove(
-          state.availableExperiments,
-          (value: number) => !(action.payload as number[]).includes(value)
+        selectedGoldstandards: difference(
+          state.selectedGoldstandards,
+          xor(action.payload as number[], state.selectedGoldstandards)
         ),
-        selectedGoldstandards: remove(
-          state.availableExperiments,
-          (value: number) => !(action.payload as number[]).includes(value)
+        selectedExperiments: difference(
+          state.selectedExperiments,
+          xor(action.payload as number[], state.selectedExperiments)
         ),
-        selectedExperiments: remove(
-          state.availableExperiments,
-          (value: number) => !(action.payload as number[]).includes(value)
+        availableExperiments: difference(
+          action.payload as number[],
+          difference(
+            state.selectedGoldstandards,
+            xor(action.payload as number[], state.selectedGoldstandards)
+          ),
+          difference(
+            state.selectedExperiments,
+            xor(action.payload as number[], state.selectedExperiments)
+          )
         ),
       };
     default:
