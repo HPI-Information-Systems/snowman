@@ -17,6 +17,7 @@ import { store } from 'store/store';
 import { MagicNotPossibleId } from 'structs/constants';
 import { IonReorderEvent } from 'types/IonReorderEvent';
 import { ViewIDs } from 'types/ViewIDs';
+import { couldEnterBinaryMetricsPage } from 'utils/navigationGuards';
 
 const mapStateToProps = (
   state: Store
@@ -30,9 +31,7 @@ const mapStateToProps = (
   availableExperiments: state.BenchmarkConfigStore.availableExperiments,
   selectedExperiments: state.BenchmarkConfigStore.selectedExperiments,
   selectedGoldstandards: state.BenchmarkConfigStore.selectedGoldstandards,
-  couldEnterBinaryMetricsPage:
-    state.BenchmarkConfigStore.selectedGoldstandards.length === 1 &&
-    state.BenchmarkConfigStore.selectedExperiments.length === 1,
+  couldEnterBinaryMetricsPage: couldEnterBinaryMetricsPage(state),
 });
 
 const mapDispatchToProps = (
