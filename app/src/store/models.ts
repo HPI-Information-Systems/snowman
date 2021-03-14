@@ -90,7 +90,7 @@ export interface BenchmarkConfigStore {
   selectedGoldstandards: number[];
 }
 
-export interface MetricsStore {
+export interface BinaryMetricsStore {
   metrics: Metric[];
   falsePositives: ExperimentIntersection | undefined;
   falseNegatives: ExperimentIntersection | undefined;
@@ -107,7 +107,7 @@ export interface ImmediateStore {
   AlgorithmDialogStore: AlgorithmDialogStore;
   GlobalIndicatorStore: GlobalIndicatorStore;
   BenchmarkConfigStore: BenchmarkConfigStore;
-  MetricsStore: MetricsStore;
+  BinaryMetricsStore: BinaryMetricsStore;
   InputChipStore: InputChipStore;
   SelectableInputStore: SelectableInputStore;
 }

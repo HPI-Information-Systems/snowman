@@ -1,5 +1,5 @@
 import { BenchmarkApi, ExperimentIntersection, Metric } from 'api';
-import { MetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
+import { BinaryMetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import {
   SnowmanAction,
   SnowmanDispatch,
