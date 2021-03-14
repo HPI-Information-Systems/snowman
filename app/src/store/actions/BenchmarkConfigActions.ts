@@ -36,3 +36,11 @@ export const resetConfigurator = (
     type: actionTypes.RESET_CONFIGURATOR,
     payload: availableExperiments,
   });
+
+export const updateExperiments = (
+  availableExperiments: number[]
+): SnowmanThunkAction<void> => (dispatch: SnowmanDispatch): SnowmanAction =>
+  dispatch({
+    type: actionTypes.UPDATE_EXPERIMENTS,
+    payload: availableExperiments,
+  });

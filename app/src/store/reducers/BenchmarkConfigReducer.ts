@@ -1,3 +1,4 @@
+import { remove } from 'lodash';
 import { BenchmarkConfigActionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { BenchmarkConfigStore } from 'store/models';
@@ -23,6 +24,23 @@ export const BenchmarkConfigReducer = (
       return {
         ...initialState,
         availableExperiments: action.payload as number[],
+      };
+    case BenchmarkConfigActionTypes.UPDATE_EXPERIMENTS:
+      // Remove all experiments that are not selected anymore
+      return {
+        ...state,
+        availableExperiments: remove(
+          state.availableExperiments,
+          (value: number) => !(action.payload as number[]).includes(value)
+        ),
+        selectedGoldstandards: remove(
+          state.availableExperiments,
+          (value: number) => !(action.payload as number[]).includes(value)
+        ),
+        selectedExperiments: remove(
+          state.availableExperiments,
+          (value: number) => !(action.payload as number[]).includes(value)
+        ),
       };
     default:
       return state;

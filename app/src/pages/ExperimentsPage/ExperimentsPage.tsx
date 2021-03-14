@@ -6,7 +6,7 @@ import {
   ExperimentsPageStateProps,
 } from 'pages/ExperimentsPage/ExperimentsPageProps';
 import { connect } from 'react-redux';
-import { resetConfigurator } from 'store/actions/BenchmarkConfigActions';
+import { updateExperiments } from 'store/actions/BenchmarkConfigActions';
 import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
 import {
   clickOnExperiment,
@@ -67,17 +67,20 @@ const mapDispatchToProps = (
   clickOnExperiment(anExperimentId: number): void {
     dispatch(clickOnExperiment(anExperimentId));
     dispatch(
-      resetConfigurator(store.getState().ExperimentsStore.selectedExperiments)
+      updateExperiments(store.getState().ExperimentsStore.selectedExperiments)
     );
   },
   loadExperiments(): void {
     dispatch(getExperiments()).then();
-    // Todo: Decide whether to call resetConfigurator() here too
+    // Todo: Decide whether to call updateExperiments() here too
+    dispatch(
+      updateExperiments(store.getState().ExperimentsStore.selectedExperiments)
+    );
   },
   deleteExperiment(anExperimentId: number): void {
     dispatch(deleteExperiment(anExperimentId)).then();
     dispatch(
-      resetConfigurator(store.getState().ExperimentsStore.selectedExperiments)
+      updateExperiments(store.getState().ExperimentsStore.selectedExperiments)
     );
   },
   editExperiment(anExperimentId: number) {
