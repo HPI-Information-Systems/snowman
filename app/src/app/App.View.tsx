@@ -34,13 +34,15 @@ const AppView = ({
   useEffect((): void => loadInitialState(), [loadInitialState]);
   return (
     <IonApp>
-      <IonSplitPane when="lg" contentId="main" class="split-pane-fixed">
-        {/*--  Side Menu  --*/}
+      <IonSplitPane
+        when="lg"
+        contentId="mainViewContentId"
+        class="split-pane-fixed"
+      >
+        {/* Side Menu (mainViewContentId used here!) */}
         <SideMenu />
-        {/* Page Content */}
-        <div id="main">
-          {React.createElement(getViewComponentToViewId(currentViewId))}
-        </div>
+        {/* Page Content (mainViewContentId used here!) */}
+        {React.createElement(getViewComponentToViewId(currentViewId))}
       </IonSplitPane>
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <GlobalLoading />
