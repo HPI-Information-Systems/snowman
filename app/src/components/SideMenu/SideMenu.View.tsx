@@ -21,8 +21,9 @@ import React from 'react';
 const SideMenuView = ({
   categoryStructure,
   enterView,
+  contentId,
 }: SideMenuProps): JSX.Element => (
-  <IonMenu contentId="main">
+  <IonMenu contentId={contentId}>
     <IonHeader>
       <IonToolbar color="primary">
         <IonTitle>Snowman - Benchmark</IonTitle>
