@@ -7,7 +7,6 @@ export class Sigmod2021ExperimentInserter extends CSVInserter {
   protected readonly requiredColumns: string[] = [
     'left_instance_id',
     'right_instance_id',
-    'label',
   ];
 
   protected addRow(row: {
@@ -20,7 +19,7 @@ export class Sigmod2021ExperimentInserter extends CSVInserter {
       row.left_instance_id!,
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       row.right_instance_id!,
-      row.label !== '0'
+      row.label ? row.label !== '0' : true
     );
   }
 }
