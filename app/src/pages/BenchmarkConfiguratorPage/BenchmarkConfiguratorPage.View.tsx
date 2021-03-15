@@ -34,6 +34,8 @@ const BenchmarkConfiguratorPageView = ({
   handleReorder,
   enterBinaryMetricsPage,
   couldEnterBinaryMetricsPage,
+  enterNMetricsPage,
+  couldEnterNMetricsPage,
 }: BenchmarkConfiguratorPageProps): JSX.Element => {
   useEffect(() => {
     // Triggered on every component update!
@@ -144,8 +146,8 @@ const BenchmarkConfiguratorPageView = ({
               </IonItem>
               <IonItem
                 button
-                disabled={true}
-                data-tip="Error: Not implemented yet!"
+                onClick={() => enterNMetricsPage()}
+                disabled={!couldEnterNMetricsPage}
               >
                 <IonIcon icon={calculatorOutline} slot="start" />
                 <IonLabel>

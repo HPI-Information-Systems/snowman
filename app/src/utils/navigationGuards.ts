@@ -13,3 +13,6 @@ export const couldEnterBenchmarkConfigurator = (
 export const couldEnterBinaryMetricsPage = (aState: Store): boolean =>
   aState.BenchmarkConfigStore.selectedGoldstandards.length === 1 &&
   aState.BenchmarkConfigStore.selectedExperiments.length === 1;
+export const couldEnterNMetricsPage = (aState: Store): boolean =>
+  aState.BenchmarkConfigStore.selectedGoldstandards.length === 1 &&
+  aState.BenchmarkConfigStore.selectedExperiments.length >= 1;

@@ -6,12 +6,14 @@ export interface BenchmarkConfiguratorPageStateProps {
   selectedGoldstandards: number[];
   selectedExperiments: number[];
   couldEnterBinaryMetricsPage: boolean;
+  couldEnterNMetricsPage: boolean;
 }
 
 export interface BenchmarkConfiguratorPageDispatchProps {
   handleReorder(event: IonReorderEvent): void;
   resetReorder(): void;
   enterBinaryMetricsPage(): void;
+  enterNMetricsPage(): void;
 }
 
 export type BenchmarkConfiguratorPageProps = BenchmarkConfiguratorPageStateProps &
