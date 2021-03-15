@@ -21,7 +21,7 @@ const PageStructView = ({
   showIndicator,
 }: PageStructProps): React.FunctionComponentElement<PageStructProps> => {
   return (
-    <IonPage id="mainViewContentId">
+    <IonPage>
       <IonHeader>
         <IonToolbar color="primary">
           <IonButtons slot="start">

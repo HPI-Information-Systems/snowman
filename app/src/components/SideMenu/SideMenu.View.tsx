@@ -22,7 +22,7 @@ const SideMenuView = ({
   categoryStructure,
   enterView,
 }: SideMenuProps): JSX.Element => (
-  <IonMenu contentId="mainViewContentId">
+  <IonMenu contentId="main">
     <IonHeader>
       <IonToolbar color="primary">
         <IonTitle>Snowman - Benchmark</IonTitle>
