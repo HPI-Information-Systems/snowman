@@ -1,4 +1,4 @@
-import { ImmediateStore, Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 
 export const couldAlwaysEnterPage = (): boolean => true;
 export const couldNeverEnterPage = (): boolean => false;
@@ -10,6 +10,3 @@ export const couldEnterBenchmarkConfigurator = (
 ): boolean =>
   aState.ExperimentsStore.selectedExperiments.length > 1 &&
   couldEnterExperimentsSelector(aState);
-export const couldEnterBinaryMetricsPage = (aState: Store): boolean =>
-  aState.BenchmarkConfigStore.selectedGoldstandards.length === 1 &&
-  aState.BenchmarkConfigStore.selectedExperiments.length === 1;

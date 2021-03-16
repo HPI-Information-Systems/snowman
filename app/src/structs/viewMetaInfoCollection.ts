@@ -1,13 +1,5 @@
-import {
-  albums,
-  documents,
-  extensionPuzzle,
-  home,
-  rocket,
-  speedometer,
-} from 'ionicons/icons';
+import { albums, documents, home, rocket, speedometer } from 'ionicons/icons';
 import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
-import BenchmarkConfiguratorPage from 'pages/BenchmarkConfiguratorPage/BenchmarkConfiguratorPage';
 import BinaryMetricsPage from 'pages/BinaryMetricsPage/BinaryMetricsPage';
 import DatasetsPage from 'pages/DatasetsPage/DatasetsPage';
 import ExperimentsPage from 'pages/ExperimentsPage/ExperimentsPage';
@@ -18,7 +10,6 @@ import { ViewMetaInformation } from 'types/ViewMetaInformation';
 import * as accessGuards from 'utils/navigationGuards';
 import {
   emptySelectedOptions,
-  selectedBenchmarkConfiguration,
   selectedDataset,
   selectedExperiments,
 } from 'utils/optionReminders';
@@ -73,18 +64,6 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuIcon: documents,
     menuSortKey: 4,
     selectedOptionsReminder: selectedExperiments,
-  },
-  {
-    key: ViewIDs.BENCHMARK_CONFIGURATOR,
-    component: BenchmarkConfiguratorPage,
-    nextView: ViewIDs.BINARY_METRICS,
-    accessGuard: accessGuards.couldEnterBenchmarkConfigurator,
-    shouldShowInMenu: true,
-    menuCategory: menuCategories.WORKFLOW,
-    menuIcon: extensionPuzzle,
-    menuName: 'Benchmark Configurator',
-    menuSortKey: 5,
-    selectedOptionsReminder: selectedBenchmarkConfiguration,
   },
   {
     key: ViewIDs.BINARY_METRICS,

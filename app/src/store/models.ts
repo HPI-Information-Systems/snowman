@@ -84,7 +84,7 @@ export interface SelectableInputStore {
   searchString: string;
 }
 
-export interface BenchmarkConfigStore {
+export interface BenchmarkConfigurationStore {
   availableExperiments: number[];
   selectedExperiments: number[];
   selectedGoldstandards: number[];
@@ -106,7 +106,6 @@ export interface ImmediateStore {
   ExperimentDialogStore: ExperimentDialogStore;
   AlgorithmDialogStore: AlgorithmDialogStore;
   GlobalIndicatorStore: GlobalIndicatorStore;
-  BenchmarkConfigStore: BenchmarkConfigStore;
   BinaryMetricsStore: BinaryMetricsStore;
   InputChipStore: InputChipStore;
   SelectableInputStore: SelectableInputStore;

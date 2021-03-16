@@ -14,13 +14,13 @@ import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import RequestHandler from 'utils/requestHandler';
 
 const getGroundTruthId = (): number => {
-  const selectedGoldstandards = store.getState().BenchmarkConfigStore
+  const selectedGoldstandards = store.getState().BenchmarkConfigurationStore
     .selectedGoldstandards;
   return selectedGoldstandards[0];
 };
 
 const getExperiment1Id = (): number => {
-  const selectedExperiments = store.getState().BenchmarkConfigStore
+  const selectedExperiments = store.getState().BenchmarkConfigurationStore
     .selectedExperiments;
   return selectedExperiments[0];
 };
