@@ -1,3 +1,5 @@
+import 'pages/ExperimentsPage/ExperimentsPageStyles.css';
+
 import { IonChip, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react';
 import AddExperimentFab from 'components/AddFab/AddExperimentFab';
 import ExperimentDialog from 'components/ExperimentDialog/ExperimentDialog';
@@ -51,19 +53,19 @@ const ExperimentsPageView = ({
               })
             }
           >
-            <IonCol size="4">
+            <IonCol size="4" class="dropable-zone">
               <ExperimentDroppable
                 bucketContent={availableExperiments}
                 bucketId={ExperimentBuckets.AVAILABLE_EXPERIMENTS}
               />
             </IonCol>
-            <IonCol size="4">
+            <IonCol size="4" class="dropable-zone">
               <ExperimentDroppable
                 bucketContent={chosenExperiments}
                 bucketId={ExperimentBuckets.CHOSEN_EXPERIMENTS}
               />
             </IonCol>
-            <IonCol size="4">
+            <IonCol size="4" class="dropable-zone">
               <ExperimentDroppable
                 bucketContent={chosenGoldstandards}
                 bucketId={ExperimentBuckets.CHOSEN_GOLDSTANDARDS}
