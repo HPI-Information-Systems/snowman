@@ -34,15 +34,6 @@ const mapDispatchToProps = (
   enterBinaryMetricsPage: () => {
     dispatch(navigateTo(ViewIDs.BINARY_METRICS));
   },
-  resetReorder: () => {
-    dispatch(setSelectedExperiments([]));
-    dispatch(setSelectedGoldstandards([]));
-    dispatch(
-      setAvailableExperiments(
-        store.getState().ExperimentsStore.selectedExperiments
-      )
-    );
-  },
   handleReorder: (event: IonReorderEvent) => {
     if (event.detail.to === 0) {
       event.detail.complete(false);
