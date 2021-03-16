@@ -1,4 +1,4 @@
-import { BenchmarkApi, ExperimentIntersection, Metric } from 'api';
+import { BenchmarkApi, FileResponse, Metric } from 'api';
 import { MetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import {
   SnowmanAction,
@@ -110,7 +110,7 @@ const loadTuples = (
       new BenchmarkApi()
         .calculateExperimentIntersectionRecords(requestBody)
         .then(
-          (res: ExperimentIntersection): SnowmanAction =>
+          (res: FileResponse): SnowmanAction =>
             dispatch({
               type: actionType,
               payload: res,

@@ -15,19 +15,19 @@
 /**
  * 
  * @export
- * @interface ExperimentIntersection
+ * @interface FileResponse
  */
-export interface ExperimentIntersection {
+export interface FileResponse {
     /**
      * 
      * @type {Array<string>}
-     * @memberof ExperimentIntersection
+     * @memberof FileResponse
      */
     header: Array<string>;
     /**
      * 
      * @type {Array<Array<string>>}
-     * @memberof ExperimentIntersection
+     * @memberof FileResponse
      */
     data: Array<Array<string>>;
 }

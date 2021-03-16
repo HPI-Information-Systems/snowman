@@ -21,6 +21,9 @@ import {
     DatasetValues,
     DatasetValuesFromJSON,
     DatasetValuesToJSON,
+    FileResponse,
+    FileResponseFromJSON,
+    FileResponseToJSON,
 } from '../models';
 
 export interface AddDatasetRequest {
@@ -57,7 +60,7 @@ export interface SetDatasetFileRequest {
     quote: string;
     escape: string;
     separator: string;
-    body: Blob;
+    fileResponse: FileResponse;
 }
 
 /**
@@ -190,7 +193,7 @@ export class DatasetsApi extends runtime.BaseAPI {
      * Always returns one row with column names followed by the requested amount of rows. To only return the column names, pass startAt=0 and limit=0.
      * Gets a dataset file by id
      */
-    async getDatasetFileRaw(requestParameters: GetDatasetFileRequest): Promise<runtime.ApiResponse<Blob>> {
+    async getDatasetFileRaw(requestParameters: GetDatasetFileRequest): Promise<runtime.ApiResponse<FileResponse>> {
         if (requestParameters.datasetId === null || requestParameters.datasetId === undefined) {
             throw new runtime.RequiredError('datasetId','Required parameter requestParameters.datasetId was null or undefined when calling getDatasetFile.');
         }
@@ -218,14 +221,14 @@ export class DatasetsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.BlobApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => FileResponseFromJSON(jsonValue));
     }
 
     /**
      * Always returns one row with column names followed by the requested amount of rows. To only return the column names, pass startAt=0 and limit=0.
      * Gets a dataset file by id
      */
-    async getDatasetFile(requestParameters: GetDatasetFileRequest): Promise<Blob> {
+    async getDatasetFile(requestParameters: GetDatasetFileRequest): Promise<FileResponse> {
         const response = await this.getDatasetFileRaw(requestParameters);
         return await response.value();
     }
@@ -316,8 +319,8 @@ export class DatasetsApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('separator','Required parameter requestParameters.separator was null or undefined when calling setDatasetFile.');
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setDatasetFile.');
+        if (requestParameters.fileResponse === null || requestParameters.fileResponse === undefined) {
+            throw new runtime.RequiredError('fileResponse','Required parameter requestParameters.fileResponse was null or undefined when calling setDatasetFile.');
         }
 
         const queryParameters: any = {};
@@ -347,7 +350,7 @@ export class DatasetsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: FileResponseToJSON(requestParameters.fileResponse),
         });
 
         return new runtime.VoidApiResponse(response);

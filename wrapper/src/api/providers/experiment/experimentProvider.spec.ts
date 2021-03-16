@@ -1,6 +1,5 @@
-import { setupDatabase } from '../../database';
+import { setupDatabase, Table } from '../../database';
 import { tableSchemas } from '../../database/schemas';
-import { throwIfTableNotExists } from '../../database/table/loader';
 import {
   AlgorithmValues,
   DatasetValues,
@@ -186,11 +185,11 @@ describe('ExperimentProvider', () => {
   });
 
   test('set file sets file', async () => {
-    expect(() =>
-      throwIfTableNotExists(
+    expect(
+      new Table(
         tableSchemas.experiment.experiment(addedExperimentIds[0])
-      )
-    ).toThrowError();
+      ).exists()
+    ).toBe(false);
     const file = [
       ['p1', 'p2'],
       ['id1', 'id1'],
@@ -200,25 +199,25 @@ describe('ExperimentProvider', () => {
       'pilot',
       fileToReadable(file)
     );
-    expect(() =>
-      throwIfTableNotExists(
+    expect(
+      new Table(
         tableSchemas.experiment.experiment(addedExperimentIds[0])
-      )
-    ).not.toThrowError();
+      ).exists()
+    ).toBe(true);
   });
 
   test('delete file deletes file', () => {
-    expect(() =>
-      throwIfTableNotExists(
+    expect(
+      new Table(
         tableSchemas.experiment.experiment(addedExperimentIds[1])
-      )
-    ).not.toThrowError();
+      ).exists()
+    ).toBe(true);
     provider.deleteExperimentFile(addedExperimentIds[1]);
-    expect(() =>
-      throwIfTableNotExists(
+    expect(
+      new Table(
         tableSchemas.experiment.experiment(addedExperimentIds[1])
-      )
-    ).toThrowError();
+      ).exists()
+    ).toBe(false);
   });
 
   test('set file throws warning when adding unknown / too many ids', async () => {

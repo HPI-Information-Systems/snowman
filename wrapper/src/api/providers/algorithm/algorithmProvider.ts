@@ -1,29 +1,31 @@
-import { Table } from '../../database';
+import { tables } from '../../database';
 import { tableSchemas } from '../../database/schemas';
 import { Algorithm, AlgorithmId, AlgorithmValues } from '../../server/types';
-import { getProviders } from '..';
 import { AlgorithmConverter } from './util/converter';
 
 export class AlgorithmProvider {
   readonly schema = tableSchemas.meta.algorithm;
-  readonly table = new Table(this.schema);
   protected readonly converter = new AlgorithmConverter();
 
   listAlgorithms(): Algorithm[] {
-    return this.table.all().map((stored) => this.converter.storedToApi(stored));
+    return tables.meta.algorithm
+      .all()
+      .map((stored) => this.converter.storedToApi(stored));
   }
 
   addAlgorithm(algorithm: AlgorithmValues): AlgorithmId {
-    return this.table
-      .insert({
-        name: algorithm.name,
-        description: algorithm.description || null,
-      })
+    return tables.meta.algorithm
+      .upsert([
+        {
+          name: algorithm.name,
+          description: algorithm.description || null,
+        },
+      ])
       .slice(-1)[0];
   }
 
   getAlgorithm(id: AlgorithmId): Algorithm {
-    const algorithm = this.table.get({ id });
+    const algorithm = tables.meta.algorithm.get({ id });
     if (!algorithm) {
       throw new Error(`A matching solution with the id ${id} does not exist.`);
     }
@@ -31,11 +33,13 @@ export class AlgorithmProvider {
   }
 
   setAlgorithm(id: AlgorithmId, algorithm: AlgorithmValues): void {
-    this.table.insert(this.converter.apiToStored({ ...algorithm, id }));
+    tables.meta.algorithm.upsert([
+      this.converter.apiToStored({ ...algorithm, id }),
+    ]);
   }
 
   private algorithmUsages(id: AlgorithmId) {
-    return getProviders().experiment.table.all({ algorithm: id });
+    return tables.meta.experiment.all({ algorithm: id });
   }
 
   private throwIfAlgorithmIsUsed(id: AlgorithmId) {
@@ -53,6 +57,6 @@ export class AlgorithmProvider {
 
   deleteAlgorithm(id: AlgorithmId): void {
     this.throwIfAlgorithmIsUsed(id);
-    this.table.delete({ id });
+    tables.meta.algorithm.delete({ id });
   }
 }

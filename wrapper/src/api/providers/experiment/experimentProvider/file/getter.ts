@@ -1,11 +1,9 @@
-import { databaseBackend, Table } from '../../../../database';
+import { Table } from '../../../../database';
 import {
   experimentCustomColumnPrefix,
   tableSchemas,
 } from '../../../../database/schemas';
-import { loadTableFromDatabase } from '../../../../database/table/loader';
-import { Column } from '../../../../database/tools/types';
-import { ExperimentId } from '../../../../server/types';
+import { ExperimentId, FileResponse } from '../../../../server/types';
 
 type ExperimentSchema = ReturnType<
   typeof tableSchemas['experiment']['experiment']
@@ -13,53 +11,49 @@ type ExperimentSchema = ReturnType<
 
 export class ExperimentFileGetter {
   protected table: Table<ExperimentSchema>;
-  protected columns: Column[];
+  protected columns: string[];
   constructor(private readonly id: ExperimentId) {
-    this.table = loadTableFromDatabase<ExperimentSchema>(
+    this.table = new Table<ExperimentSchema>(
       tableSchemas.experiment.experiment(id)
     );
-    this.columns = Object.values(this.table.schema.columns);
+    this.table.loadSchemaFromDatabase();
+    this.columns = Object.values(this.table.schema.columns)
+      .map((column) => column.name)
+      .sort();
   }
 
-  *iterate(
-    startAt?: number,
-    limit?: number,
-    sortBy?: string
-  ): IterableIterator<string[]> {
-    startAt = startAt ?? 0;
-    limit = limit ?? -1;
+  get(startAt?: number, limit?: number, sortBy?: string): FileResponse {
+    sortBy = this.getSortedColumn(sortBy);
+    return {
+      header: this.columns.map((column) =>
+        column.startsWith(experimentCustomColumnPrefix)
+          ? column.substring(experimentCustomColumnPrefix.length)
+          : column
+      ),
+      data: this.table.all({}, this.columns, true, {
+        limit,
+        startAt,
+        sortBy,
+      }) as string[][],
+    };
+  }
+
+  protected getSortedColumn(sortBy?: string): string {
     if (sortBy) {
-      if (
-        !(experimentCustomColumnPrefix + sortBy in this.table.schema.columns)
+      if (sortBy in this.table.schema.columns) {
+        return sortBy;
+      } else if (
+        experimentCustomColumnPrefix + sortBy in
+        this.table.schema.columns
       ) {
+        return experimentCustomColumnPrefix + sortBy;
+      } else {
         throw new Error(
           `Cannot sort by ${sortBy} as this column does not exist.`
         );
-      } else {
-        sortBy = experimentCustomColumnPrefix + sortBy;
       }
     } else {
-      sortBy = this.table.schema.columns.id1.name;
+      return this.table.schema.columns.id1.name;
     }
-    yield this.columns.map((column) =>
-      column.name.startsWith(experimentCustomColumnPrefix)
-        ? column.name.substring(experimentCustomColumnPrefix.length)
-        : column.name
-    );
-    yield* databaseBackend()
-      .prepare(
-        `
-            SELECT ${this.getColumnsString()}
-            FROM ${this.table}
-        ORDER BY "${sortBy}"
-           LIMIT @limit OFFSET @startAt
-      `
-      )
-      .raw(true)
-      .iterate({ startAt, limit });
-  }
-
-  private getColumnsString(): string {
-    return this.columns.map((column) => `"${column.name}"`).join(',');
   }
 }

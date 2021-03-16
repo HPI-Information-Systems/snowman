@@ -69,7 +69,7 @@ export class DatasetInserter implements CSVReaderStrategy {
 
   async readRow(row: CSVRow): Promise<void> {
     if (this.table) {
-      this.table.batchInsert(
+      this.table.batchUpsert(
         [() => this.rowToInsertParameters(row)],
         INSERT_BATCH_SIZE
       );
@@ -91,7 +91,7 @@ export class DatasetInserter implements CSVReaderStrategy {
   }
 
   async finish(): Promise<void> {
-    this.table && this.table.flushBatchInsert();
+    this.table && this.table.flushBatchUpsert();
     this.table && this.table.createIndices(true);
   }
 }

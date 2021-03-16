@@ -21,6 +21,9 @@ import {
     ExperimentValues,
     ExperimentValuesFromJSON,
     ExperimentValuesToJSON,
+    FileResponse,
+    FileResponseFromJSON,
+    FileResponseToJSON,
 } from '../models';
 
 export interface AddExperimentRequest {
@@ -54,7 +57,7 @@ export interface SetExperimentRequest {
 export interface SetExperimentFileRequest {
     experimentId: number;
     format: SetExperimentFileFormatEnum;
-    body: Blob;
+    fileResponse: FileResponse;
 }
 
 /**
@@ -186,7 +189,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
     /**
      * Get an experiment file
      */
-    async getExperimentFileRaw(requestParameters: GetExperimentFileRequest): Promise<runtime.ApiResponse<Blob>> {
+    async getExperimentFileRaw(requestParameters: GetExperimentFileRequest): Promise<runtime.ApiResponse<FileResponse>> {
         if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
             throw new runtime.RequiredError('experimentId','Required parameter requestParameters.experimentId was null or undefined when calling getExperimentFile.');
         }
@@ -214,13 +217,13 @@ export class ExperimentsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.BlobApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => FileResponseFromJSON(jsonValue));
     }
 
     /**
      * Get an experiment file
      */
-    async getExperimentFile(requestParameters: GetExperimentFileRequest): Promise<Blob> {
+    async getExperimentFile(requestParameters: GetExperimentFileRequest): Promise<FileResponse> {
         const response = await this.getExperimentFileRaw(requestParameters);
         return await response.value();
     }
@@ -299,8 +302,8 @@ export class ExperimentsApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('format','Required parameter requestParameters.format was null or undefined when calling setExperimentFile.');
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setExperimentFile.');
+        if (requestParameters.fileResponse === null || requestParameters.fileResponse === undefined) {
+            throw new runtime.RequiredError('fileResponse','Required parameter requestParameters.fileResponse was null or undefined when calling setExperimentFile.');
         }
 
         const queryParameters: any = {};
@@ -318,7 +321,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: FileResponseToJSON(requestParameters.fileResponse),
         });
 
         return new runtime.VoidApiResponse(response);

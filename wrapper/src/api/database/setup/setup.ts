@@ -6,7 +6,11 @@ import { SchemaVersion } from '../schemas/migrations/schemaVersion';
 import { mainDatabaseFile } from '../tools/storageStructure';
 import { Schema, Schemas, TableSchema } from '../tools/types';
 import { attachDatabases } from './attachDatabases';
-import { databaseBackend, loadOrCreateMainDatabase } from './backend';
+import {
+  databaseBackend,
+  databaseBackendSubject,
+  loadOrCreateMainDatabase,
+} from './backend';
 import { loadExamples } from './examples';
 import { installTables } from './install';
 
@@ -27,6 +31,7 @@ export async function setupDatabase({
   } else {
     await latest.migrate(SchemaVersion.getInstalledVersion());
   }
+  databaseBackendSubject.next(databaseBackend());
 }
 
 async function initialDatabaseSetup(loadExampleEntries: boolean) {

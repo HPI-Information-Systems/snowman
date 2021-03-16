@@ -15,9 +15,6 @@
 
 import * as runtime from '../runtime';
 import {
-    ExperimentIntersection,
-    ExperimentIntersectionFromJSON,
-    ExperimentIntersectionToJSON,
     ExperimentIntersectionCount,
     ExperimentIntersectionCountFromJSON,
     ExperimentIntersectionCountToJSON,
@@ -30,6 +27,9 @@ import {
     ExperimentIntersectionRequestExperiments,
     ExperimentIntersectionRequestExperimentsFromJSON,
     ExperimentIntersectionRequestExperimentsToJSON,
+    FileResponse,
+    FileResponseFromJSON,
+    FileResponseToJSON,
     Metric,
     MetricFromJSON,
     MetricToJSON,
@@ -133,7 +133,7 @@ export class BenchmarkApi extends runtime.BaseAPI {
     /**
      * intersects multiple experiments and returns the resulting records. This can be used to calculate the confusion-matrix.
      */
-    async calculateExperimentIntersectionRecordsRaw(requestParameters: CalculateExperimentIntersectionRecordsRequest): Promise<runtime.ApiResponse<ExperimentIntersection>> {
+    async calculateExperimentIntersectionRecordsRaw(requestParameters: CalculateExperimentIntersectionRecordsRequest): Promise<runtime.ApiResponse<FileResponse>> {
         if (requestParameters.experimentIntersectionRequestExperiments === null || requestParameters.experimentIntersectionRequestExperiments === undefined) {
             throw new runtime.RequiredError('experimentIntersectionRequestExperiments','Required parameter requestParameters.experimentIntersectionRequestExperiments was null or undefined when calling calculateExperimentIntersectionRecords.');
         }
@@ -164,13 +164,13 @@ export class BenchmarkApi extends runtime.BaseAPI {
             body: requestParameters.experimentIntersectionRequestExperiments.map(ExperimentIntersectionRequestExperimentsToJSON),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ExperimentIntersectionFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => FileResponseFromJSON(jsonValue));
     }
 
     /**
      * intersects multiple experiments and returns the resulting records. This can be used to calculate the confusion-matrix.
      */
-    async calculateExperimentIntersectionRecords(requestParameters: CalculateExperimentIntersectionRecordsRequest): Promise<ExperimentIntersection> {
+    async calculateExperimentIntersectionRecords(requestParameters: CalculateExperimentIntersectionRecordsRequest): Promise<FileResponse> {
         const response = await this.calculateExperimentIntersectionRecordsRaw(requestParameters);
         return await response.value();
     }

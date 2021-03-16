@@ -1,11 +1,11 @@
-import { DatasetId, ExperimentIntersection } from '../../../../server/types';
+import { DatasetId, FileResponse } from '../../../../server/types';
 import { DatasetIDMapper } from '../../../dataset/datasetProvider/util/idMapper';
 import { NodeID } from '../cluster/types';
 
 export function idClustersToRecordClustersNoTable(
   idClusters: (NodeID | undefined)[],
   datasetId: DatasetId
-): ExperimentIntersection {
+): FileResponse {
   const idMapper = new DatasetIDMapper(datasetId);
   return {
     header: ['id'],

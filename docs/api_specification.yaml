@@ -250,7 +250,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DatasetFile"
+                $ref: "#/components/schemas/FileResponse"
         404:
           description: Not Found
     put:
@@ -291,8 +291,8 @@ paths:
         content:
           text/csv:
             schema:
-              $ref: "#/components/schemas/DatasetFile"
-        description: updated DatasetFile-csv object
+              $ref: "#/components/schemas/FileResponse"
+        description: updated FileResponse-csv object
         required: true
       responses:
         204:
@@ -434,7 +434,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExperimentFile"
+                $ref: "#/components/schemas/FileResponse"
         404:
           description: Not Found
     put:
@@ -460,10 +460,10 @@ paths:
         content:
           text/csv:
             schema:
-              $ref: "#/components/schemas/ExperimentFile"
+              $ref: "#/components/schemas/FileResponse"
           application/json:
             schema:
-              $ref: "#/components/schemas/ExperimentFile"
+              $ref: "#/components/schemas/FileResponse"
         description: updated experiment file
         required: true
       responses:
@@ -560,7 +560,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExperimentIntersection"
+                $ref: "#/components/schemas/FileResponse"
         403:
           description: Forbidden
         404:
@@ -683,14 +683,6 @@ components:
               type: integer
               example: 2005
         - $ref: "#/components/schemas/DatasetValues"
-    DatasetFile:
-      type: string
-      format: binary
-      example: |
-        id,name
-        1, Ulf Restaurant
-        2, Ulfs Restaurant
-
       #### EXPERIMENT ####
     ExperimentId:
       type: integer
@@ -725,15 +717,6 @@ components:
               type: integer
               example: 2005
         - $ref: "#/components/schemas/ExperimentValues"
-    ExperimentFile:
-      type: string
-      format: binary
-      example: |
-        p1,p2,prediction
-        1, 2, 1
-        2, 3, 0
-        ...
-
     #### BENCHMARK ####
     Metric:
       type: object
@@ -773,7 +756,7 @@ components:
       items:
         $ref: "#/components/schemas/ExperimentIntersectionRequestExperiments"
       type: array
-    ExperimentIntersection:
+    FileResponse:
       type: object
       properties:
         header:

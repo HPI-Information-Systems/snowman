@@ -1,4 +1,4 @@
-import { ExperimentIntersection } from 'api';
+import { FileResponse } from 'api';
 import { ColumnDescriptor } from 'components/DataViewer/ColumnDescriptor';
 import { BinaryMetricsPageView } from 'pages/BinaryMetricsPage/BinaryMetricsPage.View';
 import {
@@ -18,7 +18,7 @@ import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 const getTuplesByTuplesCategory = (
   store: MetricsStore,
   aMetricsTuplesCategory: MetricsTuplesCategories
-): ExperimentIntersection | undefined => {
+): FileResponse | undefined => {
   switch (aMetricsTuplesCategory) {
     case MetricsTuplesCategories.truePositives:
       return store.truePositives;
@@ -77,15 +77,15 @@ const mapStateToProps = (state: Store): BinaryMetricsDispatchProps => ({
     // Todo: Replace with API value in later PR
     trueNegatives:
       state.MetricsStore.falseNegatives !== undefined &&
-      state.MetricsStore.falsePositives !== undefined &&
-      state.MetricsStore.truePositives?.data.length !== undefined
+        state.MetricsStore.falsePositives !== undefined &&
+        state.MetricsStore.truePositives?.data.length !== undefined
         ? Math.pow(
-            state.DatasetsStore.selectedDataset?.numberOfRecords ?? 0,
-            2
-          ) -
-          ((state.MetricsStore.falseNegatives?.data.length ?? 0) +
-            (state.MetricsStore.falsePositives?.data.length ?? 0) +
-            (state.MetricsStore.truePositives?.data.length ?? 0))
+          state.DatasetsStore.selectedDataset?.numberOfRecords ?? 0,
+          2
+        ) -
+        ((state.MetricsStore.falseNegatives?.data.length ?? 0) +
+          (state.MetricsStore.falsePositives?.data.length ?? 0) +
+          (state.MetricsStore.truePositives?.data.length ?? 0))
         : undefined,
     // Todo: Replace with API value in later PR
     truePositives: state.MetricsStore.truePositives?.data.length, // incorrect value

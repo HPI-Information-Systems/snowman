@@ -1,10 +1,10 @@
 import {
   ExperimentId,
-  ExperimentIntersection,
   ExperimentIntersectionCount,
   ExperimentIntersectionPairCountsItem,
   ExperimentIntersectionPairCountsRequestExperiments,
   ExperimentIntersectionRequestExperiments,
+  FileResponse,
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
 import { numberOfPairs } from '../../../tools/numberOfPairs';
@@ -127,7 +127,7 @@ export class BenchmarkProvider {
     startAt?: number;
     limit?: number;
     sortBy?: string;
-  }): ExperimentIntersection {
+  }): FileResponse {
     const intersection = this.intersection(config);
     return idClustersToRecordClusters(
       intersection.clusters(startAt, limit),

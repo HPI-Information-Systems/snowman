@@ -17,6 +17,16 @@ export type ColumnDataType<
   ? BasicDataType<ColumnT['dataType']>
   : BasicDataType<ColumnT['dataType']> | null;
 
+export type InsertColumnDataType<
+  ColumnT extends Column
+> = ColumnT['primaryKey'] extends true
+  ? undefined | ColumnDataType<ColumnT>
+  : ColumnT['autoIncrement'] extends true
+  ? undefined | ColumnDataType<ColumnT>
+  : ColumnT['notNull'] extends true
+  ? ColumnDataType<ColumnT>
+  : ColumnDataType<ColumnT> | undefined;
+
 export type ColumnValues<Columns extends TableSchema['columns']> = {
   [key in keyof Columns]: ColumnDataType<Columns[key]>;
 };

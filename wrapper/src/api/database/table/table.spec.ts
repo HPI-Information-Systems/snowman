@@ -3,7 +3,6 @@ import { attachDatabases } from '../setup';
 import { loadOrCreateMainDatabase } from '../setup/backend';
 import { installTables } from '../setup/install';
 import { TableSchema } from '../tools/types';
-import { loadTableFromDatabase, throwIfTableNotExists } from './loader';
 import { Table } from './table';
 
 describe('Table', () => {
@@ -37,25 +36,26 @@ describe('Table', () => {
     installTables([mountedTable]);
   });
 
-  test('loadTableFromDatabase returns correct columns', () => {
-    expect(loadTableFromDatabase(mountedTable).schema).toMatchObject(
-      mountedTable
-    );
+  test('loadSchemaFromDatabase returns correct columns', () => {
+    const table = new Table(mountedTable);
+    table.loadSchemaFromDatabase();
+    expect(table.schema).toMatchObject(mountedTable);
   });
 
-  test('loadTableFromDatabase throws error if table not existent', () => {
+  test('loadSchemaFromDatabase throws error if table not existent', () => {
     expect(() =>
-      loadTableFromDatabase({
+      new Table({
         name: notMountedTable,
         schema: schema,
-      })
+        columns: {},
+      }).loadSchemaFromDatabase()
     ).toThrow();
   });
 
   test('delete deletes table', () => {
-    expect(() => throwIfTableNotExists(mountedTable)).not.toThrow();
+    expect(new Table(mountedTable).exists()).toBe(true);
     new Table(mountedTable).dropTable();
-    expect(() => throwIfTableNotExists(mountedTable)).toThrow();
+    expect(new Table(mountedTable).exists()).toBe(false);
   });
 
   test('inserter inserts rows', () => {
@@ -65,9 +65,11 @@ describe('Table', () => {
     const canbenull2 = 'gggg';
     expect(table.all().length).toBe(0);
 
-    const [id] = table.insert({
-      nonnull: nonnull1,
-    });
+    const [id] = table.upsert([
+      {
+        nonnull: nonnull1,
+      },
+    ]);
     expect(new Set(table.all())).toMatchObject(
       new Set([
         {
@@ -78,10 +80,12 @@ describe('Table', () => {
       ])
     );
 
-    const [id2] = table.insert({
-      nonnull: nonnull2,
-      canbenull: canbenull2,
-    });
+    const [id2] = table.upsert([
+      {
+        nonnull: nonnull2,
+        canbenull: canbenull2,
+      },
+    ]);
     expect(new Set(table.all())).toMatchObject(
       new Set([
         {
@@ -105,9 +109,11 @@ describe('Table', () => {
     const canbenull2 = 'gggg';
     expect(table.all().length).toBe(0);
     expect(table.get()).toBe(undefined);
-    const [id] = table.insert({
-      nonnull: nonnull1,
-    });
+    const [id] = table.upsert([
+      {
+        nonnull: nonnull1,
+      },
+    ]);
     expect(new Set(table.all())).toMatchObject(
       new Set([
         {
@@ -133,10 +139,12 @@ describe('Table', () => {
       }).length
     ).toBe(0);
 
-    const [id2] = table.insert({
-      nonnull: nonnull2,
-      canbenull: canbenull2,
-    });
+    const [id2] = table.upsert([
+      {
+        nonnull: nonnull2,
+        canbenull: canbenull2,
+      },
+    ]);
     expect(new Set(table.all())).toMatchObject(
       new Set([
         {
@@ -173,9 +181,11 @@ describe('Table', () => {
     const nonnull2 = 'sssss';
     const canbenull2 = 'gggg';
     expect(table.all().length).toBe(0);
-    const [id] = table.insert({
-      nonnull: nonnull1,
-    });
+    const [id] = table.upsert([
+      {
+        nonnull: nonnull1,
+      },
+    ]);
     expect(new Set(table.all())).toMatchObject(
       new Set([
         {
@@ -186,10 +196,12 @@ describe('Table', () => {
       ])
     );
 
-    const [id2] = table.insert({
-      nonnull: nonnull2,
-      canbenull: canbenull2,
-    });
+    const [id2] = table.upsert([
+      {
+        nonnull: nonnull2,
+        canbenull: canbenull2,
+      },
+    ]);
     expect(new Set(table.all())).toMatchObject(
       new Set([
         {

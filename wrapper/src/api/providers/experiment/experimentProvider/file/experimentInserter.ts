@@ -32,7 +32,7 @@ export abstract class ExperimentInserter {
 
   public async insert(file: Readable): Promise<number> {
     await this.insert_internal(file);
-    this.table && this.table.flushBatchInsert();
+    this.table && this.table.flushBatchUpsert();
     if (!this.table) {
       this.getOrCreateTable({});
     }
@@ -49,7 +49,7 @@ export abstract class ExperimentInserter {
     this.numberOfUploadedRecords++;
     [id1, id2] = [id1, id2].sort();
     const table = this.getOrCreateTable(similarityScores);
-    table.batchInsert(
+    table.batchUpsert(
       [
         () =>
           this.rowToInsertParameters(

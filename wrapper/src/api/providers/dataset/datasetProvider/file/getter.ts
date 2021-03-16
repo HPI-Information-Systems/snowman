@@ -1,10 +1,9 @@
-import { databaseBackend, Table } from '../../../../database';
+import { Table } from '../../../../database';
 import {
   datasetCustomColumnPrefix,
   tableSchemas,
 } from '../../../../database/schemas';
-import { loadTableFromDatabase } from '../../../../database/table/loader';
-import { DatasetId } from '../../../../server/types';
+import { DatasetId, FileResponse } from '../../../../server/types';
 
 type DatasetSchema = ReturnType<typeof tableSchemas['dataset']['dataset']>;
 
@@ -18,42 +17,26 @@ export class DatasetFileGetter {
     private readonly limit?: number,
     sortBy?: string
   ) {
-    this.table = loadTableFromDatabase<DatasetSchema>(
-      tableSchemas.dataset.dataset(id)
-    );
+    this.table = new Table<DatasetSchema>(tableSchemas.dataset.dataset(id));
+    this.table.loadSchemaFromDatabase();
     this.customColumns = Object.values(this.table.schema.columns)
       .map((column) => column.name)
-      .filter((column) => column.startsWith(datasetCustomColumnPrefix));
+      .filter((column) => column.startsWith(datasetCustomColumnPrefix))
+      .sort();
     this.sortedColumn = this.getSortedColumn(sortBy);
   }
 
-  *iterate(): IterableIterator<string[]> {
-    yield this.customColumns.map((column) =>
-      column.substring(datasetCustomColumnPrefix.length)
-    );
-    yield* databaseBackend()
-      .prepare(
-        `
-            SELECT ${this.getColumnsString()}
-              FROM ${this.table}
-          ORDER BY "${this.sortedColumn}"
-             ${
-               this.limit !== undefined && this.startAt !== undefined
-                 ? 'LIMIT @limit OFFSET @startAt'
-                 : this.limit !== undefined
-                 ? 'LIMIT @limit'
-                 : this.startAt !== undefined
-                 ? 'LIMIT -1 OFFSET @startAt'
-                 : ''
-             }
-      `
-      )
-      .raw(true)
-      .iterate({ startAt: this.startAt, limit: this.limit });
-  }
-
-  private getColumnsString(): string {
-    return this.customColumns.map((column) => `"${column}"`).join(',');
+  get(): FileResponse {
+    return {
+      header: this.customColumns.map((column) =>
+        column.substring(datasetCustomColumnPrefix.length)
+      ),
+      data: this.table.all({}, this.customColumns, true, {
+        limit: this.limit,
+        startAt: this.startAt,
+        sortBy: this.sortedColumn,
+      }) as string[][],
+    };
   }
 
   private getSortedColumn(sortBy?: string): string {
