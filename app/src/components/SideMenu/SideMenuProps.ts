@@ -14,6 +14,10 @@ export interface SideMenuCategory {
   categoryItems: CategoryItem[];
 }
 
+export interface SideMenuOwnProps {
+  contentId: string;
+}
+
 export interface SideMenuDispatchProps {
   enterView(aViewId: ViewIDs): void;
 }
@@ -22,4 +26,6 @@ export interface SideMenuStateProps {
   categoryStructure: SideMenuCategory[];
 }
 
-export type SideMenuProps = SideMenuStateProps & SideMenuDispatchProps;
+export type SideMenuProps = SideMenuOwnProps &
+  SideMenuStateProps &
+  SideMenuDispatchProps;
