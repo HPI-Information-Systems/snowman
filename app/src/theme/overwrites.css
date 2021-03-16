@@ -5,8 +5,11 @@
 
 /** Disable hack for GPU acceleration. **/
 .menu-content {
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -ms-transform: none !important;
+  -o-transform: none !important;
   transform: none !important;
-  will-change: transform;
 }
 
 /** Overwrite Ionic CSS Variables **/
