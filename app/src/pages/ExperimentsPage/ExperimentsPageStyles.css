@@ -1,5 +1,5 @@
 .dropable-zone {
-  border-width: 4px;
-  border-style: solid;
-  border-color: #0d0d0d;
+  border-width: 1px;
+  border-style: dashed;
+  border-color: #3b4151;
 }
