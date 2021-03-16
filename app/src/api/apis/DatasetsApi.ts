@@ -60,7 +60,7 @@ export interface SetDatasetFileRequest {
     quote: string;
     escape: string;
     separator: string;
-    fileResponse: FileResponse;
+    body: Blob;
 }
 
 /**
@@ -319,8 +319,8 @@ export class DatasetsApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('separator','Required parameter requestParameters.separator was null or undefined when calling setDatasetFile.');
         }
 
-        if (requestParameters.fileResponse === null || requestParameters.fileResponse === undefined) {
-            throw new runtime.RequiredError('fileResponse','Required parameter requestParameters.fileResponse was null or undefined when calling setDatasetFile.');
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setDatasetFile.');
         }
 
         const queryParameters: any = {};
@@ -350,7 +350,7 @@ export class DatasetsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: FileResponseToJSON(requestParameters.fileResponse),
+            body: requestParameters.body as any,
         });
 
         return new runtime.VoidApiResponse(response);

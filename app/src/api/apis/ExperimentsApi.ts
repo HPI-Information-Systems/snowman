@@ -57,7 +57,7 @@ export interface SetExperimentRequest {
 export interface SetExperimentFileRequest {
     experimentId: number;
     format: SetExperimentFileFormatEnum;
-    fileResponse: FileResponse;
+    body: Blob;
 }
 
 /**
@@ -302,8 +302,8 @@ export class ExperimentsApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('format','Required parameter requestParameters.format was null or undefined when calling setExperimentFile.');
         }
 
-        if (requestParameters.fileResponse === null || requestParameters.fileResponse === undefined) {
-            throw new runtime.RequiredError('fileResponse','Required parameter requestParameters.fileResponse was null or undefined when calling setExperimentFile.');
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setExperimentFile.');
         }
 
         const queryParameters: any = {};
@@ -321,7 +321,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: FileResponseToJSON(requestParameters.fileResponse),
+            body: requestParameters.body as any,
         });
 
         return new runtime.VoidApiResponse(response);

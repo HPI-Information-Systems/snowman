@@ -373,8 +373,8 @@ paths:
         content:
           text/csv:
             schema:
-              $ref: "#/components/schemas/FileResponse"
-        description: updated FileResponse-csv object
+              $ref: "#/components/schemas/CSVFile"
+        description: updated csv object
         required: true
       responses:
         "204":
@@ -594,10 +594,7 @@ paths:
         content:
           text/csv:
             schema:
-              $ref: "#/components/schemas/FileResponse"
-          application/json:
-            schema:
-              $ref: "#/components/schemas/FileResponse"
+              $ref: "#/components/schemas/CSVFile"
         description: updated experiment file
         required: true
       responses:
@@ -1061,6 +1058,9 @@ components:
         - experiments
         - pairCount
       type: object
+    CSVFile:
+      format: binary
+      type: string
     Algorithm_allOf:
       properties:
         id:
