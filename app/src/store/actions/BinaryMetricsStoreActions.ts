@@ -14,15 +14,11 @@ import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import RequestHandler from 'utils/requestHandler';
 
 const getGroundTruthId = (): number => {
-  const selectedGoldstandards = store.getState().BenchmarkConfigurationStore
-    .selectedGoldstandards;
-  return selectedGoldstandards[0];
+  return store.getState().ExperimentsStore.experiments[0].id;
 };
 
 const getExperiment1Id = (): number => {
-  const selectedExperiments = store.getState().BenchmarkConfigurationStore
-    .selectedExperiments;
-  return selectedExperiments[0];
+  return store.getState().ExperimentsStore.experiments[1].id;
 };
 
 export const loadMetrics = (): SnowmanThunkAction<Promise<void>> => async (
