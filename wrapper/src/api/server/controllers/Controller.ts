@@ -1,4 +1,3 @@
-import stringify from 'csv-stringify';
 import { Response } from 'express';
 
 import { logger } from '../../tools/logger';
