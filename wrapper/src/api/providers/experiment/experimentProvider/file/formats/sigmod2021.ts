@@ -7,7 +7,6 @@ export class Sigmod2021ExperimentInserter extends CSVInserter {
   protected readonly requiredColumns: string[] = [
     'left_instance_id',
     'right_instance_id',
-    'label',
   ];
 
   protected addRow(row: {
