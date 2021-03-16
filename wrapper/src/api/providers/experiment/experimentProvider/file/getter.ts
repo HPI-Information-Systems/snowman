@@ -1,4 +1,4 @@
-import { Table } from '../../../../database';
+import { Table, tables } from '../../../../database';
 import {
   experimentCustomColumnPrefix,
   tableSchemas,
@@ -12,11 +12,8 @@ type ExperimentSchema = ReturnType<
 export class ExperimentFileGetter {
   protected table: Table<ExperimentSchema>;
   protected columns: string[];
-  constructor(private readonly id: ExperimentId) {
-    this.table = new Table<ExperimentSchema>(
-      tableSchemas.experiment.experiment(id)
-    );
-    this.table.loadSchemaFromDatabase();
+  constructor(id: ExperimentId) {
+    this.table = tables.experiment.experiment(id);
     this.columns = Object.values(this.table.schema.columns)
       .map((column) => column.name)
       .sort();

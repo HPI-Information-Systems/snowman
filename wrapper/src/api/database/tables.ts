@@ -35,7 +35,15 @@ function schemaToTables<RawSchemaT extends ValueOf<Schemas>>(
     Object.entries(schema).map(([key, table]) => [
       key,
       typeof table === 'function'
-        ? (...args: Parameters<typeof table>) => new Table(table(...args))
+        ? (...args: Parameters<typeof table>) => {
+            const _table = new Table(table(...args));
+            try {
+              _table.loadSchemaFromDatabase();
+            } finally {
+              // eslint-disable-next-line no-unsafe-finally
+              return _table;
+            }
+          }
         : new Table(table as TableSchema),
     ])
   ) as SchemaT<RawSchemaT>;

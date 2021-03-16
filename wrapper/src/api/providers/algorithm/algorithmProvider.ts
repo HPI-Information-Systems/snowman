@@ -1,10 +1,8 @@
 import { tables } from '../../database';
-import { tableSchemas } from '../../database/schemas';
 import { Algorithm, AlgorithmId, AlgorithmValues } from '../../server/types';
 import { AlgorithmConverter } from './util/converter';
 
 export class AlgorithmProvider {
-  readonly schema = tableSchemas.meta.algorithm;
   protected readonly converter = new AlgorithmConverter();
 
   listAlgorithms(): Algorithm[] {

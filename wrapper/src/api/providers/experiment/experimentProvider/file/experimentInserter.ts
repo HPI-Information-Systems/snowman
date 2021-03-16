@@ -1,7 +1,7 @@
 import { Readable } from 'stream';
 
 import { INSERT_BATCH_SIZE } from '../../../../config';
-import { Table } from '../../../../database';
+import { Table, tables } from '../../../../database';
 import {
   experimentCustomColumnPrefix,
   tableSchemas,
@@ -67,19 +67,13 @@ export abstract class ExperimentInserter {
     [name: string]: number;
   }): ExperimentTable {
     if (!this.table) {
-      this.table = new Table(
-        this.getTableSchema(Object.keys(similarityScores))
+      this.table = tables.experiment.experiment(
+        this.experimentId,
+        this.columnsFromNames(Object.keys(similarityScores))
       );
       this.table.create(true, false);
     }
     return this.table;
-  }
-
-  private getTableSchema(columns: string[]): ExperimentSchema {
-    return tableSchemas.experiment.experiment(
-      this.experimentId,
-      this.columnsFromNames(columns)
-    );
   }
 
   private columnsFromNames(columns: string[]): Column[] {

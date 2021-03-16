@@ -1,13 +1,13 @@
 import { Readable } from 'stream';
 
 import { INSERT_BATCH_SIZE } from '../../../../config';
-import { Table } from '../../../../database';
+import { Table, tables } from '../../../../database';
 import {
   datasetCustomColumnPrefix,
   tableSchemas,
 } from '../../../../database/schemas';
 import { escapeColumnName } from '../../../../database/tools/escapeColumnNames';
-import { Column, NullableColumnValues } from '../../../../database/tools/types';
+import { NullableColumnValues } from '../../../../database/tools/types';
 import { DatasetId } from '../../../../server/types';
 import {
   CSVColumn,
@@ -49,24 +49,19 @@ export class DatasetInserter implements CSVReaderStrategy {
         `The file does not contain the column ${this.fileIdColumn} (specified as id column).`
       );
     } else {
-      this.table = new Table(this.getTableSchema([...columns]));
+      this.table = tables.dataset.dataset(
+        this.datasetId,
+        [...columns].map((column) => {
+          return {
+            name: column,
+            dataType: 'TEXT',
+            notNull: column === this.fileIdColumn,
+          };
+        })
+      );
       this.table.create(true, false);
     }
   }
-
-  private getTableSchema(columns: string[]): DatasetFileSchema {
-    return tableSchemas.dataset.dataset(
-      this.datasetId,
-      columns.map((column) => {
-        return {
-          name: column,
-          dataType: 'TEXT',
-          notNull: column === this.fileIdColumn,
-        };
-      })
-    );
-  }
-
   async readRow(row: CSVRow): Promise<void> {
     if (this.table) {
       this.table.batchUpsert(

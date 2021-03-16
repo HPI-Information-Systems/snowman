@@ -1,4 +1,4 @@
-import { Table } from '../../../../database';
+import { Table, tables } from '../../../../database';
 import {
   datasetCustomColumnPrefix,
   tableSchemas,
@@ -17,8 +17,7 @@ export class DatasetFileGetter {
     private readonly limit?: number,
     sortBy?: string
   ) {
-    this.table = new Table<DatasetSchema>(tableSchemas.dataset.dataset(id));
-    this.table.loadSchemaFromDatabase();
+    this.table = tables.dataset.dataset(id);
     this.customColumns = Object.values(this.table.schema.columns)
       .map((column) => column.name)
       .filter((column) => column.startsWith(datasetCustomColumnPrefix))
