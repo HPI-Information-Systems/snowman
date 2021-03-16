@@ -3,6 +3,12 @@
   font-family: "Roboto", sans-serif;
 }
 
+/** Disable hack for GPU acceleration. **/
+.menu-content {
+  transform: none !important;
+  will-change: transform;
+}
+
 /** Overwrite Ionic CSS Variables **/
 :root {
   /** primary **/
