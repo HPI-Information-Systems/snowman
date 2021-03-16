@@ -102,7 +102,7 @@ http://store.com/243,http://otherstore.net/cn82,0
 ...
 ```
 
-The label _(1=duplicate, 0=non-duplicate)_ is **optional**. A missing label will consider the pair as duplicates.
+The label _(1=duplicate, 0=non-duplicate)_ is **optional** in Snowman. A missing label will consider the pair as duplicates.
 
 Therefore, the following list would be interpreted as duplicates:
 
