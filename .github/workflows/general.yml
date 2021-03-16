@@ -80,6 +80,9 @@ jobs:
     - name: Test wrapper
       run: npm test
       working-directory: ./wrapper
+    - name: Test integration
+      run: npm run test-auto
+      working-directory: ./
 
   build:
     runs-on: ubuntu-latest
