@@ -1,3 +1,8 @@
+/** Setup "Roboto" font **/
+* {
+  font-family: "Roboto", sans-serif;
+}
+
 /** Overwrite Ionic CSS Variables **/
 :root {
   /** primary **/
