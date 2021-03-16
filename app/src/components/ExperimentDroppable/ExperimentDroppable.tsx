@@ -1,3 +1,4 @@
+import { IonCol, IonGrid, IonRow } from '@ionic/react';
 import { Experiment } from 'api';
 import { ExperimentDroppableProps } from 'components/ExperimentDroppable/ExperimentDroppableProps';
 import OptionCard from 'components/OptionCard/OptionCard';
@@ -15,7 +16,7 @@ const ExperimentDroppable = ({
 }: ExperimentDroppableProps): JSX.Element => (
   <Droppable droppableId={bucketId}>
     {(provided: DroppableProvided): JSX.Element => (
-      <ul {...provided.droppableProps} ref={provided.innerRef}>
+      <IonGrid {...provided.droppableProps} ref={provided.innerRef}>
         {bucketContent.map(
           (anExperiment: Experiment, index: number): JSX.Element => (
             <Draggable
@@ -24,26 +25,28 @@ const ExperimentDroppable = ({
               index={index}
             >
               {(provided: DraggableProvided): JSX.Element => (
-                <li
+                <IonRow
                   ref={provided.innerRef}
                   {...provided.dragHandleProps}
                   {...provided.draggableProps}
                 >
-                  <OptionCard
-                    key={'card' + anExperiment.id}
-                    title={anExperiment.name}
-                    subtitle={'anOption.algorithmId'}
-                    description={anExperiment.description}
-                    tags={[]}
-                    isSelected={true}
-                  />
-                </li>
+                  <IonCol>
+                    <OptionCard
+                      key={'card' + anExperiment.id}
+                      title={anExperiment.name}
+                      subtitle={'anOption.algorithmId'}
+                      description={anExperiment.description}
+                      tags={[]}
+                      isSelected={true}
+                    />
+                  </IonCol>
+                </IonRow>
               )}
             </Draggable>
           )
         )}
         {provided.placeholder}
-      </ul>
+      </IonGrid>
     )}
   </Droppable>
 );

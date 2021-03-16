@@ -1,4 +1,4 @@
-import { IonChip, IonLabel } from '@ionic/react';
+import { IonChip, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react';
 import AddExperimentFab from 'components/AddFab/AddExperimentFab';
 import ExperimentDialog from 'components/ExperimentDialog/ExperimentDialog';
 import ExperimentDroppable from 'components/ExperimentDroppable/ExperimentDroppable';
@@ -37,30 +37,41 @@ const ExperimentsPageView = ({
           </IonChip>
         )
       )}
-      <DragDropContext
-        onDragEnd={(aDropResult: DropResult): void =>
-          dragExperiment({
-            sourceBucket: aDropResult.source.droppableId as ExperimentBuckets,
-            sourceIndex: aDropResult.source.index,
-            targetBucket: (aDropResult.destination?.droppableId ??
-              ExperimentBuckets.AVAILABLE_EXPERIMENTS) as ExperimentBuckets,
-            targetIndex: aDropResult.destination?.index ?? 0,
-          })
-        }
-      >
-        <ExperimentDroppable
-          bucketContent={availableExperiments}
-          bucketId={ExperimentBuckets.AVAILABLE_EXPERIMENTS}
-        />
-        <ExperimentDroppable
-          bucketContent={chosenExperiments}
-          bucketId={ExperimentBuckets.CHOSEN_EXPERIMENTS}
-        />
-        <ExperimentDroppable
-          bucketContent={chosenGoldstandards}
-          bucketId={ExperimentBuckets.CHOSEN_GOLDSTANDARDS}
-        />
-      </DragDropContext>
+      <IonGrid>
+        <IonRow>
+          <DragDropContext
+            onDragEnd={(aDropResult: DropResult): void =>
+              dragExperiment({
+                sourceBucket: aDropResult.source
+                  .droppableId as ExperimentBuckets,
+                sourceIndex: aDropResult.source.index,
+                targetBucket: (aDropResult.destination?.droppableId ??
+                  ExperimentBuckets.AVAILABLE_EXPERIMENTS) as ExperimentBuckets,
+                targetIndex: aDropResult.destination?.index ?? 0,
+              })
+            }
+          >
+            <IonCol size="4">
+              <ExperimentDroppable
+                bucketContent={availableExperiments}
+                bucketId={ExperimentBuckets.AVAILABLE_EXPERIMENTS}
+              />
+            </IonCol>
+            <IonCol size="4">
+              <ExperimentDroppable
+                bucketContent={chosenExperiments}
+                bucketId={ExperimentBuckets.CHOSEN_EXPERIMENTS}
+              />
+            </IonCol>
+            <IonCol size="4">
+              <ExperimentDroppable
+                bucketContent={chosenGoldstandards}
+                bucketId={ExperimentBuckets.CHOSEN_GOLDSTANDARDS}
+              />
+            </IonCol>
+          </DragDropContext>
+        </IonRow>
+      </IonGrid>
       <AddExperimentFab />
       <ExperimentDialog />
     </PageStruct>
