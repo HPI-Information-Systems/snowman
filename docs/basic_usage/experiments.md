@@ -95,6 +95,24 @@ The open-source matching solution Magellan is widely used in research. We suppor
 
 For more information, see [here](../../sigmod2021).
 
+```csv
+left_instance_id,right_instance_id,label
+http://store.com/42,http://otherstore.net/af82,1
+http://store.com/243,http://otherstore.net/cn82,0
+...
+```
+
+The label _(1=duplicate, 0=non-duplicate)_ is **optional**. A missing label will consider the pair as duplicates.
+
+Therefore, the following list would be interpreted as duplicates:
+
+```csv
+left_instance_id,right_instance_id
+http://store.com/42,http://otherstore.net/af82
+http://store.com/243,http://otherstore.net/cn82
+...
+```
+
 ### Proprietary Formats
 
 We support a range of proprietary experiment formats. A list of those can be found here:
