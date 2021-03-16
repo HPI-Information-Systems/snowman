@@ -25,10 +25,11 @@ import {
 import { BenchmarkConfiguratorPageProps } from 'pages/BenchmarkConfiguratorPage/BenchmarkConfiguratorPageProps';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
+import { getExperimentNameFromId } from 'utils/experimentsHelpers';
 
 const BenchmarkConfiguratorPageView = ({
   availableExperiments,
-  experimentResolution,
+  experiments,
   selectedExperiments,
   selectedGoldstandards,
   handleReorder,
@@ -64,7 +65,9 @@ const BenchmarkConfiguratorPageView = ({
                     <IonReorder key={`bc-exp-${expId}`}>
                       <IonItem>
                         <IonIcon icon={reorderThreeOutline} slot="start" />
-                        <IonLabel>{experimentResolution.get(expId)}</IonLabel>
+                        <IonLabel>
+                          {getExperimentNameFromId(expId, experiments)}
+                        </IonLabel>
                       </IonItem>
                     </IonReorder>
                   )
@@ -79,7 +82,9 @@ const BenchmarkConfiguratorPageView = ({
                     <IonReorder key={`bc-exp-${expId}`}>
                       <IonItem>
                         <IonIcon icon={reorderThreeOutline} slot="start" />
-                        <IonLabel>{experimentResolution.get(expId)}</IonLabel>
+                        <IonLabel>
+                          {getExperimentNameFromId(expId, experiments)}
+                        </IonLabel>
                       </IonItem>
                     </IonReorder>
                   )
@@ -94,7 +99,9 @@ const BenchmarkConfiguratorPageView = ({
                     <IonReorder key={`bc-exp-${expId}`}>
                       <IonItem>
                         <IonIcon icon={reorderThreeOutline} slot="start" />
-                        <IonLabel>{experimentResolution.get(expId)}</IonLabel>
+                        <IonLabel>
+                          {getExperimentNameFromId(expId, experiments)}
+                        </IonLabel>
                       </IonItem>
                     </IonReorder>
                   )

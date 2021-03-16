@@ -1,4 +1,3 @@
-import { Experiment } from 'api';
 import BenchmarkConfiguratorPageView from 'pages/BenchmarkConfiguratorPage/BenchmarkConfiguratorPage.View';
 import {
   BenchmarkConfiguratorPageDispatchProps,
@@ -22,12 +21,7 @@ import { couldEnterBinaryMetricsPage } from 'utils/navigationGuards';
 const mapStateToProps = (
   state: Store
 ): BenchmarkConfiguratorPageStateProps => ({
-  experimentResolution: new Map(
-    state.ExperimentsStore.experiments.map((anExp: Experiment) => [
-      anExp.id,
-      anExp.name,
-    ])
-  ),
+  experiments: state.ExperimentsStore.experiments,
   availableExperiments: state.BenchmarkConfigStore.availableExperiments,
   selectedExperiments: state.BenchmarkConfigStore.selectedExperiments,
   selectedGoldstandards: state.BenchmarkConfigStore.selectedGoldstandards,

@@ -1,7 +1,8 @@
+import { Experiment } from 'api';
 import { IonReorderEvent } from 'types/IonReorderEvent';
 
 export interface BenchmarkConfiguratorPageStateProps {
-  experimentResolution: Map<number, string>;
+  experiments: Experiment[];
   availableExperiments: number[];
   selectedGoldstandards: number[];
   selectedExperiments: number[];
