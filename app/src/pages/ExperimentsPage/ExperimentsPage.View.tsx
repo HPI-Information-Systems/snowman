@@ -1,27 +1,21 @@
 import { IonChip, IonLabel } from '@ionic/react';
 import AddExperimentFab from 'components/AddFab/AddExperimentFab';
 import ExperimentDialog from 'components/ExperimentDialog/ExperimentDialog';
-import OptionCard from 'components/OptionCard/OptionCard';
-import OptionSelector from 'components/OptionSelector/OptionSelector';
+import ExperimentDroppable from 'components/ExperimentDroppable/ExperimentDroppable';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { ExperimentsPageProps } from 'pages/ExperimentsPage/ExperimentsPageProps';
 import React, { useEffect } from 'react';
-import {
-  DragDropContext,
-  Draggable,
-  DraggableProvided,
-  Droppable,
-  DroppableProvided,
-} from 'react-beautiful-dnd';
-import { Option } from 'types/Option';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { ExperimentBuckets } from 'types/ExperimentBuckets';
 
 const ExperimentsPageView = ({
-  experiments,
+  availableExperiments,
   matchingSolutions,
   selectedMatchingSolutions,
-  selectedExperiments,
+  chosenExperiments,
+  chosenGoldstandards,
   clickOnTag,
-  clickOnExperiment,
+  dragExperiment,
   deleteExperiment,
   editExperiment,
   loadExperiments,
@@ -43,63 +37,30 @@ const ExperimentsPageView = ({
           </IonChip>
         )
       )}
-
-      <DragDropContext onDragEnd={(result): void => console.log(result)}>
-        <Droppable droppableId="availableExperiments">
-          {(provided: DroppableProvided): JSX.Element => (
-            <ul {...provided.droppableProps} ref={provided.innerRef}>
-              {experiments.map(
-                (anOption: Option, index: number): JSX.Element => (
-                  <Draggable
-                    key={anOption.id}
-                    draggableId={anOption.id.toString()}
-                    index={index}
-                  >
-                    {(provided: DraggableProvided): JSX.Element => (
-                      <li
-                        ref={provided.innerRef}
-                        {...provided.dragHandleProps}
-                        {...provided.draggableProps}
-                      >
-                        <OptionCard
-                          key={'card' + anOption.id}
-                          title={anOption.title}
-                          subtitle={anOption.subtitle}
-                          description={anOption.description}
-                          tags={anOption.tags}
-                          clickCard={(): void => clickOnExperiment(anOption.id)}
-                          isSelected={true}
-                          deleteCard={
-                            deleteExperiment !== undefined
-                              ? (): void => deleteExperiment(anOption.id)
-                              : undefined
-                          }
-                          editCard={
-                            editExperiment !== undefined
-                              ? (): void => editExperiment(anOption.id)
-                              : undefined
-                          }
-                          multiple={true}
-                        />
-                      </li>
-                    )}
-                  </Draggable>
-                )
-              )}
-            </ul>
-          )}
-        </Droppable>
+      <DragDropContext
+        onDragEnd={(aDropResult: DropResult): void =>
+          dragExperiment({
+            sourceBucket: aDropResult.source.droppableId as ExperimentBuckets,
+            sourceIndex: aDropResult.source.index,
+            targetBucket: (aDropResult.destination?.droppableId ??
+              ExperimentBuckets.AVAILABLE_EXPERIMENTS) as ExperimentBuckets,
+            targetIndex: aDropResult.destination?.index ?? 0,
+          })
+        }
+      >
+        <ExperimentDroppable
+          bucketContent={availableExperiments}
+          bucketId={ExperimentBuckets.AVAILABLE_EXPERIMENTS}
+        />
+        <ExperimentDroppable
+          bucketContent={chosenExperiments}
+          bucketId={ExperimentBuckets.CHOSEN_EXPERIMENTS}
+        />
+        <ExperimentDroppable
+          bucketContent={chosenGoldstandards}
+          bucketId={ExperimentBuckets.CHOSEN_GOLDSTANDARDS}
+        />
       </DragDropContext>
-
-      <OptionSelector
-        title="Experiments"
-        optionsList={experiments}
-        clickOnCard={clickOnExperiment}
-        selected={selectedExperiments}
-        deleteCardHandler={deleteExperiment}
-        editCardHandler={editExperiment}
-        multiple={true}
-      />
       <AddExperimentFab />
       <ExperimentDialog />
     </PageStruct>

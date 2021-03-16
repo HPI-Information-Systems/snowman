@@ -6,7 +6,7 @@ export interface OptionCardProps {
   subtitle?: string;
   description?: string;
   tags?: string[];
-  clickCard(): void;
+  clickCard?(): void;
   deleteCard?(): void;
   editCard?(): void;
   isSelected?: boolean;

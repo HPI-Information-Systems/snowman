@@ -1,16 +1,18 @@
-import { Option } from 'types/Option';
+import { Experiment } from 'api';
+import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 
 export interface ExperimentsPageStateProps {
   matchingSolutions: string[];
   selectedMatchingSolutions: string[];
-  experiments: Option[];
-  selectedExperiments: number[];
+  availableExperiments: Experiment[];
+  chosenExperiments: Experiment[];
+  chosenGoldstandards: Experiment[];
 }
 
 export interface ExperimentsPageDispatchProps {
   clickOnTag(aTag: string): void;
-  clickOnExperiment(anExperimentId: number): void;
   loadExperiments(): void;
+  dragExperiment(eventDescriptor: DragNDropDescriptor): void;
   deleteExperiment(anExperimentId: number): void;
   editExperiment(anExperimentId: number): void;
 }

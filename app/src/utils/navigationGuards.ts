@@ -8,5 +8,5 @@ export const couldEnterExperimentsSelector = (
 export const couldEnterBenchmarkConfigurator = (
   aState: ImmediateStore
 ): boolean =>
-  aState.ExperimentsStore.selectedExperiments.length > 1 &&
+  aState.ExperimentsStore.chosenExperiments.length > 1 &&
   couldEnterExperimentsSelector(aState);

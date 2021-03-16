@@ -63,9 +63,10 @@ export interface DatasetsStore {
 }
 
 export interface ExperimentsStore {
-  experiments: Experiment[];
   selectedExperimentsTags: string[];
-  selectedExperiments: number[];
+  availableExperiments: Experiment[];
+  chosenGoldStandards: Experiment[];
+  chosenExperiments: Experiment[];
 }
 
 export interface GlobalIndicatorStore {
@@ -82,12 +83,6 @@ export interface SelectableInputStore {
   shouldShowPopover: boolean;
   eventPopover: Event | undefined;
   searchString: string;
-}
-
-export interface BenchmarkConfigurationStore {
-  availableExperiments: number[];
-  selectedExperiments: number[];
-  selectedGoldstandards: number[];
 }
 
 export interface BinaryMetricsStore {

@@ -56,7 +56,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
   {
     key: ViewIDs.EXPERIMENTS,
     component: ExperimentsPage,
-    nextView: ViewIDs.BENCHMARK_CONFIGURATOR,
+    nextView: ViewIDs.BINARY_METRICS,
     accessGuard: accessGuards.couldEnterExperimentsSelector,
     shouldShowInMenu: true,
     menuCategory: menuCategories.WORKFLOW,
@@ -70,7 +70,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     component: BinaryMetricsPage,
     nextView: ViewIDs.BINARY_METRICS,
     accessGuard: accessGuards.couldAlwaysEnterPage,
-    shouldShowInMenu: false,
+    shouldShowInMenu: true,
     menuCategory: menuCategories.WORKFLOW,
     menuName: 'Binary Metrics',
     menuIcon: speedometer,
