@@ -2,14 +2,13 @@ import { SnowmanAction } from 'store/messages';
 import { ImmediateStore, Store } from 'store/models';
 import { AlgorithmDialogReducer } from 'store/reducers/AlgorithmDialogReducer';
 import { AlgorithmsReducer } from 'store/reducers/AlgorithmsReducer';
-import { BenchmarkConfigReducer } from 'store/reducers/BenchmarkConfigReducer';
+import { BinaryMetricsReducer } from 'store/reducers/BinaryMetricsReducer';
 import { DatasetDialogReducer } from 'store/reducers/DatasetDialogReducer';
 import { DatasetsReducer } from 'store/reducers/DatasetsReducer';
 import { ExperimentDialogReducer } from 'store/reducers/ExperimentDialogReducer';
 import { ExperimentsReducer } from 'store/reducers/ExperimentsReducer';
 import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
 import { InputChipReducer } from 'store/reducers/InputChipReducer';
-import { MetricsReducer } from 'store/reducers/MetricsReducer';
 import { RenderLogicReducer } from 'store/reducers/RenderLogicReducer';
 import { SelectableInputReducer } from 'store/reducers/SelectableInputReducer';
 
@@ -31,11 +30,7 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
       state?.GlobalIndicatorStore,
       action
     ),
-    MetricsStore: MetricsReducer(state?.MetricsStore, action),
-    BenchmarkConfigStore: BenchmarkConfigReducer(
-      state?.BenchmarkConfigStore,
-      action
-    ),
+    BinaryMetricsStore: BinaryMetricsReducer(state?.BinaryMetricsStore, action),
     InputChipStore: InputChipReducer(state?.InputChipStore, action),
     SelectableInputStore: SelectableInputReducer(
       state?.SelectableInputStore,

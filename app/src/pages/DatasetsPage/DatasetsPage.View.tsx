@@ -1,10 +1,18 @@
-import { IonChip, IonLabel } from '@ionic/react';
+import {
+  IonChip,
+  IonCol,
+  IonGrid,
+  IonLabel,
+  IonRow,
+  IonText,
+} from '@ionic/react';
 import AddDatasetFab from 'components/AddFab/AddDatasetFab';
 import DatasetDialog from 'components/DatasetDialog/DatasetDialog';
-import OptionSelector from 'components/OptionSelector/OptionSelector';
+import OptionCard from 'components/OptionCard/OptionCard';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { DatasetsPageProps } from 'pages/DatasetsPage/DatasetsPageProps';
 import React, { useEffect } from 'react';
+import { Option } from 'types/Option';
 
 const DatasetsPageView = ({
   tags,
@@ -34,15 +42,32 @@ const DatasetsPageView = ({
           )
         )}
       </div>
-      <OptionSelector
-        title="Datasets"
-        optionsList={datasets}
-        selected={selectedDataset}
-        clickOnCard={clickOnDataset}
-        deleteCardHandler={deleteDataset}
-        editCardHandler={editDataset}
-        multiple={false}
-      />
+      <IonText color="primary">
+        <h3>Datasets</h3>
+      </IonText>
+      <IonGrid>
+        <IonRow>
+          {datasets.map((aDataset: Option) => (
+            <IonCol key={'col' + aDataset.id} size="4" sizeXl="3">
+              <OptionCard
+                key={'card' + aDataset.id}
+                title={aDataset.title}
+                subtitle={aDataset.subtitle}
+                description={aDataset.description}
+                tags={aDataset.tags}
+                clickCard={() => clickOnDataset(aDataset.id)}
+                isSelected={selectedDataset.includes(aDataset.id)}
+                deleteCard={() => deleteDataset(aDataset.id)}
+                editCard={() => editDataset(aDataset.id)}
+                multiple={false}
+              />
+            </IonCol>
+          ))}
+        </IonRow>
+      </IonGrid>
+      {datasets.length === 0 ? (
+        <IonText color="medium">No matching elements found!</IonText>
+      ) : undefined}
       <AddDatasetFab />
       <DatasetDialog />
     </PageStruct>

@@ -6,6 +6,7 @@ import {
   SnowmanThunkAction,
 } from 'store/messages';
 import { SUCCESS_TO_DELETE_EXPERIMENT } from 'structs/statusMessages';
+import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
@@ -24,6 +25,14 @@ export const clickOnExperiment = (
   easyPrimitiveAction({
     type: actionTypes.CLICK_ON_EXPERIMENT,
     payload: selectedExperimentId,
+  });
+
+export const dragExperiment = (
+  eventDescriptor: DragNDropDescriptor
+): easyPrimitiveActionReturn =>
+  easyPrimitiveAction({
+    type: actionTypes.DRAG_N_DROP_EXPERIMENT,
+    payload: eventDescriptor,
   });
 
 export const resetSelectedExperiments = (): easyPrimitiveActionReturn =>

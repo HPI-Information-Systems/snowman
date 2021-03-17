@@ -63,9 +63,10 @@ export interface DatasetsStore {
 }
 
 export interface ExperimentsStore {
-  experiments: Experiment[];
   selectedExperimentsTags: string[];
-  selectedExperiments: number[];
+  availableExperiments: Experiment[];
+  chosenGoldStandards: Experiment[];
+  chosenExperiments: Experiment[];
 }
 
 export interface GlobalIndicatorStore {
@@ -84,13 +85,7 @@ export interface SelectableInputStore {
   searchString: string;
 }
 
-export interface BenchmarkConfigStore {
-  availableExperiments: number[];
-  selectedExperiments: number[];
-  selectedGoldstandards: number[];
-}
-
-export interface MetricsStore {
+export interface BinaryMetricsStore {
   metrics: Metric[];
   falsePositives: ExperimentIntersection | undefined;
   falseNegatives: ExperimentIntersection | undefined;
@@ -106,8 +101,7 @@ export interface ImmediateStore {
   ExperimentDialogStore: ExperimentDialogStore;
   AlgorithmDialogStore: AlgorithmDialogStore;
   GlobalIndicatorStore: GlobalIndicatorStore;
-  BenchmarkConfigStore: BenchmarkConfigStore;
-  MetricsStore: MetricsStore;
+  BinaryMetricsStore: BinaryMetricsStore;
   InputChipStore: InputChipStore;
   SelectableInputStore: SelectableInputStore;
 }

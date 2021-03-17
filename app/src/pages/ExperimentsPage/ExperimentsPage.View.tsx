@@ -1,18 +1,23 @@
-import { IonChip, IonLabel } from '@ionic/react';
+import 'pages/ExperimentsPage/ExperimentsPageStyles.css';
+
+import { IonChip, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react';
 import AddExperimentFab from 'components/AddFab/AddExperimentFab';
 import ExperimentDialog from 'components/ExperimentDialog/ExperimentDialog';
-import OptionSelector from 'components/OptionSelector/OptionSelector';
+import ExperimentDroppable from 'components/ExperimentDroppable/ExperimentDroppable';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { ExperimentsPageProps } from 'pages/ExperimentsPage/ExperimentsPageProps';
 import React, { useEffect } from 'react';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { ExperimentBuckets } from 'types/ExperimentBuckets';
 
 const ExperimentsPageView = ({
-  experiments,
+  availableExperiments,
   matchingSolutions,
   selectedMatchingSolutions,
-  selectedExperiments,
+  chosenExperiments,
+  chosenGoldstandards,
   clickOnTag,
-  clickOnExperiment,
+  dragExperiment,
   deleteExperiment,
   editExperiment,
   loadExperiments,
@@ -34,15 +39,41 @@ const ExperimentsPageView = ({
           </IonChip>
         )
       )}
-      <OptionSelector
-        title="Experiments"
-        optionsList={experiments}
-        clickOnCard={clickOnExperiment}
-        selected={selectedExperiments}
-        deleteCardHandler={deleteExperiment}
-        editCardHandler={editExperiment}
-        multiple={true}
-      />
+      <IonGrid>
+        <IonRow>
+          <DragDropContext
+            onDragEnd={(aDropResult: DropResult): void =>
+              dragExperiment({
+                sourceBucket: aDropResult.source
+                  .droppableId as ExperimentBuckets,
+                sourceIndex: aDropResult.source.index,
+                targetBucket: (aDropResult.destination?.droppableId ??
+                  ExperimentBuckets.AVAILABLE_EXPERIMENTS) as ExperimentBuckets,
+                targetIndex: aDropResult.destination?.index ?? 0,
+              })
+            }
+          >
+            <IonCol size="4" class="dropable-zone">
+              <ExperimentDroppable
+                bucketContent={availableExperiments}
+                bucketId={ExperimentBuckets.AVAILABLE_EXPERIMENTS}
+              />
+            </IonCol>
+            <IonCol size="4" class="dropable-zone">
+              <ExperimentDroppable
+                bucketContent={chosenExperiments}
+                bucketId={ExperimentBuckets.CHOSEN_EXPERIMENTS}
+              />
+            </IonCol>
+            <IonCol size="4" class="dropable-zone">
+              <ExperimentDroppable
+                bucketContent={chosenGoldstandards}
+                bucketId={ExperimentBuckets.CHOSEN_GOLDSTANDARDS}
+              />
+            </IonCol>
+          </DragDropContext>
+        </IonRow>
+      </IonGrid>
       <AddExperimentFab />
       <ExperimentDialog />
     </PageStruct>

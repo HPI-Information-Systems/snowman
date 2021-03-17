@@ -6,18 +6,16 @@ import {
   ExperimentsPageStateProps,
 } from 'pages/ExperimentsPage/ExperimentsPageProps';
 import { connect } from 'react-redux';
-import { updateExperiments } from 'store/actions/BenchmarkConfigActions';
 import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
 import {
-  clickOnExperiment,
   clickOnExperimentTag,
   deleteExperiment,
+  dragExperiment,
   getExperiments,
 } from 'store/actions/ExperimentsStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-import { store } from 'store/store';
-import { Option } from 'types/Option';
+import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import { getAlgorithmTagFromId } from 'utils/algorithmHelpers';
 
 const mapStateToProps = (state: Store): ExperimentsPageStateProps => ({
@@ -25,7 +23,7 @@ const mapStateToProps = (state: Store): ExperimentsPageStateProps => ({
     (anAlgorithm: Algorithm): string => anAlgorithm.name
   ),
   selectedMatchingSolutions: state.ExperimentsStore.selectedExperimentsTags,
-  experiments: state.ExperimentsStore.experiments
+  availableExperiments: state.ExperimentsStore.availableExperiments
     .filter(
       (anExperiment: Experiment): boolean =>
         anExperiment.datasetId === state.DatasetsStore.selectedDataset?.id
@@ -42,20 +40,9 @@ const mapStateToProps = (state: Store): ExperimentsPageStateProps => ({
             ],
             state.ExperimentsStore.selectedExperimentsTags
           ).length === 0
-    )
-    .map(
-      (anExperiment: Experiment): Option => ({
-        id: anExperiment.id,
-        title: anExperiment.name,
-        description: anExperiment.description,
-        subtitle: getAlgorithmTagFromId(
-          anExperiment.algorithmId,
-          state.AlgorithmsStore.algorithms
-        ).toUpperCase(),
-        tags: [`Count: ${anExperiment.numberOfUploadedRecords}`],
-      })
     ),
-  selectedExperiments: state.ExperimentsStore.selectedExperiments,
+  chosenExperiments: state.ExperimentsStore.chosenExperiments,
+  chosenGoldstandards: state.ExperimentsStore.chosenGoldStandards,
 });
 
 const mapDispatchToProps = (
@@ -64,24 +51,14 @@ const mapDispatchToProps = (
   clickOnTag(aTag: string): void {
     dispatch(clickOnExperimentTag(aTag));
   },
-  clickOnExperiment(anExperimentId: number): void {
-    dispatch(clickOnExperiment(anExperimentId));
-    dispatch(
-      updateExperiments(store.getState().ExperimentsStore.selectedExperiments)
-    );
+  dragExperiment(eventDescriptor: DragNDropDescriptor): void {
+    dispatch(dragExperiment(eventDescriptor));
   },
   loadExperiments(): void {
     dispatch(getExperiments()).then();
-    // Todo: Decide whether to call updateExperiments() here too
-    dispatch(
-      updateExperiments(store.getState().ExperimentsStore.selectedExperiments)
-    );
   },
   deleteExperiment(anExperimentId: number): void {
     dispatch(deleteExperiment(anExperimentId)).then();
-    dispatch(
-      updateExperiments(store.getState().ExperimentsStore.selectedExperiments)
-    );
   },
   editExperiment(anExperimentId: number) {
     dispatch(openChangeDialog(anExperimentId)).then();

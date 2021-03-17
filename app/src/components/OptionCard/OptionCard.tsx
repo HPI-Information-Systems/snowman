@@ -43,23 +43,25 @@ const OptionCard = ({
         ) : null}
         <IonCardTitle>
           {title}
-          <span onClick={clickCard} style={{ cursor: 'pointer' }}>
-            {isSelected ? (
-              <IonIcon
-                className="ion-float-right"
-                icon={multiple ? checkboxOutline : radioButtonOnOutline}
-                size="large"
-                color="primary"
-              />
-            ) : (
-              <IonIcon
-                className="ion-float-right"
-                icon={multiple ? squareOutline : radioButtonOffOutline}
-                size="large"
-                color="medium"
-              />
-            )}
-          </span>
+          {clickCard !== undefined ? (
+            <span onClick={clickCard} style={{ cursor: 'pointer' }}>
+              {isSelected ? (
+                <IonIcon
+                  className="ion-float-right"
+                  icon={multiple ? checkboxOutline : radioButtonOnOutline}
+                  size="large"
+                  color="primary"
+                />
+              ) : (
+                <IonIcon
+                  className="ion-float-right"
+                  icon={multiple ? squareOutline : radioButtonOffOutline}
+                  size="large"
+                  color="medium"
+                />
+              )}
+            </span>
+          ) : null}
         </IonCardTitle>
       </IonCardHeader>
       <IonCardContent>

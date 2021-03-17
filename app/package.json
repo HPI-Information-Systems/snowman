@@ -7,11 +7,13 @@
   "homepage": "./",
   "dependencies": {
     "@ionic/react": "^5.0.7",
+    "@types/react-beautiful-dnd": "^13.0.0",
     "immutable": "^4.0.0-rc.12",
     "ionicons": "^5.0.0",
     "katex": "^0.12.0",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
+    "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^17.0.1",
     "react-elastic-carousel": "^0.11.0",
     "react-redux": "^7.2.2",

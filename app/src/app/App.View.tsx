@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 /* Overwrite variables */
 import 'theme/overwrites.css';
 
-import { IonApp, IonSplitPane } from '@ionic/react';
+import { IonApp, IonPage, IonSplitPane } from '@ionic/react';
 import { AppProps } from 'app/AppProps';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
 import SideMenu from 'components/SideMenu/SideMenu';
@@ -34,13 +34,17 @@ const AppView = ({
   useEffect((): void => loadInitialState(), [loadInitialState]);
   return (
     <IonApp>
-      <IonSplitPane when="lg" contentId="main" class="split-pane-fixed">
-        {/*--  Side Menu  --*/}
-        <SideMenu />
+      <IonSplitPane
+        when="lg"
+        contentId="mainViewContentId"
+        class="split-pane-fixed"
+      >
+        {/* Side Menu (mainViewContentId used here!) */}
+        <SideMenu contentId="mainViewContentId" />
         {/* Page Content */}
-        <div id="main">
+        <IonPage id="mainViewContentId">
           {React.createElement(getViewComponentToViewId(currentViewId))}
-        </div>
+        </IonPage>
       </IonSplitPane>
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <GlobalLoading />
