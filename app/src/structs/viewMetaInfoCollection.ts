@@ -83,7 +83,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     component: NMetricsPage,
     nextView: ViewIDs.BINARY_METRICS,
     accessGuard: accessGuards.couldAlwaysEnterPage,
-    shouldShowInMenu: false,
+    shouldShowInMenu: true,
     menuCategory: menuCategories.WORKFLOW,
     menuName: 'N-ary Metrics',
     menuIcon: speedometer,
