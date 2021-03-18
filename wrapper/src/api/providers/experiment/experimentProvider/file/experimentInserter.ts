@@ -25,7 +25,8 @@ export abstract class ExperimentInserter {
 
   constructor(
     protected readonly experimentId: number,
-    protected readonly idMapper: DatasetIDMapper
+    protected readonly idMapper: DatasetIDMapper,
+    protected readonly datasetNumberOfRecords?: number
   ) {}
 
   protected abstract insert_internal(file: Readable): Promise<void>;
@@ -92,8 +93,8 @@ export abstract class ExperimentInserter {
     similarityScores: { [name: string]: number }
   ): NullableColumnValues<ExperimentSchema['columns']> {
     return {
-      id1: this.idMapper.map(id1),
-      id2: this.idMapper.map(id2),
+      id1: this.idMapper.map(id1, this.datasetNumberOfRecords),
+      id2: this.idMapper.map(id2, this.datasetNumberOfRecords),
       isDuplicate: detectedAsDuplicate ? 1 : 0,
       ...Object.fromEntries(
         Object.entries(similarityScores).map(([score, value]) => [

@@ -211,7 +211,7 @@ describe('ExperimentProvider', () => {
     );
   });
 
-  test('set file throws warning when adding unknown / too many ids', async () => {
+  test('set file throws error when adding unknown / too many ids', async () => {
     const file = [
       ['p1', 'p2'],
       ['unknown id1', 'unknown id2'],
@@ -224,5 +224,8 @@ describe('ExperimentProvider', () => {
           fileToReadable(file)
         )
     ).rejects.toThrowError();
+    expect(() =>
+      provider.getExperimentFile(addedExperimentIds[1])
+    ).toThrowError();
   });
 });

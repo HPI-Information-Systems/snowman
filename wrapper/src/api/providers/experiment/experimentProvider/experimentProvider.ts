@@ -7,6 +7,7 @@ import {
   ExperimentFileFormat,
   ExperimentId,
 } from '../../../server/types';
+import { getProviders } from '../..';
 import { invalidateCaches } from '../../benchmark/benchmarkProvider/intersection/cache';
 import { DatasetIDMapper } from '../../dataset/datasetProvider/util/idMapper';
 import { ExperimentFileGetter } from '../../experiment/experimentProvider/file/getter';
@@ -94,15 +95,14 @@ export class ExperimentProvider {
     return this.checks.sync.call(async () => {
       this.deleteExperimentFileNoChecks(id);
       const { datasetId } = this.getExperiment(id);
-      this.checks.throwIfDatasetNotExists(datasetId);
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const dataset = tables.meta.dataset.get({ id: datasetId })!;
+      const dataset = getProviders().dataset.getDataset(datasetId);
 
       const datasetIDMapper = new DatasetIDMapper(datasetId);
       const ExperimentInserter = getExperimentInserter(format);
       const numberOfUploadedRecords = await new ExperimentInserter(
         id,
-        datasetIDMapper
+        datasetIDMapper,
+        dataset.numberOfRecords
       )
         .insert(file)
         .catch((e) => {
@@ -116,18 +116,6 @@ export class ExperimentProvider {
         tables.meta.experiment.upsert([storedExperiment]);
       }
       invalidateCaches(id);
-
-      const mappedIdCount = datasetIDMapper.numberMappedIds();
-      if (
-        (dataset.numberOfRecords ?? Number.POSITIVE_INFINITY) < mappedIdCount
-      ) {
-        dataset.numberOfRecords = mappedIdCount;
-        tables.meta.dataset.upsert([dataset]);
-        throw new Error(
-          `The experiment contained previously unknown ids. In total there are more ids now than the number of records in the connected dataset (${dataset.name}). ` +
-            `We increased the number of records in the connected dataset to the total amount of ids (${mappedIdCount}). Please make sure this was intentional.`
-        );
-      }
     }, id);
   }
 

@@ -20,8 +20,20 @@ export class DatasetIDMapper {
     return this.table.upsert([{ id, unmappedId }])[0];
   }
 
-  map(unmappedId: string): number {
-    return this.table.get({ unmappedId })?.id ?? this.createMapping(unmappedId);
+  map(unmappedId: string, maximumNumberOfMappedIds?: number): number {
+    const id = this.table.get({ unmappedId })?.id;
+    if (typeof id !== 'number') {
+      if (
+        maximumNumberOfMappedIds !== undefined &&
+        this.numberMappedIds() >= maximumNumberOfMappedIds
+      ) {
+        throw new Error(`The id ${unmappedId} does not exist in the dataset.`);
+      } else {
+        return this.createMapping(unmappedId);
+      }
+    } else {
+      return id;
+    }
   }
 
   mapReversed(mappedId: number): string | undefined {
