@@ -33,7 +33,6 @@ export const datasetSchemas = assertType<
           name: 'id' as const,
           dataType: 'INTEGER',
           notNull: true,
-          autoIncrement: true,
           primaryKey: true,
         },
         unmappedId: {

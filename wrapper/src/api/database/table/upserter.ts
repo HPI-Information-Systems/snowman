@@ -75,9 +75,13 @@ export class TableUpserter<Schema extends TableSchema> {
   private createInsertStatement(
     columns: string[]
   ): Statement<BasicDataType<DataTypes>[]> {
-    return databaseBackend().prepare<BasicDataType[]>(`
-          INSERT OR REPLACE INTO ${this.table}
-                 (${columns.map((column) => '"' + column + '"')})
-          VALUES (${columns.map(() => '?')})`);
+    let insertStatement = `INSERT OR REPLACE INTO ${this.table}`;
+    if (columns.length === 0) {
+      insertStatement += ` DEFAULT VALUES`;
+    } else {
+      insertStatement += `(${columns.map((column) => '"' + column + '"')})
+                   VALUES (${columns.map(() => '?')})`;
+    }
+    return databaseBackend().prepare<BasicDataType[]>(insertStatement);
   }
 }

@@ -108,7 +108,9 @@ const createNewExperiment = (): SnowmanThunkAction<Promise<number>> => async (
           name: store.getState().ExperimentDialogStore.experimentName,
           description: store.getState().ExperimentDialogStore
             .experimentDescription,
-          datasetId: store.getState().DatasetsStore.selectedDataset?.id ?? -1,
+          datasetId:
+            store.getState().DatasetsStore.selectedDataset?.id ??
+            MagicNotPossibleId,
           algorithmId: getAlgorithmIdFromTag(
             store.getState().ExperimentDialogStore.selectedTags[0] ?? [],
             store.getState().AlgorithmsStore.algorithms

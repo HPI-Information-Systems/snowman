@@ -17,16 +17,6 @@ export type ColumnDataType<
   ? BasicDataType<ColumnT['dataType']>
   : BasicDataType<ColumnT['dataType']> | null;
 
-export type InsertColumnDataType<
-  ColumnT extends Column
-> = ColumnT['primaryKey'] extends true
-  ? undefined | ColumnDataType<ColumnT>
-  : ColumnT['autoIncrement'] extends true
-  ? undefined | ColumnDataType<ColumnT>
-  : ColumnT['notNull'] extends true
-  ? ColumnDataType<ColumnT>
-  : ColumnDataType<ColumnT> | undefined;
-
 export type ColumnValues<Columns extends TableSchema['columns']> = {
   [key in keyof Columns]: ColumnDataType<Columns[key]>;
 };
@@ -35,22 +25,29 @@ export type NullableColumnValues<Columns extends TableSchema['columns']> = {
   [key in keyof Columns]?: ColumnDataType<Columns[key]>;
 };
 
-export declare interface Column<DataType extends DataTypes = DataTypes> {
-  readonly name: string;
+export declare interface Column<
+  DataType extends DataTypes = DataTypes,
+  NameT extends string = string,
+  PrimaryKeyT extends DataType extends 'INTEGER'
+    ? boolean
+    : false = DataType extends 'INTEGER' ? boolean : false
+> {
+  readonly name: NameT;
   readonly dataType: DataType;
-  readonly primaryKey?: DataType extends 'INTEGER' ? boolean : false;
-  readonly autoIncrement?: DataType extends 'INTEGER' ? boolean : false;
+  readonly primaryKey?: PrimaryKeyT;
+  readonly autoIncrement?: PrimaryKeyT extends true ? boolean : false;
   readonly notNull?: boolean;
   readonly foreignKeys?: () => { table: TableSchema; column: Column }[];
 }
 
 export declare interface TableSchema<
   SchemaT extends Schema = Schema,
-  TableT extends string = string
+  TableT extends string = string,
+  ColumnNames extends string[] = string[]
 > {
   readonly name: TableT;
   readonly schema: SchemaT;
-  readonly columns: { [name: string]: Column };
+  readonly columns: { [name in ColumnNames[number]]: Column<DataTypes, name> };
   readonly indices?: Column[][];
 }
 
@@ -64,7 +61,7 @@ export type Schemas<
 > = {
   [schema in SchemaT]: {
     [table in TableT[number]]:
-      | (TableSchema<SchemaT, TableT[number]> & { autoInstall: boolean })
+      | (TableSchema<SchemaT, table> & { autoInstall: boolean })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       | ((...args: any[]) => TableSchema<SchemaT, string>);
   };
