@@ -1,3 +1,8 @@
+import type {
+  MakeOptional,
+  NonUndefinedKeys,
+  UndefinedKeys,
+} from '../../tools/types';
 import type { schemas } from '../schemas';
 
 export type DataTypes = 'NULL' | 'INTEGER' | 'REAL' | 'TEXT' | 'BLOB';
@@ -24,6 +29,29 @@ export type ColumnValues<Columns extends TableSchema['columns']> = {
 export type NullableColumnValues<Columns extends TableSchema['columns']> = {
   [key in keyof Columns]?: ColumnDataType<Columns[key]>;
 };
+
+type InsertColumnDataType<
+  ColumnT extends Column
+> = ColumnT['notNull'] extends true
+  ? ColumnT['primaryKey'] extends true
+    ? BasicDataType<ColumnT['dataType']> | null
+    : BasicDataType<ColumnT['dataType']>
+  : BasicDataType<ColumnT['dataType']> | null;
+
+type InsertColumnValuesAllRequired<Columns extends TableSchema['columns']> = {
+  [key in keyof Columns]: InsertColumnDataType<Columns[key]>;
+};
+
+export type InsertColumnValues<Columns extends TableSchema['columns']> = Pick<
+  InsertColumnValuesAllRequired<Columns>,
+  NonUndefinedKeys<InsertColumnValuesAllRequired<Columns>>
+> &
+  MakeOptional<
+    Pick<
+      InsertColumnValuesAllRequired<Columns>,
+      UndefinedKeys<InsertColumnValuesAllRequired<Columns>>
+    >
+  >;
 
 export declare interface Column<
   DataType extends DataTypes = DataTypes,

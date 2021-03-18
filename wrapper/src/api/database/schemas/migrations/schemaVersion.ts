@@ -10,13 +10,15 @@ export abstract class SchemaVersion {
   }
 
   abstract readonly predecessor?: SchemaVersion;
-  protected abstract migrateFromLastVersion(): Promise<void>;
+  protected abstract migrateFromLastVersion(
+    loadExampleEntries: boolean
+  ): Promise<void>;
 
-  async migrate(fromVersion: number): Promise<void> {
+  async migrate(fromVersion: number, loadExampleEntries = true): Promise<void> {
     if (this.version !== fromVersion) {
       if (this.predecessor) {
-        await this.predecessor.migrate(fromVersion);
-        await this.migrateFromLastVersion();
+        await this.predecessor.migrate(fromVersion, loadExampleEntries);
+        await this.migrateFromLastVersion(loadExampleEntries);
         this.setVersion();
       } else {
         throw new Error(

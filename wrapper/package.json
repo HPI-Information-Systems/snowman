@@ -12,10 +12,8 @@
     "test": "jest",
     "start": "npm run build && electron .",
     "start-api": "npm run build && node ./dist/api/main.js",
-    "build": "npm run clean-dist && tsc",
-    "clean-build": "rimraf ./build/*",
-    "clean-dist": "rimraf ./dist/*",
-    "release": "npm run clean-build && npm run build && electron-builder"
+    "build": "rimraf ./dist/* && tsc && node ./dist/api/buildDatabase.js",
+    "release": "rimraf ./build/* && npm run build && electron-builder"
   },
   "build": {
     "asar": "true",
@@ -49,6 +47,7 @@
     }
   },
   "dependencies": {
+    "@types/tmp": "^0.2.0",
     "axios": "^0.21.1",
     "better-sqlite3": "git+https://github.com/phpfs/better-sqlite3.git",
     "binary-search": "^1.3.6",
@@ -59,7 +58,9 @@
     "dashdash": "^2.0.0",
     "express": "^4.16.4",
     "express-openapi-validator": "^4.10.10",
+    "fs-extra": "^9.1.0",
     "rxjs": "^6.6.6",
+    "tmp": "^0.2.1",
     "topological-sort": "^0.3.0",
     "wait-for-localhost": "^3.3.0",
     "winston": "^3.2.1"
