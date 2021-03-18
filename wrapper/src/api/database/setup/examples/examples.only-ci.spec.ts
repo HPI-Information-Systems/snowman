@@ -29,5 +29,5 @@ describe('Automatic Database Setup', () => {
     expect(uploadedAlgorithms).toEqual(expectedAlgorithms);
     expect(uploadedDatasets).toEqual(expectedDatasets);
     expect(uploadedExperiments).toEqual(expectedExperiments);
-  });
+  }, 10_000_000); // ~3h timeout
 });

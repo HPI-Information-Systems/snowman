@@ -37,6 +37,6 @@ export const exampleAlgorithms = assertType<ExampleAlgorithms>()({
       name: 'Mock Solution',
       description: 'Experiments constructed for testing purposes only.',
     },
-    id: 3,
+    id: -3,
   },
 });

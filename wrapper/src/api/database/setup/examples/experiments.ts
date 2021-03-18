@@ -45,13 +45,13 @@ export async function loadExampleExperiments(
 export const exampleExperiments = assertType<ExampleExperiments>()({
   restaurantGoldstandard1: {
     meta: {
-      name: 'goldstandard1',
+      name: 'goldstandard',
       description:
-        'Complete list of all duplicate pairs found in the original datasets.',
+        'Complete list of all duplicate pairs found in the original dataset.',
       algorithmId: exampleAlgorithms.gold.id,
       datasetId: exampleDatasets.restaurants.id,
     },
-    id: 1,
+    id: -1,
     file: {
       format: 'pilot',
       path: path.join(
@@ -68,7 +68,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       algorithmId: exampleAlgorithms.mock.id,
       datasetId: exampleDatasets.restaurants.id,
     },
-    id: 2,
+    id: -2,
     file: {
       format: 'pilot',
       path: path.join(EXAMPLE_EXPERIMENT_DIR, 'hpi_restaurants_examplerun.csv'),
@@ -83,7 +83,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       algorithmId: exampleAlgorithms.gold.id,
       datasetId: exampleDatasets.notebookToy.id,
     },
-    id: 3,
+    id: -3,
     file: {
       format: 'sigmod2021',
       path: path.join(
@@ -101,7 +101,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       algorithmId: exampleAlgorithms.gold.id,
       datasetId: exampleDatasets.notebook.id,
     },
-    id: 4,
+    id: -4,
     file: {
       format: 'sigmod2021',
       path: path.join(
@@ -109,6 +109,24 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
         'sigmod_notebook_goldstandard.csv'
       ),
       numberOfPairs: 58653,
+    },
+  },
+  magellanGoldstandard: {
+    meta: {
+      name: 'goldstandard',
+      description:
+        'Complete list of all duplicate pairs found in the original dataset.',
+      algorithmId: exampleAlgorithms.gold.id,
+      datasetId: exampleDatasets.magellanSongs.id,
+    },
+    id: -5,
+    file: {
+      format: 'pilot',
+      path: path.join(
+        EXAMPLE_EXPERIMENT_DIR,
+        'magellan_songs_goldstandard.csv'
+      ),
+      numberOfPairs: 1292022,
     },
   },
 });
