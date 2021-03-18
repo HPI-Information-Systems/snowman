@@ -26,12 +26,12 @@ export async function setupDatabase({
   const isInitialSetup = temporary || !existsSync(mainDatabaseFile(appPath));
   loadOrCreateMainDatabase(temporary, appPath);
   attachDatabases(schemas, temporary, appPath);
+  databaseBackendSubject.next(databaseBackend());
   if (isInitialSetup) {
     await initialDatabaseSetup(loadExampleEntries);
   } else {
     await latest.migrate(SchemaVersion.getInstalledVersion());
   }
-  databaseBackendSubject.next(databaseBackend());
 }
 
 async function initialDatabaseSetup(loadExampleEntries: boolean) {
