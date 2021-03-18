@@ -111,8 +111,10 @@ class DatabaseSetup {
   protected async initialDatabaseSetup(): Promise<void> {
     databaseBackend().transaction(() => {
       installTables(this.getTablesToBeAutoInstalled(), true);
-      latest.setVersion(this.options.appPath);
     })();
+    if (!this.options.temporary) {
+      latest.setVersion(this.options.appPath);
+    }
     if (this.options.loadExampleEntries) {
       await loadExamples();
     }
