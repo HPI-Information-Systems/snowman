@@ -110,4 +110,38 @@ export const exampleDatasets = assertType<ExampleDatasets>()({
       numberOfRecords: 1_000_000,
     },
   },
+  freedbCds: {
+    meta: {
+      name: 'freedb-cds',
+      description:
+        'This dataset includes 9763 CDs randomly extracted from freeDB.',
+      tags: ['Songs', 'Music', 'CDs'],
+    },
+    id: -5,
+    file: {
+      path: path.join(EXAMPLE_DATASET_DIR, 'freedb_cds.csv'),
+      idColumn: 'id',
+      separator: ',',
+      quote: '"',
+      escape: "'",
+      numberOfRecords: 9763,
+    },
+  },
+  cora: {
+    meta: {
+      name: 'hpi-cora',
+      description:
+        'This dataset includes bibliographical information about scientific papers. It provides 1879 objects.',
+      tags: ['Papers', 'Locations'],
+    },
+    id: -6,
+    file: {
+      path: path.join(EXAMPLE_DATASET_DIR, 'hpi_cora.csv'),
+      idColumn: 'id',
+      separator: ',',
+      quote: '"',
+      escape: "'",
+      numberOfRecords: 1879,
+    },
+  },
 });

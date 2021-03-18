@@ -61,9 +61,9 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       numberOfPairs: 112,
     },
   },
-  restaurantExampleRun1: {
+  restaurantExampleRun: {
     meta: {
-      name: 'examplerun1',
+      name: 'examplerun',
       description: 'Randomly picked pairs - for testing purposes only!',
       algorithmId: exampleAlgorithms.mock.id,
       datasetId: exampleDatasets.restaurants.id,
@@ -127,6 +127,64 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
         'magellan_songs_goldstandard.csv'
       ),
       numberOfPairs: 1292022,
+    },
+  },
+  freedbCdsGoldstandard: {
+    meta: {
+      name: 'goldstandard',
+      description:
+        'Complete list of all duplicate pairs found in the original dataset.',
+      algorithmId: exampleAlgorithms.gold.id,
+      datasetId: exampleDatasets.freedbCds.id,
+    },
+    id: -6,
+    file: {
+      format: 'pilot',
+      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'freedb_cds_goldstandard.csv'),
+      numberOfPairs: 300,
+    },
+  },
+  freedbCdsExampleRun: {
+    meta: {
+      name: 'examplerun',
+      description: 'Randomly picked pairs - for testing purposes only!',
+      algorithmId: exampleAlgorithms.mock.id,
+      datasetId: exampleDatasets.freedbCds.id,
+    },
+    id: -7,
+    file: {
+      format: 'pilot',
+      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'freedb_cds_examplerun.csv'),
+      numberOfPairs: 124,
+    },
+  },
+  hpiCoraGoldstandard: {
+    meta: {
+      name: 'goldstandard',
+      description:
+        'Complete list of all duplicate pairs found in the original dataset.',
+      algorithmId: exampleAlgorithms.gold.id,
+      datasetId: exampleDatasets.cora.id,
+    },
+    id: -8,
+    file: {
+      format: 'pilot',
+      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'hpi_cora_goldstandard.csv'),
+      numberOfPairs: 64578,
+    },
+  },
+  hpiCoraExampleRun: {
+    meta: {
+      name: 'examplerun',
+      description: 'Randomly picked pairs - for testing purposes only!',
+      algorithmId: exampleAlgorithms.mock.id,
+      datasetId: exampleDatasets.cora.id,
+    },
+    id: -9,
+    file: {
+      format: 'pilot',
+      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'hpi_cora_examplerun.csv'),
+      numberOfPairs: 767,
     },
   },
 });
