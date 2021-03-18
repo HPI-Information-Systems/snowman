@@ -686,7 +686,7 @@ paths:
           name: limit
           required: false
           schema:
-            default: 500
+            default: -1
             type: integer
           style: form
         - explode: true

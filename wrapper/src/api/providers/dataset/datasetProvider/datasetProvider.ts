@@ -95,7 +95,7 @@ export class DatasetProvider {
       this.deleteDatasetFileNoChecks(id);
 
       const datasetIDMapper = new DatasetIDMapper(id);
-      const { insertedRowCount, skippedRowCount } = await new DatasetInserter(
+      const insertedRowCount = await new DatasetInserter(
         id,
         datasetIDMapper,
         idColumn
@@ -112,14 +112,7 @@ export class DatasetProvider {
         throw new Error(
           `The uploaded dataset does not contain rows for all ids belonging to this dataset (we remember all ids which have been uploaded before via a dataset file or an experiment file). ` +
             `The number of rows which have been inserted is ${insertedRowCount} but this dataset has ${storedDataset.numberOfRecords} different ids. ` +
-            `Please make sure this was intentional.` +
-            (skippedRowCount > 0
-              ? ` WARNING: The uploaded file contains ${skippedRowCount} invalid rows which have been skipped.`
-              : '')
-        );
-      } else if (skippedRowCount > 0) {
-        throw new Error(
-          `WARNING: The uploaded file contains ${skippedRowCount} invalid rows which have been skipped.`
+            `Please make sure this was intentional.`
         );
       }
     }, id);

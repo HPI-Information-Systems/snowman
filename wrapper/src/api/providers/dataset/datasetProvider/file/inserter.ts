@@ -13,7 +13,6 @@ import {
   CSVColumn,
   CSVReader,
   CSVReaderStrategy,
-  CSVReadResult,
   CSVRow,
 } from '../../../../tools/csvReader';
 import { DatasetIDMapper } from '../util/idMapper';
@@ -34,13 +33,15 @@ export class DatasetInserter implements CSVReaderStrategy {
     quote: string,
     escape: string,
     separator: string
-  ): Promise<CSVReadResult> {
-    return new CSVReader(file, this, {
+  ): Promise<number> {
+    return await new CSVReader(file, this, {
       quote,
       escape,
       separator,
-      skipLinesWithErrors: true,
-    }).read();
+      skipLinesWithErrors: false,
+    })
+      .read()
+      .then(({ insertedRowCount }) => insertedRowCount);
   }
 
   async readColumns(columns: Set<CSVColumn>): Promise<void> {

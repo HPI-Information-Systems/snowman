@@ -543,7 +543,7 @@ paths:
           in: query
           schema:
             type: integer
-            default: 500
+            default: -1
         - name: sortBy
           in: query
           schema:

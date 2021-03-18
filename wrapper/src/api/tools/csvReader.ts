@@ -2,6 +2,7 @@ import parse from 'csv-parse';
 import { Readable } from 'stream';
 
 import { ExecuteSynchronized } from './executeSynchronized';
+import { logger } from './logger';
 
 export type CSVColumn = string;
 export type CSVRow = { [column in CSVColumn]: string };
@@ -72,7 +73,10 @@ export class CSVReader {
           } as parse.Options)
         )
         .on('data', (row) => this.sync.call(() => this.readRow(row)))
-        .on('skip', () => this.skippedRowCount++)
+        .on('skip', (error) => {
+          logger.error(error.message, error);
+          this.skippedRowCount++;
+        })
         .on('end', () => this.sync.call(() => this.finish(resolve)))
         .on('error', (error) => this.sync.call(() => this.emitError(error)));
     });
@@ -153,6 +157,7 @@ export class CSVReader {
         this.insertedRowCount++;
       } catch (error) {
         if (this.config.skipLinesWithErrors) {
+          logger.error(error.message, error);
           this.skippedRowCount++;
         } else {
           this.emitError(error);
