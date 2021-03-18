@@ -2,7 +2,7 @@ import { assertType } from '../tools/types';
 import { attachDatabases } from './setup';
 import { databaseBackend, loadOrCreateMainDatabase } from './setup/backend';
 import { installTables } from './setup/install';
-import { throwIfTableNotExists } from './table/loader';
+import { Table } from './table';
 import { ForeignKeys, TableSchema } from './tools/types';
 
 describe('Database', () => {
@@ -56,18 +56,19 @@ describe('Database', () => {
     });
     installTables([dependent, dependency]);
 
-    expect(() => throwIfTableNotExists(dependency)).not.toThrow();
-    expect(() => throwIfTableNotExists(dependent)).not.toThrow();
+    expect(new Table(dependency).exists()).toBe(true);
+    expect(new Table(dependent).exists()).toBe(true);
   });
 
-  test('throwIfTableNotExists throws if table not exists', () => {
+  test('exists returns false if table not exists', () => {
     const attachedDatabase = 'meta';
     attachDatabases([attachedDatabase], true);
-    expect(() =>
-      throwIfTableNotExists({
+    expect(
+      new Table({
         name: 'notExists',
         schema: 'meta',
-      })
-    ).toThrow();
+        columns: {},
+      }).exists()
+    ).toBe(false);
   });
 });

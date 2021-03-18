@@ -1,6 +1,6 @@
-import { assertType } from '../../../tools/types';
-import { escapeColumnNames } from '../../tools/escapeColumnNames';
-import { Column, Columns, Schemas } from '../../tools/types';
+import { assertType } from '../../tools/types';
+import { escapeColumnNames } from '../tools/escapeColumnNames';
+import { Column, Columns, Schemas } from '../tools/types';
 
 export const datasetCustomColumnPrefix = 'dataset_';
 export const datasetSchemas = assertType<

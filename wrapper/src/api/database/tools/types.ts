@@ -1,6 +1,40 @@
-import type { latest } from '../schemas';
+import type { schemas } from '../schemas';
 
-type DataTypes = 'NULL' | 'INTEGER' | 'REAL' | 'TEXT' | 'BLOB';
+export type DataTypes = 'NULL' | 'INTEGER' | 'REAL' | 'TEXT' | 'BLOB';
+export type BasicDataType<
+  DataType extends DataTypes = DataTypes
+> = DataType extends 'NULL'
+  ? null
+  : DataType extends 'INTEGER'
+  ? number
+  : DataType extends 'REAL'
+  ? number
+  : string;
+
+export type ColumnDataType<
+  ColumnT extends Column
+> = ColumnT['notNull'] extends true
+  ? BasicDataType<ColumnT['dataType']>
+  : BasicDataType<ColumnT['dataType']> | null;
+
+export type InsertColumnDataType<
+  ColumnT extends Column
+> = ColumnT['primaryKey'] extends true
+  ? undefined | ColumnDataType<ColumnT>
+  : ColumnT['autoIncrement'] extends true
+  ? undefined | ColumnDataType<ColumnT>
+  : ColumnT['notNull'] extends true
+  ? ColumnDataType<ColumnT>
+  : ColumnDataType<ColumnT> | undefined;
+
+export type ColumnValues<Columns extends TableSchema['columns']> = {
+  [key in keyof Columns]: ColumnDataType<Columns[key]>;
+};
+
+export type NullableColumnValues<Columns extends TableSchema['columns']> = {
+  [key in keyof Columns]?: ColumnDataType<Columns[key]>;
+};
+
 export declare interface Column<DataType extends DataTypes = DataTypes> {
   readonly name: string;
   readonly dataType: DataType;
@@ -23,7 +57,7 @@ export declare interface TableSchema<
 export type ForeignKeys = ReturnType<NonNullable<Column['foreignKeys']>>;
 export type Columns = TableSchema['columns'];
 
-export type Schema = typeof latest.schemas[number];
+export type Schema = typeof schemas[number];
 export type Schemas<
   SchemaT extends Schema = Schema,
   TableT extends string[] = string[]

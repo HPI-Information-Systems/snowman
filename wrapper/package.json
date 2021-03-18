@@ -59,6 +59,7 @@
     "dashdash": "^2.0.0",
     "express": "^4.16.4",
     "express-openapi-validator": "^4.10.10",
+    "rxjs": "^6.6.6",
     "topological-sort": "^0.3.0",
     "wait-for-localhost": "^3.3.0",
     "winston": "^3.2.1"

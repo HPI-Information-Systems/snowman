@@ -31,7 +31,6 @@ export class ClusterERExperimentInserter extends CSVInserter {
 
   private addDuplicates(): void {
     for (const cluster of this.clusters.values()) {
-      // We start at 1 intentionally as we want to iterate over pairs
       for (let index = 1; index < cluster.length; index++) {
         this.addDuplicate(cluster[index - 1], cluster[index]);
       }

@@ -1,11 +1,11 @@
 import { getProviders } from '../../providers';
 import {
   ExperimentId,
-  ExperimentIntersection,
   ExperimentIntersectionCount,
   ExperimentIntersectionPairCountsItem,
   ExperimentIntersectionPairCountsRequestExperiments,
   ExperimentIntersectionRequestExperiments,
+  FileResponse,
   Metric,
 } from '../types';
 import { Service, SuccessResponse } from './Service';
@@ -56,7 +56,7 @@ export async function calculateExperimentIntersectionRecords({
   startAt?: number;
   limit?: number;
   sortBy?: string;
-}): Promise<SuccessResponse<ExperimentIntersection>> {
+}): Promise<SuccessResponse<FileResponse>> {
   return Service.response(
     () =>
       provider().calculateExperimentIntersectionRecords({

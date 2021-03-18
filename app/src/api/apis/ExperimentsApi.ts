@@ -21,6 +21,9 @@ import {
     ExperimentValues,
     ExperimentValuesFromJSON,
     ExperimentValuesToJSON,
+    FileResponse,
+    FileResponseFromJSON,
+    FileResponseToJSON,
 } from '../models';
 
 export interface AddExperimentRequest {
@@ -186,7 +189,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
     /**
      * Get an experiment file
      */
-    async getExperimentFileRaw(requestParameters: GetExperimentFileRequest): Promise<runtime.ApiResponse<Blob>> {
+    async getExperimentFileRaw(requestParameters: GetExperimentFileRequest): Promise<runtime.ApiResponse<FileResponse>> {
         if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
             throw new runtime.RequiredError('experimentId','Required parameter requestParameters.experimentId was null or undefined when calling getExperimentFile.');
         }
@@ -214,13 +217,13 @@ export class ExperimentsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.BlobApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => FileResponseFromJSON(jsonValue));
     }
 
     /**
      * Get an experiment file
      */
-    async getExperimentFile(requestParameters: GetExperimentFileRequest): Promise<Blob> {
+    async getExperimentFile(requestParameters: GetExperimentFileRequest): Promise<FileResponse> {
         const response = await this.getExperimentFileRaw(requestParameters);
         return await response.value();
     }

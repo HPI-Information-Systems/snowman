@@ -1,33 +1,25 @@
 import { Readable } from 'stream';
 
-import { databaseBackend, Table } from '../../../database';
-import { latest } from '../../../database/schemas';
-import { ExperimentValues } from '../../../server/types';
+import { databaseBackend, tables } from '../../../database';
+import { ExperimentValues, FileResponse } from '../../../server/types';
 import {
   Experiment,
   ExperimentFileFormat,
   ExperimentId,
 } from '../../../server/types';
-import { getProviders } from '../..';
-import {
-  IntersectionCache,
-  invalidateCaches,
-} from '../../benchmark/benchmarkProvider/intersection/cache';
+import { invalidateCaches } from '../../benchmark/benchmarkProvider/intersection/cache';
 import { DatasetIDMapper } from '../../dataset/datasetProvider/util/idMapper';
 import { ExperimentFileGetter } from '../../experiment/experimentProvider/file/getter';
-import { BaseExperimentProvider } from '../baseExperimentProvider';
 import { getExperimentInserter } from './file';
-import { ExperimentProviderQueries } from './queries';
 import { ExperimentConsistencyChecks } from './util/checks';
-import { ExperimentConverter, StoredExperiment } from './util/converter';
+import { ExperimentConverter } from './util/converter';
 
-export class ExperimentProvider extends BaseExperimentProvider {
-  private readonly queries = new ExperimentProviderQueries();
+export class ExperimentProvider {
   private readonly checks = new ExperimentConsistencyChecks();
   private readonly converter = new ExperimentConverter();
 
   listExperiments(): Experiment[] {
-    return this.queries.listExperimentsQuery
+    return tables.meta.experiment
       .all()
       .map((storedExperiment) =>
         this.converter.storedExperimentToApiExperiment(storedExperiment)
@@ -37,66 +29,49 @@ export class ExperimentProvider extends BaseExperimentProvider {
   addExperiment(experiment: ExperimentValues): ExperimentId {
     this.checks.throwIfAlgorithmNotExists(experiment.algorithmId);
     this.checks.throwIfDatasetNotExists(experiment.datasetId);
-    const storedExperimentValues = this.converter.apiExperimentValuesToStoredExperimentValues(
-      experiment
-    );
-    return this.queries.table.insert([
+    return tables.meta.experiment.upsert([
       {
-        column: this.queries.schema.columns.name,
-        value: storedExperimentValues.name,
-      },
-      {
-        column: this.queries.schema.columns.description,
-        value: storedExperimentValues.description,
-      },
-      {
-        column: this.queries.schema.columns.algorithm,
-        value: storedExperimentValues.algorithmId,
-      },
-      {
-        column: this.queries.schema.columns.dataset,
-        value: storedExperimentValues.datasetId,
+        name: experiment.name,
+        description: experiment.description,
+        algorithm: experiment.algorithmId,
+        dataset: experiment.datasetId,
       },
     ])[0];
   }
 
   getExperiment(id: ExperimentId): Experiment {
-    const experiment = this.queries.getExperimentQuery.all(id);
-    if (experiment.length === 0) {
+    const experiment = tables.meta.experiment.get({ id });
+    if (!experiment) {
       throw new Error(`An experiment with the id ${id} does not exist.`);
     }
-    return this.converter.storedExperimentToApiExperiment(experiment[0]);
+    return this.converter.storedExperimentToApiExperiment(experiment);
   }
 
   setExperiment(id: ExperimentId, experiment: ExperimentValues): void {
-    const priorStoredExperiment = this.queries.getExperimentQuery.get(id) as
-      | undefined
-      | StoredExperiment;
-    const storedExperimentValues = this.converter.apiExperimentValuesToStoredExperimentValues(
-      experiment
-    );
+    const priorStoredExperiment = tables.meta.experiment.get({ id });
+    const newStoredExperiment = this.converter.apiExperimentToStoredExperiment({
+      ...experiment,
+      id,
+    });
     if (
       priorStoredExperiment &&
-      storedExperimentValues.datasetId !== priorStoredExperiment.datasetId
+      newStoredExperiment.dataset !== priorStoredExperiment.dataset
     ) {
       throw new Error('The dataset of an experiment cannot be changed.');
     } else {
-      this.checks.throwIfDatasetNotExists(storedExperimentValues.datasetId);
+      this.checks.throwIfDatasetNotExists(newStoredExperiment.dataset);
     }
-    this.checks.throwIfAlgorithmNotExists(storedExperimentValues.algorithmId);
-    this.queries.setExperimentQuery.run({
-      id,
-      ...storedExperimentValues,
-      numberOfUploadedRecords:
-        priorStoredExperiment?.numberOfUploadedRecords ?? null,
-    });
+    this.checks.throwIfAlgorithmNotExists(newStoredExperiment.algorithm);
+    newStoredExperiment.numberOfUploadedRecords =
+      priorStoredExperiment?.numberOfUploadedRecords ?? null;
+    tables.meta.experiment.upsert([newStoredExperiment]);
   }
 
   deleteExperiment(id: ExperimentId): void {
     this.checks.throwIfLocked(id);
     databaseBackend().transaction(() => {
       this.deleteExperimentFileNoChecks(id);
-      this.queries.deleteExperimentQuery.run(id);
+      tables.meta.experiment.delete({ id });
     })();
   }
 
@@ -105,9 +80,9 @@ export class ExperimentProvider extends BaseExperimentProvider {
     startAt?: number,
     limit?: number,
     sortBy?: string
-  ): IterableIterator<string[]> {
+  ): FileResponse {
     this.checks.throwIfExperimentNotExists(id);
-    return new ExperimentFileGetter(id).iterate(startAt, limit, sortBy);
+    return new ExperimentFileGetter(id).get(startAt, limit, sortBy);
   }
 
   async setExperimentFile(
@@ -119,9 +94,9 @@ export class ExperimentProvider extends BaseExperimentProvider {
     return this.checks.sync.call(async () => {
       this.deleteExperimentFileNoChecks(id);
       const { datasetId } = this.getExperiment(id);
-      const { name, numberOfRecords } = getProviders().dataset.getDataset(
-        datasetId
-      );
+      this.checks.throwIfDatasetNotExists(datasetId);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const dataset = tables.meta.dataset.get({ id: datasetId })!;
 
       const datasetIDMapper = new DatasetIDMapper(datasetId);
       const ExperimentInserter = getExperimentInserter(format);
@@ -135,23 +110,21 @@ export class ExperimentProvider extends BaseExperimentProvider {
           throw e;
         });
 
-      const storedExperiment = this.queries.getExperimentQuery.get(id) as
-        | StoredExperiment
-        | undefined;
+      const storedExperiment = tables.meta.experiment.get({ id });
       if (storedExperiment) {
         storedExperiment.numberOfUploadedRecords = numberOfUploadedRecords;
-        this.queries.setExperimentQuery.run(storedExperiment);
+        tables.meta.experiment.upsert([storedExperiment]);
       }
       invalidateCaches(id);
 
       const mappedIdCount = datasetIDMapper.numberMappedIds();
-      if (numberOfRecords !== undefined && numberOfRecords < mappedIdCount) {
-        this.queries.updateDatasetNumberRecords.run({
-          id: datasetId,
-          numberOfRecords: mappedIdCount,
-        });
+      if (
+        (dataset.numberOfRecords ?? Number.POSITIVE_INFINITY) < mappedIdCount
+      ) {
+        dataset.numberOfRecords = mappedIdCount;
+        tables.meta.dataset.upsert([dataset]);
         throw new Error(
-          `The experiment contained previously unknown ids. In total there are more ids now than the number of records in the connected dataset (${name}). ` +
+          `The experiment contained previously unknown ids. In total there are more ids now than the number of records in the connected dataset (${dataset.name}). ` +
             `We increased the number of records in the connected dataset to the total amount of ids (${mappedIdCount}). Please make sure this was intentional.`
         );
       }
@@ -164,13 +137,11 @@ export class ExperimentProvider extends BaseExperimentProvider {
   }
 
   private deleteExperimentFileNoChecks(id: ExperimentId): void {
-    new Table(latest.tableSchemas.experiment.experiment(id)).delete(false);
-    const storedExperiment = this.queries.getExperimentQuery.get(id) as
-      | StoredExperiment
-      | undefined;
+    tables.experiment.experiment(id).dropTable(false);
+    const storedExperiment = tables.meta.experiment.get({ id });
     if (storedExperiment) {
       storedExperiment.numberOfUploadedRecords = null;
-      this.queries.setExperimentQuery.run(storedExperiment);
+      tables.meta.experiment.upsert([storedExperiment]);
     }
     invalidateCaches(id);
   }

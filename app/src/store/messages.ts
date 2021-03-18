@@ -1,10 +1,4 @@
-import {
-  Algorithm,
-  Dataset,
-  Experiment,
-  ExperimentIntersection,
-  Metric,
-} from 'api';
+import { Algorithm, Dataset, Experiment, FileResponse, Metric } from 'api';
 import { Action } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { Store } from 'store/models';
@@ -13,7 +7,7 @@ import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 
 type ActionPayload =
   | Metric[]
-  | ExperimentIntersection
+  | FileResponse
   | string
   | string[]
   | boolean
