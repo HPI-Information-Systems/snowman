@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._  Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -22,6 +22,10 @@ import {
     ExperimentValuesFromJSON,
     ExperimentValuesFromJSONTyped,
     ExperimentValuesToJSON,
+    ExperimentValuesSoftKPIs,
+    ExperimentValuesSoftKPIsFromJSON,
+    ExperimentValuesSoftKPIsFromJSONTyped,
+    ExperimentValuesSoftKPIsToJSON,
 } from './';
 
 /**
@@ -66,6 +70,12 @@ export interface Experiment {
      * @memberof Experiment
      */
     algorithmId: number;
+    /**
+     * 
+     * @type {ExperimentValuesSoftKPIs}
+     * @memberof Experiment
+     */
+    softKPIs?: ExperimentValuesSoftKPIs;
 }
 
 export function ExperimentFromJSON(json: any): Experiment {
@@ -84,6 +94,7 @@ export function ExperimentFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'description': !exists(json, 'description') ? undefined : json['description'],
         'datasetId': json['datasetId'],
         'algorithmId': json['algorithmId'],
+        'softKPIs': !exists(json, 'softKPIs') ? undefined : ExperimentValuesSoftKPIsFromJSON(json['softKPIs']),
     };
 }
 
@@ -102,6 +113,7 @@ export function ExperimentToJSON(value?: Experiment | null): any {
         'description': value.description,
         'datasetId': value.datasetId,
         'algorithmId': value.algorithmId,
+        'softKPIs': ExperimentValuesSoftKPIsToJSON(value.softKPIs),
     };
 }
 
