@@ -120,7 +120,6 @@ export class CSVReader {
   private closeFile() {
     if (!this.file.readableEnded && !this.file.destroyed) {
       this.file.unpipe();
-      this.file.destroy();
     }
   }
 
