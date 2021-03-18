@@ -78,7 +78,7 @@ jobs:
         run: npm run test
         working-directory: ./app
       - name: Test wrapper
-        run: npm test-ci
+        run: npm run test-ci
         working-directory: ./wrapper
       - name: Test integration
         run: npm run test-ci
