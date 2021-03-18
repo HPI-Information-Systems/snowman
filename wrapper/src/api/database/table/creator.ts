@@ -61,7 +61,7 @@ export class TableCreator<Schema extends TableSchema> {
   private columnConstraints(column: Column) {
     return (
       (column.notNull ? ' NOT NULL' : '') +
-      (column.autoIncrement && !column.primaryKey ? ' AUTOINCREMENT' : '')
+      (column.autoIncrement ? ' PRIMARY KEY AUTOINCREMENT' : '')
     );
   }
 
@@ -74,11 +74,31 @@ export class TableCreator<Schema extends TableSchema> {
   }
 
   private primaryKeyConstraints() {
-    const primaryKeys = Object.values(this.table.schema.columns)
-      .filter((column) => column.primaryKey)
-      .map((column) => column.name)
-      .join(',');
-    return primaryKeys.length > 0 ? [`PRIMARY KEY(${primaryKeys})`] : [];
+    const columns = Object.values(this.table.schema.columns);
+    const primaryKeyColumns = columns.filter((column) => column.primaryKey);
+    const autoIncrementColumns = columns.filter(
+      (column) => column.autoIncrement
+    );
+    if (autoIncrementColumns.length > 0) {
+      if (autoIncrementColumns.length > 1) {
+        throw new Error(
+          `The maximum number of autoincrement columns is 1. The table ${this.table} has ${autoIncrementColumns.length} auto incremented columns.`
+        );
+      } else if (
+        primaryKeyColumns.length !== 1 ||
+        primaryKeyColumns[0] !== autoIncrementColumns[0]
+      ) {
+        throw new Error(
+          `If a column is autoincremented, the table must have exactly one primary key column being the autoincremented column. The table ${this.table} does not satisfy this constraint.`
+        );
+      }
+      return [];
+    } else {
+      const primaryKeys = primaryKeyColumns
+        .map((column) => column.name)
+        .join(',');
+      return primaryKeys.length > 0 ? [`PRIMARY KEY(${primaryKeys})`] : [];
+    }
   }
 
   private foreignKeyConstraints() {

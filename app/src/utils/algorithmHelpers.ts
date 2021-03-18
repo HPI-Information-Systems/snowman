@@ -1,5 +1,7 @@
 import { Algorithm } from 'api';
 
+import { MagicNotPossibleId } from '../structs/constants';
+
 export const getAlgorithmTagFromId = (
   anId: number,
   algorithms: Algorithm[]
@@ -13,4 +15,4 @@ export const getAlgorithmIdFromTag = (
 ): number =>
   algorithms.find(
     (anAlgorithm: Algorithm): boolean => anAlgorithm.name === aTag
-  )?.id ?? -1;
+  )?.id ?? MagicNotPossibleId;

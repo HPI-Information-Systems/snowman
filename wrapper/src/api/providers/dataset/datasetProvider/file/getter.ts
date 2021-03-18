@@ -12,7 +12,7 @@ export class DatasetFileGetter {
   protected customColumns: string[];
   protected sortedColumn: string;
   constructor(
-    private readonly id: DatasetId,
+    readonly id: DatasetId,
     private readonly startAt?: number,
     private readonly limit?: number,
     sortBy?: string

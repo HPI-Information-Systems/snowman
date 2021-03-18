@@ -38,6 +38,11 @@ describe('Table', () => {
 
   test('loadSchemaFromDatabase returns correct columns', () => {
     const table = new Table(mountedTable);
+    table.upsert([
+      {
+        nonnull: '2',
+      },
+    ]);
     table.loadSchemaFromDatabase();
     expect(table.schema).toMatchObject(mountedTable);
   });

@@ -1,3 +1,3 @@
-import { SchemaV0 } from './v0';
+import { SchemaV2 } from './v2';
 
-export const latest = new SchemaV0();
+export const latest = new SchemaV2();
