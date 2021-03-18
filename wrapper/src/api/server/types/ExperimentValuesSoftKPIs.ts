@@ -15,19 +15,13 @@
 /**
  * 
  * @export
- * @interface ExperimentAllOf
+ * @interface ExperimentValuesSoftKPIs
  */
-export interface ExperimentAllOf {
+export interface ExperimentValuesSoftKPIs {
     /**
      * 
      * @type {number}
-     * @memberof ExperimentAllOf
+     * @memberof ExperimentValuesSoftKPIs
      */
-    id: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ExperimentAllOf
-     */
-    numberOfUploadedRecords?: number;
+    timeToConfigure?: number;
 }

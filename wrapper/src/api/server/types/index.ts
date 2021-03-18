@@ -17,6 +17,7 @@ export * from './ExperimentIntersectionPairCountsItem';
 export * from './ExperimentIntersectionPairCountsRequestExperiments';
 export * from './ExperimentIntersectionRequestExperiments';
 export * from './ExperimentValues';
+export * from './ExperimentValuesSoftKPIs';
 export * from './FileResponse';
 export * from './Metric';
 export * from './util';
