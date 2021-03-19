@@ -17,6 +17,12 @@ export class AlgorithmProvider {
         {
           name: algorithm.name,
           description: algorithm.description || null,
+          implementationKnowHowLevel:
+            algorithm.softKPIs?.implementationKnowHowLevel || null,
+          matchingSolutionType:
+            algorithm.softKPIs?.matchingSolutionType || null,
+          timeToInstall: algorithm.softKPIs?.timeToInstall || null,
+          timeToConfigure: algorithm.softKPIs?.timeToConfigure || null,
         },
       ])
       .slice(-1)[0];
