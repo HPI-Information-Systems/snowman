@@ -1,5 +1,5 @@
 import { Algorithm, Dataset, Experiment } from 'api';
-import { difference, nth, union } from 'lodash';
+import { differenceBy, nth, unionBy } from 'lodash';
 import {
   DatasetsPageActionTypes,
   ExperimentsPageActionTypes,
@@ -172,7 +172,7 @@ export const BenchmarkConfiguratorReducer = (
     ...immediateState,
     chosenExperiments: finalChosenExperiments,
     chosenGoldStandards: finalChosenGoldStandards,
-    availableExperiments: difference(
+    availableExperiments: differenceBy(
       coreState.experiments
         .filter(
           (anExperiment: Experiment): boolean =>
@@ -187,7 +187,8 @@ export const BenchmarkConfiguratorReducer = (
               ) !== undefined
             : true
         ),
-      union(finalChosenExperiments, finalChosenGoldStandards)
+      unionBy(finalChosenExperiments, finalChosenGoldStandards, 'id'),
+      'id'
     ),
   };
 };
