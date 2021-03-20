@@ -12,7 +12,8 @@ type StoredAlgorithm = ColumnValues<
 export class AlgorithmConverter {
   apiToStored(api: Algorithm): StoredAlgorithm {
     return {
-      ...api,
+      id: api.id,
+      name: api.name,
       description: api.description ?? null,
       implementationKnowHowLevel:
         api.softKPIs?.implementationKnowHowLevel ?? null,
@@ -35,7 +36,8 @@ export class AlgorithmConverter {
         )
       : undefined;
     return {
-      ...stored,
+      id: stored.id,
+      name: stored.name,
       description: stored.description ?? undefined,
       softKPIs: {
         timeToInstall: stored.timeToInstall ?? undefined,
@@ -47,7 +49,7 @@ export class AlgorithmConverter {
   }
 }
 
-function convertStringToEnum<T>(type: T, str: string): T[keyof T] {
-  const casted = str as keyof T;
+function convertStringToEnum<T>(type: any, str: string): T[keyof T] {
+  const casted = (str.charAt(0).toUpperCase() + str.slice(1)) as keyof T;
   return type[casted];
 }
