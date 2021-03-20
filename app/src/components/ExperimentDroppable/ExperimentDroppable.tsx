@@ -1,7 +1,7 @@
 import { IonCol, IonGrid, IonRow } from '@ionic/react';
 import { Experiment } from 'api';
+import ExperimentCard from 'components/ExperimentCard/ExperimentCard';
 import { ExperimentDroppableProps } from 'components/ExperimentDroppable/ExperimentDroppableProps';
-import OptionCard from 'components/OptionCard/OptionCard';
 import React from 'react';
 import {
   Draggable,
@@ -29,13 +29,14 @@ const getRenderItem = (allExperiments: Experiment[]) =>
         {...provided.draggableProps}
       >
         <IonCol>
-          <OptionCard
+          <ExperimentCard
             key={'card' + anExperiment.id}
-            title={anExperiment.name}
-            subtitle={'anOption.algorithmId'}
+            experimentName={anExperiment.name}
+            algorithmName={'anOption.algorithmId'}
             description={anExperiment.description}
-            tags={[]}
-            isSelected={true}
+            numberOfRecords={4}
+            editExperiment={() => undefined}
+            deleteExperiment={() => undefined}
           />
         </IonCol>
       </IonRow>
