@@ -7,7 +7,7 @@ import RootPage from 'pages/RootPage/RootPage';
 import { menuCategories } from 'types/MenuCategories';
 import { ViewIDs } from 'types/ViewIDs';
 import { ViewMetaInformation } from 'types/ViewMetaInformation';
-import * as accessGuards from 'utils/navigationGuards';
+import * as accessGuards from 'utils/accessGuards';
 import {
   emptySelectedOptions,
   selectedDataset,
