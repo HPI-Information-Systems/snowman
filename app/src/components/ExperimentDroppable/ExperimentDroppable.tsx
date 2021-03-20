@@ -27,10 +27,10 @@ const mapDispatchToProps = (
   dispatch: SnowmanDispatch
 ): ExperimentDroppableDispatchProps => ({
   editExperiment(anExperiment: Experiment) {
-    dispatch(deleteExperiment(anExperiment)).then();
+    dispatch(openChangeDialog(anExperiment)).then();
   },
   deleteExperiment(anExperiment: Experiment) {
-    dispatch(openChangeDialog(anExperiment)).then();
+    dispatch(deleteExperiment(anExperiment)).then();
   },
 });
 
