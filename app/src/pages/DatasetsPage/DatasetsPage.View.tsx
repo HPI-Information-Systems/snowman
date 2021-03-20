@@ -6,13 +6,13 @@ import {
   IonRow,
   IonText,
 } from '@ionic/react';
+import { Dataset } from 'api';
 import AddDatasetFab from 'components/AddFab/AddDatasetFab';
+import DatasetCard from 'components/DatasetCard/DatasetCard';
 import DatasetDialog from 'components/DatasetDialog/DatasetDialog';
-import OptionCard from 'components/OptionCard/OptionCard';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { DatasetsPageProps } from 'pages/DatasetsPage/DatasetsPageProps';
 import React, { useEffect } from 'react';
-import { Option } from 'types/Option';
 
 const DatasetsPageView = ({
   tags,
@@ -47,19 +47,19 @@ const DatasetsPageView = ({
       </IonText>
       <IonGrid>
         <IonRow>
-          {datasets.map((aDataset: Option) => (
+          {datasets.map((aDataset: Dataset) => (
             <IonCol key={'col' + aDataset.id} size="4" sizeXl="3">
-              <OptionCard
-                key={'card' + aDataset.id}
-                title={aDataset.title}
-                subtitle={aDataset.subtitle}
+              <DatasetCard
+                key={`datasetCard-${aDataset.id}`}
+                datasetName={aDataset.name}
+                categories={aDataset.tags ?? []}
                 description={aDataset.description}
-                tags={aDataset.tags}
-                clickCard={() => clickOnDataset(aDataset.id)}
+                totalCount={aDataset.numberOfRecords}
+                uploadedCount={aDataset.numberOfUploadedRecords}
                 isSelected={selectedDataset.includes(aDataset.id)}
-                deleteCard={() => deleteDataset(aDataset.id)}
-                editCard={() => editDataset(aDataset.id)}
-                multiple={false}
+                selectDataset={() => clickOnDataset(aDataset.id)}
+                deleteDataset={() => deleteDataset(aDataset.id)}
+                editDataset={() => editDataset(aDataset.id)}
               />
             </IonCol>
           ))}

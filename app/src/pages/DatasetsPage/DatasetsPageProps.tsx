@@ -1,8 +1,8 @@
-import { Option } from 'types/Option';
+import { Dataset } from 'api';
 
 export interface DatasetsPageStateProps {
   tags: string[];
-  datasets: Option[];
+  datasets: Dataset[];
   selectedTags: string[];
   selectedDataset: number[];
 }
