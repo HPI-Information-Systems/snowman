@@ -1,73 +1,42 @@
-import { IonCol, IonGrid, IonRow } from '@ionic/react';
 import { Experiment } from 'api';
-import ExperimentCard from 'components/ExperimentCard/ExperimentCard';
-import { ExperimentDroppableProps } from 'components/ExperimentDroppable/ExperimentDroppableProps';
-import React from 'react';
+import ExperimentDroppableView from 'components/ExperimentDroppable/ExperimentDroppable.View';
 import {
-  Draggable,
-  DraggableProvided,
-  DraggableRubric,
-  DraggableStateSnapshot,
-  Droppable,
-  DroppableProvided,
-} from 'react-beautiful-dnd';
+  ExperimentDroppableDispatchProps,
+  ExperimentDroppableOwnProps,
+  ExperimentDroppableStateProps,
+} from 'components/ExperimentDroppable/ExperimentDroppableProps';
+import { connect } from 'react-redux';
+import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
+import { deleteExperiment } from 'store/actions/ExperimentsStoreActions';
+import { SnowmanDispatch } from 'store/messages';
+import { Store } from 'store/models';
+import { getExperimentBucketFromId } from 'store/reducers/ExperimentsReducer';
 
-const getRenderItem = (allExperiments: Experiment[]) =>
-  function renderedItem(
-    provided: DraggableProvided,
-    snapshot: DraggableStateSnapshot,
-    rubric: DraggableRubric
-  ): JSX.Element {
-    const anExperiment = allExperiments[rubric.source.index];
-    if (anExperiment === undefined)
-      throw Error('referenced non-existent experiment');
+const mapStateToProps = (
+  state: Store,
+  ownProps: ExperimentDroppableOwnProps
+): ExperimentDroppableStateProps => ({
+  matchingSolutions: state.AlgorithmsStore.algorithms,
+  bucketContent: getExperimentBucketFromId(
+    state.ExperimentsStore,
+    ownProps.bucketId
+  ),
+});
 
-    return (
-      <IonRow
-        ref={provided.innerRef}
-        {...provided.dragHandleProps}
-        {...provided.draggableProps}
-      >
-        <IonCol>
-          <ExperimentCard
-            key={'card' + anExperiment.id}
-            experimentName={anExperiment.name}
-            algorithmName={'anOption.algorithmId'}
-            description={anExperiment.description}
-            numberOfRecords={4}
-            editExperiment={() => undefined}
-            deleteExperiment={() => undefined}
-          />
-        </IonCol>
-      </IonRow>
-    );
-  };
+const mapDispatchToProps = (
+  dispatch: SnowmanDispatch
+): ExperimentDroppableDispatchProps => ({
+  editExperiment(anExperiment: Experiment) {
+    dispatch(deleteExperiment(anExperiment)).then();
+  },
+  deleteExperiment(anExperiment: Experiment) {
+    dispatch(openChangeDialog(anExperiment)).then();
+  },
+});
 
-const ExperimentDroppable = ({
-  bucketId,
-  bucketContent,
-}: ExperimentDroppableProps): JSX.Element => {
-  const renderBucket = getRenderItem(bucketContent);
-  return (
-    <Droppable droppableId={bucketId} renderClone={renderBucket}>
-      {(provided: DroppableProvided): JSX.Element => (
-        <IonGrid {...provided.droppableProps} ref={provided.innerRef}>
-          {bucketContent.map(
-            (anExperiment: Experiment, index: number): JSX.Element => (
-              <Draggable
-                key={anExperiment.id}
-                draggableId={anExperiment.id.toString()}
-                index={index}
-              >
-                {renderBucket}
-              </Draggable>
-            )
-          )}
-          {provided.placeholder}
-        </IonGrid>
-      )}
-    </Droppable>
-  );
-};
+const ExperimentDroppable = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ExperimentDroppableView);
 
 export default ExperimentDroppable;

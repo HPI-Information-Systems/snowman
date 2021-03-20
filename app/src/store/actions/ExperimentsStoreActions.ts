@@ -1,4 +1,5 @@
-import { Experiment, ExperimentsApi } from 'api';
+import { Algorithm, Experiment, ExperimentsApi } from 'api';
+import { DropResult } from 'react-beautiful-dnd';
 import { ExperimentsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import {
   SnowmanAction,
@@ -6,31 +7,34 @@ import {
   SnowmanThunkAction,
 } from 'store/messages';
 import { SUCCESS_TO_DELETE_EXPERIMENT } from 'structs/statusMessages';
-import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
+import { getDndDescriptorFromDropResult } from 'utils/dragNDropHelpers';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
 
-export const clickOnExperimentTag = (aTag: string): easyPrimitiveActionReturn =>
+export const clickOnMatchingSolution = (
+  aMatchingSolution: Algorithm
+): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: actionTypes.CLICK_ON_TAG,
-    payload: aTag,
+    type: actionTypes.CLICK_ON_MATCHING_SOLUTION,
+    payload: aMatchingSolution,
   });
 
 export const dragExperiment = (
-  eventDescriptor: DragNDropDescriptor
+  aDropResult: DropResult
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
     type: actionTypes.DRAG_N_DROP_EXPERIMENT,
-    payload: eventDescriptor,
+    payload: getDndDescriptorFromDropResult(aDropResult),
   });
 
 export const resetSelectedExperiments = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
     type: actionTypes.RESET_SELECTED_EXPERIMENTS,
-    payload: 0,
+    // reducer ignores payload
+    payload: false,
   });
 
 export const getExperiments = (): SnowmanThunkAction<Promise<void>> => async (
@@ -52,7 +56,7 @@ export const getExperiments = (): SnowmanThunkAction<Promise<void>> => async (
   );
 
 export const deleteExperiment = (
-  id: number
+  anExperiment: Experiment
 ): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> => {
@@ -60,7 +64,7 @@ export const deleteExperiment = (
   dispatch(resetSelectedExperiments());
   return RequestHandler(
     (): Promise<void> =>
-      new ExperimentsApi().deleteExperiment({ experimentId: id }),
+      new ExperimentsApi().deleteExperiment({ experimentId: anExperiment.id }),
     dispatch,
     SUCCESS_TO_DELETE_EXPERIMENT
   ).then((): Promise<void> => dispatch(getExperiments()));

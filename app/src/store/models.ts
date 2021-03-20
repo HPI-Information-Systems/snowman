@@ -63,7 +63,7 @@ export interface DatasetsStore {
 }
 
 export interface ExperimentsStore {
-  selectedExperimentsTags: string[];
+  selectedMatchingSolutions: Algorithm[];
   availableExperiments: Experiment[];
   chosenGoldStandards: Experiment[];
   chosenExperiments: Experiment[];

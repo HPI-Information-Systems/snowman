@@ -1,4 +1,4 @@
-import { Experiment } from 'api';
+import { Algorithm, Experiment } from 'api';
 import { difference, nth } from 'lodash';
 import { ExperimentsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
@@ -11,10 +11,10 @@ const initialState: ExperimentsStore = {
   availableExperiments: [],
   chosenExperiments: [],
   chosenGoldStandards: [],
-  selectedExperimentsTags: [],
+  selectedMatchingSolutions: [],
 };
 
-const getBucketFromId = (
+export const getExperimentBucketFromId = (
   state: ExperimentsStore,
   BucketId: ExperimentBuckets
 ): Experiment[] => {
@@ -70,12 +70,12 @@ export const ExperimentsReducer = (
         ),
       };
     }
-    case actionTypes.CLICK_ON_TAG:
+    case actionTypes.CLICK_ON_MATCHING_SOLUTION:
       return {
         ...state,
-        selectedExperimentsTags: toggleSelectionArraySingleSelect(
-          state.selectedExperimentsTags,
-          action.payload as string
+        selectedMatchingSolutions: toggleSelectionArraySingleSelect<Algorithm>(
+          state.selectedMatchingSolutions,
+          action.payload as Algorithm
         ),
       };
     case actionTypes.DRAG_N_DROP_EXPERIMENT: {
@@ -84,7 +84,7 @@ export const ExperimentsReducer = (
         availableExperiments: Experiment[];
       const eventDescriptor: DragNDropDescriptor = action.payload as DragNDropDescriptor;
       const draggedExperiment: Experiment | undefined = nth(
-        getBucketFromId(state, eventDescriptor.sourceBucket),
+        getExperimentBucketFromId(state, eventDescriptor.sourceBucket),
         eventDescriptor.sourceIndex
       );
       if (draggedExperiment === undefined) return state;

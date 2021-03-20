@@ -4,7 +4,7 @@ import { SnowmanAction } from 'store/messages';
 import { ExperimentDialogStore } from 'store/models';
 import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
-import { getAlgorithmTagFromId } from 'utils/algorithmHelpers';
+import { getAlgorithmNameFromId } from 'utils/algorithmHelpers';
 import { toggleSelectionArraySingleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: ExperimentDialogStore = {
@@ -38,7 +38,7 @@ export const ExperimentDialogReducer = (
         experimentName: (action.payload as Experiment).name,
         experimentDescription: (action.payload as Experiment).description ?? '',
         selectedTags: [
-          getAlgorithmTagFromId(
+          getAlgorithmNameFromId(
             (action.payload as Experiment).algorithmId,
             action.optionalPayload as Algorithm[]
           ),

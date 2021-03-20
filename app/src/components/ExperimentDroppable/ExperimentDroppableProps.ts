@@ -1,7 +1,20 @@
-import { Experiment } from 'api';
+import { Algorithm, Experiment } from 'api';
 import { ExperimentBuckets } from 'types/ExperimentBuckets';
 
-export interface ExperimentDroppableProps {
+export interface ExperimentDroppableOwnProps {
   bucketId: ExperimentBuckets;
-  bucketContent: Experiment[];
 }
+
+export interface ExperimentDroppableStateProps {
+  bucketContent: Experiment[];
+  matchingSolutions: Algorithm[];
+}
+
+export interface ExperimentDroppableDispatchProps {
+  editExperiment(anExperiment: Experiment): void;
+  deleteExperiment(anExperiment: Experiment): void;
+}
+
+export type ExperimentDroppableProps = ExperimentDroppableOwnProps &
+  ExperimentDroppableDispatchProps &
+  ExperimentDroppableStateProps;

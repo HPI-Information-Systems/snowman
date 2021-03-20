@@ -12,7 +12,7 @@ import {
   SUCCESS_TO_UPLOAD_EXPERIMENT_FILE,
 } from 'structs/statusMessages';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
-import { getAlgorithmIdFromTag } from 'utils/algorithmHelpers';
+import { getAlgorithmIdFromName } from 'utils/algorithmHelpers';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
@@ -27,14 +27,14 @@ export const openAddDialog = (): easyPrimitiveActionReturn =>
   });
 
 export const openChangeDialog = (
-  experimentId: number
+  anExperiment: Experiment
 ): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> => {
   return RequestHandler(
     (): Promise<void> =>
       new ExperimentsApi()
-        .getExperiment({ experimentId: experimentId })
+        .getExperiment({ experimentId: anExperiment.id })
         .then((anExperiment: Experiment): void => {
           dispatch({
             type: actionTypes.OPEN_CHANGE_DIALOG,
@@ -109,7 +109,7 @@ const createNewExperiment = (): SnowmanThunkAction<Promise<number>> => async (
           description: store.getState().ExperimentDialogStore
             .experimentDescription,
           datasetId: store.getState().DatasetsStore.selectedDataset?.id ?? -1,
-          algorithmId: getAlgorithmIdFromTag(
+          algorithmId: getAlgorithmIdFromName(
             store.getState().ExperimentDialogStore.selectedTags[0] ?? [],
             store.getState().AlgorithmsStore.algorithms
           ),
@@ -161,7 +161,7 @@ const editExistingExperiment = (): SnowmanThunkAction<Promise<void>> => async (
           datasetId:
             store.getState().DatasetsStore.selectedDataset?.id ??
             MagicNotPossibleId,
-          algorithmId: getAlgorithmIdFromTag(
+          algorithmId: getAlgorithmIdFromName(
             store.getState().ExperimentDialogStore.selectedTags[0] ?? 'Unknown',
             store.getState().AlgorithmsStore.algorithms
           ),

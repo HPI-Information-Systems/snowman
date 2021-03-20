@@ -1,73 +1,61 @@
 import 'pages/ExperimentsPage/ExperimentsPageStyles.css';
 
 import { IonChip, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react';
+import { Algorithm } from 'api';
 import AddExperimentFab from 'components/AddFab/AddExperimentFab';
 import ExperimentDialog from 'components/ExperimentDialog/ExperimentDialog';
 import ExperimentDroppable from 'components/ExperimentDroppable/ExperimentDroppable';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { ExperimentsPageProps } from 'pages/ExperimentsPage/ExperimentsPageProps';
 import React, { useEffect } from 'react';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 import { ExperimentBuckets } from 'types/ExperimentBuckets';
+import { isMatchingSolutionSelected } from 'utils/algorithmHelpers';
 
 const ExperimentsPageView = ({
-  availableExperiments,
   matchingSolutions,
   selectedMatchingSolutions,
-  chosenExperiments,
-  chosenGoldstandards,
-  clickOnTag,
+  clickOnMatchingSolution,
   dragExperiment,
-  deleteExperiment,
-  editExperiment,
   loadExperiments,
 }: ExperimentsPageProps): JSX.Element => {
-  useEffect((): void => loadExperiments(), [loadExperiments]);
+  useEffect(loadExperiments, [loadExperiments]);
   return (
     <PageStruct title="Experiments Selector" showNextFab={true}>
       {matchingSolutions.map(
-        (aTag: string): JSX.Element => (
+        (aMatchingSolution: Algorithm): JSX.Element => (
           <IonChip
             color={
-              selectedMatchingSolutions.includes(aTag) ? 'primary' : 'dark'
+              isMatchingSolutionSelected(
+                aMatchingSolution,
+                selectedMatchingSolutions
+              )
+                ? 'primary'
+                : 'dark'
             }
             outline={false}
-            key={aTag}
-            onClick={(): void => clickOnTag(aTag)}
+            key={aMatchingSolution.id}
+            onClick={(): void => clickOnMatchingSolution(aMatchingSolution)}
           >
-            <IonLabel>{aTag}</IonLabel>
+            <IonLabel>{aMatchingSolution.name}</IonLabel>
           </IonChip>
         )
       )}
       <IonGrid>
         <IonRow>
-          <DragDropContext
-            onDragEnd={(aDropResult: DropResult): void =>
-              dragExperiment({
-                sourceBucket: aDropResult.source
-                  .droppableId as ExperimentBuckets,
-                sourceIndex: aDropResult.source.index,
-                targetBucket: (aDropResult.destination?.droppableId ??
-                  ExperimentBuckets.AVAILABLE_EXPERIMENTS) as ExperimentBuckets,
-                targetIndex: aDropResult.destination?.index ?? 0,
-              })
-            }
-          >
-            <IonCol size="4" class="dropable-zone">
+          <DragDropContext onDragEnd={dragExperiment}>
+            <IonCol size="4" class="droppable-zone">
               <ExperimentDroppable
-                bucketContent={availableExperiments}
                 bucketId={ExperimentBuckets.AVAILABLE_EXPERIMENTS}
               />
             </IonCol>
-            <IonCol size="4" class="dropable-zone">
+            <IonCol size="4" class="droppable-zone">
               <ExperimentDroppable
-                bucketContent={chosenExperiments}
                 bucketId={ExperimentBuckets.CHOSEN_EXPERIMENTS}
               />
             </IonCol>
-            <IonCol size="4" class="dropable-zone">
+            <IonCol size="4" class="droppable-zone">
               <ExperimentDroppable
-                bucketContent={chosenGoldstandards}
                 bucketId={ExperimentBuckets.CHOSEN_GOLDSTANDARDS}
               />
             </IonCol>
