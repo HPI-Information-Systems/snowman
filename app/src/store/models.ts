@@ -11,11 +11,6 @@ import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { ViewIDs } from 'types/ViewIDs';
 
-export interface RenderLogicStore {
-  currentViewID: ViewIDs;
-  couldGoNext: boolean;
-}
-
 export interface AlgorithmDialogStore {
   algorithmId: number | null;
   algorithmName: string;
@@ -52,23 +47,6 @@ export interface ExperimentDialogStore {
   selectedFiles: File[];
 }
 
-export interface AlgorithmsStore {
-  algorithms: Algorithm[];
-}
-
-export interface DatasetsStore {
-  datasets: Dataset[];
-  selectedDatasetTags: string[];
-  selectedDataset: Dataset | null;
-}
-
-export interface ExperimentsStore {
-  selectedMatchingSolutions: Algorithm[];
-  availableExperiments: Experiment[];
-  chosenGoldStandards: Experiment[];
-  chosenExperiments: Experiment[];
-}
-
 export interface GlobalIndicatorStore {
   showLoading: boolean;
   ongoingRequestsCount: number;
@@ -85,6 +63,26 @@ export interface SelectableInputStore {
   searchString: string;
 }
 
+export interface CoreStore {
+  algorithms: Algorithm[];
+  datasets: Dataset[];
+  experiments: Experiment[];
+}
+
+export interface RenderLogicStore {
+  currentViewID: ViewIDs;
+  couldGoNext: boolean;
+}
+
+export interface BenchmarkConfigurationStore {
+  selectedDatasetCategories: string[];
+  selectedDataset: Dataset | null;
+  selectedMatchingSolutions: Algorithm[];
+  availableExperiments: Experiment[];
+  chosenGoldStandards: Experiment[];
+  chosenExperiments: Experiment[];
+}
+
 export interface BinaryMetricsStore {
   metrics: Metric[];
   falsePositives: ExperimentIntersection | undefined;
@@ -94,14 +92,13 @@ export interface BinaryMetricsStore {
 }
 
 export interface ImmediateStore {
-  DatasetsStore: DatasetsStore;
-  ExperimentsStore: ExperimentsStore;
-  AlgorithmsStore: AlgorithmsStore;
+  CoreStore: CoreStore;
+  AlgorithmDialogStore: AlgorithmDialogStore;
   DatasetDialogStore: DatasetDialogStore;
   ExperimentDialogStore: ExperimentDialogStore;
-  AlgorithmDialogStore: AlgorithmDialogStore;
-  GlobalIndicatorStore: GlobalIndicatorStore;
+  BenchmarkConfigurationStore: BenchmarkConfigurationStore;
   BinaryMetricsStore: BinaryMetricsStore;
+  GlobalIndicatorStore: GlobalIndicatorStore;
   InputChipStore: InputChipStore;
   SelectableInputStore: SelectableInputStore;
 }

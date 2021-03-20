@@ -9,10 +9,10 @@ export interface DatasetsPageStateProps {
 
 export interface DatasetsPageDispatchProps {
   clickOnTag(aTag: string): void;
-  clickOnDataset(aDatasetId: number): void;
+  clickOnDataset(aDataset: Dataset): void;
   loadDatasets(): void;
-  deleteDataset(aDatasetId: number): void;
-  editDataset(aDatasetId: number): void;
+  deleteDataset(aDataset: Dataset): void;
+  editDataset(aDataset: Dataset): void;
 }
 
 export type DatasetsPageProps = DatasetsPageDispatchProps &

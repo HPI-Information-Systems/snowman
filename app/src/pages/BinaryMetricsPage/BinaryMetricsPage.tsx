@@ -67,7 +67,7 @@ const mapStateToProps = (state: Store): BinaryMetricsPageStateProps => ({
   ),
   confusionMatrix: {
     totalCount: Math.pow(
-      state.DatasetsStore.selectedDataset?.numberOfRecords ?? 0,
+      state.BenchmarkConfigurationStore.selectedDataset?.numberOfRecords ?? 0,
       2
     ),
     // Todo: Replace with API value in later PR
@@ -80,7 +80,8 @@ const mapStateToProps = (state: Store): BinaryMetricsPageStateProps => ({
       state.BinaryMetricsStore.falsePositives !== undefined &&
       state.BinaryMetricsStore.truePositives?.data.length !== undefined
         ? Math.pow(
-            state.DatasetsStore.selectedDataset?.numberOfRecords ?? 0,
+            state.BenchmarkConfigurationStore.selectedDataset
+              ?.numberOfRecords ?? 0,
             2
           ) -
           ((state.BinaryMetricsStore.falseNegatives?.data.length ?? 0) +

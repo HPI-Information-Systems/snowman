@@ -1,6 +1,6 @@
 import { Dataset, DatasetsApi } from 'api';
 import { DatasetDialogStoreActionTypes as DialogActionsTypes } from 'store/actions/actionTypes';
-import { getDatasets } from 'store/actions/DatasetsStoreActions';
+import { getDatasets } from 'store/actions/CoreStoreActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
 import { MagicNotPossibleId } from 'structs/constants';
@@ -20,7 +20,7 @@ import { getTagsFromDatasets } from 'utils/tagFactory';
 const loadAvailableTags = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
     type: DialogActionsTypes.LOAD_AVAILABLE_TAGS,
-    payload: getTagsFromDatasets(store.getState().DatasetsStore.datasets),
+    payload: getTagsFromDatasets(store.getState().CoreStore.datasets),
   });
 
 export const openAddDialog = (): SnowmanThunkAction<void> => (
@@ -35,14 +35,14 @@ export const openAddDialog = (): SnowmanThunkAction<void> => (
 };
 
 export const openChangeDialog = (
-  datasetId: number
+  aDataset: Dataset
 ): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> => {
   return RequestHandler(
     (): Promise<void> =>
       new DatasetsApi()
-        .getDataset({ datasetId: datasetId })
+        .getDataset({ datasetId: aDataset.id })
         .then((aDataset: Dataset): void => {
           dispatch({
             type: DialogActionsTypes.OPEN_CHANGE_DIALOG,

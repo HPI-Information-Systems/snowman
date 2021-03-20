@@ -4,9 +4,4 @@ export const couldAlwaysEnterPage = (): boolean => true;
 export const couldNeverEnterPage = (): boolean => false;
 export const couldEnterExperimentsSelector = (
   aState: ImmediateStore
-): boolean => aState.DatasetsStore.selectedDataset !== null;
-export const couldEnterBenchmarkConfigurator = (
-  aState: ImmediateStore
-): boolean =>
-  aState.ExperimentsStore.chosenExperiments.length > 1 &&
-  couldEnterExperimentsSelector(aState);
+): boolean => aState.BenchmarkConfigurationStore.selectedDataset !== null;

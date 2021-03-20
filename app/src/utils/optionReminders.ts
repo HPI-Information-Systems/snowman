@@ -3,11 +3,11 @@ import { ImmediateStore } from 'store/models';
 
 export const emptySelectedOptions = (): string[] => [];
 export const selectedDataset = (aState: ImmediateStore): string[] =>
-  aState.DatasetsStore.selectedDataset === null
+  aState.BenchmarkConfigurationStore.selectedDataset === null
     ? []
-    : [aState.DatasetsStore.selectedDataset.name];
+    : [aState.BenchmarkConfigurationStore.selectedDataset.name];
 export const selectedExperiments = (aState: ImmediateStore): string[] =>
-  aState.ExperimentsStore.chosenExperiments.map(
+  aState.BenchmarkConfigurationStore.chosenExperiments.map(
     (anExperiment: Experiment) => anExperiment.name
   );
 

@@ -57,9 +57,9 @@ const DatasetsPageView = ({
                 totalCount={aDataset.numberOfRecords}
                 uploadedCount={aDataset.numberOfUploadedRecords}
                 isSelected={selectedDataset.includes(aDataset.id)}
-                selectDataset={() => clickOnDataset(aDataset.id)}
-                deleteDataset={() => deleteDataset(aDataset.id)}
-                editDataset={() => editDataset(aDataset.id)}
+                selectDataset={() => clickOnDataset(aDataset)}
+                deleteDataset={() => deleteDataset(aDataset)}
+                editDataset={() => editDataset(aDataset)}
               />
             </IonCol>
           ))}

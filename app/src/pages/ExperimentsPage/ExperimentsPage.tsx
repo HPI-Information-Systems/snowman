@@ -6,17 +6,18 @@ import {
 } from 'pages/ExperimentsPage/ExperimentsPageProps';
 import { DropResult } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
+import { getExperiments } from 'store/actions/CoreStoreActions';
 import {
   clickOnMatchingSolution,
-  dragExperiment,
-  getExperiments,
-} from 'store/actions/ExperimentsStoreActions';
+  dragNDropAnExperiment,
+} from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 
 const mapStateToProps = (state: Store): ExperimentsPageStateProps => ({
-  matchingSolutions: state.AlgorithmsStore.algorithms,
-  selectedMatchingSolutions: state.ExperimentsStore.selectedMatchingSolutions,
+  matchingSolutions: state.CoreStore.algorithms,
+  selectedMatchingSolutions:
+    state.BenchmarkConfigurationStore.selectedMatchingSolutions,
 });
 
 const mapDispatchToProps = (
@@ -26,7 +27,7 @@ const mapDispatchToProps = (
     dispatch(clickOnMatchingSolution(aMatchingSolution));
   },
   dragExperiment(dragResult: DropResult): void {
-    dispatch(dragExperiment(dragResult));
+    dispatch(dragNDropAnExperiment(dragResult));
   },
   loadExperiments(): void {
     dispatch(getExperiments()).then();

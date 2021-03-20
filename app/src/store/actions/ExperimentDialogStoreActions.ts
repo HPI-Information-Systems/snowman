@@ -2,7 +2,7 @@ import 'types/ExperimentFileFormats';
 
 import { Experiment, ExperimentsApi } from 'api';
 import { ExperimentDialogStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
-import { getExperiments } from 'store/actions/ExperimentsStoreActions';
+import { getExperiments } from 'store/actions/CoreStoreActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
 import { MagicNotPossibleId } from 'structs/constants';
@@ -39,7 +39,7 @@ export const openChangeDialog = (
           dispatch({
             type: actionTypes.OPEN_CHANGE_DIALOG,
             payload: anExperiment,
-            optionalPayload: store.getState().AlgorithmsStore.algorithms,
+            optionalPayload: store.getState().CoreStore.algorithms,
           });
         }),
     dispatch
@@ -108,10 +108,12 @@ const createNewExperiment = (): SnowmanThunkAction<Promise<number>> => async (
           name: store.getState().ExperimentDialogStore.experimentName,
           description: store.getState().ExperimentDialogStore
             .experimentDescription,
-          datasetId: store.getState().DatasetsStore.selectedDataset?.id ?? -1,
+          datasetId:
+            store.getState().BenchmarkConfigurationStore.selectedDataset?.id ??
+            -1,
           algorithmId: getAlgorithmIdFromName(
             store.getState().ExperimentDialogStore.selectedTags[0] ?? [],
-            store.getState().AlgorithmsStore.algorithms
+            store.getState().CoreStore.algorithms
           ),
         },
       }),
@@ -159,11 +161,11 @@ const editExistingExperiment = (): SnowmanThunkAction<Promise<void>> => async (
           description: store.getState().ExperimentDialogStore
             .experimentDescription,
           datasetId:
-            store.getState().DatasetsStore.selectedDataset?.id ??
+            store.getState().BenchmarkConfigurationStore.selectedDataset?.id ??
             MagicNotPossibleId,
           algorithmId: getAlgorithmIdFromName(
             store.getState().ExperimentDialogStore.selectedTags[0] ?? 'Unknown',
-            store.getState().AlgorithmsStore.algorithms
+            store.getState().CoreStore.algorithms
           ),
         },
       }),

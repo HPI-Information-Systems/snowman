@@ -6,19 +6,19 @@ import {
   ExperimentDroppableStateProps,
 } from 'components/ExperimentDroppable/ExperimentDroppableProps';
 import { connect } from 'react-redux';
+import { deleteExperiment } from 'store/actions/CoreStoreActions';
 import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
-import { deleteExperiment } from 'store/actions/ExperimentsStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-import { getExperimentBucketFromId } from 'store/reducers/ExperimentsReducer';
+import { getExperimentBucketFromId } from 'store/reducers/BenchmarkConfiguratorReducer';
 
 const mapStateToProps = (
   state: Store,
   ownProps: ExperimentDroppableOwnProps
 ): ExperimentDroppableStateProps => ({
-  matchingSolutions: state.AlgorithmsStore.algorithms,
+  matchingSolutions: state.CoreStore.algorithms,
   bucketContent: getExperimentBucketFromId(
-    state.ExperimentsStore,
+    state.BenchmarkConfigurationStore,
     ownProps.bucketId
   ),
 });

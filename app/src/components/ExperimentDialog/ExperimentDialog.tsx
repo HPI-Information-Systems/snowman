@@ -40,7 +40,7 @@ const mapStateToProps = (state: Store): ExperimentDialogStateProps => ({
   isAddDialog: state.ExperimentDialogStore.experimentId === null,
   experimentName: state.ExperimentDialogStore.experimentName,
   experimentDescription: state.ExperimentDialogStore.experimentDescription,
-  tags: state.AlgorithmsStore.algorithms.map(
+  tags: state.CoreStore.algorithms.map(
     (anAlgorithm: Algorithm): string => anAlgorithm.name
   ),
   selectedTags: state.ExperimentDialogStore.selectedTags,
