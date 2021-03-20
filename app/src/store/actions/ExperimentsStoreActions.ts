@@ -19,14 +19,6 @@ export const clickOnExperimentTag = (aTag: string): easyPrimitiveActionReturn =>
     payload: aTag,
   });
 
-export const clickOnExperiment = (
-  selectedExperimentId: number
-): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
-    type: actionTypes.CLICK_ON_EXPERIMENT,
-    payload: selectedExperimentId,
-  });
-
 export const dragExperiment = (
   eventDescriptor: DragNDropDescriptor
 ): easyPrimitiveActionReturn =>
