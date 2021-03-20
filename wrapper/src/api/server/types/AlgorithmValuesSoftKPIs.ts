@@ -52,7 +52,8 @@ export enum AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum {
     Starter = 'starter',
     Intermediate = 'intermediate',
     Expert = 'expert'
-}/**
+}
+/**
 * @export
 * @enum {string}
 */
