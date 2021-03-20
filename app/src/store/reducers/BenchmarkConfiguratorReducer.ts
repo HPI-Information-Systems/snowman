@@ -113,13 +113,14 @@ const BenchmarkConfiguratorImmediateReducer = (
           anExperiment.id !== draggedExperiment.id
       );
       switch (eventDescriptor.targetBucket) {
-        case ExperimentBuckets.CHOSEN_GOLDSTANDARDS:
-          chosenGoldstandards = insertExperimentAt(
-            chosenGoldstandards,
-            draggedExperiment,
-            eventDescriptor.targetIndex
-          );
+        case ExperimentBuckets.CHOSEN_GOLDSTANDARDS: {
+          availableExperiments = [
+            ...availableExperiments,
+            ...chosenGoldstandards,
+          ];
+          chosenGoldstandards = [draggedExperiment];
           break;
+        }
         case ExperimentBuckets.CHOSEN_EXPERIMENTS:
           chosenExperiments = insertExperimentAt(
             chosenExperiments,
@@ -157,20 +158,20 @@ export const BenchmarkConfiguratorReducer = (
     coreState,
     action
   );
-  const chosenExperiments: Experiment[] = immediateState.chosenExperiments.filter(
+  const finalChosenExperiments: Experiment[] = immediateState.chosenExperiments.filter(
     (anExperiment: Experiment): boolean =>
       anExperiment.datasetId ===
       (immediateState.selectedDataset?.id ?? MagicNotPossibleId)
   );
-  const chosenGoldStandards: Experiment[] = immediateState.chosenGoldStandards.filter(
+  const finalChosenGoldStandards: Experiment[] = immediateState.chosenGoldStandards.filter(
     (anExperiment: Experiment): boolean =>
       anExperiment.datasetId ===
       (immediateState.selectedDataset?.id ?? MagicNotPossibleId)
   );
   return {
     ...immediateState,
-    chosenExperiments: chosenExperiments,
-    chosenGoldStandards: chosenGoldStandards,
+    chosenExperiments: finalChosenExperiments,
+    chosenGoldStandards: finalChosenGoldStandards,
     availableExperiments: difference(
       coreState.experiments
         .filter(
@@ -186,7 +187,7 @@ export const BenchmarkConfiguratorReducer = (
               ) !== undefined
             : true
         ),
-      union(chosenExperiments, ownState.chosenExperiments)
+      union(finalChosenExperiments, finalChosenGoldStandards)
     ),
   };
 };
