@@ -31,7 +31,7 @@ const AppView = ({
   loadInitialState,
   currentViewId,
 }: AppProps): JSX.Element => {
-  useEffect((): void => loadInitialState(), [loadInitialState]);
+  useEffect(loadInitialState, [loadInitialState]);
   return (
     <IonApp>
       <IonSplitPane
