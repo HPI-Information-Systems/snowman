@@ -69,7 +69,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     key: ViewIDs.BINARY_METRICS,
     component: BinaryMetricsPage,
     nextView: ViewIDs.BINARY_METRICS,
-    accessGuard: accessGuards.couldAlwaysEnterPage,
+    accessGuard: accessGuards.couldEnterBinaryMetricsPage,
     shouldShowInMenu: true,
     menuCategory: menuCategories.WORKFLOW,
     menuName: 'Binary Metrics',
