@@ -79,9 +79,6 @@ const BenchmarkConfiguratorImmediateReducer = (
         ? {
             ...ownState,
             selectedDataset: action.payload as Dataset,
-            availableExperiments: [],
-            chosenExperiments: [],
-            chosenGoldStandards: [],
           }
         : ownState;
     }
@@ -160,8 +157,20 @@ export const BenchmarkConfiguratorReducer = (
     coreState,
     action
   );
+  const chosenExperiments: Experiment[] = immediateState.chosenExperiments.filter(
+    (anExperiment: Experiment): boolean =>
+      anExperiment.datasetId ===
+      (immediateState.selectedDataset?.id ?? MagicNotPossibleId)
+  );
+  const chosenGoldStandards: Experiment[] = immediateState.chosenGoldStandards.filter(
+    (anExperiment: Experiment): boolean =>
+      anExperiment.datasetId ===
+      (immediateState.selectedDataset?.id ?? MagicNotPossibleId)
+  );
   return {
     ...immediateState,
+    chosenExperiments: chosenExperiments,
+    chosenGoldStandards: chosenGoldStandards,
     availableExperiments: difference(
       coreState.experiments
         .filter(
@@ -177,7 +186,7 @@ export const BenchmarkConfiguratorReducer = (
               ) !== undefined
             : true
         ),
-      union(ownState.chosenGoldStandards, ownState.chosenExperiments)
+      union(chosenExperiments, ownState.chosenExperiments)
     ),
   };
 };
