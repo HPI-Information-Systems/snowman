@@ -51,8 +51,8 @@ const insertExperimentAt = (
         ...sourceList.slice(targetIndex),
       ];
 
-export const BenchmarkConfiguratorReducer = (
-  ownState: BenchmarkConfigurationStore = initialState,
+const BenchmarkConfiguratorImmediateReducer = (
+  ownState: BenchmarkConfigurationStore,
   coreState: CoreStore,
   action: SnowmanAction
 ): BenchmarkConfigurationStore => {
@@ -79,42 +79,20 @@ export const BenchmarkConfiguratorReducer = (
         ? {
             ...ownState,
             selectedDataset: action.payload as Dataset,
-            availableExperiments: coreState.experiments.filter(
-              (anExperiment: Experiment): boolean =>
-                anExperiment.datasetId === (action.payload as Dataset).id
-            ),
+            availableExperiments: [],
             chosenExperiments: [],
             chosenGoldStandards: [],
           }
         : ownState;
     }
-    case ExperimentsPageActionTypes.CLICK_ON_MATCHING_SOLUTION: {
-      const resultingSelectedMatchingSolutions: Algorithm[] = toggleSelectionArraySingleSelect<Algorithm>(
-        ownState.selectedMatchingSolutions,
-        action.payload as Algorithm
-      );
+    case ExperimentsPageActionTypes.CLICK_ON_MATCHING_SOLUTION:
       return {
         ...ownState,
-        selectedMatchingSolutions: resultingSelectedMatchingSolutions,
-        availableExperiments: difference(
-          coreState.experiments
-            .filter(
-              (anExperiment: Experiment): boolean =>
-                anExperiment.datasetId ===
-                (ownState.selectedDataset?.id ?? MagicNotPossibleId)
-            )
-            .filter((anExperiment: Experiment): boolean =>
-              resultingSelectedMatchingSolutions.length > 0
-                ? resultingSelectedMatchingSolutions.find(
-                    (aMatchingSolution: Algorithm): boolean =>
-                      anExperiment.algorithmId === aMatchingSolution.id
-                  ) !== undefined
-                : true
-            ),
-          union(ownState.chosenGoldStandards, ownState.chosenExperiments)
+        selectedMatchingSolutions: toggleSelectionArraySingleSelect<Algorithm>(
+          ownState.selectedMatchingSolutions,
+          action.payload as Algorithm
         ),
       };
-    }
     case ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT: {
       let chosenExperiments,
         chosenGoldstandards,
@@ -170,4 +148,36 @@ export const BenchmarkConfiguratorReducer = (
     default:
       return ownState;
   }
+};
+
+export const BenchmarkConfiguratorReducer = (
+  ownState: BenchmarkConfigurationStore = initialState,
+  coreState: CoreStore,
+  action: SnowmanAction
+): BenchmarkConfigurationStore => {
+  const immediateState: BenchmarkConfigurationStore = BenchmarkConfiguratorImmediateReducer(
+    ownState,
+    coreState,
+    action
+  );
+  return {
+    ...immediateState,
+    availableExperiments: difference(
+      coreState.experiments
+        .filter(
+          (anExperiment: Experiment): boolean =>
+            anExperiment.datasetId ===
+            (ownState.selectedDataset?.id ?? MagicNotPossibleId)
+        )
+        .filter((anExperiment: Experiment): boolean =>
+          immediateState.selectedMatchingSolutions.length > 0
+            ? immediateState.selectedMatchingSolutions.find(
+                (aMatchingSolution: Algorithm): boolean =>
+                  anExperiment.algorithmId === aMatchingSolution.id
+              ) !== undefined
+            : true
+        ),
+      union(ownState.chosenGoldStandards, ownState.chosenExperiments)
+    ),
+  };
 };
