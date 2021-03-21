@@ -55,9 +55,9 @@ export class IntersectionCounts extends IntersectionBase {
           ++clusterCount;
         }
       }
-      return rowCount + clusterCount - 1;
+      return rowCount + Math.max(0, clusterCount - 1);
     } else {
-      return this.pairCount * 2 + this.pairCount - 1;
+      return this.pairCount * 2 + Math.max(0, this.pairCount - 1);
     }
   }
 }
