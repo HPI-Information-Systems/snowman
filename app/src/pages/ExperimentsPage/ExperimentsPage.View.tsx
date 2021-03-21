@@ -22,39 +22,44 @@ const ExperimentsPageView = ({
   useEffect(loadExperiments, [loadExperiments]);
   return (
     <PageStruct title="Experiments Selector" showNextFab={true}>
-      {matchingSolutions.map(
-        (aMatchingSolution: Algorithm): JSX.Element => (
-          <IonChip
-            color={
-              isMatchingSolutionSelected(
-                aMatchingSolution,
-                selectedMatchingSolutions
-              )
-                ? 'primary'
-                : 'dark'
-            }
-            outline={false}
-            key={aMatchingSolution.id}
-            onClick={(): void => clickOnMatchingSolution(aMatchingSolution)}
-          >
-            <IonLabel>{aMatchingSolution.name}</IonLabel>
-          </IonChip>
-        )
-      )}
       <IonGrid>
         <IonRow>
           <DragDropContext onDragEnd={dragExperiment}>
             <IonCol size="4" class="droppable-zone">
+              <h2>Available Experiments</h2>
+              {matchingSolutions.map(
+                (aMatchingSolution: Algorithm): JSX.Element => (
+                  <IonChip
+                    color={
+                      isMatchingSolutionSelected(
+                        aMatchingSolution,
+                        selectedMatchingSolutions
+                      )
+                        ? 'primary'
+                        : 'dark'
+                    }
+                    outline={false}
+                    key={aMatchingSolution.id}
+                    onClick={(): void =>
+                      clickOnMatchingSolution(aMatchingSolution)
+                    }
+                  >
+                    <IonLabel>{aMatchingSolution.name}</IonLabel>
+                  </IonChip>
+                )
+              )}
               <ExperimentDroppable
                 bucketId={ExperimentBuckets.AVAILABLE_EXPERIMENTS}
               />
             </IonCol>
             <IonCol size="4" class="droppable-zone">
+              <h2>Selected Experiments</h2>
               <ExperimentDroppable
                 bucketId={ExperimentBuckets.CHOSEN_EXPERIMENTS}
               />
             </IonCol>
             <IonCol size="4" class="droppable-zone">
+              <h2>Selected Ground Truth</h2>
               <ExperimentDroppable
                 bucketId={ExperimentBuckets.CHOSEN_GOLDSTANDARDS}
               />
