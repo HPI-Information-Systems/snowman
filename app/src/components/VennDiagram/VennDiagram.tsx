@@ -25,7 +25,7 @@ export const VennDiagram = ({ sets }: VennDiagramProps): JSX.Element => {
 
   useEffect((): void => {
     if (svgSelection == null) throw Error('VennDiagram canvas not rendered');
-    if (tooltip == null) throw Error('VennDiagram canvas not rendered');
+    if (tooltip == null) throw Error('Tooltip element not rendered');
 
     switch (sets.length) {
       case 3:
