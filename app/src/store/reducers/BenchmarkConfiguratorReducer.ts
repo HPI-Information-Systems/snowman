@@ -162,15 +162,20 @@ export const BenchmarkConfiguratorReducer = (
     coreState,
     action
   );
-  const finalChosenExperiments: Experiment[] = immediateState.chosenExperiments.filter(
-    (anExperiment: Experiment): boolean =>
-      anExperiment.datasetId ===
-      (immediateState.selectedDataset?.id ?? MagicNotPossibleId)
+  const cleanUpBucket = (aBucket: Experiment[]): Experiment[] =>
+    coreState.experiments.filter(
+      (anExperiment: Experiment): boolean =>
+        anExperiment.datasetId ===
+          (immediateState.selectedDataset?.id ?? MagicNotPossibleId) &&
+        aBucket
+          .map((oneExperiment: Experiment): number => oneExperiment.id)
+          .includes(anExperiment.id)
+    );
+  const finalChosenExperiments: Experiment[] = cleanUpBucket(
+    immediateState.chosenExperiments
   );
-  const finalChosenGoldStandards: Experiment[] = immediateState.chosenGoldStandards.filter(
-    (anExperiment: Experiment): boolean =>
-      anExperiment.datasetId ===
-      (immediateState.selectedDataset?.id ?? MagicNotPossibleId)
+  const finalChosenGoldStandards: Experiment[] = cleanUpBucket(
+    immediateState.chosenGoldStandards
   );
   return {
     ...immediateState,
