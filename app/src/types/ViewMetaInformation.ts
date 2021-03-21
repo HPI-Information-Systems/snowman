@@ -1,8 +1,8 @@
 import { FC, LazyExoticComponent } from 'react';
 import { ImmediateStore } from 'store/models';
 import { menuCategories } from 'types/MenuCategories';
+import { SelectedOptionItem } from 'types/SelectedOptionItem';
 import { ViewIDs } from 'types/ViewIDs';
-import { ISelectedOptionsMap } from 'utils/optionReminders';
 
 export type ViewComponent = LazyExoticComponent<FC<unknown>> | FC;
 
@@ -19,5 +19,5 @@ export interface ViewMetaInformation {
 
   accessGuard(aState: ImmediateStore): boolean;
 
-  selectedOptionsReminder(selectedOptions: ISelectedOptionsMap): string[];
+  selectedOptionsReminder(aState: ImmediateStore): SelectedOptionItem[];
 }

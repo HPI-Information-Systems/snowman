@@ -4,7 +4,7 @@ import { ImmediateStore, RenderLogicStore, Store } from 'store/models';
 import { ViewIDs } from 'types/ViewIDs';
 import { couldNavigateToView, getNextViewId } from 'utils/viewMetaInfoHandlers';
 
-export const initialRenderLogicState: RenderLogicStore = {
+const initialRenderLogicState: RenderLogicStore = {
   currentViewID: ViewIDs.HOME,
   couldGoNext: true,
 };

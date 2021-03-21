@@ -1,10 +1,10 @@
 import { FileResponse, Metric } from 'api';
-import { MetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
+import { BinaryMetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
-import { MetricsStore } from 'store/models';
+import { BinaryMetricsStore } from 'store/models';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
-const initialState: MetricsStore = {
+const initialState: BinaryMetricsStore = {
   metrics: [],
   falseNegatives: undefined,
   falsePositives: undefined,
@@ -12,10 +12,10 @@ const initialState: MetricsStore = {
   selectedDataView: MetricsTuplesCategories.falsePositives,
 };
 
-export const MetricsReducer = (
-  state: MetricsStore = initialState,
+export const BinaryMetricsReducer = (
+  state: BinaryMetricsStore = initialState,
   action: SnowmanAction
-): MetricsStore => {
+): BinaryMetricsStore => {
   switch (action.type) {
     case actionTypes.RESET_METRICS:
       return {

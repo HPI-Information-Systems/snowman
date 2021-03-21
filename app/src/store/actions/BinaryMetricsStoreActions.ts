@@ -1,5 +1,5 @@
 import { BenchmarkApi, FileResponse, Metric } from 'api';
-import { MetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
+import { BinaryMetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import {
   SnowmanAction,
   SnowmanDispatch,
@@ -14,15 +14,11 @@ import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import RequestHandler from 'utils/requestHandler';
 
 const getGroundTruthId = (): number => {
-  const selectedExperiments = store.getState().ExperimentsStore
-    .selectedExperiments;
-  return selectedExperiments[0];
+  return store.getState().BenchmarkConfigurationStore.chosenGoldStandards[0].id;
 };
 
 const getExperiment1Id = (): number => {
-  const selectedExperiments = store.getState().ExperimentsStore
-    .selectedExperiments;
-  return selectedExperiments[1];
+  return store.getState().BenchmarkConfigurationStore.chosenExperiments[0].id;
 };
 
 export const loadMetrics = (): SnowmanThunkAction<Promise<void>> => async (

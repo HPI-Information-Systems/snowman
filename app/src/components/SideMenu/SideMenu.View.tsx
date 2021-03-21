@@ -17,6 +17,7 @@ import {
   SideMenuProps,
 } from 'components/SideMenu/SideMenuProps';
 import React from 'react';
+import { SelectedOptionItem } from 'types/SelectedOptionItem';
 
 const SideMenuView = ({
   categoryStructure,
@@ -53,8 +54,13 @@ const SideMenuView = ({
                     <IonLabel>
                       <h2>{aCategoryItem.name}</h2>
                       {aCategoryItem.selectedOptions.map(
-                        (anOption: string): JSX.Element => (
-                          <p key={anOption}>{anOption}</p>
+                        (anOption: SelectedOptionItem): JSX.Element => (
+                          <p key={anOption.displayName}>
+                            {anOption.icon !== null ? (
+                              <IonIcon icon={anOption.icon} />
+                            ) : null}
+                            {anOption.displayName}
+                          </p>
                         )
                       )}
                     </IonLabel>

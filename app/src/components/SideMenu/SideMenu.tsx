@@ -15,29 +15,6 @@ import { ViewMetaInformationCollection } from 'structs/viewMetaInfoCollection';
 import { menuCategories } from 'types/MenuCategories';
 import { ViewIDs } from 'types/ViewIDs';
 import { ViewMetaInformation } from 'types/ViewMetaInformation';
-import { getExperimentNameFromId } from 'utils/experimentsHelpers';
-
-const getSelectedOptionsFromPathMapper = (
-  aViewMetaInfo: ViewMetaInformation,
-  state: Store
-): string[] => {
-  switch (aViewMetaInfo.key) {
-    case ViewIDs.DATASETS: {
-      if (state.DatasetsStore.selectedDataset === null) return [];
-      return [state.DatasetsStore.selectedDataset.name];
-    }
-    case ViewIDs.EXPERIMENTS:
-      return state.ExperimentsStore.selectedExperiments.map(
-        (anExperimentId: number, index: number): string =>
-          `${index + 1}. ${getExperimentNameFromId(
-            anExperimentId,
-            state.ExperimentsStore.experiments
-          )}`
-      );
-    default:
-      return [];
-  }
-};
 
 const getCategoryItemFromViewMetaInfo = (
   aViewMetaInfo: ViewMetaInformation,
@@ -47,7 +24,7 @@ const getCategoryItemFromViewMetaInfo = (
   key: aViewMetaInfo.key,
   menuIcon: aViewMetaInfo.menuIcon ?? skull,
   couldEnter: aViewMetaInfo.accessGuard(state),
-  selectedOptions: getSelectedOptionsFromPathMapper(aViewMetaInfo, state),
+  selectedOptions: aViewMetaInfo.selectedOptionsReminder(state),
   isActive: aViewMetaInfo.key === state.RenderLogicStore.currentViewID,
 });
 

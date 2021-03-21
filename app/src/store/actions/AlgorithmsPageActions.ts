@@ -1,6 +1,5 @@
-import { AlgorithmApi } from 'api';
-import { Algorithm } from 'api/models/Algorithm';
-import { AlgorithmsStoreActionTypes } from 'store/actions/actionTypes';
+import { Algorithm, AlgorithmApi } from 'api';
+import { CoreStoreActionTypes } from 'store/actions/actionTypes';
 import {
   SnowmanAction,
   SnowmanDispatch,
@@ -19,7 +18,7 @@ export const getAlgorithms = (): SnowmanThunkAction<Promise<void>> => async (
         .then(
           (algorithms: Algorithm[]): SnowmanAction =>
             dispatch({
-              type: AlgorithmsStoreActionTypes.SET_ALL_ALGORITHMS,
+              type: CoreStoreActionTypes.SET_ALL_ALGORITHMS,
               payload: algorithms,
             })
         )

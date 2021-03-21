@@ -1,26 +1,18 @@
-import {
-  albums,
-  documents,
-  extensionPuzzle,
-  home,
-  rocket,
-  speedometer,
-} from 'ionicons/icons';
+import { albums, documents, home, rocket, speedometer } from 'ionicons/icons';
 import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
-import BenchmarkConfiguratorPage from 'pages/BenchmarkConfiguratorPage/BenchmarkConfiguratorPage';
 import BinaryMetricsPage from 'pages/BinaryMetricsPage/BinaryMetricsPage';
 import DatasetsPage from 'pages/DatasetsPage/DatasetsPage';
 import ExperimentsPage from 'pages/ExperimentsPage/ExperimentsPage';
+import { NMetricsPage } from 'pages/NMetricsPage/NMetricsPage';
 import RootPage from 'pages/RootPage/RootPage';
 import { menuCategories } from 'types/MenuCategories';
 import { ViewIDs } from 'types/ViewIDs';
 import { ViewMetaInformation } from 'types/ViewMetaInformation';
-import * as accessGuards from 'utils/navigationGuards';
+import * as accessGuards from 'utils/accessGuards';
 import {
   emptySelectedOptions,
   selectedDataset,
   selectedExperiments,
-  selectedMetrics,
 } from 'utils/optionReminders';
 
 export const PrimaryViewMetaInformation: ViewMetaInformation = {
@@ -65,7 +57,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
   {
     key: ViewIDs.EXPERIMENTS,
     component: ExperimentsPage,
-    nextView: ViewIDs.BENCHMARK_CONFIGURATOR,
+    nextView: ViewIDs.BINARY_METRICS,
     accessGuard: accessGuards.couldEnterExperimentsSelector,
     shouldShowInMenu: true,
     menuCategory: menuCategories.WORKFLOW,
@@ -75,27 +67,27 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     selectedOptionsReminder: selectedExperiments,
   },
   {
-    key: ViewIDs.BENCHMARK_CONFIGURATOR,
-    component: BenchmarkConfiguratorPage,
-    nextView: ViewIDs.BINARY_METRICS,
-    accessGuard: accessGuards.couldEnterMetricsViewer,
-    shouldShowInMenu: true,
-    menuCategory: menuCategories.WORKFLOW,
-    menuIcon: extensionPuzzle,
-    menuName: 'Benchmark Configurator',
-    menuSortKey: 5,
-    selectedOptionsReminder: emptySelectedOptions,
-  },
-  {
     key: ViewIDs.BINARY_METRICS,
     component: BinaryMetricsPage,
     nextView: ViewIDs.BINARY_METRICS,
-    accessGuard: accessGuards.couldEnterMetricsViewer,
+    accessGuard: accessGuards.couldEnterBinaryMetricsPage,
     shouldShowInMenu: true,
     menuCategory: menuCategories.WORKFLOW,
     menuName: 'Binary Metrics',
     menuIcon: speedometer,
     menuSortKey: 6,
-    selectedOptionsReminder: selectedMetrics,
+    selectedOptionsReminder: emptySelectedOptions,
+  },
+  {
+    key: ViewIDs.N_METRICS,
+    component: NMetricsPage,
+    nextView: ViewIDs.BINARY_METRICS,
+    accessGuard: accessGuards.couldAlwaysEnterPage,
+    shouldShowInMenu: true,
+    menuCategory: menuCategories.WORKFLOW,
+    menuName: 'N-ary Metrics',
+    menuIcon: speedometer,
+    menuSortKey: 7,
+    selectedOptionsReminder: emptySelectedOptions,
   },
 ];
