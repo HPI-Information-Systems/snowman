@@ -3,6 +3,7 @@ import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
 import BinaryMetricsPage from 'pages/BinaryMetricsPage/BinaryMetricsPage';
 import DatasetsPage from 'pages/DatasetsPage/DatasetsPage';
 import ExperimentsPage from 'pages/ExperimentsPage/ExperimentsPage';
+import { NMetricsPage } from 'pages/NMetricsPage/NMetricsPage';
 import RootPage from 'pages/RootPage/RootPage';
 import { menuCategories } from 'types/MenuCategories';
 import { ViewIDs } from 'types/ViewIDs';
@@ -75,6 +76,18 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuName: 'Binary Metrics',
     menuIcon: speedometer,
     menuSortKey: 6,
+    selectedOptionsReminder: emptySelectedOptions,
+  },
+  {
+    key: ViewIDs.N_METRICS,
+    component: NMetricsPage,
+    nextView: ViewIDs.BINARY_METRICS,
+    accessGuard: accessGuards.couldAlwaysEnterPage,
+    shouldShowInMenu: true,
+    menuCategory: menuCategories.WORKFLOW,
+    menuName: 'N-ary Metrics',
+    menuIcon: speedometer,
+    menuSortKey: 7,
     selectedOptionsReminder: emptySelectedOptions,
   },
 ];

@@ -4,4 +4,5 @@ export enum ViewIDs {
   EXPERIMENTS,
   ALGORITHMS,
   BINARY_METRICS,
+  N_METRICS,
 }

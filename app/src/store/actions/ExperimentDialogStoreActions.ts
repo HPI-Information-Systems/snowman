@@ -110,7 +110,7 @@ const createNewExperiment = (): SnowmanThunkAction<Promise<number>> => async (
             .experimentDescription,
           datasetId:
             store.getState().BenchmarkConfigurationStore.selectedDataset?.id ??
-            -1,
+            MagicNotPossibleId,
           algorithmId: getAlgorithmIdFromName(
             store.getState().ExperimentDialogStore.selectedTags[0] ?? [],
             store.getState().CoreStore.algorithms
