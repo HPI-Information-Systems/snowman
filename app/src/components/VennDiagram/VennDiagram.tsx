@@ -3,12 +3,9 @@ import { stageFourEllipsisOn } from 'components/VennDiagram/venn/fourSets';
 import { stageThreeCirclesOn } from 'components/VennDiagram/venn/threeSets';
 import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
 import { d3Selection } from 'components/VennDiagram/venn/types';
+import { VennDiagramProps } from 'components/VennDiagram/VennDiagramProps';
 import * as d3 from 'd3';
 import React, { useEffect } from 'react';
-
-export interface VennDiagramProps {
-  sets: string[];
-}
 
 export const VennDiagram = ({ sets }: VennDiagramProps): JSX.Element => {
   let svgSelection: d3Selection | null = null;
@@ -50,3 +47,5 @@ export const VennDiagram = ({ sets }: VennDiagramProps): JSX.Element => {
     </>
   );
 };
+
+export default VennDiagram;
