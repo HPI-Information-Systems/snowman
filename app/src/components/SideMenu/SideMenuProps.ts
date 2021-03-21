@@ -1,10 +1,11 @@
+import { SelectedOptionItem } from 'types/SelectedOptionItem';
 import { ViewIDs } from 'types/ViewIDs';
 
 export interface CategoryItem {
   name: string;
   key: ViewIDs;
   couldEnter: boolean;
-  selectedOptions: string[];
+  selectedOptions: SelectedOptionItem[];
   menuIcon: string;
   isActive: boolean;
 }
