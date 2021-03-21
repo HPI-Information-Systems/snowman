@@ -31,8 +31,8 @@ export const BinaryMetricsPageView = ({
   dataViewerTuples,
   confusionMatrix,
 }: BinaryMetricsPageProps): JSX.Element => {
-  useEffect(() => loadMetrics(), [loadMetrics]);
-  useEffect(() => loadTuples(), [loadTuples]);
+  useEffect(loadMetrics, [loadMetrics]);
+  useEffect(loadTuples, [loadTuples]);
   useEffect(() => {
     // Triggered on every component update!
     ReactTooltip.rebuild();
