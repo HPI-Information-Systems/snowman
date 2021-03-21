@@ -43,9 +43,7 @@ export async function getExperimentFile(
   request: Request,
   response: Response
 ): Promise<void> {
-  await Controller.handleRequest(request, response, service.getExperimentFile, {
-    responseIsFile: true,
-  });
+  await Controller.handleRequest(request, response, service.getExperimentFile);
 }
 
 export async function setExperimentFile(

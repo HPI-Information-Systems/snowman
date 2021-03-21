@@ -18,7 +18,8 @@
         "editor.formatOnSave": false
     },
     "typescript.preferences.importModuleSpecifier": "relative",
-    "jest.pathToConfig": "wrapper/jest.config.js",
+    "jest.pathToConfig": "jest.config.js",
+    "jest.pathToJest": "npm run test --prefix wrapper --",
     "jest.disabledWorkspaceFolders": [
         "app"
     ]

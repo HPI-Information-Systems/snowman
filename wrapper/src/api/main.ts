@@ -14,6 +14,7 @@ async function launch(): Promise<void> {
     temporary: cliArgs.inMemory,
     appPath: cliArgs.storageDirectory,
     loadExampleEntries: true,
+    usePreBuiltDatabase: true,
   });
   logger.info('Starting webserver...');
   APIServer.launch();

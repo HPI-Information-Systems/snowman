@@ -1,4 +1,4 @@
-import { ExperimentIntersection } from 'api';
+import { FileResponse } from 'api';
 import { ColumnDescriptor } from 'components/DataViewer/ColumnDescriptor';
 import { BinaryMetricsPageView } from 'pages/BinaryMetricsPage/BinaryMetricsPage.View';
 import {
@@ -18,7 +18,7 @@ import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 const getTuplesByTuplesCategory = (
   store: BinaryMetricsStore,
   aMetricsTuplesCategory: MetricsTuplesCategories
-): ExperimentIntersection | undefined => {
+): FileResponse | undefined => {
   switch (aMetricsTuplesCategory) {
     case MetricsTuplesCategories.truePositives:
       return store.truePositives;

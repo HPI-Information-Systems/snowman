@@ -1,14 +1,9 @@
-import { databaseBackend, Table } from '../../../database';
-import { latest } from '../../../database/schemas';
+import { databaseBackend, tables } from '../../../database';
 import { getProviders } from '../..';
-import { DatasetProviderQueries } from './queries';
 import { DatasetIDMapper } from './util/idMapper';
 
 export class DatasetDeleter {
-  constructor(
-    private readonly datasetId: number,
-    private readonly queries: DatasetProviderQueries
-  ) {}
+  constructor(private readonly datasetId: number) {}
 
   delete(): void {
     databaseBackend().transaction(() => {
@@ -20,9 +15,7 @@ export class DatasetDeleter {
   }
 
   deleteFile(): void {
-    new Table(latest.tableSchemas.dataset.dataset(this.datasetId)).delete(
-      false
-    );
+    tables.dataset.dataset(this.datasetId).dropTable(false);
   }
 
   private deleteIDMap(): void {
@@ -30,15 +23,15 @@ export class DatasetDeleter {
   }
 
   private deleteMetaRecord(): void {
-    this.queries.deleteDatasetQuery.run(this.datasetId);
+    tables.meta.dataset.delete({ id: this.datasetId });
   }
 
   private deleteExperimentsUsingThisDataset(): void {
     const experimentProvider = getProviders().experiment;
-    for (const experimentId of this.queries.listExperimentsUsingThisDataset(
-      this.datasetId
-    )) {
-      experimentProvider.deleteExperiment(experimentId);
+    for (const { id } of tables.meta.experiment.all({
+      dataset: this.datasetId,
+    })) {
+      experimentProvider.deleteExperiment(id);
     }
   }
 }

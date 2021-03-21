@@ -1,4 +1,5 @@
-import { ExperimentIntersection, Metric } from 'api';
+import { FileResponse, Metric } from 'api';
+import { MetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { BinaryMetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { BinaryMetricsStore } from 'store/models';
@@ -37,17 +38,17 @@ export const BinaryMetricsReducer = (
     case actionTypes.SET_TRUE_POSITIVES_TUPLES:
       return {
         ...state,
-        truePositives: action.payload as ExperimentIntersection,
+        truePositives: action.payload as FileResponse,
       };
     case actionTypes.SET_FALSE_POSITIVES_TUPLES:
       return {
         ...state,
-        falsePositives: action.payload as ExperimentIntersection,
+        falsePositives: action.payload as FileResponse,
       };
     case actionTypes.SET_FALSE_NEGATIVES_TUPLES:
       return {
         ...state,
-        falseNegatives: action.payload as ExperimentIntersection,
+        falseNegatives: action.payload as FileResponse,
       };
     case actionTypes.CLICK_ON_PANE:
       return {
