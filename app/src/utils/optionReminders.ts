@@ -1,5 +1,5 @@
 import { Experiment } from 'api';
-import { ribbon } from 'ionicons/icons';
+import { fingerPrint, ribbon } from 'ionicons/icons';
 import { ImmediateStore } from 'store/models';
 import { SelectedOptionItem } from 'types/SelectedOptionItem';
 
@@ -25,7 +25,7 @@ export const selectedExperiments = (
   ...aState.BenchmarkConfigurationStore.chosenExperiments.map(
     (anExperiment: Experiment): SelectedOptionItem => ({
       displayName: anExperiment.name,
-      icon: null,
+      icon: fingerPrint,
     })
   ),
 ];
