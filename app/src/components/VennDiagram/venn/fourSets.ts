@@ -3,6 +3,7 @@ import {
   clearStage,
   drawEllipsis,
   drawIntersection,
+  drawText,
 } from 'components/VennDiagram/venn/draw';
 import {
   intersectFourPathSet1Set2,
@@ -36,16 +37,18 @@ export const stageFourEllipsisOn = (
     { x: 196, y: 246 },
     { x: 200, y: 110 }
   );
+  drawText(stage, { x: 110, y: 240 }, 'ellipsis1');
   // Set 2
   drawEllipsis(
     stage,
     tooltip,
     'ellipsis2',
     45,
-    'gray',
+    'purple',
     { x: 266, y: 176 },
     { x: 200, y: 110 }
   );
+  drawText(stage, { x: 180, y: 65 }, 'ellipsis2');
   // Set 3
   drawEllipsis(
     stage,
@@ -56,6 +59,7 @@ export const stageFourEllipsisOn = (
     { x: 326, y: 176 },
     { x: 200, y: 110 }
   );
+  drawText(stage, { x: 410, y: 65 }, 'ellipsis3');
   // Set 4
   drawEllipsis(
     stage,
@@ -66,6 +70,7 @@ export const stageFourEllipsisOn = (
     { x: 396, y: 246 },
     { x: 200, y: 110 }
   );
+  drawText(stage, { x: 480, y: 240 }, 'ellipsis4');
 
   // Intersections
   drawIntersection(

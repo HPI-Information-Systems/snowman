@@ -95,16 +95,19 @@ export const drawEllipsis = (
     )
     .style('fill-opacity', 0.4)
     .style('stroke-opacity', 0)
-    .style('stroke', '#259286')
-    .style('stroke-width', '0')
+    .style('stroke', 'black')
+    .style('stroke-width', '2')
+    .style('stroke-opacity', 0)
     .style('fill', color)
     .on('mousemove', (event: MouseEvent) => {
       tooltip.position([event.offsetX, event.offsetY]);
     })
     .on('mouseout', function () {
+      d3.select(this).transition().style('stroke-opacity', 0);
       tooltip.hide();
     })
     .on('mouseover', function () {
+      d3.select(this).transition().style('stroke-opacity', 1);
       tooltip.showText(name);
     });
 };
