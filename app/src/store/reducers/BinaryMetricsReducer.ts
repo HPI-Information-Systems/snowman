@@ -1,5 +1,4 @@
 import { FileResponse, Metric } from 'api';
-import { MetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { BinaryMetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { BinaryMetricsStore } from 'store/models';
