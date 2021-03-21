@@ -22,7 +22,7 @@ export class VennTooltip {
       .style('color', 'white')
       .style('padding', '5px')
       .style('border', '1px solid transparent')
-      .style('border-radius', '5px')
+      .style('border-radius', '3px')
       .style('opacity', 0);
   }
 
@@ -41,7 +41,7 @@ export class VennTooltip {
   public position(target: [number, number]): void {
     this.tooltip
       .style('left', Math.round(target[0]) + 'px')
-      .style('top', Math.round(target[1]) + 'px');
+      .style('top', Math.round(target[1] + 40) + 'px');
   }
 
   public showText(text: string): void {

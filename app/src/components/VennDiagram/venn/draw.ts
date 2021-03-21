@@ -23,7 +23,7 @@ export const drawCircle = (
     .attr('cy', center.y)
     .attr('id', name)
     .on('mousemove', (event: MouseEvent) => {
-      tooltip.position([event.offsetX, event.offsetY + 40]);
+      tooltip.position([event.offsetX, event.offsetY]);
     })
     .on('mouseout', function () {
       tooltip.hide();
@@ -62,7 +62,7 @@ export const drawIntersection = (
       tooltip.hide();
     })
     .on('mousemove', (event: MouseEvent) => {
-      tooltip.position([event.offsetX, event.offsetY + 40]);
+      tooltip.position([event.offsetX, event.offsetY]);
     });
 };
 export const drawEllipsis = (
@@ -91,7 +91,7 @@ export const drawEllipsis = (
     .style('stroke-width', '0')
     .style('fill', color)
     .on('mousemove', (event: MouseEvent) => {
-      tooltip.position([event.offsetX, event.offsetY + 40]);
+      tooltip.position([event.offsetX, event.offsetY]);
     })
     .on('mouseout', function () {
       tooltip.hide();
