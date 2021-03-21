@@ -17,5 +17,6 @@
   "typescript.preferences.importModuleSpecifier": "relative",
   "jest.pathToConfig": "wrapper/jest.config.js",
   "jest.disabledWorkspaceFolders": ["app"],
-  "prettier.singleQuote": true
+  "prettier.singleQuote": true,
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
