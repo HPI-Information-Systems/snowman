@@ -1,27 +1,20 @@
 import 'pages/RootPage/RootPageStyle.css';
 
+import { IonCard, IonCardContent } from '@ionic/react';
 import PageStruct from 'components/PageStruct/PageStruct';
+import { VennDiagram } from 'components/VennDiagram/VennDiagram';
 import React from 'react';
 
-const RootPageView = (): JSX.Element => (
-  <PageStruct title="Home Page" showNextFab={true}>
-    <div className="ion-text-center introduction">
-      <img src="./logo192.png" alt="logo" />
-      <h1>Welcome to Snowman Benchmark!</h1>
-      <p>
-        Start by selecting a dataset to work with on the left of this page.
-        <br />
-        You will be guided through the process necessary to create your first
-        analysis!
-      </p>
-      <p>
-        This app is open-source and community-driven.
-        <br />
-        Contributions of all kinds are welcome - feel free to fork us on Github!
-        :)
-      </p>
-    </div>
-  </PageStruct>
-);
+const RootPageView = (): JSX.Element => {
+  return (
+    <PageStruct title="Home Page" showNextFab={true}>
+      <IonCard>
+        <IonCardContent>
+          <VennDiagram sets={['1', '2', '3']} />
+        </IonCardContent>
+      </IonCard>
+    </PageStruct>
+  );
+};
 
 export default RootPageView;
