@@ -80,7 +80,7 @@ const BenchmarkConfiguratorImmediateReducer = (
             ...ownState,
             selectedDataset: action.payload as Dataset,
           }
-        : ownState;
+        : { ...ownState, selectedDataset: null };
     }
     case ExperimentsPageActionTypes.CLICK_ON_MATCHING_SOLUTION:
       return {
