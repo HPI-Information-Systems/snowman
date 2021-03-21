@@ -100,16 +100,21 @@ const BenchmarkConfiguratorImmediateReducer = (
         eventDescriptor.sourceIndex
       );
       if (draggedExperiment === undefined) return ownState;
-      const filterOutDraggedExperiment = (anExperiment: Experiment): boolean =>
-        anExperiment.id !== draggedExperiment.id;
-      chosenGoldstandards = ownState.chosenGoldStandards.filter(
-        filterOutDraggedExperiment
+      const filterOutDraggedExperiment = (
+        aBucket: Experiment[]
+      ): Experiment[] =>
+        aBucket.filter(
+          (anExperiment: Experiment): boolean =>
+            anExperiment.id !== draggedExperiment.id
+        );
+      chosenGoldstandards = filterOutDraggedExperiment(
+        ownState.chosenGoldStandards
       );
-      chosenExperiments = ownState.chosenExperiments.filter(
-        filterOutDraggedExperiment
+      chosenExperiments = filterOutDraggedExperiment(
+        ownState.chosenExperiments
       );
-      availableExperiments = ownState.availableExperiments.filter(
-        filterOutDraggedExperiment
+      availableExperiments = filterOutDraggedExperiment(
+        ownState.availableExperiments
       );
       switch (eventDescriptor.targetBucket) {
         case ExperimentBuckets.CHOSEN_GOLDSTANDARDS: {
