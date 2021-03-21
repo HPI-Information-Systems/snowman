@@ -110,8 +110,6 @@ const loadTuples = (
   requestBody: LoadTuplesRequestBody,
   startAt: number,
   stopAt: number
-): SnowmanThunkAction<Promise<ExperimentIntersection>> => async (
-  dispatch: SnowmanDispatch
 ): Promise<ExperimentIntersection> =>
   RequestHandler<ExperimentIntersection>(
     (): Promise<ExperimentIntersection> =>
@@ -120,7 +118,9 @@ const loadTuples = (
         startAt: startAt,
         limit: stopAt - startAt,
       }),
-    dispatch
+    () => {
+      return;
+    }
   );
 
 const loadTuplesCountOf = (
@@ -147,7 +147,7 @@ const loadTuplesCountOf = (
 export const loadTruePositives = (
   startIndex: number,
   stopIndex: number
-): SnowmanThunkAction<Promise<ExperimentIntersection>> =>
+): Promise<ExperimentIntersection> =>
   loadTuples(
     getRequestBodyForTruePositives(...getExperimentsComparisonTuple()),
     startIndex,
@@ -163,7 +163,7 @@ const loadTruePositivesCount = (): SnowmanThunkAction<Promise<void>> =>
 export const loadFalsePositives = (
   startIndex: number,
   stopIndex: number
-): SnowmanThunkAction<Promise<ExperimentIntersection>> =>
+): Promise<ExperimentIntersection> =>
   loadTuples(
     getRequestBodyForFalsePositives(...getExperimentsComparisonTuple()),
     startIndex,
@@ -179,7 +179,7 @@ const loadFalsePositivesCount = (): SnowmanThunkAction<Promise<void>> =>
 export const loadFalseNegatives = (
   startIndex: number,
   stopIndex: number
-): SnowmanThunkAction<Promise<ExperimentIntersection>> =>
+): Promise<ExperimentIntersection> =>
   loadTuples(
     getRequestBodyForFalseNegatives(...getExperimentsComparisonTuple()),
     startIndex,

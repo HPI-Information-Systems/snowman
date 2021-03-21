@@ -1,10 +1,4 @@
-import {
-  Algorithm,
-  Dataset,
-  Experiment,
-  ExperimentIntersection,
-  Metric,
-} from 'api';
+import { Algorithm, Dataset, Experiment, Metric } from 'api';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
@@ -80,10 +74,6 @@ export interface MetricsStore {
   selectedDataView: MetricsTuplesCategories;
 }
 
-export interface DataViewerStore {
-  dataToShow: ExperimentIntersection;
-}
-
 export interface Store {
   DatasetsStore: DatasetsStore;
   ExperimentsStore: ExperimentsStore;
@@ -94,5 +84,4 @@ export interface Store {
   GlobalIndicatorStore: GlobalIndicatorStore;
   MetricsStore: MetricsStore;
   InputChipStore: InputChipStore;
-  DataViewerStore: DataViewerStore;
 }

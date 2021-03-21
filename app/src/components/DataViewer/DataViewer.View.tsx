@@ -2,21 +2,54 @@ import 'react-virtualized/styles.css';
 import 'components/DataViewer/DataViewerStyles.css';
 
 import { DataViewerProps } from 'components/DataViewer/DataViewerProps';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AutoSizer, Column, InfiniteLoader, Table } from 'react-virtualized';
+
+const BATCH_SIZE = 1000;
 
 const DataViewerView = ({
   tuplesCount,
-  handleLoadTuples,
-  resetDataViewer,
-  data,
+  loadTuples,
 }: DataViewerProps): JSX.Element => {
-  useEffect((): void => resetDataViewer(), [tuplesCount, resetDataViewer]);
+  const [header, setHeader] = useState<string[]>([]);
+  const [rows, setRows] = useState<string[][]>([]);
+  const [requestedRowsLength, setRequestedRowsLength] = useState(0);
+  const [sync, setSync] = useState<Promise<unknown>>(Promise.resolve());
+
+  useEffect(() => {
+    setRequestedRowsLength(0);
+    setRows([]);
+    setSync(
+      Promise.all([loadTuples(0, BATCH_SIZE), sync])
+        .then(([data]) => {
+          setRequestedRowsLength(data.data.length);
+          setRows(data.data);
+          setHeader(data.header);
+        })
+        .catch()
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadTuples, tuplesCount]);
+
   return (
     <InfiniteLoader
-      loadMoreRows={handleLoadTuples}
-      isRowLoaded={({ index }) => !!data.data[index]}
+      loadMoreRows={async ({ stopIndex }) => {
+        if (stopIndex > requestedRowsLength) {
+          setRequestedRowsLength(stopIndex);
+          const awaitLoad = Promise.all([
+            loadTuples(requestedRowsLength, stopIndex),
+            sync,
+          ])
+            .then(([{ data }]) => rows.push(...data) && setRows(rows))
+            .catch();
+          setSync(awaitLoad);
+          await awaitLoad;
+        }
+      }}
+      isRowLoaded={({ index }) => index < rows.length}
       rowCount={tuplesCount}
+      threshold={BATCH_SIZE}
+      minimumBatchSize={BATCH_SIZE}
     >
       {({ onRowsRendered, registerChild }) => (
         <AutoSizer>
@@ -29,18 +62,18 @@ const DataViewerView = ({
               rowClassName="table-row"
               headerHeight={20}
               rowHeight={30}
-              rowCount={tuplesCount}
+              overscanRowCount={0}
+              rowCount={rows.length}
               rowGetter={({ index }: { index: number }): unknown => {
                 const dataRow: Record<string, string> = {};
-                // Todo: Evaluate whether this is a proper fix
-                if (data.data[index] === undefined) return dataRow;
-                data.header.forEach((_: string, headerIndex: number): void => {
-                  dataRow[headerIndex] = data.data[index][headerIndex];
+                header.forEach((_: string, headerIndex: number): void => {
+                  dataRow[headerIndex] =
+                    index < rows.length ? rows[index][headerIndex] : '';
                 });
                 return dataRow;
               }}
             >
-              {data.header.map((headerLabel: string, index: number) => (
+              {header.map((headerLabel: string, index: number) => (
                 <Column
                   key={`${index}-${headerLabel}`}
                   label={headerLabel}
