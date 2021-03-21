@@ -1,19 +1,15 @@
-import { clearStage } from 'components/VennDiagram/venn/draw';
-import { stageFourEllipsisOn } from 'components/VennDiagram/venn/fourSets';
-import { stageThreeCirclesOn } from 'components/VennDiagram/venn/threeSets';
+import { VennDiagramFlavors } from 'components/VennDiagram/venn/flavors';
 import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
-import { d3Selection } from 'components/VennDiagram/venn/types';
 import { VennDiagramProps } from 'components/VennDiagram/VennDiagramProps';
 import * as d3 from 'd3';
 import React, { useEffect } from 'react';
 
 export const VennDiagram = ({ sets }: VennDiagramProps): JSX.Element => {
-  let svgSelection: d3Selection | null = null;
+  let svgElement: SVGSVGElement | null = null;
   let tooltip: VennTooltip | undefined = undefined;
 
   const updateSvgSelection = (ref: SVGSVGElement): void => {
-    svgSelection = d3.select(ref);
-    clearStage(svgSelection);
+    svgElement = ref;
   };
 
   const updateTooltipSelection = (ref: HTMLDivElement): void => {
@@ -21,20 +17,18 @@ export const VennDiagram = ({ sets }: VennDiagramProps): JSX.Element => {
   };
 
   useEffect((): void => {
-    if (svgSelection == null) throw Error('VennDiagram canvas not rendered');
+    if (svgElement == null) throw Error('VennDiagram canvas not rendered');
     if (tooltip == null) throw Error('Tooltip element not rendered');
 
-    switch (sets.length) {
-      case 3:
-        stageThreeCirclesOn(svgSelection, tooltip);
-        break;
-      case 4:
-        stageFourEllipsisOn(svgSelection, tooltip);
-        break;
-      default:
-        throw Error('unsupported set count for VennDiagram diagram');
+    if (sets.length in VennDiagramFlavors) {
+      const flavor = VennDiagramFlavors[sets.length];
+      svgElement.viewBox.baseVal.width = flavor.canvas.width;
+      svgElement.viewBox.baseVal.height = flavor.canvas.height;
+      flavor.renderer(d3.select(svgElement), tooltip);
+    } else {
+      throw Error('unsupported set count for VennDiagram diagram');
     }
-  }, [sets, svgSelection, tooltip]);
+  }, [sets, svgElement, tooltip]);
 
   return (
     <>

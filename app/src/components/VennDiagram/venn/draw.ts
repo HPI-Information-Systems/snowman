@@ -44,8 +44,8 @@ export const drawIntersection = (
   tooltip: VennTooltip,
   shape: string,
   name: string
-): void => {
-  stage
+): d3Selection => {
+  return stage
     .append('path')
     .attr('d', shape)
     .attr('id', name)

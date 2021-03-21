@@ -35,7 +35,7 @@ export const stageThreeCirclesOn = (
     tooltip,
     intersectThreePathSet1Set2,
     'intersectThreePathSet1Set2'
-  );
+  ).style('transform', 'matrix(1,0,0,1,-0.5,0)');
   drawIntersection(
     stage,
     tooltip,
