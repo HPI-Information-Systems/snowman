@@ -1,6 +1,6 @@
 import { Algorithm, AlgorithmApi } from 'api';
 import { AlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
-import { getAlgorithms } from 'store/actions/CoreStoreActions';
+import { getAlgorithms } from 'store/actions/AlgorithmsPageActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
 import { MagicNotPossibleId } from 'structs/constants';

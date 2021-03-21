@@ -6,8 +6,8 @@ import {
   ExperimentDroppableStateProps,
 } from 'components/ExperimentDroppable/ExperimentDroppableProps';
 import { connect } from 'react-redux';
-import { deleteExperiment } from 'store/actions/CoreStoreActions';
 import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
+import { deleteExperiment } from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 import { getExperimentBucketFromId } from 'store/reducers/BenchmarkConfiguratorReducer';

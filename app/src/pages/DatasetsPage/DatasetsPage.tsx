@@ -5,11 +5,12 @@ import {
   DatasetsPageStateProps,
 } from 'pages/DatasetsPage/DatasetsPageProps';
 import { connect } from 'react-redux';
-import { deleteDataset, getDatasets } from 'store/actions/CoreStoreActions';
 import { openChangeDialog } from 'store/actions/DatasetDialogStoreActions';
 import {
   clickOnDataset,
   clickOnDatasetCategory,
+  deleteDataset,
+  getDatasets,
 } from 'store/actions/DatasetsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';

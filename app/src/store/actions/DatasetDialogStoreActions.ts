@@ -1,6 +1,6 @@
 import { Dataset, DatasetsApi } from 'api';
 import { DatasetDialogStoreActionTypes as DialogActionsTypes } from 'store/actions/actionTypes';
-import { getDatasets } from 'store/actions/CoreStoreActions';
+import { getDatasets } from 'store/actions/DatasetsPageActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
 import { MagicNotPossibleId } from 'structs/constants';

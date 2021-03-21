@@ -2,7 +2,7 @@ import 'types/ExperimentFileFormats';
 
 import { Experiment, ExperimentsApi } from 'api';
 import { ExperimentDialogStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
-import { getExperiments } from 'store/actions/CoreStoreActions';
+import { getExperiments } from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
 import { MagicNotPossibleId } from 'structs/constants';

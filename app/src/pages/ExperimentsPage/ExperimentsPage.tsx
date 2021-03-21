@@ -6,10 +6,10 @@ import {
 } from 'pages/ExperimentsPage/ExperimentsPageProps';
 import { DropResult } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
-import { getExperiments } from 'store/actions/CoreStoreActions';
 import {
   clickOnMatchingSolution,
   dragNDropAnExperiment,
+  getExperiments,
 } from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
