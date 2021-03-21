@@ -10,12 +10,17 @@ const RootPageView = (): JSX.Element => {
     <PageStruct title="Home Page" showNextFab={true}>
       <IonCard>
         <IonCardContent>
-          <VennDiagram sets={['1', '2']} />
+          <VennDiagram sets={['1', '2', '3', '4']} />
         </IonCardContent>
       </IonCard>
       <IonCard>
         <IonCardContent>
           <VennDiagram sets={['1', '2', '3']} />
+        </IonCardContent>
+      </IonCard>
+      <IonCard>
+        <IonCardContent>
+          <VennDiagram sets={['1', '2']} />
         </IonCardContent>
       </IonCard>
     </PageStruct>
