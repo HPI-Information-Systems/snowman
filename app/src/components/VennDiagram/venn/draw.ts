@@ -6,6 +6,7 @@ import * as d3 from 'd3';
 export const clearStage = (stage: d3Selection): void => {
   stage.selectAll('*').remove();
 };
+
 export const drawCircle = (
   stage: d3Selection,
   tooltip: VennTooltip,
@@ -18,6 +19,9 @@ export const drawCircle = (
     .append('circle')
     .style('fill', color)
     .style('fill-opacity', 0.4)
+    .style('stroke', 'black')
+    .style('stroke-width', '2')
+    .style('stroke-opacity', 0)
     .attr('r', radius)
     .attr('cx', center.x)
     .attr('cy', center.y)
@@ -25,13 +29,16 @@ export const drawCircle = (
     .on('mousemove', (event: MouseEvent) => {
       tooltip.position([event.offsetX, event.offsetY]);
     })
-    .on('mouseout', function () {
-      tooltip.hide();
-    })
     .on('mouseover', function () {
+      d3.select(this).transition().style('stroke-opacity', 1);
       tooltip.showText(name);
+    })
+    .on('mouseout', function () {
+      d3.select(this).transition().style('stroke-opacity', 0);
+      tooltip.hide();
     });
 };
+
 export const drawIntersection = (
   stage: d3Selection,
   tooltip: VennTooltip,
@@ -65,6 +72,7 @@ export const drawIntersection = (
       tooltip.position([event.offsetX, event.offsetY]);
     });
 };
+
 export const drawEllipsis = (
   stage: d3Selection,
   tooltip: VennTooltip,
@@ -99,4 +107,19 @@ export const drawEllipsis = (
     .on('mouseover', function () {
       tooltip.showText(name);
     });
+};
+
+export const drawText = (
+  stage: d3Selection,
+  position: { x: number; y: number },
+  text: string
+): void => {
+  stage
+    .append('text')
+    .attr('id', 'text1')
+    .attr('x', position.x)
+    .attr('y', position.y)
+    .attr('fill', 'black')
+    .attr('text-anchor', 'middle')
+    .text(text);
 };

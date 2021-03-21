@@ -3,6 +3,7 @@ import {
   clearStage,
   drawCircle,
   drawIntersection,
+  drawText,
 } from 'components/VennDiagram/venn/draw';
 import {
   intersectThreePathSet1Set2,
@@ -21,10 +22,13 @@ export const stageThreeCirclesOn = (
 
   // Set 1
   drawCircle(stage, tooltip, 'circle1', '#00bf00', 110, { x: 230, y: 306 });
+  drawText(stage, { x: 180, y: 325 }, 'circle1');
   // Set 2
   drawCircle(stage, tooltip, 'circle2', '#007fff', 110, { x: 370, y: 306 });
+  drawText(stage, { x: 420, y: 325 }, 'circle2');
   // Set 3
   drawCircle(stage, tooltip, 'circle3', '#ff3433', 110, { x: 300, y: 185 });
+  drawText(stage, { x: 300, y: 140 }, 'circle3');
 
   drawIntersection(
     stage,
