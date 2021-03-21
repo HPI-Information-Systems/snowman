@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._  Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -21,6 +21,9 @@ import {
     ExperimentValues,
     ExperimentValuesFromJSON,
     ExperimentValuesToJSON,
+    FileResponse,
+    FileResponseFromJSON,
+    FileResponseToJSON,
 } from '../models';
 
 export interface AddExperimentRequest {
@@ -186,7 +189,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
     /**
      * Get an experiment file
      */
-    async getExperimentFileRaw(requestParameters: GetExperimentFileRequest): Promise<runtime.ApiResponse<Blob>> {
+    async getExperimentFileRaw(requestParameters: GetExperimentFileRequest): Promise<runtime.ApiResponse<FileResponse>> {
         if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
             throw new runtime.RequiredError('experimentId','Required parameter requestParameters.experimentId was null or undefined when calling getExperimentFile.');
         }
@@ -214,13 +217,13 @@ export class ExperimentsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.BlobApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => FileResponseFromJSON(jsonValue));
     }
 
     /**
      * Get an experiment file
      */
-    async getExperimentFile(requestParameters: GetExperimentFileRequest): Promise<Blob> {
+    async getExperimentFile(requestParameters: GetExperimentFileRequest): Promise<FileResponse> {
         const response = await this.getExperimentFileRaw(requestParameters);
         return await response.value();
     }

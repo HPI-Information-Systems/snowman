@@ -1,34 +1,21 @@
-import { Experiment, ExperimentValues } from '../../../../server/types';
+import { tableSchemas } from '../../../../database/schemas';
+import { ColumnValues } from '../../../../database/tools/types';
+import { Experiment } from '../../../../server/types';
 
-export interface StoredExperimentValues {
-  name: string;
-  description: string | null;
-  datasetId: number;
-  algorithmId: number;
-}
-
-export interface StoredExperiment extends StoredExperimentValues {
-  id: number;
-  numberOfUploadedRecords: number | null;
-}
+type StoredExperiment = ColumnValues<
+  typeof tableSchemas['meta']['experiment']['columns']
+>;
 
 export class ExperimentConverter {
-  apiExperimentValuesToStoredExperimentValues(
-    apiExperiment: ExperimentValues
-  ): StoredExperimentValues {
-    return {
-      algorithmId: apiExperiment.algorithmId,
-      datasetId: apiExperiment.datasetId,
-      description: apiExperiment.description ?? null,
-      name: apiExperiment.name,
-    };
-  }
-
   apiExperimentToStoredExperiment(apiExperiment: Experiment): StoredExperiment {
     return {
-      ...this.apiExperimentValuesToStoredExperimentValues(apiExperiment),
+      algorithm: apiExperiment.algorithmId,
+      dataset: apiExperiment.datasetId,
+      description: apiExperiment.description ?? null,
+      name: apiExperiment.name,
       id: apiExperiment.id,
       numberOfUploadedRecords: apiExperiment.numberOfUploadedRecords ?? null,
+      timeToConfigure: apiExperiment.softKPIs?.timeToConfigure ?? null,
     };
   }
 
@@ -36,13 +23,16 @@ export class ExperimentConverter {
     storedExperiment: StoredExperiment
   ): Experiment {
     return {
-      algorithmId: storedExperiment.algorithmId,
-      datasetId: storedExperiment.datasetId,
+      algorithmId: storedExperiment.algorithm,
+      datasetId: storedExperiment.dataset,
       description: storedExperiment.description ?? undefined,
       id: storedExperiment.id,
       name: storedExperiment.name,
       numberOfUploadedRecords:
         storedExperiment.numberOfUploadedRecords ?? undefined,
+      softKPIs: {
+        timeToConfigure: storedExperiment.timeToConfigure ?? undefined,
+      },
     };
   }
 }

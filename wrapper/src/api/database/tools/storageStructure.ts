@@ -10,3 +10,7 @@ export function mainDatabaseFile(appPath: string): string {
 export function databaseFileForSchema(schema: string, appPath: string): string {
   return join(databaseFolder(appPath), schema + '.db');
 }
+
+export function databaseVersionFile(appPath: string): string {
+  return join(databaseFolder(appPath), 'version.json');
+}

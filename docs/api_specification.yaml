@@ -3,8 +3,6 @@ info:
   description: >
     _This document describes the REST API of the snowman data matching benchmark
     tool._
-
-
     Comparing data matching algorithms is still an unsolved topic in both industry and research. 
     With snowman, developers and researchers will be able to compare the performance of different data matching 
     solutions or improve new algorithms.
@@ -250,7 +248,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DatasetFile"
+                $ref: "#/components/schemas/FileResponse"
         404:
           description: Not Found
     put:
@@ -291,8 +289,8 @@ paths:
         content:
           text/csv:
             schema:
-              $ref: "#/components/schemas/DatasetFile"
-        description: updated DatasetFile-csv object
+              $ref: "#/components/schemas/CSVFile"
+        description: updated csv object
         required: true
       responses:
         204:
@@ -434,7 +432,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExperimentFile"
+                $ref: "#/components/schemas/FileResponse"
         404:
           description: Not Found
     put:
@@ -460,10 +458,7 @@ paths:
         content:
           text/csv:
             schema:
-              $ref: "#/components/schemas/ExperimentFile"
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ExperimentFile"
+              $ref: "#/components/schemas/CSVFile"
         description: updated experiment file
         required: true
       responses:
@@ -546,7 +541,7 @@ paths:
           in: query
           schema:
             type: integer
-            default: 500
+            default: -1
         - name: sortBy
           in: query
           schema:
@@ -560,7 +555,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExperimentIntersection"
+                $ref: "#/components/schemas/FileResponse"
         403:
           description: Forbidden
         404:
@@ -637,6 +632,21 @@ components:
         description:
           type: string
           example: This is an open source python library
+        softKPIs:
+          type: object
+          properties:
+            implementationKnowHowLevel:
+              type: string
+              enum: ["starter", "intermediate", "expert"]
+            matchingSolutionType:
+              type: string
+              enum: ["ml", "rulebased", "other"]
+            timeToInstall:
+              type: number
+              example: 3
+            timeToConfigure:
+              type: number
+              example: 1
     Algorithm:
       allOf:
         - type: object
@@ -683,14 +693,6 @@ components:
               type: integer
               example: 2005
         - $ref: "#/components/schemas/DatasetValues"
-    DatasetFile:
-      type: string
-      format: binary
-      example: |
-        id,name
-        1, Ulf Restaurant
-        2, Ulfs Restaurant
-
       #### EXPERIMENT ####
     ExperimentId:
       type: integer
@@ -713,6 +715,12 @@ components:
           $ref: "#/components/schemas/DatasetId"
         algorithmId:
           $ref: "#/components/schemas/AlgorithmId"
+        softKPIs:
+          type: object
+          properties:
+            timeToConfigure:
+              type: number
+              example: 1
     Experiment:
       allOf:
         - type: object
@@ -725,15 +733,6 @@ components:
               type: integer
               example: 2005
         - $ref: "#/components/schemas/ExperimentValues"
-    ExperimentFile:
-      type: string
-      format: binary
-      example: |
-        p1,p2,prediction
-        1, 2, 1
-        2, 3, 0
-        ...
-
     #### BENCHMARK ####
     Metric:
       type: object
@@ -773,7 +772,7 @@ components:
       items:
         $ref: "#/components/schemas/ExperimentIntersectionRequestExperiments"
       type: array
-    ExperimentIntersection:
+    FileResponse:
       type: object
       properties:
         header:
@@ -870,3 +869,6 @@ components:
         - experiments
         - pairCount
       type: object
+    CSVFile:
+      type: string
+      format: binary

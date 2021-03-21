@@ -1,55 +1,50 @@
 import { TableSchema } from '../tools/types';
+import { TableCounter } from './counter';
 import { TableCreator } from './creator';
 import { TableDeleter } from './deleter';
-import { InsertParameters, TableInserter } from './inserter';
+import { TableGetter } from './getter';
+import { TableMeta } from './meta';
+import { TableUpserter } from './upserter';
 
 export class Table<Schema extends TableSchema> {
-  private _inserter?: TableInserter<Schema>;
+  protected inserter = new TableUpserter<Schema>(this);
+  protected getter = new TableGetter<Schema>(this);
+  protected deleter = new TableDeleter<Schema>(this);
+  protected creator = new TableCreator<Schema>(this);
+  protected counter = new TableCounter<Schema>(this);
+  protected meta = new TableMeta<Schema>(this);
 
-  private get inserter(): TableInserter<Schema> {
-    if (!this._inserter) {
-      this._inserter = new TableInserter(this);
-    }
-    return this._inserter;
+  constructor(protected _schema: Schema) {}
+
+  get schema(): Schema {
+    return this._schema;
   }
 
-  constructor(public readonly schema: Schema) {}
-
-  insert(
-    ...rows: InsertParameters<Schema>
-  ): ReturnType<TableInserter<Schema>['insert']> {
-    return this.inserter.insert(...rows);
+  exists: TableMeta<Schema>['exists'] = (...args) => this.meta.exists(...args);
+  create: TableCreator<Schema>['createTable'] = (...args) =>
+    this.creator.createTable(...args);
+  createIndices: TableCreator<Schema>['createIndices'] = (...args) =>
+    this.creator.createIndices(...args);
+  loadSchemaFromDatabase(): void {
+    this._schema = this.meta.loadSchemaFromDatabase();
   }
 
-  batchInsert(
-    ...args: Parameters<TableInserter<Schema>['batchInsert']>
-  ): ReturnType<TableInserter<Schema>['batchInsert']> {
-    return this.inserter.batchInsert(...args);
-  }
+  upsert: TableUpserter<Schema>['upsert'] = (...args) =>
+    this.inserter.upsert(...args);
+  batchUpsert: TableUpserter<Schema>['batchUpsert'] = (...args) =>
+    this.inserter.batchUpsert(...args);
+  flushBatchUpsert: TableUpserter<Schema>['flushBatchUpsert'] = (...args) =>
+    this.inserter.flushBatchUpsert(...args);
 
-  flushBatchInsert(
-    ...args: Parameters<TableInserter<Schema>['flushBatchInsert']>
-  ): ReturnType<TableInserter<Schema>['flushBatchInsert']> {
-    return this.inserter.flushBatchInsert(...args);
-  }
+  get: TableGetter<Schema>['get'] = (...args) => this.getter.get(...args);
+  all: TableGetter<Schema>['all'] = (...args) => this.getter.all(...args);
+  count: TableCounter<Schema>['count'] = (...args) =>
+    this.counter.count(...args);
 
-  create(
-    ...args: Parameters<TableCreator<Schema>['createTable']>
-  ): ReturnType<TableCreator<Schema>['createTable']> {
-    return new TableCreator(this).createTable(...args);
-  }
-
-  createIndices(
-    ...args: Parameters<TableCreator<Schema>['createIndices']>
-  ): ReturnType<TableCreator<Schema>['createIndices']> {
-    return new TableCreator(this).createIndices(...args);
-  }
-
-  delete(
-    ...args: Parameters<TableDeleter<Schema>['deleteTable']>
-  ): ReturnType<TableDeleter<Schema>['deleteTable']> {
-    return new TableDeleter(this).deleteTable(...args);
-  }
+  delete: TableDeleter<Schema>['delete'] = (...args) =>
+    this.deleter.delete(...args);
+  dropTable: TableDeleter<Schema>['dropTable'] = (...args) =>
+    this.deleter.dropTable(...args);
 
   toString(): string {
     return `"${this.schema.schema}"."${this.schema.name}"`;

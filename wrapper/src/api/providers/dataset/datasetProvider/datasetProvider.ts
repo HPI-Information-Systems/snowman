@@ -1,65 +1,52 @@
 import { Readable } from 'stream';
 
-import { Dataset, DatasetId, DatasetValues } from '../../../server/types';
+import { tables } from '../../../database';
 import {
-  IntersectionCache,
-  invalidateCaches,
-} from '../../benchmark/benchmarkProvider/intersection/cache';
-import { BaseDatasetProvider } from '../baseDatasetProvider';
+  Dataset,
+  DatasetId,
+  DatasetValues,
+  FileResponse,
+} from '../../../server/types';
+import { invalidateCaches } from '../../benchmark/benchmarkProvider/intersection/cache';
 import { DatasetDeleter } from './deleter';
 import { DatasetFileGetter } from './file/getter';
 import { DatasetInserter } from './file/inserter';
-import { DatasetProviderQueries } from './queries';
 import { DatasetConsistencyChecks } from './util/checks';
-import { DatasetConverter, StoredDataset } from './util/converter';
+import { DatasetConverter } from './util/converter';
 import { DatasetIDMapper } from './util/idMapper';
 
-export class DatasetProvider extends BaseDatasetProvider {
-  protected readonly queries = new DatasetProviderQueries();
+export class DatasetProvider {
   protected readonly converter = new DatasetConverter();
   protected readonly checks = new DatasetConsistencyChecks();
 
   listDatasets(): Dataset[] {
-    return this.queries.listDatasetsQuery
+    return tables.meta.dataset
       .all()
       .map((dataset) => this.converter.storedDatasetToAPIDataset(dataset));
   }
 
   addDataset(dataset: DatasetValues): DatasetId {
-    const storedDataset = this.converter.apiDatasetToStoredDataset(dataset);
-    return this.queries.table.insert([
+    return tables.meta.dataset.upsert([
       {
-        column: this.queries.schema.columns.name,
-        value: storedDataset.name,
-      },
-      {
-        column: this.queries.schema.columns.description,
-        value: storedDataset.description,
-      },
-      {
-        column: this.queries.schema.columns.tags,
-        value: storedDataset.tags,
-      },
-      {
-        column: this.queries.schema.columns.numberOfRecords,
-        value: storedDataset.numberOfRecords,
+        name: dataset.name,
+        description: dataset.description,
+        tags: this.converter.tagsArrayToString(dataset.tags ?? []),
+        numberOfRecords: dataset.numberOfRecords,
       },
     ])[0];
   }
 
   getDataset(id: DatasetId): Dataset {
-    const storedDataset = this.queries.getDatasetQuery.all(id);
-    if (storedDataset.length === 0) {
+    const storedDataset = tables.meta.dataset.get({ id });
+    if (!storedDataset) {
       throw new Error(`A dataset with the id ${id} does not exist.`);
     }
-    return this.converter.storedDatasetToAPIDataset(storedDataset[0]);
+    return this.converter.storedDatasetToAPIDataset(storedDataset);
   }
 
   setDataset(id: DatasetId, dataset: DatasetValues): void {
     this.checks.throwIfLocked(id);
-    const priorStoredDataset = this.queries.getDatasetQuery.get(id) as
-      | StoredDataset
-      | undefined;
+    const priorStoredDataset = tables.meta.dataset.get({ id });
     const newStoredDataset = this.converter.apiDatasetToStoredDataset({
       id,
       ...dataset,
@@ -73,13 +60,13 @@ export class DatasetProvider extends BaseDatasetProvider {
       priorStoredDataset?.numberOfRecords ?? null,
       newStoredDataset.numberOfRecords
     );
-    this.queries.setDatasetQuery.run(newStoredDataset);
+    tables.meta.dataset.upsert([newStoredDataset]);
     this.invalidateConnectedCaches(id);
   }
 
   deleteDataset(id: DatasetId): void {
     this.checks.throwIfLocked(id);
-    new DatasetDeleter(id, this.queries).delete();
+    new DatasetDeleter(id).delete();
   }
 
   getDatasetFile(
@@ -87,9 +74,9 @@ export class DatasetProvider extends BaseDatasetProvider {
     startAt?: number,
     limit?: number,
     sortBy?: string
-  ): IterableIterator<string[]> {
+  ): FileResponse {
     this.checks.throwIfNoDatasetFileUploaded(id);
-    return new DatasetFileGetter(id, startAt, limit, sortBy).iterate();
+    return new DatasetFileGetter(id, startAt, limit, sortBy).get();
   }
 
   async setDatasetFile(
@@ -108,7 +95,7 @@ export class DatasetProvider extends BaseDatasetProvider {
       this.deleteDatasetFileNoChecks(id);
 
       const datasetIDMapper = new DatasetIDMapper(id);
-      const { insertedRowCount, skippedRowCount } = await new DatasetInserter(
+      const insertedRowCount = await new DatasetInserter(
         id,
         datasetIDMapper,
         idColumn
@@ -116,7 +103,7 @@ export class DatasetProvider extends BaseDatasetProvider {
 
       storedDataset.numberOfRecords = datasetIDMapper.numberMappedIds();
       storedDataset.numberOfUploadedRecords = insertedRowCount;
-      this.queries.setDatasetQuery.run(storedDataset);
+      tables.meta.dataset.upsert([storedDataset]);
       this.invalidateConnectedCaches(id);
       if (
         storedDataset.numberOfRecords !== null &&
@@ -125,14 +112,7 @@ export class DatasetProvider extends BaseDatasetProvider {
         throw new Error(
           `The uploaded dataset does not contain rows for all ids belonging to this dataset (we remember all ids which have been uploaded before via a dataset file or an experiment file). ` +
             `The number of rows which have been inserted is ${insertedRowCount} but this dataset has ${storedDataset.numberOfRecords} different ids. ` +
-            `Please make sure this was intentional.` +
-            (skippedRowCount > 0
-              ? ` WARNING: The uploaded file contains ${skippedRowCount} invalid rows which have been skipped.`
-              : '')
-        );
-      } else if (skippedRowCount > 0) {
-        throw new Error(
-          `WARNING: The uploaded file contains ${skippedRowCount} invalid rows which have been skipped.`
+            `Please make sure this was intentional.`
         );
       }
     }, id);
@@ -144,19 +124,19 @@ export class DatasetProvider extends BaseDatasetProvider {
   }
 
   protected deleteDatasetFileNoChecks(id: DatasetId): void {
-    new DatasetDeleter(id, this.queries).deleteFile();
-    const dataset = this.queries.getDatasetQuery.get(id) as StoredDataset;
+    new DatasetDeleter(id).deleteFile();
+    const dataset = tables.meta.dataset.get({ id });
     if (dataset) {
       dataset.numberOfUploadedRecords = null;
-      this.queries.setDatasetQuery.run(dataset);
+      tables.meta.dataset.upsert([dataset]);
     }
   }
 
   protected invalidateConnectedCaches(datasetId: DatasetId): void {
-    for (const experimentId of this.queries.listExperimentsUsingThisDataset(
-      datasetId
-    )) {
-      invalidateCaches(experimentId);
+    for (const { id } of tables.meta.experiment.all({
+      dataset: datasetId,
+    })) {
+      invalidateCaches(id);
     }
   }
 }

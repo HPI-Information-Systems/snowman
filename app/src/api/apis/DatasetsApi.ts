@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._  Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -21,6 +21,9 @@ import {
     DatasetValues,
     DatasetValuesFromJSON,
     DatasetValuesToJSON,
+    FileResponse,
+    FileResponseFromJSON,
+    FileResponseToJSON,
 } from '../models';
 
 export interface AddDatasetRequest {
@@ -190,7 +193,7 @@ export class DatasetsApi extends runtime.BaseAPI {
      * Always returns one row with column names followed by the requested amount of rows. To only return the column names, pass startAt=0 and limit=0.
      * Gets a dataset file by id
      */
-    async getDatasetFileRaw(requestParameters: GetDatasetFileRequest): Promise<runtime.ApiResponse<Blob>> {
+    async getDatasetFileRaw(requestParameters: GetDatasetFileRequest): Promise<runtime.ApiResponse<FileResponse>> {
         if (requestParameters.datasetId === null || requestParameters.datasetId === undefined) {
             throw new runtime.RequiredError('datasetId','Required parameter requestParameters.datasetId was null or undefined when calling getDatasetFile.');
         }
@@ -218,14 +221,14 @@ export class DatasetsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.BlobApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => FileResponseFromJSON(jsonValue));
     }
 
     /**
      * Always returns one row with column names followed by the requested amount of rows. To only return the column names, pass startAt=0 and limit=0.
      * Gets a dataset file by id
      */
-    async getDatasetFile(requestParameters: GetDatasetFileRequest): Promise<Blob> {
+    async getDatasetFile(requestParameters: GetDatasetFileRequest): Promise<FileResponse> {
         const response = await this.getDatasetFileRaw(requestParameters);
         return await response.value();
     }

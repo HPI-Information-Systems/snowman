@@ -1,5 +1,5 @@
-import { assertType } from '../../../tools/types';
-import { ForeignKeys, Schemas } from '../../tools/types';
+import { assertType } from '../../tools/types';
+import { ForeignKeys, Schemas } from '../tools/types';
 
 export const metaSchemas = assertType<
   Schemas<'meta', ['algorithm', 'dataset', 'experiment']>
@@ -25,6 +25,22 @@ export const metaSchemas = assertType<
         description: {
           name: 'description' as const,
           dataType: 'TEXT',
+        },
+        implementationKnowHowLevel: {
+          name: 'implementationKnowHowLevel' as const,
+          dataType: 'TEXT',
+        },
+        matchingSolutionType: {
+          name: 'matchingSolutionType' as const,
+          dataType: 'TEXT',
+        },
+        timeToInstall: {
+          name: 'timeToInstall' as const,
+          dataType: 'INTEGER',
+        },
+        timeToConfigure: {
+          name: 'timeToConfigure' as const,
+          dataType: 'INTEGER',
         },
       },
     },
@@ -112,6 +128,10 @@ export const metaSchemas = assertType<
         },
         numberOfUploadedRecords: {
           name: 'numberOfUploadedRecords' as const,
+          dataType: 'INTEGER',
+        },
+        timeToConfigure: {
+          name: 'timeToConfigure' as const,
           dataType: 'INTEGER',
         },
       },

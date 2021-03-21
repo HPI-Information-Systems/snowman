@@ -1,6 +1,4 @@
-import { setupDatabase } from '../../database';
-import { latest } from '../../database/schemas';
-import { throwIfTableNotExists } from '../../database/table/loader';
+import { setupDatabase, tables } from '../../database';
 import {
   AlgorithmValues,
   DatasetValues,
@@ -186,11 +184,9 @@ describe('ExperimentProvider', () => {
   });
 
   test('set file sets file', async () => {
-    expect(() =>
-      throwIfTableNotExists(
-        latest.tableSchemas.experiment.experiment(addedExperimentIds[0])
-      )
-    ).toThrowError();
+    expect(tables.experiment.experiment(addedExperimentIds[0]).exists()).toBe(
+      false
+    );
     const file = [
       ['p1', 'p2'],
       ['id1', 'id1'],
@@ -200,28 +196,22 @@ describe('ExperimentProvider', () => {
       'pilot',
       fileToReadable(file)
     );
-    expect(() =>
-      throwIfTableNotExists(
-        latest.tableSchemas.experiment.experiment(addedExperimentIds[0])
-      )
-    ).not.toThrowError();
+    expect(tables.experiment.experiment(addedExperimentIds[0]).exists()).toBe(
+      true
+    );
   });
 
   test('delete file deletes file', () => {
-    expect(() =>
-      throwIfTableNotExists(
-        latest.tableSchemas.experiment.experiment(addedExperimentIds[1])
-      )
-    ).not.toThrowError();
+    expect(tables.experiment.experiment(addedExperimentIds[1]).exists()).toBe(
+      true
+    );
     provider.deleteExperimentFile(addedExperimentIds[1]);
-    expect(() =>
-      throwIfTableNotExists(
-        latest.tableSchemas.experiment.experiment(addedExperimentIds[1])
-      )
-    ).toThrowError();
+    expect(tables.experiment.experiment(addedExperimentIds[1]).exists()).toBe(
+      false
+    );
   });
 
-  test('set file throws warning when adding unknown / too many ids', async () => {
+  test('set file throws error when adding unknown / too many ids', async () => {
     const file = [
       ['p1', 'p2'],
       ['unknown id1', 'unknown id2'],
@@ -234,5 +224,8 @@ describe('ExperimentProvider', () => {
           fileToReadable(file)
         )
     ).rejects.toThrowError();
+    expect(() =>
+      provider.getExperimentFile(addedExperimentIds[1])
+    ).toThrowError();
   });
 });

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._  Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -16,28 +16,28 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface ExperimentIntersection
+ * @interface FileResponse
  */
-export interface ExperimentIntersection {
+export interface FileResponse {
     /**
      * 
      * @type {Array<string>}
-     * @memberof ExperimentIntersection
+     * @memberof FileResponse
      */
     header: Array<string>;
     /**
      * 
      * @type {Array<Array<string>>}
-     * @memberof ExperimentIntersection
+     * @memberof FileResponse
      */
     data: Array<Array<string>>;
 }
 
-export function ExperimentIntersectionFromJSON(json: any): ExperimentIntersection {
-    return ExperimentIntersectionFromJSONTyped(json, false);
+export function FileResponseFromJSON(json: any): FileResponse {
+    return FileResponseFromJSONTyped(json, false);
 }
 
-export function ExperimentIntersectionFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExperimentIntersection {
+export function FileResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): FileResponse {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -48,7 +48,7 @@ export function ExperimentIntersectionFromJSONTyped(json: any, ignoreDiscriminat
     };
 }
 
-export function ExperimentIntersectionToJSON(value?: ExperimentIntersection | null): any {
+export function FileResponseToJSON(value?: FileResponse | null): any {
     if (value === undefined) {
         return undefined;
     }
