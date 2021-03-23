@@ -1,10 +1,12 @@
 {
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    // "source.organizeImports": true,
     "source.fixAll": true
   },
-  "eslint.validate": ["javascript", "typescript"],
+  "eslint.validate": [
+    "javascript",
+    "typescript"
+  ],
   "eslint.options": {
     "configFile": ".eslintrc.json"
   },
@@ -14,9 +16,17 @@
   "[javascript]": {
     "editor.formatOnSave": false
   },
+  "[typescriptreact]": {
+    "editor.formatOnSave": false
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": false
+  },
   "typescript.preferences.importModuleSpecifier": "relative",
   "jest.pathToConfig": "wrapper/jest.config.js",
-  "jest.disabledWorkspaceFolders": ["app"],
+  "jest.disabledWorkspaceFolders": [
+    "app"
+  ],
   "prettier.singleQuote": true,
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }
