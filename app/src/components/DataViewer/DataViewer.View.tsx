@@ -29,7 +29,7 @@ const DataViewerView = ({
         .catch()
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loadTuples, tuplesCount]);
+  }, [loadTuples]);
 
   return (
     <InfiniteLoader
