@@ -62,7 +62,9 @@ class IdClustersToRecordClusters {
   }
 
   protected getRecordClusters(): ExperimentIntersection['data'] {
-    return this.idClusters.map((id) => (id ? this.getRecord(id) : []));
+    return this.idClusters.map((id) =>
+      id === undefined ? [] : this.getRecord(id)
+    );
   }
 
   protected getRecord(id: number): string[] {
