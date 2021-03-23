@@ -5,47 +5,117 @@ import { DataViewerProps } from 'components/DataViewer/DataViewerProps';
 import React, { useEffect, useState } from 'react';
 import { AutoSizer, Column, InfiniteLoader, Table } from 'react-virtualized';
 
-const BATCH_SIZE = 1000;
+import { RequestedRowsT, StateT } from './DataViewer.types';
 
 const DataViewerView = ({
   tuplesCount,
   loadTuples,
+  BATCH_SIZE = 1000,
 }: DataViewerProps): JSX.Element => {
-  const [header, setHeader] = useState<string[]>([]);
-  const [rows, setRows] = useState<string[][]>([]);
-  const [requestedRowsLength, setRequestedRowsLength] = useState(0);
-  const [sync, setSync] = useState<Promise<unknown>>(Promise.resolve());
+  const [{ header, rows, requestedRows }, setState] = useState<StateT>({
+    header: [],
+    rows: [],
+    requestedRows: [],
+    resetVersion: 0,
+  });
+
+  function getState(callback: (state: StateT) => void) {
+    setState((newState) => {
+      callback(newState);
+      return newState;
+    });
+  }
+
+  async function requestRows(rowCount: number): Promise<void> {
+    return new Promise((resolve) =>
+      getState(({ header, rows, requestedRows, resetVersion }) => {
+        const request: RequestedRowsT = {
+          rowCount,
+          resolve,
+        };
+        setState({
+          header,
+          rows,
+          requestedRows: [...requestedRows, request],
+          resetVersion,
+        });
+        const maxRequestedRowsLength = Math.max(
+          ...requestedRows.map(({ rowCount: length }) => length),
+          rows.length
+        );
+        if (rowCount > maxRequestedRowsLength) {
+          Promise.all([
+            loadTuples(maxRequestedRowsLength, rowCount),
+            requestRows(maxRequestedRowsLength),
+          ]).then(async ([{ header, data }]) => {
+            getState(({ requestedRows, rows, resetVersion }) => {
+              if (requestedRows.includes(request)) {
+                rows.push(...data);
+                setState({
+                  header,
+                  rows,
+                  requestedRows,
+                  resetVersion,
+                });
+              }
+            });
+          });
+        }
+      })
+    );
+  }
 
   useEffect(() => {
-    setRequestedRowsLength(0);
-    setRows([]);
-    setSync(
-      Promise.all([loadTuples(0, BATCH_SIZE), sync])
-        .then(([data]) => {
-          setRequestedRowsLength(data.data.length);
-          setRows(data.data);
-          setHeader(data.header);
+    getState(({ header, rows, requestedRows, resetVersion }) => {
+      const loadingRequestedRows = requestedRows.filter((request) => {
+        if (request.rowCount <= rows.length) {
+          request.resolve();
+          return false;
+        } else {
+          return true;
+        }
+      });
+      if (loadingRequestedRows.length !== requestedRows.length) {
+        setState({
+          rows,
+          header,
+          requestedRows: loadingRequestedRows,
+          resetVersion,
+        });
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestedRows, rows]);
+
+  useEffect(() => {
+    getState(({ header, rows, requestedRows, resetVersion }) => {
+      const newResetVersion = resetVersion + 1;
+      setState({
+        header,
+        requestedRows,
+        rows,
+        resetVersion: newResetVersion,
+      });
+      loadTuples(0, BATCH_SIZE).then(({ header, data }) =>
+        getState(({ requestedRows, resetVersion }) => {
+          if (resetVersion === newResetVersion) {
+            requestedRows.forEach(({ resolve }) => resolve());
+            setState({
+              header,
+              rows: data,
+              requestedRows: [],
+              resetVersion,
+            });
+          }
         })
-        .catch()
-    );
+      );
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadTuples]);
 
   return (
     <InfiniteLoader
-      loadMoreRows={async ({ stopIndex }) => {
-        if (stopIndex > requestedRowsLength) {
-          setRequestedRowsLength(stopIndex);
-          const awaitLoad = Promise.all([
-            loadTuples(requestedRowsLength, stopIndex),
-            sync,
-          ])
-            .then(([{ data }]) => rows.push(...data) && setRows(rows))
-            .catch();
-          setSync(awaitLoad);
-          await awaitLoad;
-        }
-      }}
+      loadMoreRows={({ stopIndex }) => requestRows(stopIndex)}
       isRowLoaded={({ index }) => index < rows.length}
       rowCount={tuplesCount}
       threshold={BATCH_SIZE}
