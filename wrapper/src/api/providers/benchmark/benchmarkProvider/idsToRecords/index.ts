@@ -1,6 +1,5 @@
-import { latest } from '../../../../database/schemas';
-import { tableExists } from '../../../../database/table/loader';
-import { DatasetId, ExperimentIntersection } from '../../../../server/types';
+import { tables } from '../../../../database';
+import { DatasetId, FileResponse } from '../../../../server/types';
 import { NodeID } from '../cluster/types';
 import { idClustersToRecordClustersNoTable } from './noTable';
 import { idClustersToRecordClustersWithTable } from './withTable';
@@ -8,10 +7,11 @@ import { idClustersToRecordClustersWithTable } from './withTable';
 export function idClustersToRecordClusters(
   idClusters: (NodeID | undefined)[],
   datasetId: DatasetId
-): ExperimentIntersection {
-  const schema = latest.tableSchemas.dataset.dataset(datasetId);
-  if (tableExists(schema)) {
-    return idClustersToRecordClustersWithTable(idClusters, schema, datasetId);
+): FileResponse {
+  const table = tables.dataset.dataset(datasetId);
+  if (table.exists()) {
+    table.loadSchemaFromDatabase();
+    return idClustersToRecordClustersWithTable(idClusters, table, datasetId);
   } else {
     return idClustersToRecordClustersNoTable(idClusters, datasetId);
   }

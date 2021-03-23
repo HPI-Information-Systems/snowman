@@ -1,14 +1,13 @@
 import {
   ExperimentId,
-  ExperimentIntersection,
   ExperimentIntersectionCount,
   ExperimentIntersectionPairCountsItem,
   ExperimentIntersectionPairCountsRequestExperiments,
   ExperimentIntersectionRequestExperiments,
+  FileResponse,
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
 import { numberOfPairs } from '../../../tools/numberOfPairs';
-import { BaseBenchmarkProvider } from '../baseBenchmarkProvider';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
 import { idClustersToRecordClusters } from './idsToRecords';
 import { Intersection, IntersectionCache } from './intersection';
@@ -33,7 +32,7 @@ import {
 } from './metrics';
 import { ConfusionMatrix } from './metrics/confusionMatrix';
 
-export class BenchmarkProvider extends BaseBenchmarkProvider {
+export class BenchmarkProvider {
   calculateExperimentIntersectionCount({
     config,
   }: {
@@ -41,7 +40,7 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
   }): ExperimentIntersectionCount {
     const intersection = this.intersection(config);
     return {
-      numberPairs: intersection.pairCount,
+      numberPairs: intersection.numberPairs,
       numberRows: intersection.rowCount,
     };
   }
@@ -49,9 +48,8 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
   calculateExperimentIntersectionPairCounts(
     config: ExperimentIntersectionPairCountsRequestExperiments[]
   ): ExperimentIntersectionPairCountsItem[] {
-    const dataset = datasetFromExperimentIds(
-      config.map(({ experimentId }) => experimentId)
-    );
+    const experimentIds = config.map(({ experimentId }) => experimentId);
+    const dataset = datasetFromExperimentIds(experimentIds);
     enum ExperimentState {
       IRRELEVANT,
       INCLUDED,
@@ -80,22 +78,25 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
     do {
       const included = state
         .map((state, index) =>
-          state === ExperimentState.INCLUDED ? index : undefined
+          state === ExperimentState.INCLUDED ? experimentIds[index] : undefined
         )
         .filter((index) => index !== undefined) as ExperimentId[];
       const excluded = state
         .map((state, index) =>
-          state === ExperimentState.EXCLUDED ? index : undefined
+          state === ExperimentState.EXCLUDED ? experimentIds[index] : undefined
         )
         .filter((index) => index !== undefined) as ExperimentId[];
-      let pairCount: number;
+      let numberPairs: number;
+      let numberRows: number;
       if (included.length === 0) {
-        pairCount = numberOfPairs(dataset.numberOfRecords);
+        numberPairs = numberOfPairs(dataset.numberOfRecords);
         if (excluded.length !== 0) {
-          pairCount -= IntersectionCache.get(excluded, []).pairCount;
+          numberPairs -= IntersectionCache.get(excluded, []).numberPairs;
         }
+        numberRows = numberPairs * 2 + Math.max(0, numberPairs - 1);
       } else {
-        pairCount = IntersectionCache.get(included, excluded).pairCount;
+        numberPairs = IntersectionCache.get(included, excluded).numberPairs;
+        numberRows = IntersectionCache.get(included, excluded).rowCount;
       }
       counts.push({
         experiments: [
@@ -112,7 +113,8 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
             };
           }),
         ],
-        pairCount,
+        numberPairs,
+        numberRows,
       });
     } while (nextState());
     return counts;
@@ -128,7 +130,7 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
     startAt?: number;
     limit?: number;
     sortBy?: string;
-  }): ExperimentIntersection {
+  }): FileResponse {
     const intersection = this.intersection(config);
     return idClustersToRecordClusters(
       intersection.clusters(startAt, limit),
@@ -161,11 +163,11 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
     ];
     const matrix: ConfusionMatrix = {
       truePositives: IntersectionCache.get([goldstandardId, experimentId], [])
-        .pairCount,
+        .numberPairs,
       falsePositives: IntersectionCache.get([experimentId], [goldstandardId])
-        .pairCount,
+        .numberPairs,
       falseNegatives: IntersectionCache.get([goldstandardId], [experimentId])
-        .pairCount,
+        .numberPairs,
       trueNegatives: 0,
     };
     matrix.trueNegatives =

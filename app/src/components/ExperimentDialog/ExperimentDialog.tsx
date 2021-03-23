@@ -40,7 +40,7 @@ const mapStateToProps = (state: Store): ExperimentDialogStateProps => ({
   isAddDialog: state.ExperimentDialogStore.experimentId === null,
   experimentName: state.ExperimentDialogStore.experimentName,
   experimentDescription: state.ExperimentDialogStore.experimentDescription,
-  tags: state.AlgorithmsStore.algorithms.map(
+  tags: state.CoreStore.algorithms.map(
     (anAlgorithm: Algorithm): string => anAlgorithm.name
   ),
   selectedTags: state.ExperimentDialogStore.selectedTags,
@@ -58,8 +58,8 @@ const mapDispatchToProps = (
     dispatch(changeExperimentName(event.detail.value as string)),
   changeExperimentDescription: (event: IonChangeEvent): void =>
     dispatch(changeExperimentDescription(event.detail.value as string)),
-  changeExperimentFileFormat: (event: IonChangeEvent): void =>
-    dispatch(changeFileFormat(event.detail.value as experimentFileFormatEnum)),
+  changeExperimentFileFormat: (anOption: string): void =>
+    dispatch(changeFileFormat(anOption as experimentFileFormatEnum)),
   clickOnMatchingSolutionTag: (aTag: string): void =>
     dispatch(clickOnMatchingSolutionTag(aTag)),
   clickOnSubmit: (): void => {

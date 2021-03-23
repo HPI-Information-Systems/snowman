@@ -1,9 +1,11 @@
+import { SelectedOptionItem } from 'types/SelectedOptionItem';
+import { ViewIDs } from 'types/ViewIDs';
+
 export interface CategoryItem {
   name: string;
-  key: string;
+  key: ViewIDs;
   couldEnter: boolean;
-  enterItem(): void;
-  selectedOptions: string[];
+  selectedOptions: SelectedOptionItem[];
   menuIcon: string;
   isActive: boolean;
 }
@@ -13,6 +15,18 @@ export interface SideMenuCategory {
   categoryItems: CategoryItem[];
 }
 
-export interface SideMenuProps {
+export interface SideMenuOwnProps {
+  contentId: string;
+}
+
+export interface SideMenuDispatchProps {
+  enterView(aViewId: ViewIDs): void;
+}
+
+export interface SideMenuStateProps {
   categoryStructure: SideMenuCategory[];
 }
+
+export type SideMenuProps = SideMenuOwnProps &
+  SideMenuStateProps &
+  SideMenuDispatchProps;

@@ -10,7 +10,7 @@ export interface BinaryMetricsPageDispatchProps {
 }
 
 export interface BinaryMetricsPageStateProps {
-  tuplesCount: number;
+  rowCount: number;
   metrics: Metric[];
   selectedMetricsTuplesCategory: MetricsTuplesCategories;
   metricsTuplesCategories: MetricsTuplesCategories[];

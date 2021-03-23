@@ -5,7 +5,7 @@ import {
 } from 'components/AlgorithmCard/AlgorithmCardProps';
 import { connect } from 'react-redux';
 import { openChangeDialog } from 'store/actions/AlgorithmDialogStoreActions';
-import { deleteAlgorithm } from 'store/actions/AlgorithmsStoreActions';
+import { deleteAlgorithm } from 'store/actions/AlgorithmsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 
 const mapDispatchToProps = (

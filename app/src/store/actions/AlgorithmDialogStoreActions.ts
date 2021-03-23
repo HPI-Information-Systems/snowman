@@ -1,18 +1,18 @@
 import { Algorithm, AlgorithmApi } from 'api';
 import { AlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
-import { getAlgorithms } from 'store/actions/AlgorithmsStoreActions';
+import { getAlgorithms } from 'store/actions/AlgorithmsPageActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
-import { MagicNotPossibleId } from 'utils/constants';
+import { MagicNotPossibleId } from 'structs/constants';
+import {
+  SUCCESS_TO_ADD_NEW_ALGORITHM,
+  SUCCESS_TO_UPDATE_ALGORITHM,
+} from 'structs/statusMessages';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
-import {
-  SUCCESS_TO_ADD_NEW_ALGORITHM,
-  SUCCESS_TO_UPDATE_ALGORITHM,
-} from 'utils/statusMessages';
 
 export const openAddDialog = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({

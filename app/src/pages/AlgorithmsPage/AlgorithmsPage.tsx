@@ -5,14 +5,14 @@ import {
   AlgorithmsPageStateProps,
 } from 'pages/AlgorithmsPage/AlgorithmsPageProps';
 import { connect } from 'react-redux';
-import { getAlgorithms } from 'store/actions/AlgorithmsStoreActions';
+import { getAlgorithms } from 'store/actions/AlgorithmsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-import { FirstValidMatchingSolution } from 'utils/constants';
+import { HiddenMatchingSolutions } from 'structs/constants';
 
 const mapStateToProps = (state: Store): AlgorithmsPageStateProps => ({
-  algorithms: state.AlgorithmsStore.algorithms.filter(
-    (anAlgorithm: Algorithm) => anAlgorithm.id >= FirstValidMatchingSolution
+  algorithms: state.CoreStore.algorithms.filter(
+    (anAlgorithm: Algorithm) => !HiddenMatchingSolutions.has(anAlgorithm.id)
   ),
 });
 

@@ -1,22 +1,44 @@
-import { combineReducers } from 'redux';
+import { SnowmanAction } from 'store/messages';
+import { CoreStore, ImmediateStore, Store } from 'store/models';
 import { AlgorithmDialogReducer } from 'store/reducers/AlgorithmDialogReducer';
-import { AlgorithmsReducer } from 'store/reducers/AlgorithmsReducer';
+import { BenchmarkConfiguratorReducer } from 'store/reducers/BenchmarkConfiguratorReducer';
+import { BinaryMetricsReducer } from 'store/reducers/BinaryMetricsReducer';
+import { CoreReducer } from 'store/reducers/CoreReducer';
 import { DatasetDialogReducer } from 'store/reducers/DatasetDialogReducer';
-import { DatasetsReducer } from 'store/reducers/DatasetsReducer';
 import { ExperimentDialogReducer } from 'store/reducers/ExperimentDialogReducer';
-import { ExperimentsReducer } from 'store/reducers/ExperimentsReducer';
 import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
 import { InputChipReducer } from 'store/reducers/InputChipReducer';
-import { MetricsReducer } from 'store/reducers/MetricsReducer';
+import { RenderLogicReducer } from 'store/reducers/RenderLogicReducer';
+import { SelectableInputReducer } from 'store/reducers/SelectableInputReducer';
 
-export const rootReducer = combineReducers({
-  DatasetsStore: DatasetsReducer,
-  ExperimentsStore: ExperimentsReducer,
-  AlgorithmsStore: AlgorithmsReducer,
-  DatasetDialogStore: DatasetDialogReducer,
-  ExperimentDialogStore: ExperimentDialogReducer,
-  AlgorithmDialogStore: AlgorithmDialogReducer,
-  GlobalIndicatorStore: GlobalIndicatorReducer,
-  MetricsStore: MetricsReducer,
-  InputChipStore: InputChipReducer,
-});
+export const rootReducer = (state: Store, action: SnowmanAction): Store => {
+  const coreState: CoreStore = CoreReducer(state?.CoreStore, action);
+  const immediateState: ImmediateStore = {
+    CoreStore: coreState,
+    AlgorithmDialogStore: AlgorithmDialogReducer(
+      state?.AlgorithmDialogStore,
+      action
+    ),
+    DatasetDialogStore: DatasetDialogReducer(state?.DatasetDialogStore, action),
+    ExperimentDialogStore: ExperimentDialogReducer(
+      state?.ExperimentDialogStore,
+      action
+    ),
+    BenchmarkConfigurationStore: BenchmarkConfiguratorReducer(
+      state?.BenchmarkConfigurationStore,
+      coreState,
+      action
+    ),
+    BinaryMetricsStore: BinaryMetricsReducer(state?.BinaryMetricsStore, action),
+    GlobalIndicatorStore: GlobalIndicatorReducer(
+      state?.GlobalIndicatorStore,
+      action
+    ),
+    InputChipStore: InputChipReducer(state?.InputChipStore, action),
+    SelectableInputStore: SelectableInputReducer(
+      state?.SelectableInputStore,
+      action
+    ),
+  };
+  return RenderLogicReducer(state?.RenderLogicStore, immediateState, action);
+};

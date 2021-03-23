@@ -27,12 +27,12 @@ export const BinaryMetricsPageView = ({
   selectedMetricsTuplesCategory,
   selectPane,
   metricsTuplesCategories,
-  tuplesCount,
+  rowCount,
   tuplesLoader,
   confusionMatrix,
 }: BinaryMetricsPageProps): JSX.Element => {
-  useEffect(() => loadMetrics(), [loadMetrics]);
-  useEffect(() => preloadTuplesCounts(), [preloadTuplesCounts]);
+  useEffect(loadMetrics, [loadMetrics]);
+  useEffect(preloadTuplesCounts, [preloadTuplesCounts]);
   useEffect(() => {
     // Triggered on every component update!
     ReactTooltip.rebuild();
@@ -125,7 +125,7 @@ export const BinaryMetricsPageView = ({
           selectedPaneTitle={selectedMetricsTuplesCategory}
         />
         <IonCardContent class="table-housing">
-          <DataViewer tuplesCount={tuplesCount} loadTuples={tuplesLoader} />
+          <DataViewer tuplesCount={rowCount} loadTuples={tuplesLoader} />
         </IonCardContent>
       </IonCard>
     </PageStruct>

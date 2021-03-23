@@ -7,7 +7,7 @@ export interface ExperimentDialogDispatchProps {
   clickOnCancel(): void;
   changeExperimentName(event: IonChangeEvent): void;
   changeExperimentDescription(event: IonChangeEvent): void;
-  changeExperimentFileFormat(event: IonChangeEvent): void;
+  changeExperimentFileFormat(anOption: string): void;
   clickOnMatchingSolutionTag(aTag: string): void;
   clickOnSubmit(): void;
   changeSelectedFiles(event: ChangeEvent<HTMLInputElement>): void;

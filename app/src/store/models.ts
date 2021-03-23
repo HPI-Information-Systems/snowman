@@ -1,8 +1,15 @@
-import { Algorithm, Dataset, Experiment, Metric } from 'api';
+import {
+  Algorithm,
+  Dataset,
+  Experiment,
+  ExperimentIntersectionPairCountsItem,
+  Metric,
+} from 'api';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
+import { ViewIDs } from 'types/ViewIDs';
 
 export interface AlgorithmDialogStore {
   algorithmId: number | null;
@@ -40,22 +47,6 @@ export interface ExperimentDialogStore {
   selectedFiles: File[];
 }
 
-export interface AlgorithmsStore {
-  algorithms: Algorithm[];
-}
-
-export interface DatasetsStore {
-  datasets: Dataset[];
-  selectedDatasetTags: string[];
-  selectedDataset: Dataset | null;
-}
-
-export interface ExperimentsStore {
-  experiments: Experiment[];
-  selectedExperimentsTags: string[];
-  selectedExperiments: number[];
-}
-
 export interface GlobalIndicatorStore {
   showLoading: boolean;
   ongoingRequestsCount: number;
@@ -66,22 +57,50 @@ export interface InputChipStore {
   shouldShowInput: boolean;
 }
 
-export interface MetricsStore {
-  falseNegativesCount: number;
-  falsePositivesCount: number;
-  truePositivesCount: number;
+export interface SelectableInputStore {
+  shouldShowPopover: boolean;
+  eventPopover: Event | undefined;
+  searchString: string;
+}
+
+export interface CoreStore {
+  algorithms: Algorithm[];
+  datasets: Dataset[];
+  experiments: Experiment[];
+}
+
+export interface RenderLogicStore {
+  currentViewID: ViewIDs;
+  couldGoNext: boolean;
+}
+
+export interface BenchmarkConfigurationStore {
+  selectedDatasetCategories: string[];
+  selectedDataset: Dataset | null;
+  selectedMatchingSolutions: Algorithm[];
+  availableExperiments: Experiment[];
+  chosenGoldStandards: Experiment[];
+  chosenExperiments: Experiment[];
+}
+
+export interface BinaryMetricsStore {
+  counts: ExperimentIntersectionPairCountsItem[];
   metrics: Metric[];
   selectedDataView: MetricsTuplesCategories;
 }
 
-export interface Store {
-  DatasetsStore: DatasetsStore;
-  ExperimentsStore: ExperimentsStore;
-  AlgorithmsStore: AlgorithmsStore;
+export interface ImmediateStore {
+  CoreStore: CoreStore;
+  AlgorithmDialogStore: AlgorithmDialogStore;
   DatasetDialogStore: DatasetDialogStore;
   ExperimentDialogStore: ExperimentDialogStore;
-  AlgorithmDialogStore: AlgorithmDialogStore;
+  BenchmarkConfigurationStore: BenchmarkConfigurationStore;
+  BinaryMetricsStore: BinaryMetricsStore;
   GlobalIndicatorStore: GlobalIndicatorStore;
-  MetricsStore: MetricsStore;
   InputChipStore: InputChipStore;
+  SelectableInputStore: SelectableInputStore;
+}
+
+export interface Store extends ImmediateStore {
+  RenderLogicStore: RenderLogicStore;
 }

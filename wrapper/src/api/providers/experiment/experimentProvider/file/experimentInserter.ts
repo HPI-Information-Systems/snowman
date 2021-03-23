@@ -1,14 +1,17 @@
 import { Readable } from 'stream';
 
 import { INSERT_BATCH_SIZE } from '../../../../config';
-import { Table } from '../../../../database';
-import { latest } from '../../../../database/schemas';
+import { Table, tables } from '../../../../database';
+import {
+  experimentCustomColumnPrefix,
+  tableSchemas,
+} from '../../../../database/schemas';
 import { escapeColumnName } from '../../../../database/tools/escapeColumnNames';
-import { Column } from '../../../../database/tools/types';
+import { Column, NullableColumnValues } from '../../../../database/tools/types';
 import { DatasetIDMapper } from '../../../dataset/datasetProvider/util/idMapper';
 
 type ExperimentSchema = ReturnType<
-  typeof latest.tableSchemas['experiment']['experiment']
+  typeof tableSchemas['experiment']['experiment']
 >;
 type ExperimentTable = Table<ExperimentSchema>;
 
@@ -22,14 +25,15 @@ export abstract class ExperimentInserter {
 
   constructor(
     protected readonly experimentId: number,
-    protected readonly idMapper: DatasetIDMapper
+    protected readonly idMapper: DatasetIDMapper,
+    protected readonly datasetNumberOfRecords?: number
   ) {}
 
   protected abstract insert_internal(file: Readable): Promise<void>;
 
   public async insert(file: Readable): Promise<number> {
     await this.insert_internal(file);
-    this.table && this.table.flushBatchInsert();
+    this.table && this.table.flushBatchUpsert();
     if (!this.table) {
       this.getOrCreateTable({});
     }
@@ -46,15 +50,16 @@ export abstract class ExperimentInserter {
     this.numberOfUploadedRecords++;
     [id1, id2] = [id1, id2].sort();
     const table = this.getOrCreateTable(similarityScores);
-    table.batchInsert(
-      () =>
-        this.rowToInsertParameters(
-          table.schema.columns,
-          id1,
-          id2,
-          detectedAsDuplicate,
-          similarityScores
-        ),
+    table.batchUpsert(
+      [
+        () =>
+          this.rowToInsertParameters(
+            id1,
+            id2,
+            detectedAsDuplicate,
+            similarityScores
+          ),
+      ],
       INSERT_BATCH_SIZE
     );
   }
@@ -63,19 +68,13 @@ export abstract class ExperimentInserter {
     [name: string]: number;
   }): ExperimentTable {
     if (!this.table) {
-      this.table = new Table(
-        this.getTableSchema(Object.keys(similarityScores))
+      this.table = tables.experiment.experiment(
+        this.experimentId,
+        this.columnsFromNames(Object.keys(similarityScores))
       );
       this.table.create(true, false);
     }
     return this.table;
-  }
-
-  private getTableSchema(columns: string[]): ExperimentSchema {
-    return latest.tableSchemas.experiment.experiment(
-      this.experimentId,
-      this.columnsFromNames(columns)
-    );
   }
 
   private columnsFromNames(columns: string[]): Column[] {
@@ -88,44 +87,21 @@ export abstract class ExperimentInserter {
   }
 
   private rowToInsertParameters(
-    columns: ReturnType<
-      typeof latest.tableSchemas['experiment']['experiment']
-    >['columns'],
     id1: string,
     id2: string,
     detectedAsDuplicate: boolean,
     similarityScores: { [name: string]: number }
-  ) {
-    const inserts: Parameters<
-      Table<
-        ReturnType<typeof latest.tableSchemas['experiment']['experiment']>
-      >['insert']
-    > = [
-      [
-        {
-          column: columns.id1,
-          value: this.idMapper.map(id1),
-        },
-        {
-          column: columns.id2,
-          value: this.idMapper.map(id2),
-        },
-        {
-          column: columns.isDuplicate,
-          value: detectedAsDuplicate ? 1 : 0,
-        },
-        ...Object.entries(similarityScores).map(([score, value]) => {
-          return {
-            column: columns[
-              escapeColumnName(score, latest.experimentCustomColumnPrefix)
-            ] as Column<'REAL'> & {
-              autoIncrement: false;
-            },
-            value,
-          };
-        }),
-      ],
-    ];
-    return inserts;
+  ): NullableColumnValues<ExperimentSchema['columns']> {
+    return {
+      id1: this.idMapper.map(id1, this.datasetNumberOfRecords),
+      id2: this.idMapper.map(id2, this.datasetNumberOfRecords),
+      isDuplicate: detectedAsDuplicate ? 1 : 0,
+      ...Object.fromEntries(
+        Object.entries(similarityScores).map(([score, value]) => [
+          escapeColumnName(score, experimentCustomColumnPrefix),
+          value,
+        ])
+      ),
+    };
   }
 }

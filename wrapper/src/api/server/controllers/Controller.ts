@@ -1,4 +1,3 @@
-import stringify from 'csv-stringify';
 import { Response } from 'express';
 
 import { logger } from '../../tools/logger';
@@ -23,26 +22,6 @@ export class Controller {
       responsePayload = responsePayload.toString();
     }
     response.status(payload.code || 200).send(responsePayload);
-  }
-
-  static sendFileResponse(
-    response: Response,
-    payload: SuccessResponse<IterableIterator<string[]>>
-  ): void {
-    const stringifier = stringify();
-    stringifier.pipe(response);
-    stringifier.on('finish', () => {
-      response.end();
-    });
-    try {
-      for (const line of payload.payload) {
-        stringifier.write(line);
-      }
-      response.status(payload.code);
-    } catch (e) {
-      response.status(404).send(e.message || e);
-    }
-    stringifier.end();
   }
 
   static sendError(response: Response, error: ErrorResponse<unknown>): void {
@@ -108,7 +87,6 @@ export class Controller {
         ) => Promise<SuccessResponse<ResponseT>>)
       | ((params: ParamsT) => Promise<SuccessResponse<ResponseT>>),
     options: {
-      responseIsFile?: boolean;
       requestIsFile?: boolean;
     } = {}
   ): Promise<void> {
@@ -122,17 +100,7 @@ export class Controller {
           params: ParamsT
         ) => Promise<SuccessResponse<ResponseT>>)(params);
       }
-
-      if ('responseIsFile' in options && options.responseIsFile) {
-        Controller.sendFileResponse(
-          response,
-          (serviceResponse as unknown) as SuccessResponse<
-            IterableIterator<string[]>
-          >
-        );
-      } else {
-        Controller.sendResponse(response, serviceResponse);
-      }
+      Controller.sendResponse(response, serviceResponse);
     } catch (error) {
       Controller.sendError(response, error);
     }

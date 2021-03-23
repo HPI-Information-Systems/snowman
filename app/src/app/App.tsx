@@ -1,8 +1,13 @@
 import AppView from 'app/App.View';
-import { AppDispatchProps } from 'app/AppProps';
+import { AppDispatchProps, AppStateProps } from 'app/AppProps';
 import { connect } from 'react-redux';
-import { getAlgorithms } from 'store/actions/AlgorithmsStoreActions';
+import { getAlgorithms } from 'store/actions/AlgorithmsPageActions';
 import { SnowmanDispatch } from 'store/messages';
+import { Store } from 'store/models';
+
+const mapStateToProps = (state: Store): AppStateProps => ({
+  currentViewId: state.RenderLogicStore.currentViewID,
+});
 
 const mapDispatchToProps = (dispatch: SnowmanDispatch): AppDispatchProps => ({
   loadInitialState() {
@@ -10,6 +15,6 @@ const mapDispatchToProps = (dispatch: SnowmanDispatch): AppDispatchProps => ({
   },
 });
 
-const App = connect(null, mapDispatchToProps)(AppView);
+const App = connect(mapStateToProps, mapDispatchToProps)(AppView);
 
 export default App;

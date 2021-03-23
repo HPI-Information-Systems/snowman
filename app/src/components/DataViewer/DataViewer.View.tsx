@@ -122,7 +122,7 @@ const DataViewerView = ({
 
   return (
     <InfiniteLoader
-      loadMoreRows={({ stopIndex }) => requestRows(stopIndex)}
+      loadMoreRows={({ stopIndex }) => requestRows(stopIndex + 1)}
       isRowLoaded={({ index }) => index < rows.length}
       rowCount={tuplesCount}
       threshold={BATCH_SIZE}

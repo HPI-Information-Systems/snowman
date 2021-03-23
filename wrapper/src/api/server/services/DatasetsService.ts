@@ -1,5 +1,11 @@
 import { getProviders } from '../../providers';
-import { Dataset, DatasetId, DatasetValues, Request } from '../types';
+import {
+  Dataset,
+  DatasetId,
+  DatasetValues,
+  FileResponse,
+  Request,
+} from '../types';
 import { Service, SuccessResponse } from './Service';
 
 function provider() {
@@ -86,7 +92,7 @@ export async function getDatasetFile({
   startAt: number;
   limit: number;
   sortBy: string;
-}): Promise<SuccessResponse<IterableIterator<string[]>>> {
+}): Promise<SuccessResponse<FileResponse>> {
   return Service.response(
     () => provider().getDatasetFile(datasetId, startAt, limit, sortBy),
     200,

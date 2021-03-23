@@ -36,9 +36,7 @@ export async function getDatasetFile(
   request: Request,
   response: Response
 ): Promise<void> {
-  await Controller.handleRequest(request, response, service.getDatasetFile, {
-    responseIsFile: true,
-  });
+  await Controller.handleRequest(request, response, service.getDatasetFile);
 }
 
 export async function getDatasets(

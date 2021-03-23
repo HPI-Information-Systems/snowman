@@ -21,14 +21,19 @@
     "start-api": "npm run start-api --prefix ./wrapper",
     "start-wrapper": "npm start --prefix ./wrapper",
     "start-stack": "npm run deploy-app && npm run start-wrapper",
+    "start-stack-api": "npm run deploy-app && npm run start-api",
     "release": "npm run deploy-app && npm run release-wrapper",
-    "start": "npm run start-stack"
+    "start": "npm run start-stack",
+    "cypress": "cypress open",
+    "test": "cypress run",
+    "test-ci": "start-server-and-test start-stack-api http://localhost:8123 test"
   },
   "devDependencies": {
     "@types/react-dom": "^17.0.0",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "cpx": "^1.5.0",
+    "cypress": "^6.7.1",
     "electron-rebuild": "^2.3.5",
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",
@@ -40,6 +45,7 @@
     "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-scripts": "4.0.1",
+    "start-server-and-test": "^1.12.0",
     "stylelint": "^13.8.0",
     "stylelint-config-property-sort-order-smacss": "^7.0.0",
     "stylelint-config-standard": "^20.0.0",

@@ -34,7 +34,7 @@ function testConfig(
   expected: NodeID[][]
 ) {
   expectClusteringsToEqual(getClustering(pos, neg), expected);
-  expect(IntersectionCache.get(pos, neg).pairCount).toBe(
+  expect(IntersectionCache.get(pos, neg).numberPairs).toBe(
     expected.reduce((prev, cur) => prev + numberOfPairs(cur.length), 0)
   );
   const result = [

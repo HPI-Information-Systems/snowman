@@ -5,7 +5,6 @@ import {
   IonContent,
   IonHeader,
   IonMenuButton,
-  IonPage,
   IonSpinner,
   IonTitle,
   IonToolbar,
@@ -21,7 +20,7 @@ const PageStructView = ({
   showIndicator,
 }: PageStructProps): React.FunctionComponentElement<PageStructProps> => {
   return (
-    <IonPage>
+    <>
       <IonHeader>
         <IonToolbar color="primary">
           <IonButtons slot="start">
@@ -37,7 +36,7 @@ const PageStructView = ({
         {showNextFab ? <NextFab /> : null}
         {children}
       </IonContent>
-    </IonPage>
+    </>
   );
 };
 

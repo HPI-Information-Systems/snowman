@@ -7,14 +7,12 @@ import {
   IonLabel,
   IonList,
   IonNote,
-  IonSelect,
-  IonSelectOption,
   IonTextarea,
 } from '@ionic/react';
-import { SetExperimentFileFormatEnum } from 'api';
 import { ExperimentDialogProps } from 'components/ExperimentDialog/ExperimentDialogProps';
 import FileInput from 'components/FileInput/FileInput';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
+import SelectableInput from 'components/SelectableInput/SelectableInput';
 import { addCircleOutline, closeCircleOutline } from 'ionicons/icons';
 import React from 'react';
 import { $enum } from 'ts-enum-util';
@@ -65,19 +63,13 @@ const ExperimentDialogView = ({
       </IonItem>
       <IonItem>
         <IonLabel position="fixed">File Format:</IonLabel>
-        <IonSelect
-          value={experimentFileFormat}
-          multiple={false}
-          onIonChange={changeExperimentFileFormat}
-        >
-          {$enum(experimentFileFormatEnum).map(
-            (form: SetExperimentFileFormatEnum) => (
-              <IonSelectOption key={'format-option-' + form} value={form}>
-                {form}
-              </IonSelectOption>
-            )
+        <SelectableInput
+          allOptions={$enum(experimentFileFormatEnum).map(
+            (form) => form as string
           )}
-        </IonSelect>
+          currentOption={experimentFileFormat}
+          setOption={changeExperimentFileFormat}
+        />
       </IonItem>
       <IonItem>
         <IonLabel position="fixed">Source File:</IonLabel>

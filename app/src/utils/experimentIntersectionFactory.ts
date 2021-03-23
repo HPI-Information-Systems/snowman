@@ -1,6 +1,6 @@
-import { ExperimentIntersection } from 'api';
+import { FileResponse } from 'api';
 
-export const getEmptyExperimentIntersection = (): ExperimentIntersection => ({
+export const getEmptyExperimentIntersection = (): FileResponse => ({
   header: [],
   data: [],
 });

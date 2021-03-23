@@ -7,28 +7,80 @@ import {
 import { connect } from 'react-redux';
 import {
   clickOnPane,
+  getExperiment1Id,
+  getGroundTruthId,
   loadBinaryMetricsTuplesCounts,
   loadFalseNegatives,
   loadFalsePositives,
   loadMetrics,
+  loadTrueNegatives,
   loadTruePositives,
-} from 'store/actions/MetricsStoreActions';
+} from 'store/actions/BinaryMetricsStoreActions';
 import { SnowmanDispatch } from 'store/messages';
-import { MetricsStore, Store } from 'store/models';
+import { Store } from 'store/models';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
-const getTuplesCountByTuplesCategory = (
-  store: MetricsStore,
+import { ExperimentIntersectionPairCountsItem } from '../../api';
+const getCountsByTuplesCategory = (
+  store: Store,
   aMetricsTuplesCategory: MetricsTuplesCategories
-): number => {
+): ExperimentIntersectionPairCountsItem | undefined => {
+  const counts = store.BinaryMetricsStore.counts
+    .filter(({ experiments }) => experiments.length === 2)
+    .filter(({ experiments }) =>
+      experiments
+        .map(({ experimentId }) => experimentId)
+        .includes(getGroundTruthId(store))
+    )
+    .filter(({ experiments }) =>
+      experiments
+        .map(({ experimentId }) => experimentId)
+        .includes(getExperiment1Id(store))
+    );
   switch (aMetricsTuplesCategory) {
     case MetricsTuplesCategories.truePositives:
-      return store.truePositivesCount;
+      return counts.find(({ experiments }) =>
+        experiments.every(({ predictedCondition }) => predictedCondition)
+      );
     case MetricsTuplesCategories.falseNegatives:
-      return store.falseNegativesCount;
+      return counts.find(({ experiments }) =>
+        experiments.every(({ predictedCondition, experimentId }) =>
+          getGroundTruthId(store) === experimentId
+            ? predictedCondition
+            : !predictedCondition
+        )
+      );
     case MetricsTuplesCategories.falsePositives:
-      return store.falsePositivesCount;
+      return counts.find(({ experiments }) =>
+        experiments.every(({ predictedCondition, experimentId }) =>
+          getExperiment1Id(store) === experimentId
+            ? predictedCondition
+            : !predictedCondition
+        )
+      );
+    case MetricsTuplesCategories.trueNegatives:
+      return counts.find(({ experiments }) =>
+        experiments.every(
+          ({ predictedCondition, experimentId }) => !predictedCondition
+        )
+      );
   }
+};
+const getPairCountByTuplesCategory = (
+  store: Store,
+  aMetricsTuplesCategory: MetricsTuplesCategories
+): number => {
+  return (
+    getCountsByTuplesCategory(store, aMetricsTuplesCategory)?.numberPairs ?? 0
+  );
+};
+const getRowCountByTuplesCategory = (
+  store: Store,
+  aMetricsTuplesCategory: MetricsTuplesCategories
+): number => {
+  return (
+    getCountsByTuplesCategory(store, aMetricsTuplesCategory)?.numberRows ?? 0
+  );
 };
 
 const getTuplesLoaderByTuplesCategory = (
@@ -41,37 +93,47 @@ const getTuplesLoaderByTuplesCategory = (
       return loadTruePositives;
     case MetricsTuplesCategories.falseNegatives:
       return loadFalseNegatives;
+    case MetricsTuplesCategories.trueNegatives:
+      return loadTrueNegatives;
   }
 };
 
 const mapStateToProps = (state: Store): BinaryMetricsPageStateProps => ({
-  metrics: state.MetricsStore.metrics,
+  metrics: state.BinaryMetricsStore.metrics,
   metricsTuplesCategories: [
     MetricsTuplesCategories.falseNegatives,
     MetricsTuplesCategories.falsePositives,
     MetricsTuplesCategories.truePositives,
   ],
-  selectedMetricsTuplesCategory: state.MetricsStore.selectedDataView,
-  tuplesCount: getTuplesCountByTuplesCategory(
-    state.MetricsStore,
-    state.MetricsStore.selectedDataView
+  selectedMetricsTuplesCategory: state.BinaryMetricsStore.selectedDataView,
+  rowCount: getRowCountByTuplesCategory(
+    state,
+    state.BinaryMetricsStore.selectedDataView
   ),
   tuplesLoader: getTuplesLoaderByTuplesCategory(
-    state.MetricsStore.selectedDataView
+    state.BinaryMetricsStore.selectedDataView
   ),
   confusionMatrix: {
     totalCount: Math.pow(
-      state.DatasetsStore.selectedDataset?.numberOfRecords ?? 0,
+      state.BenchmarkConfigurationStore.selectedDataset?.numberOfRecords ?? 0,
       2
     ),
-    falseNegatives: state.MetricsStore.falseNegativesCount,
-    falsePositives: state.MetricsStore.falsePositivesCount,
-    trueNegatives:
-      Math.pow(state.DatasetsStore.selectedDataset?.numberOfRecords ?? 0, 2) -
-      (state.MetricsStore.falseNegativesCount +
-        state.MetricsStore.falsePositivesCount +
-        state.MetricsStore.truePositivesCount),
-    truePositives: state.MetricsStore.truePositivesCount, // incorrect value???
+    falseNegatives: getPairCountByTuplesCategory(
+      state,
+      MetricsTuplesCategories.falseNegatives
+    ),
+    falsePositives: getPairCountByTuplesCategory(
+      state,
+      MetricsTuplesCategories.falsePositives
+    ),
+    trueNegatives: getPairCountByTuplesCategory(
+      state,
+      MetricsTuplesCategories.trueNegatives
+    ),
+    truePositives: getPairCountByTuplesCategory(
+      state,
+      MetricsTuplesCategories.truePositives
+    ),
   },
 });
 

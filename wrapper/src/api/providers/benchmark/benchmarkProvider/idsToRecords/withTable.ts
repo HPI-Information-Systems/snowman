@@ -1,27 +1,25 @@
-import { Statement } from 'better-sqlite3';
-
 import { databaseBackend, Table } from '../../../../database';
-import { latest } from '../../../../database/schemas';
-import { loadTableFromDatabase } from '../../../../database/table/loader';
+import {
+  datasetCustomColumnPrefix,
+  tableSchemas,
+} from '../../../../database/schemas';
 import { Column } from '../../../../database/tools/types';
-import { DatasetId, ExperimentIntersection } from '../../../../server/types';
+import { DatasetId, FileResponse } from '../../../../server/types';
 import { DatasetIDMapper } from '../../../dataset/datasetProvider/util/idMapper';
 import { NodeID } from '../cluster/types';
 
-type DatasetSchema = ReturnType<
-  typeof latest.tableSchemas['dataset']['dataset']
->;
+type DatasetSchema = ReturnType<typeof tableSchemas['dataset']['dataset']>;
 
 export function idClustersToRecordClustersWithTable(
   idClusters: (NodeID | undefined)[],
-  schema: DatasetSchema,
+  table: Table<DatasetSchema>,
   datasetId: DatasetId
-): ExperimentIntersection {
-  let result: ExperimentIntersection;
+): FileResponse {
+  let result: FileResponse;
   databaseBackend().transaction(() => {
     result = new IdClustersToRecordClusters(
       idClusters,
-      loadTableFromDatabase<DatasetSchema>(schema),
+      table,
       new DatasetIDMapper(datasetId)
     ).run();
   })();
@@ -31,7 +29,7 @@ export function idClustersToRecordClustersWithTable(
 
 class IdClustersToRecordClusters {
   protected readonly columns: readonly Column[];
-  protected readonly getRecordByIdQuery: Statement<number>;
+  protected readonly columnNames: readonly string[];
 
   constructor(
     protected readonly idClusters: (NodeID | undefined)[],
@@ -39,16 +37,12 @@ class IdClustersToRecordClusters {
     protected readonly idMapper: DatasetIDMapper
   ) {
     this.columns = Object.values(this.table.schema.columns).filter((column) =>
-      column.name.startsWith(latest.datasetCustomColumnPrefix)
+      column.name.startsWith(datasetCustomColumnPrefix)
     );
-    this.getRecordByIdQuery = databaseBackend().prepare(`
-      SELECT ${this.getColumnsString()}
-        FROM ${this.table}
-      WHERE ${this.table.schema.columns.id.name} = ?
-    `);
+    this.columnNames = this.columns.map((column) => column.name);
   }
 
-  run(): ExperimentIntersection {
+  run(): FileResponse {
     return {
       header: this.getHeader(),
       data: this.getRecordClusters(),
@@ -56,21 +50,20 @@ class IdClustersToRecordClusters {
   }
 
   protected getHeader() {
-    return this.columns.map((column) =>
-      column.name.substring(latest.datasetCustomColumnPrefix.length)
+    return this.columnNames.map((column) =>
+      column.substring(datasetCustomColumnPrefix.length)
     );
   }
 
-  protected getRecordClusters(): ExperimentIntersection['data'] {
+  protected getRecordClusters(): FileResponse['data'] {
     return this.idClusters.map((id) =>
       id === undefined ? [] : this.getRecord(id)
     );
   }
 
   protected getRecord(id: number): string[] {
-    return (
-      this.getRecordByIdQuery.raw(true).get(id) ?? this.getNonExistingRecord(id)
-    );
+    return (this.table.get({ id }, this.columnNames, true) ??
+      this.getNonExistingRecord(id)) as string[];
   }
 
   protected getNonExistingRecord(id: number): string[] {
@@ -79,9 +72,5 @@ class IdClustersToRecordClusters {
         ? this.idMapper.mapReversed(id) ?? '<unknown>'
         : '<unknown>'
     );
-  }
-
-  protected getColumnsString(): string {
-    return this.columns.map((column) => `"${column.name}"`).join(',');
   }
 }

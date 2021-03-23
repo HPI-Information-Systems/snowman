@@ -1,5 +1,11 @@
+import { ViewIDs } from 'types/ViewIDs';
+
 export interface AppDispatchProps {
   loadInitialState(): void;
 }
 
-export type AppProps = AppDispatchProps;
+export interface AppStateProps {
+  currentViewId: ViewIDs;
+}
+
+export type AppProps = AppStateProps & AppDispatchProps;

@@ -4,7 +4,7 @@ import { IntersectionBase } from './base';
 import { IntersectionCache } from './cache';
 
 export class IntersectionCounts extends IntersectionBase {
-  get pairCount(): number {
+  get numberPairs(): number {
     return this._pairCount.value;
   }
   get rowCount(): number {
@@ -20,28 +20,28 @@ export class IntersectionCounts extends IntersectionBase {
 
   protected calculatePairCount(): number {
     if (this.predictedConditionNegative.length === 0) {
-      let pairCount = 0;
+      let numberPairs = 0;
       for (const cluster of this.clustering.clusters()) {
-        pairCount += numberOfPairs(cluster.length);
+        numberPairs += numberOfPairs(cluster.length);
       }
-      return pairCount;
+      return numberPairs;
     } else {
       // |A without B without C without D ...| = |A| - |A intersected B|  - |A without B intersected C| - |A without B without C intersected D| - ...
-      let pairCount = this.positiveIntersection.pairCount;
+      let numberPairs = this.positiveIntersection.numberPairs;
       for (
         let index = 0;
         index < this.predictedConditionNegative.length;
         ++index
       ) {
-        pairCount -= IntersectionCache.get(
+        numberPairs -= IntersectionCache.get(
           [
             ...this.predictedConditionPositive,
             this.predictedConditionNegative[index],
           ],
           this.predictedConditionNegative.slice(0, index)
-        ).pairCount;
+        ).numberPairs;
       }
-      return pairCount;
+      return numberPairs;
     }
   }
 
@@ -57,7 +57,7 @@ export class IntersectionCounts extends IntersectionBase {
       }
       return rowCount + Math.max(0, clusterCount - 1);
     } else {
-      return this.pairCount * 2 + Math.max(0, this.pairCount - 1);
+      return this.numberPairs * 2 + Math.max(0, this.numberPairs - 1);
     }
   }
 }

@@ -31,5 +31,11 @@ export interface ExperimentIntersectionPairCountsItem {
      * @type {number}
      * @memberof ExperimentIntersectionPairCountsItem
      */
-    pairCount: number;
+    numberPairs: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExperimentIntersectionPairCountsItem
+     */
+    numberRows: number;
 }

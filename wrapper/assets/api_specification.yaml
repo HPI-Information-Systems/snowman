@@ -314,7 +314,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DatasetFile"
+                $ref: "#/components/schemas/FileResponse"
           description: OK
         "404":
           description: Not Found
@@ -373,8 +373,8 @@ paths:
         content:
           text/csv:
             schema:
-              $ref: "#/components/schemas/DatasetFile"
-        description: updated DatasetFile-csv object
+              $ref: "#/components/schemas/CSVFile"
+        description: updated csv object
         required: true
       responses:
         "204":
@@ -556,7 +556,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExperimentFile"
+                $ref: "#/components/schemas/FileResponse"
           description: OK
         "404":
           description: Not Found
@@ -594,10 +594,7 @@ paths:
         content:
           text/csv:
             schema:
-              $ref: "#/components/schemas/ExperimentFile"
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ExperimentFile"
+              $ref: "#/components/schemas/CSVFile"
         description: updated experiment file
         required: true
       responses:
@@ -689,7 +686,7 @@ paths:
           name: limit
           required: false
           schema:
-            default: 500
+            default: -1
             type: integer
           style: form
         - explode: true
@@ -707,7 +704,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ExperimentIntersection"
+                $ref: "#/components/schemas/FileResponse"
           description: OK
         "403":
           description: Forbidden
@@ -832,9 +829,6 @@ components:
       allOf:
         - $ref: "#/components/schemas/Dataset_allOf"
         - $ref: "#/components/schemas/DatasetValues"
-    DatasetFile:
-      format: binary
-      type: string
     ExperimentId:
       example: 1
       type: integer
@@ -867,9 +861,6 @@ components:
       allOf:
         - $ref: "#/components/schemas/Experiment_allOf"
         - $ref: "#/components/schemas/ExperimentValues"
-    ExperimentFile:
-      format: binary
-      type: string
     Metric:
       example:
         name: precision
@@ -919,7 +910,7 @@ components:
       items:
         $ref: "#/components/schemas/ExperimentIntersectionRequestExperiments"
       type: array
-    ExperimentIntersection:
+    FileResponse:
       example:
         data:
           - - "1"
@@ -1054,19 +1045,27 @@ components:
             experimentId: 1
           - predictedCondition: true
             experimentId: 1
-        pairCount: 0
+        numberRows: 0
+        numberPairs: 0
       properties:
         experiments:
           items:
             $ref: "#/components/schemas/ExperimentIntersectionPairCountsExperiments"
           type: array
-        pairCount:
+        numberPairs:
+          minimum: 0
+          type: integer
+        numberRows:
           minimum: 0
           type: integer
       required:
         - experiments
-        - pairCount
+        - numberPairs
+        - numberRows
       type: object
+    CSVFile:
+      format: binary
+      type: string
     Algorithm_allOf:
       properties:
         id:
