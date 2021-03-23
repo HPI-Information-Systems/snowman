@@ -97,9 +97,9 @@ export const BinaryMetricsPageView = ({
             Total Count: {confusionMatrix.totalCount}
           </IonChip>
         ) : null}
-        {confusionMatrix.trueNegatives !== undefined ? (
+        {confusionMatrix.truePositives !== undefined ? (
           <IonChip outline={true} color="success">
-            True Negatives: {confusionMatrix.trueNegatives}
+            True Positives: {confusionMatrix.truePositives}
           </IonChip>
         ) : null}
         {confusionMatrix.falsePositives !== undefined ? (
@@ -112,9 +112,9 @@ export const BinaryMetricsPageView = ({
             False Negatives: {confusionMatrix.falseNegatives}
           </IonChip>
         ) : null}
-        {confusionMatrix.truePositives !== undefined ? (
+        {confusionMatrix.trueNegatives !== undefined ? (
           <IonChip outline={true} color="success">
-            True Positives: {confusionMatrix.truePositives}
+            True Negatives: {confusionMatrix.trueNegatives}
           </IonChip>
         ) : null}
       </div>

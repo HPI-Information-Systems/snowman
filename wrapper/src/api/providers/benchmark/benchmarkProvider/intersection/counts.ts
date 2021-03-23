@@ -38,7 +38,8 @@ export class IntersectionCounts extends IntersectionBase {
             ...this.predictedConditionPositive,
             this.predictedConditionNegative[index],
           ],
-          this.predictedConditionNegative.slice(0, index)
+          this.predictedConditionNegative.slice(0, index),
+          this.datasetId
         ).numberPairs;
       }
       return numberPairs;

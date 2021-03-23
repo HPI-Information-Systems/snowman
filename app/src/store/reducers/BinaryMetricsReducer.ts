@@ -7,7 +7,7 @@ import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 const initialState: BinaryMetricsStore = {
   metrics: [],
   counts: [],
-  selectedDataView: MetricsTuplesCategories.falsePositives,
+  selectedDataView: MetricsTuplesCategories.truePositives,
 };
 
 export const BinaryMetricsReducer = (

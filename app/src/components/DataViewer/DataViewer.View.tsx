@@ -13,7 +13,7 @@ import { RequestedRowsT, StateT } from './DataViewer.types';
 const DataViewerView = ({
   tuplesCount,
   loadTuples,
-  BATCH_SIZE = 1000,
+  BATCH_SIZE = 500,
 }: DataViewerProps): JSX.Element => {
   const dispatch: SnowmanDispatch = useDispatch();
   function wrappedLoadTuples(start: number, stop: number) {

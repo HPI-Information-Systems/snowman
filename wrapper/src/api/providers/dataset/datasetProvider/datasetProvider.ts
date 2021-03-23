@@ -61,7 +61,7 @@ export class DatasetProvider {
       newStoredDataset.numberOfRecords
     );
     tables.meta.dataset.upsert([newStoredDataset]);
-    this.invalidateConnectedCaches(id);
+    invalidateCaches(id);
   }
 
   deleteDataset(id: DatasetId): void {
@@ -104,7 +104,7 @@ export class DatasetProvider {
       storedDataset.numberOfRecords = datasetIDMapper.numberMappedIds();
       storedDataset.numberOfUploadedRecords = insertedRowCount;
       tables.meta.dataset.upsert([storedDataset]);
-      this.invalidateConnectedCaches(id);
+      invalidateCaches(id);
       if (
         storedDataset.numberOfRecords !== null &&
         insertedRowCount < storedDataset.numberOfRecords
@@ -129,14 +129,6 @@ export class DatasetProvider {
     if (dataset) {
       dataset.numberOfUploadedRecords = null;
       tables.meta.dataset.upsert([dataset]);
-    }
-  }
-
-  protected invalidateConnectedCaches(datasetId: DatasetId): void {
-    for (const { id } of tables.meta.experiment.all({
-      dataset: datasetId,
-    })) {
-      invalidateCaches(id);
     }
   }
 }

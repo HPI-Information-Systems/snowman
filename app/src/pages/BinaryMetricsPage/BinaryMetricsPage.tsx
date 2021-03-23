@@ -60,9 +60,7 @@ const getCountsByTuplesCategory = (
       );
     case MetricsTuplesCategories.trueNegatives:
       return counts.find(({ experiments }) =>
-        experiments.every(
-          ({ predictedCondition, experimentId }) => !predictedCondition
-        )
+        experiments.every(({ predictedCondition }) => !predictedCondition)
       );
   }
 };
@@ -101,9 +99,10 @@ const getTuplesLoaderByTuplesCategory = (
 const mapStateToProps = (state: Store): BinaryMetricsPageStateProps => ({
   metrics: state.BinaryMetricsStore.metrics,
   metricsTuplesCategories: [
-    MetricsTuplesCategories.falseNegatives,
-    MetricsTuplesCategories.falsePositives,
     MetricsTuplesCategories.truePositives,
+    MetricsTuplesCategories.falsePositives,
+    MetricsTuplesCategories.falseNegatives,
+    MetricsTuplesCategories.trueNegatives,
   ],
   selectedMetricsTuplesCategory: state.BinaryMetricsStore.selectedDataView,
   rowCount: getRowCountByTuplesCategory(

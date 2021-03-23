@@ -7,7 +7,6 @@ import {
   FileResponse,
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
-import { numberOfPairs } from '../../../tools/numberOfPairs';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
 import { idClustersToRecordClusters } from './idsToRecords';
 import { Intersection, IntersectionCache } from './intersection';
@@ -49,7 +48,7 @@ export class BenchmarkProvider {
     config: ExperimentIntersectionPairCountsRequestExperiments[]
   ): ExperimentIntersectionPairCountsItem[] {
     const experimentIds = config.map(({ experimentId }) => experimentId);
-    const dataset = datasetFromExperimentIds(experimentIds);
+    const datasetId = datasetFromExperimentIds(experimentIds).id;
     enum ExperimentState {
       IRRELEVANT,
       INCLUDED,
@@ -86,18 +85,6 @@ export class BenchmarkProvider {
           state === ExperimentState.EXCLUDED ? experimentIds[index] : undefined
         )
         .filter((index) => index !== undefined) as ExperimentId[];
-      let numberPairs: number;
-      let numberRows: number;
-      if (included.length === 0) {
-        numberPairs = numberOfPairs(dataset.numberOfRecords);
-        if (excluded.length !== 0) {
-          numberPairs -= IntersectionCache.get(excluded, []).numberPairs;
-        }
-        numberRows = numberPairs * 2 + Math.max(0, numberPairs - 1);
-      } else {
-        numberPairs = IntersectionCache.get(included, excluded).numberPairs;
-        numberRows = IntersectionCache.get(included, excluded).rowCount;
-      }
       counts.push({
         experiments: [
           ...included.map((experimentId) => {
@@ -113,8 +100,10 @@ export class BenchmarkProvider {
             };
           }),
         ],
-        numberPairs,
-        numberRows,
+        numberPairs: IntersectionCache.get(included, excluded, [datasetId])
+          .numberPairs,
+        numberRows: IntersectionCache.get(included, excluded, [datasetId])
+          .rowCount,
       });
     } while (nextState());
     return counts;
@@ -140,6 +129,8 @@ export class BenchmarkProvider {
   }
 
   getBinaryMetrics(goldstandardId: number, experimentId: number): Metric[] {
+    const datasetId = datasetFromExperimentIds([goldstandardId, experimentId])
+      .id;
     const metrics = [
       Accuracy,
       Precision,
@@ -162,21 +153,27 @@ export class BenchmarkProvider {
       ThreatScore,
     ];
     const matrix: ConfusionMatrix = {
-      truePositives: IntersectionCache.get([goldstandardId, experimentId], [])
-        .numberPairs,
-      falsePositives: IntersectionCache.get([experimentId], [goldstandardId])
-        .numberPairs,
-      falseNegatives: IntersectionCache.get([goldstandardId], [experimentId])
-        .numberPairs,
-      trueNegatives: 0,
+      truePositives: IntersectionCache.get(
+        [goldstandardId, experimentId],
+        [],
+        [datasetId]
+      ).numberPairs,
+      falsePositives: IntersectionCache.get(
+        [experimentId],
+        [goldstandardId],
+        [datasetId]
+      ).numberPairs,
+      falseNegatives: IntersectionCache.get(
+        [goldstandardId],
+        [experimentId],
+        [datasetId]
+      ).numberPairs,
+      trueNegatives: IntersectionCache.get(
+        [],
+        [goldstandardId, experimentId],
+        [datasetId]
+      ).numberPairs,
     };
-    matrix.trueNegatives =
-      numberOfPairs(
-        datasetFromExperimentIds([goldstandardId, experimentId]).numberOfRecords
-      ) -
-      matrix.truePositives -
-      matrix.falsePositives -
-      matrix.falseNegatives;
     return metrics
       .map((Metric) => new Metric(matrix))
       .map(({ value, formula, name, range, info, infoLink }) => {
@@ -200,7 +197,11 @@ export class BenchmarkProvider {
         .map(({ experimentId }) => experimentId),
       config
         .filter(({ predictedCondition }) => !predictedCondition)
-        .map(({ experimentId }) => experimentId)
+        .map(({ experimentId }) => experimentId),
+      [
+        datasetFromExperimentIds(config.map(({ experimentId }) => experimentId))
+          .id,
+      ]
     );
   }
 }
