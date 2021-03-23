@@ -3,8 +3,11 @@ import 'components/DataViewer/DataViewerStyles.css';
 
 import { DataViewerProps } from 'components/DataViewer/DataViewerProps';
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { AutoSizer, Column, InfiniteLoader, Table } from 'react-virtualized';
 
+import { SnowmanDispatch } from '../../store/messages';
+import RequestHandler from '../../utils/requestHandler';
 import { RequestedRowsT, StateT } from './DataViewer.types';
 
 const DataViewerView = ({
@@ -12,6 +15,10 @@ const DataViewerView = ({
   loadTuples,
   BATCH_SIZE = 1000,
 }: DataViewerProps): JSX.Element => {
+  const dispatch: SnowmanDispatch = useDispatch();
+  function wrappedLoadTuples(start: number, stop: number) {
+    return RequestHandler(() => loadTuples(start, stop), dispatch);
+  }
   const [{ header, rows, requestedRows }, setState] = useState<StateT>({
     header: [],
     rows: [],
@@ -45,7 +52,7 @@ const DataViewerView = ({
         );
         if (rowCount > maxRequestedRowsLength) {
           Promise.all([
-            loadTuples(maxRequestedRowsLength, rowCount),
+            wrappedLoadTuples(maxRequestedRowsLength, rowCount),
             requestRows(maxRequestedRowsLength),
           ]).then(async ([{ header, data }]) => {
             getState(({ requestedRows, rows, resetVersion }) => {
@@ -96,7 +103,7 @@ const DataViewerView = ({
         rows,
         resetVersion: newResetVersion,
       });
-      loadTuples(0, BATCH_SIZE).then(({ header, data }) =>
+      wrappedLoadTuples(0, BATCH_SIZE).then(({ header, data }) =>
         getState(({ requestedRows, resetVersion }) => {
           if (resetVersion === newResetVersion) {
             requestedRows.forEach(({ resolve }) => resolve());

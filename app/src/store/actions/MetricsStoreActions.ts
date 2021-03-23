@@ -111,17 +111,11 @@ const loadTuples = (
   startAt: number,
   stopAt: number
 ): Promise<ExperimentIntersection> =>
-  RequestHandler<ExperimentIntersection>(
-    (): Promise<ExperimentIntersection> =>
-      new BenchmarkApi().calculateExperimentIntersectionRecords({
-        ...requestBody,
-        startAt: startAt,
-        limit: stopAt - startAt,
-      }),
-    () => {
-      return;
-    }
-  );
+  new BenchmarkApi().calculateExperimentIntersectionRecords({
+    ...requestBody,
+    startAt: startAt,
+    limit: stopAt - startAt,
+  });
 
 const loadTuplesCountOf = (
   requestBody: LoadTuplesRequestBody,
