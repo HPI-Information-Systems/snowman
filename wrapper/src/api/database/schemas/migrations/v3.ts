@@ -3,6 +3,7 @@ import { SetupOptions } from '../../setup';
 import { databaseBackend } from '../../setup/backend';
 import { SchemaVersion } from './schemaVersion';
 import { SchemaV2 } from './v2';
+
 export class SchemaV3 extends SchemaVersion {
   readonly predecessor = new SchemaV2();
 
