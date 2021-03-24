@@ -1,3 +1,5 @@
+import 'components/ExperimentDroppable/ExperimentDroppableStyles.css';
+
 import { IonCol, IonGrid, IonRow } from '@ionic/react';
 import { Experiment } from 'api';
 import ExperimentCard from 'components/ExperimentCard/ExperimentCard';
@@ -55,7 +57,11 @@ const ExperimentDroppableView = ({
   return (
     <Droppable droppableId={bucketId} renderClone={experimentRenderer}>
       {(provided: DroppableProvided): JSX.Element => (
-        <IonGrid {...provided.droppableProps} ref={provided.innerRef}>
+        <IonGrid
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          class="iongrid-droppable-container"
+        >
           {bucketContent.map(
             (anExperiment: Experiment, index: number): JSX.Element => (
               <Draggable
