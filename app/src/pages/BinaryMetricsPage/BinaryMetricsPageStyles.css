@@ -19,3 +19,7 @@
   height: 500px;
   padding-bottom: 20px;
 }
+
+.count-chip {
+  opacity: 1 !important;
+}
