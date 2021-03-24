@@ -60,6 +60,7 @@ const DatasetsPageView = ({
                 selectDataset={() => clickOnDataset(aDataset)}
                 deleteDataset={() => deleteDataset(aDataset)}
                 editDataset={() => editDataset(aDataset)}
+                datasetId={aDataset.id}
               />
             </IonCol>
           ))}
