@@ -16,9 +16,21 @@ export class SchemaV3 extends SchemaVersion {
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
          ADD COLUMN
-             implementationKnowHowLevel TEXT,
-             matchingSolutionType TEXT,
-             timeToInstall INTEGER,
+             implementationKnowHowLevel TEXT`
+    );
+    databaseBackend().exec(
+      `ALTER TABLE ${tables.meta.algorithm.schema.name}
+         ADD COLUMN
+             matchingSolutionType TEXT`
+    );
+    databaseBackend().exec(
+      `ALTER TABLE ${tables.meta.algorithm.schema.name}
+         ADD COLUMN
+             timeToInstall INTEGER`
+    );
+    databaseBackend().exec(
+      `ALTER TABLE ${tables.meta.algorithm.schema.name}
+         ADD COLUMN
              timeToConfigure INTEGER`
     );
   }
