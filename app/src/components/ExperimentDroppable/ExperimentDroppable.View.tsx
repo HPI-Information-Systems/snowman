@@ -40,6 +40,7 @@ const ExperimentDroppableView = ({
         <IonCol>
           <ExperimentCard
             key={`experimentCard-${anExperiment.id}`}
+            experimentId={anExperiment.id}
             experimentName={anExperiment.name}
             algorithmName={getAlgorithmNameFromId(
               anExperiment.algorithmId,
