@@ -12,54 +12,53 @@
  * Do not edit the class manually.
  */
 
-import { ExperimentValuesSoftKPIs } from './';
-
 /**
  * 
  * @export
- * @interface Experiment
+ * @interface AlgorithmValuesSoftKPIs
  */
-export interface Experiment {
-    /**
-     * 
-     * @type {number}
-     * @memberof Experiment
-     */
-    id: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof Experiment
-     */
-    numberOfUploadedRecords?: number;
+export interface AlgorithmValuesSoftKPIs {
     /**
      * 
      * @type {string}
-     * @memberof Experiment
+     * @memberof AlgorithmValuesSoftKPIs
      */
-    name: string;
+    implementationKnowHowLevel?: AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum;
     /**
      * 
      * @type {string}
-     * @memberof Experiment
+     * @memberof AlgorithmValuesSoftKPIs
      */
-    description?: string;
+    matchingSolutionType?: AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum;
     /**
      * 
      * @type {number}
-     * @memberof Experiment
+     * @memberof AlgorithmValuesSoftKPIs
      */
-    datasetId: number;
+    timeToInstall?: number;
     /**
      * 
      * @type {number}
-     * @memberof Experiment
+     * @memberof AlgorithmValuesSoftKPIs
      */
-    algorithmId: number;
-    /**
-     * 
-     * @type {ExperimentValuesSoftKPIs}
-     * @memberof Experiment
-     */
-    softKPIs?: ExperimentValuesSoftKPIs;
+    timeToConfigure?: number;
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum {
+    Starter = 'starter',
+    Intermediate = 'intermediate',
+    Expert = 'expert'
+}
+/**
+* @export
+* @enum {string}
+*/
+export enum AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum {
+    Ml = 'ml',
+    Rulebased = 'rulebased',
+    Other = 'other'
 }

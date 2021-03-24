@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._  Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    AlgorithmValuesSoftKPIs,
+    AlgorithmValuesSoftKPIsFromJSON,
+    AlgorithmValuesSoftKPIsFromJSONTyped,
+    AlgorithmValuesSoftKPIsToJSON,
+} from './';
+
 /**
  * 
  * @export
@@ -31,6 +38,12 @@ export interface AlgorithmValues {
      * @memberof AlgorithmValues
      */
     description?: string;
+    /**
+     * 
+     * @type {AlgorithmValuesSoftKPIs}
+     * @memberof AlgorithmValues
+     */
+    softKPIs?: AlgorithmValuesSoftKPIs;
 }
 
 export function AlgorithmValuesFromJSON(json: any): AlgorithmValues {
@@ -45,6 +58,7 @@ export function AlgorithmValuesFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'name': json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'softKPIs': !exists(json, 'softKPIs') ? undefined : AlgorithmValuesSoftKPIsFromJSON(json['softKPIs']),
     };
 }
 
@@ -59,6 +73,7 @@ export function AlgorithmValuesToJSON(value?: AlgorithmValues | null): any {
         
         'name': value.name,
         'description': value.description,
+        'softKPIs': AlgorithmValuesSoftKPIsToJSON(value.softKPIs),
     };
 }
 

@@ -15,6 +15,7 @@ export class ExperimentConverter {
       name: apiExperiment.name,
       id: apiExperiment.id,
       numberOfUploadedRecords: apiExperiment.numberOfUploadedRecords ?? null,
+      timeToConfigure: apiExperiment.softKPIs?.timeToConfigure ?? null,
     };
   }
 
@@ -29,6 +30,9 @@ export class ExperimentConverter {
       name: storedExperiment.name,
       numberOfUploadedRecords:
         storedExperiment.numberOfUploadedRecords ?? undefined,
+      softKPIs: {
+        timeToConfigure: storedExperiment.timeToConfigure ?? undefined,
+      },
     };
   }
 }
