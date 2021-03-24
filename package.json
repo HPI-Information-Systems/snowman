@@ -12,10 +12,10 @@
     "eslint": "eslint --ext .ts,.tsx .",
     "csslint": "stylelint \"./app/src/**/*.css\"",
     "test": "cypress run",
-    "test-ci": "start-server-and-test start-api http://localhost:8123 test",
-    "start-api": "npm run start-api --prefix ./wrapper",
-    "release": "npm run release-app && npm run release --prefix ./wrapper",
-    "release-app": "npm run build --prefix ./app && cpx -C \"./app/build/**/*\" ./wrapper/app/"
+    "test-ci": "start-server-and-test start-test-stack http://localhost:8123 test",
+    "start-test-stack": "npm run release-app && npm run start-api --prefix ./wrapper",
+    "release-app": "npm run build --prefix ./app && cpx -C \"./app/build/**/*\" ./wrapper/app/",
+    "release": "npm run release-app && npm run release --prefix ./wrapper"
   },
   "devDependencies": {
     "@types/react-dom": "^17.0.0",
