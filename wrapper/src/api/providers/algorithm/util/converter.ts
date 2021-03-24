@@ -23,18 +23,6 @@ export class AlgorithmConverter {
     };
   }
   storedToApi(stored: StoredAlgorithm): Algorithm {
-    const implementationKnowHowLevel = stored.implementationKnowHowLevel
-      ? convertStringToEnum(
-          AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
-          stored.implementationKnowHowLevel
-        )
-      : undefined;
-    const matchingSolutionType = stored.matchingSolutionType
-      ? convertStringToEnum(
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
-          stored.matchingSolutionType
-        )
-      : undefined;
     return {
       id: stored.id,
       name: stored.name,
@@ -42,14 +30,13 @@ export class AlgorithmConverter {
       softKPIs: {
         timeToInstall: stored.timeToInstall ?? undefined,
         timeToConfigure: stored.timeToConfigure ?? undefined,
-        implementationKnowHowLevel: implementationKnowHowLevel,
-        matchingSolutionType: matchingSolutionType,
+        implementationKnowHowLevel:
+          (stored.implementationKnowHowLevel as AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum | null) ??
+          undefined,
+        matchingSolutionType:
+          (stored.matchingSolutionType as AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum | null) ??
+          undefined,
       },
     };
   }
-}
-
-function convertStringToEnum<T>(type: any, str: string): T[keyof T] {
-  const casted = (str.charAt(0).toUpperCase() + str.slice(1)) as keyof T;
-  return type[casted];
 }
