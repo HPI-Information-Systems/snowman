@@ -4,9 +4,7 @@ info:
     email: snowman@groups.sap.com
     url: https://github.com
   description: |
-    _This document describes the REST API of the snowman data matching benchmark tool._
-
-    Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
+    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
   license:
     name: LICENSE (MIT)
     url: https://github.com
@@ -778,6 +776,11 @@ components:
       type: integer
     AlgorithmValues:
       example:
+        softKPIs:
+          timeToInstall: 3
+          matchingSolutionType: ml
+          implementationKnowHowLevel: starter
+          timeToConfigure: 1
         name: Magellan
         description: This is an open source python library
       properties:
@@ -788,6 +791,8 @@ components:
         description:
           example: This is an open source python library
           type: string
+        softKPIs:
+          $ref: "#/components/schemas/AlgorithmValues_softKPIs"
       required:
         - name
       type: object
@@ -834,6 +839,8 @@ components:
       type: integer
     ExperimentValues:
       example:
+        softKPIs:
+          timeToConfigure: 1
         name: Experiment1
         description: This is an experiment using a fancy algorithm
         datasetId: 1
@@ -852,6 +859,8 @@ components:
         algorithmId:
           example: 1
           type: integer
+        softKPIs:
+          $ref: "#/components/schemas/ExperimentValues_softKPIs"
       required:
         - algorithmId
         - datasetId
@@ -1066,6 +1075,32 @@ components:
     CSVFile:
       format: binary
       type: string
+    AlgorithmValues_softKPIs:
+      example:
+        timeToInstall: 3
+        matchingSolutionType: ml
+        implementationKnowHowLevel: starter
+        timeToConfigure: 1
+      properties:
+        implementationKnowHowLevel:
+          enum:
+            - starter
+            - intermediate
+            - expert
+          type: string
+        matchingSolutionType:
+          enum:
+            - ml
+            - rulebased
+            - other
+          type: string
+        timeToInstall:
+          example: 3
+          type: number
+        timeToConfigure:
+          example: 1
+          type: number
+      type: object
     Algorithm_allOf:
       properties:
         id:
@@ -1084,6 +1119,14 @@ components:
           type: integer
       required:
         - id
+      type: object
+    ExperimentValues_softKPIs:
+      example:
+        timeToConfigure: 1
+      properties:
+        timeToConfigure:
+          example: 1
+          type: number
       type: object
     Experiment_allOf:
       properties:

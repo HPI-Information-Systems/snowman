@@ -67,6 +67,9 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       description: 'Randomly picked pairs - for testing purposes only!',
       algorithmId: exampleAlgorithms.mock.id,
       datasetId: exampleDatasets.restaurants.id,
+      softKPIs: {
+        timeToConfigure: 60 * 60,
+      },
     },
     id: -2,
     file: {
@@ -150,6 +153,9 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       description: 'Randomly picked pairs - for testing purposes only!',
       algorithmId: exampleAlgorithms.mock.id,
       datasetId: exampleDatasets.freedbCds.id,
+      softKPIs: {
+        timeToConfigure: 220 * 60,
+      },
     },
     id: -7,
     file: {
@@ -179,6 +185,9 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       description: 'Randomly picked pairs - for testing purposes only!',
       algorithmId: exampleAlgorithms.mock.id,
       datasetId: exampleDatasets.cora.id,
+      softKPIs: {
+        timeToConfigure: 50 * 60,
+      },
     },
     id: -9,
     file: {

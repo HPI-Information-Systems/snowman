@@ -3,8 +3,6 @@ info:
   description: >
     _This document describes the REST API of the snowman data matching benchmark
     tool._
-
-
     Comparing data matching algorithms is still an unsolved topic in both industry and research. 
     With snowman, developers and researchers will be able to compare the performance of different data matching 
     solutions or improve new algorithms.
@@ -634,6 +632,21 @@ components:
         description:
           type: string
           example: This is an open source python library
+        softKPIs:
+          type: object
+          properties:
+            implementationKnowHowLevel:
+              type: string
+              enum: ["starter", "intermediate", "expert"]
+            matchingSolutionType:
+              type: string
+              enum: ["ml", "rulebased", "other"]
+            timeToInstall:
+              type: number
+              example: 3
+            timeToConfigure:
+              type: number
+              example: 1
     Algorithm:
       allOf:
         - type: object
@@ -702,6 +715,12 @@ components:
           $ref: "#/components/schemas/DatasetId"
         algorithmId:
           $ref: "#/components/schemas/AlgorithmId"
+        softKPIs:
+          type: object
+          properties:
+            timeToConfigure:
+              type: number
+              example: 1
     Experiment:
       allOf:
         - type: object
