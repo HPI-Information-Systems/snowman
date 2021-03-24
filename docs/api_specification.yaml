@@ -542,11 +542,6 @@ paths:
           schema:
             type: integer
             default: -1
-        - name: sortBy
-          in: query
-          schema:
-            type: string
-            example: similarity
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersectionConfiguration"
       responses:
