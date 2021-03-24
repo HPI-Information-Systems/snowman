@@ -1,9 +1,13 @@
-import { Table, tables } from '../../../../database';
+import { databaseBackend, Table, tables } from '../../../../database';
 import {
   experimentCustomColumnPrefix,
   tableSchemas,
 } from '../../../../database/schemas';
-import { ExperimentId, FileResponse } from '../../../../server/types';
+import {
+  DatasetId,
+  ExperimentId,
+  FileResponse,
+} from '../../../../server/types';
 import { DatasetIDMapper } from '../../../dataset/datasetProvider/util/idMapper';
 
 type ExperimentSchema = ReturnType<
@@ -16,7 +20,7 @@ export class ExperimentFileGetter {
   protected idIndices: number[];
   protected idMapper: DatasetIDMapper;
 
-  constructor(id: ExperimentId) {
+  constructor(id: ExperimentId, datasetId: DatasetId) {
     this.table = tables.experiment.experiment(id);
     this.columns = Object.values(this.table.schema.columns)
       .map((column) => column.name)
@@ -25,33 +29,38 @@ export class ExperimentFileGetter {
       this.columns.indexOf(this.table.schema.columns.id1.name),
       this.columns.indexOf(this.table.schema.columns.id2.name),
     ];
-    this.idMapper = new DatasetIDMapper(id);
+    this.idMapper = new DatasetIDMapper(datasetId);
   }
 
   get(startAt?: number, limit?: number, sortBy?: string): FileResponse {
     sortBy = this.getSortedColumn(sortBy);
-    return {
-      header: this.columns.map((column) =>
-        column.startsWith(experimentCustomColumnPrefix)
-          ? column.substring(experimentCustomColumnPrefix.length)
-          : column
-      ),
-      data: this.table
-        .all({}, this.columns, true, {
-          limit,
-          startAt,
-          sortBy,
+    let result: FileResponse;
+    databaseBackend().transaction(
+      () =>
+        (result = {
+          header: this.columns.map((column) =>
+            column.startsWith(experimentCustomColumnPrefix)
+              ? column.substring(experimentCustomColumnPrefix.length)
+              : column
+          ),
+          data: this.table
+            .all({}, this.columns, true, {
+              limit,
+              startAt,
+              sortBy,
+            })
+            .map((row) => {
+              for (const idIndex of this.idIndices) {
+                row[idIndex] =
+                  this.idMapper.mapReversed(row[idIndex] as number) ??
+                  `mapped: ${row[idIndex]}`;
+              }
+              return row;
+            }) as string[][],
         })
-        .map((row) => {
-          const copy = row.slice();
-          for (const idIndex of this.idIndices) {
-            copy[idIndex] =
-              this.idMapper.mapReversed(copy[idIndex] as number) ??
-              `mapped: ${copy[idIndex]}`;
-          }
-          return copy;
-        }) as string[][],
-    };
+    )();
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return result!;
   }
 
   protected getSortedColumn(sortBy?: string): string {
