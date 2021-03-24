@@ -1,5 +1,8 @@
 .metric-number {
   font-size: 2.5em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .metric-name {
