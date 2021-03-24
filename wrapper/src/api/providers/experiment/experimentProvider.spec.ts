@@ -1,6 +1,8 @@
 import { setupDatabase, tables } from '../../database';
 import {
   AlgorithmValues,
+  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
+  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
   DatasetValues,
   ExperimentValues,
 } from '../../server/types';
@@ -39,6 +41,13 @@ describe('ExperimentProvider', () => {
   const addedAlgorithm: AlgorithmValues = {
     description: 'Algorithm',
     name: 'Algorithm',
+    softKPIs: {
+      timeToConfigure: 2,
+      timeToInstall: 3,
+      implementationKnowHowLevel:
+        AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
+      matchingSolutionType: AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Ml,
+    },
   };
   let addedAlgorithmId: number;
 
@@ -80,6 +89,9 @@ describe('ExperimentProvider', () => {
           datasetId: addedDatasetIds[0],
           description: 'No dataset file',
           name: 'No dataset file',
+          softKPIs: {
+            timeToConfigure: 4,
+          },
         },
       },
       {
@@ -88,6 +100,9 @@ describe('ExperimentProvider', () => {
           datasetId: addedDatasetIds[1],
           description: 'Dataset file',
           name: 'Dataset file',
+          softKPIs: {
+            timeToConfigure: 5,
+          },
         },
         file: [
           ['p1', 'p2'],
@@ -139,6 +154,9 @@ describe('ExperimentProvider', () => {
       datasetId: addedDatasetIds[0],
       description: 'Another one',
       name: 'Another Name',
+      softKPIs: {
+        timeToConfigure: 5,
+      },
     };
     const id = provider.addExperiment(addedExperiment);
     expect(provider.getExperiment(id)).toMatchObject({
@@ -166,6 +184,9 @@ describe('ExperimentProvider', () => {
       datasetId: addedDatasetIds[0],
       description: ' A new description',
       name: 'A neeew name',
+      softKPIs: {
+        timeToConfigure: 6,
+      },
     };
     provider.setExperiment(addedExperimentIds[0], updatedExperiment);
     expect(provider.getExperiment(addedExperimentIds[0])).toMatchObject({

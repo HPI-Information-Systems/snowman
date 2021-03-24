@@ -16,13 +16,12 @@ export class AlgorithmProvider {
       .upsert([
         {
           name: algorithm.name,
-          description: algorithm.description || null,
+          description: algorithm.description,
           implementationKnowHowLevel:
-            algorithm.softKPIs?.implementationKnowHowLevel || null,
-          matchingSolutionType:
-            algorithm.softKPIs?.matchingSolutionType || null,
-          timeToInstall: algorithm.softKPIs?.timeToInstall || null,
-          timeToConfigure: algorithm.softKPIs?.timeToConfigure || null,
+            algorithm.softKPIs?.implementationKnowHowLevel,
+          matchingSolutionType: algorithm.softKPIs?.matchingSolutionType,
+          timeToInstall: algorithm.softKPIs?.timeToInstall,
+          timeToConfigure: algorithm.softKPIs?.timeToConfigure,
         },
       ])
       .slice(-1)[0];
