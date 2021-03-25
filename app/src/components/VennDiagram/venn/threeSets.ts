@@ -31,12 +31,12 @@ export const stageThreeCirclesOn = (
     110,
     {
       x: 230,
-      y: 306,
+      y: 256,
     },
     payload.x100.tooltip
   );
   if (payload.x100.title !== undefined) {
-    drawText(stage, { x: 180, y: 325 }, payload.x100.title);
+    drawText(stage, { x: 180, y: 275 }, payload.x100.title);
   }
   // Set 2
   drawCircle(
@@ -47,12 +47,12 @@ export const stageThreeCirclesOn = (
     110,
     {
       x: 370,
-      y: 306,
+      y: 256,
     },
     payload.x010.tooltip
   );
   if (payload.x010.title !== undefined) {
-    drawText(stage, { x: 420, y: 325 }, payload.x010.title);
+    drawText(stage, { x: 420, y: 275 }, payload.x010.title);
   }
   // Set 3
   drawCircle(
@@ -63,12 +63,12 @@ export const stageThreeCirclesOn = (
     110,
     {
       x: 300,
-      y: 185,
+      y: 135,
     },
     payload.x001.tooltip
   );
   if (payload.x001.title !== undefined) {
-    drawText(stage, { x: 300, y: 140 }, payload.x001.title);
+    drawText(stage, { x: 300, y: 90 }, payload.x001.title);
   }
 
   drawIntersection(
@@ -77,26 +77,26 @@ export const stageThreeCirclesOn = (
     intersectThreePathSet1Set2,
     'intersectThreePathSet1Set2',
     payload.x110.tooltip
-  ).style('transform', 'matrix(1,0,0,1,-0.5,0)');
+  ).style('transform', 'matrix(1,0,0,1,-0.5,-50)');
   drawIntersection(
     stage,
     tooltip,
     intersectThreePathSet1Set3,
     'intersectThreePathSet1Set3',
     payload.x101.tooltip
-  );
+  ).style('transform', 'matrix(1,0,0,1,-0.5,-50)');
   drawIntersection(
     stage,
     tooltip,
     intersectThreePathSet2Set3,
     'intersectThreePathSet2Set3',
     payload.x011.tooltip
-  );
+  ).style('transform', 'matrix(1,0,0,1,0,-50)');
   drawIntersection(
     stage,
     tooltip,
     intersectThreePathSet1Set2Set3,
     'intersectThreePathSet1Set2Set3',
     payload.x111.tooltip
-  );
+  ).style('transform', 'matrix(1,0,0,1,0,-50)');
 };

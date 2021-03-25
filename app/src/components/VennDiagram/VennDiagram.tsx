@@ -40,7 +40,7 @@ export const VennDiagram = ({
         break;
       case VennDiagramFlavors.ThreeSets:
         svgElement.viewBox.baseVal.width = 600;
-        svgElement.viewBox.baseVal.height = 480;
+        svgElement.viewBox.baseVal.height = 400;
         stageThreeCirclesOn(
           d3.select(svgElement),
           tooltip,
