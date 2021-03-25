@@ -28,6 +28,9 @@ export const drawCircle = (
     .attr('cx', center.x)
     .attr('cy', center.y)
     .attr('id', name)
+    .on('click', function () {
+      onClick();
+    })
     .on('mousemove', (event: MouseEvent) => {
       tooltip.position([event.offsetX, event.offsetY]);
     })
@@ -58,6 +61,9 @@ export const drawIntersection = (
     .style('stroke', 'white')
     .style('stroke-width', '2')
     .style('stroke-opacity', 0)
+    .on('click', function () {
+      onClick();
+    })
     .on('mouseover', function () {
       d3.select(this)
         .transition()
@@ -105,6 +111,9 @@ export const drawEllipsis = (
     .style('stroke-width', '2')
     .style('stroke-opacity', 0)
     .style('fill', color)
+    .on('click', function () {
+      onClick();
+    })
     .on('mousemove', (event: MouseEvent) => {
       tooltip.position([event.offsetX, event.offsetY]);
     })
