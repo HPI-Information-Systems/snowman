@@ -68,6 +68,30 @@ const AlgorithmDialogView = ({
         />
       </IonItem>
       <IonItem>
+        <IonLabel>Matching Solution Type</IonLabel>
+        <IonSelect
+          multiple={false}
+          value={matchingSolutionType}
+          onIonChange={changeMatchingSolutionType}
+        >
+          <IonSelectOption value={undefined}>---</IonSelectOption>
+          {Object.keys(AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum).map(
+            (aType: string): JSX.Element => (
+              <IonSelectOption
+                key={aType}
+                value={
+                  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum[
+                    aType as keyof typeof AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum
+                  ]
+                }
+              >
+                {aType}
+              </IonSelectOption>
+            )
+          )}
+        </IonSelect>
+      </IonItem>
+      <IonItem>
         <IonLabel>Implementation Know How Level</IonLabel>
         <IonSelect
           multiple={false}
@@ -81,22 +105,6 @@ const AlgorithmDialogView = ({
             (aLevel: string): JSX.Element => (
               <IonSelectOption key={aLevel} value={aLevel}>
                 {aLevel}
-              </IonSelectOption>
-            )
-          )}
-        </IonSelect>
-      </IonItem>
-      <IonItem>
-        <IonLabel>Matching Solution Type</IonLabel>
-        <IonSelect
-          multiple={false}
-          value={matchingSolutionType}
-          onIonChange={changeMatchingSolutionType}
-        >
-          {Object.keys(AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum).map(
-            (aType: string): JSX.Element => (
-              <IonSelectOption key={aType} value={aType}>
-                {aType}
               </IonSelectOption>
             )
           )}

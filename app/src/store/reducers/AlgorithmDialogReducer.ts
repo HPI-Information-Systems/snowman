@@ -40,6 +40,11 @@ export const AlgorithmDialogReducer = (
         algorithmId: (action.payload as Algorithm).id,
         algorithmName: (action.payload as Algorithm).name,
         algorithmDescription: (action.payload as Algorithm).description ?? '',
+        matchingSolutionType: (action.payload as Algorithm).softKPIs
+          ?.matchingSolutionType,
+        timeToConfigure: (action.payload as Algorithm).softKPIs
+          ?.timeToConfigure,
+        timeToInstall: (action.payload as Algorithm).softKPIs?.timeToInstall,
         dialogType: DialogTypes.CHANGE_DIALOG,
       };
     case DialogActions.CLOSE_DIALOG:

@@ -12,7 +12,9 @@ export interface AlgorithmDialogStateProps {
   implementationKnowHowLevel:
     | AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
     | undefined;
-  matchingSolutionType: AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum;
+  matchingSolutionType:
+    | AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum
+    | undefined;
   timeToInstall: number | undefined;
   timeToConfigure: number | undefined;
 }

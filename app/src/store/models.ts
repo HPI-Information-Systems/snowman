@@ -20,7 +20,9 @@ export interface AlgorithmDialogStore {
   implementationKnowHowLevel:
     | AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
     | undefined;
-  matchingSolutionType: AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum;
+  matchingSolutionType:
+    | AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum
+    | undefined;
   timeToConfigure: number | undefined;
   timeToInstall: number | undefined;
   isOpen: boolean;
