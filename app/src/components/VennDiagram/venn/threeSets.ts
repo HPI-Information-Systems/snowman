@@ -33,6 +33,7 @@ export const stageThreeCirclesOn = (
       x: 230,
       y: 256,
     },
+    payload.x100.callback,
     payload.x100.tooltip
   );
   if (payload.x100.title !== undefined) {
@@ -49,6 +50,7 @@ export const stageThreeCirclesOn = (
       x: 370,
       y: 256,
     },
+    payload.x010.callback,
     payload.x010.tooltip
   );
   if (payload.x010.title !== undefined) {
@@ -65,6 +67,7 @@ export const stageThreeCirclesOn = (
       x: 300,
       y: 135,
     },
+    payload.x001.callback,
     payload.x001.tooltip
   );
   if (payload.x001.title !== undefined) {
@@ -76,6 +79,7 @@ export const stageThreeCirclesOn = (
     tooltip,
     intersectThreePathSet1Set2,
     'intersectThreePathSet1Set2',
+    payload.x110.callback,
     payload.x110.tooltip
   ).style('transform', 'matrix(1,0,0,1,-0.5,-50)');
   drawIntersection(
@@ -83,6 +87,7 @@ export const stageThreeCirclesOn = (
     tooltip,
     intersectThreePathSet1Set3,
     'intersectThreePathSet1Set3',
+    payload.x101.callback,
     payload.x101.tooltip
   ).style('transform', 'matrix(1,0,0,1,-0.5,-50)');
   drawIntersection(
@@ -90,6 +95,7 @@ export const stageThreeCirclesOn = (
     tooltip,
     intersectThreePathSet2Set3,
     'intersectThreePathSet2Set3',
+    payload.x011.callback,
     payload.x011.tooltip
   ).style('transform', 'matrix(1,0,0,1,0,-50)');
   drawIntersection(
@@ -97,6 +103,7 @@ export const stageThreeCirclesOn = (
     tooltip,
     intersectThreePathSet1Set2Set3,
     'intersectThreePathSet1Set2Set3',
+    payload.x111.callback,
     payload.x111.tooltip
   ).style('transform', 'matrix(1,0,0,1,0,-50)');
 };

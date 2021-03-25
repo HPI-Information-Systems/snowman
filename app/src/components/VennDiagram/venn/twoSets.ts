@@ -28,6 +28,7 @@ export const stageTwoCirclesOn = (
       x: 230,
       y: 156,
     },
+    payload.x10.callback,
     payload.x10.tooltip
   );
   if (payload.x10.title !== undefined) {
@@ -44,6 +45,7 @@ export const stageTwoCirclesOn = (
       x: 370,
       y: 156,
     },
+    payload.x01.callback,
     payload.x01.tooltip
   );
   if (payload.x01.title !== undefined) {
@@ -55,6 +57,7 @@ export const stageTwoCirclesOn = (
     tooltip,
     intersectThreePathSet1Set2,
     'intersectThreePathSet1Set2',
+    payload.x11.callback,
     payload.x11.tooltip
   ).style('transform', 'matrix(1,0,0,1,-0.5,-150)');
 };
