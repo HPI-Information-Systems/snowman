@@ -17,6 +17,9 @@ import {
 import RequestHandler from 'utils/requestHandler';
 import { getTagsFromDatasets } from 'utils/tagFactory';
 
+import { ToastType } from '../../types/ToastTypes';
+import { showToast } from './GlobalIndicatorActions';
+
 const loadAvailableTags = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
     type: DialogActionsTypes.LOAD_AVAILABLE_TAGS,
@@ -150,7 +153,9 @@ export const clickOnDatasetTag = (aTag: string): easyPrimitiveActionReturn =>
     payload: aTag,
   });
 
-const createNewDataset = (): SnowmanThunkAction<Promise<number>> => async (
+const createNewDataset = (
+  showSuccess = true
+): SnowmanThunkAction<Promise<number>> => async (
   dispatch: SnowmanDispatch
 ): Promise<number> =>
   RequestHandler<number>(
@@ -168,7 +173,7 @@ const createNewDataset = (): SnowmanThunkAction<Promise<number>> => async (
         },
       }),
     dispatch,
-    SUCCESS_TO_CREATE_NEW_DATASET
+    showSuccess ? SUCCESS_TO_CREATE_NEW_DATASET : undefined
   );
 
 const setExistingDataset = (): SnowmanThunkAction<Promise<void>> => async (
@@ -191,7 +196,8 @@ const setExistingDataset = (): SnowmanThunkAction<Promise<void>> => async (
   );
 
 const uploadDatasetFile = (
-  id?: number
+  id?: number,
+  showSuccess = false
 ): SnowmanThunkAction<Promise<void>> => async (dispatch: SnowmanDispatch) => {
   const willUpload =
     store.getState().DatasetDialogStore.selectedFiles.length > 0;
@@ -215,7 +221,7 @@ const uploadDatasetFile = (
       return Promise.resolve();
     },
     dispatch,
-    willUpload ? SUCCESS_TO_UPLOAD_DATASET_FILE : undefined,
+    showSuccess && willUpload ? SUCCESS_TO_UPLOAD_DATASET_FILE : undefined,
     true
   );
 };
@@ -223,9 +229,19 @@ const uploadDatasetFile = (
 const addNewDataset = (): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> => {
-  return dispatch(createNewDataset())
-    .then((id: number): Promise<void> => dispatch(uploadDatasetFile(id)))
-    .then((): void => dispatch(resetDialog()))
+  return dispatch(createNewDataset(false))
+    .then((id) =>
+      dispatch(uploadDatasetFile(id)).catch((error) =>
+        RequestHandler(
+          () => new DatasetsApi().deleteDataset({ datasetId: id }),
+          dispatch
+        ).finally(() => Promise.reject(error))
+      )
+    )
+    .then(() => dispatch(resetDialog()))
+    .then(() =>
+      dispatch(showToast(SUCCESS_TO_CREATE_NEW_DATASET, ToastType.Success))
+    )
     .finally((): void => {
       dispatch(getDatasets());
       dispatch(closeDialog());
