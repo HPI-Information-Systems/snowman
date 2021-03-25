@@ -18,16 +18,43 @@ export const stageTwoCirclesOn = (
   clearStage(stage);
 
   // Set 1
-  drawCircle(stage, tooltip, 'circle1', '#00bf00', 110, { x: 230, y: 156 });
-  drawText(stage, { x: 180, y: 125 }, 'circle1');
+  drawCircle(
+    stage,
+    tooltip,
+    'circle1',
+    payload.x10.color ?? '#00bf00',
+    110,
+    {
+      x: 230,
+      y: 156,
+    },
+    payload.x10.tooltip
+  );
+  if (payload.x10.title !== undefined) {
+    drawText(stage, { x: 180, y: 125 }, payload.x10.title);
+  }
   // Set 2
-  drawCircle(stage, tooltip, 'circle2', '#007fff', 110, { x: 370, y: 156 });
-  drawText(stage, { x: 420, y: 125 }, 'circle2');
+  drawCircle(
+    stage,
+    tooltip,
+    'circle2',
+    payload.x01.color ?? '#007fff',
+    110,
+    {
+      x: 370,
+      y: 156,
+    },
+    payload.x01.tooltip
+  );
+  if (payload.x01.title !== undefined) {
+    drawText(stage, { x: 420, y: 125 }, payload.x01.title);
+  }
 
   drawIntersection(
     stage,
     tooltip,
     intersectThreePathSet1Set2,
-    'intersectThreePathSet1Set2'
+    'intersectThreePathSet1Set2',
+    payload.x11.tooltip
   ).style('transform', 'matrix(1,0,0,1,-0.5,-150)');
 };

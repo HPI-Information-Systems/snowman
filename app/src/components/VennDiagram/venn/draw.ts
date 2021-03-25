@@ -13,7 +13,8 @@ export const drawCircle = (
   name: string,
   color: string,
   radius: number,
-  center: { x: number; y: number }
+  center: { x: number; y: number },
+  tiptext: string
 ): void => {
   stage
     .append('circle')
@@ -31,7 +32,7 @@ export const drawCircle = (
     })
     .on('mouseover', function () {
       d3.select(this).transition().style('stroke-opacity', 1);
-      tooltip.showText(name);
+      tooltip.showText(tiptext);
     })
     .on('mouseout', function () {
       d3.select(this).transition().style('stroke-opacity', 0);
@@ -43,7 +44,8 @@ export const drawIntersection = (
   stage: d3Selection,
   tooltip: VennTooltip,
   shape: string,
-  name: string
+  name: string,
+  tiptext: string
 ): d3Selection => {
   return stage
     .append('path')
@@ -59,7 +61,7 @@ export const drawIntersection = (
         .transition()
         .style('fill-opacity', 0.1)
         .style('stroke-opacity', 1);
-      tooltip.showText(name);
+      tooltip.showText(tiptext);
     })
     .on('mouseout', function () {
       d3.select(this)
@@ -80,7 +82,8 @@ export const drawEllipsis = (
   angle: number,
   color: string,
   position: { x: number; y: number },
-  dimensions: { x: number; y: number }
+  dimensions: { x: number; y: number },
+  tiptext: string
 ): void => {
   stage
     .append('ellipse')
@@ -108,7 +111,7 @@ export const drawEllipsis = (
     })
     .on('mouseover', function () {
       d3.select(this).transition().style('stroke-opacity', 1);
-      tooltip.showText(name);
+      tooltip.showText(tiptext);
     });
 };
 
