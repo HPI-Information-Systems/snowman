@@ -1,8 +1,6 @@
-import { ExperimentBuckets } from 'types/ExperimentBuckets';
-
-export interface DragNDropDescriptor {
+export interface DragNDropDescriptor<T> {
   sourceIndex: number;
   targetIndex: number;
-  sourceBucket: ExperimentBuckets;
-  targetBucket: ExperimentBuckets;
+  sourceBucket: T;
+  targetBucket: T;
 }

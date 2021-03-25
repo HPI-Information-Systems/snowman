@@ -5,4 +5,5 @@ export enum ViewIDs {
   ALGORITHMS,
   BINARY_METRICS,
   N_METRICS,
+  INTERSECTION,
 }

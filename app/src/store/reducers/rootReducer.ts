@@ -11,6 +11,8 @@ import { InputChipReducer } from 'store/reducers/InputChipReducer';
 import { RenderLogicReducer } from 'store/reducers/RenderLogicReducer';
 import { SelectableInputReducer } from 'store/reducers/SelectableInputReducer';
 
+import { IntersectionReducer } from './IntersectionReducer';
+
 export const rootReducer = (state: Store, action: SnowmanAction): Store => {
   const coreState: CoreStore = CoreReducer(state?.CoreStore, action);
   const immediateState: ImmediateStore = {
@@ -39,6 +41,7 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
       state?.SelectableInputStore,
       action
     ),
+    IntersectionStore: IntersectionReducer(state?.IntersectionStore, action),
   };
   return RenderLogicReducer(state?.RenderLogicStore, immediateState, action);
 };

@@ -1,4 +1,4 @@
-import 'pages/ExperimentsPage/ExperimentsPageStyles.css';
+import 'pages/ExperimentsPage/ExperimentsPage.Styles.css';
 
 import { IonChip, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react';
 import { Algorithm } from 'api';
@@ -18,8 +18,10 @@ const ExperimentsPageView = ({
   clickOnMatchingSolution,
   dragExperiment,
   loadExperiments,
+  resetIntersection,
 }: ExperimentsPageProps): JSX.Element => {
   useEffect(loadExperiments, [loadExperiments]);
+  useEffect(resetIntersection, [resetIntersection]);
   return (
     <PageStruct title="Experiments Selector" showNextFab={true}>
       <IonGrid>

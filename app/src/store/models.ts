@@ -83,6 +83,12 @@ export interface BenchmarkConfigurationStore {
   chosenExperiments: Experiment[];
 }
 
+export interface IntersectionStore {
+  included: Experiment[];
+  excluded: Experiment[];
+  counts: ExperimentIntersectionPairCountsItem[];
+}
+
 export interface BinaryMetricsStore {
   counts: ExperimentIntersectionPairCountsItem[];
   metrics: Metric[];
@@ -99,6 +105,7 @@ export interface ImmediateStore {
   GlobalIndicatorStore: GlobalIndicatorStore;
   InputChipStore: InputChipStore;
   SelectableInputStore: SelectableInputStore;
+  IntersectionStore: IntersectionStore;
 }
 
 export interface Store extends ImmediateStore {

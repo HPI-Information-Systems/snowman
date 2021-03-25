@@ -10,6 +10,7 @@ export interface ExperimentsPageDispatchProps {
   loadExperiments(): void;
   clickOnMatchingSolution(aMatchingSolution: Algorithm): void;
   dragExperiment(dragResult: DropResult): void;
+  resetIntersection(): void;
 }
 
 export type ExperimentsPageProps = ExperimentsPageDispatchProps &

@@ -1,4 +1,11 @@
-import { albums, documents, home, rocket, speedometer } from 'ionicons/icons';
+import {
+  albums,
+  documents,
+  home,
+  pieChartOutline,
+  rocket,
+  speedometer,
+} from 'ionicons/icons';
 import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
 import BinaryMetricsPage from 'pages/BinaryMetricsPage/BinaryMetricsPage';
 import DatasetsPage from 'pages/DatasetsPage/DatasetsPage';
@@ -14,6 +21,8 @@ import {
   selectedDataset,
   selectedExperiments,
 } from 'utils/optionReminders';
+
+import IntersectionPage from '../pages/IntersectionPage/IntersectionPage';
 
 export const PrimaryViewMetaInformation: ViewMetaInformation = {
   key: ViewIDs.HOME,
@@ -88,6 +97,18 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuName: 'N-ary Metrics',
     menuIcon: speedometer,
     menuSortKey: 7,
+    selectedOptionsReminder: emptySelectedOptions,
+  },
+  {
+    key: ViewIDs.INTERSECTION,
+    component: IntersectionPage,
+    nextView: ViewIDs.N_METRICS,
+    accessGuard: accessGuards.couldEnterIntersectionPage,
+    shouldShowInMenu: true,
+    menuCategory: menuCategories.WORKFLOW,
+    menuName: 'Intersection',
+    menuIcon: pieChartOutline,
+    menuSortKey: 8,
     selectedOptionsReminder: emptySelectedOptions,
   },
 ];

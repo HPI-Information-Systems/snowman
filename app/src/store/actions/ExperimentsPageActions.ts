@@ -17,6 +17,8 @@ import {
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
 
+import { ExperimentBuckets } from '../../types/ExperimentBuckets';
+
 export const clickOnMatchingSolution = (
   aMatchingSolution: Algorithm
 ): easyPrimitiveActionReturn =>
@@ -30,7 +32,10 @@ export const dragNDropAnExperiment = (
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
     type: ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT,
-    payload: getDndDescriptorFromDropResult(aDropResult),
+    payload: getDndDescriptorFromDropResult<ExperimentBuckets>(
+      aDropResult,
+      ExperimentBuckets.AVAILABLE_EXPERIMENTS
+    ),
   });
 
 export const getExperiments = (): SnowmanThunkAction<Promise<void>> => async (

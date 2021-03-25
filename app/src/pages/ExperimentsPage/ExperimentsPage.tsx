@@ -14,6 +14,8 @@ import {
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 
+import { resetIntersection } from '../../store/actions/IntersectionStoreActions';
+
 const mapStateToProps = (state: Store): ExperimentsPageStateProps => ({
   matchingSolutions: state.CoreStore.algorithms,
   selectedMatchingSolutions:
@@ -31,6 +33,9 @@ const mapDispatchToProps = (
   },
   loadExperiments(): void {
     dispatch(getExperiments()).then();
+  },
+  resetIntersection() {
+    dispatch(resetIntersection());
   },
 });
 

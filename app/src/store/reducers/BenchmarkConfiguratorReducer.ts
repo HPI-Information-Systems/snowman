@@ -94,7 +94,7 @@ const BenchmarkConfiguratorImmediateReducer = (
       let chosenExperiments,
         chosenGoldstandards,
         availableExperiments: Experiment[];
-      const eventDescriptor: DragNDropDescriptor = action.payload as DragNDropDescriptor;
+      const eventDescriptor: DragNDropDescriptor<ExperimentBuckets> = action.payload as DragNDropDescriptor<ExperimentBuckets>;
       const draggedExperiment: Experiment | undefined = nth(
         getExperimentBucketFromId(ownState, eventDescriptor.sourceBucket),
         eventDescriptor.sourceIndex

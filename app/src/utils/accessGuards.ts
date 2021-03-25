@@ -8,3 +8,7 @@ export const couldEnterExperimentsSelector = (
 export const couldEnterBinaryMetricsPage = (aState: ImmediateStore): boolean =>
   aState.BenchmarkConfigurationStore.chosenExperiments.length === 1 &&
   aState.BenchmarkConfigurationStore.chosenGoldStandards.length === 1;
+export const couldEnterIntersectionPage = (aState: ImmediateStore): boolean =>
+  aState.BenchmarkConfigurationStore.chosenExperiments.length +
+    aState.BenchmarkConfigurationStore.chosenGoldStandards.length >=
+    1 && aState.BenchmarkConfigurationStore.selectedDataset !== null;

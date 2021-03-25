@@ -29,7 +29,7 @@ type ActionPayload =
   | Experiment[]
   | Experiment
   | Event
-  | DragNDropDescriptor
+  | DragNDropDescriptor<string>
   | ExperimentIntersectionPairCountsItem[];
 
 export interface SnowmanAction extends Action<string> {
