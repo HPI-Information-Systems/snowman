@@ -152,24 +152,24 @@ export const stageFourEllipsisOn = (
     tooltip,
     intersectFourPathSet1Set2Set4,
     'intersectFourPathSet1Set2Set4',
-    payload.x1110.callback,
-    payload.x1110.tooltip
+    payload.x1101.callback,
+    payload.x1101.tooltip
   );
   drawIntersection(
     stage,
     tooltip,
     intersectFourPathSet1Set3Set4,
     'intersectFourPathSet1Set3Set4',
-    payload.x1110.callback,
-    payload.x1110.tooltip
+    payload.x1011.callback,
+    payload.x1011.tooltip
   );
   drawIntersection(
     stage,
     tooltip,
     intersectFourPathSet2Set3Set4,
     'intersectFourPathSet2Set3Set4',
-    payload.x1110.callback,
-    payload.x1110.tooltip
+    payload.x0111.callback,
+    payload.x0111.tooltip
   );
   drawIntersection(
     stage,
