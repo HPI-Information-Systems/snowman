@@ -26,6 +26,7 @@ const ExperimentDialogView = ({
   experimentName,
   experimentDescription,
   experimentFileFormat,
+  timeToConfigure,
   tags,
   selectedTags,
   changeExperimentDescription,
@@ -36,6 +37,7 @@ const ExperimentDialogView = ({
   isValidForm,
   selectedFiles,
   changeSelectedFiles,
+  changeTimeToConfigure,
 }: ExperimentDialogProps): JSX.Element => (
   <ModalDialog
     heading={isAddDialog ? 'Add New Experiment' : 'Update Existing Experiment'}
@@ -44,7 +46,7 @@ const ExperimentDialogView = ({
   >
     <IonList>
       <IonItem>
-        <IonLabel position="fixed">Name/ID*:</IonLabel>
+        <IonLabel position="fixed">Name/ID:</IonLabel>
         <IonInput
           clearInput
           value={experimentName}
@@ -76,6 +78,15 @@ const ExperimentDialogView = ({
         <FileInput
           selectedFiles={selectedFiles}
           onChange={changeSelectedFiles}
+        />
+      </IonItem>
+      <IonItem>
+        <IonLabel>Time to Configure</IonLabel>
+        <IonInput
+          clearInput
+          type="number"
+          value={timeToConfigure}
+          onIonChange={changeTimeToConfigure}
         />
       </IonItem>
     </IonList>

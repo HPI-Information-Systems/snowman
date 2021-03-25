@@ -98,6 +98,14 @@ export const changeSelectedFiles = (files: File[]): easyPrimitiveActionReturn =>
     payload: files,
   });
 
+export const changeSoftKPITimeToConfigure = (
+  aConfigurationTime: number | undefined
+): easyPrimitiveActionReturn =>
+  easyPrimitiveAction({
+    type: actionTypes.CHANGE_SOFT_KPI_TIME_TO_CONFIGURE,
+    payload: aConfigurationTime,
+  });
+
 const createNewExperiment = (): SnowmanThunkAction<Promise<number>> => async (
   dispatch: SnowmanDispatch
 ): Promise<number> =>
@@ -108,6 +116,10 @@ const createNewExperiment = (): SnowmanThunkAction<Promise<number>> => async (
           name: store.getState().ExperimentDialogStore.experimentName,
           description: store.getState().ExperimentDialogStore
             .experimentDescription,
+          softKPIs: {
+            // TODO: get correct timeToConfigure
+            timeToConfigure: undefined,
+          },
           datasetId:
             store.getState().BenchmarkConfigurationStore.selectedDataset?.id ??
             MagicNotPossibleId,
