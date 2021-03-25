@@ -103,7 +103,14 @@ const AlgorithmDialogView = ({
             AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
           ).map(
             (aLevel: string): JSX.Element => (
-              <IonSelectOption key={aLevel} value={aLevel}>
+              <IonSelectOption
+                key={aLevel}
+                value={
+                  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum[
+                    aLevel as keyof typeof AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
+                  ]
+                }
+              >
                 {aLevel}
               </IonSelectOption>
             )
