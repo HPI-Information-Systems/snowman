@@ -1,4 +1,10 @@
-import { Algorithm, Dataset, Experiment, FileResponse, Metric } from 'api';
+import {
+  Algorithm,
+  Dataset,
+  Experiment,
+  ExperimentIntersectionPairCountsItem,
+  Metric,
+} from 'api';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
@@ -78,10 +84,8 @@ export interface BenchmarkConfigurationStore {
 }
 
 export interface BinaryMetricsStore {
+  counts: ExperimentIntersectionPairCountsItem[];
   metrics: Metric[];
-  falsePositives: FileResponse | undefined;
-  falseNegatives: FileResponse | undefined;
-  truePositives: FileResponse | undefined;
   selectedDataView: MetricsTuplesCategories;
 }
 

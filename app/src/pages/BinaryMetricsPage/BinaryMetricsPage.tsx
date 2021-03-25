@@ -1,5 +1,4 @@
-import { FileResponse } from 'api';
-import { ColumnDescriptor } from 'components/DataViewer/ColumnDescriptor';
+import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 import { BinaryMetricsPageView } from 'pages/BinaryMetricsPage/BinaryMetricsPage.View';
 import {
   BinaryMetricsPageDispatchProps,
@@ -8,88 +7,132 @@ import {
 import { connect } from 'react-redux';
 import {
   clickOnPane,
-  loadBinaryMetricsTuples,
+  getExperiment1Id,
+  getGroundTruthId,
+  loadBinaryMetricsTuplesCounts,
+  loadFalseNegatives,
+  loadFalsePositives,
   loadMetrics,
+  loadTrueNegatives,
+  loadTruePositives,
 } from 'store/actions/BinaryMetricsStoreActions';
 import { SnowmanDispatch } from 'store/messages';
-import { BinaryMetricsStore, Store } from 'store/models';
+import { Store } from 'store/models';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
-const getTuplesByTuplesCategory = (
-  store: BinaryMetricsStore,
+import { ExperimentIntersectionPairCountsItem } from '../../api';
+const getCountsByTuplesCategory = (
+  store: Store,
   aMetricsTuplesCategory: MetricsTuplesCategories
-): FileResponse | undefined => {
+): ExperimentIntersectionPairCountsItem | undefined => {
+  const counts = store.BinaryMetricsStore.counts
+    .filter(({ experiments }) => experiments.length === 2)
+    .filter(({ experiments }) =>
+      experiments
+        .map(({ experimentId }) => experimentId)
+        .includes(getGroundTruthId(store))
+    )
+    .filter(({ experiments }) =>
+      experiments
+        .map(({ experimentId }) => experimentId)
+        .includes(getExperiment1Id(store))
+    );
   switch (aMetricsTuplesCategory) {
     case MetricsTuplesCategories.truePositives:
-      return store.truePositives;
+      return counts.find(({ experiments }) =>
+        experiments.every(({ predictedCondition }) => predictedCondition)
+      );
     case MetricsTuplesCategories.falseNegatives:
-      return store.falseNegatives;
+      return counts.find(({ experiments }) =>
+        experiments.every(({ predictedCondition, experimentId }) =>
+          getGroundTruthId(store) === experimentId
+            ? predictedCondition
+            : !predictedCondition
+        )
+      );
     case MetricsTuplesCategories.falsePositives:
-      return store.falsePositives;
+      return counts.find(({ experiments }) =>
+        experiments.every(({ predictedCondition, experimentId }) =>
+          getExperiment1Id(store) === experimentId
+            ? predictedCondition
+            : !predictedCondition
+        )
+      );
+    case MetricsTuplesCategories.trueNegatives:
+      return counts.find(({ experiments }) =>
+        experiments.every(({ predictedCondition }) => !predictedCondition)
+      );
+  }
+};
+const getPairCountByTuplesCategory = (
+  store: Store,
+  aMetricsTuplesCategory: MetricsTuplesCategories
+): number => {
+  return (
+    getCountsByTuplesCategory(store, aMetricsTuplesCategory)?.numberPairs ?? 0
+  );
+};
+const getRowCountByTuplesCategory = (
+  store: Store,
+  aMetricsTuplesCategory: MetricsTuplesCategories
+): number => {
+  return (
+    getCountsByTuplesCategory(store, aMetricsTuplesCategory)?.numberRows ?? 0
+  );
+};
+
+const getTuplesLoaderByTuplesCategory = (
+  aMetricsTuplesCategory: MetricsTuplesCategories
+): TuplesLoader => {
+  switch (aMetricsTuplesCategory) {
+    case MetricsTuplesCategories.falsePositives:
+      return loadFalsePositives;
+    case MetricsTuplesCategories.truePositives:
+      return loadTruePositives;
+    case MetricsTuplesCategories.falseNegatives:
+      return loadFalseNegatives;
+    case MetricsTuplesCategories.trueNegatives:
+      return loadTrueNegatives;
   }
 };
 
 const mapStateToProps = (state: Store): BinaryMetricsPageStateProps => ({
   metrics: state.BinaryMetricsStore.metrics,
   metricsTuplesCategories: [
-    MetricsTuplesCategories.falseNegatives,
-    MetricsTuplesCategories.falsePositives,
     MetricsTuplesCategories.truePositives,
+    MetricsTuplesCategories.falsePositives,
+    MetricsTuplesCategories.falseNegatives,
+    MetricsTuplesCategories.trueNegatives,
   ],
   selectedMetricsTuplesCategory: state.BinaryMetricsStore.selectedDataView,
-  dataViewerTuples: ((): unknown[] => {
-    const tuples = getTuplesByTuplesCategory(
-      state.BinaryMetricsStore,
-      state.BinaryMetricsStore.selectedDataView
-    );
-    if (tuples !== undefined) {
-      const { header, data: rows } = tuples;
-      return rows.map((row) => {
-        const rowObject: Record<string, string> = {};
-        row.forEach((value: string, index: number): void => {
-          rowObject[header[index]] = value;
-        });
-        return rowObject;
-      });
-    }
-    return [];
-  })(),
-  dataViewerHeader: (
-    getTuplesByTuplesCategory(
-      state.BinaryMetricsStore,
-      state.BinaryMetricsStore.selectedDataView
-    )?.header ?? []
-  ).map(
-    (aTitle: string): ColumnDescriptor => ({
-      label: aTitle,
-      objKey: aTitle,
-    })
+  rowCount: getRowCountByTuplesCategory(
+    state,
+    state.BinaryMetricsStore.selectedDataView
+  ),
+  tuplesLoader: getTuplesLoaderByTuplesCategory(
+    state.BinaryMetricsStore.selectedDataView
   ),
   confusionMatrix: {
     totalCount: Math.pow(
       state.BenchmarkConfigurationStore.selectedDataset?.numberOfRecords ?? 0,
       2
     ),
-    // Todo: Replace with API value in later PR
-    falseNegatives: state.BinaryMetricsStore.falseNegatives?.data.length,
-    // Todo: Replace with API value in later PR
-    falsePositives: state.BinaryMetricsStore.falsePositives?.data.length,
-    // Todo: Replace with API value in later PR
-    trueNegatives:
-      state.BinaryMetricsStore.falseNegatives !== undefined &&
-      state.BinaryMetricsStore.falsePositives !== undefined &&
-      state.BinaryMetricsStore.truePositives?.data.length !== undefined
-        ? Math.pow(
-            state.BenchmarkConfigurationStore.selectedDataset
-              ?.numberOfRecords ?? 0,
-            2
-          ) -
-          ((state.BinaryMetricsStore.falseNegatives?.data.length ?? 0) +
-            (state.BinaryMetricsStore.falsePositives?.data.length ?? 0) +
-            (state.BinaryMetricsStore.truePositives?.data.length ?? 0))
-        : undefined,
-    // Todo: Replace with API value in later PR
-    truePositives: state.BinaryMetricsStore.truePositives?.data.length, // incorrect value
+    falseNegatives: getPairCountByTuplesCategory(
+      state,
+      MetricsTuplesCategories.falseNegatives
+    ),
+    falsePositives: getPairCountByTuplesCategory(
+      state,
+      MetricsTuplesCategories.falsePositives
+    ),
+    trueNegatives: getPairCountByTuplesCategory(
+      state,
+      MetricsTuplesCategories.trueNegatives
+    ),
+    truePositives: getPairCountByTuplesCategory(
+      state,
+      MetricsTuplesCategories.truePositives
+    ),
   },
 });
 
@@ -99,8 +142,8 @@ const mapDispatchToProps = (
   loadMetrics() {
     dispatch(loadMetrics()).then();
   },
-  loadTuples() {
-    dispatch(loadBinaryMetricsTuples()).then();
+  preloadTuplesCounts() {
+    dispatch(loadBinaryMetricsTuplesCounts()).then();
   },
   selectPane(aMetricsTuplesCategory: MetricsTuplesCategories) {
     dispatch(clickOnPane(aMetricsTuplesCategory));

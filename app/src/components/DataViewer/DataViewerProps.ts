@@ -1,6 +1,7 @@
-import { ColumnDescriptor } from 'components/DataViewer/ColumnDescriptor';
+import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 
-export interface DataViewerProps {
-  columnHeaders: ColumnDescriptor[];
-  tuples: unknown[];
-}
+export type DataViewerProps = {
+  tuplesCount: number;
+  loadTuples: TuplesLoader;
+  BATCH_SIZE?: number;
+};

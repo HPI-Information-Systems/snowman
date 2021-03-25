@@ -1,5 +1,5 @@
 import { setupDatabase } from '../../../../../database';
-import { ExperimentId } from '../../../../../server/types';
+import { DatasetId, ExperimentId } from '../../../../../server/types';
 import { numberOfPairs } from '../../../../../tools/numberOfPairs';
 import { expectClusteringsToEqual } from '../../cluster/test/utility';
 import { ClusterID, NodeID } from '../../cluster/types';
@@ -31,19 +31,24 @@ function getClustering(...args: ConstructorParameters<typeof Intersection>) {
 function testConfig(
   pos: ExperimentId[],
   neg: ExperimentId[],
-  expected: NodeID[][]
+  expected: NodeID[][],
+  datasetId: [DatasetId]
 ) {
-  expectClusteringsToEqual(getClustering(pos, neg), expected);
-  expect(IntersectionCache.get(pos, neg).pairCount).toBe(
+  expectClusteringsToEqual(getClustering(pos, neg, datasetId), expected);
+  expect(IntersectionCache.get(pos, neg, datasetId).numberPairs).toBe(
     expected.reduce((prev, cur) => prev + numberOfPairs(cur.length), 0)
   );
   const result = [
-    ...IntersectionCache.get(pos, neg).clusters(0, 1),
-    ...IntersectionCache.get(pos, neg).clusters(1, 2),
-    ...IntersectionCache.get(pos, neg).clusters(3, 97),
-    ...IntersectionCache.get(pos, neg).clusters(100),
+    ...IntersectionCache.get(pos, neg, datasetId).clusters(0, 1),
+    ...IntersectionCache.get(pos, neg, datasetId).clusters(1, 2),
+    ...IntersectionCache.get(pos, neg, datasetId).clusters(3, 97),
+    ...IntersectionCache.get(pos, neg, datasetId).clusters(100),
   ];
-  const expectedClusters = IntersectionCache.get(pos, neg).clusters();
+  const expectedClusters = IntersectionCache.get(
+    pos,
+    neg,
+    datasetId
+  ).clusters();
   expect(result).toEqual(expectedClusters);
 }
 beforeAll(async () => {
@@ -63,27 +68,40 @@ describe.each(confusionTuplesTestCases)(
     } = testCase;
     let goldStandardId: ExperimentId;
     let experimentId: ExperimentId;
+    let datasetId: DatasetId;
 
     beforeAll(async () => {
-      [goldStandardId, experimentId] = await loadTestCase([
+      [[goldStandardId, experimentId], datasetId] = await loadTestCase([
         testCase.goldStandard,
         testCase.experiment,
       ]);
     });
 
     test('calculates true positives correctly', () => {
-      testConfig([goldStandardId, experimentId], [], expectedTruePositives);
-      testConfig([goldStandardId, experimentId], [], expectedTruePositives);
+      testConfig([goldStandardId, experimentId], [], expectedTruePositives, [
+        datasetId,
+      ]);
+      testConfig([goldStandardId, experimentId], [], expectedTruePositives, [
+        datasetId,
+      ]);
     });
 
     test('calculates false positives correctly', () => {
-      testConfig([experimentId], [goldStandardId], expectedFalsePositives);
-      testConfig([experimentId], [goldStandardId], expectedFalsePositives);
+      testConfig([experimentId], [goldStandardId], expectedFalsePositives, [
+        datasetId,
+      ]);
+      testConfig([experimentId], [goldStandardId], expectedFalsePositives, [
+        datasetId,
+      ]);
     });
 
     test('calculates false negatives correctly', () => {
-      testConfig([goldStandardId], [experimentId], expectedFalseNegatives);
-      testConfig([goldStandardId], [experimentId], expectedFalseNegatives);
+      testConfig([goldStandardId], [experimentId], expectedFalseNegatives, [
+        datasetId,
+      ]);
+      testConfig([goldStandardId], [experimentId], expectedFalseNegatives, [
+        datasetId,
+      ]);
     });
   }
 );
@@ -92,14 +110,19 @@ describe.each(multiIntersectionTestCases)(
   'n experiment intersection',
   ({ negative, positive, pairs }) => {
     let experimentIds: ExperimentId[];
+    let datasetId: DatasetId;
     beforeAll(async () => {
-      experimentIds = await loadTestCase([...positive, ...negative]);
+      [experimentIds, datasetId] = await loadTestCase([
+        ...positive,
+        ...negative,
+      ]);
     });
     test('calculates test case correctly', () => {
       testConfig(
         experimentIds.slice(0, positive.length),
         experimentIds.slice(positive.length),
-        pairs
+        pairs,
+        [datasetId]
       );
     });
   }

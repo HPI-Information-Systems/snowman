@@ -12,7 +12,8 @@ export class CalculatePairsManyNegative extends CalculatePairs {
   protected get subclustering(): Subclustering {
     return SubclusterCache.get(
       this.intersection.predictedConditionPositive,
-      this.intersection.predictedConditionNegative.slice(0, 1)
+      this.intersection.predictedConditionNegative.slice(0, 1),
+      this.intersection.datasetId
     ).clustering;
   }
 
@@ -27,7 +28,9 @@ export class CalculatePairsManyNegative extends CalculatePairs {
     this.negativeClusterings = this.intersection.predictedConditionNegative
       .slice(1)
       .map(
-        (experimentId) => IntersectionCache.get([experimentId], []).clustering
+        (experimentId) =>
+          IntersectionCache.get([experimentId], [], this.intersection.datasetId)
+            .clustering
       );
     this.rows = [];
     this.skipRemains = this.skip;
