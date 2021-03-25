@@ -107,7 +107,7 @@ export const confusionTuplesTestCases: {
   },
 ];
 
-export const multiIntersectinTestCases: {
+export const multiIntersectionTestCases: {
   positive: RelaxedClustering[];
   negative: RelaxedClustering[];
   pairs: NodeID[][];
@@ -260,6 +260,10 @@ async function loadExperiment(
   return experimentId;
 }
 
+/**
+ * @param experiments All clusterings must have the same number of ids x. Further they need to contain the ids 0 to x-1.
+ * This ensures that the mapped id equals the given id.
+ */
 export async function loadTestCase(
   experiments: RelaxedClustering[]
 ): Promise<ExperimentId[]> {
@@ -272,8 +276,20 @@ export async function loadTestCase(
   );
   const datasetId = getProviders().dataset.addDataset({
     name: '',
-    numberOfRecords,
   });
+  await getProviders().dataset.setDatasetFile(
+    datasetId,
+    fileToReadable([
+      ['id'],
+      ...new Array(numberOfRecords)
+        .fill(0)
+        .map((_, index) => [index.toString()]),
+    ]),
+    'id',
+    '"',
+    "'",
+    ','
+  );
   const algorithmId = getProviders().algorithm.addAlgorithm({
     name: '',
   });

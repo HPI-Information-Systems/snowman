@@ -8,7 +8,7 @@ import { IntersectionCache } from '../cache';
 import {
   confusionTuplesTestCases,
   loadTestCase,
-  multiIntersectinTestCases,
+  multiIntersectionTestCases,
 } from './testCases';
 
 function getClustering(...args: ConstructorParameters<typeof Intersection>) {
@@ -88,7 +88,7 @@ describe.each(confusionTuplesTestCases)(
   }
 );
 
-describe.each(multiIntersectinTestCases)(
+describe.each(multiIntersectionTestCases)(
   'n experiment intersection',
   ({ negative, positive, pairs }) => {
     let experimentIds: ExperimentId[];
@@ -96,11 +96,6 @@ describe.each(multiIntersectinTestCases)(
       experimentIds = await loadTestCase([...positive, ...negative]);
     });
     test('calculates test case correctly', () => {
-      testConfig(
-        experimentIds.slice(0, positive.length),
-        experimentIds.slice(positive.length),
-        pairs
-      );
       testConfig(
         experimentIds.slice(0, positive.length),
         experimentIds.slice(positive.length),
