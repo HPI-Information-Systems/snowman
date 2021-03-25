@@ -1,10 +1,22 @@
-import { VennDiagramFlavors } from 'components/VennDiagram/venn/flavors';
+import { stageFourEllipsisOn } from 'components/VennDiagram/venn/fourSets';
+import { VennFourSets } from 'components/VennDiagram/venn/fourSetsTypes';
+import { stageThreeCirclesOn } from 'components/VennDiagram/venn/threeSets';
+import { VennThreeSets } from 'components/VennDiagram/venn/threeSetsTypes';
 import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
-import { VennDiagramProps } from 'components/VennDiagram/VennDiagramProps';
+import { stageTwoCirclesOn } from 'components/VennDiagram/venn/twoSets';
+import { VennTwoSets } from 'components/VennDiagram/venn/twoSetsTypes';
+import {
+  VennDiagramFlavors,
+  VennDiagramProps,
+} from 'components/VennDiagram/VennDiagramProps';
 import * as d3 from 'd3';
 import React, { useEffect } from 'react';
 
-export const VennDiagram = ({ sets }: VennDiagramProps): JSX.Element => {
+export const VennDiagram = ({
+  flavor,
+  sets,
+}: VennDiagramProps): JSX.Element => {
+  // Attention - will be updated for prop update!
   let svgElement: SVGSVGElement | null = null;
   let tooltip: VennTooltip | undefined = undefined;
 
@@ -20,15 +32,34 @@ export const VennDiagram = ({ sets }: VennDiagramProps): JSX.Element => {
     if (svgElement == null) throw Error('VennDiagram canvas not rendered');
     if (tooltip == null) throw Error('Tooltip element not rendered');
 
-    if (sets.length in VennDiagramFlavors) {
-      const flavor = VennDiagramFlavors[sets.length];
-      svgElement.viewBox.baseVal.width = flavor.canvas.width;
-      svgElement.viewBox.baseVal.height = flavor.canvas.height;
-      flavor.renderer(d3.select(svgElement), tooltip);
-    } else {
-      throw Error('unsupported set count for VennDiagram diagram');
+    switch (flavor) {
+      case VennDiagramFlavors.TwoSets:
+        svgElement.viewBox.baseVal.width = 600;
+        svgElement.viewBox.baseVal.height = 320;
+        stageTwoCirclesOn(d3.select(svgElement), tooltip, sets as VennTwoSets);
+        break;
+      case VennDiagramFlavors.ThreeSets:
+        svgElement.viewBox.baseVal.width = 600;
+        svgElement.viewBox.baseVal.height = 480;
+        stageThreeCirclesOn(
+          d3.select(svgElement),
+          tooltip,
+          sets as VennThreeSets
+        );
+        break;
+      case VennDiagramFlavors.FourSets:
+        svgElement.viewBox.baseVal.width = 600;
+        svgElement.viewBox.baseVal.height = 430;
+        stageFourEllipsisOn(
+          d3.select(svgElement),
+          tooltip,
+          sets as VennFourSets
+        );
+        break;
+      default:
+        throw Error('unsupported set count for VennDiagram diagram');
     }
-  }, [sets, svgElement, tooltip]);
+  }, [flavor, sets, svgElement, tooltip]);
 
   return (
     <>

@@ -7,11 +7,13 @@ import {
 } from 'components/VennDiagram/venn/draw';
 import { intersectThreePathSet1Set2 } from 'components/VennDiagram/venn/paths';
 import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
+import { VennTwoSets } from 'components/VennDiagram/venn/twoSetsTypes';
 import { d3Selection } from 'components/VennDiagram/venn/types';
 
 export const stageTwoCirclesOn = (
   stage: d3Selection,
-  tooltip: VennTooltip
+  tooltip: VennTooltip,
+  payload: VennTwoSets
 ): void => {
   clearStage(stage);
 

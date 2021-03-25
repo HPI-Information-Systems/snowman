@@ -11,12 +11,14 @@ import {
   intersectThreePathSet1Set3,
   intersectThreePathSet2Set3,
 } from 'components/VennDiagram/venn/paths';
+import { VennThreeSets } from 'components/VennDiagram/venn/threeSetsTypes';
 import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
 import { d3Selection } from 'components/VennDiagram/venn/types';
 
 export const stageThreeCirclesOn = (
   stage: d3Selection,
-  tooltip: VennTooltip
+  tooltip: VennTooltip,
+  payload: VennThreeSets
 ): void => {
   clearStage(stage);
 

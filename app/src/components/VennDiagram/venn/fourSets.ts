@@ -5,6 +5,7 @@ import {
   drawIntersection,
   drawText,
 } from 'components/VennDiagram/venn/draw';
+import { VennFourSets } from 'components/VennDiagram/venn/fourSetsTypes';
 import {
   intersectFourPathSet1Set2,
   intersectFourPathSet1Set2Set3,
@@ -23,7 +24,8 @@ import { d3Selection } from 'components/VennDiagram/venn/types';
 
 export const stageFourEllipsisOn = (
   stage: d3Selection,
-  tooltip: VennTooltip
+  tooltip: VennTooltip,
+  payload: VennFourSets
 ): void => {
   clearStage(stage);
 
@@ -33,44 +35,52 @@ export const stageFourEllipsisOn = (
     tooltip,
     'ellipsis1',
     45,
-    'red',
+    payload.x1000.color ?? 'red',
     { x: 196, y: 246 },
     { x: 200, y: 110 }
   );
-  drawText(stage, { x: 110, y: 240 }, 'ellipsis1');
+  if (payload.x1000.title !== undefined) {
+    drawText(stage, { x: 110, y: 240 }, payload.x1000.title);
+  }
   // Set 2
   drawEllipsis(
     stage,
     tooltip,
     'ellipsis2',
     45,
-    'purple',
+    payload.x0100.color ?? 'purple',
     { x: 266, y: 176 },
     { x: 200, y: 110 }
   );
-  drawText(stage, { x: 180, y: 65 }, 'ellipsis2');
+  if (payload.x0100.title !== undefined) {
+    drawText(stage, { x: 180, y: 65 }, payload.x0100.title);
+  }
   // Set 3
   drawEllipsis(
     stage,
     tooltip,
     'ellipsis3',
     135,
-    'cyan',
+    payload.x0010.color ?? 'cyan',
     { x: 326, y: 176 },
     { x: 200, y: 110 }
   );
-  drawText(stage, { x: 410, y: 65 }, 'ellipsis3');
+  if (payload.x0010.title !== undefined) {
+    drawText(stage, { x: 410, y: 65 }, payload.x0010.title);
+  }
   // Set 4
   drawEllipsis(
     stage,
     tooltip,
     'ellipsis4',
     135,
-    'orange',
+    payload.x0001.color ?? 'orange',
     { x: 396, y: 246 },
     { x: 200, y: 110 }
   );
-  drawText(stage, { x: 480, y: 240 }, 'ellipsis4');
+  if (payload.x0001.title !== undefined) {
+    drawText(stage, { x: 480, y: 240 }, payload.x0001.title);
+  }
 
   // Intersections
   drawIntersection(
