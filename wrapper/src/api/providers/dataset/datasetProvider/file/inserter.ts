@@ -44,7 +44,7 @@ export class DatasetInserter implements CSVReaderStrategy {
       .then(({ insertedRowCount }) => insertedRowCount);
   }
 
-  async readColumns(columns: Set<CSVColumn>): Promise<void> {
+  readColumns(columns: Set<CSVColumn>): void {
     if (!columns.has(this.fileIdColumn)) {
       throw new Error(
         `The file does not contain the column ${this.fileIdColumn} (specified as id column).`
@@ -63,7 +63,7 @@ export class DatasetInserter implements CSVReaderStrategy {
       this.table.create(true, false);
     }
   }
-  async readRow(row: CSVRow): Promise<void> {
+  readRow(row: CSVRow): void {
     if (this.table) {
       this.table.batchUpsert(
         [() => this.rowToInsertParameters(row)],
@@ -86,7 +86,7 @@ export class DatasetInserter implements CSVReaderStrategy {
     };
   }
 
-  async finish(): Promise<void> {
+  finish(): void {
     this.table && this.table.flushBatchUpsert();
     this.table && this.table.createIndices(true);
   }

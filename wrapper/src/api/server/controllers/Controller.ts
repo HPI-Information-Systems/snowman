@@ -24,13 +24,26 @@ export class Controller {
     response.status(payload.code || 200).send(responsePayload);
   }
 
-  static sendError(response: Response, error: ErrorResponse<unknown>): void {
+  static sendError(
+    request: Request,
+    response: Response,
+    error: ErrorResponse<unknown>
+  ): void {
     let payload = error.error;
     if (typeof payload === 'number') {
       payload = payload.toString();
     }
     logger.error((payload as string).toString());
-    response.status(error.code || 500).send(payload);
+    if (request.complete) {
+      response.status(error.code || 500).send(payload);
+    } else {
+      request.on('end', () => {
+        response.status(error.code || 500).send(payload);
+      });
+      request.on('error', () => {
+        response.status(error.code || 500).send(payload);
+      });
+    }
   }
 
   static collectRequestParams<ParamsT extends RequestParameters>(
@@ -102,7 +115,7 @@ export class Controller {
       }
       Controller.sendResponse(response, serviceResponse);
     } catch (error) {
-      Controller.sendError(response, error);
+      Controller.sendError(request, response, error);
     }
   }
 }

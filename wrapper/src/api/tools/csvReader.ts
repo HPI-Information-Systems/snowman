@@ -1,7 +1,6 @@
 import parse from 'csv-parse';
-import { Readable } from 'stream';
+import { Readable, Writable } from 'stream';
 
-import { ExecuteSynchronized } from './executeSynchronized';
 import { logger } from './logger';
 
 export type CSVColumn = string;
@@ -18,8 +17,8 @@ export type CSVReadResult = {
  * 3. finish
  */
 export interface CSVReaderStrategy {
-  readColumns(columns: Set<CSVColumn>): Promise<void>;
-  readRow(row: CSVRow): Promise<void>;
+  readColumns(columns: Set<CSVColumn>): void;
+  readRow(row: CSVRow): void;
   /**
    * Is called if
    * 1. an error occured in @function readColumns
@@ -27,8 +26,8 @@ export interface CSVReaderStrategy {
    * 3. an error occured in @function readRow and @member CSVReader.config.skipLinesWithErrors is false
    * No other functions are called after this.
    */
-  onError?(error: Error): Promise<void>;
-  finish?(): Promise<void>;
+  onError?(error: Error): void;
+  finish?(): void;
 }
 
 export class CSVReader {
@@ -37,12 +36,9 @@ export class CSVReader {
   private columns = new Set<CSVColumn>();
 
   private reject?: (error: Error) => void;
-  private parsedStream?: Readable;
   private startedReading = false;
   private errorOccured = false;
   private emittedColumns = false;
-
-  private readonly sync = new ExecuteSynchronized();
 
   constructor(
     private readonly file: Readable,
@@ -59,7 +55,7 @@ export class CSVReader {
     this.throwIfAlreadyRead();
     return new Promise((resolve, reject) => {
       this.reject = reject;
-      this.parsedStream = this.file
+      this.file
         .pipe(
           parse({
             quote: this.config.quote,
@@ -69,16 +65,20 @@ export class CSVReader {
             columns: (columns: CSVColumn[]) =>
               columns.map((column) => this.addColumn(column)),
             skip_empty_lines: true,
-            skip_lines_with_error: this.config.skipLinesWithErrors,
+            skip_lines_with_error: true,
           } as parse.Options)
         )
-        .on('data', (row) => this.sync.call(() => this.readRow(row)))
+        .on('data', (row) => this.readRow(row))
         .on('skip', (error) => {
-          logger.error(error.message, error);
-          this.skippedRowCount++;
+          if (this.config.skipLinesWithErrors) {
+            logger.error(error.message, error);
+            this.skippedRowCount++;
+          } else {
+            this.emitError(error);
+          }
         })
-        .on('end', () => this.sync.call(() => this.finish(resolve)))
-        .on('error', (error) => this.sync.call(() => this.emitError(error)));
+        .on('end', () => this.finish(resolve))
+        .on('error', (error) => this.emitError(error));
     });
   }
 
@@ -93,41 +93,24 @@ export class CSVReader {
   private emitError(error: Error, informParser = true) {
     if (!this.errorOccured) {
       this.errorOccured = true;
-      this.closeParsedStream();
-      this.closeFile();
+      // we cannot close the streams as this would yield in strange behaviour of express (the response would not be sent correctly)
       if (informParser && this.strategy.onError) {
-        this.strategy
-          .onError(error)
-          .catch((_) => _)
-          .then(() => this.reject && this.reject(error));
+        try {
+          this.strategy.onError(error);
+        } finally {
+          this.reject && this.reject(error);
+        }
       } else {
         this.reject && this.reject(error);
       }
     }
   }
 
-  private closeParsedStream() {
-    if (
-      this.parsedStream &&
-      !this.parsedStream.readableEnded &&
-      !this.parsedStream.destroyed
-    ) {
-      this.parsedStream.unpipe();
-      this.parsedStream.destroy();
-    }
-  }
-
-  private closeFile() {
-    if (!this.file.readableEnded && !this.file.destroyed) {
-      this.file.unpipe();
-    }
-  }
-
-  private async emitColumnsIfNecessary() {
+  private emitColumnsIfNecessary() {
     if (!this.emittedColumns && !this.errorOccured) {
       this.emittedColumns = true;
       try {
-        await this.strategy.readColumns(this.columns);
+        this.strategy.readColumns(this.columns);
       } catch (error) {
         this.emitError(error);
       }
@@ -148,11 +131,11 @@ export class CSVReader {
     return column;
   }
 
-  private async readRow(row: CSVRow) {
-    await this.emitColumnsIfNecessary();
+  private readRow(row: CSVRow) {
+    this.emitColumnsIfNecessary();
     if (!this.errorOccured) {
       try {
-        await this.strategy.readRow(row);
+        this.strategy.readRow(row);
         this.insertedRowCount++;
       } catch (error) {
         if (this.config.skipLinesWithErrors) {
@@ -165,12 +148,12 @@ export class CSVReader {
     }
   }
 
-  private async finish(resolve: (result: CSVReadResult) => void) {
-    await this.emitColumnsIfNecessary();
+  private finish(resolve: (result: CSVReadResult) => void) {
+    this.emitColumnsIfNecessary();
     if (!this.errorOccured) {
       try {
         if (this.strategy.finish) {
-          await this.strategy.finish();
+          this.strategy.finish();
         }
         resolve({
           insertedRowCount: this.insertedRowCount,

@@ -9,10 +9,10 @@ describe('CSVReader', () => {
     await new CSVReader(
       Readable.from(['c1,c2\n', '"v""1","v2"']),
       {
-        readColumns: async (_columns) => {
+        readColumns: (_columns) => {
           columns = _columns;
         },
-        readRow: async (row) => {
+        readRow: (row) => {
           rows.push(row);
         },
       },
