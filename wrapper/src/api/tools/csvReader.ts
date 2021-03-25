@@ -1,5 +1,5 @@
 import parse from 'csv-parse';
-import { Readable, Writable } from 'stream';
+import { Readable } from 'stream';
 
 import { logger } from './logger';
 
