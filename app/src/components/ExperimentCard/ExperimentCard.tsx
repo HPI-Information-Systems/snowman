@@ -36,7 +36,7 @@ const ExperimentCard = ({
       <IonRow>
         <IonCol>
           <IonChip color="dark" outline={false}>
-            <IonLabel>Count: {numberOfRecords ?? 'unknown'}</IonLabel>
+            <IonLabel>Count: {numberOfRecords ?? 'none'}</IonLabel>
           </IonChip>
         </IonCol>
       </IonRow>
