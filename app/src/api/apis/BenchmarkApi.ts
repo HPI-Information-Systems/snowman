@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._  Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -47,7 +47,6 @@ export interface CalculateExperimentIntersectionRecordsRequest {
     experimentIntersectionRequestExperiments: Array<ExperimentIntersectionRequestExperiments>;
     startAt?: number;
     limit?: number;
-    sortBy?: string;
 }
 
 export interface GetBinaryMetricsRequest {
@@ -146,10 +145,6 @@ export class BenchmarkApi extends runtime.BaseAPI {
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.sortBy !== undefined) {
-            queryParameters['sortBy'] = requestParameters.sortBy;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

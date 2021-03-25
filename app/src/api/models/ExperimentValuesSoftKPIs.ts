@@ -16,39 +16,32 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface ExperimentAllOf
+ * @interface ExperimentValuesSoftKPIs
  */
-export interface ExperimentAllOf {
+export interface ExperimentValuesSoftKPIs {
     /**
      * 
      * @type {number}
-     * @memberof ExperimentAllOf
+     * @memberof ExperimentValuesSoftKPIs
      */
-    id: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ExperimentAllOf
-     */
-    numberOfUploadedRecords?: number;
+    timeToConfigure?: number;
 }
 
-export function ExperimentAllOfFromJSON(json: any): ExperimentAllOf {
-    return ExperimentAllOfFromJSONTyped(json, false);
+export function ExperimentValuesSoftKPIsFromJSON(json: any): ExperimentValuesSoftKPIs {
+    return ExperimentValuesSoftKPIsFromJSONTyped(json, false);
 }
 
-export function ExperimentAllOfFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExperimentAllOf {
+export function ExperimentValuesSoftKPIsFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExperimentValuesSoftKPIs {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'id': json['id'],
-        'numberOfUploadedRecords': !exists(json, 'numberOfUploadedRecords') ? undefined : json['numberOfUploadedRecords'],
+        'timeToConfigure': !exists(json, 'timeToConfigure') ? undefined : json['timeToConfigure'],
     };
 }
 
-export function ExperimentAllOfToJSON(value?: ExperimentAllOf | null): any {
+export function ExperimentValuesSoftKPIsToJSON(value?: ExperimentValuesSoftKPIs | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -57,8 +50,7 @@ export function ExperimentAllOfToJSON(value?: ExperimentAllOf | null): any {
     }
     return {
         
-        'id': value.id,
-        'numberOfUploadedRecords': value.numberOfUploadedRecords,
+        'timeToConfigure': value.timeToConfigure,
     };
 }
 

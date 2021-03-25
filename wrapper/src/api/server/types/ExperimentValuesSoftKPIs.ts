@@ -12,30 +12,16 @@
  * Do not edit the class manually.
  */
 
-import { AlgorithmValuesSoftKPIs } from './';
-
 /**
  * 
  * @export
- * @interface AlgorithmValues
+ * @interface ExperimentValuesSoftKPIs
  */
-export interface AlgorithmValues {
+export interface ExperimentValuesSoftKPIs {
     /**
      * 
-     * @type {string}
-     * @memberof AlgorithmValues
+     * @type {number}
+     * @memberof ExperimentValuesSoftKPIs
      */
-    name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AlgorithmValues
-     */
-    description?: string;
-    /**
-     * 
-     * @type {AlgorithmValuesSoftKPIs}
-     * @memberof AlgorithmValues
-     */
-    softKPIs?: AlgorithmValuesSoftKPIs;
+    timeToConfigure?: number;
 }

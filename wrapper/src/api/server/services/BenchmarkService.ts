@@ -43,19 +43,16 @@ export async function calculateExperimentIntersectionCount({
  * object List
  * startAt Integer  (optional)
  * limit Integer  (optional)
- * sortBy String  (optional)
  * returns String
  * */
 export async function calculateExperimentIntersectionRecords({
   body: config,
   startAt,
   limit,
-  sortBy,
 }: {
   body: ExperimentIntersectionRequestExperiments[];
   startAt?: number;
   limit?: number;
-  sortBy?: string;
 }): Promise<SuccessResponse<FileResponse>> {
   return Service.response(
     () =>
@@ -63,7 +60,6 @@ export async function calculateExperimentIntersectionRecords({
         config,
         startAt,
         limit,
-        sortBy,
       }),
     200,
     404

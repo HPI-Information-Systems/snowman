@@ -12,14 +12,17 @@ export class AlgorithmProvider {
   }
 
   addAlgorithm(algorithm: AlgorithmValues): AlgorithmId {
-    return tables.meta.algorithm
-      .upsert([
-        {
-          name: algorithm.name,
-          description: algorithm.description || null,
-        },
-      ])
-      .slice(-1)[0];
+    return tables.meta.algorithm.upsert([
+      {
+        name: algorithm.name,
+        description: algorithm.description,
+        implementationKnowHowLevel:
+          algorithm.softKPIs?.implementationKnowHowLevel,
+        matchingSolutionType: algorithm.softKPIs?.matchingSolutionType,
+        timeToInstall: algorithm.softKPIs?.timeToInstall,
+        timeToConfigure: algorithm.softKPIs?.timeToConfigure,
+      },
+    ])[0];
   }
 
   getAlgorithm(id: AlgorithmId): Algorithm {
