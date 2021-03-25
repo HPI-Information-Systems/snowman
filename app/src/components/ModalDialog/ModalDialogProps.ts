@@ -5,4 +5,5 @@ export interface ModalDialogProps {
   isOpen: boolean;
   closeDialog(): void;
   children?: React.ReactNode | React.ReactNode[];
+  provideScrollingMechanism?: boolean;
 }

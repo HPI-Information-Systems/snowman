@@ -120,6 +120,11 @@ export const DatasetDialogReducer = (
       return {
         ...state,
         availableTags: uniq([...state.availableTags, action.payload as string]),
+        selectedTags: toggleSelectionArrayMultipleSelect(
+          state.selectedTags,
+          action.payload as string,
+          true
+        ),
       };
     default:
       return state;

@@ -99,7 +99,7 @@ const DatasetDialogView = ({
       </IonItemGroup>
       {datasetType === DatasetTypes.skeleton ? (
         <IonItemGroup>
-          <IonItemDivider>DATASET SETTING</IonItemDivider>
+          <IonItemDivider>DATASET SETTINGS</IonItemDivider>
           <IonItem>
             <IonLabel position="fixed">Records:</IonLabel>
             <IonInput

@@ -1,5 +1,6 @@
 export interface DatasetCardProps {
   datasetName: string;
+  datasetId: number;
   categories: string[];
   description?: string;
   totalCount?: number;
