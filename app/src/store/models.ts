@@ -1,4 +1,12 @@
-import { Algorithm, Dataset, Experiment, FileResponse, Metric } from 'api';
+import {
+  Algorithm,
+  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
+  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
+  Dataset,
+  Experiment,
+  FileResponse,
+  Metric,
+} from 'api';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
@@ -9,6 +17,12 @@ export interface AlgorithmDialogStore {
   algorithmId: number | null;
   algorithmName: string;
   algorithmDescription: string;
+  implementationKnowHowLevel:
+    | AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
+    | undefined;
+  matchingSolutionType: AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum;
+  timeToConfigure: number | undefined;
+  timeToInstall: number | undefined;
   isOpen: boolean;
   dialogType: DialogTypes;
 }

@@ -7,8 +7,14 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonSelect,
+  IonSelectOption,
   IonTextarea,
 } from '@ionic/react';
+import {
+  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
+  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
+} from 'api';
 import { AlgorithmDialogProps } from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
 import {
@@ -21,12 +27,20 @@ import React from 'react';
 const AlgorithmDialogView = ({
   algorithmDescription,
   algorithmName,
+  implementationKnowHowLevel,
+  matchingSolutionType,
+  timeToConfigure,
+  timeToInstall,
   isOpen,
   isAddDialog,
   clickOnCancel,
   clickOnSubmit,
   changeAlgorithmDescription,
   changeAlgorithmName,
+  changeImplementationKnowHowLevel,
+  changeMatchingSolutionType,
+  changeTimeToConfigure,
+  changeTimeToInstall,
   closeDialog,
 }: AlgorithmDialogProps): JSX.Element => (
   <ModalDialog
@@ -51,6 +65,59 @@ const AlgorithmDialogView = ({
           value={algorithmDescription}
           onIonChange={changeAlgorithmDescription}
           placeholder="e.g. Matching solution developed by a team at our company."
+        />
+      </IonItem>
+      <IonItem>
+        <IonLabel>Implementation Know How Level</IonLabel>
+        <IonSelect
+          multiple={false}
+          value={implementationKnowHowLevel}
+          onIonChange={changeImplementationKnowHowLevel}
+        >
+          <IonSelectOption value={undefined}>---</IonSelectOption>
+          {Object.keys(
+            AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
+          ).map(
+            (aLevel: string): JSX.Element => (
+              <IonSelectOption key={aLevel} value={aLevel}>
+                {aLevel}
+              </IonSelectOption>
+            )
+          )}
+        </IonSelect>
+      </IonItem>
+      <IonItem>
+        <IonLabel>Matching Solution Type</IonLabel>
+        <IonSelect
+          multiple={false}
+          value={matchingSolutionType}
+          onIonChange={changeMatchingSolutionType}
+        >
+          {Object.keys(AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum).map(
+            (aType: string): JSX.Element => (
+              <IonSelectOption key={aType} value={aType}>
+                {aType}
+              </IonSelectOption>
+            )
+          )}
+        </IonSelect>
+      </IonItem>
+      <IonItem>
+        <IonLabel>Time To Install</IonLabel>
+        <IonInput
+          clearInput
+          type="number"
+          value={timeToInstall}
+          onIonChange={changeTimeToInstall}
+        />
+      </IonItem>
+      <IonItem>
+        <IonLabel>Time To Configure</IonLabel>
+        <IonInput
+          clearInput
+          type="number"
+          value={timeToConfigure}
+          onIonChange={changeTimeToConfigure}
         />
       </IonItem>
     </IonList>
