@@ -4,11 +4,11 @@ import {
   drawCircle,
   drawIntersection,
   drawText,
-} from 'components/VennDiagram/venn/draw';
-import { intersectThreePathSet1Set2 } from 'components/VennDiagram/venn/paths';
+} from 'components/VennDiagram/venn/fundamentals/draw';
+import { intersectThreePathSet1Set2 } from 'components/VennDiagram/venn/fundamentals/paths';
 import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
-import { VennTwoSets } from 'components/VennDiagram/venn/twoSetsTypes';
-import { d3Selection } from 'components/VennDiagram/venn/types';
+import { VennTwoSets } from 'components/VennDiagram/venn/types/twoSetsTypes';
+import { d3Selection } from 'components/VennDiagram/venn/types/types';
 
 export const stageTwoCirclesOn = (
   stage: d3Selection,

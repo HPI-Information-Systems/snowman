@@ -1,5 +1,5 @@
 /*------------ See README.txt for license and copyright information! -----------*/
-import { d3Selection } from 'components/VennDiagram/venn/types';
+import { d3Selection } from 'components/VennDiagram/venn/types/types';
 
 export interface VennTooltipProps {
   element: d3Selection;

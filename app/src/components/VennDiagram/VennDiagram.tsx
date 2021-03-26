@@ -1,10 +1,10 @@
 import { stageFourEllipsisOn } from 'components/VennDiagram/venn/fourSets';
-import { VennFourSets } from 'components/VennDiagram/venn/fourSetsTypes';
 import { stageThreeCirclesOn } from 'components/VennDiagram/venn/threeSets';
-import { VennThreeSets } from 'components/VennDiagram/venn/threeSetsTypes';
 import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
 import { stageTwoCirclesOn } from 'components/VennDiagram/venn/twoSets';
-import { VennTwoSets } from 'components/VennDiagram/venn/twoSetsTypes';
+import { VennFourSets } from 'components/VennDiagram/venn/types/fourSetsTypes';
+import { VennThreeSets } from 'components/VennDiagram/venn/types/threeSetsTypes';
+import { VennTwoSets } from 'components/VennDiagram/venn/types/twoSetsTypes';
 import {
   VennDiagramFlavors,
   VennDiagramProps,

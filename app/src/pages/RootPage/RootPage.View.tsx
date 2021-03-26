@@ -2,9 +2,9 @@ import 'pages/RootPage/RootPageStyle.css';
 
 import { IonCard, IonCardContent } from '@ionic/react';
 import PageStruct from 'components/PageStruct/PageStruct';
-import { VennFourSetsExample } from 'components/VennDiagram/venn/fourSetsTypes';
-import { VennThreeSetsExample } from 'components/VennDiagram/venn/threeSetsTypes';
-import { VennTwoSetsExample } from 'components/VennDiagram/venn/twoSetsTypes';
+import { VennFourSetsExample } from 'components/VennDiagram/venn/types/fourSetsTypes';
+import { VennThreeSetsExample } from 'components/VennDiagram/venn/types/threeSetsTypes';
+import { VennTwoSetsExample } from 'components/VennDiagram/venn/types/twoSetsTypes';
 import { VennDiagram } from 'components/VennDiagram/VennDiagram';
 import { VennDiagramFlavors } from 'components/VennDiagram/VennDiagramProps';
 import React from 'react';

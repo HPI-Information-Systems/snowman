@@ -1,6 +1,6 @@
 /*------------ See README.txt for license and copyright information! -----------*/
 import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
-import { d3Selection } from 'components/VennDiagram/venn/types';
+import { d3Selection } from 'components/VennDiagram/venn/types/types';
 import * as d3 from 'd3';
 
 export const clearStage = (stage: d3Selection): void => {

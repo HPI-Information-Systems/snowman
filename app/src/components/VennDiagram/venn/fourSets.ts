@@ -4,8 +4,7 @@ import {
   drawEllipsis,
   drawIntersection,
   drawText,
-} from 'components/VennDiagram/venn/draw';
-import { VennFourSets } from 'components/VennDiagram/venn/fourSetsTypes';
+} from 'components/VennDiagram/venn/fundamentals/draw';
 import {
   intersectFourPathSet1Set2,
   intersectFourPathSet1Set2Set3,
@@ -18,9 +17,10 @@ import {
   intersectFourPathSet2Set3Set4,
   intersectFourPathSet2Set4,
   intersectFourPathSet3Set4,
-} from 'components/VennDiagram/venn/paths';
+} from 'components/VennDiagram/venn/fundamentals/paths';
 import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
-import { d3Selection } from 'components/VennDiagram/venn/types';
+import { VennFourSets } from 'components/VennDiagram/venn/types/fourSetsTypes';
+import { d3Selection } from 'components/VennDiagram/venn/types/types';
 
 export const stageFourEllipsisOn = (
   stage: d3Selection,

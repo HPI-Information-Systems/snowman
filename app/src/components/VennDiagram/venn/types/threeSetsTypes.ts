@@ -1,4 +1,4 @@
-import { VennIntersection } from 'components/VennDiagram/venn/types';
+import { VennIntersection } from 'components/VennDiagram/venn/types/types';
 
 export interface VennThreeSets {
   x100: VennIntersection;
