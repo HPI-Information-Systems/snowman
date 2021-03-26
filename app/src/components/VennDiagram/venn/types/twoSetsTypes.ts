@@ -22,7 +22,7 @@ export const VennTwoSetsPayloadExample = {
       console.log('clicked set 2');
     },
     tooltip: 'n-items',
-    color: 'purple',
+    color: 'pink',
   },
   x11: {
     callback: (): void => {

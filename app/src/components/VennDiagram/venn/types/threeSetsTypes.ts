@@ -26,7 +26,7 @@ export const VennThreeSetsPayloadExample = {
       console.log('clicked set 2');
     },
     tooltip: 'n-items',
-    color: 'purple',
+    color: 'pink',
   },
   x001: {
     title: 'set 3',

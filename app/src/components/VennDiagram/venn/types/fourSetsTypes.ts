@@ -34,7 +34,7 @@ export const VennFourSetsPayloadExample: VennFourSetsPayload = {
       console.log('clicked set 2');
     },
     tooltip: 'n-items',
-    color: 'purple',
+    color: 'pink',
   },
   x0010: {
     title: 'set 3',
