@@ -49,14 +49,15 @@ export const drawIntersection = (
   shape: string,
   name: string,
   onClick: () => void,
-  tipText: string
+  tipText: string,
+  color?: string
 ): d3Selection =>
   stage
     .append('path')
     .attr('d', shape)
     .attr('id', name)
-    .style('fill', 'black')
-    .style('fill-opacity', 0)
+    .style('fill', color ?? 'black')
+    .style('fill-opacity', color !== undefined ? 1 : 0)
     .style('stroke', 'white')
     .style('stroke-width', '2')
     .style('stroke-opacity', 0)
@@ -64,17 +65,21 @@ export const drawIntersection = (
       onClick();
     })
     .on('mouseover', function () {
-      d3.select(this)
-        .transition()
-        .style('fill-opacity', 0.1)
-        .style('stroke-opacity', 1);
+      if (color === undefined) {
+        d3.select(this)
+          .transition()
+          .style('fill-opacity', 0.2)
+          .style('stroke-opacity', 1);
+      }
       tooltip.showText(tipText);
     })
     .on('mouseout', function () {
-      d3.select(this)
-        .transition()
-        .style('fill-opacity', 0)
-        .style('stroke-opacity', 0);
+      if (color === undefined) {
+        d3.select(this)
+          .transition()
+          .style('fill-opacity', 0)
+          .style('stroke-opacity', 0);
+      }
       tooltip.hide();
     })
     .on('mousemove', (event: MouseEvent) => {
