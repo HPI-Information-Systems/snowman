@@ -42,7 +42,12 @@ export const stageFourEllipsisOn = (
     payload.x1000.tooltip
   );
   if (payload.x1000.title !== undefined) {
-    drawText(stage, { x: 110, y: 240 }, payload.x1000.title);
+    drawText(
+      stage,
+      { x: 110, y: 240 },
+      'fourSetsTextSet1',
+      payload.x1000.title
+    );
   }
   // Set 2
   drawEllipsis(
@@ -57,7 +62,7 @@ export const stageFourEllipsisOn = (
     payload.x0100.tooltip
   );
   if (payload.x0100.title !== undefined) {
-    drawText(stage, { x: 180, y: 65 }, payload.x0100.title);
+    drawText(stage, { x: 180, y: 65 }, 'fourSetsTextSet2', payload.x0100.title);
   }
   // Set 3
   drawEllipsis(
@@ -72,7 +77,7 @@ export const stageFourEllipsisOn = (
     payload.x0010.tooltip
   );
   if (payload.x0010.title !== undefined) {
-    drawText(stage, { x: 410, y: 65 }, payload.x0010.title);
+    drawText(stage, { x: 410, y: 65 }, 'fourSetsTextSet3', payload.x0010.title);
   }
   // Set 4
   drawEllipsis(
@@ -87,7 +92,12 @@ export const stageFourEllipsisOn = (
     payload.x0001.tooltip
   );
   if (payload.x0001.title !== undefined) {
-    drawText(stage, { x: 480, y: 240 }, payload.x0001.title);
+    drawText(
+      stage,
+      { x: 480, y: 240 },
+      'fourSetsTextSet4',
+      payload.x0001.title
+    );
   }
 
   // Intersections

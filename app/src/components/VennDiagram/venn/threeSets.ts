@@ -37,7 +37,12 @@ export const stageThreeCirclesOn = (
     payload.x100.tooltip
   );
   if (payload.x100.title !== undefined) {
-    drawText(stage, { x: 180, y: 275 }, payload.x100.title);
+    drawText(
+      stage,
+      { x: 180, y: 275 },
+      'threeSetsTextSet1',
+      payload.x100.title
+    );
   }
   // Set 2
   drawCircle(
@@ -54,7 +59,12 @@ export const stageThreeCirclesOn = (
     payload.x010.tooltip
   );
   if (payload.x010.title !== undefined) {
-    drawText(stage, { x: 420, y: 275 }, payload.x010.title);
+    drawText(
+      stage,
+      { x: 420, y: 275 },
+      'threeSetsTextSet2',
+      payload.x010.title
+    );
   }
   // Set 3
   drawCircle(
@@ -71,7 +81,7 @@ export const stageThreeCirclesOn = (
     payload.x001.tooltip
   );
   if (payload.x001.title !== undefined) {
-    drawText(stage, { x: 300, y: 90 }, payload.x001.title);
+    drawText(stage, { x: 300, y: 90 }, 'threeSetsTextSet3', payload.x001.title);
   }
 
   drawIntersection(

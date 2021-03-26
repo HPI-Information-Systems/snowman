@@ -32,7 +32,7 @@ export const stageTwoCirclesOn = (
     payload.x10.tooltip
   );
   if (payload.x10.title !== undefined) {
-    drawText(stage, { x: 180, y: 125 }, payload.x10.title);
+    drawText(stage, { x: 180, y: 125 }, 'twoSetsTextSet1', payload.x10.title);
   }
   // Set 2
   drawCircle(
@@ -49,7 +49,7 @@ export const stageTwoCirclesOn = (
     payload.x01.tooltip
   );
   if (payload.x01.title !== undefined) {
-    drawText(stage, { x: 420, y: 125 }, payload.x01.title);
+    drawText(stage, { x: 420, y: 125 }, 'twoSetsTextSet2', payload.x01.title);
   }
 
   drawIntersection(

@@ -10,7 +10,7 @@ export const clearStage = (stage: d3Selection): void => {
 export const drawCircle = (
   stage: d3Selection,
   tooltip: VennDiagramTooltip,
-  name: string,
+  id: string,
   color: string,
   radius: number,
   center: { x: number; y: number },
@@ -27,7 +27,7 @@ export const drawCircle = (
     .attr('r', radius)
     .attr('cx', center.x)
     .attr('cy', center.y)
-    .attr('id', name)
+    .attr('id', id)
     .on('click', function () {
       onClick();
     })
@@ -47,7 +47,7 @@ export const drawIntersection = (
   stage: d3Selection,
   tooltip: VennDiagramTooltip,
   shape: string,
-  name: string,
+  id: string,
   onClick: () => void,
   tipText: string,
   color?: string
@@ -55,7 +55,7 @@ export const drawIntersection = (
   stage
     .append('path')
     .attr('d', shape)
-    .attr('id', name)
+    .attr('id', id)
     .style('fill', color ?? 'black')
     .style('fill-opacity', color !== undefined ? 1 : 0)
     .style('stroke', 'white')
@@ -93,7 +93,7 @@ export const drawIntersection = (
 export const drawEllipsis = (
   stage: d3Selection,
   tooltip: VennDiagramTooltip,
-  name: string,
+  id: string,
   angle: number,
   color: string,
   position: { x: number; y: number },
@@ -107,7 +107,7 @@ export const drawEllipsis = (
     .attr('cy', position.y)
     .attr('rx', dimensions.x)
     .attr('ry', dimensions.y)
-    .attr('id', name)
+    .attr('id', id)
     .attr(
       'transform',
       'rotate(' + angle + ' ' + position.x + ' ' + position.y + ')'
@@ -136,13 +136,28 @@ export const drawEllipsis = (
 export const drawText = (
   stage: d3Selection,
   position: { x: number; y: number },
+  id: string,
   text: string
 ): d3Selection =>
   stage
     .append('text')
-    .attr('id', 'text1')
+    .attr('id', id)
     .attr('x', position.x)
     .attr('y', position.y)
     .attr('fill', 'black')
     .attr('text-anchor', 'middle')
     .text(text);
+
+export const drawTooltip = (element: d3Selection, id: string): d3Selection =>
+  element
+    .text('undefined')
+    .attr('id', id)
+    .style('position', 'absolute')
+    .style('top', '50')
+    .style('left', '50')
+    .style('background-color', '#222')
+    .style('color', 'white')
+    .style('padding', '5px')
+    .style('border', '1px solid transparent')
+    .style('border-radius', '3px')
+    .style('opacity', 0);

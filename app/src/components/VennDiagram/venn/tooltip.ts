@@ -1,29 +1,22 @@
 /*------------ See README.txt for license and copyright information! -----------*/
+import { drawTooltip } from 'components/VennDiagram/venn/fundamentals/draw';
 import { d3Selection } from 'components/VennDiagram/venn/types/types';
 
 export interface VennDiagramTooltipProps {
   element: d3Selection;
+  id?: string;
 }
 
 export class VennDiagramTooltip {
-  private tooltip: d3Selection;
+  private readonly tooltip: d3Selection;
+
   constructor(props: VennDiagramTooltipProps) {
     this.tooltip = props.element;
-    this.initTooltip();
+    this.initTooltip(props.id ?? 'vennDiagramTooltipElement');
   }
 
-  private initTooltip(): void {
-    this.tooltip
-      .text('undefined')
-      .style('position', 'absolute')
-      .style('top', '50')
-      .style('left', '50')
-      .style('background-color', '#222')
-      .style('color', 'white')
-      .style('padding', '5px')
-      .style('border', '1px solid transparent')
-      .style('border-radius', '3px')
-      .style('opacity', 0);
+  private initTooltip(id: string): void {
+    drawTooltip(this.tooltip, id);
   }
 
   public hide(): void {
