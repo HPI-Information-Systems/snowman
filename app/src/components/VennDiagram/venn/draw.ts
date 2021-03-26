@@ -70,6 +70,8 @@ export const drawIntersection = (
           .transition()
           .style('fill-opacity', 0.2)
           .style('stroke-opacity', 1);
+      } else {
+        d3.select(this).transition().style('stroke-opacity', 1);
       }
       tooltip.showText(tipText);
     })
@@ -79,6 +81,8 @@ export const drawIntersection = (
           .transition()
           .style('fill-opacity', 0)
           .style('stroke-opacity', 0);
+      } else {
+        d3.select(this).transition().style('stroke-opacity', 0);
       }
       tooltip.hide();
     })
