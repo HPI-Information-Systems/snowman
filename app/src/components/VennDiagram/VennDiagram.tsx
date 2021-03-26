@@ -68,11 +68,7 @@ export const VennDiagram = ({
   return (
     <>
       <div ref={updateTooltipSelection} />
-      <svg
-        ref={updateSvgSelection}
-        viewBox="0 0 600 500"
-        style={{ background: '#FCFCFC' }}
-      />
+      <svg ref={updateSvgSelection} viewBox="0 0 600 500" />
     </>
   );
 };
