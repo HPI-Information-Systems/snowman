@@ -1,13 +1,13 @@
 /*------------ See README.txt for license and copyright information! -----------*/
 import { d3Selection } from 'components/VennDiagram/venn/types/types';
 
-export interface VennTooltipProps {
+export interface VennDiagramTooltipProps {
   element: d3Selection;
 }
 
-export class VennTooltip {
+export class VennDiagramTooltip {
   private tooltip: d3Selection;
-  constructor(props: VennTooltipProps) {
+  constructor(props: VennDiagramTooltipProps) {
     this.tooltip = props.element;
     this.initTooltip();
   }

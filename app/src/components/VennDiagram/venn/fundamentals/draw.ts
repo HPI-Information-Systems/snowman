@@ -1,5 +1,5 @@
 /*------------ See README.txt for license and copyright information! -----------*/
-import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
+import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import { d3Selection } from 'components/VennDiagram/venn/types/types';
 import * as d3 from 'd3';
 
@@ -9,7 +9,7 @@ export const clearStage = (stage: d3Selection): void => {
 
 export const drawCircle = (
   stage: d3Selection,
-  tooltip: VennTooltip,
+  tooltip: VennDiagramTooltip,
   name: string,
   color: string,
   radius: number,
@@ -45,7 +45,7 @@ export const drawCircle = (
 
 export const drawIntersection = (
   stage: d3Selection,
-  tooltip: VennTooltip,
+  tooltip: VennDiagramTooltip,
   shape: string,
   name: string,
   onClick: () => void,
@@ -92,7 +92,7 @@ export const drawIntersection = (
 
 export const drawEllipsis = (
   stage: d3Selection,
-  tooltip: VennTooltip,
+  tooltip: VennDiagramTooltip,
   name: string,
   angle: number,
   color: string,

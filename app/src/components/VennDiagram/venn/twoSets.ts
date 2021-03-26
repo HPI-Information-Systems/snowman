@@ -6,14 +6,14 @@ import {
   drawText,
 } from 'components/VennDiagram/venn/fundamentals/draw';
 import { intersectThreePathSet1Set2 } from 'components/VennDiagram/venn/fundamentals/paths';
-import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
-import { VennTwoSets } from 'components/VennDiagram/venn/types/twoSetsTypes';
+import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
+import { VennTwoSetsPayload } from 'components/VennDiagram/venn/types/twoSetsTypes';
 import { d3Selection } from 'components/VennDiagram/venn/types/types';
 
 export const stageTwoCirclesOn = (
   stage: d3Selection,
-  tooltip: VennTooltip,
-  payload: VennTwoSets
+  tooltip: VennDiagramTooltip,
+  payload: VennTwoSetsPayload
 ): void => {
   clearStage(stage);
 

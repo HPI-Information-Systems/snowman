@@ -1,24 +1,25 @@
-import { VennIntersection } from 'components/VennDiagram/venn/types/types';
+/*------------ See README.txt for license and copyright information! -----------*/
+import { VennDiagramEntity } from 'components/VennDiagram/venn/types/types';
 
-export interface VennFourSets {
-  x1000: VennIntersection;
-  x0100: VennIntersection;
-  x0010: VennIntersection;
-  x0001: VennIntersection;
-  x1100: VennIntersection;
-  x1010: VennIntersection;
-  x1001: VennIntersection;
-  x0110: VennIntersection;
-  x0101: VennIntersection;
-  x0011: VennIntersection;
-  x1110: VennIntersection;
-  x1101: VennIntersection;
-  x1011: VennIntersection;
-  x0111: VennIntersection;
-  x1111: VennIntersection;
+export interface VennFourSetsPayload {
+  x1000: VennDiagramEntity;
+  x0100: VennDiagramEntity;
+  x0010: VennDiagramEntity;
+  x0001: VennDiagramEntity;
+  x1100: VennDiagramEntity;
+  x1010: VennDiagramEntity;
+  x1001: VennDiagramEntity;
+  x0110: VennDiagramEntity;
+  x0101: VennDiagramEntity;
+  x0011: VennDiagramEntity;
+  x1110: VennDiagramEntity;
+  x1101: VennDiagramEntity;
+  x1011: VennDiagramEntity;
+  x0111: VennDiagramEntity;
+  x1111: VennDiagramEntity;
 }
 
-export const VennFourSetsExample: VennFourSets = {
+export const VennFourSetsPayloadExample: VennFourSetsPayload = {
   x1000: {
     title: 'set 1',
     callback: (): void => {

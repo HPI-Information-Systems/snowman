@@ -1,16 +1,17 @@
-import { VennIntersection } from 'components/VennDiagram/venn/types/types';
+/*------------ See README.txt for license and copyright information! -----------*/
+import { VennDiagramEntity } from 'components/VennDiagram/venn/types/types';
 
-export interface VennThreeSets {
-  x100: VennIntersection;
-  x010: VennIntersection;
-  x001: VennIntersection;
-  x110: VennIntersection;
-  x101: VennIntersection;
-  x011: VennIntersection;
-  x111: VennIntersection;
+export interface VennThreeSetsPayload {
+  x100: VennDiagramEntity;
+  x010: VennDiagramEntity;
+  x001: VennDiagramEntity;
+  x110: VennDiagramEntity;
+  x101: VennDiagramEntity;
+  x011: VennDiagramEntity;
+  x111: VennDiagramEntity;
 }
 
-export const VennThreeSetsExample = {
+export const VennThreeSetsPayloadExample = {
   x100: {
     title: 'set 1',
     callback: (): void => {

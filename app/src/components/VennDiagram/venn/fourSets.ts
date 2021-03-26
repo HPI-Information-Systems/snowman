@@ -18,14 +18,14 @@ import {
   intersectFourPathSet2Set4,
   intersectFourPathSet3Set4,
 } from 'components/VennDiagram/venn/fundamentals/paths';
-import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
-import { VennFourSets } from 'components/VennDiagram/venn/types/fourSetsTypes';
+import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
+import { VennFourSetsPayload } from 'components/VennDiagram/venn/types/fourSetsTypes';
 import { d3Selection } from 'components/VennDiagram/venn/types/types';
 
 export const stageFourEllipsisOn = (
   stage: d3Selection,
-  tooltip: VennTooltip,
-  payload: VennFourSets
+  tooltip: VennDiagramTooltip,
+  payload: VennFourSetsPayload
 ): void => {
   clearStage(stage);
 

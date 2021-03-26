@@ -1,10 +1,10 @@
 import { stageFourEllipsisOn } from 'components/VennDiagram/venn/fourSets';
 import { stageThreeCirclesOn } from 'components/VennDiagram/venn/threeSets';
-import { VennTooltip } from 'components/VennDiagram/venn/tooltip';
+import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import { stageTwoCirclesOn } from 'components/VennDiagram/venn/twoSets';
-import { VennFourSets } from 'components/VennDiagram/venn/types/fourSetsTypes';
-import { VennThreeSets } from 'components/VennDiagram/venn/types/threeSetsTypes';
-import { VennTwoSets } from 'components/VennDiagram/venn/types/twoSetsTypes';
+import { VennFourSetsPayload } from 'components/VennDiagram/venn/types/fourSetsTypes';
+import { VennThreeSetsPayload } from 'components/VennDiagram/venn/types/threeSetsTypes';
+import { VennTwoSetsPayload } from 'components/VennDiagram/venn/types/twoSetsTypes';
 import {
   VennDiagramFlavors,
   VennDiagramProps,
@@ -14,18 +14,18 @@ import React, { useEffect } from 'react';
 
 export const VennDiagram = ({
   flavor,
-  sets,
+  payload,
 }: VennDiagramProps): JSX.Element => {
   // Attention - will be updated for prop update!
   let svgElement: SVGSVGElement | null = null;
-  let tooltip: VennTooltip | undefined = undefined;
+  let tooltip: VennDiagramTooltip | undefined = undefined;
 
   const updateSvgSelection = (ref: SVGSVGElement): void => {
     svgElement = ref;
   };
 
   const updateTooltipSelection = (ref: HTMLDivElement): void => {
-    tooltip = new VennTooltip({ element: d3.select(ref) });
+    tooltip = new VennDiagramTooltip({ element: d3.select(ref) });
   };
 
   useEffect((): void => {
@@ -36,7 +36,11 @@ export const VennDiagram = ({
       case VennDiagramFlavors.TwoSets:
         svgElement.viewBox.baseVal.width = 600;
         svgElement.viewBox.baseVal.height = 320;
-        stageTwoCirclesOn(d3.select(svgElement), tooltip, sets as VennTwoSets);
+        stageTwoCirclesOn(
+          d3.select(svgElement),
+          tooltip,
+          payload as VennTwoSetsPayload
+        );
         break;
       case VennDiagramFlavors.ThreeSets:
         svgElement.viewBox.baseVal.width = 600;
@@ -44,7 +48,7 @@ export const VennDiagram = ({
         stageThreeCirclesOn(
           d3.select(svgElement),
           tooltip,
-          sets as VennThreeSets
+          payload as VennThreeSetsPayload
         );
         break;
       case VennDiagramFlavors.FourSets:
@@ -53,13 +57,13 @@ export const VennDiagram = ({
         stageFourEllipsisOn(
           d3.select(svgElement),
           tooltip,
-          sets as VennFourSets
+          payload as VennFourSetsPayload
         );
         break;
       default:
         throw Error('unsupported set count for VennDiagram diagram');
     }
-  }, [flavor, sets, svgElement, tooltip]);
+  }, [flavor, payload, svgElement, tooltip]);
 
   return (
     <>
