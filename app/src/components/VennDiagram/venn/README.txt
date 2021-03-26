@@ -1,4 +1,4 @@
-This module is able to compute venn diagrams for up to 5 sets.
+This module is able to compute venn diagrams for up to 4 sets.
 
 All code within this folder is largely influenced and heavily based
 upon the works of @habtom and @daviddao in their library "genvenn".
