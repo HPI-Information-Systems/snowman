@@ -16,7 +16,7 @@ export const drawCircle = (
   center: { x: number; y: number },
   onClick: () => void,
   tipText: string
-): void => {
+): d3Selection =>
   stage
     .append('circle')
     .style('fill', color)
@@ -42,7 +42,6 @@ export const drawCircle = (
       d3.select(this).transition().style('stroke-opacity', 0);
       tooltip.hide();
     });
-};
 
 export const drawIntersection = (
   stage: d3Selection,
@@ -51,8 +50,8 @@ export const drawIntersection = (
   name: string,
   onClick: () => void,
   tipText: string
-): d3Selection => {
-  return stage
+): d3Selection =>
+  stage
     .append('path')
     .attr('d', shape)
     .attr('id', name)
@@ -81,7 +80,6 @@ export const drawIntersection = (
     .on('mousemove', (event: MouseEvent) => {
       tooltip.position([event.offsetX, event.offsetY]);
     });
-};
 
 export const drawEllipsis = (
   stage: d3Selection,
@@ -93,7 +91,7 @@ export const drawEllipsis = (
   dimensions: { x: number; y: number },
   onClick: () => void,
   tipText: string
-): void => {
+): d3Selection =>
   stage
     .append('ellipse')
     .attr('cx', position.x)
@@ -125,13 +123,12 @@ export const drawEllipsis = (
       d3.select(this).transition().style('stroke-opacity', 1);
       tooltip.showText(tipText);
     });
-};
 
 export const drawText = (
   stage: d3Selection,
   position: { x: number; y: number },
   text: string
-): void => {
+): d3Selection =>
   stage
     .append('text')
     .attr('id', 'text1')
@@ -140,4 +137,3 @@ export const drawText = (
     .attr('fill', 'black')
     .attr('text-anchor', 'middle')
     .text(text);
-};
