@@ -7,7 +7,7 @@ import { VennDiagram } from 'components/VennDiagram/VennDiagram';
 import { VennDiagramFlavors } from 'components/VennDiagram/VennDiagramProps';
 import React from 'react';
 
-const VennDiagramExample = (): JSX.Element => {
+const VennDiagramPageExample = (): JSX.Element => {
   return (
     <PageStruct title="Venn Diagram Example" showNextFab={false}>
       <IonCard>
@@ -38,4 +38,4 @@ const VennDiagramExample = (): JSX.Element => {
   );
 };
 
-export default VennDiagramExample;
+export default VennDiagramPageExample;

@@ -1,4 +1,12 @@
-import { albums, documents, home, rocket, speedometer } from 'ionicons/icons';
+import VennDiagramPageExample from 'components/VennDiagram/VennDiagramPageExample';
+import {
+  albums,
+  documents,
+  flaskOutline,
+  home,
+  rocket,
+  speedometer,
+} from 'ionicons/icons';
 import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
 import BinaryMetricsPage from 'pages/BinaryMetricsPage/BinaryMetricsPage';
 import DatasetsPage from 'pages/DatasetsPage/DatasetsPage';
@@ -88,6 +96,18 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuName: 'N-ary Metrics',
     menuIcon: speedometer,
     menuSortKey: 7,
+    selectedOptionsReminder: emptySelectedOptions,
+  },
+  {
+    key: ViewIDs.VENN_EXAMPLE,
+    component: VennDiagramPageExample,
+    nextView: ViewIDs.VENN_EXAMPLE,
+    accessGuard: accessGuards.couldAlwaysEnterPage,
+    shouldShowInMenu: true,
+    menuCategory: menuCategories.WORKFLOW,
+    menuName: 'Venn Diagram Example',
+    menuIcon: flaskOutline,
+    menuSortKey: 8,
     selectedOptionsReminder: emptySelectedOptions,
   },
 ];
