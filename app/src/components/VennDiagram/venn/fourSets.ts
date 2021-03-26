@@ -97,7 +97,8 @@ export const stageFourEllipsisOn = (
     intersectFourPathSet1Set2,
     'intersectFourPathSet1Set2',
     payload.x1100.callback,
-    payload.x1100.tooltip
+    payload.x1100.tooltip,
+    payload.x1100.color
   );
   drawIntersection(
     stage,
@@ -105,7 +106,8 @@ export const stageFourEllipsisOn = (
     intersectFourPathSet1Set3,
     'intersectFourPathSet1Set3',
     payload.x1010.callback,
-    payload.x1010.tooltip
+    payload.x1010.tooltip,
+    payload.x1010.color
   );
   drawIntersection(
     stage,
@@ -113,7 +115,8 @@ export const stageFourEllipsisOn = (
     intersectFourPathSet1Set4,
     'intersectFourPathSet1Set4',
     payload.x1001.callback,
-    payload.x1001.tooltip
+    payload.x1001.tooltip,
+    payload.x1001.color
   );
   drawIntersection(
     stage,
@@ -121,7 +124,8 @@ export const stageFourEllipsisOn = (
     intersectFourPathSet2Set3,
     'intersectFourPathSet2Set3',
     payload.x0110.callback,
-    payload.x0110.tooltip
+    payload.x0110.tooltip,
+    payload.x0110.color
   );
   drawIntersection(
     stage,
@@ -129,7 +133,8 @@ export const stageFourEllipsisOn = (
     intersectFourPathSet2Set4,
     'intersectFourPathSet2Set4',
     payload.x0101.callback,
-    payload.x0101.tooltip
+    payload.x0101.tooltip,
+    payload.x0101.color
   );
   drawIntersection(
     stage,
@@ -137,7 +142,8 @@ export const stageFourEllipsisOn = (
     intersectFourPathSet3Set4,
     'intersectFourPathSet3Set4',
     payload.x0011.callback,
-    payload.x0011.tooltip
+    payload.x0011.tooltip,
+    payload.x0011.color
   );
   drawIntersection(
     stage,
@@ -145,7 +151,8 @@ export const stageFourEllipsisOn = (
     intersectFourPathSet1Set2Set3,
     'intersectFourPathSet1Set2Set3',
     payload.x1110.callback,
-    payload.x1110.tooltip
+    payload.x1110.tooltip,
+    payload.x1110.color
   );
   drawIntersection(
     stage,
@@ -153,7 +160,8 @@ export const stageFourEllipsisOn = (
     intersectFourPathSet1Set2Set4,
     'intersectFourPathSet1Set2Set4',
     payload.x1101.callback,
-    payload.x1101.tooltip
+    payload.x1101.tooltip,
+    payload.x1101.color
   );
   drawIntersection(
     stage,
@@ -161,7 +169,8 @@ export const stageFourEllipsisOn = (
     intersectFourPathSet1Set3Set4,
     'intersectFourPathSet1Set3Set4',
     payload.x1011.callback,
-    payload.x1011.tooltip
+    payload.x1011.tooltip,
+    payload.x1011.color
   );
   drawIntersection(
     stage,
@@ -169,7 +178,8 @@ export const stageFourEllipsisOn = (
     intersectFourPathSet2Set3Set4,
     'intersectFourPathSet2Set3Set4',
     payload.x0111.callback,
-    payload.x0111.tooltip
+    payload.x0111.tooltip,
+    payload.x0111.color
   );
   drawIntersection(
     stage,
@@ -177,6 +187,7 @@ export const stageFourEllipsisOn = (
     intersectFourPathSet1Set2Set3Set4,
     'intersectFourPathSet1Set2Set3Set4',
     payload.x1111.callback,
-    payload.x1111.tooltip
+    payload.x1111.tooltip,
+    payload.x1111.color
   );
 };

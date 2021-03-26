@@ -80,7 +80,8 @@ export const stageThreeCirclesOn = (
     intersectThreePathSet1Set2,
     'intersectThreePathSet1Set2',
     payload.x110.callback,
-    payload.x110.tooltip
+    payload.x110.tooltip,
+    payload.x110.color
   ).style('transform', 'matrix(1,0,0,1,-0.5,-50)');
   drawIntersection(
     stage,
@@ -88,7 +89,8 @@ export const stageThreeCirclesOn = (
     intersectThreePathSet1Set3,
     'intersectThreePathSet1Set3',
     payload.x101.callback,
-    payload.x101.tooltip
+    payload.x101.tooltip,
+    payload.x101.color
   ).style('transform', 'matrix(1,0,0,1,-0.5,-50)');
   drawIntersection(
     stage,
@@ -96,7 +98,8 @@ export const stageThreeCirclesOn = (
     intersectThreePathSet2Set3,
     'intersectThreePathSet2Set3',
     payload.x011.callback,
-    payload.x011.tooltip
+    payload.x011.tooltip,
+    payload.x011.color
   ).style('transform', 'matrix(1,0,0,1,0,-50)');
   drawIntersection(
     stage,
@@ -104,6 +107,7 @@ export const stageThreeCirclesOn = (
     intersectThreePathSet1Set2Set3,
     'intersectThreePathSet1Set2Set3',
     payload.x111.callback,
-    payload.x111.tooltip
+    payload.x111.tooltip,
+    payload.x111.color
   ).style('transform', 'matrix(1,0,0,1,0,-50)');
 };

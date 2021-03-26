@@ -58,6 +58,7 @@ export const stageTwoCirclesOn = (
     intersectThreePathSet1Set2,
     'intersectThreePathSet1Set2',
     payload.x11.callback,
-    payload.x11.tooltip
+    payload.x11.tooltip,
+    payload.x11.color
   ).style('transform', 'matrix(1,0,0,1,-0.5,-150)');
 };
