@@ -97,7 +97,7 @@ const BenchmarkConfiguratorImmediateReducer = (
           }
         : { ...ownState, selectedDataset: null };
     }
-    case ExperimentsPageActionTypes.TOGGLE_SHOW_EXPERIMENT_FILTERS:
+    case ExperimentsPageActionTypes.CLICK_ON_EXPERIMENTS_FILTER_TOOL:
       return {
         ...ownState,
         showExperimentFilters: !ownState.showExperimentFilters,

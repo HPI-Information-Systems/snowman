@@ -30,7 +30,7 @@ const ExperimentsPageView = ({
   dragExperiment,
   loadExperiments,
   showExperimentFilters,
-  toggleShowExperimentFilters,
+  clickOnExperimentFilterTool,
 }: ExperimentsPageProps): JSX.Element => {
   useEffect(loadExperiments, [loadExperiments]);
   return (
@@ -48,7 +48,7 @@ const ExperimentsPageView = ({
                       size="large"
                       color={showExperimentFilters ? 'primary' : 'dark'}
                       icon={filterCircleOutline}
-                      onClick={(): void => toggleShowExperimentFilters()}
+                      onClick={clickOnExperimentFilterTool}
                     />
                   </IonCardTitle>
                 </IonCardHeader>

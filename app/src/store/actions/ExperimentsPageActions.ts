@@ -33,9 +33,9 @@ export const dragNDropAnExperiment = (
     payload: getDndDescriptorFromDropResult(aDropResult),
   });
 
-export const toggleShowExperimentFilters = (): easyPrimitiveActionReturn =>
+export const clickOnExperimentsFilterTool = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: ExperimentsPageActionTypes.TOGGLE_SHOW_EXPERIMENT_FILTERS,
+    type: ExperimentsPageActionTypes.CLICK_ON_EXPERIMENTS_FILTER_TOOL,
     // reducer ignores payload
     payload: false,
   });

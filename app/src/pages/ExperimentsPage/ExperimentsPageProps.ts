@@ -11,7 +11,7 @@ export interface ExperimentsPageDispatchProps {
   loadExperiments(): void;
   clickOnMatchingSolution(aMatchingSolution: Algorithm): void;
   dragExperiment(dragResult: DropResult): void;
-  toggleShowExperimentFilters(): void;
+  clickOnExperimentFilterTool(): void;
 }
 
 export type ExperimentsPageProps = ExperimentsPageDispatchProps &

@@ -7,10 +7,10 @@ import {
 import { DropResult } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
 import {
+  clickOnExperimentsFilterTool,
   clickOnMatchingSolution,
   dragNDropAnExperiment,
   getExperiments,
-  toggleShowExperimentFilters,
 } from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
@@ -35,8 +35,8 @@ const mapDispatchToProps = (
   loadExperiments(): void {
     dispatch(getExperiments()).then();
   },
-  toggleShowExperimentFilters(): void {
-    dispatch(toggleShowExperimentFilters());
+  clickOnExperimentFilterTool(): void {
+    dispatch(clickOnExperimentsFilterTool());
   },
 });
 
