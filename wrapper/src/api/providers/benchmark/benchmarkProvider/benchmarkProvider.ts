@@ -121,12 +121,10 @@ export class BenchmarkProvider {
     config,
     startAt,
     limit,
-    sortBy,
   }: {
     config: ExperimentIntersectionRequestExperiments[];
     startAt?: number;
     limit?: number;
-    sortBy?: string;
   }): FileResponse {
     const intersection = this.intersection(config);
     return idClustersToRecordClusters(

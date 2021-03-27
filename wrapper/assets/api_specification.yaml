@@ -684,14 +684,6 @@ paths:
           default: -1
           type: integer
         style: form
-      - explode: true
-        in: query
-        name: sortBy
-        required: false
-        schema:
-          example: similarity
-          type: string
-        style: form
       requestBody:
         $ref: '#/components/requestBodies/ExperimentIntersectionConfiguration'
       responses:

@@ -1,4 +1,5 @@
 export interface SelectedOptionItem {
   displayName: string;
-  icon: string | null;
+  iconStart?: string;
+  iconEnd?: string;
 }

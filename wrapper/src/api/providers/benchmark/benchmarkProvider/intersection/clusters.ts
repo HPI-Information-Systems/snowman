@@ -29,6 +29,7 @@ export class IntersectionClusters extends IntersectionCounts {
     startAt = 0,
     limit: number = Number.POSITIVE_INFINITY
   ): (NodeID | undefined)[] {
+    limit = limit === -1 ? Number.POSITIVE_INFINITY : limit;
     let clusterId = this.findCluster(startAt);
     if (clusterId > 0) {
       startAt -= this.accumulatedRowCounts[clusterId - 1];

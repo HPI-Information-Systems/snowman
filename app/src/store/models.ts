@@ -92,6 +92,7 @@ export interface BenchmarkConfigurationStore {
   availableExperiments: Experiment[];
   chosenGoldStandards: Experiment[];
   chosenExperiments: Experiment[];
+  showExperimentFilters: boolean;
 }
 
 export interface BinaryMetricsStore {
