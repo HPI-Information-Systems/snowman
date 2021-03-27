@@ -1,4 +1,11 @@
-import { albums, documents, home, rocket, speedometer } from 'ionicons/icons';
+import {
+  albums,
+  calculator,
+  documents,
+  home,
+  pauseCircle,
+  rocket,
+} from 'ionicons/icons';
 import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
 import BinaryMetricsPage from 'pages/BinaryMetricsPage/BinaryMetricsPage';
 import DatasetsPage from 'pages/DatasetsPage/DatasetsPage';
@@ -48,7 +55,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     nextView: ViewIDs.EXPERIMENTS,
     accessGuard: accessGuards.couldAlwaysEnterPage,
     shouldShowInMenu: true,
-    menuCategory: menuCategories.WORKFLOW,
+    menuCategory: menuCategories.CONFIGURATION,
     menuName: 'Datasets',
     menuIcon: albums,
     menuSortKey: 3,
@@ -60,7 +67,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     nextView: ViewIDs.BINARY_METRICS,
     accessGuard: accessGuards.couldEnterExperimentsSelector,
     shouldShowInMenu: true,
-    menuCategory: menuCategories.WORKFLOW,
+    menuCategory: menuCategories.CONFIGURATION,
     menuName: 'Experiments',
     menuIcon: documents,
     menuSortKey: 4,
@@ -72,9 +79,9 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     nextView: ViewIDs.BINARY_METRICS,
     accessGuard: accessGuards.couldEnterBinaryMetricsPage,
     shouldShowInMenu: true,
-    menuCategory: menuCategories.WORKFLOW,
+    menuCategory: menuCategories.EVALUATION,
     menuName: 'Binary Metrics',
-    menuIcon: speedometer,
+    menuIcon: pauseCircle,
     menuSortKey: 6,
     selectedOptionsReminder: emptySelectedOptions,
   },
@@ -84,10 +91,11 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     nextView: ViewIDs.BINARY_METRICS,
     accessGuard: accessGuards.couldEnterNMetricsPage,
     shouldShowInMenu: true,
-    menuCategory: menuCategories.WORKFLOW,
+    menuCategory: menuCategories.EVALUATION,
     menuName: 'N-ary Metrics',
-    menuIcon: speedometer,
+    menuIcon: calculator,
     menuSortKey: 7,
     selectedOptionsReminder: emptySelectedOptions,
   },
+  // Icon for n-visual: colorFilter
 ];
