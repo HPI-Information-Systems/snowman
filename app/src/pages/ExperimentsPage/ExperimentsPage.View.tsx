@@ -41,42 +41,41 @@ const ExperimentsPageView = ({
             <IonCol size="6" sizeXl="4">
               <IonCard>
                 <IonCardHeader>
-                  <IonCardTitle
-                    class="dropzone-title"
-                    onClick={(): void => toggleShowExperimentFilters()}
-                  >
+                  <IonCardTitle class="dropzone-title">
                     <span>Available Experiments</span>
                     <IonIcon
                       size="large"
-                      color={showExperimentFilters ? 'primary' : undefined}
+                      color={showExperimentFilters ? 'primary' : 'dark'}
                       icon={filterCircleOutline}
+                      onClick={(): void => toggleShowExperimentFilters()}
                     />
                   </IonCardTitle>
-
-                  {showExperimentFilters
-                    ? matchingSolutions.map(
-                        (aMatchingSolution: Algorithm): JSX.Element => (
-                          <IonChip
-                            color={
-                              isMatchingSolutionSelected(
-                                aMatchingSolution,
-                                selectedMatchingSolutions
-                              )
-                                ? 'primary'
-                                : 'dark'
-                            }
-                            outline={false}
-                            key={aMatchingSolution.id}
-                            onClick={(): void =>
-                              clickOnMatchingSolution(aMatchingSolution)
-                            }
-                          >
-                            <IonLabel>{aMatchingSolution.name}</IonLabel>
-                          </IonChip>
-                        )
-                      )
-                    : null}
                 </IonCardHeader>
+                {showExperimentFilters ? (
+                  <div className="ms-tags-container">
+                    {matchingSolutions.map(
+                      (aMatchingSolution: Algorithm): JSX.Element => (
+                        <IonChip
+                          color={
+                            isMatchingSolutionSelected(
+                              aMatchingSolution,
+                              selectedMatchingSolutions
+                            )
+                              ? 'primary'
+                              : 'dark'
+                          }
+                          outline={false}
+                          key={aMatchingSolution.id}
+                          onClick={(): void =>
+                            clickOnMatchingSolution(aMatchingSolution)
+                          }
+                        >
+                          <IonLabel>{aMatchingSolution.name}</IonLabel>
+                        </IonChip>
+                      )
+                    )}
+                  </div>
+                ) : null}
                 <ExperimentDroppable
                   bucketId={ExperimentBuckets.AVAILABLE_EXPERIMENTS}
                 />

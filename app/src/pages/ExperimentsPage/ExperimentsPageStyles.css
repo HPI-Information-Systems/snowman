@@ -21,3 +21,7 @@
   vertical-align: middle;
   float: right;
 }
+
+.ms-tags-container {
+  padding: 2px 15px;
+}
