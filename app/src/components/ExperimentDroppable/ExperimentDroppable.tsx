@@ -10,7 +10,10 @@ import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
 import { deleteExperiment } from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-import { getExperimentBucketFromId } from 'store/reducers/BenchmarkConfiguratorReducer';
+import {
+  getExperimentBucketFromId,
+  isExperimentBucketDisabledFromId,
+} from 'store/reducers/BenchmarkConfiguratorReducer';
 
 const mapStateToProps = (
   state: Store,
@@ -18,6 +21,10 @@ const mapStateToProps = (
 ): ExperimentDroppableStateProps => ({
   matchingSolutions: state.CoreStore.algorithms,
   bucketContent: getExperimentBucketFromId(
+    state.BenchmarkConfigurationStore,
+    ownProps.bucketId
+  ),
+  isDropDisabled: isExperimentBucketDisabledFromId(
     state.BenchmarkConfigurationStore,
     ownProps.bucketId
   ),

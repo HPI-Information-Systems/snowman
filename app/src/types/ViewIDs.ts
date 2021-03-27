@@ -6,4 +6,5 @@ export enum ViewIDs {
   BINARY_METRICS,
   N_METRICS,
   INTERSECTION,
+  VENN_EXAMPLE,
 }

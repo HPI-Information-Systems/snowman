@@ -3,3 +3,26 @@
   border-style: dashed;
   border-color: #3b4151;
 }
+
+.col-no-padding {
+  --ion-grid-column-padding: 0;
+}
+
+.dropzone-title {
+  font-size: x-large;
+}
+
+.dropzone-title span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.dropzone-title .ion-icon {
+  display: inline-block;
+  float: right;
+  vertical-align: middle;
+}
+
+.ms-tags-container {
+  padding: 2px 15px;
+}

@@ -1,5 +1,5 @@
 import { Experiment } from 'api';
-import { fingerPrint, ribbon } from 'ionicons/icons';
+import { sparklesOutline } from 'ionicons/icons';
 import { ImmediateStore } from 'store/models';
 import { SelectedOptionItem } from 'types/SelectedOptionItem';
 
@@ -10,7 +10,6 @@ export const selectedDataset = (aState: ImmediateStore): SelectedOptionItem[] =>
     : [
         {
           displayName: aState.BenchmarkConfigurationStore.selectedDataset.name,
-          icon: null,
         },
       ];
 export const selectedExperiments = (
@@ -19,13 +18,12 @@ export const selectedExperiments = (
   ...aState.BenchmarkConfigurationStore.chosenGoldStandards.map(
     (anExperiment: Experiment): SelectedOptionItem => ({
       displayName: anExperiment.name,
-      icon: ribbon,
+      iconEnd: sparklesOutline,
     })
   ),
   ...aState.BenchmarkConfigurationStore.chosenExperiments.map(
     (anExperiment: Experiment): SelectedOptionItem => ({
       displayName: anExperiment.name,
-      icon: fingerPrint,
     })
   ),
 ];

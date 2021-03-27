@@ -12,3 +12,6 @@ export const couldEnterIntersectionPage = (aState: ImmediateStore): boolean =>
   aState.BenchmarkConfigurationStore.chosenExperiments.length +
     aState.BenchmarkConfigurationStore.chosenGoldStandards.length >=
     1 && aState.BenchmarkConfigurationStore.selectedDataset !== null;
+export const couldEnterNMetricsPage = (aState: ImmediateStore): boolean =>
+  aState.BenchmarkConfigurationStore.chosenExperiments.length > 0 &&
+  aState.BenchmarkConfigurationStore.chosenGoldStandards.length === 1;

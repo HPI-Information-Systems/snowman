@@ -7,6 +7,7 @@ import {
 import { DropResult } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
 import {
+  clickOnExperimentsFilterTool,
   clickOnMatchingSolution,
   dragNDropAnExperiment,
   getExperiments,
@@ -20,6 +21,8 @@ const mapStateToProps = (state: Store): ExperimentsPageStateProps => ({
   matchingSolutions: state.CoreStore.algorithms,
   selectedMatchingSolutions:
     state.BenchmarkConfigurationStore.selectedMatchingSolutions,
+  showExperimentFilters:
+    state.BenchmarkConfigurationStore.showExperimentFilters,
 });
 
 const mapDispatchToProps = (
@@ -36,6 +39,9 @@ const mapDispatchToProps = (
   },
   resetIntersection() {
     dispatch(resetIntersection());
+  },
+  clickOnExperimentFilterTool(): void {
+    dispatch(clickOnExperimentsFilterTool());
   },
 });
 

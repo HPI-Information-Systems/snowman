@@ -22,6 +22,21 @@ const initialState: BenchmarkConfigurationStore = {
   availableExperiments: [],
   chosenGoldStandards: [],
   chosenExperiments: [],
+  showExperimentFilters: false,
+};
+
+export const isExperimentBucketDisabledFromId = (
+  state: BenchmarkConfigurationStore,
+  BucketId: ExperimentBuckets
+): boolean => {
+  switch (BucketId) {
+    case ExperimentBuckets.AVAILABLE_EXPERIMENTS:
+      return false;
+    case ExperimentBuckets.CHOSEN_EXPERIMENTS:
+      return false;
+    case ExperimentBuckets.CHOSEN_GOLDSTANDARDS:
+      return state.chosenGoldStandards.length > 0;
+  }
 };
 
 export const getExperimentBucketFromId = (
@@ -82,6 +97,11 @@ const BenchmarkConfiguratorImmediateReducer = (
           }
         : { ...ownState, selectedDataset: null };
     }
+    case ExperimentsPageActionTypes.CLICK_ON_EXPERIMENTS_FILTER_TOOL:
+      return {
+        ...ownState,
+        showExperimentFilters: !ownState.showExperimentFilters,
+      };
     case ExperimentsPageActionTypes.CLICK_ON_MATCHING_SOLUTION:
       return {
         ...ownState,
@@ -122,7 +142,11 @@ const BenchmarkConfiguratorImmediateReducer = (
             ...availableExperiments,
             ...chosenGoldstandards,
           ];
-          chosenGoldstandards = [draggedExperiment];
+          chosenGoldstandards = insertExperimentAt(
+            chosenGoldstandards,
+            draggedExperiment,
+            eventDescriptor.targetIndex
+          );
           break;
         }
         case ExperimentBuckets.CHOSEN_EXPERIMENTS:
