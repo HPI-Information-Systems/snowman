@@ -22,6 +22,7 @@ const initialState: BenchmarkConfigurationStore = {
   availableExperiments: [],
   chosenGoldStandards: [],
   chosenExperiments: [],
+  showExperimentFilters: false,
 };
 
 export const getExperimentBucketFromId = (
@@ -82,6 +83,11 @@ const BenchmarkConfiguratorImmediateReducer = (
           }
         : { ...ownState, selectedDataset: null };
     }
+    case ExperimentsPageActionTypes.TOGGLE_SHOW_EXPERIMENT_FILTERS:
+      return {
+        ...ownState,
+        showExperimentFilters: !ownState.showExperimentFilters,
+      };
     case ExperimentsPageActionTypes.CLICK_ON_MATCHING_SOLUTION:
       return {
         ...ownState,

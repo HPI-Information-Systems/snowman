@@ -10,6 +10,7 @@ import {
   clickOnMatchingSolution,
   dragNDropAnExperiment,
   getExperiments,
+  toggleShowExperimentFilters,
 } from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
@@ -18,6 +19,8 @@ const mapStateToProps = (state: Store): ExperimentsPageStateProps => ({
   matchingSolutions: state.CoreStore.algorithms,
   selectedMatchingSolutions:
     state.BenchmarkConfigurationStore.selectedMatchingSolutions,
+  showExperimentFilters:
+    state.BenchmarkConfigurationStore.showExperimentFilters,
 });
 
 const mapDispatchToProps = (
@@ -31,6 +34,9 @@ const mapDispatchToProps = (
   },
   loadExperiments(): void {
     dispatch(getExperiments()).then();
+  },
+  toggleShowExperimentFilters(): void {
+    dispatch(toggleShowExperimentFilters());
   },
 });
 
