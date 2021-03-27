@@ -27,7 +27,7 @@ export class IntersectionVennDiagramDisplayStrategy
     } else if (this.included.every((id) => experimentsSet.has(id))) {
       return includedColor;
     } else {
-      return irrelevantColor;
+      return experiments.length === 1 ? irrelevantColor : undefined;
     }
   }
 
