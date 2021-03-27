@@ -142,7 +142,11 @@ const BenchmarkConfiguratorImmediateReducer = (
             ...availableExperiments,
             ...chosenGoldstandards,
           ];
-          chosenGoldstandards = [draggedExperiment];
+          chosenGoldstandards = insertExperimentAt(
+            chosenGoldstandards,
+            draggedExperiment,
+            eventDescriptor.targetIndex
+          );
           break;
         }
         case ExperimentBuckets.CHOSEN_EXPERIMENTS:
