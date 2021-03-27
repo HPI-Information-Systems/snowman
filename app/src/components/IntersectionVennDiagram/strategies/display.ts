@@ -1,9 +1,9 @@
 import { Experiment } from '../../../api';
 import { IntersectionVennDiagramConfigStrategy } from '../config';
 
-const irrelevantColor = '#000000';
-const includedColor = '#00FF00';
-const excludedColor = '#FF0000';
+export const IRRELEVANT_COLOR = '#000000';
+export const INCLUDED_COLOR = '#00FF00';
+export const EXCLUDED_COLOR = '#FF0000';
 
 export class IntersectionVennDiagramDisplayStrategy
   implements IntersectionVennDiagramConfigStrategy {
@@ -23,11 +23,11 @@ export class IntersectionVennDiagramDisplayStrategy
     const experimentIds = experiments.map(({ id }) => id);
     const experimentsSet = new Set(experimentIds);
     if (experiments.find(({ id }) => this.excludedSet.has(id))) {
-      return excludedColor;
+      return EXCLUDED_COLOR;
     } else if (this.included.every((id) => experimentsSet.has(id))) {
-      return includedColor;
+      return INCLUDED_COLOR;
     } else {
-      return experiments.length === 1 ? irrelevantColor : undefined;
+      return experiments.length === 1 ? IRRELEVANT_COLOR : undefined;
     }
   }
 

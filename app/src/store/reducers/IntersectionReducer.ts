@@ -1,4 +1,8 @@
-import { IntersectionStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
+import {
+  DatasetsPageActionTypes,
+  ExperimentsPageActionTypes,
+  IntersectionStoreActionTypes as actionTypes,
+} from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { IntersectionStore } from 'store/models';
 
@@ -53,6 +57,9 @@ export const IntersectionReducer = (
             }
           | undefined) ?? {}),
       };
+    case ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT:
+    case DatasetsPageActionTypes.CLICK_ON_DATASET:
+      return initialState;
     default:
       return state;
   }

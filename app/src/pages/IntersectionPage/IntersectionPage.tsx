@@ -7,7 +7,10 @@ import {
   ExperimentIntersectionPairCountsExperiments,
 } from '../../api';
 import { TuplesLoader } from '../../components/DataViewer/TuplesLoader';
-import { loadCounts } from '../../store/actions/IntersectionStoreActions';
+import {
+  loadCounts,
+  resetIntersection,
+} from '../../store/actions/IntersectionStoreActions';
 import { SnowmanDispatch } from '../../store/messages';
 import IntersectionPageView from './IntersectionPage.View';
 import {
@@ -71,6 +74,31 @@ function getLoadTuples(
   return lastLoadTuples;
 }
 
+function countsLoaded({
+  IntersectionStore,
+  BenchmarkConfigurationStore,
+}: Store) {
+  const loadedExperimentIds = new Set(
+    IntersectionStore.counts
+      .reduce<{
+        experiments: ExperimentIntersectionPairCountsExperiments[];
+      }>(
+        (prev, current) =>
+          current.experiments.length > prev.experiments.length ? current : prev,
+        { experiments: [] }
+      )
+      .experiments.map(({ experimentId }) => experimentId)
+  );
+  return (
+    BenchmarkConfigurationStore.chosenExperiments.every(({ id }) =>
+      loadedExperimentIds.has(id)
+    ) &&
+    BenchmarkConfigurationStore.chosenGoldStandards.every(({ id }) =>
+      loadedExperimentIds.has(id)
+    )
+  );
+}
+
 const mapStateToProps = (state: Store): IntersectionPageStateProps => {
   const sortedCounts = state.IntersectionStore.counts.map((intersection) => ({
     ...intersection,
@@ -104,7 +132,7 @@ const mapStateToProps = (state: Store): IntersectionPageStateProps => {
     excludedExperimentNames: state.IntersectionStore.excluded.map(
       ({ name }) => name
     ),
-    countsLength: sortedCounts.length,
+    countsLoaded: countsLoaded(state),
   };
 };
 

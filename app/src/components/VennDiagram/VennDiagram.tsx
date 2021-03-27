@@ -35,10 +35,10 @@ export const VennDiagram = ({ config }: VennDiagramProps): JSX.Element => {
   }, [config, svgElement, tooltip]);
 
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       <div ref={tooltipElement} />
       <svg ref={svgElement} />
-    </>
+    </div>
   );
 };
 

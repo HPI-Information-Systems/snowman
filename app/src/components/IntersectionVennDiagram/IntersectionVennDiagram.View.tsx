@@ -8,7 +8,10 @@ import {
   IntersectionVennDiagramConfigStrategy,
 } from './config';
 import { IntersectionVennDiagramProps } from './IntersectionVennDiagramProps';
-import { IntersectionVennDiagramDisplayStrategy } from './strategies/display';
+import {
+  INCLUDED_COLOR,
+  IntersectionVennDiagramDisplayStrategy,
+} from './strategies/display';
 
 export default function IntersectionVennDiagramView({
   excluded,
@@ -46,5 +49,31 @@ export default function IntersectionVennDiagramView({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [excluded, ignored]);
 
-  return <VennDiagram config={configCreator.config(strategy)}></VennDiagram>;
+  return (
+    <div
+      style={{ position: 'relative', cursor: 'pointer' }}
+      onClick={() => intersect([])}
+    >
+      <div
+        style={{
+          background: `${
+            excluded.length + included.length === 0 ? INCLUDED_COLOR : ''
+          }`,
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          opacity: 0.3,
+          pointerEvents: 'none',
+          padding: '1rem',
+          fontSize: '1.5rem',
+          color: 'black',
+        }}
+      >
+        <b>Ω</b>
+      </div>
+      <VennDiagram config={configCreator.config(strategy)}></VennDiagram>;
+    </div>
+  );
 }

@@ -2,7 +2,7 @@ import 'pages/IntersectionPage/IntersectionPage.Styles.scss';
 
 import { IonCard, IonCardContent, IonCardHeader } from '@ionic/react';
 import PageStruct from 'components/PageStruct/PageStruct';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import DataViewer from '../../components/DataViewer/DataViewer';
 import IntersectionSelector from '../../components/IntersectionSelector/IntersectionSelector';
@@ -17,13 +17,10 @@ const IntersectionPageView = ({
   excludedExperimentNames,
   includedExperimentNames,
   pairCount,
-  countsLength,
+  countsLoaded,
 }: IntersectionPageProps): JSX.Element => {
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    setLoading(true);
-    loadCounts().then(() => setLoading(false));
+    loadCounts();
   }, [loadCounts]);
 
   return (
@@ -31,10 +28,10 @@ const IntersectionPageView = ({
       <div className="container">
         <div className="splitter">
           <IonCard>
-            {loading || countsLength === 0 ? (
-              ''
-            ) : (
+            {countsLoaded ? (
               <IntersectionVennDiagram></IntersectionVennDiagram>
+            ) : (
+              ''
             )}
           </IonCard>
           <IonCard>
