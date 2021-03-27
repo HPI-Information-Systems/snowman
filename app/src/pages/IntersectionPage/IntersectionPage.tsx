@@ -104,6 +104,7 @@ const mapStateToProps = (state: Store): IntersectionPageStateProps => {
     excludedExperimentNames: state.IntersectionStore.excluded.map(
       ({ name }) => name
     ),
+    countsLength: sortedCounts.length,
   };
 };
 
@@ -112,7 +113,7 @@ const mapDispatchToProps = (
 ): IntersectionPageDispatchProps => {
   return {
     loadCounts() {
-      dispatch(loadCounts()).then();
+      return dispatch(loadCounts());
     },
   };
 };

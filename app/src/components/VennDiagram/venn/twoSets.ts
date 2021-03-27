@@ -6,13 +6,13 @@ import {
 } from 'components/VennDiagram/venn/fundamentals/draw';
 import { intersectThreePathSet1Set2 } from 'components/VennDiagram/venn/fundamentals/paths';
 import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
-import { VennTwoSetsPayload } from 'components/VennDiagram/venn/types/twoSetsTypes';
+import { VennDiagramTwoSetsConfig } from 'components/VennDiagram/venn/types/twoSetsTypes';
 import { d3Selection } from 'components/VennDiagram/venn/types/types';
 
 export const drawTwoSetVennDiagram = (
   svg: d3Selection,
   tooltipDrawer: VennDiagramTooltip,
-  payload: VennTwoSetsPayload
+  payload: VennDiagramTwoSetsConfig
 ): void => {
   clearSelection(svg);
   svg.attr('viewBox', '0 0 600 320');

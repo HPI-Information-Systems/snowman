@@ -46,8 +46,12 @@ export const IntersectionReducer = (
     case actionTypes.RESET_INTERSECTION:
       return {
         ...state,
-        included: [],
-        excluded: [],
+        ...((action.payload as
+          | {
+              excluded: Experiment[];
+              included: Experiment[];
+            }
+          | undefined) ?? {}),
       };
     default:
       return state;

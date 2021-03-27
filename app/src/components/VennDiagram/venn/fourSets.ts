@@ -18,13 +18,13 @@ import {
   intersectFourPathSet3Set4,
 } from 'components/VennDiagram/venn/fundamentals/paths';
 import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
-import { VennFourSetsPayload } from 'components/VennDiagram/venn/types/fourSetsTypes';
+import { VennDiagramFourSetsConfig } from 'components/VennDiagram/venn/types/fourSetsTypes';
 import { d3Selection } from 'components/VennDiagram/venn/types/types';
 
 export const drawFourSetVennDiagram = (
   svg: d3Selection,
   tooltipDrawer: VennDiagramTooltip,
-  payload: VennFourSetsPayload
+  payload: VennDiagramFourSetsConfig
 ): void => {
   clearSelection(svg);
   svg.attr('viewBox', '0 0 600 430');

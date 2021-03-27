@@ -33,10 +33,13 @@ export const ignoreExperiment = (
     payload: experiment,
   });
 
-export const resetIntersection = (): easyPrimitiveActionReturn =>
+export const resetIntersection = (payload?: {
+  excluded: Experiment[];
+  included: Experiment[];
+}): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
     type: actionTypes.RESET_INTERSECTION,
-    payload: false,
+    payload: payload ?? false,
   });
 
 export const loadCounts = (): SnowmanThunkAction<Promise<void>> => async (

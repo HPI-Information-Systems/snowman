@@ -5,6 +5,7 @@ import { VennDiagramProps } from 'components/VennDiagram/VennDiagramProps';
 import { select } from 'd3';
 import React, { useEffect, useRef, useState } from 'react';
 
+import { drawOneSetVennDiagram } from './venn/oneSet';
 import { VennDiagramTooltip } from './venn/tooltip';
 
 export const VennDiagram = ({ config }: VennDiagramProps): JSX.Element => {
@@ -21,7 +22,9 @@ export const VennDiagram = ({ config }: VennDiagramProps): JSX.Element => {
   useEffect((): void => {
     if (svgElement.current && tooltip) {
       const svg = select(svgElement.current);
-      if ('x11' in config) {
+      if ('x1' in config) {
+        drawOneSetVennDiagram(svg, tooltip, config);
+      } else if ('x11' in config) {
         drawTwoSetVennDiagram(svg, tooltip, config);
       } else if ('x111' in config) {
         drawThreeSetVennDiagram(svg, tooltip, config);

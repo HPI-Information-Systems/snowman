@@ -6,10 +6,11 @@ export interface IntersectionPageStateProps {
   pairCount: number;
   includedExperimentNames: string[];
   excludedExperimentNames: string[];
+  countsLength: number;
 }
 
 export interface IntersectionPageDispatchProps {
-  loadCounts(): void;
+  loadCounts(): Promise<void>;
 }
 
 export type IntersectionPageProps = IntersectionPageStateProps &
