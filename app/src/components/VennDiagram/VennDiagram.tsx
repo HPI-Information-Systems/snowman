@@ -3,7 +3,7 @@ import { drawThreeSetVennDiagram } from 'components/VennDiagram/venn/threeSets';
 import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import { drawTwoSetVennDiagram } from 'components/VennDiagram/venn/twoSets';
 import { VennDiagramProps } from 'components/VennDiagram/VennDiagramProps';
-import * as d3 from 'd3';
+import { select } from 'd3';
 import React, { useEffect, useRef, useState } from 'react';
 
 export const VennDiagram = ({ config }: VennDiagramProps): JSX.Element => {
@@ -14,14 +14,14 @@ export const VennDiagram = ({ config }: VennDiagramProps): JSX.Element => {
   useEffect(() => {
     if (tooltipElement.current) {
       setTooltip(
-        new VennDiagramTooltip({ element: d3.select(tooltipElement.current) })
+        new VennDiagramTooltip({ element: select(tooltipElement.current) })
       );
     }
   }, [tooltipElement]);
 
   useEffect((): void => {
     if (svgElement.current && tooltip) {
-      const svg = d3.select(svgElement.current);
+      const svg = select(svgElement.current);
       if ('x11' in config) {
         drawTwoSetVennDiagram(svg, tooltip, config);
       } else if ('x111' in config) {

@@ -4,7 +4,7 @@ import {
   d3Selection,
   VennDiagramIntersection,
 } from 'components/VennDiagram/venn/types/types';
-import * as d3 from 'd3';
+import { select } from 'd3';
 
 import { animateStroke, animateTooltip } from '../animation';
 
@@ -32,12 +32,12 @@ export const drawIntersection = ({
     .on('click', callback)
     .on('mouseover.opacity', function () {
       if (color === undefined) {
-        d3.select(this).transition().style('fill-opacity', 0.2);
+        select(this).transition().style('fill-opacity', 0.2);
       }
     })
     .on('mouseout.opacity', function () {
       if (color === undefined) {
-        d3.select(this).transition().style('fill-opacity', 0);
+        select(this).transition().style('fill-opacity', 0);
       }
     })
     .call(animateStroke.bind(undefined, 'white'))

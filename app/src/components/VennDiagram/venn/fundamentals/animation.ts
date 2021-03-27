@@ -1,7 +1,7 @@
 /*------------ See README.txt for license and copyright information! -----------*/
 import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import { d3Selection } from 'components/VennDiagram/venn/types/types';
-import * as d3 from 'd3';
+import { select } from 'd3';
 
 export const animateTooltip = (
   tooltipDrawer: VennDiagramTooltip,
@@ -28,8 +28,8 @@ export const animateStroke = (
     .style('stroke-width', '2')
     .style('stroke-opacity', 0)
     .on('mouseover.stroke', function () {
-      d3.select(this).transition().style('stroke-opacity', 1);
+      select(this).transition().style('stroke-opacity', 1);
     })
     .on('mouseout.stroke', function () {
-      d3.select(this).transition().style('stroke-opacity', 0);
+      select(this).transition().style('stroke-opacity', 0);
     });
