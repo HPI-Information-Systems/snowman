@@ -87,15 +87,23 @@ const mapStateToProps = (state: Store): IntersectionPageStateProps => {
     })),
   ].sort(intersectionCountSorter);
 
+  const configCounts = sortedCounts.find(({ experiments }) =>
+    sortedConfigsMatch(experiments, sortedConfig)
+  );
+
   return {
     loadTuples: getLoadTuples(
       sortedConfig,
       state.BenchmarkConfigurationStore.selectedDataset?.id
     ),
-    tuplesCount:
-      sortedCounts.find(({ experiments }) =>
-        sortedConfigsMatch(experiments, sortedConfig)
-      )?.numberRows ?? 0,
+    tuplesCount: configCounts?.numberRows ?? 0,
+    pairCount: configCounts?.numberPairs ?? 0,
+    includedExperimentNames: state.IntersectionStore.included.map(
+      ({ name }) => name
+    ),
+    excludedExperimentNames: state.IntersectionStore.excluded.map(
+      ({ name }) => name
+    ),
   };
 };
 
