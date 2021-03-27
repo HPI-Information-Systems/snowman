@@ -15,7 +15,7 @@
     "@ionic/react": "^5.0.7",
     "@types/react-beautiful-dnd": "^13.0.0",
     "immutable": "^4.0.0-rc.12",
-    "ionicons": "^5.0.0",
+    "ionicons": "^5.4",
     "katex": "^0.12.0",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
