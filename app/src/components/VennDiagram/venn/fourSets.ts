@@ -1,9 +1,8 @@
 /*------------ See README.txt for license and copyright information! -----------*/
 import {
-  clearStage,
+  clearSelection,
   drawEllipsis,
   drawIntersection,
-  drawText,
 } from 'components/VennDiagram/venn/fundamentals/draw';
 import {
   intersectFourPathSet1Set2,
@@ -22,182 +21,119 @@ import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import { VennFourSetsPayload } from 'components/VennDiagram/venn/types/fourSetsTypes';
 import { d3Selection } from 'components/VennDiagram/venn/types/types';
 
-export const stageFourEllipsisOn = (
-  stage: d3Selection,
-  tooltip: VennDiagramTooltip,
+export const drawFourSetVennDiagram = (
+  svg: d3Selection,
+  tooltipDrawer: VennDiagramTooltip,
   payload: VennFourSetsPayload
 ): void => {
-  clearStage(stage);
+  clearSelection(svg);
+  svg.attr('viewBox', '0 0 600 430');
 
-  // Set 1
-  drawEllipsis(
-    stage,
-    tooltip,
-    'ellipsis1',
-    45,
-    payload.x1000.color ?? 'red',
-    { x: 196, y: 246 },
-    { x: 200, y: 110 },
-    payload.x1000.callback,
-    payload.x1000.tooltip
-  );
-  if (payload.x1000.title !== undefined) {
-    drawText(
-      stage,
-      { x: 110, y: 240 },
-      'fourSetsTextSet1',
-      payload.x1000.title
-    );
-  }
-  // Set 2
-  drawEllipsis(
-    stage,
-    tooltip,
-    'ellipsis2',
-    45,
-    payload.x0100.color ?? 'purple',
-    { x: 266, y: 176 },
-    { x: 200, y: 110 },
-    payload.x0100.callback,
-    payload.x0100.tooltip
-  );
-  if (payload.x0100.title !== undefined) {
-    drawText(stage, { x: 180, y: 65 }, 'fourSetsTextSet2', payload.x0100.title);
-  }
-  // Set 3
-  drawEllipsis(
-    stage,
-    tooltip,
-    'ellipsis3',
-    135,
-    payload.x0010.color ?? 'cyan',
-    { x: 326, y: 176 },
-    { x: 200, y: 110 },
-    payload.x0010.callback,
-    payload.x0010.tooltip
-  );
-  if (payload.x0010.title !== undefined) {
-    drawText(stage, { x: 410, y: 65 }, 'fourSetsTextSet3', payload.x0010.title);
-  }
-  // Set 4
-  drawEllipsis(
-    stage,
-    tooltip,
-    'ellipsis4',
-    135,
-    payload.x0001.color ?? 'orange',
-    { x: 396, y: 246 },
-    { x: 200, y: 110 },
-    payload.x0001.callback,
-    payload.x0001.tooltip
-  );
-  if (payload.x0001.title !== undefined) {
-    drawText(
-      stage,
-      { x: 480, y: 240 },
-      'fourSetsTextSet4',
-      payload.x0001.title
-    );
-  }
+  drawEllipsis({
+    svg,
+    tooltipDrawer,
+    angle: 45,
+    position: { x: 196, y: 246 },
+    dimensions: { x: 200, y: 110 },
+    textPosition: { x: 110, y: 240 },
+    ...payload.x1000,
+    color: payload.x1000.color ?? 'red',
+  });
+  drawEllipsis({
+    svg,
+    tooltipDrawer,
+    angle: 45,
+    position: { x: 266, y: 176 },
+    dimensions: { x: 200, y: 110 },
+    textPosition: { x: 180, y: 65 },
+    ...payload.x0100,
+    color: payload.x0100.color ?? 'purple',
+  });
+  drawEllipsis({
+    svg,
+    tooltipDrawer,
+    angle: 135,
+    position: { x: 326, y: 176 },
+    textPosition: { x: 410, y: 65 },
+    dimensions: { x: 200, y: 110 },
+    ...payload.x0010,
+    color: payload.x0010.color ?? 'cyan',
+  });
+  drawEllipsis({
+    svg,
+    tooltipDrawer,
+    angle: 135,
+    position: { x: 396, y: 246 },
+    dimensions: { x: 200, y: 110 },
+    textPosition: { x: 480, y: 240 },
+    ...payload.x0001,
+    color: payload.x0001.color ?? 'orange',
+  });
 
-  // Intersections
-  drawIntersection(
-    stage,
-    tooltip,
-    intersectFourPathSet1Set2,
-    'intersectFourPathSet1Set2',
-    payload.x1100.callback,
-    payload.x1100.tooltip,
-    payload.x1100.color
-  );
-  drawIntersection(
-    stage,
-    tooltip,
-    intersectFourPathSet1Set3,
-    'intersectFourPathSet1Set3',
-    payload.x1010.callback,
-    payload.x1010.tooltip,
-    payload.x1010.color
-  );
-  drawIntersection(
-    stage,
-    tooltip,
-    intersectFourPathSet1Set4,
-    'intersectFourPathSet1Set4',
-    payload.x1001.callback,
-    payload.x1001.tooltip,
-    payload.x1001.color
-  );
-  drawIntersection(
-    stage,
-    tooltip,
-    intersectFourPathSet2Set3,
-    'intersectFourPathSet2Set3',
-    payload.x0110.callback,
-    payload.x0110.tooltip,
-    payload.x0110.color
-  );
-  drawIntersection(
-    stage,
-    tooltip,
-    intersectFourPathSet2Set4,
-    'intersectFourPathSet2Set4',
-    payload.x0101.callback,
-    payload.x0101.tooltip,
-    payload.x0101.color
-  );
-  drawIntersection(
-    stage,
-    tooltip,
-    intersectFourPathSet3Set4,
-    'intersectFourPathSet3Set4',
-    payload.x0011.callback,
-    payload.x0011.tooltip,
-    payload.x0011.color
-  );
-  drawIntersection(
-    stage,
-    tooltip,
-    intersectFourPathSet1Set2Set3,
-    'intersectFourPathSet1Set2Set3',
-    payload.x1110.callback,
-    payload.x1110.tooltip,
-    payload.x1110.color
-  );
-  drawIntersection(
-    stage,
-    tooltip,
-    intersectFourPathSet1Set2Set4,
-    'intersectFourPathSet1Set2Set4',
-    payload.x1101.callback,
-    payload.x1101.tooltip,
-    payload.x1101.color
-  );
-  drawIntersection(
-    stage,
-    tooltip,
-    intersectFourPathSet1Set3Set4,
-    'intersectFourPathSet1Set3Set4',
-    payload.x1011.callback,
-    payload.x1011.tooltip,
-    payload.x1011.color
-  );
-  drawIntersection(
-    stage,
-    tooltip,
-    intersectFourPathSet2Set3Set4,
-    'intersectFourPathSet2Set3Set4',
-    payload.x0111.callback,
-    payload.x0111.tooltip,
-    payload.x0111.color
-  );
-  drawIntersection(
-    stage,
-    tooltip,
-    intersectFourPathSet1Set2Set3Set4,
-    'intersectFourPathSet1Set2Set3Set4',
-    payload.x1111.callback,
-    payload.x1111.tooltip,
-    payload.x1111.color
-  );
+  drawIntersection({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set2,
+    ...payload.x1100,
+  });
+  drawIntersection({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set3,
+    ...payload.x1010,
+  });
+  drawIntersection({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set4,
+    ...payload.x1001,
+  });
+  drawIntersection({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet2Set3,
+    ...payload.x0110,
+  });
+  drawIntersection({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet2Set4,
+    ...payload.x0101,
+  });
+  drawIntersection({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet3Set4,
+    ...payload.x0011,
+  });
+  drawIntersection({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set2Set3,
+    ...payload.x1110,
+  });
+  drawIntersection({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set2Set4,
+    ...payload.x1101,
+  });
+  drawIntersection({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set3Set4,
+    ...payload.x1011,
+  });
+  drawIntersection({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet2Set3Set4,
+    ...payload.x0111,
+  });
+  drawIntersection({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set2Set3Set4,
+    ...payload.x1111,
+  });
 };

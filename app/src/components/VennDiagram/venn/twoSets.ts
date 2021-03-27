@@ -1,64 +1,52 @@
 /*------------ See README.txt for license and copyright information! -----------*/
 import {
-  clearStage,
+  clearSelection,
   drawCircle,
   drawIntersection,
-  drawText,
 } from 'components/VennDiagram/venn/fundamentals/draw';
 import { intersectThreePathSet1Set2 } from 'components/VennDiagram/venn/fundamentals/paths';
 import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import { VennTwoSetsPayload } from 'components/VennDiagram/venn/types/twoSetsTypes';
 import { d3Selection } from 'components/VennDiagram/venn/types/types';
 
-export const stageTwoCirclesOn = (
-  stage: d3Selection,
-  tooltip: VennDiagramTooltip,
+export const drawTwoSetVennDiagram = (
+  svg: d3Selection,
+  tooltipDrawer: VennDiagramTooltip,
   payload: VennTwoSetsPayload
 ): void => {
-  clearStage(stage);
+  clearSelection(svg);
+  svg.attr('viewBox', '0 0 600 320');
 
-  // Set 1
-  drawCircle(
-    stage,
-    tooltip,
-    'circle1',
-    payload.x10.color ?? '#00bf00',
-    110,
-    {
+  drawCircle({
+    svg,
+    tooltipDrawer,
+    radius: 110,
+    position: {
       x: 230,
       y: 156,
     },
-    payload.x10.callback,
-    payload.x10.tooltip
-  );
-  if (payload.x10.title !== undefined) {
-    drawText(stage, { x: 180, y: 125 }, 'twoSetsTextSet1', payload.x10.title);
-  }
-  // Set 2
-  drawCircle(
-    stage,
-    tooltip,
-    'circle2',
-    payload.x01.color ?? '#007fff',
-    110,
-    {
+    textPosition: { x: 180, y: 125 },
+    ...payload.x10,
+    color: payload.x10.color ?? '#00bf00',
+  });
+  drawCircle({
+    svg,
+    tooltipDrawer,
+    radius: 110,
+    position: {
       x: 370,
       y: 156,
     },
-    payload.x01.callback,
-    payload.x01.tooltip
-  );
-  if (payload.x01.title !== undefined) {
-    drawText(stage, { x: 420, y: 125 }, 'twoSetsTextSet2', payload.x01.title);
-  }
+    textPosition: { x: 420, y: 125 },
+    ...payload.x01,
+    color: payload.x01.color ?? '#007fff',
+  });
 
-  drawIntersection(
-    stage,
-    tooltip,
-    intersectThreePathSet1Set2,
-    'intersectThreePathSet1Set2',
-    payload.x11.callback,
-    payload.x11.tooltip,
-    payload.x11.color
-  ).style('transform', 'matrix(1,0,0,1,-0.5,-150)');
+  drawIntersection({
+    svg,
+    tooltipDrawer,
+    shape: intersectThreePathSet1Set2,
+    ...payload.x11,
+    transform: 'matrix(1,0,0,1,-0.5,-150)',
+  });
 };

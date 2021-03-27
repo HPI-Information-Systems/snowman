@@ -1,19 +1,22 @@
 /*------------ See README.txt for license and copyright information! -----------*/
-import { VennDiagramEntity } from 'components/VennDiagram/venn/types/types';
+import {
+  VennDiagramIntersection,
+  VennDiagramSet,
+} from 'components/VennDiagram/venn/types/types';
 
 export interface VennThreeSetsPayload {
-  x100: VennDiagramEntity;
-  x010: VennDiagramEntity;
-  x001: VennDiagramEntity;
-  x110: VennDiagramEntity;
-  x101: VennDiagramEntity;
-  x011: VennDiagramEntity;
-  x111: VennDiagramEntity;
+  x100: VennDiagramSet;
+  x010: VennDiagramSet;
+  x001: VennDiagramSet;
+  x110: VennDiagramIntersection;
+  x101: VennDiagramIntersection;
+  x011: VennDiagramIntersection;
+  x111: VennDiagramIntersection;
 }
 
-export const VennThreeSetsPayloadExample = {
+export const VennThreeSetsPayloadExample: VennThreeSetsPayload = {
   x100: {
-    title: 'set 1',
+    text: 'set 1',
     callback: (): void => {
       console.log('clicked set 1');
     },
@@ -21,7 +24,7 @@ export const VennThreeSetsPayloadExample = {
     color: 'red',
   },
   x010: {
-    title: 'set 2',
+    text: 'set 2',
     callback: (): void => {
       console.log('clicked set 2');
     },
@@ -29,7 +32,7 @@ export const VennThreeSetsPayloadExample = {
     color: 'pink',
   },
   x001: {
-    title: 'set 3',
+    text: 'set 3',
     callback: (): void => {
       console.log('clicked set 3');
     },

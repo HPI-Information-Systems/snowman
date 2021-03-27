@@ -1,15 +1,18 @@
 /*------------ See README.txt for license and copyright information! -----------*/
-import { VennDiagramEntity } from 'components/VennDiagram/venn/types/types';
+import {
+  VennDiagramIntersection,
+  VennDiagramSet,
+} from 'components/VennDiagram/venn/types/types';
 
 export interface VennTwoSetsPayload {
-  x10: VennDiagramEntity;
-  x01: VennDiagramEntity;
-  x11: VennDiagramEntity;
+  x10: VennDiagramSet;
+  x01: VennDiagramSet;
+  x11: VennDiagramIntersection;
 }
 
-export const VennTwoSetsPayloadExample = {
+export const VennTwoSetsPayloadExample: VennTwoSetsPayload = {
   x10: {
-    title: 'set 1',
+    text: 'set 1',
     callback: (): void => {
       console.log('clicked set 1');
     },
@@ -17,7 +20,7 @@ export const VennTwoSetsPayloadExample = {
     color: 'red',
   },
   x01: {
-    title: 'set 2',
+    text: 'set 2',
     callback: (): void => {
       console.log('clicked set 2');
     },

@@ -1,27 +1,30 @@
 /*------------ See README.txt for license and copyright information! -----------*/
-import { VennDiagramEntity } from 'components/VennDiagram/venn/types/types';
+import {
+  VennDiagramIntersection,
+  VennDiagramSet,
+} from 'components/VennDiagram/venn/types/types';
 
 export interface VennFourSetsPayload {
-  x1000: VennDiagramEntity;
-  x0100: VennDiagramEntity;
-  x0010: VennDiagramEntity;
-  x0001: VennDiagramEntity;
-  x1100: VennDiagramEntity;
-  x1010: VennDiagramEntity;
-  x1001: VennDiagramEntity;
-  x0110: VennDiagramEntity;
-  x0101: VennDiagramEntity;
-  x0011: VennDiagramEntity;
-  x1110: VennDiagramEntity;
-  x1101: VennDiagramEntity;
-  x1011: VennDiagramEntity;
-  x0111: VennDiagramEntity;
-  x1111: VennDiagramEntity;
+  x1000: VennDiagramSet;
+  x0100: VennDiagramSet;
+  x0010: VennDiagramSet;
+  x0001: VennDiagramSet;
+  x1100: VennDiagramIntersection;
+  x1010: VennDiagramIntersection;
+  x1001: VennDiagramIntersection;
+  x0110: VennDiagramIntersection;
+  x0101: VennDiagramIntersection;
+  x0011: VennDiagramIntersection;
+  x1110: VennDiagramIntersection;
+  x1101: VennDiagramIntersection;
+  x1011: VennDiagramIntersection;
+  x0111: VennDiagramIntersection;
+  x1111: VennDiagramIntersection;
 }
 
 export const VennFourSetsPayloadExample: VennFourSetsPayload = {
   x1000: {
-    title: 'set 1',
+    text: 'set 1',
     callback: (): void => {
       console.log('clicked set 1');
     },
@@ -29,7 +32,7 @@ export const VennFourSetsPayloadExample: VennFourSetsPayload = {
     color: 'red',
   },
   x0100: {
-    title: 'set 2',
+    text: 'set 2',
     callback: (): void => {
       console.log('clicked set 2');
     },
@@ -37,7 +40,7 @@ export const VennFourSetsPayloadExample: VennFourSetsPayload = {
     color: 'pink',
   },
   x0010: {
-    title: 'set 3',
+    text: 'set 3',
     callback: (): void => {
       console.log('clicked set 3');
     },
@@ -45,7 +48,7 @@ export const VennFourSetsPayloadExample: VennFourSetsPayload = {
     color: 'cyan',
   },
   x0001: {
-    title: 'set 4',
+    text: 'set 4',
     callback: (): void => {
       console.log('clicked set 4');
     },
