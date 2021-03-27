@@ -25,6 +25,20 @@ const initialState: BenchmarkConfigurationStore = {
   showExperimentFilters: false,
 };
 
+export const isExperimentBucketDisabledFromId = (
+  state: BenchmarkConfigurationStore,
+  BucketId: ExperimentBuckets
+): boolean => {
+  switch (BucketId) {
+    case ExperimentBuckets.AVAILABLE_EXPERIMENTS:
+      return false;
+    case ExperimentBuckets.CHOSEN_EXPERIMENTS:
+      return false;
+    case ExperimentBuckets.CHOSEN_GOLDSTANDARDS:
+      return state.chosenGoldStandards.length > 0;
+  }
+};
+
 export const getExperimentBucketFromId = (
   state: BenchmarkConfigurationStore,
   BucketId: ExperimentBuckets
