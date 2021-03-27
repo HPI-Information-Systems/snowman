@@ -12,4 +12,5 @@ export const drawText = (
     .attr('y', position.y)
     .attr('fill', 'black')
     .attr('text-anchor', 'middle')
-    .text(text);
+    .text(text)
+    .style('pointer-events', 'none');
