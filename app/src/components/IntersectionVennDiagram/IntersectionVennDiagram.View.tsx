@@ -9,7 +9,6 @@ import {
 } from './config';
 import { IntersectionVennDiagramProps } from './IntersectionVennDiagramProps';
 import { IntersectionVennDiagramDisplayStrategy } from './strategies/display';
-import { IntersectionVennDiagramSelectStrategy } from './strategies/select';
 
 export default function IntersectionVennDiagramView({
   excluded,
@@ -43,24 +42,9 @@ export default function IntersectionVennDiagramView({
   }, [excluded, ignored, included, counts, intersect]);
 
   useEffect(() => {
-    if (strategy !== IntersectionVennDiagramSelectStrategy) {
-      setStrategy(
-        new IntersectionVennDiagramDisplayStrategy(included, excluded)
-      );
-    }
+    setStrategy(new IntersectionVennDiagramDisplayStrategy(included, excluded));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [excluded, ignored]);
 
-  return (
-    <div
-      onMouseOver={() => setStrategy(IntersectionVennDiagramSelectStrategy)}
-      onMouseOut={() =>
-        setStrategy(
-          new IntersectionVennDiagramDisplayStrategy(included, excluded)
-        )
-      }
-    >
-      <VennDiagram config={configCreator.config(strategy)}></VennDiagram>
-    </div>
-  );
+  return <VennDiagram config={configCreator.config(strategy)}></VennDiagram>;
 }

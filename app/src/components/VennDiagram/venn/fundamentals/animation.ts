@@ -25,11 +25,12 @@ export const animateStroke = (
 ): d3Selection =>
   selection
     .style('stroke', color)
+    .style('paint-order', 'stroke')
     .style('stroke-width', '2')
     .style('stroke-opacity', 0)
     .on('mouseover.stroke', function () {
-      select(this).transition().style('stroke-opacity', 1);
+      select(this).transition('stroke').style('stroke-opacity', 1);
     })
     .on('mouseout.stroke', function () {
-      select(this).transition().style('stroke-opacity', 0);
+      select(this).transition('stroke').style('stroke-opacity', 0);
     });

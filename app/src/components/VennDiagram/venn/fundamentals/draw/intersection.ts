@@ -4,17 +4,32 @@ import {
   d3Selection,
   VennDiagramIntersection,
 } from 'components/VennDiagram/venn/types/types';
-import { select } from 'd3';
 
-import { animateStroke, animateTooltip } from '../animation';
+import { drawStroke } from './stroke';
+
+const baseIntersection = (svg: d3Selection, shape: string, transform = '') =>
+  svg.append('path').attr('d', shape).style('transform', transform);
 
 export const drawIntersection = ({
   svg,
   shape,
-  transform = '',
+  transform,
+  color,
+}: {
+  svg: d3Selection;
+  shape: string;
+  transform?: string;
+} & VennDiagramIntersection): d3Selection =>
+  baseIntersection(svg, shape, transform)
+    .style('fill', color ?? 'black')
+    .style('fill-opacity', color !== undefined ? 1 : 0);
+
+export const drawIntersectionStroke = ({
+  svg,
+  shape,
+  transform,
   tooltipDrawer,
   tooltip,
-  color,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   callback = () => {},
 }: {
@@ -23,22 +38,6 @@ export const drawIntersection = ({
   transform?: string;
   tooltipDrawer: VennDiagramTooltip;
 } & VennDiagramIntersection): d3Selection =>
-  svg
-    .append('path')
-    .attr('d', shape)
-    .style('transform', transform)
-    .style('fill', color ?? 'black')
-    .style('fill-opacity', color !== undefined ? 1 : 0)
-    .on('click', callback)
-    .on('mouseover.opacity', function () {
-      if (color === undefined) {
-        select(this).transition().style('fill-opacity', 0.2);
-      }
-    })
-    .on('mouseout.opacity', function () {
-      if (color === undefined) {
-        select(this).transition().style('fill-opacity', 0);
-      }
-    })
-    .call(animateStroke.bind(undefined, 'white'))
-    .call(animateTooltip.bind(undefined, tooltipDrawer, tooltip));
+  baseIntersection(svg, shape, transform).call((selection) =>
+    drawStroke(selection, callback, tooltipDrawer, tooltip)
+  );

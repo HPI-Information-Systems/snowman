@@ -2,6 +2,7 @@
 import {
   clearSelection,
   drawCircle,
+  drawCircleStroke,
 } from 'components/VennDiagram/venn/fundamentals/draw';
 import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import { VennDiagramOneSetConfig } from 'components/VennDiagram/venn/types/oneSetTypes';
@@ -17,13 +18,24 @@ export const drawOneSetVennDiagram = (
 
   drawCircle({
     svg,
-    tooltipDrawer,
     radius: 130,
     position: {
       x: 300,
       y: 300,
     },
     textPosition: { x: 300, y: 300 },
+    ...payload.x1,
+    color: payload.x1.color ?? '#00bf00',
+  });
+
+  drawCircleStroke({
+    svg,
+    tooltipDrawer,
+    radius: 130,
+    position: {
+      x: 300,
+      y: 300,
+    },
     ...payload.x1,
     color: payload.x1.color ?? '#00bf00',
   });

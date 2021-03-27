@@ -2,7 +2,9 @@
 import {
   clearSelection,
   drawEllipsis,
+  drawEllipsisStroke,
   drawIntersection,
+  drawIntersectionStroke,
 } from 'components/VennDiagram/venn/fundamentals/draw';
 import {
   intersectFourPathSet1Set2,
@@ -31,7 +33,6 @@ export const drawFourSetVennDiagram = (
 
   drawEllipsis({
     svg,
-    tooltipDrawer,
     angle: 45,
     position: { x: 196, y: 246 },
     dimensions: { x: 200, y: 110 },
@@ -41,7 +42,6 @@ export const drawFourSetVennDiagram = (
   });
   drawEllipsis({
     svg,
-    tooltipDrawer,
     angle: 45,
     position: { x: 266, y: 176 },
     dimensions: { x: 200, y: 110 },
@@ -51,7 +51,6 @@ export const drawFourSetVennDiagram = (
   });
   drawEllipsis({
     svg,
-    tooltipDrawer,
     angle: 135,
     position: { x: 326, y: 176 },
     textPosition: { x: 410, y: 65 },
@@ -61,7 +60,6 @@ export const drawFourSetVennDiagram = (
   });
   drawEllipsis({
     svg,
-    tooltipDrawer,
     angle: 135,
     position: { x: 396, y: 246 },
     dimensions: { x: 200, y: 110 },
@@ -72,65 +70,157 @@ export const drawFourSetVennDiagram = (
 
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectFourPathSet1Set2,
     ...payload.x1100,
   });
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectFourPathSet1Set3,
     ...payload.x1010,
   });
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectFourPathSet1Set4,
     ...payload.x1001,
   });
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectFourPathSet2Set3,
     ...payload.x0110,
   });
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectFourPathSet2Set4,
     ...payload.x0101,
   });
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectFourPathSet3Set4,
     ...payload.x0011,
   });
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectFourPathSet1Set2Set3,
     ...payload.x1110,
   });
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectFourPathSet1Set2Set4,
     ...payload.x1101,
   });
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectFourPathSet1Set3Set4,
     ...payload.x1011,
   });
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectFourPathSet2Set3Set4,
     ...payload.x0111,
   });
   drawIntersection({
+    svg,
+    shape: intersectFourPathSet1Set2Set3Set4,
+    ...payload.x1111,
+  });
+
+  drawEllipsisStroke({
+    svg,
+    tooltipDrawer,
+    angle: 45,
+    position: { x: 196, y: 246 },
+    dimensions: { x: 200, y: 110 },
+    ...payload.x1000,
+    color: payload.x1000.color ?? 'red',
+  });
+  drawEllipsisStroke({
+    svg,
+    tooltipDrawer,
+    angle: 45,
+    position: { x: 266, y: 176 },
+    dimensions: { x: 200, y: 110 },
+    ...payload.x0100,
+    color: payload.x0100.color ?? 'purple',
+  });
+  drawEllipsisStroke({
+    svg,
+    tooltipDrawer,
+    angle: 135,
+    position: { x: 326, y: 176 },
+    dimensions: { x: 200, y: 110 },
+    ...payload.x0010,
+    color: payload.x0010.color ?? 'cyan',
+  });
+  drawEllipsisStroke({
+    svg,
+    tooltipDrawer,
+    angle: 135,
+    position: { x: 396, y: 246 },
+    dimensions: { x: 200, y: 110 },
+    ...payload.x0001,
+    color: payload.x0001.color ?? 'orange',
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set2,
+    ...payload.x1100,
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set3,
+    ...payload.x1010,
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set4,
+    ...payload.x1001,
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet2Set3,
+    ...payload.x0110,
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet2Set4,
+    ...payload.x0101,
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet3Set4,
+    ...payload.x0011,
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set2Set3,
+    ...payload.x1110,
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set2Set4,
+    ...payload.x1101,
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet1Set3Set4,
+    ...payload.x1011,
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectFourPathSet2Set3Set4,
+    ...payload.x0111,
+  });
+  drawIntersectionStroke({
     svg,
     tooltipDrawer,
     shape: intersectFourPathSet1Set2Set3Set4,

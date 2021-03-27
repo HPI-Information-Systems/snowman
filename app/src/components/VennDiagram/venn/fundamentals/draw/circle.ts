@@ -5,20 +5,33 @@ import {
   VennDiagramSet,
 } from 'components/VennDiagram/venn/types/types';
 
-import { drawEllipsis } from './ellipsis';
+import { drawEllipsis, drawEllipsisStroke } from './ellipsis';
 
 export const drawCircle = (
   settings: {
     svg: d3Selection;
     radius: number;
     position: { x: number; y: number };
-    tooltipDrawer: VennDiagramTooltip;
     color: string;
     textPosition: { x: number; y: number };
     text?: string;
   } & VennDiagramSet
 ): d3Selection =>
   drawEllipsis({
+    ...settings,
+    angle: 0,
+    dimensions: { x: settings.radius, y: settings.radius },
+  });
+
+export const drawCircleStroke = (
+  settings: {
+    svg: d3Selection;
+    radius: number;
+    position: { x: number; y: number };
+    tooltipDrawer: VennDiagramTooltip;
+  } & VennDiagramSet
+): d3Selection =>
+  drawEllipsisStroke({
     ...settings,
     angle: 0,
     dimensions: { x: settings.radius, y: settings.radius },

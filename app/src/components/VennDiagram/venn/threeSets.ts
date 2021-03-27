@@ -2,7 +2,9 @@
 import {
   clearSelection,
   drawCircle,
+  drawCircleStroke,
   drawIntersection,
+  drawIntersectionStroke,
 } from 'components/VennDiagram/venn/fundamentals/draw';
 import {
   intersectThreePathSet1Set2,
@@ -24,7 +26,6 @@ export const drawThreeSetVennDiagram = (
 
   drawCircle({
     svg,
-    tooltipDrawer,
     radius: 110,
     position: {
       x: 230,
@@ -36,7 +37,6 @@ export const drawThreeSetVennDiagram = (
   });
   drawCircle({
     svg,
-    tooltipDrawer,
     radius: 110,
     position: {
       x: 370,
@@ -48,7 +48,6 @@ export const drawThreeSetVennDiagram = (
   });
   drawCircle({
     svg,
-    tooltipDrawer,
     radius: 110,
     position: {
       x: 300,
@@ -61,26 +60,84 @@ export const drawThreeSetVennDiagram = (
 
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectThreePathSet1Set2,
     ...payload.x110,
     transform: 'matrix(1,0,0,1,-0.5,-50)',
   });
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectThreePathSet1Set3,
     ...payload.x101,
     transform: 'matrix(1,0,0,1,-0.5,-50)',
   });
   drawIntersection({
     svg,
-    tooltipDrawer,
     shape: intersectThreePathSet2Set3,
     ...payload.x011,
     transform: 'matrix(1,0,0,1,0,-50)',
   });
   drawIntersection({
+    svg,
+    shape: intersectThreePathSet1Set2Set3,
+    ...payload.x111,
+    transform: 'matrix(1,0,0,1,0,-50)',
+  });
+
+  drawCircleStroke({
+    svg,
+    tooltipDrawer,
+    radius: 110,
+    position: {
+      x: 230,
+      y: 256,
+    },
+    ...payload.x100,
+    color: payload.x100.color ?? '#00bf00',
+  });
+  drawCircleStroke({
+    svg,
+    tooltipDrawer,
+    radius: 110,
+    position: {
+      x: 370,
+      y: 256,
+    },
+    ...payload.x010,
+    color: payload.x010.color ?? '#007fff',
+  });
+  drawCircleStroke({
+    svg,
+    tooltipDrawer,
+    radius: 110,
+    position: {
+      x: 300,
+      y: 135,
+    },
+    ...payload.x001,
+    color: payload.x001.color ?? '#ff3433',
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectThreePathSet1Set2,
+    ...payload.x110,
+    transform: 'matrix(1,0,0,1,-0.5,-50)',
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectThreePathSet1Set3,
+    ...payload.x101,
+    transform: 'matrix(1,0,0,1,-0.5,-50)',
+  });
+  drawIntersectionStroke({
+    svg,
+    tooltipDrawer,
+    shape: intersectThreePathSet2Set3,
+    ...payload.x011,
+    transform: 'matrix(1,0,0,1,0,-50)',
+  });
+  drawIntersectionStroke({
     svg,
     tooltipDrawer,
     shape: intersectThreePathSet1Set2Set3,
