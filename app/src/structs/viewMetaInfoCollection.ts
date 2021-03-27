@@ -82,7 +82,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     key: ViewIDs.N_METRICS,
     component: NMetricsPage,
     nextView: ViewIDs.BINARY_METRICS,
-    accessGuard: accessGuards.couldAlwaysEnterPage,
+    accessGuard: accessGuards.couldEnterNMetricsPage,
     shouldShowInMenu: true,
     menuCategory: menuCategories.WORKFLOW,
     menuName: 'N-ary Metrics',
