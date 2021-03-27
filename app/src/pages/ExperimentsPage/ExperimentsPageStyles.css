@@ -5,7 +5,7 @@
 }
 
 .col-no-padding {
-  --ion-grid-column-padding: 0px;
+  --ion-grid-column-padding: 0;
 }
 
 .dropzone-title {
@@ -16,10 +16,11 @@
   display: inline-block;
   vertical-align: middle;
 }
-.dropzone-title ion-icon {
+
+.dropzone-title .ion-icon {
   display: inline-block;
-  vertical-align: middle;
   float: right;
+  vertical-align: middle;
 }
 
 .ms-tags-container {

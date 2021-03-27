@@ -44,6 +44,7 @@ const ExperimentsPageView = ({
                   <IonCardTitle class="dropzone-title">
                     <span>Available Experiments</span>
                     <IonIcon
+                      class="ion-icon"
                       size="large"
                       color={showExperimentFilters ? 'primary' : 'dark'}
                       icon={filterCircleOutline}
