@@ -2,15 +2,11 @@
 import { drawTooltip } from 'components/VennDiagram/venn/fundamentals/draw';
 import { d3Selection } from 'components/VennDiagram/venn/types/types';
 
-export interface VennDiagramTooltipProps {
-  element: d3Selection;
-}
-
 export class VennDiagramTooltip {
   protected readonly tooltip: d3Selection;
 
-  constructor(props: VennDiagramTooltipProps) {
-    this.tooltip = props.element;
+  constructor(element: d3Selection) {
+    this.tooltip = element;
     drawTooltip(this.tooltip);
   }
 
