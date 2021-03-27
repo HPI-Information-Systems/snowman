@@ -47,24 +47,24 @@ const ExperimentIntersectionSelectorView = ({
           }}
         >
           <IonCol size="4" class="droppable-zone">
-            <h2>intersect</h2>
+            <h2>available</h2>
+            <IntersectionDroppable
+              bucketId={IntersectionBuckets.IRRELEVANT}
+              bucketContent={ignored}
+            />
+          </IonCol>
+          <IonCol size="4" class="droppable-zone">
+            <h2>intersect (∩)</h2>
             <IntersectionDroppable
               bucketId={IntersectionBuckets.INCLUDED}
               bucketContent={included}
             />
           </IonCol>
           <IonCol size="4" class="droppable-zone">
-            <h2>exclude</h2>
+            <h2>exclude (\)</h2>
             <IntersectionDroppable
               bucketId={IntersectionBuckets.EXCLUDED}
               bucketContent={excluded}
-            />
-          </IonCol>
-          <IonCol size="4" class="droppable-zone">
-            <h2>available</h2>
-            <IntersectionDroppable
-              bucketId={IntersectionBuckets.IRRELEVANT}
-              bucketContent={ignored}
             />
           </IonCol>
         </DragDropContext>

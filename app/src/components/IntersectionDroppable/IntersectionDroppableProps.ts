@@ -6,4 +6,9 @@ export interface IntersectionDroppableOwnProps {
   bucketContent: Experiment[];
 }
 
-export type IntersectionDroppableProps = IntersectionDroppableOwnProps;
+export interface IntersectionDroppableStateProps {
+  pairCounts: Map<number, number>;
+}
+
+export type IntersectionDroppableProps = IntersectionDroppableOwnProps &
+  IntersectionDroppableStateProps;
