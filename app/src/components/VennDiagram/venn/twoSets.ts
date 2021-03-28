@@ -47,6 +47,6 @@ export const drawTwoSetVennDiagram = (
     tooltipDrawer,
     shape: intersectThreePathSet1Set2,
     ...payload.x11,
-    transform: 'matrix(1,0,0,1,-0.5,-150)',
+    transform: 'matrix(1,0,0,1,0,-150)',
   });
 };

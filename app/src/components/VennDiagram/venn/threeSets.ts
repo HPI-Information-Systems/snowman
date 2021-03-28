@@ -64,14 +64,14 @@ export const drawThreeSetVennDiagram = (
     tooltipDrawer,
     shape: intersectThreePathSet1Set2,
     ...payload.x110,
-    transform: 'matrix(1,0,0,1,-0.5,-50)',
+    transform: 'matrix(1,0,0,1,0,-50)',
   });
   drawIntersection({
     svg,
     tooltipDrawer,
     shape: intersectThreePathSet1Set3,
     ...payload.x101,
-    transform: 'matrix(1,0,0,1,-0.5,-50)',
+    transform: 'matrix(1,0,0,1,0,-50)',
   });
   drawIntersection({
     svg,
