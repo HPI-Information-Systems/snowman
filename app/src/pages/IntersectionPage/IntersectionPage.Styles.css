@@ -1,14 +1,14 @@
 .container {
   display: flex;
+  position: relative;
   flex-wrap: wrap;
   width: 100%;
-  position: relative;
   min-height: 100%;
 }
 
 .container .splitter {
-  min-width: calc(1200px / 2);
   flex-grow: 1;
   width: 40%;
+  min-width: calc(1200px / 2);
   max-width: 100%;
 }
