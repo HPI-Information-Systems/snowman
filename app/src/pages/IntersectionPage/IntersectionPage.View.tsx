@@ -2,53 +2,48 @@ import 'pages/IntersectionPage/IntersectionPage.Styles.scss';
 
 import { IonCard, IonCardContent, IonCardHeader } from '@ionic/react';
 import PageStruct from 'components/PageStruct/PageStruct';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import DataViewer from '../../components/DataViewer/DataViewer';
 import IntersectionSelector from '../../components/IntersectionSelector/IntersectionSelector';
+import { IntersectionVennDiagramConfigStrategy } from '../../components/IntersectionVennDiagram/config';
 import IntersectionVennDiagram from '../../components/IntersectionVennDiagram/IntersectionVennDiagram';
-import { MAX_VENN_DIAGRAM_DIMENSION } from '../../components/VennDiagram/limits';
+import { IntersectionVennDiagramIntersectionStrategy } from '../../components/IntersectionVennDiagram/strategies/intersection';
 import { intersectionDescription } from '../../utils/intersectionDescription';
 import { IntersectionPageProps } from './IntersectionPageProps';
 
 const IntersectionPageView = ({
   loadTuples,
   tuplesCount,
-  loadCounts,
-  excludedExperimentNames,
-  includedExperimentNames,
   pairCount,
-  countsLoaded,
-  experimentCount,
+  included,
+  excluded,
+  loadCounts,
 }: IntersectionPageProps): JSX.Element => {
   useEffect(() => {
     loadCounts();
   }, [loadCounts]);
 
+  const [
+    strategy,
+    setStrategy,
+  ] = useState<IntersectionVennDiagramConfigStrategy>(
+    new IntersectionVennDiagramIntersectionStrategy(included, excluded)
+  );
+  useEffect(() => {
+    setStrategy(
+      new IntersectionVennDiagramIntersectionStrategy(included, excluded)
+    );
+  }, [included, excluded]);
+
   return (
-    <PageStruct title={'N Metrics Viewer'}>
+    <PageStruct title={'Intersection'}>
       <div className="container">
         <div className="splitter">
           <IonCard>
-            {experimentCount <= MAX_VENN_DIAGRAM_DIMENSION ? (
-              countsLoaded ? (
-                <IntersectionVennDiagram></IntersectionVennDiagram>
-              ) : (
-                ''
-              )
-            ) : (
-              <div
-                style={{
-                  height: '8rem',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                Venn Diagram of size {experimentCount} is not supported yet
-                (maximum is {MAX_VENN_DIAGRAM_DIMENSION}).
-              </div>
-            )}
+            <IntersectionVennDiagram
+              strategy={strategy}
+            ></IntersectionVennDiagram>
           </IonCard>
           <IonCard>
             <IntersectionSelector></IntersectionSelector>
@@ -66,8 +61,8 @@ const IntersectionPageView = ({
           <IonCardHeader>
             <b>
               {intersectionDescription({
-                excluded: excludedExperimentNames,
-                included: includedExperimentNames,
+                excluded: excluded.map(({ name }) => name),
+                included: included.map(({ name }) => name),
                 pairCount,
               })}
             </b>

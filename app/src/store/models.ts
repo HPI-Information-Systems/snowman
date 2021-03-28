@@ -87,6 +87,7 @@ export interface BenchmarkConfigurationStore {
 export interface IntersectionStore {
   included: Experiment[];
   excluded: Experiment[];
+  // experiments are guaranteed to be sorted by intersectionCountSorter (see IntersectionStoreActions.ts)
   counts: ExperimentIntersectionPairCountsItem[];
 }
 

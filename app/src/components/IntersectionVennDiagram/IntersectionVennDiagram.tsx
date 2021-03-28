@@ -1,26 +1,31 @@
+import { sortBy } from 'lodash';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 
-import { resetIntersection } from '../../store/actions/IntersectionStoreActions';
+import {
+  countsMatchConfiguration,
+  resetIntersection,
+} from '../../store/actions/IntersectionStoreActions';
 import IntersectionVennDiagramView from './IntersectionVennDiagram.View';
 import {
   IntersectionVennDiagramDispatchProps,
   IntersectionVennDiagramStateProps,
 } from './IntersectionVennDiagramProps';
 
-const mapStateToProps = (state: Store): IntersectionVennDiagramStateProps => {
-  const { excluded, included, counts } = state.IntersectionStore;
-  const notIgnored = new Set([...excluded, ...included].map(({ id }) => id));
-  const availableExperiments = [
-    ...state.BenchmarkConfigurationStore.chosenExperiments,
-    ...state.BenchmarkConfigurationStore.chosenGoldStandards,
-  ];
+const mapStateToProps = ({
+  IntersectionStore: { included, counts },
+  BenchmarkConfigurationStore: { chosenGoldStandards, chosenExperiments },
+}: Store): IntersectionVennDiagramStateProps => {
+  const availableExperiments = sortBy(
+    [...chosenExperiments, ...chosenGoldStandards],
+    ({ id }) => id
+  );
   return {
-    ignored: availableExperiments.filter(({ id }) => !notIgnored.has(id)),
-    excluded,
+    experiments: availableExperiments,
     included,
     counts,
+    countsLoaded: countsMatchConfiguration(counts, availableExperiments),
   };
 };
 
