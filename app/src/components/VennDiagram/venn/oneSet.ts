@@ -25,7 +25,7 @@ export const drawOneSetVennDiagram = (
     },
     textPosition: { x: 300, y: 150 },
     ...payload.x1,
-    color: payload.x1.color ?? '#00bf00',
+    color: payload.x1.color ?? 'purple',
   });
 
   drawCircleStroke({
@@ -37,6 +37,6 @@ export const drawOneSetVennDiagram = (
       y: 150,
     },
     ...payload.x1,
-    color: payload.x1.color ?? '#00bf00',
+    color: payload.x1.color ?? 'purple',
   });
 };

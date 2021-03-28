@@ -33,7 +33,7 @@ export const drawThreeSetVennDiagram = (
     },
     textPosition: { x: 180, y: 275 },
     ...payload.x100,
-    color: payload.x100.color ?? '#00bf00',
+    color: payload.x100.color ?? 'cyan',
   });
   drawCircle({
     svg,
@@ -44,7 +44,7 @@ export const drawThreeSetVennDiagram = (
     },
     textPosition: { x: 420, y: 275 },
     ...payload.x010,
-    color: payload.x010.color ?? '#007fff',
+    color: payload.x010.color ?? 'purple',
   });
   drawCircle({
     svg,
@@ -55,7 +55,7 @@ export const drawThreeSetVennDiagram = (
     },
     textPosition: { x: 300, y: 90 },
     ...payload.x001,
-    color: payload.x001.color ?? '#ff3433',
+    color: payload.x001.color ?? 'orange',
   });
 
   drawIntersection({
