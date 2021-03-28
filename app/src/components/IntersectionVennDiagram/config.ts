@@ -13,7 +13,6 @@ type PartialVennDiagramConfig = {
 
 export interface IntersectionVennDiagramConfigStrategy {
   backgroundColor: string | undefined;
-  backgroundOpacity: number | undefined;
   color(experiments: Experiment[]): string | undefined;
   opacity(experiment: Experiment): number | undefined;
 }

@@ -4,5 +4,4 @@ export const IntersectionVennDiagramDefaultStrategy: IntersectionVennDiagramConf
   color: () => undefined,
   opacity: () => undefined,
   backgroundColor: undefined,
-  backgroundOpacity: undefined,
 };

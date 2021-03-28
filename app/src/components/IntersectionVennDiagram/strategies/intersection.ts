@@ -4,6 +4,7 @@ import { IntersectionVennDiagramConfigStrategy } from 'components/IntersectionVe
 // Ionic Colors: themes/variables.css
 export const IRRELEVANT_COLOR = '#92949c';
 export const INCLUDED_COLOR = '#2dd36f';
+export const INCLUDED_COLOR_BG = 'rgba(45, 211, 111, 0.3)';
 export const EXCLUDED_COLOR = '#eb445a';
 
 export class IntersectionVennDiagramIntersectionStrategy
@@ -43,7 +44,6 @@ export class IntersectionVennDiagramIntersectionStrategy
   }
 
   get backgroundColor(): string | undefined {
-    return this.included.length === 0 ? INCLUDED_COLOR : undefined;
+    return this.included.length === 0 ? INCLUDED_COLOR_BG : undefined;
   }
-  backgroundOpacity = 0.3;
 }
