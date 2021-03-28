@@ -14,10 +14,8 @@ const initialState: AlgorithmDialogStore = {
   algorithmName: '',
   algorithmDescription: '',
   dialogType: DialogTypes.ADD_DIALOG,
-  implementationKnowHowLevel:
-    AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
-  matchingSolutionType:
-    AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Rulebased,
+  implementationKnowHowLevel: undefined,
+  matchingSolutionType: undefined,
   timeToConfigure: undefined,
   timeToInstall: undefined,
 };
