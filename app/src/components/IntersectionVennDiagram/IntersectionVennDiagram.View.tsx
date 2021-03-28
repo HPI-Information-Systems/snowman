@@ -56,9 +56,7 @@ export default function IntersectionVennDiagramView({
     >
       <div
         style={{
-          background: `${
-            excluded.length + included.length === 0 ? INCLUDED_COLOR : ''
-          }`,
+          background: `${included.length === 0 ? INCLUDED_COLOR : ''}`,
           position: 'absolute',
           left: 0,
           right: 0,
