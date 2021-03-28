@@ -49,7 +49,7 @@ const IntersectionDroppableView = ({
           >
             <IonLabel>
               {anExperiment.name} (
-              {pairCounts.get(anExperiment.id) ?? 'unknown'} pairs)
+              {pairCounts.get(anExperiment.id) ?? 'unknown'})
             </IonLabel>
           </IonChip>
         </IonCol>

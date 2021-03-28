@@ -5,7 +5,7 @@ import {
   gridOutline,
   home,
   pauseCircle,
-  pieChartOutline,
+  pieChart,
   rocket,
 } from 'ionicons/icons';
 import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
@@ -122,7 +122,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     shouldShowInMenu: true,
     menuCategory: menuCategories.EVALUATION,
     menuName: 'Intersection',
-    menuIcon: pieChartOutline,
+    menuIcon: pieChart,
     menuSortKey: 8,
     selectedOptionsReminder: emptySelectedOptions,
   },
