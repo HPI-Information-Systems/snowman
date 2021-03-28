@@ -3,6 +3,7 @@ import { differenceBy, nth, unionBy } from 'lodash';
 import {
   DatasetsPageActionTypes,
   ExperimentsPageActionTypes,
+  NMetricsPageActionTypes,
 } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { BenchmarkConfigurationStore, CoreStore } from 'store/models';
@@ -168,6 +169,11 @@ const BenchmarkConfiguratorImmediateReducer = (
         availableExperiments: availableExperiments,
       };
     }
+    case NMetricsPageActionTypes.INSPECT_AN_EXPERIMENT:
+      return {
+        ...ownState,
+        chosenExperiments: [action.payload as Experiment],
+      };
     default:
       return ownState;
   }

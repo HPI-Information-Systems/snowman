@@ -105,8 +105,9 @@ export const BinaryMetricsStoreActionTypes = {
   RESET_TUPLES: 'BINARY_METRICS_STORE-RESET_TUPLES',
 };
 
-export const NMetricsStoreActionTypes = {
+export const NMetricsPageActionTypes = {
   SET_ALL_METRICS: 'N_METRICS_STORE-SET_ALL_METRICS',
+  INSPECT_AN_EXPERIMENT: 'N_METRICS_STORE-INSPECT_AN_EXPERIMENT',
   RESET_METRICS: 'N_METRICS_STORE-RESET_METRICS',
 };
 

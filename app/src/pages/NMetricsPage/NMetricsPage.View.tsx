@@ -12,6 +12,7 @@ const NMetricsPageView = ({
   metrics,
   experiments,
   loadMetrics,
+  inspectExperiment,
 }: NMetricsPageProps): JSX.Element => {
   useEffect(() => {
     // Triggered on every component update!
@@ -31,7 +32,7 @@ const NMetricsPageView = ({
                     <IonText
                       color="primary"
                       className="clickable-content"
-                      onClick={() => alert('Not implemented yet')}
+                      onClick={(): void => inspectExperiment(anExperiment)}
                       data-tip="Open BinaryMetrics Viewer for experiment."
                     >
                       {anExperiment.name}
