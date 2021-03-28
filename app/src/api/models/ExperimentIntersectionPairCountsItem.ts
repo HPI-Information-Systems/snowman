@@ -37,7 +37,13 @@ export interface ExperimentIntersectionPairCountsItem {
      * @type {number}
      * @memberof ExperimentIntersectionPairCountsItem
      */
-    pairCount: number;
+    numberPairs: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ExperimentIntersectionPairCountsItem
+     */
+    numberRows: number;
 }
 
 export function ExperimentIntersectionPairCountsItemFromJSON(json: any): ExperimentIntersectionPairCountsItem {
@@ -51,7 +57,8 @@ export function ExperimentIntersectionPairCountsItemFromJSONTyped(json: any, ign
     return {
         
         'experiments': ((json['experiments'] as Array<any>).map(ExperimentIntersectionPairCountsExperimentsFromJSON)),
-        'pairCount': json['pairCount'],
+        'numberPairs': json['numberPairs'],
+        'numberRows': json['numberRows'],
     };
 }
 
@@ -65,7 +72,8 @@ export function ExperimentIntersectionPairCountsItemToJSON(value?: ExperimentInt
     return {
         
         'experiments': ((value.experiments as Array<any>).map(ExperimentIntersectionPairCountsExperimentsToJSON)),
-        'pairCount': value.pairCount,
+        'numberPairs': value.numberPairs,
+        'numberRows': value.numberRows,
     };
 }
 

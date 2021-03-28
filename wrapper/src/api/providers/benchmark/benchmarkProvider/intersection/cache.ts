@@ -1,4 +1,4 @@
-import { ExperimentId } from '../../../../server/types';
+import { DatasetId, ExperimentId } from '../../../../server/types';
 import { Cache } from '../../../../tools/cache';
 import { Intersection } from '.';
 import { CachedSubclusting } from './cachedSubclustering';
@@ -13,7 +13,7 @@ export const SubclusterCache = new Cache(
     new CachedSubclusting(...args)
 );
 
-export function invalidateCaches(experiment: ExperimentId): void {
-  IntersectionCache.invalidate(experiment);
-  SubclusterCache.invalidate(experiment);
+export function invalidateCaches(id: ExperimentId | DatasetId): void {
+  IntersectionCache.invalidate(id);
+  SubclusterCache.invalidate(id);
 }

@@ -262,7 +262,7 @@ async function loadExperiment(
 
 export async function loadTestCase(
   experiments: RelaxedClustering[]
-): Promise<ExperimentId[]> {
+): Promise<[ExperimentId[], DatasetId]> {
   const experimentArrays = experiments.map(
     relaxedClusteringToArray
   ) as NodeID[][][];
@@ -277,9 +277,12 @@ export async function loadTestCase(
   const algorithmId = getProviders().algorithm.addAlgorithm({
     name: '',
   });
-  return await Promise.all(
-    experimentArrays.map((experimentArray) =>
-      loadExperiment(datasetId, algorithmId, experimentArray)
-    )
-  );
+  return [
+    await Promise.all(
+      experimentArrays.map((experimentArray) =>
+        loadExperiment(datasetId, algorithmId, experimentArray)
+      )
+    ),
+    datasetId,
+  ];
 }

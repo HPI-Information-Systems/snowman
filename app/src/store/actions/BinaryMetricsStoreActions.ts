@@ -9,16 +9,14 @@ import {
   SnowmanDispatch,
   SnowmanThunkAction,
 } from 'store/messages';
+import { Store } from 'store/models';
 import { store } from 'store/store';
-import {
-  SUCCESS_LOAD_BINARY_METRICS,
-  SUCCESS_LOAD_METRICS_TUPLES,
-} from 'structs/statusMessages';
+import { SUCCESS_LOAD_BINARY_METRICS } from 'structs/statusMessages';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import RequestHandler from 'utils/requestHandler';
 
-const getExperiment1Id = (): number => {
-  return store.getState().BenchmarkConfigurationStore.chosenExperiments[0].id;
+export const getExperiment1Id = (state: Store = store.getState()): number => {
+  return state.BenchmarkConfigurationStore.chosenExperiments[0].id;
 };
 
 export const loadMetrics = (): SnowmanThunkAction<Promise<void>> => async (
@@ -82,73 +80,101 @@ const getRequestBodyForFalseNegatives = (
   ],
 });
 
+const getRequestBodyForTrueNegatives = (
+  experimentId1: number,
+  experimentId2: number
+) => ({
+  experimentIntersectionRequestExperiments: [
+    {
+      experimentId: experimentId1,
+      predictedCondition: false,
+    },
+    {
+      experimentId: experimentId2,
+      predictedCondition: false,
+    },
+  ],
+});
+
 type LoadTuplesRequestBody = ReturnType<typeof getRequestBodyForTruePositives>;
+
+const getExperimentsComparisonTuple = (): [number, number] => [
+  getGroundTruthId(),
+  getExperiment1Id(),
+];
 
 const loadTuples = (
   requestBody: LoadTuplesRequestBody,
-  actionType: string
-): SnowmanThunkAction<Promise<void>> => async (
-  dispatch: SnowmanDispatch
-): Promise<void> =>
-  RequestHandler<void>(
-    (): Promise<void> =>
+  startAt: number,
+  stopAt: number
+): Promise<FileResponse> =>
+  new BenchmarkApi().calculateExperimentIntersectionRecords({
+    ...requestBody,
+    startAt: startAt,
+    limit: stopAt - startAt,
+  });
+
+export const loadTruePositives = (
+  startIndex: number,
+  stopIndex: number
+): Promise<FileResponse> =>
+  loadTuples(
+    getRequestBodyForTruePositives(...getExperimentsComparisonTuple()),
+    startIndex,
+    stopIndex
+  );
+
+export const loadFalsePositives = (
+  startIndex: number,
+  stopIndex: number
+): Promise<FileResponse> =>
+  loadTuples(
+    getRequestBodyForFalsePositives(...getExperimentsComparisonTuple()),
+    startIndex,
+    stopIndex
+  );
+
+export const loadFalseNegatives = (
+  startIndex: number,
+  stopIndex: number
+): Promise<FileResponse> =>
+  loadTuples(
+    getRequestBodyForFalseNegatives(...getExperimentsComparisonTuple()),
+    startIndex,
+    stopIndex
+  );
+
+export const loadTrueNegatives = (
+  startIndex: number,
+  stopIndex: number
+): Promise<FileResponse> =>
+  loadTuples(
+    getRequestBodyForTrueNegatives(...getExperimentsComparisonTuple()),
+    startIndex,
+    stopIndex
+  );
+
+export const loadBinaryMetricsTuplesCounts = (): SnowmanThunkAction<
+  Promise<void>
+> => async (dispatch: SnowmanDispatch): Promise<void> => {
+  RequestHandler(
+    () =>
       new BenchmarkApi()
-        .calculateExperimentIntersectionRecords(requestBody)
-        .then(
-          (res: FileResponse): SnowmanAction =>
-            dispatch({
-              type: actionType,
-              payload: res,
+        .calculateExperimentIntersectionPairCounts({
+          experimentIntersectionPairCountsRequestExperiments: getExperimentsComparisonTuple().map(
+            (experimentId) => ({
+              experimentId,
             })
+          ),
+        })
+        .then((counts) =>
+          dispatch({
+            type: actionTypes.SET_ALL_COUNTS,
+            payload: counts,
+          })
         )
         .then(),
     dispatch
-  );
-
-const loadTruePositives = (
-  experimentId1: number,
-  experimentId2: number
-): SnowmanThunkAction<Promise<void>> =>
-  loadTuples(
-    getRequestBodyForTruePositives(experimentId1, experimentId2),
-    actionTypes.SET_TRUE_POSITIVES_TUPLES
-  );
-
-const loadFalsePositives = (
-  experimentId1: number,
-  experimentId2: number
-): SnowmanThunkAction<Promise<void>> =>
-  loadTuples(
-    getRequestBodyForFalsePositives(experimentId1, experimentId2),
-    actionTypes.SET_FALSE_POSITIVES_TUPLES
-  );
-
-const loadFalseNegatives = (
-  experimentId1: number,
-  experimentId2: number
-): SnowmanThunkAction<Promise<void>> =>
-  loadTuples(
-    getRequestBodyForFalseNegatives(experimentId1, experimentId2),
-    actionTypes.SET_FALSE_NEGATIVES_TUPLES
-  );
-
-export const loadBinaryMetricsTuples = (): SnowmanThunkAction<
-  Promise<void>
-> => async (dispatch: SnowmanDispatch): Promise<void> => {
-  dispatch(resetTuples());
-  return RequestHandler(
-    (): Promise<void> =>
-      dispatch(loadFalseNegatives(getGroundTruthId(), getExperiment1Id()))
-        .then(
-          (): Promise<void> =>
-            dispatch(loadTruePositives(getGroundTruthId(), getExperiment1Id()))
-        )
-        .then(
-          (): Promise<void> =>
-            dispatch(loadFalsePositives(getGroundTruthId(), getExperiment1Id()))
-        ),
-    dispatch,
-    SUCCESS_LOAD_METRICS_TUPLES
   );
 };
 
@@ -165,15 +191,6 @@ export const resetMetrics = (): SnowmanThunkAction<void> => (
 ): SnowmanAction =>
   dispatch({
     type: actionTypes.RESET_METRICS,
-    // reducer ignores payload
-    payload: false,
-  });
-
-export const resetTuples = (): SnowmanThunkAction<void> => (
-  dispatch: SnowmanDispatch
-): SnowmanAction =>
-  dispatch({
-    type: actionTypes.RESET_TUPLES,
     // reducer ignores payload
     payload: false,
   });

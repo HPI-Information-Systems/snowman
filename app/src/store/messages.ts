@@ -1,4 +1,11 @@
-import { Algorithm, Dataset, Experiment, FileResponse, Metric } from 'api';
+import {
+  Algorithm,
+  Dataset,
+  Experiment,
+  ExperimentIntersectionPairCountsItem,
+  FileResponse,
+  Metric,
+} from 'api';
 import { Action } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { Store } from 'store/models';
@@ -24,7 +31,8 @@ type ActionPayload =
   | Experiment[]
   | Experiment
   | Event
-  | DragNDropDescriptor;
+  | DragNDropDescriptor
+  | ExperimentIntersectionPairCountsItem[];
 
 export interface SnowmanAction extends Action<string> {
   payload: ActionPayload;

@@ -7,7 +7,6 @@ import {
   FileResponse,
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
-import { numberOfPairs } from '../../../tools/numberOfPairs';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
 import { idClustersToRecordClusters } from './idsToRecords';
 import { Intersection, IntersectionCache } from './intersection';
@@ -40,7 +39,7 @@ export class BenchmarkProvider {
   }): ExperimentIntersectionCount {
     const intersection = this.intersection(config);
     return {
-      numberPairs: intersection.pairCount,
+      numberPairs: intersection.numberPairs,
       numberRows: intersection.rowCount,
     };
   }
@@ -48,9 +47,8 @@ export class BenchmarkProvider {
   calculateExperimentIntersectionPairCounts(
     config: ExperimentIntersectionPairCountsRequestExperiments[]
   ): ExperimentIntersectionPairCountsItem[] {
-    const dataset = datasetFromExperimentIds(
-      config.map(({ experimentId }) => experimentId)
-    );
+    const experimentIds = config.map(({ experimentId }) => experimentId);
+    const datasetId = datasetFromExperimentIds(experimentIds).id;
     enum ExperimentState {
       IRRELEVANT,
       INCLUDED,
@@ -79,23 +77,14 @@ export class BenchmarkProvider {
     do {
       const included = state
         .map((state, index) =>
-          state === ExperimentState.INCLUDED ? index : undefined
+          state === ExperimentState.INCLUDED ? experimentIds[index] : undefined
         )
         .filter((index) => index !== undefined) as ExperimentId[];
       const excluded = state
         .map((state, index) =>
-          state === ExperimentState.EXCLUDED ? index : undefined
+          state === ExperimentState.EXCLUDED ? experimentIds[index] : undefined
         )
         .filter((index) => index !== undefined) as ExperimentId[];
-      let pairCount: number;
-      if (included.length === 0) {
-        pairCount = numberOfPairs(dataset.numberOfRecords);
-        if (excluded.length !== 0) {
-          pairCount -= IntersectionCache.get(excluded, []).pairCount;
-        }
-      } else {
-        pairCount = IntersectionCache.get(included, excluded).pairCount;
-      }
       counts.push({
         experiments: [
           ...included.map((experimentId) => {
@@ -111,7 +100,10 @@ export class BenchmarkProvider {
             };
           }),
         ],
-        pairCount,
+        numberPairs: IntersectionCache.get(included, excluded, [datasetId])
+          .numberPairs,
+        numberRows: IntersectionCache.get(included, excluded, [datasetId])
+          .rowCount,
       });
     } while (nextState());
     return counts;
@@ -135,6 +127,8 @@ export class BenchmarkProvider {
   }
 
   getBinaryMetrics(goldstandardId: number, experimentId: number): Metric[] {
+    const datasetId = datasetFromExperimentIds([goldstandardId, experimentId])
+      .id;
     const metrics = [
       Accuracy,
       Precision,
@@ -157,21 +151,27 @@ export class BenchmarkProvider {
       ThreatScore,
     ];
     const matrix: ConfusionMatrix = {
-      truePositives: IntersectionCache.get([goldstandardId, experimentId], [])
-        .pairCount,
-      falsePositives: IntersectionCache.get([experimentId], [goldstandardId])
-        .pairCount,
-      falseNegatives: IntersectionCache.get([goldstandardId], [experimentId])
-        .pairCount,
-      trueNegatives: 0,
+      truePositives: IntersectionCache.get(
+        [goldstandardId, experimentId],
+        [],
+        [datasetId]
+      ).numberPairs,
+      falsePositives: IntersectionCache.get(
+        [experimentId],
+        [goldstandardId],
+        [datasetId]
+      ).numberPairs,
+      falseNegatives: IntersectionCache.get(
+        [goldstandardId],
+        [experimentId],
+        [datasetId]
+      ).numberPairs,
+      trueNegatives: IntersectionCache.get(
+        [],
+        [goldstandardId, experimentId],
+        [datasetId]
+      ).numberPairs,
     };
-    matrix.trueNegatives =
-      numberOfPairs(
-        datasetFromExperimentIds([goldstandardId, experimentId]).numberOfRecords
-      ) -
-      matrix.truePositives -
-      matrix.falsePositives -
-      matrix.falseNegatives;
     return metrics
       .map((Metric) => new Metric(matrix))
       .map(({ value, formula, name, range, info, infoLink }) => {
@@ -195,7 +195,11 @@ export class BenchmarkProvider {
         .map(({ experimentId }) => experimentId),
       config
         .filter(({ predictedCondition }) => !predictedCondition)
-        .map(({ experimentId }) => experimentId)
+        .map(({ experimentId }) => experimentId),
+      [
+        datasetFromExperimentIds(config.map(({ experimentId }) => experimentId))
+          .id,
+      ]
     );
   }
 }

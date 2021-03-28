@@ -83,8 +83,10 @@ export class ExperimentProvider {
     limit?: number,
     sortBy?: string
   ): FileResponse {
-    this.checks.throwIfExperimentNotExists(id);
-    return new ExperimentFileGetter(id).get(startAt, limit, sortBy);
+    return new ExperimentFileGetter(
+      id,
+      getProviders().experiment.getExperiment(id).datasetId
+    ).get(startAt, limit, sortBy);
   }
 
   async setExperimentFile(

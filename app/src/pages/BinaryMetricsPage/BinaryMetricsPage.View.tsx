@@ -22,17 +22,17 @@ import ReactTooltip from 'react-tooltip';
 
 export const BinaryMetricsPageView = ({
   loadMetrics,
-  loadTuples,
+  preloadTuplesCounts,
   metrics,
   selectedMetricsTuplesCategory,
   selectPane,
   metricsTuplesCategories,
-  dataViewerHeader,
-  dataViewerTuples,
+  rowCount,
+  tuplesLoader,
   confusionMatrix,
 }: BinaryMetricsPageProps): JSX.Element => {
   useEffect(loadMetrics, [loadMetrics]);
-  useEffect(loadTuples, [loadTuples]);
+  useEffect(preloadTuplesCounts, [preloadTuplesCounts]);
   useEffect(() => {
     // Triggered on every component update!
     ReactTooltip.rebuild();
@@ -93,28 +93,43 @@ export const BinaryMetricsPageView = ({
       </IonText>
       <div>
         {confusionMatrix.totalCount !== undefined ? (
-          <IonChip outline={true} color="dark">
+          <IonChip outline={true} color="dark" disabled className="count-chip">
             Total Count: {confusionMatrix.totalCount}
           </IonChip>
         ) : null}
-        {confusionMatrix.trueNegatives !== undefined ? (
-          <IonChip outline={true} color="success">
-            True Negatives: {confusionMatrix.trueNegatives}
+        {confusionMatrix.truePositives !== undefined ? (
+          <IonChip
+            outline={true}
+            color="success"
+            disabled
+            className="count-chip"
+          >
+            True Positives: {confusionMatrix.truePositives}
           </IonChip>
         ) : null}
         {confusionMatrix.falsePositives !== undefined ? (
-          <IonChip outline={true} color="danger">
+          <IonChip
+            outline={true}
+            color="danger"
+            disabled
+            className="count-chip"
+          >
             False Positives: {confusionMatrix.falsePositives}
           </IonChip>
         ) : null}
         {confusionMatrix.falseNegatives !== undefined ? (
-          <IonChip outline={true} color="danger">
+          <IonChip
+            outline={true}
+            color="danger"
+            disabled
+            className="count-chip"
+          >
             False Negatives: {confusionMatrix.falseNegatives}
           </IonChip>
         ) : null}
-        {confusionMatrix.truePositives !== undefined ? (
-          <IonChip outline={true} color="success">
-            True Positives: {confusionMatrix.truePositives}
+        {confusionMatrix.trueNegatives !== undefined ? (
+          <IonChip outline={true} color="success" disabled class="count-chip">
+            True Negatives: {confusionMatrix.trueNegatives}
           </IonChip>
         ) : null}
       </div>
@@ -125,10 +140,7 @@ export const BinaryMetricsPageView = ({
           selectedPaneTitle={selectedMetricsTuplesCategory}
         />
         <IonCardContent class="table-housing">
-          <DataViewer
-            columnHeaders={dataViewerHeader}
-            tuples={dataViewerTuples}
-          />
+          <DataViewer tuplesCount={rowCount} loadTuples={tuplesLoader} />
         </IonCardContent>
       </IonCard>
     </PageStruct>

@@ -1,71 +1,168 @@
 import 'react-virtualized/styles.css';
 import 'components/DataViewer/DataViewerStyles.css';
 
-import { AutoSizerParams } from 'components/DataViewer/AutoSizerParams';
-import { ColumnDescriptor } from 'components/DataViewer/ColumnDescriptor';
 import { DataViewerProps } from 'components/DataViewer/DataViewerProps';
-import { RowGetterParams } from 'components/DataViewer/RowGetterParams';
-import { SortConfiguration } from 'components/DataViewer/SortConfiguration';
-import * as lodash from 'lodash';
-import React, { useState } from 'react';
-import { AutoSizer, Column, SortDirection, Table } from 'react-virtualized';
+import { RequestedRowsT, StateT } from 'components/DataViewer/DataViewerTypes';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AutoSizer, Column, InfiniteLoader, Table } from 'react-virtualized';
+import { SnowmanDispatch } from 'store/messages';
+import RequestHandler from 'utils/requestHandler';
 
 const DataViewer = ({
-  tuples,
-  columnHeaders,
+  tuplesCount,
+  loadTuples,
+  BATCH_SIZE = 500,
 }: DataViewerProps): JSX.Element => {
-  const [list, setList] = useState(tuples);
+  const dispatch: SnowmanDispatch = useDispatch();
+  function wrappedLoadTuples(start: number, stop: number) {
+    return RequestHandler(() => loadTuples(start, stop), dispatch);
+  }
+  const [{ header, rows, requestedRows }, setState] = useState<StateT>({
+    header: [],
+    rows: [],
+    requestedRows: [],
+    resetVersion: 0,
+  });
 
-  React.useEffect(() => {
-    setList(tuples);
-  }, [tuples]);
+  function getState(callback: (state: StateT) => void) {
+    setState((newState) => {
+      callback(newState);
+      return newState;
+    });
+  }
 
-  const [sortConfiguration, setSortConfiguration] = useState<SortConfiguration>(
-    {
-      sortBy: '',
-      sortDirection: SortDirection.ASC,
-    }
-  );
+  async function requestRows(rowCount: number): Promise<void> {
+    return new Promise((resolve) =>
+      getState(({ header, rows, requestedRows, resetVersion }) => {
+        const request: RequestedRowsT = {
+          rowCount,
+          resolve,
+        };
+        setState({
+          header,
+          rows,
+          requestedRows: [...requestedRows, request],
+          resetVersion,
+        });
+        const maxRequestedRowsLength = Math.max(
+          ...requestedRows.map(({ rowCount: length }) => length),
+          rows.length
+        );
+        if (rowCount > maxRequestedRowsLength) {
+          Promise.all([
+            wrappedLoadTuples(maxRequestedRowsLength, rowCount),
+            requestRows(maxRequestedRowsLength),
+          ]).then(async ([{ header, data }]) => {
+            getState(({ requestedRows, rows, resetVersion }) => {
+              if (requestedRows.includes(request)) {
+                rows.push(...data);
+                setState({
+                  header,
+                  rows,
+                  requestedRows,
+                  resetVersion,
+                });
+              }
+            });
+          });
+        }
+      })
+    );
+  }
 
-  const _sortList = ({ sortBy, sortDirection }: SortConfiguration) => {
-    const newList = lodash.sortBy(list, [sortBy]);
-    if (sortDirection === SortDirection.DESC) {
-      newList.reverse();
-    }
-    return newList;
-  };
+  useEffect(() => {
+    getState(({ header, rows, requestedRows, resetVersion }) => {
+      const loadingRequestedRows = requestedRows.filter((request) => {
+        if (request.rowCount <= rows.length) {
+          request.resolve();
+          return false;
+        } else {
+          return true;
+        }
+      });
+      if (loadingRequestedRows.length !== requestedRows.length) {
+        setState({
+          rows,
+          header,
+          requestedRows: loadingRequestedRows,
+          resetVersion,
+        });
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestedRows, rows]);
 
-  const _sort = ({ sortBy, sortDirection }: SortConfiguration): void => {
-    setSortConfiguration({ sortBy: sortBy, sortDirection: sortDirection });
-    setList(_sortList({ sortBy, sortDirection }));
-  };
+  useEffect(() => {
+    getState(({ header, rows, requestedRows, resetVersion }) => {
+      const newResetVersion = resetVersion + 1;
+      setState({
+        header,
+        requestedRows,
+        rows,
+        resetVersion: newResetVersion,
+      });
+      wrappedLoadTuples(0, BATCH_SIZE).then(({ header, data }) =>
+        getState(({ requestedRows, resetVersion }) => {
+          if (resetVersion === newResetVersion) {
+            requestedRows.forEach(({ resolve }) => resolve());
+            setState({
+              header,
+              rows: data,
+              requestedRows: [],
+              resetVersion,
+            });
+          }
+        })
+      );
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadTuples]);
 
   return (
-    <AutoSizer>
-      {({ height, width }: AutoSizerParams) => (
-        <Table
-          width={width}
-          height={height}
-          rowClassName="table-row"
-          headerHeight={20}
-          rowHeight={30}
-          sort={_sort}
-          sortBy={sortConfiguration.sortBy}
-          sortDirection={sortConfiguration.sortDirection}
-          rowCount={list.length}
-          rowGetter={({ index }: RowGetterParams) => list[index]}
-        >
-          {columnHeaders.map((aColumnHeader: ColumnDescriptor) => (
-            <Column
-              key={aColumnHeader.objKey}
-              label={aColumnHeader.label}
-              dataKey={aColumnHeader.objKey}
+    <InfiniteLoader
+      loadMoreRows={({ stopIndex }) => requestRows(stopIndex + 1)}
+      isRowLoaded={({ index }) => index < rows.length}
+      rowCount={tuplesCount}
+      threshold={BATCH_SIZE}
+      minimumBatchSize={BATCH_SIZE}
+    >
+      {({ onRowsRendered, registerChild }) => (
+        <AutoSizer>
+          {({ height, width }: { height: number; width: number }) => (
+            <Table
+              ref={registerChild}
+              onRowsRendered={onRowsRendered}
               width={width}
-            />
-          ))}
-        </Table>
+              height={height}
+              rowClassName="table-row"
+              headerHeight={20}
+              rowHeight={30}
+              overscanRowCount={0}
+              rowCount={rows.length}
+              rowGetter={({ index }: { index: number }): unknown => {
+                const dataRow: Record<string, string> = {};
+                header.forEach((_: string, headerIndex: number): void => {
+                  dataRow[headerIndex] =
+                    index < rows.length ? rows[index][headerIndex] : '';
+                });
+                return dataRow;
+              }}
+            >
+              {header.map((headerLabel: string, index: number) => (
+                <Column
+                  key={`${index}-${headerLabel}`}
+                  label={headerLabel}
+                  dataKey={index.toString()}
+                  width={width}
+                  minWidth={80}
+                />
+              ))}
+            </Table>
+          )}
+        </AutoSizer>
       )}
-    </AutoSizer>
+    </InfiniteLoader>
   );
 };
 

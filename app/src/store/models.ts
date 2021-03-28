@@ -4,7 +4,7 @@ import {
   AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
   Dataset,
   Experiment,
-  FileResponse,
+  ExperimentIntersectionPairCountsItem,
   Metric,
 } from 'api';
 import { DatasetTypes } from 'types/DatasetTypes';
@@ -96,10 +96,8 @@ export interface BenchmarkConfigurationStore {
 }
 
 export interface BinaryMetricsStore {
+  counts: ExperimentIntersectionPairCountsItem[];
   metrics: Metric[];
-  falsePositives: FileResponse | undefined;
-  falseNegatives: FileResponse | undefined;
-  truePositives: FileResponse | undefined;
   selectedDataView: MetricsTuplesCategories;
 }
 

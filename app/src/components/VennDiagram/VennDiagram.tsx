@@ -1,11 +1,10 @@
 import { drawFourSetVennDiagram } from 'components/VennDiagram/venn/fourSets';
 import { drawThreeSetVennDiagram } from 'components/VennDiagram/venn/threeSets';
+import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import { drawTwoSetVennDiagram } from 'components/VennDiagram/venn/twoSets';
 import { VennDiagramProps } from 'components/VennDiagram/VennDiagramProps';
 import { select } from 'd3';
 import React, { useEffect, useRef, useState } from 'react';
-
-import { VennDiagramTooltip } from './venn/tooltip';
 
 export const VennDiagram = ({ config }: VennDiagramProps): JSX.Element => {
   const svgElement = useRef<SVGSVGElement>(null);

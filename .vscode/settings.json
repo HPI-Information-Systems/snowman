@@ -1,26 +1,27 @@
 {
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-        // "source.organizeImports": true,
-        "source.fixAll": true
-    },
-    "eslint.validate": [
-        "javascript",
-        "typescript"
-    ],
-    "eslint.options": {
-        "configFile": ".eslintrc.json"
-    },
-    "[typescript]": {
-        "editor.formatOnSave": false
-    },
-    "[javascript]": {
-        "editor.formatOnSave": false
-    },
-    "typescript.preferences.importModuleSpecifier": "relative",
-    "jest.pathToConfig": "jest.config.js",
-    "jest.pathToJest": "npm run test --prefix wrapper --",
-    "jest.disabledWorkspaceFolders": [
-        "app"
-    ]
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  },
+  "eslint.validate": ["javascript", "typescript"],
+  "eslint.options": {
+    "configFile": ".eslintrc.json"
+  },
+  "[typescript]": {
+    "editor.formatOnSave": false
+  },
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": false
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": false
+  },
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+  "jest.pathToConfig": "jest.config.js",
+  "jest.pathToJest": "npm run test --prefix wrapper --",
+  "jest.disabledWorkspaceFolders": ["app"],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

@@ -1,4 +1,4 @@
-import { Cluster } from '../../cluster/types';
+import { Cluster, NodeID } from '../../cluster/types';
 import { CalculatePairs } from './base';
 
 export class CalculatePairsNoNegative extends CalculatePairs {
@@ -20,23 +20,28 @@ export class CalculatePairsNoNegative extends CalculatePairs {
       return [cluster.length + 1, []];
     } else if (this.skip === cluster.length) {
       return [this.skip, [undefined]];
-    } else if (this.skip === 0 && this.limit >= cluster.length) {
-      return this.collectAllClusterIds(cluster);
     } else {
-      return [
-        this.skip,
-        [...cluster, undefined].slice(this.skip, this.skip + this.limit),
-      ];
+      return this.collectClusterIds(cluster);
     }
   }
 
-  protected collectAllClusterIds(
+  protected collectClusterIds(
     cluster: Cluster
   ): ReturnType<CalculatePairs['calculatePairs']> {
-    if (this.limit === cluster.length) {
-      return [0, [...cluster]];
-    } else {
-      return [0, [...cluster, undefined]];
+    const rows: (NodeID | undefined)[] = [];
+    let skipped = 0;
+    for (const nodeId of cluster) {
+      if (skipped < this.skip) {
+        ++skipped;
+      } else if (rows.length < this.limit) {
+        rows.push(nodeId);
+      } else {
+        break;
+      }
     }
+    if (rows.length < this.limit) {
+      rows.push(undefined);
+    }
+    return [skipped, rows];
   }
 }

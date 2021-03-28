@@ -120,6 +120,7 @@ export const DatasetDialogReducer = (
       return {
         ...state,
         availableTags: uniq([...state.availableTags, action.payload as string]),
+        selectedTags: uniq([...state.selectedTags, action.payload as string]),
       };
     default:
       return state;
