@@ -12,17 +12,43 @@ import {
   IonRow,
 } from '@ionic/react';
 import { AlgorithmCardProps } from 'components/AlgorithmCard/AlgorithmCardProps';
-import { create, trash } from 'ionicons/icons';
+import {
+  create,
+  radioButtonOffOutline,
+  radioButtonOnOutline,
+  trash,
+} from 'ionicons/icons';
 import React from 'react';
 
 const AlgorithmCardView = ({
   algorithm,
+  isSelected,
   deleteAlgorithm,
+  selectAlgorithm,
   editAlgorithm,
 }: AlgorithmCardProps): JSX.Element => (
   <IonCard button={false}>
     <IonCardHeader>
-      <IonCardTitle>{algorithm.name}</IonCardTitle>
+      <IonCardTitle>
+        {algorithm.name}
+        <span onClick={selectAlgorithm} style={{ cursor: 'pointer' }}>
+          {isSelected ? (
+            <IonIcon
+              className="ion-float-right"
+              icon={radioButtonOnOutline}
+              size="large"
+              color="primary"
+            />
+          ) : (
+            <IonIcon
+              className="ion-float-right"
+              icon={radioButtonOffOutline}
+              size="large"
+              color="medium"
+            />
+          )}
+        </span>
+      </IonCardTitle>
     </IonCardHeader>
     <IonCardContent>{algorithm.description}</IonCardContent>
     <IonGrid>
@@ -31,32 +57,28 @@ const AlgorithmCardView = ({
           {algorithm.softKPIs?.matchingSolutionType !== undefined ? (
             <IonChip>
               <IonLabel>
-                Type:
-                {algorithm.softKPIs?.matchingSolutionType}
+                {`Type: ${algorithm.softKPIs?.matchingSolutionType}`}
               </IonLabel>
             </IonChip>
           ) : null}
           {algorithm.softKPIs?.implementationKnowHowLevel !== undefined ? (
             <IonChip>
               <IonLabel>
-                KnowHow Level:
-                {algorithm.softKPIs?.implementationKnowHowLevel}
+                {`KnowHow Level: ${algorithm.softKPIs?.implementationKnowHowLevel}`}
               </IonLabel>
             </IonChip>
           ) : null}
           {algorithm.softKPIs?.timeToInstall !== undefined ? (
             <IonChip>
               <IonLabel>
-                Install Time:
-                {algorithm.softKPIs?.timeToInstall}
+                {`Install Time: ${algorithm.softKPIs?.timeToInstall}`}
               </IonLabel>
             </IonChip>
           ) : null}
           {algorithm.softKPIs?.timeToConfigure !== undefined ? (
             <IonChip>
               <IonLabel>
-                Config Time:
-                {algorithm.softKPIs?.timeToConfigure}
+                {`Config Time: ${algorithm.softKPIs?.timeToConfigure}`}
               </IonLabel>
             </IonChip>
           ) : null}

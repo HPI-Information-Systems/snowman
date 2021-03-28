@@ -10,10 +10,7 @@ import { MagicNotPossibleId } from 'structs/constants';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import { ExperimentBuckets } from 'types/ExperimentBuckets';
 import { doesDatasetMatchTags } from 'utils/datasetHelper';
-import {
-  toggleSelectionArrayMultipleSelect,
-  toggleSelectionArraySingleSelect,
-} from 'utils/toggleSelectionArray';
+import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: BenchmarkConfigurationStore = {
   selectedDatasetCategories: [],
@@ -105,7 +102,7 @@ const BenchmarkConfiguratorImmediateReducer = (
     case ExperimentsPageActionTypes.CLICK_ON_MATCHING_SOLUTION:
       return {
         ...ownState,
-        selectedMatchingSolutions: toggleSelectionArraySingleSelect<Algorithm>(
+        selectedMatchingSolutions: toggleSelectionArrayMultipleSelect<Algorithm>(
           ownState.selectedMatchingSolutions,
           action.payload as Algorithm
         ),
