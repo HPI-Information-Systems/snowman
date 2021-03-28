@@ -1,72 +1,119 @@
 import 'pages/DashboardPage/DashboardPageStyles.css';
 
 import {
-  IonButton,
   IonCard,
-  IonCardContent,
-  IonCardHeader,
+  IonCol,
+  IonGrid,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonRow,
+  IonTitle,
+  IonToolbar,
 } from '@ionic/react';
 import IntersectionVennDiagram from 'components/IntersectionVennDiagram/IntersectionVennDiagram';
 import PageStruct from 'components/PageStruct/PageStruct';
+import {
+  calculatorOutline,
+  chevronForwardOutline,
+  colorFilterOutline,
+  pauseOutline,
+} from 'ionicons/icons';
 import { DashboardPageProps } from 'pages/DashboardPage/DashboardPageProps';
 import React, { useEffect } from 'react';
 
 export default function DashboardPageView({
   loadCounts,
-  gotoIntersectionPage,
-  vennDiagramRendered,
-  canShowMetricsPage,
-  gotoMetricsPage,
+  isVennDiagramRendered,
+  isBinaryMetricsDisabled,
+  isNMetricsDisabled,
+  openNMetricsPage,
+  openIntersectionPage,
+  openBinaryMetricsPage,
 }: DashboardPageProps): JSX.Element {
   useEffect(() => {
     loadCounts();
   }, [loadCounts]);
   return (
     <PageStruct title={'Dashboard'}>
-      <div className="dashboard-center">
-        <IonCard className="dashboard-content">
-          <IntersectionVennDiagram
-            onIntersect={gotoIntersectionPage}
-          ></IntersectionVennDiagram>
-          {vennDiagramRendered ? (
-            <div style={{ paddingLeft: '0.4rem', paddingBottom: '0.4rem' }}>
-              <i>
-                You can click on an area in the Venn Diagram to show the
-                intersection.
-              </i>
-            </div>
-          ) : (
-            ''
-          )}
-        </IonCard>
-      </div>
-      <div className="dashboard-center">
-        <IonCard className="dashboard-content">
-          <IonCardHeader>
-            <b>Evaluation Dashboard</b>
-          </IonCardHeader>
-          <IonCardContent>
-            <IonButton
-              color="light"
-              style={{ marginLeft: '0', marginRight: '0.5rem' }}
-              onClick={gotoIntersectionPage}
-            >
-              Intersect experiments
-            </IonButton>
-            {canShowMetricsPage ? (
-              <IonButton
-                color="light"
-                style={{ marginLeft: '0', marginRight: '0.5rem' }}
-                onClick={gotoMetricsPage}
+      <IonGrid>
+        <IonRow>
+          <IonCol size="12" sizeLg="8">
+            <IonCard className="dashboard-content">
+              <IntersectionVennDiagram onIntersect={openIntersectionPage} />
+              {isVennDiagramRendered ? (
+                <div
+                  style={{
+                    paddingLeft: '0.4rem',
+                    paddingBottom: '0.4rem',
+                    textAlign: 'center',
+                  }}
+                >
+                  <i>
+                    You can click on an area in the Venn Diagram to show the
+                    intersection.
+                  </i>
+                </div>
+              ) : (
+                ''
+              )}
+            </IonCard>
+          </IonCol>
+          <IonCol size="12" sizeLg="4">
+            <IonCard>
+              <IonHeader>
+                <IonToolbar>
+                  <IonTitle>Evaluation Actions</IonTitle>
+                </IonToolbar>
+              </IonHeader>
+              <IonItem
+                button
+                disabled={isBinaryMetricsDisabled}
+                onClick={openBinaryMetricsPage}
               >
-                View Metrics
-              </IonButton>
-            ) : (
-              ''
-            )}
-          </IonCardContent>
-        </IonCard>
-      </div>
+                <IonIcon icon={pauseOutline} slot="start" />
+                <IonLabel>
+                  <h2>Binary comparison (two only)</h2>
+                  <p className="ion-text-wrap">
+                    Evaluate a single experiment run against a gold standard in
+                    a traditional binary comparison.
+                  </p>
+                </IonLabel>
+                <IonIcon icon={chevronForwardOutline} slot="end" />
+              </IonItem>
+              <IonItem button onClick={openIntersectionPage}>
+                <IonIcon icon={colorFilterOutline} slot="start" />
+                <IonLabel>
+                  <h2>Visually compare all pairs</h2>
+                  <p className="ion-text-wrap">
+                    Use a visual representation to investigate which pairs were
+                    detected as duplicates within each experiment. Selecting one
+                    experiment as a gold standard is optional.
+                  </p>
+                </IonLabel>
+                <IonIcon icon={chevronForwardOutline} slot="end" />
+              </IonItem>
+              <IonItem
+                button
+                disabled={isNMetricsDisabled}
+                onClick={openNMetricsPage}
+              >
+                <IonIcon icon={calculatorOutline} slot="start" />
+                <IonLabel>
+                  <h2>Compare binary metrics for all</h2>
+                  <p className="ion-text-wrap">
+                    Select multiple experiments and a single gold standard.
+                    You&apos;ll be able to compare all experiments&apos; metrics
+                    against each other in a table.
+                  </p>
+                </IonLabel>
+                <IonIcon icon={chevronForwardOutline} slot="end" />
+              </IonItem>
+            </IonCard>
+          </IonCol>
+        </IonRow>
+      </IonGrid>
     </PageStruct>
   );
 }

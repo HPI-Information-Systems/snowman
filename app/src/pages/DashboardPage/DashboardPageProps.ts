@@ -1,12 +1,14 @@
 export interface DashboardPageStateProps {
-  vennDiagramRendered: boolean;
-  canShowMetricsPage: boolean;
+  isVennDiagramRendered: boolean;
+  isBinaryMetricsDisabled: boolean;
+  isNMetricsDisabled: boolean;
 }
 
 export interface DashboardPageDispatchProps {
   loadCounts(): Promise<void>;
-  gotoIntersectionPage(): void;
-  gotoMetricsPage(): void;
+  openIntersectionPage(): void;
+  openNMetricsPage(): void;
+  openBinaryMetricsPage(): void;
 }
 
 export type DashboardPageProps = DashboardPageDispatchProps &

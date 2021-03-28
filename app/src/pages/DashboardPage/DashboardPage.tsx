@@ -10,14 +10,18 @@ import { navigateTo } from 'store/actions/RenderStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 import { ViewIDs } from 'types/ViewIDs';
-import { couldEnterNMetricsPage } from 'utils/accessGuards';
+import {
+  couldEnterBinaryMetricsPage,
+  couldEnterNMetricsPage,
+} from 'utils/accessGuards';
 
 const mapStateToProps = (state: Store): DashboardPageStateProps => ({
-  vennDiagramRendered:
+  isVennDiagramRendered:
     state.BenchmarkConfigurationStore.chosenExperiments.length +
       state.BenchmarkConfigurationStore.chosenGoldStandards.length <=
     MAX_VENN_DIAGRAM_DIMENSION,
-  canShowMetricsPage: couldEnterNMetricsPage(state),
+  isBinaryMetricsDisabled: !couldEnterBinaryMetricsPage(state),
+  isNMetricsDisabled: !couldEnterNMetricsPage(state),
 });
 
 const mapDispatchToProps = (
@@ -27,11 +31,14 @@ const mapDispatchToProps = (
     loadCounts() {
       return dispatch(loadCounts());
     },
-    gotoIntersectionPage() {
+    openIntersectionPage() {
       dispatch(navigateTo(ViewIDs.INTERSECTION));
     },
-    gotoMetricsPage() {
+    openNMetricsPage() {
       dispatch(navigateTo(ViewIDs.N_METRICS));
+    },
+    openBinaryMetricsPage() {
+      dispatch(navigateTo(ViewIDs.BINARY_METRICS));
     },
   };
 };
