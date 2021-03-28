@@ -70,7 +70,7 @@ export default function IntersectionVennDiagramView({
                 pointerEvents: 'none',
                 padding: '1rem',
                 fontSize: '1.5rem',
-                color: 'black',
+                textAlign: 'left',
               }}
             >
               <b>Ω</b>
