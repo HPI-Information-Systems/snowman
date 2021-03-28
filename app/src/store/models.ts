@@ -103,6 +103,10 @@ export interface BinaryMetricsStore {
   selectedDataView: MetricsTuplesCategories;
 }
 
+export interface NMetricsStore {
+  metrics: Metric[][];
+}
+
 export interface ImmediateStore {
   CoreStore: CoreStore;
   AlgorithmDialogStore: AlgorithmDialogStore;
@@ -110,6 +114,7 @@ export interface ImmediateStore {
   ExperimentDialogStore: ExperimentDialogStore;
   BenchmarkConfigurationStore: BenchmarkConfigurationStore;
   BinaryMetricsStore: BinaryMetricsStore;
+  NMetricsStore: NMetricsStore;
   GlobalIndicatorStore: GlobalIndicatorStore;
   InputChipStore: InputChipStore;
   SelectableInputStore: SelectableInputStore;

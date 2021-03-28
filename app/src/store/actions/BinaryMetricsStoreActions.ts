@@ -1,6 +1,10 @@
 import { BenchmarkApi, FileResponse, Metric } from 'api';
 import { BinaryMetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import {
+  getGroundTruthId,
+  getMetrics,
+} from 'store/actions/CommonMetricsActions';
+import {
   SnowmanAction,
   SnowmanDispatch,
   SnowmanThunkAction,
@@ -13,10 +17,6 @@ import {
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import RequestHandler from 'utils/requestHandler';
 
-const getGroundTruthId = (): number => {
-  return store.getState().BenchmarkConfigurationStore.chosenGoldStandards[0].id;
-};
-
 const getExperiment1Id = (): number => {
   return store.getState().BenchmarkConfigurationStore.chosenExperiments[0].id;
 };
@@ -25,23 +25,12 @@ export const loadMetrics = (): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> => {
   dispatch(resetMetrics());
-  return RequestHandler(
-    () =>
-      new BenchmarkApi()
-        .getBinaryMetrics({
-          experimentId1: getGroundTruthId(),
-          experimentId2: getExperiment1Id(),
-        })
-        .then(
-          (response: Metric[]): SnowmanAction =>
-            dispatch({
-              type: actionTypes.SET_ALL_METRICS,
-              payload: response,
-            })
-        )
-        .then(),
-    dispatch,
-    SUCCESS_LOAD_BINARY_METRICS
+  dispatch(getMetrics(getExperiment1Id(), SUCCESS_LOAD_BINARY_METRICS)).then(
+    (response: Metric[]): SnowmanAction =>
+      dispatch({
+        type: actionTypes.SET_ALL_METRICS,
+        payload: response,
+      })
   );
 };
 

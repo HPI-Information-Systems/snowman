@@ -8,6 +8,7 @@ import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 
 type ActionPayload =
   | Metric[]
+  | Metric[][]
   | FileResponse
   | string
   | string[]

@@ -10,7 +10,7 @@ import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
 import BinaryMetricsPage from 'pages/BinaryMetricsPage/BinaryMetricsPage';
 import DatasetsPage from 'pages/DatasetsPage/DatasetsPage';
 import ExperimentsPage from 'pages/ExperimentsPage/ExperimentsPage';
-import { NMetricsPage } from 'pages/NMetricsPage/NMetricsPage';
+import NMetricsPage from 'pages/NMetricsPage/NMetricsPage';
 import RootPage from 'pages/RootPage/RootPage';
 import { menuCategories } from 'types/MenuCategories';
 import { ViewIDs } from 'types/ViewIDs';
