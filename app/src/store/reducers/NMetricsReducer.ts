@@ -1,5 +1,5 @@
 import { Metric } from 'api';
-import { NMetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
+import { NMetricsPageActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { NMetricsStore } from 'store/models';
 

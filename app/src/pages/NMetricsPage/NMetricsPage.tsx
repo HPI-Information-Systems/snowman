@@ -1,10 +1,14 @@
+import { Experiment } from 'api';
 import NMetricsPageView from 'pages/NMetricsPage/NMetricsPage.View';
 import {
   NMetricsPageDispatchProps,
   NMetricsPageStateProps,
 } from 'pages/NMetricsPage/NMetricsPageProps';
 import { connect } from 'react-redux';
-import { loadNMetrics } from 'store/actions/NMetricsPageActions';
+import {
+  inspectOneExperiment,
+  loadNMetrics,
+} from 'store/actions/NMetricsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 
@@ -18,6 +22,9 @@ const mapDispatchToProps = (
 ): NMetricsPageDispatchProps => ({
   loadMetrics() {
     dispatch(loadNMetrics());
+  },
+  inspectExperiment(anExperiment: Experiment) {
+    dispatch(inspectOneExperiment(anExperiment));
   },
 });
 

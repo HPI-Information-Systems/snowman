@@ -7,6 +7,7 @@ export interface NMetricsPageStateProps {
 
 export interface NMetricsPageDispatchProps {
   loadMetrics(): void;
+  inspectExperiment(anExperiment: Experiment): void;
 }
 
 export type NMetricsPageProps = NMetricsPageStateProps &
