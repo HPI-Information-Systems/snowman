@@ -1,4 +1,4 @@
-import 'pages/ExperimentsPage/ExperimentsPage.Styles.css';
+import 'pages/ExperimentsPage/ExperimentsPageStyles.css';
 
 import {
   IonCard,

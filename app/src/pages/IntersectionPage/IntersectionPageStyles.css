@@ -1,0 +1,18 @@
+:root {
+    --minSplitWidth: 1200px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    position: relative;
+    min-height: 100%;
+}
+
+.container .splitter {
+    min-width: calc(var(--minSplitWidth) / 2);
+    flex-grow: 1;
+    width: 40%;
+    max-width: 100%;
+}

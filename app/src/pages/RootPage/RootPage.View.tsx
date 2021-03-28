@@ -1,4 +1,4 @@
-import 'pages/RootPage/RootPageStyle.css';
+import 'pages/RootPage/RootPageStyles.css';
 
 import PageStruct from 'components/PageStruct/PageStruct';
 import React from 'react';

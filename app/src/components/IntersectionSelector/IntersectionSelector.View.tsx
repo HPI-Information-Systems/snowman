@@ -1,4 +1,4 @@
-import 'components/IntersectionSelector/IntersectionSelector.Styles.scss';
+import 'components/IntersectionSelector/IntersectionSelectorStyles.css';
 
 import { IonCol, IonGrid, IonRow } from '@ionic/react';
 import React from 'react';
