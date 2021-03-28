@@ -51,8 +51,8 @@ export default function DashboardPageView({
                   }}
                 >
                   <i>
-                    You can click on an area in the Venn Diagram to show the
-                    intersection.
+                    You can click on an area in the Venn Diagram to directly
+                    start browsing an intersection.
                   </i>
                 </div>
               ) : (

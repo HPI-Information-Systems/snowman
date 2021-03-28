@@ -121,7 +121,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     accessGuard: accessGuards.couldEnterIntersectionPage,
     shouldShowInMenu: true,
     menuCategory: menuCategories.EVALUATION,
-    menuName: 'Intersection',
+    menuName: 'Intersections',
     menuIcon: pieChart,
     menuSortKey: 8,
     selectedOptionsReminder: emptySelectedOptions,
