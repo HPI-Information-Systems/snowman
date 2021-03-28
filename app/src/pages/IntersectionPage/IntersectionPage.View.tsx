@@ -1,4 +1,4 @@
-import 'pages/IntersectionPage/IntersectionPage.Styles.scss';
+import 'pages/IntersectionPage/IntersectionPage.Styles.css';
 
 import { IonCard, IonCardContent, IonCardHeader } from '@ionic/react';
 import PageStruct from 'components/PageStruct/PageStruct';

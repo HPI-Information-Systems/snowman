@@ -1,5 +1,3 @@
-import 'components/IntersectionSelector/IntersectionSelector.Styles.scss';
-
 import { IonCol, IonGrid, IonRow } from '@ionic/react';
 import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
