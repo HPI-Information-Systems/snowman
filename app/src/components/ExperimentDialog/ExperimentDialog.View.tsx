@@ -4,6 +4,7 @@ import {
   IonIcon,
   IonInput,
   IonItem,
+  IonItemDivider,
   IonLabel,
   IonList,
   IonNote,
@@ -63,6 +64,9 @@ const ExperimentDialogView = ({
           placeholder="e.g. Randomly assigned pairs for testing purposes."
         />
       </IonItem>
+      <IonItemDivider>
+        <IonLabel>UPLOAD CONTENT</IonLabel>
+      </IonItemDivider>
       <IonItem>
         <IonLabel position="fixed">File Format:</IonLabel>
         <SelectableInput
@@ -80,6 +84,18 @@ const ExperimentDialogView = ({
           onChange={changeSelectedFiles}
         />
       </IonItem>
+      {!isAddDialog ? (
+        <div className="center">
+          <IonNote color="medium">
+            <b>Note: Uploading a file is optional here!</b>
+            <br />
+            If no file is selected, the stored records will remain unchanged.
+          </IonNote>
+        </div>
+      ) : null}
+      <IonItemDivider>
+        <IonLabel>SPECIFY SOFT KPIS</IonLabel>
+      </IonItemDivider>
       <IonItem>
         <IonLabel>Time to Configure</IonLabel>
         <IonInput
@@ -87,18 +103,13 @@ const ExperimentDialogView = ({
           type="number"
           value={timeToConfigure}
           onIonChange={changeTimeToConfigure}
+          className="input-align-right"
         />
       </IonItem>
+      <IonItemDivider>
+        <IonLabel>USED MATCHING SOLUTION</IonLabel>
+      </IonItemDivider>
     </IonList>
-    {!isAddDialog ? (
-      <div className="center upload-notice">
-        <IonNote color="medium">
-          <b>Note: Uploading a file is optional here!</b>
-          <br />
-          If no file is selected, the stored records will remain unchanged.
-        </IonNote>
-      </div>
-    ) : null}
     <div className="center tag-view">
       {tags.map(
         (aTag: string): JSX.Element => (
