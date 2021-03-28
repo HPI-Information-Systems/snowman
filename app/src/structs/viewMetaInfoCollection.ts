@@ -1,7 +1,9 @@
+import VennDiagramPageExample from 'components/VennDiagram/VennDiagramPageExample';
 import {
   albums,
   calculator,
   documents,
+  flaskOutline,
   home,
   pauseCircle,
   rocket,
@@ -95,6 +97,18 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuName: 'N-ary Metrics',
     menuIcon: calculator,
     menuSortKey: 7,
+    selectedOptionsReminder: emptySelectedOptions,
+  },
+  {
+    key: ViewIDs.VENN_EXAMPLE,
+    component: VennDiagramPageExample,
+    nextView: ViewIDs.VENN_EXAMPLE,
+    accessGuard: accessGuards.couldAlwaysEnterPage,
+    shouldShowInMenu: true,
+    menuCategory: menuCategories.EVALUATION,
+    menuName: 'Venn Diagram Example',
+    menuIcon: flaskOutline,
+    menuSortKey: 8,
     selectedOptionsReminder: emptySelectedOptions,
   },
   // Icon for n-visual: colorFilter
