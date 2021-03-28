@@ -5,6 +5,7 @@ import {
   IonIcon,
   IonInput,
   IonItem,
+  IonItemDivider,
   IonLabel,
   IonList,
   IonSelect,
@@ -67,6 +68,9 @@ const AlgorithmDialogView = ({
           placeholder="e.g. Matching solution developed by a team at our company."
         />
       </IonItem>
+      <IonItemDivider>
+        <IonLabel>SPECIFY SOFT KPIS</IonLabel>
+      </IonItemDivider>
       <IonItem>
         <IonLabel>Matching Solution Type</IonLabel>
         <IonSelect
@@ -124,6 +128,7 @@ const AlgorithmDialogView = ({
           type="number"
           value={timeToInstall}
           onIonChange={changeTimeToInstall}
+          className="input-align-right"
         />
       </IonItem>
       <IonItem>
@@ -133,6 +138,7 @@ const AlgorithmDialogView = ({
           type="number"
           value={timeToConfigure}
           onIonChange={changeTimeToConfigure}
+          className="input-align-right"
         />
       </IonItem>
     </IonList>
