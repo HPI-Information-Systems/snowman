@@ -72,7 +72,7 @@ const DatasetCard = ({
           </IonCol>
         </IonRow>
         <IonRow>
-          <IonCol size="6">
+          <IonCol size="12" sizeMd="6">
             <IonButton
               size="small"
               fill="clear"
@@ -84,7 +84,7 @@ const DatasetCard = ({
               Edit
             </IonButton>
           </IonCol>
-          <IonCol size="6">
+          <IonCol size="12" sizeMd="6">
             <IonButton
               size="small"
               fill="clear"
