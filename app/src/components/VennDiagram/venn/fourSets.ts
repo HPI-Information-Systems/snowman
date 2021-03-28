@@ -47,7 +47,7 @@ export const drawFourSetVennDiagram = (
     dimensions: { x: 200, y: 110 },
     textPosition: { x: 180, y: 65 },
     ...payload.x0100,
-    color: payload.x0100.color ?? 'purple',
+    color: payload.x0100.color ?? '#9400D3',
   });
   drawEllipsis({
     svg,
@@ -140,7 +140,7 @@ export const drawFourSetVennDiagram = (
     position: { x: 266, y: 176 },
     dimensions: { x: 200, y: 110 },
     ...payload.x0100,
-    color: payload.x0100.color ?? 'purple',
+    color: payload.x0100.color ?? '#9400D3',
   });
   drawEllipsisStroke({
     svg,

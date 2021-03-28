@@ -28,7 +28,7 @@ export const drawTwoSetVennDiagram = (
     },
     textPosition: { x: 180, y: 125 },
     ...payload.x10,
-    color: payload.x10.color ?? 'purple',
+    color: payload.x10.color ?? '#9400D3',
   });
   drawCircle({
     svg,
@@ -57,7 +57,7 @@ export const drawTwoSetVennDiagram = (
       y: 156,
     },
     ...payload.x10,
-    color: payload.x10.color ?? 'purple',
+    color: payload.x10.color ?? '#9400D3',
   });
   drawCircleStroke({
     svg,

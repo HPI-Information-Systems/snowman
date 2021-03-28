@@ -44,7 +44,7 @@ export const drawThreeSetVennDiagram = (
     },
     textPosition: { x: 420, y: 275 },
     ...payload.x010,
-    color: payload.x010.color ?? 'purple',
+    color: payload.x010.color ?? '#9400D3',
   });
   drawCircle({
     svg,
