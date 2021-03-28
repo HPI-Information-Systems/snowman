@@ -41,12 +41,10 @@ const IntersectionPageView = ({
       <div className="container">
         <div className="splitter">
           <IonCard>
-            <IntersectionVennDiagram
-              strategy={strategy}
-            ></IntersectionVennDiagram>
+            <IntersectionVennDiagram strategy={strategy} />
           </IonCard>
           <IonCard>
-            <IntersectionSelector></IntersectionSelector>
+            <IntersectionSelector />
           </IonCard>
         </div>
         <IonCard
@@ -70,10 +68,7 @@ const IntersectionPageView = ({
           <IonCardContent
             style={{ minHeight: '20rem', maxHeight: '90vh', flexGrow: '1' }}
           >
-            <DataViewer
-              loadTuples={loadTuples}
-              tuplesCount={tuplesCount}
-            ></DataViewer>
+            <DataViewer loadTuples={loadTuples} tuplesCount={tuplesCount} />
           </IonCardContent>
         </IonCard>
       </div>
