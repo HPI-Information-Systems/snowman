@@ -12,38 +12,17 @@ import {
   IonRow,
 } from '@ionic/react';
 import { AlgorithmCardProps } from 'components/AlgorithmCard/AlgorithmCardProps';
-import { checkboxOutline, create, squareOutline, trash } from 'ionicons/icons';
+import { create, trash } from 'ionicons/icons';
 import React from 'react';
 
 const AlgorithmCardView = ({
   algorithm,
-  isSelected,
   deleteAlgorithm,
-  selectAlgorithm,
   editAlgorithm,
 }: AlgorithmCardProps): JSX.Element => (
   <IonCard button={false}>
     <IonCardHeader>
-      <IonCardTitle>
-        {algorithm.name}
-        <span onClick={selectAlgorithm} style={{ cursor: 'pointer' }}>
-          {isSelected ? (
-            <IonIcon
-              className="ion-float-right"
-              icon={checkboxOutline}
-              size="large"
-              color="primary"
-            />
-          ) : (
-            <IonIcon
-              className="ion-float-right"
-              icon={squareOutline}
-              size="large"
-              color="medium"
-            />
-          )}
-        </span>
-      </IonCardTitle>
+      <IonCardTitle>{algorithm.name}</IonCardTitle>
     </IonCardHeader>
     <IonCardContent>{algorithm.description}</IonCardContent>
     <IonGrid>

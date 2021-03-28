@@ -44,7 +44,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     nextView: ViewIDs.DATASETS,
     accessGuard: accessGuards.couldAlwaysEnterPage,
     shouldShowInMenu: true,
-    menuCategory: menuCategories.CONFIGURATION,
+    menuCategory: menuCategories.GENERAL,
     menuIcon: rocket,
     menuName: 'Matching Solutions',
     menuSortKey: 2,
