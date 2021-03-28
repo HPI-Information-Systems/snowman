@@ -14,16 +14,16 @@ export const drawOneSetVennDiagram = (
   payload: VennDiagramOneSetConfig
 ): void => {
   clearSelection(svg);
-  svg.attr('viewBox', '0 0 600 600');
+  svg.attr('viewBox', '0 0 600 300');
 
   drawCircle({
     svg,
     radius: 130,
     position: {
       x: 300,
-      y: 300,
+      y: 150,
     },
-    textPosition: { x: 300, y: 300 },
+    textPosition: { x: 300, y: 150 },
     ...payload.x1,
     color: payload.x1.color ?? '#00bf00',
   });
