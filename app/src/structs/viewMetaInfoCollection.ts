@@ -20,6 +20,7 @@ import {
   emptySelectedOptions,
   selectedDataset,
   selectedExperiments,
+  selectedMatchingSolutions,
 } from 'utils/optionReminders';
 
 export const PrimaryViewMetaInformation: ViewMetaInformation = {
@@ -40,14 +41,14 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
   {
     key: ViewIDs.ALGORITHMS,
     component: AlgorithmsPage,
-    nextView: ViewIDs.ALGORITHMS,
+    nextView: ViewIDs.DATASETS,
     accessGuard: accessGuards.couldAlwaysEnterPage,
     shouldShowInMenu: true,
-    menuCategory: menuCategories.GENERAL,
+    menuCategory: menuCategories.CONFIGURATION,
     menuIcon: rocket,
     menuName: 'Matching Solutions',
     menuSortKey: 2,
-    selectedOptionsReminder: emptySelectedOptions,
+    selectedOptionsReminder: selectedMatchingSolutions,
   },
   {
     key: ViewIDs.DATASETS,

@@ -3,6 +3,7 @@ import { Algorithm } from 'api';
 import AddAlgorithmFab from 'components/AddFab/AddAlgorithmFab';
 import AlgorithmCard from 'components/AlgorithmCard/AlgorithmCard';
 import AlgorithmDialog from 'components/AlgorithmDialog/AlgorithmDialog';
+import NextFab from 'components/NextFab/NextFab';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { AlgorithmsPageProps } from 'pages/AlgorithmsPage/AlgorithmsPageProps';
 import React, { useEffect } from 'react';
@@ -24,6 +25,7 @@ const AlgorithmsPageView = ({
         </IonRow>
       </IonGrid>
       <AddAlgorithmFab />
+      <NextFab />
       <AlgorithmDialog />
     </PageStruct>
   );
