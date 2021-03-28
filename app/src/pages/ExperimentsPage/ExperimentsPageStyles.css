@@ -4,10 +4,6 @@
   border-color: #3b4151;
 }
 
-.col-no-padding {
-  --ion-grid-column-padding: 0;
-}
-
 .dropzone-title {
   display: inline-block;
   width: 100%;

@@ -1,18 +1,3 @@
-:root {
-  --minSplitWidth: 1200px;
-}
-
-.container {
-  display: flex;
-  position: relative;
-  flex-wrap: wrap;
-  width: 100%;
-  min-height: 100%;
-}
-
-.container .splitter {
-  flex-grow: 1;
-  width: 40%;
-  min-width: calc(var(--minSplitWidth) / 2);
-  max-width: 100%;
+.dataviewer-card-full {
+  height: 80vh;
 }

@@ -1,6 +1,13 @@
 import 'pages/IntersectionPage/IntersectionPageStyles.css';
 
-import { IonCard, IonCardContent, IonCardHeader } from '@ionic/react';
+import {
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCol,
+  IonGrid,
+  IonRow,
+} from '@ionic/react';
 import DataViewer from 'components/DataViewer/DataViewer';
 import IntersectionSelector from 'components/IntersectionSelector/IntersectionSelector';
 import { IntersectionVennDiagramConfigStrategy } from 'components/IntersectionVennDiagram/config';
@@ -37,40 +44,44 @@ const IntersectionPageView = ({
 
   return (
     <PageStruct title={'Intersection'}>
-      <div className="container">
-        <div className="splitter">
-          <IonCard>
-            <IntersectionVennDiagram strategy={strategy} />
-          </IonCard>
-          <IonCard>
-            <IntersectionSelector />
-          </IonCard>
-        </div>
-        <IonCard
-          className="splitter"
-          style={{
-            flexGrow: 100,
-            display: 'flex',
-            flexDirection: 'column',
-            flexWrap: 'wrap',
-          }}
-        >
-          <IonCardHeader>
-            <b>
-              {intersectionDescription({
-                excluded: excluded.map(({ name }) => name),
-                included: included.map(({ name }) => name),
-                pairCount,
-              })}
-            </b>
-          </IonCardHeader>
-          <IonCardContent
-            style={{ minHeight: '20rem', maxHeight: '90vh', flexGrow: '1' }}
-          >
-            <DataViewer loadTuples={loadTuples} tuplesCount={tuplesCount} />
-          </IonCardContent>
-        </IonCard>
-      </div>
+      <IonGrid>
+        <IonRow>
+          <IonCol class="col-no-padding" size="12" sizeXl="6">
+            <IonRow>
+              <IonCol class="col-no-padding">
+                <IonCard>
+                  <IntersectionVennDiagram strategy={strategy} />
+                </IonCard>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol class="col-no-padding">
+                <IntersectionSelector />
+              </IonCol>
+            </IonRow>
+          </IonCol>
+          <IonCol class="col-no-padding" size="12" sizeXl="6">
+            <IonCard class="dataviewer-card-full">
+              <IonCardHeader>
+                <b>
+                  {intersectionDescription({
+                    excluded: excluded.map(({ name }) => name),
+                    included: included.map(({ name }) => name),
+                    pairCount,
+                  })}
+                </b>
+              </IonCardHeader>
+              <IonCardContent
+                style={{
+                  height: '72vh',
+                }}
+              >
+                <DataViewer loadTuples={loadTuples} tuplesCount={tuplesCount} />
+              </IonCardContent>
+            </IonCard>
+          </IonCol>
+        </IonRow>
+      </IonGrid>
     </PageStruct>
   );
 };

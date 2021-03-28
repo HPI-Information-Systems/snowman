@@ -1,4 +1,11 @@
-import { IonCol, IonGrid, IonRow } from '@ionic/react';
+import {
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCol,
+  IonGrid,
+  IonRow,
+} from '@ionic/react';
 import IntersectionDroppable from 'components/IntersectionDroppable/IntersectionDroppable';
 import { IntersectionSelectorProps } from 'components/IntersectionSelector/IntersectionSelectorProps';
 import React from 'react';
@@ -15,7 +22,7 @@ const IntersectionSelectorView = ({
   include,
 }: IntersectionSelectorProps): JSX.Element => {
   return (
-    <IonGrid>
+    <IonGrid class="grid-no-padding">
       <IonRow>
         <DragDropContext
           onDragEnd={(result) => {
@@ -25,7 +32,7 @@ const IntersectionSelectorView = ({
               targetBucket,
             } = getDndDescriptorFromDropResult<IntersectionBuckets>(
               result,
-              IntersectionBuckets.IRRELEVANT
+              IntersectionBuckets.IGNORED
             );
             const source =
               sourceBucket === IntersectionBuckets.EXCLUDED
@@ -43,26 +50,44 @@ const IntersectionSelectorView = ({
             }
           }}
         >
-          <IonCol size="4" class="droppable-zone">
-            <h2>available</h2>
-            <IntersectionDroppable
-              bucketId={IntersectionBuckets.IRRELEVANT}
-              bucketContent={ignored}
-            />
+          <IonCol size="4" class="col-no-padding">
+            <IonCard>
+              <IonCardHeader>
+                <IonCardTitle>available</IonCardTitle>
+              </IonCardHeader>
+              <IonGrid class="grid-5px-padding">
+                <IntersectionDroppable
+                  bucketId={IntersectionBuckets.IGNORED}
+                  bucketContent={ignored}
+                />
+              </IonGrid>
+            </IonCard>
           </IonCol>
-          <IonCol size="4" class="droppable-zone">
-            <h2>intersect (∩)</h2>
-            <IntersectionDroppable
-              bucketId={IntersectionBuckets.INCLUDED}
-              bucketContent={included}
-            />
+          <IonCol size="4" class="col-no-padding">
+            <IonCard>
+              <IonCardHeader>
+                <IonCardTitle>intersect (∩)</IonCardTitle>
+              </IonCardHeader>
+              <IonGrid class="grid-5px-padding">
+                <IntersectionDroppable
+                  bucketId={IntersectionBuckets.INCLUDED}
+                  bucketContent={included}
+                />
+              </IonGrid>
+            </IonCard>
           </IonCol>
-          <IonCol size="4" class="droppable-zone">
-            <h2>exclude (\)</h2>
-            <IntersectionDroppable
-              bucketId={IntersectionBuckets.EXCLUDED}
-              bucketContent={excluded}
-            />
+          <IonCol size="4" class="col-no-padding">
+            <IonCard>
+              <IonCardHeader>
+                <IonCardTitle>exclude (\)</IonCardTitle>
+              </IonCardHeader>
+              <IonGrid class="grid-5px-padding">
+                <IntersectionDroppable
+                  bucketId={IntersectionBuckets.EXCLUDED}
+                  bucketContent={excluded}
+                />
+              </IonGrid>
+            </IonCard>
           </IonCol>
         </DragDropContext>
       </IonRow>

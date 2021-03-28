@@ -1,5 +1,3 @@
-import 'components/ExperimentDroppable/ExperimentDroppableStyles.css';
-
 import { IonChip, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react';
 import { Experiment } from 'api';
 import { IntersectionDroppableProps } from 'components/IntersectionDroppable/IntersectionDroppableProps';
@@ -34,7 +32,7 @@ const IntersectionDroppableView = ({
         {...provided.dragHandleProps}
         {...provided.draggableProps}
       >
-        <IonCol>
+        <IonCol class="col-5px-padding">
           <IonChip
             color={
               bucketId === IntersectionBuckets.EXCLUDED
