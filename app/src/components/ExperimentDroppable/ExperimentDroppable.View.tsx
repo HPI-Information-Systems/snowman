@@ -18,6 +18,7 @@ import { getAlgorithmNameFromId } from 'utils/algorithmHelpers';
 const ExperimentDroppableView = ({
   bucketId,
   bucketContent,
+  isDropDisabled,
   matchingSolutions,
   editExperiment,
   deleteExperiment,
@@ -56,7 +57,11 @@ const ExperimentDroppableView = ({
     );
   };
   return (
-    <Droppable droppableId={bucketId} renderClone={experimentRenderer}>
+    <Droppable
+      droppableId={bucketId}
+      renderClone={experimentRenderer}
+      isDropDisabled={isDropDisabled}
+    >
       {(provided: DroppableProvided): JSX.Element => (
         <IonGrid
           {...provided.droppableProps}

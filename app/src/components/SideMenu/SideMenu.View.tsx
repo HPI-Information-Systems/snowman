@@ -1,3 +1,5 @@
+import 'components/SideMenu/SideMenuStyles.css';
+
 import {
   IonContent,
   IonHeader,
@@ -56,10 +58,21 @@ const SideMenuView = ({
                       {aCategoryItem.selectedOptions.map(
                         (anOption: SelectedOptionItem): JSX.Element => (
                           <p key={anOption.displayName}>
-                            {anOption.icon !== null ? (
-                              <IonIcon icon={anOption.icon} />
+                            {anOption.iconStart !== undefined ? (
+                              <IonIcon
+                                className="sm-option-middle"
+                                icon={anOption.iconStart}
+                              />
                             ) : null}
-                            {anOption.displayName}
+                            <span className="sm-option-middle">
+                              {anOption.displayName}
+                            </span>
+                            {anOption.iconEnd !== undefined ? (
+                              <IonIcon
+                                className="sm-option-middle"
+                                icon={anOption.iconEnd}
+                              />
+                            ) : null}
                           </p>
                         )
                       )}

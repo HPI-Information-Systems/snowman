@@ -8,6 +8,7 @@ export interface ExperimentDroppableOwnProps {
 export interface ExperimentDroppableStateProps {
   bucketContent: Experiment[];
   matchingSolutions: Algorithm[];
+  isDropDisabled: boolean;
 }
 
 export interface ExperimentDroppableDispatchProps {

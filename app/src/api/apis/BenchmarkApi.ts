@@ -47,7 +47,6 @@ export interface CalculateExperimentIntersectionRecordsRequest {
     experimentIntersectionRequestExperiments: Array<ExperimentIntersectionRequestExperiments>;
     startAt?: number;
     limit?: number;
-    sortBy?: string;
 }
 
 export interface GetBinaryMetricsRequest {
@@ -146,10 +145,6 @@ export class BenchmarkApi extends runtime.BaseAPI {
 
         if (requestParameters.limit !== undefined) {
             queryParameters['limit'] = requestParameters.limit;
-        }
-
-        if (requestParameters.sortBy !== undefined) {
-            queryParameters['sortBy'] = requestParameters.sortBy;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

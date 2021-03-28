@@ -6,14 +6,15 @@
   "license": "MIT",
   "main": "dist/main.js",
   "scripts": {
+    "start": "npm run build-no-database && electron .",
+    "start-api": "npm run build && node ./dist/api/main.js",
+    "build": "npm run build-no-database && node ./dist/api/buildDatabase.js",
+    "build-no-database": "rimraf ./dist/* && tsc",
     "erebuild": "run-script-os",
     "erebuild:windows": ".\\node_modules\\.bin\\electron-rebuild.cmd",
     "erebuild:default": "electron-rebuild",
     "test": "jest --testPathIgnorePatterns=\".only-ci.spec.ts$\"",
     "test-ci": "jest",
-    "start": "npm run build && electron .",
-    "start-api": "npm run build && node ./dist/api/main.js",
-    "build": "rimraf ./dist/* && tsc && node ./dist/api/buildDatabase.js",
     "release": "rimraf ./build/* && npm run build && electron-builder"
   },
   "build": {

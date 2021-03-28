@@ -33,6 +33,13 @@ export const dragNDropAnExperiment = (
     payload: getDndDescriptorFromDropResult(aDropResult),
   });
 
+export const clickOnExperimentsFilterTool = (): easyPrimitiveActionReturn =>
+  easyPrimitiveAction({
+    type: ExperimentsPageActionTypes.CLICK_ON_EXPERIMENTS_FILTER_TOOL,
+    // reducer ignores payload
+    payload: false,
+  });
+
 export const getExperiments = (): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> =>

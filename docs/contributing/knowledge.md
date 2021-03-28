@@ -14,13 +14,11 @@ This document contains information about how to extend the codebase in specific 
 
 ## Updating the database schema
 
-1. create a folder for the new version in `api/database/schemas` named like `v1`
-2. copy all files from the previous version
-3. make necessary changes
-4. edit the `migration.ts` file and update `version`, `successor` and `migrateFromLastVersion`
-   - make sure the `version` is unique
-   - `migrateFromLastVersion` contains the migration logic
-5. update `api/database/schemas/index.ts` and export the new version as `latest`
+1. change the schema under `api/database/schemas` as required
+2. create a migration script in `api/database/schemas/migrations` which **does not reference the schema** (as it might change in the future)
+   - that means the changes should be "duplicated" here. See `api/database/schemas/v3.ts` as an example.
+   - You can overwrite `performResetAsMigration` if a migration is not possible and the database must be recreated.
+3. update `api/database/schemas/migrations/index.ts` and export the new version as `latest`
 
 ## Creating a release
 
