@@ -9,12 +9,11 @@ import {
   SnowmanDispatch,
   SnowmanThunkAction,
 } from 'store/messages';
+import { Store } from 'store/models';
 import { store } from 'store/store';
 import { SUCCESS_LOAD_BINARY_METRICS } from 'structs/statusMessages';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import RequestHandler from 'utils/requestHandler';
-
-import { Store } from '../models';
 
 export const getExperiment1Id = (state: Store = store.getState()): number => {
   return state.BenchmarkConfigurationStore.chosenExperiments[0].id;

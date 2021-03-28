@@ -13,6 +13,7 @@ import {
   IonRow,
 } from '@ionic/react';
 import { DatasetCardProps } from 'components/DatasetCard/DatasetCardProps';
+import DatasetPreview from 'components/DatasetPreview/DatasetPreview';
 import {
   create,
   radioButtonOffOutline,
@@ -20,8 +21,6 @@ import {
   trash,
 } from 'ionicons/icons';
 import React, { useState } from 'react';
-
-import DatasetPreview from '../DatasetPreview/DatasetPreview';
 
 const DatasetCard = ({
   datasetName,

@@ -1,3 +1,4 @@
+import { ExperimentIntersectionPairCountsItem } from 'api';
 import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 import { BinaryMetricsPageView } from 'pages/BinaryMetricsPage/BinaryMetricsPage.View';
 import {
@@ -15,12 +16,11 @@ import {
   loadTrueNegatives,
   loadTruePositives,
 } from 'store/actions/BinaryMetricsStoreActions';
+import { getGroundTruthId } from 'store/actions/CommonMetricsActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
-import { ExperimentIntersectionPairCountsItem } from '../../api';
-import { getGroundTruthId } from '../../store/actions/CommonMetricsActions';
 const getCountsByTuplesCategory = (
   store: Store,
   aMetricsTuplesCategory: MetricsTuplesCategories

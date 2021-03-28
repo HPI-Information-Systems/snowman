@@ -1,12 +1,14 @@
 /*------------ See README.txt for license and copyright information! -----------*/
+import {
+  animateStroke,
+  animateTooltip,
+} from 'components/VennDiagram/venn/fundamentals/animation';
 import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import {
   d3Selection,
   VennDiagramIntersection,
 } from 'components/VennDiagram/venn/types/types';
 import { select } from 'd3';
-
-import { animateStroke, animateTooltip } from '../animation';
 
 export const drawIntersection = ({
   svg,
