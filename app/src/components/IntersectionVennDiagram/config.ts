@@ -1,5 +1,6 @@
 import { Experiment, ExperimentIntersectionPairCountsItem } from '../../api';
 import { intersectionDescription } from '../../utils/intersectionDescription';
+import { MAX_VENN_DIAGRAM_DIMENSION } from '../VennDiagram/limits';
 import {
   VennDiagramEntity,
   VennDiagramIntersection,
@@ -41,7 +42,7 @@ export class IntersectionVennDiagramConfig {
   }
 
   config(strategy: IntersectionVennDiagramConfigStrategy): VennDiagramConfig {
-    if (this.dimension > 4) {
+    if (this.dimension > MAX_VENN_DIAGRAM_DIMENSION) {
       throw new Error('Cannot draw venn diagrams of size 5 or larger yet');
     }
     return {

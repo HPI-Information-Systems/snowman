@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 import DataViewer from '../../components/DataViewer/DataViewer';
 import IntersectionSelector from '../../components/IntersectionSelector/IntersectionSelector';
 import IntersectionVennDiagram from '../../components/IntersectionVennDiagram/IntersectionVennDiagram';
+import { MAX_VENN_DIAGRAM_DIMENSION } from '../../components/VennDiagram/limits';
 import { intersectionDescription } from '../../utils/intersectionDescription';
 import { IntersectionPageProps } from './IntersectionPageProps';
 
@@ -29,7 +30,7 @@ const IntersectionPageView = ({
       <div className="container">
         <div className="splitter">
           <IonCard>
-            {experimentCount <= 4 ? (
+            {experimentCount <= MAX_VENN_DIAGRAM_DIMENSION ? (
               countsLoaded ? (
                 <IntersectionVennDiagram></IntersectionVennDiagram>
               ) : (
@@ -45,7 +46,7 @@ const IntersectionPageView = ({
                 }}
               >
                 Venn Diagram of size {experimentCount} is not supported yet
-                (maximum is 4).
+                (maximum is {MAX_VENN_DIAGRAM_DIMENSION}).
               </div>
             )}
           </IonCard>
