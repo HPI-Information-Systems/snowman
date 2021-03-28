@@ -10,8 +10,10 @@ import {
 } from 'ionicons/icons';
 import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
 import BinaryMetricsPage from 'pages/BinaryMetricsPage/BinaryMetricsPage';
+import DashboardPage from 'pages/DashboardPage/DashboardPage';
 import DatasetsPage from 'pages/DatasetsPage/DatasetsPage';
 import ExperimentsPage from 'pages/ExperimentsPage/ExperimentsPage';
+import IntersectionPage from 'pages/IntersectionPage/IntersectionPage';
 import NMetricsPage from 'pages/NMetricsPage/NMetricsPage';
 import RootPage from 'pages/RootPage/RootPage';
 import { menuCategories } from 'types/MenuCategories';
@@ -24,9 +26,6 @@ import {
   selectedExperiments,
   selectedMatchingSolutions,
 } from 'utils/optionReminders';
-
-import DashboardPage from '../pages/DashboardPage/DashboardPage';
-import IntersectionPage from '../pages/IntersectionPage/IntersectionPage';
 
 export const PrimaryViewMetaInformation: ViewMetaInformation = {
   key: ViewIDs.HOME,

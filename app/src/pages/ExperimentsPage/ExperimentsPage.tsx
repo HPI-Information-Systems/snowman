@@ -12,10 +12,9 @@ import {
   dragNDropAnExperiment,
   getExperiments,
 } from 'store/actions/ExperimentsPageActions';
+import { resetIntersection } from 'store/actions/IntersectionStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-
-import { resetIntersection } from '../../store/actions/IntersectionStoreActions';
 
 const mapStateToProps = (state: Store): ExperimentsPageStateProps => ({
   matchingSolutions: state.CoreStore.algorithms,

@@ -1,13 +1,12 @@
 import { IonCol, IonGrid, IonRow } from '@ionic/react';
+import IntersectionDroppable from 'components/IntersectionDroppable/IntersectionDroppable';
+import { IntersectionSelectorProps } from 'components/IntersectionSelector/IntersectionSelectorProps';
 import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
+import { IntersectionBuckets } from 'types/IntersectionBuckets';
+import { getDndDescriptorFromDropResult } from 'utils/dragNDropHelpers';
 
-import { IntersectionBuckets } from '../../types/IntersectionBuckets';
-import { getDndDescriptorFromDropResult } from '../../utils/dragNDropHelpers';
-import IntersectionDroppable from '../IntersectionDroppable/IntersectionDroppable';
-import { IntersectionSelectorProps } from './IntersectionSelectorProps';
-
-const ExperimentIntersectionSelectorView = ({
+const IntersectionSelectorView = ({
   ignored,
   excluded,
   included,
@@ -71,4 +70,4 @@ const ExperimentIntersectionSelectorView = ({
   );
 };
 
-export default ExperimentIntersectionSelectorView;
+export default IntersectionSelectorView;

@@ -1,3 +1,4 @@
+import { Experiment, ExperimentIntersectionPairCountsItem } from 'api';
 import {
   DatasetsPageActionTypes,
   ExperimentsPageActionTypes,
@@ -5,8 +6,6 @@ import {
 } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { IntersectionStore } from 'store/models';
-
-import { Experiment, ExperimentIntersectionPairCountsItem } from '../../api';
 
 const initialState: IntersectionStore = {
   excluded: [],

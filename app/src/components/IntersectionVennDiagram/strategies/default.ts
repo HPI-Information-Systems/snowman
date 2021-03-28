@@ -1,4 +1,4 @@
-import { IntersectionVennDiagramConfigStrategy } from '../config';
+import { IntersectionVennDiagramConfigStrategy } from 'components/IntersectionVennDiagram/config';
 
 export const IntersectionVennDiagramDefaultStrategy: IntersectionVennDiagramConfigStrategy = {
   color: () => undefined,

@@ -1,11 +1,10 @@
 import 'pages/NMetricsPage/NMetricsPageStyles.css';
 
 import { IonCard } from '@ionic/react';
+import IntersectionVennDiagram from 'components/IntersectionVennDiagram/IntersectionVennDiagram';
 import PageStruct from 'components/PageStruct/PageStruct';
+import { DashboardPageProps } from 'pages/DashboardPage/DashboardPageProps';
 import React, { useEffect } from 'react';
-
-import IntersectionVennDiagram from '../../components/IntersectionVennDiagram/IntersectionVennDiagram';
-import { DashboardPageProps } from './DashboardPageProps';
 
 export default function DashboardPageView({
   loadCounts,

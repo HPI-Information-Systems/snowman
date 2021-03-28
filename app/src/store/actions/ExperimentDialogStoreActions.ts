@@ -3,6 +3,7 @@ import 'types/ExperimentFileFormats';
 import { Experiment, ExperimentsApi } from 'api';
 import { ExperimentDialogStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { getExperiments } from 'store/actions/ExperimentsPageActions';
+import { showToast } from 'store/actions/GlobalIndicatorActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
 import { MagicNotPossibleId } from 'structs/constants';
@@ -12,15 +13,13 @@ import {
   SUCCESS_TO_UPLOAD_EXPERIMENT_FILE,
 } from 'structs/statusMessages';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
+import { ToastType } from 'types/ToastTypes';
 import { getAlgorithmIdFromName } from 'utils/algorithmHelpers';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
-
-import { ToastType } from '../../types/ToastTypes';
-import { showToast } from './GlobalIndicatorActions';
 
 export const openAddDialog = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({

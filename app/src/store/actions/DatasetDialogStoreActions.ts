@@ -1,6 +1,7 @@
 import { Dataset, DatasetsApi } from 'api';
 import { DatasetDialogStoreActionTypes as DialogActionsTypes } from 'store/actions/actionTypes';
 import { getDatasets } from 'store/actions/DatasetsPageActions';
+import { showToast } from 'store/actions/GlobalIndicatorActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
 import { MagicNotPossibleId } from 'structs/constants';
@@ -10,15 +11,13 @@ import {
   SUCCESS_TO_UPLOAD_DATASET_FILE,
 } from 'structs/statusMessages';
 import { DatasetTypes } from 'types/DatasetTypes';
+import { ToastType } from 'types/ToastTypes';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
 import { getTagsFromDatasets } from 'utils/tagFactory';
-
-import { ToastType } from '../../types/ToastTypes';
-import { showToast } from './GlobalIndicatorActions';
 
 const loadAvailableTags = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({

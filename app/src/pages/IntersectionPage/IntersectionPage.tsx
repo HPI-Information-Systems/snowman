@@ -1,19 +1,18 @@
+import IntersectionPageView from 'pages/IntersectionPage/IntersectionPage.View';
+import {
+  IntersectionPageDispatchProps,
+  IntersectionPageStateProps,
+} from 'pages/IntersectionPage/IntersectionPageProps';
 import { connect } from 'react-redux';
-import { Store } from 'store/models';
-
 import {
   countsMatchConfiguration,
   getCountsForIntersection,
   intersectionSorter,
   intersectionTuplesLoader,
   loadCounts,
-} from '../../store/actions/IntersectionStoreActions';
-import { SnowmanDispatch } from '../../store/messages';
-import IntersectionPageView from './IntersectionPage.View';
-import {
-  IntersectionPageDispatchProps,
-  IntersectionPageStateProps,
-} from './IntersectionPageProps';
+} from 'store/actions/IntersectionStoreActions';
+import { SnowmanDispatch } from 'store/messages';
+import { Store } from 'store/models';
 
 const mapStateToProps = ({
   IntersectionStore: { included, excluded, counts },

@@ -1,8 +1,10 @@
+import {
+  animateStroke,
+  animateTooltip,
+} from 'components/VennDiagram/venn/fundamentals/animation';
+import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
+import { d3Selection } from 'components/VennDiagram/venn/types/types';
 import { select } from 'd3';
-
-import { VennDiagramTooltip } from '../../tooltip';
-import { d3Selection } from '../../types/types';
-import { animateStroke, animateTooltip } from '../animation';
 
 export const drawStroke = (
   selection: d3Selection,

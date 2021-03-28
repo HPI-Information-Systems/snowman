@@ -1,18 +1,17 @@
+import { Experiment } from 'api';
+import IntersectionSelectorView from 'components/IntersectionSelector/IntersectionSelector.View';
+import {
+  IntersectionSelectorDispatchProps,
+  IntersectionSelectorStateProps,
+} from 'components/IntersectionSelector/IntersectionSelectorProps';
 import { connect } from 'react-redux';
-import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
-
-import { Experiment } from '../../api';
 import {
   excludeExperiment,
   ignoreExperiment,
   includeExperiment,
-} from '../../store/actions/IntersectionStoreActions';
-import IntersectionSelectorView from './IntersectionSelector.View';
-import {
-  IntersectionSelectorDispatchProps,
-  IntersectionSelectorStateProps,
-} from './IntersectionSelectorProps';
+} from 'store/actions/IntersectionStoreActions';
+import { SnowmanDispatch } from 'store/messages';
+import { Store } from 'store/models';
 
 const mapStateToProps = (state: Store): IntersectionSelectorStateProps => {
   const { excluded, included } = state.IntersectionStore;

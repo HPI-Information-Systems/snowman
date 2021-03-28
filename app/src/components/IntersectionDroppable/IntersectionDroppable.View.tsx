@@ -12,8 +12,7 @@ import {
   Droppable,
   DroppableProvided,
 } from 'react-beautiful-dnd';
-
-import { IntersectionBuckets } from '../../types/IntersectionBuckets';
+import { IntersectionBuckets } from 'types/IntersectionBuckets';
 
 const IntersectionDroppableView = ({
   bucketId,

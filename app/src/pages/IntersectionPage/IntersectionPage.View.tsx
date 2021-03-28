@@ -1,16 +1,15 @@
 import 'pages/IntersectionPage/IntersectionPageStyles.css';
 
 import { IonCard, IonCardContent, IonCardHeader } from '@ionic/react';
+import DataViewer from 'components/DataViewer/DataViewer';
+import IntersectionSelector from 'components/IntersectionSelector/IntersectionSelector';
+import { IntersectionVennDiagramConfigStrategy } from 'components/IntersectionVennDiagram/config';
+import IntersectionVennDiagram from 'components/IntersectionVennDiagram/IntersectionVennDiagram';
+import { IntersectionVennDiagramIntersectionStrategy } from 'components/IntersectionVennDiagram/strategies/intersection';
 import PageStruct from 'components/PageStruct/PageStruct';
+import { IntersectionPageProps } from 'pages/IntersectionPage/IntersectionPageProps';
 import React, { useEffect, useState } from 'react';
-
-import DataViewer from '../../components/DataViewer/DataViewer';
-import IntersectionSelector from '../../components/IntersectionSelector/IntersectionSelector';
-import { IntersectionVennDiagramConfigStrategy } from '../../components/IntersectionVennDiagram/config';
-import IntersectionVennDiagram from '../../components/IntersectionVennDiagram/IntersectionVennDiagram';
-import { IntersectionVennDiagramIntersectionStrategy } from '../../components/IntersectionVennDiagram/strategies/intersection';
-import { intersectionDescription } from '../../utils/intersectionDescription';
-import { IntersectionPageProps } from './IntersectionPageProps';
+import { intersectionDescription } from 'utils/intersectionDescription';
 
 const IntersectionPageView = ({
   loadTuples,

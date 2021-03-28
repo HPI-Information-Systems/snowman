@@ -1,11 +1,11 @@
-import { Experiment, ExperimentIntersectionPairCountsItem } from '../../api';
-import { intersectionDescription } from '../../utils/intersectionDescription';
+import { Experiment, ExperimentIntersectionPairCountsItem } from 'api';
 import {
   VennDiagramEntity,
   VennDiagramIntersection,
   VennDiagramSet,
-} from '../VennDiagram/venn/types/types';
-import { VennDiagramConfig } from '../VennDiagram/VennDiagramProps';
+} from 'components/VennDiagram/venn/types/types';
+import { VennDiagramConfig } from 'components/VennDiagram/VennDiagramProps';
+import { intersectionDescription } from 'utils/intersectionDescription';
 
 type PartialVennDiagramConfig = {
   [x: string]: VennDiagramSet | VennDiagramIntersection;

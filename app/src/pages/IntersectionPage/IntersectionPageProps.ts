@@ -1,5 +1,5 @@
-import { Experiment } from '../../api';
-import { TuplesLoader } from '../../components/DataViewer/TuplesLoader';
+import { Experiment } from 'api';
+import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 
 export interface IntersectionPageStateProps {
   loadTuples: TuplesLoader;

@@ -1,8 +1,7 @@
+import IntersectionDroppableView from 'components/IntersectionDroppable/IntersectionDroppable.View';
+import { IntersectionDroppableStateProps } from 'components/IntersectionDroppable/IntersectionDroppableProps';
 import { connect } from 'react-redux';
 import { Store } from 'store/models';
-
-import IntersectionDroppableView from './IntersectionDroppable.View';
-import { IntersectionDroppableStateProps } from './IntersectionDroppableProps';
 
 const mapStateToProps = (state: Store): IntersectionDroppableStateProps => {
   return {

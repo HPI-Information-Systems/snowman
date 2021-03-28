@@ -1,21 +1,20 @@
-import { IntersectionStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
-import { store } from 'store/store';
-
 import {
   BenchmarkApi,
   CalculateExperimentIntersectionPairCountsRequest,
   Experiment,
   ExperimentIntersectionPairCountsExperiments,
   ExperimentIntersectionPairCountsItem,
-} from '../../api';
-import { TuplesLoader } from '../../components/DataViewer/TuplesLoader';
+} from 'api';
+import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
+import { IntersectionStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
+import { datasetTuplesLoader } from 'store/actions/DatasetsPageActions';
+import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
+import { store } from 'store/store';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
-} from '../../utils/easyActionsFactory';
-import RequestHandler from '../../utils/requestHandler';
-import { SnowmanDispatch, SnowmanThunkAction } from '../messages';
-import { datasetTuplesLoader } from './DatasetsPageActions';
+} from 'utils/easyActionsFactory';
+import RequestHandler from 'utils/requestHandler';
 
 export const includeExperiment = (
   experiment: Experiment

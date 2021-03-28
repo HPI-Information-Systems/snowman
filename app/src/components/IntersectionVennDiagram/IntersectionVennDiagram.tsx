@@ -1,17 +1,16 @@
-import { sortBy } from 'lodash';
-import { connect } from 'react-redux';
-import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
-
-import {
-  countsMatchConfiguration,
-  resetIntersection,
-} from '../../store/actions/IntersectionStoreActions';
-import IntersectionVennDiagramView from './IntersectionVennDiagram.View';
+import IntersectionVennDiagramView from 'components/IntersectionVennDiagram/IntersectionVennDiagram.View';
 import {
   IntersectionVennDiagramDispatchProps,
   IntersectionVennDiagramStateProps,
-} from './IntersectionVennDiagramProps';
+} from 'components/IntersectionVennDiagram/IntersectionVennDiagramProps';
+import { sortBy } from 'lodash';
+import { connect } from 'react-redux';
+import {
+  countsMatchConfiguration,
+  resetIntersection,
+} from 'store/actions/IntersectionStoreActions';
+import { SnowmanDispatch } from 'store/messages';
+import { Store } from 'store/models';
 
 const mapStateToProps = ({
   IntersectionStore: { included, counts },

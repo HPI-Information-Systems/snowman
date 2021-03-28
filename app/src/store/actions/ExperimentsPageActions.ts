@@ -10,14 +10,13 @@ import {
   SnowmanThunkAction,
 } from 'store/messages';
 import { SUCCESS_TO_DELETE_EXPERIMENT } from 'structs/statusMessages';
+import { ExperimentBuckets } from 'types/ExperimentBuckets';
 import { getDndDescriptorFromDropResult } from 'utils/dragNDropHelpers';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
-
-import { ExperimentBuckets } from '../../types/ExperimentBuckets';
 
 export const clickOnMatchingSolution = (
   aMatchingSolution: Algorithm

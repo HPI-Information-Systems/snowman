@@ -1,4 +1,5 @@
 import { Dataset, DatasetsApi } from 'api';
+import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 import {
   CoreStoreActionTypes,
   DatasetsPageActionTypes,
@@ -14,8 +15,6 @@ import {
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
-
-import { TuplesLoader } from '../../components/DataViewer/TuplesLoader';
 
 export const clickOnDataset = (aDataset: Dataset): easyPrimitiveActionReturn =>
   easyPrimitiveAction({

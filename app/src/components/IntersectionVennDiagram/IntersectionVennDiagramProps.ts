@@ -1,6 +1,5 @@
 import { Experiment, ExperimentIntersectionPairCountsItem } from 'api';
-
-import { IntersectionVennDiagramConfigStrategy } from './config';
+import { IntersectionVennDiagramConfigStrategy } from 'components/IntersectionVennDiagram/config';
 
 export interface IntersectionVennDiagramOwnProps {
   strategy?: IntersectionVennDiagramConfigStrategy;

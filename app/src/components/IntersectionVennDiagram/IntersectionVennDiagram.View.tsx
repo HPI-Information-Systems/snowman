@@ -1,12 +1,11 @@
+import { Experiment } from 'api';
+import { IntersectionVennDiagramConfig } from 'components/IntersectionVennDiagram/config';
+import { IntersectionVennDiagramProps } from 'components/IntersectionVennDiagram/IntersectionVennDiagramProps';
+import { IntersectionVennDiagramDefaultStrategy } from 'components/IntersectionVennDiagram/strategies/default';
+import { MAX_VENN_DIAGRAM_DIMENSION } from 'components/VennDiagram/limits';
+import VennDiagram from 'components/VennDiagram/VennDiagram';
 import { useEffect, useState } from 'react';
 import React from 'react';
-
-import { Experiment } from '../../api';
-import { MAX_VENN_DIAGRAM_DIMENSION } from '../VennDiagram/limits';
-import VennDiagram from '../VennDiagram/VennDiagram';
-import { IntersectionVennDiagramConfig } from './config';
-import { IntersectionVennDiagramProps } from './IntersectionVennDiagramProps';
-import { IntersectionVennDiagramDefaultStrategy } from './strategies/default';
 
 export default function IntersectionVennDiagramView({
   experiments,
