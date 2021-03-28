@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import {
   clickOnPane,
   getExperiment1Id,
-  getGroundTruthId,
   loadBinaryMetricsTuplesCounts,
   loadFalseNegatives,
   loadFalsePositives,
@@ -21,6 +20,7 @@ import { Store } from 'store/models';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
 import { ExperimentIntersectionPairCountsItem } from '../../api';
+import { getGroundTruthId } from '../../store/actions/CommonMetricsActions';
 const getCountsByTuplesCategory = (
   store: Store,
   aMetricsTuplesCategory: MetricsTuplesCategories

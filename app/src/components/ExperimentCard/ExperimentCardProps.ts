@@ -4,6 +4,7 @@ export interface ExperimentCardProps {
   description?: string;
   numberOfRecords?: number;
   experimentId: number;
+  timeToConfigure?: number;
   deleteExperiment(): void;
   editExperiment(): void;
 }

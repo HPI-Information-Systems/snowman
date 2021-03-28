@@ -19,3 +19,7 @@
 .button-row {
   padding-top: 25px;
 }
+
+.input-align-right {
+  text-align: right;
+}

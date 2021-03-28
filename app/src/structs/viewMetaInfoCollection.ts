@@ -12,7 +12,7 @@ import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
 import BinaryMetricsPage from 'pages/BinaryMetricsPage/BinaryMetricsPage';
 import DatasetsPage from 'pages/DatasetsPage/DatasetsPage';
 import ExperimentsPage from 'pages/ExperimentsPage/ExperimentsPage';
-import { NMetricsPage } from 'pages/NMetricsPage/NMetricsPage';
+import NMetricsPage from 'pages/NMetricsPage/NMetricsPage';
 import RootPage from 'pages/RootPage/RootPage';
 import { menuCategories } from 'types/MenuCategories';
 import { ViewIDs } from 'types/ViewIDs';
@@ -22,6 +22,7 @@ import {
   emptySelectedOptions,
   selectedDataset,
   selectedExperiments,
+  selectedMatchingSolutions,
 } from 'utils/optionReminders';
 
 export const PrimaryViewMetaInformation: ViewMetaInformation = {
@@ -42,14 +43,14 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
   {
     key: ViewIDs.ALGORITHMS,
     component: AlgorithmsPage,
-    nextView: ViewIDs.ALGORITHMS,
+    nextView: ViewIDs.DATASETS,
     accessGuard: accessGuards.couldAlwaysEnterPage,
     shouldShowInMenu: true,
     menuCategory: menuCategories.GENERAL,
     menuIcon: rocket,
     menuName: 'Matching Solutions',
     menuSortKey: 2,
-    selectedOptionsReminder: emptySelectedOptions,
+    selectedOptionsReminder: selectedMatchingSolutions,
   },
   {
     key: ViewIDs.DATASETS,

@@ -1,5 +1,7 @@
 import {
   Algorithm,
+  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
+  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
   Dataset,
   Experiment,
   ExperimentIntersectionPairCountsItem,
@@ -15,6 +17,14 @@ export interface AlgorithmDialogStore {
   algorithmId: number | null;
   algorithmName: string;
   algorithmDescription: string;
+  implementationKnowHowLevel:
+    | AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
+    | undefined;
+  matchingSolutionType:
+    | AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum
+    | undefined;
+  timeToConfigure: number | undefined;
+  timeToInstall: number | undefined;
   isOpen: boolean;
   dialogType: DialogTypes;
 }
@@ -42,6 +52,7 @@ export interface ExperimentDialogStore {
   experimentId: number | null;
   experimentName: string;
   experimentDescription: string;
+  timeToConfigure: number | undefined;
   experimentFileFormat: experimentFileFormatEnum;
   selectedTags: string[];
   selectedFiles: File[];
@@ -90,6 +101,10 @@ export interface BinaryMetricsStore {
   selectedDataView: MetricsTuplesCategories;
 }
 
+export interface NMetricsStore {
+  metrics: Metric[][];
+}
+
 export interface ImmediateStore {
   CoreStore: CoreStore;
   AlgorithmDialogStore: AlgorithmDialogStore;
@@ -97,6 +112,7 @@ export interface ImmediateStore {
   ExperimentDialogStore: ExperimentDialogStore;
   BenchmarkConfigurationStore: BenchmarkConfigurationStore;
   BinaryMetricsStore: BinaryMetricsStore;
+  NMetricsStore: NMetricsStore;
   GlobalIndicatorStore: GlobalIndicatorStore;
   InputChipStore: InputChipStore;
   SelectableInputStore: SelectableInputStore;

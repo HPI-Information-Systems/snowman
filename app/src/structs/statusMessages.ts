@@ -14,6 +14,7 @@ export const SUCCESS_DELETE_ALGORITHM =
   'Successfully deleted the matching solution!';
 export const SUCCESS_LOAD_BINARY_METRICS =
   'Successfully loaded binary metrics!';
+export const SUCCESS_LOAD_NARY_METRICS = 'Successfully loaded n-nary metrics!';
 export const SUCCESS_TO_UPDATE_ALGORITHM =
   'Successfully updated the designated matching solution!';
 export const SUCCESS_TO_UPDATE_DATASET =
