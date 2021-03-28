@@ -88,7 +88,7 @@ const ExperimentsPageView = ({
                   <IonCard>
                     <IonCardHeader>
                       <IonCardTitle class="dropzone-title">
-                        Selected Ground Truth
+                        <span>Selected Ground Truth</span>
                       </IonCardTitle>
                     </IonCardHeader>
                     <ExperimentDroppable
@@ -100,7 +100,7 @@ const ExperimentsPageView = ({
                   <IonCard>
                     <IonCardHeader>
                       <IonCardTitle class="dropzone-title">
-                        Selected Experiments
+                        <span>Selected Experiments</span>
                       </IonCardTitle>
                     </IonCardHeader>
                     <ExperimentDroppable
