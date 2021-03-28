@@ -39,9 +39,11 @@ const ExperimentCard = ({
           <IonChip color="dark" outline={false}>
             <IonLabel>Count: {numberOfRecords ?? 'unknown'}</IonLabel>
           </IonChip>
-          <IonChip color="dark" outline={false}>
-            <IonLabel>Config Time: {timeToConfigure ?? 'unknown'}</IonLabel>
-          </IonChip>
+          {timeToConfigure !== undefined ? (
+            <IonChip color="dark" outline={false}>
+              <IonLabel>Config Time: {timeToConfigure}</IonLabel>
+            </IonChip>
+          ) : null}
         </IonCol>
       </IonRow>
       <IonRow>
