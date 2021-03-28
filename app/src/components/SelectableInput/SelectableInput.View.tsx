@@ -1,4 +1,4 @@
-import './SelectableInput.Styles.css';
+import 'components/SelectableInput/SelectableInput.Styles.css';
 
 import {
   IonIcon,
@@ -77,7 +77,15 @@ export const SelectableInputView = ({
           showPopover((e as unknown) as Event);
         }}
       />
-      <IonIcon icon={ellipsisVerticalCircle} slot="end" color="medium" />
+      <IonIcon
+        icon={ellipsisVerticalCircle}
+        slot="end"
+        color="medium"
+        onClick={(e: unknown): void => {
+          // This required to solve type inconsistency
+          showPopover((e as unknown) as Event);
+        }}
+      />
     </>
   );
 };

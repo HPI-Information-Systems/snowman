@@ -4,9 +4,11 @@ import {
   IonCardContent,
   IonCardHeader,
   IonCardTitle,
+  IonChip,
   IonCol,
   IonGrid,
   IonIcon,
+  IonLabel,
   IonRow,
 } from '@ionic/react';
 import { AlgorithmCardProps } from 'components/AlgorithmCard/AlgorithmCardProps';
@@ -25,7 +27,39 @@ const AlgorithmCardView = ({
     <IonCardContent>{algorithm.description}</IonCardContent>
     <IonGrid>
       <IonRow>
-        <IonCol size="6">
+        <IonCol>
+          {algorithm.softKPIs?.matchingSolutionType !== undefined ? (
+            <IonChip>
+              <IonLabel>
+                {`Type: ${algorithm.softKPIs?.matchingSolutionType}`}
+              </IonLabel>
+            </IonChip>
+          ) : null}
+          {algorithm.softKPIs?.implementationKnowHowLevel !== undefined ? (
+            <IonChip>
+              <IonLabel>
+                {`KnowHow Level: ${algorithm.softKPIs?.implementationKnowHowLevel}`}
+              </IonLabel>
+            </IonChip>
+          ) : null}
+          {algorithm.softKPIs?.timeToInstall !== undefined ? (
+            <IonChip>
+              <IonLabel>
+                {`Install Time: ${algorithm.softKPIs?.timeToInstall}`}
+              </IonLabel>
+            </IonChip>
+          ) : null}
+          {algorithm.softKPIs?.timeToConfigure !== undefined ? (
+            <IonChip>
+              <IonLabel>
+                {`Config Time: ${algorithm.softKPIs?.timeToConfigure}`}
+              </IonLabel>
+            </IonChip>
+          ) : null}
+        </IonCol>
+      </IonRow>
+      <IonRow>
+        <IonCol size="12" sizeMd="6">
           <IonButton
             size="small"
             fill="clear"
@@ -37,7 +71,7 @@ const AlgorithmCardView = ({
             Edit
           </IonButton>
         </IonCol>
-        <IonCol size="6">
+        <IonCol size="12" sizeMd="6">
           <IonButton
             size="small"
             fill="clear"

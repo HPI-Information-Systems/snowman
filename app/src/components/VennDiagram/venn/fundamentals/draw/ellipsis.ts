@@ -1,12 +1,14 @@
 /*------------ See README.txt for license and copyright information! -----------*/
+import {
+  animateStroke,
+  animateTooltip,
+} from 'components/VennDiagram/venn/fundamentals/animation';
+import { drawText } from 'components/VennDiagram/venn/fundamentals/draw/text';
 import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import {
   d3Selection,
   VennDiagramSet,
 } from 'components/VennDiagram/venn/types/types';
-
-import { animateStroke, animateTooltip } from '../animation';
-import { drawText } from './text';
 
 export const drawEllipsis = ({
   svg,

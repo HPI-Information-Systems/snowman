@@ -4,6 +4,7 @@ import {
   IonIcon,
   IonInput,
   IonItem,
+  IonItemDivider,
   IonLabel,
   IonList,
   IonNote,
@@ -26,6 +27,7 @@ const ExperimentDialogView = ({
   experimentName,
   experimentDescription,
   experimentFileFormat,
+  timeToConfigure,
   tags,
   selectedTags,
   changeExperimentDescription,
@@ -36,6 +38,7 @@ const ExperimentDialogView = ({
   isValidForm,
   selectedFiles,
   changeSelectedFiles,
+  changeTimeToConfigure,
 }: ExperimentDialogProps): JSX.Element => (
   <ModalDialog
     heading={isAddDialog ? 'Add New Experiment' : 'Update Existing Experiment'}
@@ -44,7 +47,7 @@ const ExperimentDialogView = ({
   >
     <IonList>
       <IonItem>
-        <IonLabel position="fixed">Name/ID*:</IonLabel>
+        <IonLabel position="fixed">Name/ID:</IonLabel>
         <IonInput
           clearInput
           value={experimentName}
@@ -61,6 +64,9 @@ const ExperimentDialogView = ({
           placeholder="e.g. Randomly assigned pairs for testing purposes."
         />
       </IonItem>
+      <IonItemDivider>
+        <IonLabel>UPLOAD CONTENT</IonLabel>
+      </IonItemDivider>
       <IonItem>
         <IonLabel position="fixed">File Format:</IonLabel>
         <SelectableInput
@@ -78,16 +84,32 @@ const ExperimentDialogView = ({
           onChange={changeSelectedFiles}
         />
       </IonItem>
+      {!isAddDialog ? (
+        <div className="center">
+          <IonNote color="medium">
+            <b>Note: Uploading a file is optional here!</b>
+            <br />
+            If no file is selected, the stored records will remain unchanged.
+          </IonNote>
+        </div>
+      ) : null}
+      <IonItemDivider>
+        <IonLabel>SPECIFY SOFT KPIS</IonLabel>
+      </IonItemDivider>
+      <IonItem>
+        <IonLabel>Time to Configure</IonLabel>
+        <IonInput
+          clearInput
+          type="number"
+          value={timeToConfigure}
+          onIonChange={changeTimeToConfigure}
+          className="input-align-right"
+        />
+      </IonItem>
+      <IonItemDivider>
+        <IonLabel>USED MATCHING SOLUTION</IonLabel>
+      </IonItemDivider>
     </IonList>
-    {!isAddDialog ? (
-      <div className="center upload-notice">
-        <IonNote color="medium">
-          <b>Note: Uploading a file is optional here!</b>
-          <br />
-          If no file is selected, the stored records will remain unchanged.
-        </IonNote>
-      </div>
-    ) : null}
     <div className="center tag-view">
       {tags.map(
         (aTag: string): JSX.Element => (

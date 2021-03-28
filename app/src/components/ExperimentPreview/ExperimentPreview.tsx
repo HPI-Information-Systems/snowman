@@ -1,10 +1,9 @@
+import { ExperimentsApi } from 'api';
+import DataViewer from 'components/DataViewer/DataViewer';
+import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
+import { ExperimentPreviewProps } from 'components/ExperimentPreview/ExperimentPreviewProps';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
 import React, { useEffect, useState } from 'react';
-
-import { ExperimentsApi } from '../../api';
-import DataViewer from '../DataViewer/DataViewer';
-import { TuplesLoader } from '../DataViewer/TuplesLoader';
-import { ExperimentPreviewProps } from './ExperimentPreviewProps';
 
 const ExperimentPreview = ({
   closeDialog,

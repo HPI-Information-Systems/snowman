@@ -13,6 +13,7 @@ import {
   IonRow,
 } from '@ionic/react';
 import { DatasetCardProps } from 'components/DatasetCard/DatasetCardProps';
+import DatasetPreview from 'components/DatasetPreview/DatasetPreview';
 import {
   create,
   radioButtonOffOutline,
@@ -20,8 +21,6 @@ import {
   trash,
 } from 'ionicons/icons';
 import React, { useState } from 'react';
-
-import DatasetPreview from '../DatasetPreview/DatasetPreview';
 
 const DatasetCard = ({
   datasetName,
@@ -85,7 +84,7 @@ const DatasetCard = ({
           </IonCol>
         </IonRow>
         <IonRow>
-          <IonCol size="6">
+          <IonCol size="12" sizeMd="6">
             <IonButton
               size="small"
               fill="clear"
@@ -97,7 +96,7 @@ const DatasetCard = ({
               Edit
             </IonButton>
           </IonCol>
-          <IonCol size="6">
+          <IonCol size="12" sizeMd="6">
             <IonButton
               size="small"
               fill="clear"

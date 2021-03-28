@@ -13,6 +13,7 @@ const initialState: ExperimentDialogStore = {
   experimentId: null,
   experimentName: '',
   experimentDescription: '',
+  timeToConfigure: undefined,
   experimentFileFormat: experimentFileFormatEnum.Pilot,
   selectedTags: [],
   selectedFiles: [],
@@ -68,6 +69,11 @@ export const ExperimentDialogReducer = (
       return {
         ...state,
         experimentFileFormat: action.payload as experimentFileFormatEnum,
+      };
+    case actionTypes.CHANGE_SOFT_KPI_TIME_TO_CONFIGURE:
+      return {
+        ...state,
+        timeToConfigure: action.payload as number | undefined,
       };
     case actionTypes.RESET_DIALOG:
       return initialState;

@@ -23,6 +23,7 @@ const ExperimentCard = ({
   experimentId,
   description,
   numberOfRecords,
+  timeToConfigure,
   editExperiment,
   deleteExperiment,
 }: ExperimentCardProps): JSX.Element => {
@@ -46,10 +47,15 @@ const ExperimentCard = ({
             >
               <IonLabel>Count: {numberOfRecords ?? 'unknown'}</IonLabel>
             </IonChip>
+            {timeToConfigure !== undefined ? (
+              <IonChip color="dark" outline={false}>
+                <IonLabel>Config Time: {timeToConfigure}</IonLabel>
+              </IonChip>
+            ) : null}
           </IonCol>
         </IonRow>
         <IonRow>
-          <IonCol size="6">
+          <IonCol size="12" sizeMd="6">
             <IonButton
               size="small"
               fill="clear"
@@ -61,7 +67,7 @@ const ExperimentCard = ({
               Edit
             </IonButton>
           </IonCol>
-          <IonCol size="6">
+          <IonCol size="12" sizeMd="6">
             <IonButton
               size="small"
               fill="clear"

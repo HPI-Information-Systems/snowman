@@ -49,6 +49,7 @@ const ExperimentDroppableView = ({
             )}
             description={anExperiment.description}
             numberOfRecords={anExperiment.numberOfUploadedRecords}
+            timeToConfigure={anExperiment.softKPIs?.timeToConfigure}
             editExperiment={(): void => editExperiment(anExperiment)}
             deleteExperiment={(): void => deleteExperiment(anExperiment)}
           />
