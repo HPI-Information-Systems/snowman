@@ -1,3 +1,4 @@
+import { IonText } from '@ionic/react';
 import { Experiment } from 'api';
 import { IntersectionVennDiagramConfig } from 'components/IntersectionVennDiagram/config';
 import { IntersectionVennDiagramProps } from 'components/IntersectionVennDiagram/IntersectionVennDiagramProps';
@@ -66,16 +67,18 @@ export default function IntersectionVennDiagramView({
                 right: 0,
                 top: 0,
                 bottom: 0,
-                opacity: strategy.backgroundOpacity,
+                opacity: 1,
                 pointerEvents: 'none',
                 padding: '1rem',
                 fontSize: '1.5rem',
                 textAlign: 'left',
               }}
             >
-              <b>Ω</b>
+              <IonText color="dark">
+                <b>Ω</b>
+              </IonText>
             </div>
-            <VennDiagram config={configCreator.config(strategy)}></VennDiagram>
+            <VennDiagram config={configCreator.config(strategy)} />
           </div>
         ) : (
           ''

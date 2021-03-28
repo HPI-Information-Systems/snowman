@@ -2,7 +2,7 @@ import { Experiment } from 'api';
 import { IntersectionVennDiagramConfigStrategy } from 'components/IntersectionVennDiagram/config';
 
 // Ionic Colors: themes/variables.css
-export const IRRELEVANT_COLOR = '#222428';
+export const IRRELEVANT_COLOR = '#92949c';
 export const INCLUDED_COLOR = '#2dd36f';
 export const EXCLUDED_COLOR = '#eb445a';
 
