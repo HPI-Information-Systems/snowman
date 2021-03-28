@@ -12,12 +12,7 @@ import {
   IonRow,
 } from '@ionic/react';
 import { AlgorithmCardProps } from 'components/AlgorithmCard/AlgorithmCardProps';
-import {
-  create,
-  radioButtonOffOutline,
-  radioButtonOnOutline,
-  trash,
-} from 'ionicons/icons';
+import { checkboxOutline, create, squareOutline, trash } from 'ionicons/icons';
 import React from 'react';
 
 const AlgorithmCardView = ({
@@ -35,14 +30,14 @@ const AlgorithmCardView = ({
           {isSelected ? (
             <IonIcon
               className="ion-float-right"
-              icon={radioButtonOnOutline}
+              icon={checkboxOutline}
               size="large"
               color="primary"
             />
           ) : (
             <IonIcon
               className="ion-float-right"
-              icon={radioButtonOffOutline}
+              icon={squareOutline}
               size="large"
               color="medium"
             />
