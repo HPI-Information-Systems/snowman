@@ -117,8 +117,8 @@ const createNewExperiment = (): SnowmanThunkAction<Promise<number>> => async (
           description: store.getState().ExperimentDialogStore
             .experimentDescription,
           softKPIs: {
-            // TODO: get correct timeToConfigure
-            timeToConfigure: undefined,
+            timeToConfigure: store.getState().ExperimentDialogStore
+              .timeToConfigure,
           },
           datasetId:
             store.getState().BenchmarkConfigurationStore.selectedDataset?.id ??
@@ -172,6 +172,10 @@ const editExistingExperiment = (): SnowmanThunkAction<Promise<void>> => async (
           name: store.getState().ExperimentDialogStore.experimentName,
           description: store.getState().ExperimentDialogStore
             .experimentDescription,
+          softKPIs: {
+            timeToConfigure: store.getState().ExperimentDialogStore
+              .timeToConfigure,
+          },
           datasetId:
             store.getState().BenchmarkConfigurationStore.selectedDataset?.id ??
             MagicNotPossibleId,
@@ -183,7 +187,7 @@ const editExistingExperiment = (): SnowmanThunkAction<Promise<void>> => async (
       }),
     dispatch,
     SUCCESS_TO_UPDATE_EXPERIMENT
-  );
+  ).then((): Promise<void> => dispatch(getExperiments()));
 };
 
 const addNewExperiment = (): SnowmanThunkAction<Promise<void>> => async (
