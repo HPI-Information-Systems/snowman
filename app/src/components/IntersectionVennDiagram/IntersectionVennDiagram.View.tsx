@@ -76,7 +76,7 @@ export default function IntersectionVennDiagramView({
             >
               <b>Ω</b>
             </div>
-            <VennDiagram config={configCreator.config(strategy)}></VennDiagram>;
+            <VennDiagram config={configCreator.config(strategy)}></VennDiagram>
           </div>
         ) : (
           ''
