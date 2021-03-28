@@ -7,10 +7,7 @@ import {
   ExperimentIntersectionPairCountsExperiments,
 } from '../../api';
 import { TuplesLoader } from '../../components/DataViewer/TuplesLoader';
-import {
-  loadCounts,
-  resetIntersection,
-} from '../../store/actions/IntersectionStoreActions';
+import { loadCounts } from '../../store/actions/IntersectionStoreActions';
 import { SnowmanDispatch } from '../../store/messages';
 import IntersectionPageView from './IntersectionPage.View';
 import {
