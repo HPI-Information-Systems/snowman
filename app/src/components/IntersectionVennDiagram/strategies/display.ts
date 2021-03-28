@@ -1,9 +1,10 @@
 import { Experiment } from '../../../api';
 import { IntersectionVennDiagramConfigStrategy } from '../config';
 
-export const IRRELEVANT_COLOR = '#000000';
-export const INCLUDED_COLOR = '#00FF00';
-export const EXCLUDED_COLOR = '#FF0000';
+// Ionic Colors: themes/variables.css
+export const IRRELEVANT_COLOR = '#222428';
+export const INCLUDED_COLOR = '#2dd36f';
+export const EXCLUDED_COLOR = '#eb445a';
 
 export class IntersectionVennDiagramDisplayStrategy
   implements IntersectionVennDiagramConfigStrategy {
