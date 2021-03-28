@@ -43,7 +43,7 @@ const IntersectionPageView = ({
   }, [included, excluded]);
 
   return (
-    <PageStruct title={'Intersection'}>
+    <PageStruct title={'Intersections'}>
       <IonGrid>
         <IonRow>
           <IonCol class="col-no-padding" size="12" sizeXl="6">

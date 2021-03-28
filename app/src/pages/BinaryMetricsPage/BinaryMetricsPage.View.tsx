@@ -39,7 +39,7 @@ export const BinaryMetricsPageView = ({
   });
 
   return (
-    <PageStruct title="Benchmark - Binary Comparison" showNextFab={false}>
+    <PageStruct title="Binary Comparison" showNextFab={false}>
       <IonText color="primary">
         <h3 data-tip="Binary metrics are calculated based upon the count of false positives, false negatives, true negatives and true positives.">
           Binary Metrics

@@ -97,7 +97,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     accessGuard: accessGuards.couldEnterBinaryMetricsPage,
     shouldShowInMenu: true,
     menuCategory: menuCategories.EVALUATION,
-    menuName: 'Binary Metrics',
+    menuName: 'Binary Comparison',
     menuIcon: pauseCircle,
     menuSortKey: 6,
     selectedOptionsReminder: emptySelectedOptions,

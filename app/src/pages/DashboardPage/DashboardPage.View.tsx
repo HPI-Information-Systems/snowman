@@ -85,7 +85,7 @@ export default function DashboardPageView({
               <IonItem button onClick={openIntersectionPage}>
                 <IonIcon icon={colorFilterOutline} slot="start" />
                 <IonLabel>
-                  <h2>Visually compare all pairs</h2>
+                  <h2>Visually compare intersections</h2>
                   <p className="ion-text-wrap">
                     Use a visual representation to investigate which pairs were
                     detected as duplicates within each experiment. Selecting one
