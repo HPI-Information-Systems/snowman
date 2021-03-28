@@ -8,6 +8,7 @@ import { DatasetDialogReducer } from 'store/reducers/DatasetDialogReducer';
 import { ExperimentDialogReducer } from 'store/reducers/ExperimentDialogReducer';
 import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
 import { InputChipReducer } from 'store/reducers/InputChipReducer';
+import { NMetricsReducer } from 'store/reducers/NMetricsReducer';
 import { RenderLogicReducer } from 'store/reducers/RenderLogicReducer';
 import { SelectableInputReducer } from 'store/reducers/SelectableInputReducer';
 
@@ -30,6 +31,7 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
       action
     ),
     BinaryMetricsStore: BinaryMetricsReducer(state?.BinaryMetricsStore, action),
+    NMetricsStore: NMetricsReducer(state?.NMetricsStore, action),
     GlobalIndicatorStore: GlobalIndicatorReducer(
       state?.GlobalIndicatorStore,
       action
