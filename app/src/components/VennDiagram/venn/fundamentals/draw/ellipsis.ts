@@ -1,12 +1,11 @@
 /*------------ See README.txt for license and copyright information! -----------*/
+import { drawStroke } from 'components/VennDiagram/venn/fundamentals/draw/stroke';
+import { drawText } from 'components/VennDiagram/venn/fundamentals/draw/text';
 import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import {
   d3Selection,
   VennDiagramSet,
 } from 'components/VennDiagram/venn/types/types';
-
-import { drawStroke } from './stroke';
-import { drawText } from './text';
 
 const baseEllipsis = (
   svg: d3Selection,

@@ -1,10 +1,9 @@
+import { DatasetPreviewProps } from 'components/DatasetPreview/DatasetPreviewProps';
+import DataViewer from 'components/DataViewer/DataViewer';
+import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
 import React, { useEffect, useState } from 'react';
-
-import { datasetTuplesLoader } from '../../store/actions/DatasetsPageActions';
-import DataViewer from '../DataViewer/DataViewer';
-import { TuplesLoader } from '../DataViewer/TuplesLoader';
-import { DatasetPreviewProps } from './DatasetPreviewProps';
+import { datasetTuplesLoader } from 'store/actions/DatasetsPageActions';
 
 const DatasetPreview = ({
   closeDialog,

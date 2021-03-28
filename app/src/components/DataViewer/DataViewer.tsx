@@ -2,13 +2,12 @@ import 'react-virtualized/styles.css';
 import 'components/DataViewer/DataViewerStyles.css';
 
 import { DataViewerProps } from 'components/DataViewer/DataViewerProps';
+import { RequestedRowsT, StateT } from 'components/DataViewer/DataViewerTypes';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AutoSizer, Column, InfiniteLoader, Table } from 'react-virtualized';
-
-import { SnowmanDispatch } from '../../store/messages';
-import RequestHandler from '../../utils/requestHandler';
-import { RequestedRowsT, StateT } from './DataViewer.types';
+import { SnowmanDispatch } from 'store/messages';
+import RequestHandler from 'utils/requestHandler';
 
 const DataViewer = ({
   tuplesCount,
@@ -163,6 +162,7 @@ const DataViewer = ({
                   label={headerLabel}
                   dataKey={index.toString()}
                   width={width}
+                  minWidth={80}
                 />
               ))}
             </Table>

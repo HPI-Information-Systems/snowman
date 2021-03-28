@@ -1,11 +1,10 @@
 /*------------ See README.txt for license and copyright information! -----------*/
+import { drawStroke } from 'components/VennDiagram/venn/fundamentals/draw/stroke';
 import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import {
   d3Selection,
   VennDiagramIntersection,
 } from 'components/VennDiagram/venn/types/types';
-
-import { drawStroke } from './stroke';
 
 const baseIntersection = (svg: d3Selection, shape: string, transform = '') =>
   svg.append('path').attr('d', shape).style('transform', transform);

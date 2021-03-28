@@ -1,9 +1,10 @@
 import { BenchmarkApi, Metric } from 'api';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
+import { Store } from 'store/models';
 import { store } from 'store/store';
 import RequestHandler from 'utils/requestHandler';
 
-export const getGroundTruthId = (state = store.getState()): number => {
+export const getGroundTruthId = (state: Store = store.getState()): number => {
   return state.BenchmarkConfigurationStore.chosenGoldStandards[0].id;
 };
 
