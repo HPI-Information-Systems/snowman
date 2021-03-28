@@ -155,6 +155,7 @@ const DataViewer = ({
                   label={headerLabel}
                   dataKey={index.toString()}
                   width={width}
+                  minWidth={80}
                 />
               ))}
             </Table>
