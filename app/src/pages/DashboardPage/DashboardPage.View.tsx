@@ -1,5 +1,3 @@
-import 'pages/DashboardPage/DashboardPageStyles.css';
-
 import {
   IonCard,
   IonCol,
