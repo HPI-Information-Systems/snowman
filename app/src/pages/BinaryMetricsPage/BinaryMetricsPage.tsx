@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import {
   clickOnPane,
   getExperiment1Id,
-  getGroundTruthId,
   loadBinaryMetricsTuplesCounts,
   loadFalseNegatives,
   loadFalsePositives,
@@ -16,6 +15,7 @@ import {
   loadTrueNegatives,
   loadTruePositives,
 } from 'store/actions/BinaryMetricsStoreActions';
+import { getGroundTruthId } from 'store/actions/CommonMetricsActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';

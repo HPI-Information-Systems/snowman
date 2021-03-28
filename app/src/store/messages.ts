@@ -15,6 +15,7 @@ import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 
 type ActionPayload =
   | Metric[]
+  | Metric[][]
   | FileResponse
   | string
   | string[]
@@ -26,6 +27,7 @@ type ActionPayload =
   | Dataset
   | Dataset[]
   | number
+  | undefined
   | Experiment[]
   | Experiment
   | Event

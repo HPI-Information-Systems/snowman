@@ -3,6 +3,7 @@ import { differenceBy, nth, unionBy } from 'lodash';
 import {
   DatasetsPageActionTypes,
   ExperimentsPageActionTypes,
+  NMetricsPageActionTypes,
 } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { BenchmarkConfigurationStore, CoreStore } from 'store/models';
@@ -10,10 +11,7 @@ import { MagicNotPossibleId } from 'structs/constants';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import { ExperimentBuckets } from 'types/ExperimentBuckets';
 import { doesDatasetMatchTags } from 'utils/datasetHelper';
-import {
-  toggleSelectionArrayMultipleSelect,
-  toggleSelectionArraySingleSelect,
-} from 'utils/toggleSelectionArray';
+import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: BenchmarkConfigurationStore = {
   selectedDatasetCategories: [],
@@ -105,7 +103,7 @@ const BenchmarkConfiguratorImmediateReducer = (
     case ExperimentsPageActionTypes.CLICK_ON_MATCHING_SOLUTION:
       return {
         ...ownState,
-        selectedMatchingSolutions: toggleSelectionArraySingleSelect<Algorithm>(
+        selectedMatchingSolutions: toggleSelectionArrayMultipleSelect<Algorithm>(
           ownState.selectedMatchingSolutions,
           action.payload as Algorithm
         ),
@@ -171,6 +169,11 @@ const BenchmarkConfiguratorImmediateReducer = (
         availableExperiments: availableExperiments,
       };
     }
+    case NMetricsPageActionTypes.INSPECT_AN_EXPERIMENT:
+      return {
+        ...ownState,
+        chosenExperiments: [action.payload as Experiment],
+      };
     default:
       return ownState;
   }

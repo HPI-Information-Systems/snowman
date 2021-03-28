@@ -101,6 +101,14 @@ export const changeSelectedFiles = (files: File[]): easyPrimitiveActionReturn =>
     payload: files,
   });
 
+export const changeSoftKPITimeToConfigure = (
+  aConfigurationTime: number | undefined
+): easyPrimitiveActionReturn =>
+  easyPrimitiveAction({
+    type: actionTypes.CHANGE_SOFT_KPI_TIME_TO_CONFIGURE,
+    payload: aConfigurationTime,
+  });
+
 const createNewExperiment = (
   showSuccess = true
 ): SnowmanThunkAction<Promise<number>> => async (
@@ -113,6 +121,10 @@ const createNewExperiment = (
           name: store.getState().ExperimentDialogStore.experimentName,
           description: store.getState().ExperimentDialogStore
             .experimentDescription,
+          softKPIs: {
+            timeToConfigure: store.getState().ExperimentDialogStore
+              .timeToConfigure,
+          },
           datasetId:
             store.getState().BenchmarkConfigurationStore.selectedDataset?.id ??
             MagicNotPossibleId,
@@ -166,6 +178,10 @@ const editExistingExperiment = (): SnowmanThunkAction<Promise<void>> => async (
           name: store.getState().ExperimentDialogStore.experimentName,
           description: store.getState().ExperimentDialogStore
             .experimentDescription,
+          softKPIs: {
+            timeToConfigure: store.getState().ExperimentDialogStore
+              .timeToConfigure,
+          },
           datasetId:
             store.getState().BenchmarkConfigurationStore.selectedDataset?.id ??
             MagicNotPossibleId,
@@ -177,7 +193,7 @@ const editExistingExperiment = (): SnowmanThunkAction<Promise<void>> => async (
       }),
     dispatch,
     SUCCESS_TO_UPDATE_EXPERIMENT
-  );
+  ).then((): Promise<void> => dispatch(getExperiments()));
 };
 
 const addNewExperiment = (): SnowmanThunkAction<Promise<void>> => async (

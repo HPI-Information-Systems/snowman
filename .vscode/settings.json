@@ -3,10 +3,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
-  "eslint.validate": [
-    "javascript",
-    "typescript"
-  ],
+  "eslint.validate": ["javascript", "typescript"],
   "eslint.options": {
     "configFile": ".eslintrc.json"
   },
@@ -22,11 +19,9 @@
   "[javascriptreact]": {
     "editor.formatOnSave": false
   },
-  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifier": "non-relative",
   "jest.pathToConfig": "jest.config.js",
   "jest.pathToJest": "npm run test --prefix wrapper --",
-  "jest.disabledWorkspaceFolders": [
-    "app"
-  ],
+  "jest.disabledWorkspaceFolders": ["app"],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }
