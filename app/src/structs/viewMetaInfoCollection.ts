@@ -1,9 +1,8 @@
-import VennDiagramPageExample from 'components/VennDiagram/VennDiagramPageExample';
 import {
   albums,
   calculator,
   documents,
-  flaskOutline,
+  gridOutline,
   home,
   pauseCircle,
   pieChartOutline,
@@ -25,6 +24,7 @@ import {
   selectedExperiments,
 } from 'utils/optionReminders';
 
+import DashboardPage from '../pages/DashboardPage/DashboardPage';
 import IntersectionPage from '../pages/IntersectionPage/IntersectionPage';
 
 export const PrimaryViewMetaInformation: ViewMetaInformation = {
@@ -69,7 +69,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
   {
     key: ViewIDs.EXPERIMENTS,
     component: ExperimentsPage,
-    nextView: ViewIDs.BINARY_METRICS,
+    nextView: ViewIDs.DASHBOARD,
     accessGuard: accessGuards.couldEnterExperimentsSelector,
     shouldShowInMenu: true,
     menuCategory: menuCategories.CONFIGURATION,
@@ -77,6 +77,18 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuIcon: documents,
     menuSortKey: 4,
     selectedOptionsReminder: selectedExperiments,
+  },
+  {
+    key: ViewIDs.DASHBOARD,
+    component: DashboardPage,
+    nextView: ViewIDs.DASHBOARD,
+    accessGuard: accessGuards.couldEnterDashboardPage,
+    shouldShowInMenu: true,
+    menuCategory: menuCategories.EVALUATION,
+    menuName: 'Dashboard',
+    menuIcon: gridOutline,
+    menuSortKey: 5,
+    selectedOptionsReminder: emptySelectedOptions,
   },
   {
     key: ViewIDs.BINARY_METRICS,
@@ -114,17 +126,4 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuSortKey: 8,
     selectedOptionsReminder: emptySelectedOptions,
   },
-  {
-    key: ViewIDs.VENN_EXAMPLE,
-    component: VennDiagramPageExample,
-    nextView: ViewIDs.VENN_EXAMPLE,
-    accessGuard: accessGuards.couldAlwaysEnterPage,
-    shouldShowInMenu: true,
-    menuCategory: menuCategories.EVALUATION,
-    menuName: 'Venn Diagram Example',
-    menuIcon: flaskOutline,
-    menuSortKey: 8,
-    selectedOptionsReminder: emptySelectedOptions,
-  },
-  // Icon for n-visual: colorFilter
 ];

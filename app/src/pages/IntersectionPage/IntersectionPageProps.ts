@@ -1,13 +1,13 @@
+import { Experiment } from '../../api';
 import { TuplesLoader } from '../../components/DataViewer/TuplesLoader';
 
 export interface IntersectionPageStateProps {
   loadTuples: TuplesLoader;
   tuplesCount: number;
   pairCount: number;
-  includedExperimentNames: string[];
-  excludedExperimentNames: string[];
-  experimentCount: number;
   countsLoaded: boolean;
+  included: Experiment[];
+  excluded: Experiment[];
 }
 
 export interface IntersectionPageDispatchProps {

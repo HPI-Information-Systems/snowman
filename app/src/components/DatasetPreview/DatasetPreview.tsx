@@ -1,7 +1,7 @@
 import ModalDialog from 'components/ModalDialog/ModalDialog';
 import React, { useEffect, useState } from 'react';
 
-import { DatasetsApi } from '../../api';
+import { datasetTuplesLoader } from '../../store/actions/DatasetsPageActions';
 import DataViewer from '../DataViewer/DataViewer';
 import { TuplesLoader } from '../DataViewer/TuplesLoader';
 import { DatasetPreviewProps } from './DatasetPreviewProps';
@@ -13,21 +13,12 @@ const DatasetPreview = ({
   isOpen,
   rowCount,
 }: DatasetPreviewProps): JSX.Element => {
-  function loadTuplesLogic(start: number, stop: number) {
-    return new DatasetsApi().getDatasetFile({
-      datasetId,
-      startAt: start,
-      limit: stop - start,
-    });
-  }
-
   const [loadTuples, setLoadTuples] = useState<TuplesLoader>(
-    () => loadTuplesLogic
+    datasetTuplesLoader(datasetId)
   );
 
   useEffect(() => {
-    setLoadTuples(() => loadTuplesLogic);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setLoadTuples(datasetTuplesLoader(datasetId));
   }, [datasetId]);
 
   return (

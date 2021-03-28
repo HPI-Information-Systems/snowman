@@ -1,77 +1,99 @@
-import { sortBy } from 'lodash';
 import { useEffect, useState } from 'react';
 import React from 'react';
 
+import { Experiment } from '../../api';
+import { MAX_VENN_DIAGRAM_DIMENSION } from '../VennDiagram/limits';
 import VennDiagram from '../VennDiagram/VennDiagram';
-import {
-  IntersectionVennDiagramConfig,
-  IntersectionVennDiagramConfigStrategy,
-} from './config';
+import { IntersectionVennDiagramConfig } from './config';
 import { IntersectionVennDiagramProps } from './IntersectionVennDiagramProps';
-import {
-  INCLUDED_COLOR,
-  IntersectionVennDiagramDisplayStrategy,
-} from './strategies/display';
+import { IntersectionVennDiagramDefaultStrategy } from './strategies/default';
 
 export default function IntersectionVennDiagramView({
-  excluded,
-  ignored,
+  experiments,
   included,
   counts,
+  countsLoaded,
   intersect,
+  onIntersect,
+  strategy = IntersectionVennDiagramDefaultStrategy,
 }: IntersectionVennDiagramProps): JSX.Element {
+  function createIntersectWrapper() {
+    return (experiments: Experiment[]) => {
+      intersect(experiments);
+      if (onIntersect) {
+        onIntersect(experiments);
+      }
+    };
+  }
+  const [intersectWrapper, setIntersectWrapper] = useState(
+    createIntersectWrapper
+  );
   const [
     configCreator,
     setConfigCreator,
   ] = useState<IntersectionVennDiagramConfig>(createConfigCreator());
-  const [
-    strategy,
-    setStrategy,
-  ] = useState<IntersectionVennDiagramConfigStrategy>(
-    new IntersectionVennDiagramDisplayStrategy(included, excluded)
-  );
 
   function createConfigCreator() {
     return new IntersectionVennDiagramConfig(
-      sortBy([...excluded, ...included, ...ignored], ({ id }) => id),
+      experiments,
       counts,
-      intersect
+      intersectWrapper
     );
   }
 
   useEffect(() => {
     setConfigCreator(createConfigCreator());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [excluded, ignored, included, counts, intersect]);
+  }, [experiments, included, counts, intersectWrapper]);
 
   useEffect(() => {
-    setStrategy(new IntersectionVennDiagramDisplayStrategy(included, excluded));
+    setIntersectWrapper(createIntersectWrapper);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [excluded, ignored]);
+  }, [intersect, onIntersect]);
 
   return (
-    <div
-      style={{ position: 'relative', cursor: 'pointer' }}
-      onClick={() => intersect([])}
-    >
-      <div
-        style={{
-          background: `${included.length === 0 ? INCLUDED_COLOR : ''}`,
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          top: 0,
-          bottom: 0,
-          opacity: 0.3,
-          pointerEvents: 'none',
-          padding: '1rem',
-          fontSize: '1.5rem',
-          color: 'black',
-        }}
-      >
-        <b>Ω</b>
-      </div>
-      <VennDiagram config={configCreator.config(strategy)}></VennDiagram>;
-    </div>
+    <>
+      {experiments.length <= MAX_VENN_DIAGRAM_DIMENSION ? (
+        countsLoaded ? (
+          <div
+            style={{ position: 'relative', cursor: 'pointer' }}
+            onClick={() => intersectWrapper([])}
+          >
+            <div
+              style={{
+                background: strategy.backgroundColor,
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                opacity: strategy.backgroundOpacity,
+                pointerEvents: 'none',
+                padding: '1rem',
+                fontSize: '1.5rem',
+                color: 'black',
+              }}
+            >
+              <b>Ω</b>
+            </div>
+            <VennDiagram config={configCreator.config(strategy)}></VennDiagram>;
+          </div>
+        ) : (
+          ''
+        )
+      ) : (
+        <div
+          style={{
+            height: '8rem',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          Venn Diagram of size {experiments.length} is not supported yet
+          (maximum is {MAX_VENN_DIAGRAM_DIMENSION}).
+        </div>
+      )}
+    </>
   );
 }

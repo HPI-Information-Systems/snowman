@@ -6,7 +6,7 @@ export const IRRELEVANT_COLOR = '#222428';
 export const INCLUDED_COLOR = '#2dd36f';
 export const EXCLUDED_COLOR = '#eb445a';
 
-export class IntersectionVennDiagramDisplayStrategy
+export class IntersectionVennDiagramIntersectionStrategy
   implements IntersectionVennDiagramConfigStrategy {
   protected readonly includedSet: Set<number>;
   protected readonly excludedSet: Set<number>;
@@ -41,4 +41,9 @@ export class IntersectionVennDiagramDisplayStrategy
       return 0.4;
     }
   }
+
+  get backgroundColor(): string | undefined {
+    return this.included.length === 0 ? INCLUDED_COLOR : undefined;
+  }
+  backgroundOpacity = 0.3;
 }
