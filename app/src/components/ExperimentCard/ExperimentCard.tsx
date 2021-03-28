@@ -87,7 +87,7 @@ const ExperimentCard = ({
         isOpen={showExperimentPreview}
         rowCount={numberOfRecords ?? 0}
         closeDialog={() => setShowExperimentPreview(false)}
-      ></ExperimentPreview>
+      />
     </IonCard>
   );
 };
