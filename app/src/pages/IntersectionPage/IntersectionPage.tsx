@@ -130,6 +130,9 @@ const mapStateToProps = (state: Store): IntersectionPageStateProps => {
       ({ name }) => name
     ),
     countsLoaded: countsLoaded(state),
+    experimentCount:
+      state.BenchmarkConfigurationStore.chosenExperiments.length +
+      state.BenchmarkConfigurationStore.chosenGoldStandards.length,
   };
 };
 

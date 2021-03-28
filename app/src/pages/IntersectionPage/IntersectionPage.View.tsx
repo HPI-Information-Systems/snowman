@@ -18,6 +18,7 @@ const IntersectionPageView = ({
   includedExperimentNames,
   pairCount,
   countsLoaded,
+  experimentCount,
 }: IntersectionPageProps): JSX.Element => {
   useEffect(() => {
     loadCounts();
@@ -28,10 +29,24 @@ const IntersectionPageView = ({
       <div className="container">
         <div className="splitter">
           <IonCard>
-            {countsLoaded ? (
-              <IntersectionVennDiagram></IntersectionVennDiagram>
+            {experimentCount <= 4 ? (
+              countsLoaded ? (
+                <IntersectionVennDiagram></IntersectionVennDiagram>
+              ) : (
+                ''
+              )
             ) : (
-              ''
+              <div
+                style={{
+                  height: '8rem',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                Venn Diagram of size {experimentCount} is not supported yet
+                (maximum is 4).
+              </div>
             )}
           </IonCard>
           <IonCard>

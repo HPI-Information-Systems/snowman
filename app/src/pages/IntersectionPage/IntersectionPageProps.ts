@@ -6,6 +6,7 @@ export interface IntersectionPageStateProps {
   pairCount: number;
   includedExperimentNames: string[];
   excludedExperimentNames: string[];
+  experimentCount: number;
   countsLoaded: boolean;
 }
 
