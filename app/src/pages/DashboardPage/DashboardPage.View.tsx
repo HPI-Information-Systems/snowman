@@ -80,18 +80,6 @@ export default function DashboardPageView({
                 </IonLabel>
                 <IonIcon icon={chevronForwardOutline} slot="end" />
               </IonItem>
-              <IonItem button onClick={openIntersectionPage}>
-                <IonIcon icon={colorFilterOutline} slot="start" />
-                <IonLabel>
-                  <h2>Visually compare intersections</h2>
-                  <p className="ion-text-wrap">
-                    Use a visual representation to investigate which pairs were
-                    detected as duplicates within each experiment. Selecting one
-                    experiment as a gold standard is optional.
-                  </p>
-                </IonLabel>
-                <IonIcon icon={chevronForwardOutline} slot="end" />
-              </IonItem>
               <IonItem
                 button
                 disabled={isNMetricsDisabled}
@@ -104,6 +92,18 @@ export default function DashboardPageView({
                     Select multiple experiments and a single gold standard.
                     You&apos;ll be able to compare all experiments&apos; metrics
                     against each other in a table.
+                  </p>
+                </IonLabel>
+                <IonIcon icon={chevronForwardOutline} slot="end" />
+              </IonItem>
+              <IonItem button onClick={openIntersectionPage}>
+                <IonIcon icon={colorFilterOutline} slot="start" />
+                <IonLabel>
+                  <h2>Visually compare intersections</h2>
+                  <p className="ion-text-wrap">
+                    Use a visual representation to investigate which pairs were
+                    detected as duplicates within each experiment. Selecting one
+                    experiment as a gold standard is optional.
                   </p>
                 </IonLabel>
                 <IonIcon icon={chevronForwardOutline} slot="end" />
