@@ -10,6 +10,7 @@ import { Dataset } from 'api';
 import AddDatasetFab from 'components/AddFab/AddDatasetFab';
 import DatasetCard from 'components/DatasetCard/DatasetCard';
 import DatasetDialog from 'components/DatasetDialog/DatasetDialog';
+import DatasetPreviewer from 'components/FilePreviewer/DatasetPreviewer';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { DatasetsPageProps } from 'pages/DatasetsPage/DatasetsPageProps';
 import React, { useEffect } from 'react';
@@ -24,6 +25,7 @@ const DatasetsPageView = ({
   deleteDataset,
   editDataset,
   loadDatasets,
+  previewDataset,
 }: DatasetsPageProps): JSX.Element => {
   useEffect((): void => loadDatasets(), [loadDatasets]);
   return (
@@ -60,6 +62,7 @@ const DatasetsPageView = ({
                 selectDataset={() => clickOnDataset(aDataset)}
                 deleteDataset={() => deleteDataset(aDataset)}
                 editDataset={() => editDataset(aDataset)}
+                previewDataset={() => previewDataset(aDataset)}
                 datasetId={aDataset.id}
               />
             </IonCol>
@@ -71,6 +74,7 @@ const DatasetsPageView = ({
       ) : undefined}
       <AddDatasetFab />
       <DatasetDialog />
+      <DatasetPreviewer />
     </PageStruct>
   );
 };

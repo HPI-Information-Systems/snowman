@@ -5,6 +5,7 @@ import { BenchmarkConfiguratorReducer } from 'store/reducers/BenchmarkConfigurat
 import { BinaryMetricsReducer } from 'store/reducers/BinaryMetricsReducer';
 import { CoreReducer } from 'store/reducers/CoreReducer';
 import { DatasetDialogReducer } from 'store/reducers/DatasetDialogReducer';
+import { DatasetPreviewerReducer } from 'store/reducers/DatasetPreviewerReducer';
 import { ExperimentDialogReducer } from 'store/reducers/ExperimentDialogReducer';
 import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
 import { InputChipReducer } from 'store/reducers/InputChipReducer';
@@ -29,6 +30,10 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
     BenchmarkConfigurationStore: BenchmarkConfiguratorReducer(
       state?.BenchmarkConfigurationStore,
       coreState,
+      action
+    ),
+    DatasetPreviewerStore: DatasetPreviewerReducer(
+      state?.DatasetPreviewerStore,
       action
     ),
     BinaryMetricsStore: BinaryMetricsReducer(state?.BinaryMetricsStore, action),

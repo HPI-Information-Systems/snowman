@@ -1,19 +1,15 @@
-import {TuplesLoader} from "components/DataViewer/TuplesLoader";
-
-export interface FilePreviewerOwnProps {
-  fileName: string;
-}
+import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 
 export interface FilePreviewerStateProps {
+  fileName: string;
   isOpen: boolean;
   rowCount: number;
+  loadTuples: TuplesLoader;
 }
 
 export interface FilePreviewerDispatchProps {
   closeDialog(): void;
-  loadTuples: TuplesLoader;
 }
 
-export type FilePreviewerProps = FilePreviewerOwnProps &
-  FilePreviewerStateProps &
+export type FilePreviewerProps = FilePreviewerStateProps &
   FilePreviewerDispatchProps;

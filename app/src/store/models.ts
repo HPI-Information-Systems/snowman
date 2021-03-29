@@ -95,6 +95,11 @@ export interface BenchmarkConfigurationStore {
   showExperimentFilters: boolean;
 }
 
+export interface DatasetPreviewerStore {
+  isOpen: boolean;
+  dataset: Dataset | undefined;
+}
+
 export interface IntersectionStore {
   included: Experiment[];
   excluded: Experiment[];
@@ -123,6 +128,7 @@ export interface ImmediateStore {
   GlobalIndicatorStore: GlobalIndicatorStore;
   InputChipStore: InputChipStore;
   SelectableInputStore: SelectableInputStore;
+  DatasetPreviewerStore: DatasetPreviewerStore;
   IntersectionStore: IntersectionStore;
 }
 

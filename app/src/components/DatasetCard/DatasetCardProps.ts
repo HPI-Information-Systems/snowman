@@ -1,6 +1,5 @@
 export interface DatasetCardProps {
   datasetName: string;
-  datasetId: number;
   categories: string[];
   description?: string;
   totalCount?: number;
@@ -9,4 +8,5 @@ export interface DatasetCardProps {
   selectDataset(): void;
   deleteDataset(): void;
   editDataset(): void;
+  previewDataset(): void;
 }
