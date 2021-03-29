@@ -190,11 +190,11 @@ export const BenchmarkConfiguratorReducer = (
     action
   );
   const cleanUpBucket = (aBucket: Experiment[]): Experiment[] =>
-    coreState.experiments.filter(
+    aBucket.filter(
       (anExperiment: Experiment): boolean =>
         anExperiment.datasetId ===
           (immediateState.selectedDataset?.id ?? MagicNotPossibleId) &&
-        aBucket
+        coreState.experiments
           .map((oneExperiment: Experiment): number => oneExperiment.id)
           .includes(anExperiment.id)
     );
