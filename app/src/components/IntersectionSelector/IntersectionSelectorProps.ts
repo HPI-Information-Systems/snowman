@@ -1,4 +1,5 @@
 import { Experiment } from 'api';
+import { DropResult } from 'react-beautiful-dnd';
 
 export interface IntersectionSelectorStateProps {
   ignored: Experiment[];
@@ -7,9 +8,7 @@ export interface IntersectionSelectorStateProps {
 }
 
 export interface IntersectionSelectorDispatchProps {
-  include(anExperiment: Experiment): void;
-  exclude(anExperiment: Experiment): void;
-  ignore(anExperiment: Experiment): void;
+  dragExperiment(dragResult: DropResult): void;
 }
 
 export type IntersectionSelectorProps = IntersectionSelectorDispatchProps &
