@@ -1,17 +1,12 @@
 export const toggleSelectionArrayMultipleSelect = <T = string>(
   aSelectionArray: T[],
-  toggledItem: T,
-  forceState?: boolean
+  toggledItem: T
 ): T[] =>
   aSelectionArray.includes(toggledItem)
-    ? forceState !== true
-      ? aSelectionArray.filter(
-          (anArrayItem: T): boolean => anArrayItem !== toggledItem
-        )
-      : aSelectionArray
-    : forceState !== false
-    ? [...aSelectionArray, toggledItem]
-    : aSelectionArray;
+    ? aSelectionArray.filter(
+        (anArrayItem: T): boolean => anArrayItem !== toggledItem
+      )
+    : [...aSelectionArray, toggledItem];
 
 export const toggleSelectionArraySingleSelect = <T = string>(
   aSelectionArray: T[],
