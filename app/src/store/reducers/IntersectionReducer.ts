@@ -5,11 +5,12 @@ import {
   IntersectionStoreActionTypes as actionTypes,
 } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
-import { IntersectionStore } from 'store/models';
+import { BenchmarkConfigurationStore, IntersectionStore } from 'store/models';
 
 const initialState: IntersectionStore = {
   excluded: [],
   included: [],
+  ignored: [],
   counts: [],
 };
 
@@ -25,41 +26,43 @@ function filterId(
 }
 
 export const IntersectionReducer = (
-  state: IntersectionStore = initialState,
+  ownState: IntersectionStore = initialState,
+  benchmarkState: BenchmarkConfigurationStore,
   action: SnowmanAction
 ): IntersectionStore => {
   switch (action.type) {
     case actionTypes.INCLUDE_EXPERIMENT: {
-      const newState = filterId(state, action.payload as Experiment);
+      const newState = filterId(ownState, action.payload as Experiment);
       newState.included.push(action.payload as Experiment);
       return newState;
     }
     case actionTypes.EXCLUDE_EXPERIMENT: {
-      const newState = filterId(state, action.payload as Experiment);
+      const newState = filterId(ownState, action.payload as Experiment);
       newState.excluded.push(action.payload as Experiment);
       return newState;
     }
-    case actionTypes.IGNORE_EXPERIMENT:
-      return filterId(state, action.payload as Experiment);
+    case actionTypes.IGNORE_EXPERIMENT: {
+      const newState = filterId(ownState, action.payload as Experiment);
+      newState.ignored.push(action.payload as Experiment);
+      return newState;
+    }
+
     case actionTypes.SET_COUNTS:
       return {
-        ...state,
+        ...ownState,
         counts: action.payload as ExperimentIntersectionPairCountsItem[],
       };
     case actionTypes.RESET_INTERSECTION:
-      return {
-        ...state,
-        ...((action.payload as
-          | {
-              excluded: Experiment[];
-              included: Experiment[];
-            }
-          | undefined) ?? {}),
-      };
     case ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT:
     case DatasetsPageActionTypes.CLICK_ON_DATASET:
-      return initialState;
+      return {
+        ...initialState,
+        ignored: [
+          ...benchmarkState.chosenGoldStandards,
+          ...benchmarkState.chosenExperiments,
+        ],
+      };
     default:
-      return state;
+      return ownState;
   }
 };

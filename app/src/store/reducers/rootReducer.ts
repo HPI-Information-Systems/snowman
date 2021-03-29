@@ -1,5 +1,10 @@
 import { SnowmanAction } from 'store/messages';
-import { CoreStore, ImmediateStore, Store } from 'store/models';
+import {
+  BenchmarkConfigurationStore,
+  CoreStore,
+  ImmediateStore,
+  Store,
+} from 'store/models';
 import { AlgorithmDialogReducer } from 'store/reducers/AlgorithmDialogReducer';
 import { BenchmarkConfiguratorReducer } from 'store/reducers/BenchmarkConfiguratorReducer';
 import { BinaryMetricsReducer } from 'store/reducers/BinaryMetricsReducer';
@@ -17,8 +22,15 @@ import { SelectableInputReducer } from 'store/reducers/SelectableInputReducer';
 
 export const rootReducer = (state: Store, action: SnowmanAction): Store => {
   const coreState: CoreStore = CoreReducer(state?.CoreStore, action);
+  const benchmarkState: BenchmarkConfigurationStore = BenchmarkConfiguratorReducer(
+    state?.BenchmarkConfigurationStore,
+    coreState,
+    action
+  );
+
   const immediateState: ImmediateStore = {
     CoreStore: coreState,
+    BenchmarkConfigurationStore: benchmarkState,
     AlgorithmDialogStore: AlgorithmDialogReducer(
       state?.AlgorithmDialogStore,
       action
@@ -26,11 +38,6 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
     DatasetDialogStore: DatasetDialogReducer(state?.DatasetDialogStore, action),
     ExperimentDialogStore: ExperimentDialogReducer(
       state?.ExperimentDialogStore,
-      action
-    ),
-    BenchmarkConfigurationStore: BenchmarkConfiguratorReducer(
-      state?.BenchmarkConfigurationStore,
-      coreState,
       action
     ),
     DatasetPreviewerStore: DatasetPreviewerReducer(
@@ -52,7 +59,11 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
       state?.SelectableInputStore,
       action
     ),
-    IntersectionStore: IntersectionReducer(state?.IntersectionStore, action),
+    IntersectionStore: IntersectionReducer(
+      state?.IntersectionStore,
+      benchmarkState,
+      action
+    ),
   };
   return RenderLogicReducer(state?.RenderLogicStore, immediateState, action);
 };

@@ -8,7 +8,7 @@ export interface IntersectionPageStateProps {
   countsLoaded: boolean;
   included: Experiment[];
   excluded: Experiment[];
-  irrelevant: Experiment[];
+  ignored: Experiment[];
 }
 
 export interface IntersectionPageDispatchProps {
