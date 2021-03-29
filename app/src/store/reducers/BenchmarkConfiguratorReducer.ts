@@ -1,5 +1,5 @@
 import { Algorithm, Dataset, Experiment } from 'api';
-import { differenceBy, nth, unionBy } from 'lodash';
+import { nth } from 'lodash';
 import {
   DatasetsPageActionTypes,
   ExperimentsPageActionTypes,
@@ -189,53 +189,61 @@ export const BenchmarkConfiguratorReducer = (
     coreState,
     action
   );
-  const experimentsToIds = (oneExperiment: Experiment): number =>
+  const experimentToId = (oneExperiment: Experiment): number =>
     oneExperiment.id;
-  const cleanUpBucket = (aBucket: Experiment[]): Experiment[] =>
-    aBucket.filter(
-      (anExperiment: Experiment): boolean =>
-        anExperiment.datasetId ===
-          (immediateState.selectedDataset?.id ?? MagicNotPossibleId) &&
-        coreState.experiments.map(experimentsToIds).includes(anExperiment.id)
+  const filterOutIrrelevantExperiments = (
+    theRelevantExperimentIds: number[],
+    aBucket: Experiment[]
+  ): Experiment[] =>
+    aBucket.filter((oneExperiment: Experiment): boolean =>
+      theRelevantExperimentIds.includes(oneExperiment.id)
     );
-  const finalChosenExperiments: Experiment[] = cleanUpBucket(
+  const relevantExperiments: Experiment[] = coreState.experiments.filter(
+    (anExperiment: Experiment): boolean =>
+      anExperiment.datasetId ===
+      (ownState.selectedDataset?.id ?? MagicNotPossibleId)
+  );
+  const relevantExperimentIds: number[] = relevantExperiments.map(
+    experimentToId
+  );
+  const finalChosenExperiments: Experiment[] = filterOutIrrelevantExperiments(
+    relevantExperimentIds,
     immediateState.chosenExperiments
   );
-  const finalChosenGoldStandards: Experiment[] = cleanUpBucket(
+  const finalChosenGoldStandards: Experiment[] = filterOutIrrelevantExperiments(
+    relevantExperimentIds,
     immediateState.chosenGoldStandards
   );
-  const alreadyChosenExperiments: Experiment[] = unionBy(
-    finalChosenExperiments,
-    finalChosenGoldStandards,
-    'id'
-  );
-  const remainingKnownExperiments: Experiment[] = differenceBy(
-    immediateState.availableExperiments,
-    alreadyChosenExperiments,
-    'id'
-  );
+  const finalAvailableExperiments: Experiment[] = ((): Experiment[] => {
+    const knownAvailableExperiments: Experiment[] = filterOutIrrelevantExperiments(
+      relevantExperimentIds,
+      immediateState.availableExperiments
+    );
+    const alreadyChosenExperimentIds: number[] = [
+      ...finalChosenGoldStandards.map(experimentToId),
+      ...finalChosenExperiments.map(experimentToId),
+      ...knownAvailableExperiments.map(experimentToId),
+    ];
+    return [
+      ...knownAvailableExperiments,
+      ...relevantExperiments.filter(
+        (oneExperiment: Experiment): boolean =>
+          !alreadyChosenExperimentIds.includes(oneExperiment.id)
+      ),
+    ];
+  })();
   return {
     ...immediateState,
     chosenExperiments: finalChosenExperiments,
     chosenGoldStandards: finalChosenGoldStandards,
-    availableExperiments: [
-      ...remainingKnownExperiments,
-      ...differenceBy(
-        coreState.experiments.filter(
-          (anExperiment: Experiment): boolean =>
-            anExperiment.datasetId ===
-            (ownState.selectedDataset?.id ?? MagicNotPossibleId)
-        ),
-        unionBy(alreadyChosenExperiments, remainingKnownExperiments, 'id'),
-        'id'
-      ),
-    ].filter((anExperiment: Experiment): boolean =>
-      immediateState.selectedMatchingSolutions.length > 0
-        ? immediateState.selectedMatchingSolutions.find(
-            (aMatchingSolution: Algorithm): boolean =>
-              anExperiment.algorithmId === aMatchingSolution.id
-          ) !== undefined
-        : true
+    availableExperiments: finalAvailableExperiments.filter(
+      (anExperiment: Experiment): boolean =>
+        immediateState.selectedMatchingSolutions.length > 0
+          ? immediateState.selectedMatchingSolutions.find(
+              (aMatchingSolution: Algorithm): boolean =>
+                anExperiment.algorithmId === aMatchingSolution.id
+            ) !== undefined
+          : true
     ),
   };
 };
