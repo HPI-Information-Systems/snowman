@@ -59,7 +59,7 @@ const insertExperimentAt = (
   sourceList.length === 0
     ? [anExperiment]
     : [
-        ...sourceList.splice(0, targetIndex),
+        ...sourceList.slice(0, targetIndex),
         anExperiment,
         ...sourceList.slice(targetIndex),
       ];
