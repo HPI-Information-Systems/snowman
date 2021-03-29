@@ -2,7 +2,6 @@ import {
   albums,
   calculator,
   colorFilter,
-  colorFilterOutline,
   documents,
   grid,
   home,
