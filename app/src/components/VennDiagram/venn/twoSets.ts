@@ -6,7 +6,7 @@ import {
   drawIntersection,
   drawIntersectionStroke,
 } from 'components/VennDiagram/venn/fundamentals/draw';
-import { intersectThreePathSet1Set2 } from 'components/VennDiagram/venn/fundamentals/paths';
+import { intersectTwoPathSet1Set2 } from 'components/VennDiagram/venn/fundamentals/paths';
 import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import { VennDiagramTwoSetsConfig } from 'components/VennDiagram/venn/types/twoSetsTypes';
 import { d3Selection } from 'components/VennDiagram/venn/types/types';
@@ -44,9 +44,8 @@ export const drawTwoSetVennDiagram = (
 
   drawIntersection({
     svg,
-    shape: intersectThreePathSet1Set2,
+    shape: intersectTwoPathSet1Set2,
     ...payload.x11,
-    transform: 'matrix(1,0,0,1,-0.5,-150)',
   });
   drawCircleStroke({
     svg,
@@ -73,8 +72,7 @@ export const drawTwoSetVennDiagram = (
   drawIntersectionStroke({
     svg,
     tooltipDrawer,
-    shape: intersectThreePathSet1Set2,
+    shape: intersectTwoPathSet1Set2,
     ...payload.x11,
-    transform: 'matrix(1,0,0,1,0,-150)',
   });
 };

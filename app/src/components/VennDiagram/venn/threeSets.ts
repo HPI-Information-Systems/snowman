@@ -62,25 +62,21 @@ export const drawThreeSetVennDiagram = (
     svg,
     shape: intersectThreePathSet1Set2,
     ...payload.x110,
-    transform: 'matrix(1,0,0,1,0,-50)',
   });
   drawIntersection({
     svg,
     shape: intersectThreePathSet1Set3,
     ...payload.x101,
-    transform: 'matrix(1,0,0,1,0,-50)',
   });
   drawIntersection({
     svg,
     shape: intersectThreePathSet2Set3,
     ...payload.x011,
-    transform: 'matrix(1,0,0,1,0,-50)',
   });
   drawIntersection({
     svg,
     shape: intersectThreePathSet1Set2Set3,
     ...payload.x111,
-    transform: 'matrix(1,0,0,1,0,-50)',
   });
 
   drawCircleStroke({
@@ -121,27 +117,23 @@ export const drawThreeSetVennDiagram = (
     tooltipDrawer,
     shape: intersectThreePathSet1Set2,
     ...payload.x110,
-    transform: 'matrix(1,0,0,1,-0.5,-50)',
   });
   drawIntersectionStroke({
     svg,
     tooltipDrawer,
     shape: intersectThreePathSet1Set3,
     ...payload.x101,
-    transform: 'matrix(1,0,0,1,-0.5,-50)',
   });
   drawIntersectionStroke({
     svg,
     tooltipDrawer,
     shape: intersectThreePathSet2Set3,
     ...payload.x011,
-    transform: 'matrix(1,0,0,1,0,-50)',
   });
   drawIntersectionStroke({
     svg,
     tooltipDrawer,
     shape: intersectThreePathSet1Set2Set3,
     ...payload.x111,
-    transform: 'matrix(1,0,0,1,0,-50)',
   });
 };

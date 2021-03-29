@@ -6,27 +6,25 @@ import {
   VennDiagramIntersection,
 } from 'components/VennDiagram/venn/types/types';
 
-const baseIntersection = (svg: d3Selection, shape: string, transform = '') =>
-  svg.append('path').attr('d', shape).style('transform', transform);
+const baseIntersection = (svg: d3Selection, shape: string) =>
+  svg.append('path').attr('d', shape);
 
 export const drawIntersection = ({
   svg,
   shape,
-  transform,
   color,
 }: {
   svg: d3Selection;
   shape: string;
   transform?: string;
 } & VennDiagramIntersection): d3Selection =>
-  baseIntersection(svg, shape, transform)
+  baseIntersection(svg, shape)
     .style('fill', color ?? 'black')
     .style('fill-opacity', color !== undefined ? 1 : 0);
 
 export const drawIntersectionStroke = ({
   svg,
   shape,
-  transform,
   tooltipDrawer,
   tooltip,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -34,9 +32,8 @@ export const drawIntersectionStroke = ({
 }: {
   svg: d3Selection;
   shape: string;
-  transform?: string;
   tooltipDrawer: VennDiagramTooltip;
 } & VennDiagramIntersection): d3Selection =>
-  baseIntersection(svg, shape, transform).call((selection) =>
+  baseIntersection(svg, shape).call((selection) =>
     drawStroke(selection, callback, tooltipDrawer, tooltip)
   );
