@@ -1,4 +1,4 @@
-import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
+import { TuplesLoader } from 'types/TuplesLoader';
 
 export interface FilePreviewerStateProps {
   fileName: string;

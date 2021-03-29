@@ -1,5 +1,4 @@
 import { Algorithm, Experiment, ExperimentsApi } from 'api';
-import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 import { DropResult } from 'react-beautiful-dnd';
 import {
   CoreStoreActionTypes,
@@ -12,6 +11,7 @@ import {
 } from 'store/messages';
 import { SUCCESS_TO_DELETE_EXPERIMENT } from 'structs/statusMessages';
 import { ExperimentBuckets } from 'types/ExperimentBuckets';
+import { TuplesLoader } from 'types/TuplesLoader';
 import { getDndDescriptorFromDropResult } from 'utils/dragNDropHelpers';
 import {
   easyPrimitiveAction,

@@ -1,5 +1,4 @@
 import { Dataset, DatasetsApi } from 'api';
-import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 import {
   CoreStoreActionTypes,
   DatasetsPageActionTypes,
@@ -10,6 +9,7 @@ import {
   SnowmanThunkAction,
 } from 'store/messages';
 import { SUCCESS_TO_DELETE_DATASET } from 'structs/statusMessages';
+import { TuplesLoader } from 'types/TuplesLoader';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,

@@ -5,11 +5,11 @@ import {
   ExperimentIntersectionPairCountsExperiments,
   ExperimentIntersectionPairCountsItem,
 } from 'api';
-import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 import { IntersectionStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { datasetTuplesLoader } from 'store/actions/DatasetsPageActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
+import { TuplesLoader } from 'types/TuplesLoader';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,

@@ -1,4 +1,4 @@
-import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
+import { TuplesLoader } from 'types/TuplesLoader';
 
 export type DataViewerProps = {
   tuplesCount: number;

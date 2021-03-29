@@ -1,7 +1,7 @@
 import { Metric } from 'api';
-import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 import { ConfusionMatrix } from 'types/ConfusionMatrix';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
+import { TuplesLoader } from 'types/TuplesLoader';
 
 export interface BinaryMetricsPageDispatchProps {
   loadMetrics(): void;
