@@ -55,6 +55,19 @@ export const getExperimentBucketFromId = (
   }
 };
 
+const insertExperimentAt = (
+  sourceList: Experiment[],
+  anExperiment: Experiment,
+  targetIndex: number
+): Experiment[] =>
+  sourceList.length === 0
+    ? [anExperiment]
+    : [
+        ...sourceList.slice(0, targetIndex),
+        anExperiment,
+        ...sourceList.slice(targetIndex),
+      ];
+
 const BenchmarkConfiguratorImmediateReducer = (
   ownState: BenchmarkConfigurationStore,
   coreState: CoreStore,
