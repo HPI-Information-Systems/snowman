@@ -15,6 +15,7 @@ import { Algorithm } from 'api';
 import AddExperimentFab from 'components/AddFab/AddExperimentFab';
 import ExperimentDialog from 'components/ExperimentDialog/ExperimentDialog';
 import ExperimentDroppable from 'components/ExperimentDroppable/ExperimentDroppable';
+import ExperimentPreviewer from 'components/FilePreviewer/ExperimentPreviewer';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { filterCircleOutline } from 'ionicons/icons';
 import { ExperimentsPageProps } from 'pages/ExperimentsPage/ExperimentsPageProps';
@@ -117,6 +118,7 @@ const ExperimentsPageView = ({
       </IonGrid>
       <AddExperimentFab />
       <ExperimentDialog />
+      <ExperimentPreviewer />
     </PageStruct>
   );
 };

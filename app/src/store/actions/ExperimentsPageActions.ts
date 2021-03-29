@@ -1,4 +1,5 @@
 import { Algorithm, Experiment, ExperimentsApi } from 'api';
+import { TuplesLoader } from 'components/DataViewer/TuplesLoader';
 import { DropResult } from 'react-beautiful-dnd';
 import {
   CoreStoreActionTypes,
@@ -73,3 +74,19 @@ export const deleteExperiment = (
     dispatch,
     SUCCESS_TO_DELETE_EXPERIMENT
   ).then((): Promise<void> => dispatch(getExperiments()));
+
+// Cache loaders to not trigger a rerender
+const experimentTuplesLoaders = new Map<number, TuplesLoader>();
+export const experimentTuplesLoader = (experimentId: number): TuplesLoader => {
+  let tuplesLoader = experimentTuplesLoaders.get(experimentId);
+  if (!tuplesLoader) {
+    tuplesLoader = (startAt, stop) =>
+      new ExperimentsApi().getExperimentFile({
+        experimentId: experimentId,
+        startAt,
+        limit: stop - startAt,
+      });
+    experimentTuplesLoaders.set(experimentId, tuplesLoader);
+  }
+  return tuplesLoader;
+};
