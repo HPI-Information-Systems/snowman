@@ -189,14 +189,14 @@ export const BenchmarkConfiguratorReducer = (
     coreState,
     action
   );
+  const experimentsToIds = (oneExperiment: Experiment): number =>
+    oneExperiment.id;
   const cleanUpBucket = (aBucket: Experiment[]): Experiment[] =>
     aBucket.filter(
       (anExperiment: Experiment): boolean =>
         anExperiment.datasetId ===
           (immediateState.selectedDataset?.id ?? MagicNotPossibleId) &&
-        coreState.experiments
-          .map((oneExperiment: Experiment): number => oneExperiment.id)
-          .includes(anExperiment.id)
+        coreState.experiments.map(experimentsToIds).includes(anExperiment.id)
     );
   const finalChosenExperiments: Experiment[] = cleanUpBucket(
     immediateState.chosenExperiments
@@ -204,27 +204,38 @@ export const BenchmarkConfiguratorReducer = (
   const finalChosenGoldStandards: Experiment[] = cleanUpBucket(
     immediateState.chosenGoldStandards
   );
+  const alreadyChosenExperiments: Experiment[] = unionBy(
+    finalChosenExperiments,
+    finalChosenGoldStandards,
+    'id'
+  );
+  const remainingKnownExperiments: Experiment[] = differenceBy(
+    immediateState.availableExperiments,
+    alreadyChosenExperiments,
+    'id'
+  );
   return {
     ...immediateState,
     chosenExperiments: finalChosenExperiments,
     chosenGoldStandards: finalChosenGoldStandards,
-    availableExperiments: differenceBy(
-      coreState.experiments
-        .filter(
+    availableExperiments: [
+      ...remainingKnownExperiments,
+      ...differenceBy(
+        coreState.experiments.filter(
           (anExperiment: Experiment): boolean =>
             anExperiment.datasetId ===
             (ownState.selectedDataset?.id ?? MagicNotPossibleId)
-        )
-        .filter((anExperiment: Experiment): boolean =>
-          immediateState.selectedMatchingSolutions.length > 0
-            ? immediateState.selectedMatchingSolutions.find(
-                (aMatchingSolution: Algorithm): boolean =>
-                  anExperiment.algorithmId === aMatchingSolution.id
-              ) !== undefined
-            : true
         ),
-      unionBy(finalChosenExperiments, finalChosenGoldStandards, 'id'),
-      'id'
+        unionBy(alreadyChosenExperiments, remainingKnownExperiments, 'id'),
+        'id'
+      ),
+    ].filter((anExperiment: Experiment): boolean =>
+      immediateState.selectedMatchingSolutions.length > 0
+        ? immediateState.selectedMatchingSolutions.find(
+            (aMatchingSolution: Algorithm): boolean =>
+              anExperiment.algorithmId === aMatchingSolution.id
+          ) !== undefined
+        : true
     ),
   };
 };
