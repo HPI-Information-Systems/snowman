@@ -67,6 +67,7 @@ const DatasetCard = ({
             <IonChip
               color="dark"
               outline={false}
+              disabled={uploadedCount === undefined}
               onClick={(): void =>
                 uploadedCount !== undefined ? previewDataset() : undefined
               }
@@ -76,6 +77,7 @@ const DatasetCard = ({
             <IonChip
               color="dark"
               outline={false}
+              disabled={uploadedCount === undefined}
               onClick={(): void =>
                 uploadedCount !== undefined ? previewDataset() : undefined
               }

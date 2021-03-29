@@ -41,6 +41,7 @@ const ExperimentCard = ({
             <IonChip
               color="dark"
               outline={false}
+              disabled={numberOfRecords === undefined}
               onClick={(): void =>
                 numberOfRecords !== undefined ? previewExperiment() : undefined
               }
