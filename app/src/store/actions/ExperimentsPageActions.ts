@@ -75,6 +75,7 @@ export const deleteExperiment = (
     SUCCESS_TO_DELETE_EXPERIMENT
   ).then((): Promise<void> => dispatch(getExperiments()));
 
+// Cache loaders to not trigger a rerender
 const experimentTuplesLoaders = new Map<number, TuplesLoader>();
 export const experimentTuplesLoader = (experimentId: number): TuplesLoader => {
   let tuplesLoader = experimentTuplesLoaders.get(experimentId);

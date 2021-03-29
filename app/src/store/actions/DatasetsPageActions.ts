@@ -60,17 +60,18 @@ export const deleteDataset = (
     SUCCESS_TO_DELETE_DATASET
   ).then((): Promise<void> => dispatch(getDatasets()));
 
+// Cache loaders to not trigger a rerender
 const datasetTuplesLoaders = new Map<number, TuplesLoader>();
-export const datasetTuplesLoader = (dataset: number): TuplesLoader => {
-  let tuplesLoader = datasetTuplesLoaders.get(dataset);
+export const datasetTuplesLoader = (datasetId: number): TuplesLoader => {
+  let tuplesLoader = datasetTuplesLoaders.get(datasetId);
   if (!tuplesLoader) {
     tuplesLoader = (startAt, stop) =>
       new DatasetsApi().getDatasetFile({
-        datasetId: dataset,
+        datasetId: datasetId,
         startAt,
         limit: stop - startAt,
       });
-    datasetTuplesLoaders.set(dataset, tuplesLoader);
+    datasetTuplesLoaders.set(datasetId, tuplesLoader);
   }
   return tuplesLoader;
 };

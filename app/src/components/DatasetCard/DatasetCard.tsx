@@ -67,14 +67,18 @@ const DatasetCard = ({
             <IonChip
               color="dark"
               outline={false}
-              onClick={() => uploadedCount && previewDataset()}
+              onClick={(): void =>
+                uploadedCount !== undefined ? previewDataset() : undefined
+              }
             >
               <IonLabel>Total: {totalCount ?? 'unknown'}</IonLabel>
             </IonChip>
             <IonChip
               color="dark"
               outline={false}
-              onClick={() => uploadedCount && previewDataset()}
+              onClick={(): void =>
+                uploadedCount !== undefined ? previewDataset() : undefined
+              }
             >
               <IonLabel>Uploaded: {uploadedCount ?? 'none'}</IonLabel>
             </IonChip>
