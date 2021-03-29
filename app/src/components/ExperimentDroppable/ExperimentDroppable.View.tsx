@@ -22,6 +22,7 @@ const ExperimentDroppableView = ({
   matchingSolutions,
   editExperiment,
   deleteExperiment,
+  previewExperiment,
 }: ExperimentDroppableProps): JSX.Element => {
   const experimentRenderer = (
     provided: DraggableProvided,
@@ -41,7 +42,6 @@ const ExperimentDroppableView = ({
         <IonCol>
           <ExperimentCard
             key={`experimentCard-${anExperiment.id}`}
-            experimentId={anExperiment.id}
             experimentName={anExperiment.name}
             algorithmName={getAlgorithmNameFromId(
               anExperiment.algorithmId,
@@ -52,6 +52,7 @@ const ExperimentDroppableView = ({
             timeToConfigure={anExperiment.softKPIs?.timeToConfigure}
             editExperiment={(): void => editExperiment(anExperiment)}
             deleteExperiment={(): void => deleteExperiment(anExperiment)}
+            previewExperiment={(): void => previewExperiment(anExperiment)}
           />
         </IonCol>
       </IonRow>

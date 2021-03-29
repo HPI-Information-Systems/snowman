@@ -13,21 +13,19 @@ import {
   IonRow,
 } from '@ionic/react';
 import { ExperimentCardProps } from 'components/ExperimentCard/ExperimentCardProps';
-import ExperimentPreview from 'components/ExperimentPreview/ExperimentPreview';
 import { create, trash } from 'ionicons/icons';
-import React, { useState } from 'react';
+import React from 'react';
 
 const ExperimentCard = ({
   experimentName,
   algorithmName,
-  experimentId,
   description,
   numberOfRecords,
   timeToConfigure,
   editExperiment,
   deleteExperiment,
+  previewExperiment,
 }: ExperimentCardProps): JSX.Element => {
-  const [showExperimentPreview, setShowExperimentPreview] = useState(false);
   return (
     <IonCard button={false}>
       <IonCardHeader>
@@ -43,7 +41,7 @@ const ExperimentCard = ({
             <IonChip
               color="dark"
               outline={false}
-              onClick={() => setShowExperimentPreview(true)}
+              onClick={() => previewExperiment()}
             >
               <IonLabel>Count: {numberOfRecords ?? 'none'}</IonLabel>
             </IonChip>
@@ -81,13 +79,6 @@ const ExperimentCard = ({
           </IonCol>
         </IonRow>
       </IonGrid>
-      <ExperimentPreview
-        experimentId={experimentId}
-        experimentName={experimentName}
-        isOpen={showExperimentPreview}
-        rowCount={numberOfRecords ?? 0}
-        closeDialog={() => setShowExperimentPreview(false)}
-      />
     </IonCard>
   );
 };

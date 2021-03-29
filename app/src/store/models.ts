@@ -100,6 +100,11 @@ export interface DatasetPreviewerStore {
   dataset: Dataset | undefined;
 }
 
+export interface ExperimentPreviewerStore {
+  isOpen: boolean;
+  experiment: Experiment | undefined;
+}
+
 export interface IntersectionStore {
   included: Experiment[];
   excluded: Experiment[];
@@ -129,6 +134,7 @@ export interface ImmediateStore {
   InputChipStore: InputChipStore;
   SelectableInputStore: SelectableInputStore;
   DatasetPreviewerStore: DatasetPreviewerStore;
+  ExperimentPreviewerStore: ExperimentPreviewerStore;
   IntersectionStore: IntersectionStore;
 }
 
