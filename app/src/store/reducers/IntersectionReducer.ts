@@ -54,12 +54,10 @@ export const IntersectionReducer = (
         eventDescriptor.sourceIndex
       );
       if (draggedExperiment === undefined) return ownState;
-      console.log('draggedexp', draggedExperiment.id);
 
       newIgnored = filterOutAnExperiment(ownState.ignored, draggedExperiment);
       newIncluded = filterOutAnExperiment(ownState.included, draggedExperiment);
       newExcluded = filterOutAnExperiment(ownState.excluded, draggedExperiment);
-      console.log('filtered', newIgnored, newIncluded, newExcluded);
 
       switch (eventDescriptor.targetBucket) {
         case IntersectionBuckets.IGNORED:
@@ -84,7 +82,6 @@ export const IntersectionReducer = (
           );
           break;
       }
-      console.log('prepared', newIgnored, newIncluded, newExcluded);
       return {
         ...ownState,
         ignored: newIgnored,
