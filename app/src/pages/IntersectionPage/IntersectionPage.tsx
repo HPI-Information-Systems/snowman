@@ -32,6 +32,10 @@ const mapStateToProps = ({
       predictedCondition: false,
     })),
   ].sort(intersectionSorter);
+  const nonIrrelevant = new Set([...included, ...excluded].map(({ id }) => id));
+  const irrelevant = [...chosenExperiments, ...chosenGoldStandards].filter(
+    ({ id }) => !nonIrrelevant.has(id)
+  );
 
   const configCounts = getCountsForIntersection(counts, sortedConfig);
 
@@ -45,6 +49,7 @@ const mapStateToProps = ({
     pairCount: configCounts?.numberPairs ?? 0,
     included,
     excluded,
+    irrelevant,
     countsLoaded: countsMatchConfiguration(
       counts,
       chosenExperiments,

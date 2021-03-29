@@ -24,6 +24,7 @@ const IntersectionPageView = ({
   pairCount,
   included,
   excluded,
+  irrelevant,
   loadCounts,
 }: IntersectionPageProps): JSX.Element => {
   useEffect(() => {
@@ -34,13 +35,21 @@ const IntersectionPageView = ({
     strategy,
     setStrategy,
   ] = useState<IntersectionVennDiagramConfigStrategy>(
-    new IntersectionVennDiagramIntersectionStrategy(included, excluded)
+    new IntersectionVennDiagramIntersectionStrategy(
+      included,
+      excluded,
+      irrelevant
+    )
   );
   useEffect(() => {
     setStrategy(
-      new IntersectionVennDiagramIntersectionStrategy(included, excluded)
+      new IntersectionVennDiagramIntersectionStrategy(
+        included,
+        excluded,
+        irrelevant
+      )
     );
-  }, [included, excluded]);
+  }, [included, excluded, irrelevant]);
 
   return (
     <PageStruct title={'Intersections'}>
