@@ -1,3 +1,5 @@
+import 'components/DatasetCard/DatasetCardStyles.css';
+
 import {
   IonButton,
   IonCard,
@@ -67,6 +69,7 @@ const DatasetCard = ({
             <IonChip
               color="dark"
               outline={false}
+              class="custom-disabled-chip"
               disabled={uploadedCount === undefined}
               onClick={(): void =>
                 uploadedCount !== undefined ? previewDataset() : undefined
@@ -77,6 +80,7 @@ const DatasetCard = ({
             <IonChip
               color="dark"
               outline={false}
+              class="custom-disabled-chip"
               disabled={uploadedCount === undefined}
               onClick={(): void =>
                 uploadedCount !== undefined ? previewDataset() : undefined
