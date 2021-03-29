@@ -13,19 +13,11 @@ import {
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 
-const mapStateToProps = (state: Store): IntersectionSelectorStateProps => {
-  const { excluded, included } = state.IntersectionStore;
-  const notIgnored = new Set([...excluded, ...included].map(({ id }) => id));
-  const availableExperiments = [
-    ...state.BenchmarkConfigurationStore.chosenExperiments,
-    ...state.BenchmarkConfigurationStore.chosenGoldStandards,
-  ];
-  return {
-    ignored: availableExperiments.filter(({ id }) => !notIgnored.has(id)),
-    excluded,
-    included,
-  };
-};
+const mapStateToProps = (state: Store): IntersectionSelectorStateProps => ({
+  ignored: state.IntersectionStore.ignored,
+  excluded: state.IntersectionStore.excluded,
+  included: state.IntersectionStore.included,
+});
 
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch

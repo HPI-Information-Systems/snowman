@@ -20,6 +20,7 @@ function filterId(
 ) {
   return {
     ...state,
+    ignored: state.ignored.filter(({ id }) => id !== payload.id),
     excluded: state.excluded.filter(({ id }) => id !== payload.id),
     included: state.included.filter(({ id }) => id !== payload.id),
   };
@@ -46,12 +47,14 @@ export const IntersectionReducer = (
       newState.ignored.push(action.payload as Experiment);
       return newState;
     }
-
     case actionTypes.SET_COUNTS:
       return {
         ...ownState,
         counts: action.payload as ExperimentIntersectionPairCountsItem[],
       };
+    case actionTypes.DRAG_N_DROP_EXPERIMENT: {
+      return ownState;
+    }
     case actionTypes.RESET_INTERSECTION:
     case ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT:
     case DatasetsPageActionTypes.CLICK_ON_DATASET:
