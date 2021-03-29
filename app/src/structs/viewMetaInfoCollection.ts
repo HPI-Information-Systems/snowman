@@ -1,11 +1,12 @@
 import {
   albums,
   calculator,
+  colorFilter,
+  colorFilterOutline,
   documents,
   grid,
   home,
   pauseCircle,
-  pieChart,
   rocket,
 } from 'ionicons/icons';
 import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
@@ -122,7 +123,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     shouldShowInMenu: true,
     menuCategory: menuCategories.EVALUATION,
     menuName: 'Intersections',
-    menuIcon: pieChart,
+    menuIcon: colorFilter,
     menuSortKey: 8,
     selectedOptionsReminder: emptySelectedOptions,
   },
