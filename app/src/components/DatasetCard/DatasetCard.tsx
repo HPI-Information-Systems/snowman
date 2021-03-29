@@ -116,7 +116,7 @@ const DatasetCard = ({
         datasetName={datasetName}
         isOpen={datasetPreviewIsOpen}
         rowCount={uploadedCount ?? 0}
-      ></DatasetPreview>
+      />
     </IonCard>
   );
 };
