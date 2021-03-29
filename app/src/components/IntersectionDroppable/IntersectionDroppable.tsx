@@ -3,21 +3,17 @@ import { IntersectionDroppableStateProps } from 'components/IntersectionDroppabl
 import { connect } from 'react-redux';
 import { Store } from 'store/models';
 
-const mapStateToProps = (state: Store): IntersectionDroppableStateProps => {
-  return {
-    pairCounts: new Map(
-      state.IntersectionStore.counts
-        .filter(({ experiments }) => experiments.length === 1)
-        .filter(
-          ({ experiments: [{ predictedCondition }] }) => predictedCondition
-        )
-        .map(({ experiments: [{ experimentId }], numberPairs }) => [
-          experimentId,
-          numberPairs,
-        ])
-    ),
-  };
-};
+const mapStateToProps = (state: Store): IntersectionDroppableStateProps => ({
+  pairCounts: new Map(
+    state.IntersectionStore.counts
+      .filter(({ experiments }) => experiments.length === 1)
+      .filter(({ experiments: [{ predictedCondition }] }) => predictedCondition)
+      .map(({ experiments: [{ experimentId }], numberPairs }) => [
+        experimentId,
+        numberPairs,
+      ])
+  ),
+});
 
 const IntersectionDroppable = connect(mapStateToProps)(
   IntersectionDroppableView
