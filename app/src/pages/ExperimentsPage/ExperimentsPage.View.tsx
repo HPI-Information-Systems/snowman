@@ -30,12 +30,10 @@ const ExperimentsPageView = ({
   clickOnMatchingSolution,
   dragExperiment,
   loadExperiments,
-  resetIntersection,
   showExperimentFilters,
   clickOnExperimentFilterTool,
 }: ExperimentsPageProps): JSX.Element => {
   useEffect(loadExperiments, [loadExperiments]);
-  useEffect(resetIntersection, [resetIntersection]);
   return (
     <PageStruct title="Experiments Selector" showNextFab={true}>
       <IonGrid>

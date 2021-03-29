@@ -12,7 +12,6 @@ import {
   dragNDropAnExperiment,
   getExperiments,
 } from 'store/actions/ExperimentsPageActions';
-import { resetIntersection } from 'store/actions/IntersectionStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 
@@ -35,9 +34,6 @@ const mapDispatchToProps = (
   },
   loadExperiments(): void {
     dispatch(getExperiments()).then();
-  },
-  resetIntersection() {
-    dispatch(resetIntersection());
   },
   clickOnExperimentFilterTool(): void {
     dispatch(clickOnExperimentsFilterTool());

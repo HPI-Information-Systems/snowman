@@ -30,13 +30,18 @@ export const dragNDropAnExperiment = (
     ),
   });
 
-export const resetIntersection = (payload?: {
-  excluded: Experiment[];
-  included: Experiment[];
-}): easyPrimitiveActionReturn =>
+export const resetIntersection = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
     type: actionTypes.RESET_INTERSECTION,
-    payload: payload ?? false,
+    payload: false,
+  });
+
+export const resetIncludedExperiments = (
+  experiments: Experiment[]
+): easyPrimitiveActionReturn =>
+  easyPrimitiveAction({
+    type: actionTypes.RESET_INCLUDED_EXPERIMENTS,
+    payload: experiments,
   });
 
 export const countsMatchConfiguration = (

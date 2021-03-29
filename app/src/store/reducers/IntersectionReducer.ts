@@ -1,5 +1,5 @@
 import { Experiment, ExperimentIntersectionPairCountsItem } from 'api';
-import { nth } from 'lodash';
+import { difference, nth } from 'lodash';
 import {
   DatasetsPageActionTypes,
   ExperimentsPageActionTypes,
@@ -92,19 +92,22 @@ export const IntersectionReducer = (
         excluded: newExcluded,
       };
     }
-    case actionTypes.RESET_INTERSECTION:
-      // Todo: Update ignored
+    case actionTypes.RESET_INCLUDED_EXPERIMENTS:
       return {
         ...ownState,
-        ...((action.payload as
-          | {
-              excluded: Experiment[];
-              included: Experiment[];
-            }
-          | undefined) ?? {}),
+        ignored: difference(
+          [
+            ...benchmarkState.chosenGoldStandards,
+            ...benchmarkState.chosenExperiments,
+          ],
+          action.payload as Experiment[]
+        ),
+        included: action.payload as Experiment[],
+        excluded: [],
       };
     case ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT:
     case DatasetsPageActionTypes.CLICK_ON_DATASET:
+    case actionTypes.RESET_INTERSECTION:
       return {
         ...initialState,
         ignored: [
