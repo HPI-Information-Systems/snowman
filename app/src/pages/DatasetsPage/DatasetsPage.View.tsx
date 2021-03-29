@@ -63,7 +63,6 @@ const DatasetsPageView = ({
                 deleteDataset={() => deleteDataset(aDataset)}
                 editDataset={() => editDataset(aDataset)}
                 previewDataset={() => previewDataset(aDataset)}
-                datasetId={aDataset.id}
               />
             </IonCol>
           ))}
