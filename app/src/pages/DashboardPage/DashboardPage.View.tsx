@@ -37,7 +37,7 @@ export default function DashboardPageView({
     <PageStruct title={'Dashboard'}>
       <IonGrid>
         <IonRow>
-          <IonCol size="12" sizeLg="8">
+          <IonCol size="12" sizeXl="8">
             <IonCard className="dashboard-content">
               <IntersectionVennDiagram onIntersect={openIntersectionPage} />
               {isVennDiagramRendered ? (
@@ -58,7 +58,7 @@ export default function DashboardPageView({
               )}
             </IonCard>
           </IonCol>
-          <IonCol size="12" sizeLg="4">
+          <IonCol size="12" sizeXl="4">
             <IonCard>
               <IonHeader>
                 <IonToolbar>
