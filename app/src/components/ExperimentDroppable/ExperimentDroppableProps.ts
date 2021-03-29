@@ -14,6 +14,7 @@ export interface ExperimentDroppableStateProps {
 export interface ExperimentDroppableDispatchProps {
   editExperiment(anExperiment: Experiment): void;
   deleteExperiment(anExperiment: Experiment): void;
+  previewExperiment(anExperiment: Experiment): void;
 }
 
 export type ExperimentDroppableProps = ExperimentDroppableOwnProps &

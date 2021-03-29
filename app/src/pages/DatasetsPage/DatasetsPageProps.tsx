@@ -13,6 +13,7 @@ export interface DatasetsPageDispatchProps {
   loadDatasets(): void;
   deleteDataset(aDataset: Dataset): void;
   editDataset(aDataset: Dataset): void;
+  previewDataset(aDataset: Dataset): void;
 }
 
 export type DatasetsPageProps = DatasetsPageDispatchProps &

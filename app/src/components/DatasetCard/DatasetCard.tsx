@@ -13,18 +13,16 @@ import {
   IonRow,
 } from '@ionic/react';
 import { DatasetCardProps } from 'components/DatasetCard/DatasetCardProps';
-import DatasetPreview from 'components/DatasetPreview/DatasetPreview';
 import {
   create,
   radioButtonOffOutline,
   radioButtonOnOutline,
   trash,
 } from 'ionicons/icons';
-import React, { useState } from 'react';
+import React from 'react';
 
 const DatasetCard = ({
   datasetName,
-  datasetId,
   isSelected,
   categories,
   description,
@@ -33,9 +31,8 @@ const DatasetCard = ({
   selectDataset,
   deleteDataset,
   editDataset,
+  previewDataset,
 }: DatasetCardProps): JSX.Element => {
-  const [datasetPreviewIsOpen, setDatasetPreviewIsOpen] = useState(false);
-
   return (
     <IonCard button={false}>
       <IonCardHeader>
@@ -70,14 +67,18 @@ const DatasetCard = ({
             <IonChip
               color="dark"
               outline={false}
-              onClick={() => uploadedCount && setDatasetPreviewIsOpen(true)}
+              onClick={(): void =>
+                uploadedCount !== undefined ? previewDataset() : undefined
+              }
             >
               <IonLabel>Total: {totalCount ?? 'unknown'}</IonLabel>
             </IonChip>
             <IonChip
               color="dark"
               outline={false}
-              onClick={() => uploadedCount && setDatasetPreviewIsOpen(true)}
+              onClick={(): void =>
+                uploadedCount !== undefined ? previewDataset() : undefined
+              }
             >
               <IonLabel>Uploaded: {uploadedCount ?? 'none'}</IonLabel>
             </IonChip>
@@ -110,13 +111,6 @@ const DatasetCard = ({
           </IonCol>
         </IonRow>
       </IonGrid>
-      <DatasetPreview
-        closeDialog={() => setDatasetPreviewIsOpen(false)}
-        datasetId={datasetId}
-        datasetName={datasetName}
-        isOpen={datasetPreviewIsOpen}
-        rowCount={uploadedCount ?? 0}
-      />
     </IonCard>
   );
 };
