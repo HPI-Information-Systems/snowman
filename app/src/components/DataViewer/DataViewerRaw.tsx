@@ -1,5 +1,12 @@
-import React, { useMemo } from 'react';
-import { Column, useBlockLayout, useTable } from 'react-table';
+import React, { useMemo, useState } from 'react';
+import {
+  Column,
+  useAbsoluteLayout,
+  useBlockLayout,
+  useFlexLayout,
+  useResizeColumns,
+  useTable,
+} from 'react-table';
 import { IndexRange } from 'react-virtualized';
 import { FixedSizeList } from 'react-window';
 
@@ -29,8 +36,8 @@ export default function DataViewerRaw({
 }): JSX.Element {
   const columns = useMemo(() => rawColumns, [rawColumns]);
   const data = useMemo(() => {
-    console.log(`UPDATE`);
     return rawData;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rawData, rowsUpdated]);
   const defaultColumn = React.useMemo(
     () => ({
@@ -54,51 +61,83 @@ export default function DataViewerRaw({
       data,
       defaultColumn,
     },
-    useBlockLayout
+    useFlexLayout,
+    useResizeColumns
   );
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   const RenderRow = React.useCallback(
     ({ index, style }) => {
-      console.log('B');
       const row = rows[index];
       prepareRow(row);
       const result = (
         <div
-          {...row.getRowProps({
-            style,
-          })}
-          className="tr"
+          style={{
+            width: `${totalColumnsWidth + scrollBarSize}px`,
+            transform: `translateX(-${scrollPosition}px)`,
+          }}
         >
-          {row.cells.map((cell) => {
-            return (
-              // eslint-disable-next-line react/jsx-key
-              <div {...cell.getCellProps()} className="td">
-                {cell.render('Cell')}
-              </div>
-            );
-          })}
+          <div
+            {...row.getRowProps({
+              style,
+            })}
+            className="tr"
+          >
+            {row.cells.map((cell) => {
+              return (
+                // eslint-disable-next-line react/jsx-key
+                <div {...cell.getCellProps()} className="td">
+                  {cell.render('Cell')}
+                </div>
+              );
+            })}
+          </div>
         </div>
       );
+      console.log(scrollPosition);
       return result;
     },
-    [prepareRow, rows]
+    [prepareRow, rows, scrollPosition]
   );
 
   // Render the UI for your table
   return (
     <div {...getTableProps()} className="table" style={{ background: 'white' }}>
-      <div>
-        {headerGroups.map((headerGroup) => (
-          // eslint-disable-next-line react/jsx-key
-          <div {...headerGroup.getHeaderGroupProps()} className="tr">
-            {headerGroup.headers.map((column) => (
-              // eslint-disable-next-line react/jsx-key
-              <div {...column.getHeaderProps()} className="th">
-                {column.render('Header')}
-              </div>
-            ))}
-          </div>
-        ))}
+      <div
+        style={{
+          width: `100%`,
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          style={{
+            width: `${totalColumnsWidth + scrollBarSize}px`,
+            transform: `translateX(-${scrollPosition}px)`,
+          }}
+        >
+          {headerGroups.map((headerGroup) => (
+            // eslint-disable-next-line react/jsx-key
+            <div {...headerGroup.getHeaderGroupProps()} className="tr">
+              {headerGroup.headers.map((column) => (
+                // eslint-disable-next-line react/jsx-key
+                <div {...column.getHeaderProps()} className="th">
+                  {column.render('Header')}
+                  {column.canResize && (
+                    <div
+                      {...column.getResizerProps()}
+                      style={{
+                        width: '0.5rem',
+                        height: '100%',
+                        background: 'orange',
+                        float: 'right',
+                      }}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div {...getTableBodyProps()}>
@@ -109,13 +148,30 @@ export default function DataViewerRaw({
               stopIndex: props.visibleStopIndex,
             })
           }
-          height={400}
+          height={370}
           itemCount={rows.length}
           itemSize={35}
-          width={totalColumnsWidth + scrollBarSize}
+          width={'100%'}
+          style={{
+            overflowY: 'scroll',
+            overflowX: 'hidden',
+          }}
         >
           {RenderRow}
         </FixedSizeList>
+        <div
+          style={{ width: '100%', overflowY: 'hidden', overflowX: 'scroll' }}
+          onScroll={(e) => {
+            setScrollPosition(e.currentTarget.scrollLeft);
+          }}
+        >
+          <div
+            style={{
+              width: `${totalColumnsWidth + scrollBarSize}px`,
+              height: '1px',
+            }}
+          ></div>
+        </div>
       </div>
     </div>
   );

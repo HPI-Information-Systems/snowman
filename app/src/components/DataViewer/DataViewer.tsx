@@ -19,10 +19,7 @@ const DataViewer = ({
   function wrappedLoadTuples(start: number, stop: number) {
     return RequestHandler(() => loadTuples(start, stop), dispatch);
   }
-  const [
-    { header, rows, requestedCount, rowsUpdated },
-    setState,
-  ] = useState<StateT>({
+  const [{ header, rows, rowsUpdated }, setState] = useState<StateT>({
     header: [],
     rows: [],
     requestedCount: 0,
@@ -91,7 +88,7 @@ const DataViewer = ({
   }
 
   useEffect(() => {
-    getState(({ header, rows, requestedCount, resetVersion, rowsUpdated }) => {
+    getState(({ header, rows, resetVersion, rowsUpdated }) => {
       const newResetVersion = resetVersion + 1;
       setState({
         header,
@@ -127,7 +124,6 @@ const DataViewer = ({
   return (
     <InfiniteLoader
       loadMoreRows={async ({ stopIndex }) => {
-        console.log('A');
         requestRows(stopIndex + 1);
       }}
       isRowLoaded={({ index }) => index < rows.length}
