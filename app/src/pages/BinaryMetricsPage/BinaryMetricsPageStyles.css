@@ -26,3 +26,11 @@
 .count-chip {
   opacity: 1 !important;
 }
+
+.info-icon-fixed {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  cursor: pointer;
+  font-size: larger;
+}

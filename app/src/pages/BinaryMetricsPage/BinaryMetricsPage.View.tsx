@@ -8,6 +8,7 @@ import {
   IonCardSubtitle,
   IonCardTitle,
   IonChip,
+  IonIcon,
   IonText,
 } from '@ionic/react';
 import { Metric } from 'api';
@@ -15,6 +16,7 @@ import DataViewer from 'components/DataViewer/DataViewer';
 import PageStruct from 'components/PageStruct/PageStruct';
 import PaneButtonRow from 'components/PaneButtonRow/PaneButtonRow';
 import StyledCarousel from 'components/StyledCarousel/StyledCarousel';
+import { informationCircle } from 'ionicons/icons';
 import { renderToString } from 'katex';
 import { BinaryMetricsPageProps } from 'pages/BinaryMetricsPage/BinaryMetricsPageProps';
 import React, { useEffect } from 'react';
@@ -77,6 +79,15 @@ export const BinaryMetricsPageView = ({
                         {name}
                       </IonCardSubtitle>
                     </IonCardHeader>
+                    {infoLink !== undefined ? (
+                      <IonIcon
+                        className="info-icon-fixed"
+                        icon={informationCircle}
+                        onClick={(): void => {
+                          window.open(infoLink, '_blank');
+                        }}
+                      />
+                    ) : null}
                   </IonCard>
                 </div>
               )
