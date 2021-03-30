@@ -1,65 +1,118 @@
 import { Experiment, ExperimentIntersectionPairCountsItem } from 'api';
+import { difference, nth } from 'lodash';
 import {
   DatasetsPageActionTypes,
   ExperimentsPageActionTypes,
   IntersectionStoreActionTypes as actionTypes,
 } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
-import { IntersectionStore } from 'store/models';
+import { BenchmarkConfigurationStore, IntersectionStore } from 'store/models';
+import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
+import { IntersectionBuckets } from 'types/IntersectionBuckets';
+import {
+  filterOutAnExperiment,
+  insertExperimentAt,
+} from 'utils/experimentsHelpers';
 
 const initialState: IntersectionStore = {
   excluded: [],
   included: [],
+  ignored: [],
   counts: [],
 };
 
-function filterId(
-  state: IntersectionStore = initialState,
-  payload: Experiment
-) {
-  return {
-    ...state,
-    excluded: state.excluded.filter(({ id }) => id !== payload.id),
-    included: state.included.filter(({ id }) => id !== payload.id),
-  };
-}
+export const getIntersectionBucketFromId = (
+  state: IntersectionStore,
+  BucketId: IntersectionBuckets
+): Experiment[] => {
+  switch (BucketId) {
+    case IntersectionBuckets.IGNORED:
+      return state.ignored;
+    case IntersectionBuckets.INCLUDED:
+      return state.included;
+    case IntersectionBuckets.EXCLUDED:
+      return state.excluded;
+  }
+};
 
 export const IntersectionReducer = (
-  state: IntersectionStore = initialState,
+  ownState: IntersectionStore = initialState,
+  benchmarkState: BenchmarkConfigurationStore,
   action: SnowmanAction
 ): IntersectionStore => {
   switch (action.type) {
-    case actionTypes.INCLUDE_EXPERIMENT: {
-      const newState = filterId(state, action.payload as Experiment);
-      newState.included.push(action.payload as Experiment);
-      return newState;
-    }
-    case actionTypes.EXCLUDE_EXPERIMENT: {
-      const newState = filterId(state, action.payload as Experiment);
-      newState.excluded.push(action.payload as Experiment);
-      return newState;
-    }
-    case actionTypes.IGNORE_EXPERIMENT:
-      return filterId(state, action.payload as Experiment);
     case actionTypes.SET_COUNTS:
       return {
-        ...state,
+        ...ownState,
         counts: action.payload as ExperimentIntersectionPairCountsItem[],
       };
-    case actionTypes.RESET_INTERSECTION:
+    case actionTypes.DRAG_N_DROP_EXPERIMENT: {
+      let newIgnored, newIncluded, newExcluded: Experiment[];
+      const eventDescriptor: DragNDropDescriptor<IntersectionBuckets> = action.payload as DragNDropDescriptor<IntersectionBuckets>;
+      const draggedExperiment: Experiment | undefined = nth(
+        getIntersectionBucketFromId(ownState, eventDescriptor.sourceBucket),
+        eventDescriptor.sourceIndex
+      );
+      if (draggedExperiment === undefined) return ownState;
+
+      newIgnored = filterOutAnExperiment(ownState.ignored, draggedExperiment);
+      newIncluded = filterOutAnExperiment(ownState.included, draggedExperiment);
+      newExcluded = filterOutAnExperiment(ownState.excluded, draggedExperiment);
+
+      switch (eventDescriptor.targetBucket) {
+        case IntersectionBuckets.IGNORED:
+          newIgnored = insertExperimentAt(
+            newIgnored,
+            draggedExperiment,
+            eventDescriptor.targetIndex
+          );
+          break;
+        case IntersectionBuckets.INCLUDED:
+          newIncluded = insertExperimentAt(
+            newIncluded,
+            draggedExperiment,
+            eventDescriptor.targetIndex
+          );
+          break;
+        case IntersectionBuckets.EXCLUDED:
+          newExcluded = insertExperimentAt(
+            newExcluded,
+            draggedExperiment,
+            eventDescriptor.targetIndex
+          );
+          break;
+      }
       return {
-        ...state,
-        ...((action.payload as
-          | {
-              excluded: Experiment[];
-              included: Experiment[];
-            }
-          | undefined) ?? {}),
+        ...ownState,
+        ignored: newIgnored,
+        included: newIncluded,
+        excluded: newExcluded,
+      };
+    }
+    case actionTypes.RESET_INCLUDED_EXPERIMENTS:
+      return {
+        ...ownState,
+        ignored: difference(
+          [
+            ...benchmarkState.chosenGoldStandards,
+            ...benchmarkState.chosenExperiments,
+          ],
+          action.payload as Experiment[]
+        ),
+        included: action.payload as Experiment[],
+        excluded: [],
       };
     case ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT:
     case DatasetsPageActionTypes.CLICK_ON_DATASET:
-      return initialState;
+    case actionTypes.RESET_INTERSECTION:
+      return {
+        ...initialState,
+        ignored: [
+          ...benchmarkState.chosenGoldStandards,
+          ...benchmarkState.chosenExperiments,
+        ],
+      };
     default:
-      return state;
+      return ownState;
   }
 };

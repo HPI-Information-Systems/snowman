@@ -15,7 +15,7 @@ import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 
 const mapStateToProps = ({
-  IntersectionStore: { included, excluded, counts },
+  IntersectionStore: { included, excluded, ignored, counts },
   BenchmarkConfigurationStore: {
     selectedDataset,
     chosenExperiments,
@@ -32,11 +32,6 @@ const mapStateToProps = ({
       predictedCondition: false,
     })),
   ].sort(intersectionSorter);
-  const nonIrrelevant = new Set([...included, ...excluded].map(({ id }) => id));
-  const irrelevant = [...chosenExperiments, ...chosenGoldStandards].filter(
-    ({ id }) => !nonIrrelevant.has(id)
-  );
-
   const configCounts = getCountsForIntersection(counts, sortedConfig);
 
   if (!selectedDataset) {
@@ -49,7 +44,7 @@ const mapStateToProps = ({
     pairCount: configCounts?.numberPairs ?? 0,
     included,
     excluded,
-    irrelevant,
+    ignored: ignored,
     countsLoaded: countsMatchConfiguration(
       counts,
       chosenExperiments,

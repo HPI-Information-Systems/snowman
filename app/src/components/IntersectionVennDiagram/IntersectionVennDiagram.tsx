@@ -7,7 +7,7 @@ import { sortBy } from 'lodash';
 import { connect } from 'react-redux';
 import {
   countsMatchConfiguration,
-  resetIntersection,
+  resetIncludedExperiments,
 } from 'store/actions/IntersectionStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
@@ -32,12 +32,7 @@ const mapDispatchToProps = (
   dispatch: SnowmanDispatch
 ): IntersectionVennDiagramDispatchProps => ({
   intersect(experiments) {
-    dispatch(
-      resetIntersection({
-        excluded: [],
-        included: experiments,
-      })
-    );
+    dispatch(resetIncludedExperiments(experiments));
   },
 });
 

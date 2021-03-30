@@ -11,45 +11,17 @@ import { IntersectionSelectorProps } from 'components/IntersectionSelector/Inter
 import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';
-import { getDndDescriptorFromDropResult } from 'utils/dragNDropHelpers';
 
 const IntersectionSelectorView = ({
   ignored,
   excluded,
   included,
-  ignore,
-  exclude,
-  include,
+  dragExperiment,
 }: IntersectionSelectorProps): JSX.Element => {
   return (
     <IonGrid class="grid-no-padding">
       <IonRow>
-        <DragDropContext
-          onDragEnd={(result) => {
-            const {
-              sourceBucket,
-              sourceIndex,
-              targetBucket,
-            } = getDndDescriptorFromDropResult<IntersectionBuckets>(
-              result,
-              IntersectionBuckets.IGNORED
-            );
-            const source =
-              sourceBucket === IntersectionBuckets.EXCLUDED
-                ? excluded[sourceIndex]
-                : sourceBucket === IntersectionBuckets.INCLUDED
-                ? included[sourceIndex]
-                : ignored[sourceIndex];
-            switch (targetBucket) {
-              case IntersectionBuckets.INCLUDED:
-                return include(source);
-              case IntersectionBuckets.EXCLUDED:
-                return exclude(source);
-              default:
-                return ignore(source);
-            }
-          }}
-        >
+        <DragDropContext onDragEnd={dragExperiment}>
           <IonCol size="4" class="col-no-padding">
             <IonCard>
               <IonCardHeader>

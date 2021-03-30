@@ -5,48 +5,43 @@ import {
   ExperimentIntersectionPairCountsExperiments,
   ExperimentIntersectionPairCountsItem,
 } from 'api';
+import { DropResult } from 'react-beautiful-dnd';
 import { IntersectionStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { datasetTuplesLoader } from 'store/actions/DatasetsPageActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
+import { IntersectionBuckets } from 'types/IntersectionBuckets';
 import { TuplesLoader } from 'types/TuplesLoader';
+import { getDndDescriptorFromDropResult } from 'utils/dragNDropHelpers';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
 
-export const includeExperiment = (
-  experiment: Experiment
+export const dragNDropAnExperiment = (
+  aDropResult: DropResult
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: actionTypes.INCLUDE_EXPERIMENT,
-    payload: experiment,
+    type: actionTypes.DRAG_N_DROP_EXPERIMENT,
+    payload: getDndDescriptorFromDropResult<IntersectionBuckets>(
+      aDropResult,
+      IntersectionBuckets.IGNORED
+    ),
   });
 
-export const excludeExperiment = (
-  experiment: Experiment
-): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
-    type: actionTypes.EXCLUDE_EXPERIMENT,
-    payload: experiment,
-  });
-
-export const ignoreExperiment = (
-  experiment: Experiment
-): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
-    type: actionTypes.IGNORE_EXPERIMENT,
-    payload: experiment,
-  });
-
-export const resetIntersection = (payload?: {
-  excluded: Experiment[];
-  included: Experiment[];
-}): easyPrimitiveActionReturn =>
+export const resetIntersection = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
     type: actionTypes.RESET_INTERSECTION,
-    payload: payload ?? false,
+    payload: false,
+  });
+
+export const resetIncludedExperiments = (
+  experiments: Experiment[]
+): easyPrimitiveActionReturn =>
+  easyPrimitiveAction({
+    type: actionTypes.RESET_INCLUDED_EXPERIMENTS,
+    payload: experiments,
   });
 
 export const countsMatchConfiguration = (
