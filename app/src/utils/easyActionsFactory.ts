@@ -10,3 +10,11 @@ export const easyPrimitiveAction = (
   dispatch(anAction);
 
 export type easyPrimitiveActionReturn = ReturnType<typeof easyPrimitiveAction>;
+
+export const easyPrimitiveDumpAction = (): easyPrimitiveActionReturn =>
+  easyPrimitiveAction({
+    // reducer skip action
+    type: '',
+    // reducer ignores payload
+    payload: false,
+  });

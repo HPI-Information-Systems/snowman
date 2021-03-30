@@ -3,15 +3,19 @@ import { ExperimentPreviewerStoreActionTypes } from 'store/actions/actionTypes';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
+  easyPrimitiveDumpAction,
 } from 'utils/easyActionsFactory';
+import { couldPreviewExperiment } from 'utils/experimentsHelpers';
 
 export const openPreviewer = (
   anExperiment: Experiment
 ): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
-    type: ExperimentPreviewerStoreActionTypes.OPEN_DIALOG,
-    payload: anExperiment,
-  });
+  couldPreviewExperiment(anExperiment)
+    ? easyPrimitiveAction({
+        type: ExperimentPreviewerStoreActionTypes.OPEN_DIALOG,
+        payload: anExperiment,
+      })
+    : easyPrimitiveDumpAction();
 
 export const closePreviewer = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
