@@ -138,15 +138,10 @@ const DataViewer = ({
       {({ onRowsRendered, registerChild }) => (
         <DataViewerRaw
           onRowsRendered={onRowsRendered}
-          columns={[
-            {
-              Header: 'Name',
-              columns: header.map((column, index) => ({
-                Header: column,
-                accessor: (row) => row[index],
-              })),
-            },
-          ]}
+          columns={header.map((column, index) => ({
+            Header: column,
+            accessor: (row: string[]) => row[index],
+          }))}
           rows={rows}
           rowsUpdated={rowsUpdated}
         />
