@@ -13,16 +13,11 @@ import {
   Droppable,
   DroppableProvided,
 } from 'react-beautiful-dnd';
-import { getAlgorithmNameFromId } from 'utils/algorithmHelpers';
 
 const ExperimentDroppableView = ({
   bucketId,
   bucketContent,
   isDropDisabled,
-  matchingSolutions,
-  editExperiment,
-  deleteExperiment,
-  previewExperiment,
 }: ExperimentDroppableProps): JSX.Element => {
   const experimentRenderer = (
     provided: DraggableProvided,
@@ -42,17 +37,7 @@ const ExperimentDroppableView = ({
         <IonCol>
           <ExperimentCard
             key={`experimentCard-${anExperiment.id}`}
-            experimentName={anExperiment.name}
-            algorithmName={getAlgorithmNameFromId(
-              anExperiment.algorithmId,
-              matchingSolutions
-            )}
-            description={anExperiment.description}
-            numberOfRecords={anExperiment.numberOfUploadedRecords}
-            timeToConfigure={anExperiment.softKPIs?.timeToConfigure}
-            editExperiment={(): void => editExperiment(anExperiment)}
-            deleteExperiment={(): void => deleteExperiment(anExperiment)}
-            previewExperiment={(): void => previewExperiment(anExperiment)}
+            experiment={anExperiment}
           />
         </IonCol>
       </IonRow>

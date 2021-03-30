@@ -1,124 +1,52 @@
-import 'components/DatasetCard/DatasetCardStyles.css';
-
+import DatasetCardView from 'components/DatasetCard/DatasetCard.View';
 import {
-  IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonChip,
-  IonCol,
-  IonGrid,
-  IonIcon,
-  IonLabel,
-  IonRow,
-} from '@ionic/react';
-import { DatasetCardProps } from 'components/DatasetCard/DatasetCardProps';
+  DatasetCardDispatchProps,
+  DatasetCardOwnProps,
+  DatasetCardStateProps,
+} from 'components/DatasetCard/DatasetCardProps';
+import { connect } from 'react-redux';
+import { openChangeDialog } from 'store/actions/DatasetDialogStoreActions';
+import { openPreviewer } from 'store/actions/DatasetPreviewerActions';
 import {
-  create,
-  radioButtonOffOutline,
-  radioButtonOnOutline,
-  trash,
-} from 'ionicons/icons';
-import React from 'react';
-
-const DatasetCard = ({
-  datasetName,
-  isSelected,
-  categories,
-  description,
-  totalCount,
-  uploadedCount,
-  selectDataset,
+  clickOnDataset,
   deleteDataset,
-  editDataset,
-  previewDataset,
-}: DatasetCardProps): JSX.Element => {
-  return (
-    <IonCard button={false}>
-      <IonCardHeader>
-        <IonCardSubtitle>{categories.join(', ').toUpperCase()}</IonCardSubtitle>
-        <IonCardTitle>
-          {datasetName}
-          <span onClick={selectDataset} style={{ cursor: 'pointer' }}>
-            {isSelected ? (
-              <IonIcon
-                className="ion-float-right"
-                icon={radioButtonOnOutline}
-                size="large"
-                color="primary"
-              />
-            ) : (
-              <IonIcon
-                className="ion-float-right"
-                icon={radioButtonOffOutline}
-                size="large"
-                color="medium"
-              />
-            )}
-          </span>
-        </IonCardTitle>
-      </IonCardHeader>
-      <IonCardContent>
-        {description !== null ? <p>{description}</p> : null}
-      </IonCardContent>
-      <IonGrid>
-        <IonRow>
-          <IonCol>
-            <IonChip
-              color="dark"
-              outline={false}
-              class="custom-disabled-chip"
-              disabled={uploadedCount === undefined}
-              onClick={(): void =>
-                uploadedCount !== undefined ? previewDataset() : undefined
-              }
-            >
-              <IonLabel>Total: {totalCount ?? 'unknown'}</IonLabel>
-            </IonChip>
-            <IonChip
-              color="dark"
-              outline={false}
-              class="custom-disabled-chip"
-              disabled={uploadedCount === undefined}
-              onClick={(): void =>
-                uploadedCount !== undefined ? previewDataset() : undefined
-              }
-            >
-              <IonLabel>Uploaded: {uploadedCount ?? 'none'}</IonLabel>
-            </IonChip>
-          </IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol size="12" sizeMd="6">
-            <IonButton
-              size="small"
-              fill="clear"
-              color="primary"
-              onClick={editDataset}
-              className="ion-float-left"
-            >
-              <IonIcon slot="start" icon={create} />
-              Edit
-            </IonButton>
-          </IonCol>
-          <IonCol size="12" sizeMd="6">
-            <IonButton
-              size="small"
-              fill="clear"
-              color="danger"
-              onClick={deleteDataset}
-              className="ion-float-right"
-            >
-              <IonIcon slot="start" icon={trash} />
-              Delete
-            </IonButton>
-          </IonCol>
-        </IonRow>
-      </IonGrid>
-    </IonCard>
-  );
-};
+} from 'store/actions/DatasetsPageActions';
+import { SnowmanDispatch } from 'store/messages';
+import { Store } from 'store/models';
+import { MagicNotPossibleId } from 'structs/constants';
+import { couldPreviewDataset } from 'utils/datasetHelper';
+
+const mapStateToProps = (
+  state: Store,
+  ownProps: DatasetCardOwnProps
+): DatasetCardStateProps => ({
+  couldPreview: couldPreviewDataset(ownProps.dataset),
+  isSelected:
+    (state.BenchmarkConfigurationStore.selectedDataset?.id ??
+      MagicNotPossibleId) === ownProps.dataset.id,
+});
+
+const mapDispatchToProps = (
+  dispatch: SnowmanDispatch,
+  ownProps: DatasetCardOwnProps
+): DatasetCardDispatchProps => ({
+  selectDataset() {
+    dispatch(clickOnDataset(ownProps.dataset));
+  },
+  deleteDataset() {
+    dispatch(deleteDataset(ownProps.dataset)).then();
+  },
+  editDataset() {
+    dispatch(openChangeDialog(ownProps.dataset)).then();
+  },
+  previewDataset() {
+    dispatch(openPreviewer(ownProps.dataset));
+  },
+});
+
+const DatasetCard = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DatasetCardView);
 
 export default DatasetCard;

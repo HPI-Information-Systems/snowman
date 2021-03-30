@@ -1,10 +1,20 @@
-export interface ExperimentCardProps {
-  experimentName: string;
+import { Experiment } from 'api';
+
+export interface ExperimentCardStateProps {
   algorithmName: string;
-  description?: string;
-  numberOfRecords?: number;
-  timeToConfigure?: number;
+  couldPreview: boolean;
+}
+
+export interface ExperimentCardOwnProps {
+  experiment: Experiment;
+}
+
+export interface ExperimentCardDispatchProps {
   deleteExperiment(): void;
   editExperiment(): void;
   previewExperiment(): void;
 }
+
+export type ExperimentCardProps = ExperimentCardOwnProps &
+  ExperimentCardDispatchProps &
+  ExperimentCardStateProps;

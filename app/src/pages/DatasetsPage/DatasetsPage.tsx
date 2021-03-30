@@ -5,17 +5,12 @@ import {
   DatasetsPageStateProps,
 } from 'pages/DatasetsPage/DatasetsPageProps';
 import { connect } from 'react-redux';
-import { openChangeDialog } from 'store/actions/DatasetDialogStoreActions';
-import { openPreviewer } from 'store/actions/DatasetPreviewerActions';
 import {
-  clickOnDataset,
   clickOnDatasetCategory,
-  deleteDataset,
   getDatasets,
 } from 'store/actions/DatasetsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-import { MagicNotPossibleId } from 'structs/constants';
 import { doesDatasetMatchTags } from 'utils/datasetHelper';
 import { getTagsFromDatasets } from 'utils/tagFactory';
 
@@ -28,9 +23,6 @@ const mapStateToProps = (state: Store): DatasetsPageStateProps => ({
       state.BenchmarkConfigurationStore.selectedDatasetCategories
     )
   ),
-  selectedDataset: [
-    state.BenchmarkConfigurationStore.selectedDataset?.id ?? MagicNotPossibleId,
-  ],
 });
 
 const mapDispatchToProps = (
@@ -39,20 +31,8 @@ const mapDispatchToProps = (
   clickOnTag(aTag: string): void {
     dispatch(clickOnDatasetCategory(aTag));
   },
-  clickOnDataset(aDataset: Dataset): void {
-    dispatch(clickOnDataset(aDataset));
-  },
   loadDatasets() {
     dispatch(getDatasets()).then();
-  },
-  deleteDataset(aDataset: Dataset) {
-    dispatch(deleteDataset(aDataset)).then();
-  },
-  editDataset(aDataset: Dataset) {
-    dispatch(openChangeDialog(aDataset)).then();
-  },
-  previewDataset(aDataset: Dataset) {
-    dispatch(openPreviewer(aDataset));
   },
 });
 

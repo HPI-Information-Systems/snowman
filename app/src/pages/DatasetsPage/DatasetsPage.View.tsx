@@ -19,13 +19,8 @@ const DatasetsPageView = ({
   tags,
   datasets,
   selectedTags,
-  selectedDataset,
   clickOnTag,
-  clickOnDataset,
-  deleteDataset,
-  editDataset,
   loadDatasets,
-  previewDataset,
 }: DatasetsPageProps): JSX.Element => {
   useEffect((): void => loadDatasets(), [loadDatasets]);
   return (
@@ -53,16 +48,7 @@ const DatasetsPageView = ({
             <IonCol key={'col' + aDataset.id} size="4" sizeXl="3">
               <DatasetCard
                 key={`datasetCard-${aDataset.id}`}
-                datasetName={aDataset.name}
-                categories={aDataset.tags ?? []}
-                description={aDataset.description}
-                totalCount={aDataset.numberOfRecords}
-                uploadedCount={aDataset.numberOfUploadedRecords}
-                isSelected={selectedDataset.includes(aDataset.id)}
-                selectDataset={(): void => clickOnDataset(aDataset)}
-                deleteDataset={(): void => deleteDataset(aDataset)}
-                editDataset={(): void => editDataset(aDataset)}
-                previewDataset={(): void => previewDataset(aDataset)}
+                dataset={aDataset}
               />
             </IonCol>
           ))}
