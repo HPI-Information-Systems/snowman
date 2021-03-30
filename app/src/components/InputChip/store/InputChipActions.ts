@@ -1,7 +1,7 @@
 import { SubmitCallback } from 'components/InputChip/InputChipProps';
 import {
-  easyPrimitiveAction,
-  easyPrimitiveActionReturn,
+  createPrimitiveInputChipAction,
+  primitiveInputChipActionReturn,
 } from 'components/InputChip/store/easyActionsFactory';
 import { store } from 'components/InputChip/store/InputChipStore';
 import {
@@ -13,21 +13,21 @@ import { KeyboardEvent } from 'react';
 
 export const changeInputValue = (
   newInputValue: string
-): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
+): primitiveInputChipActionReturn =>
+  createPrimitiveInputChipAction({
     type: InputChipActionTypes.CHANGE_VALUE,
     payload: newInputValue,
   });
 
-export const showInput = (): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
+export const showInput = (): primitiveInputChipActionReturn =>
+  createPrimitiveInputChipAction({
     type: InputChipActionTypes.SHOW_INPUT,
     // reducer ignores payload
     payload: false,
   });
 
-export const hideInput = (): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
+export const hideInput = (): primitiveInputChipActionReturn =>
+  createPrimitiveInputChipAction({
     type: InputChipActionTypes.HIDE_INPUT,
     // reducer ignores payload
     payload: false,

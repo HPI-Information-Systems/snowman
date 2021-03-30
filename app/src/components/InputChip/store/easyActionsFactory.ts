@@ -4,10 +4,12 @@ import {
   InputChipThunkAction,
 } from 'components/InputChip/store/models';
 
-export const easyPrimitiveAction = (
+export const createPrimitiveInputChipAction = (
   anAction: InputChipAction
 ): InputChipThunkAction<void> => (
   dispatch: InputChipDispatch
 ): InputChipAction => dispatch(anAction);
 
-export type easyPrimitiveActionReturn = ReturnType<typeof easyPrimitiveAction>;
+export type primitiveInputChipActionReturn = ReturnType<
+  typeof createPrimitiveInputChipAction
+>;
