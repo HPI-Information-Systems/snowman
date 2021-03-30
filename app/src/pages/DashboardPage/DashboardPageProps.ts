@@ -5,7 +5,7 @@ export interface DashboardPageStateProps {
 }
 
 export interface DashboardPageDispatchProps {
-  loadCounts(): Promise<void>;
+  loadCounts(): void;
   openIntersectionPage(): void;
   openNMetricsPage(): void;
   openBinaryMetricsPage(): void;

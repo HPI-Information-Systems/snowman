@@ -30,9 +30,7 @@ export default function DashboardPageView({
   openIntersectionPage,
   openBinaryMetricsPage,
 }: DashboardPageProps): JSX.Element {
-  useEffect(() => {
-    loadCounts();
-  }, [loadCounts]);
+  useEffect(loadCounts, [loadCounts]);
   return (
     <PageStruct title={'Dashboard'}>
       <IonGrid>

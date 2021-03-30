@@ -29,7 +29,7 @@ const mapDispatchToProps = (
 ): DashboardPageDispatchProps => {
   return {
     loadCounts() {
-      return dispatch(loadCounts());
+      dispatch(loadCounts()).then();
     },
     openIntersectionPage() {
       dispatch(navigateTo(ViewIDs.INTERSECTION));
