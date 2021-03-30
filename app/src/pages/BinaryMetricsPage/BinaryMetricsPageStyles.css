@@ -29,8 +29,8 @@
 
 .info-icon-fixed {
   position: absolute;
-  right: 5px;
   top: 5px;
-  cursor: pointer;
+  right: 5px;
   font-size: larger;
+  cursor: pointer;
 }
