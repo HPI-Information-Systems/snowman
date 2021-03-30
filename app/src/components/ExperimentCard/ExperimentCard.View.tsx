@@ -13,7 +13,7 @@ import {
   IonRow,
 } from '@ionic/react';
 import { ExperimentCardProps } from 'components/ExperimentCard/ExperimentCardProps';
-import { create, telescopeOutline, trash } from 'ionicons/icons';
+import { create, telescope, trash } from 'ionicons/icons';
 import React from 'react';
 
 const ExperimentCardView = ({
@@ -57,42 +57,36 @@ const ExperimentCardView = ({
         </IonCol>
       </IonRow>
       <IonRow>
-        <IonCol size="12" sizeMd="4">
+        <IonCol size="4" class="ion-text-left">
           <IonButton
             size="small"
             fill="clear"
             color="primary"
             onClick={editExperiment}
-            className="ion-float-left"
           >
-            <IonIcon slot="start" icon={create} />
-            Edit
+            <IonIcon slot="icon-only" icon={create} />
           </IonButton>
         </IonCol>
-        <IonCol size="12" sizeMd="4">
+        <IonCol size="4" class="ion-text-center">
           {couldPreview ? (
             <IonButton
               size="small"
               fill="clear"
-              color="primary"
+              color="dark"
               onClick={previewExperiment}
-              className="ion-float-left"
             >
-              <IonIcon slot="start" icon={telescopeOutline} />
-              Preview
+              <IonIcon slot="icon-only" icon={telescope} />
             </IonButton>
           ) : null}
         </IonCol>
-        <IonCol size="12" sizeMd="4">
+        <IonCol size="4" class="ion-text-right">
           <IonButton
             size="small"
             fill="clear"
             color="danger"
             onClick={deleteExperiment}
-            className="ion-float-right"
           >
-            <IonIcon slot="start" icon={trash} />
-            Delete
+            <IonIcon slot="icon-only" icon={trash} />
           </IonButton>
         </IonCol>
       </IonRow>
