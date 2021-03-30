@@ -30,7 +30,7 @@ import { DatasetTypes } from 'types/DatasetTypes';
 const DatasetDialogView = ({
   isOpen,
   isAddDialog,
-  isValidForm,
+  isValidAnsweredDialog,
   closeDialog,
   clickOnCancel,
   datasetName,
@@ -54,7 +54,7 @@ const DatasetDialogView = ({
   datasetDescription,
   changeDatasetDescription,
   clickOnATag,
-  addNewTagCallback,
+  createTag,
   clickOnSubmit,
 }: DatasetDialogProps): JSX.Element => (
   <ModalDialog
@@ -195,14 +195,14 @@ const DatasetDialogView = ({
       <InputChip
         label="Add domain"
         placeholder="New domain's name"
-        addNewTag={addNewTagCallback}
+        submitValueCallback={createTag}
       />
     </div>
     <div className="center button-row">
       <IonButton
         className="button-hugh button-padding"
         onClick={clickOnSubmit}
-        disabled={!isValidForm}
+        disabled={!isValidAnsweredDialog}
       >
         <IonIcon slot="start" icon={addCircleOutline} />
         {isAddDialog ? 'Add' : 'Update'}
