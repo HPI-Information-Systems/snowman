@@ -21,14 +21,5 @@ export const insertExperimentAt = (
         ...sourceList.slice(targetIndex),
       ];
 
-export const filterOutAnExperiment = (
-  aBucket: Experiment[],
-  anExperiment: Experiment
-): Experiment[] =>
-  aBucket.filter(
-    (currentExperiment: Experiment): boolean =>
-      currentExperiment.id !== anExperiment.id
-  );
-
 export const couldPreviewExperiment = (anExperiment: Experiment): boolean =>
   anExperiment.numberOfUploadedRecords !== undefined;

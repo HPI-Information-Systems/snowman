@@ -11,10 +11,8 @@ import { MagicNotPossibleId } from 'structs/constants';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import { ExperimentBuckets } from 'types/ExperimentBuckets';
 import { doesDatasetMatchTags } from 'utils/datasetHelper';
-import {
-  filterOutAnExperiment,
-  insertExperimentAt,
-} from 'utils/experimentsHelpers';
+import { filterOutAnElement } from 'utils/dragNDropHelpers';
+import { insertExperimentAt } from 'utils/experimentsHelpers';
 import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: BenchmarkConfigurationStore = {
@@ -110,15 +108,15 @@ const BenchmarkConfiguratorImmediateReducer = (
       );
       if (draggedExperiment === undefined) return ownState;
 
-      chosenGoldstandards = filterOutAnExperiment(
+      chosenGoldstandards = filterOutAnElement<Experiment>(
         ownState.chosenGoldStandards,
         draggedExperiment
       );
-      chosenExperiments = filterOutAnExperiment(
+      chosenExperiments = filterOutAnElement<Experiment>(
         ownState.chosenExperiments,
         draggedExperiment
       );
-      availableExperiments = filterOutAnExperiment(
+      availableExperiments = filterOutAnElement<Experiment>(
         ownState.availableExperiments,
         draggedExperiment
       );
