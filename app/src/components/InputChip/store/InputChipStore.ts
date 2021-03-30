@@ -9,7 +9,8 @@ import thunk from 'redux-thunk';
 const composeEnhancer =
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose();
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ name: 'IonChipStore' }) ||
+  compose();
 
 export const store: Store<InputChipStore> = createStore(
   InputChipReducer as Reducer<InputChipStore, InputChipAction>,

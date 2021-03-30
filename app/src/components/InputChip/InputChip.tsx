@@ -35,7 +35,6 @@ const mapDispatchToProps = (
   },
   showInput(): void {
     dispatch(showInput());
-    console.log('open');
   },
   hideInput(): void {
     dispatch(hideInput());

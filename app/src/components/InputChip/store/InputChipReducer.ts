@@ -13,7 +13,6 @@ const InputChipReducer = (
   state: InputChipStore = initialState,
   action: InputChipAction
 ): InputChipStore => {
-  console.log(action);
   switch (action.type) {
     case InputChipActionTypes.HIDE_INPUT:
       return {
