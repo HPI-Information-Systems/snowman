@@ -13,7 +13,7 @@ import {
   IonRow,
 } from '@ionic/react';
 import { ExperimentCardProps } from 'components/ExperimentCard/ExperimentCardProps';
-import { create, trash } from 'ionicons/icons';
+import { create, telescopeOutline, trash } from 'ionicons/icons';
 import React from 'react';
 
 const ExperimentCardView = ({
@@ -41,15 +41,14 @@ const ExperimentCardView = ({
             color="dark"
             outline={false}
             class="custom-disabled-chip"
-            disabled={!couldPreview}
-            onClick={previewExperiment}
+            disabled
           >
             <IonLabel>
               Count: {experiment.numberOfUploadedRecords ?? 'none'}
             </IonLabel>
           </IonChip>
           {experiment.softKPIs?.timeToConfigure !== undefined ? (
-            <IonChip color="medium" outline={false}>
+            <IonChip color="dark" outline={false}>
               <IonLabel>
                 Config Time: {experiment.softKPIs.timeToConfigure}
               </IonLabel>
@@ -70,6 +69,20 @@ const ExperimentCardView = ({
             Edit
           </IonButton>
         </IonCol>
+        {couldPreview ? (
+          <IonCol size="12" sizeMd="6">
+            <IonButton
+              size="small"
+              fill="clear"
+              color="primary"
+              onClick={previewExperiment}
+              className="ion-float-left"
+            >
+              <IonIcon slot="start" icon={telescopeOutline} />
+              Preview
+            </IonButton>
+          </IonCol>
+        ) : null}
         <IonCol size="12" sizeMd="6">
           <IonButton
             size="small"

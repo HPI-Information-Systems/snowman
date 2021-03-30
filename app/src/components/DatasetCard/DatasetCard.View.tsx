@@ -19,6 +19,7 @@ import {
   create,
   radioButtonOffOutline,
   radioButtonOnOutline,
+  telescopeOutline,
   trash,
 } from 'ionicons/icons';
 import React from 'react';
@@ -68,8 +69,7 @@ const DatasetCardView = ({
             color="dark"
             outline={false}
             class="custom-disabled-chip"
-            disabled={!couldPreview}
-            onClick={previewDataset}
+            disabled
           >
             <IonLabel>Total: {dataset.numberOfRecords ?? 'unknown'}</IonLabel>
           </IonChip>
@@ -77,8 +77,7 @@ const DatasetCardView = ({
             color="dark"
             outline={false}
             class="custom-disabled-chip"
-            disabled={!couldPreview}
-            onClick={previewDataset}
+            disabled
           >
             <IonLabel>
               Uploaded: {dataset.numberOfUploadedRecords ?? 'none'}
@@ -99,6 +98,20 @@ const DatasetCardView = ({
             Edit
           </IonButton>
         </IonCol>
+        {couldPreview ? (
+          <IonCol size="12" sizeMd="6">
+            <IonButton
+              size="small"
+              fill="clear"
+              color="primary"
+              onClick={previewDataset}
+              className="ion-float-right"
+            >
+              <IonIcon slot="start" icon={telescopeOutline} />
+              Preview
+            </IonButton>
+          </IonCol>
+        ) : null}
         <IonCol size="12" sizeMd="6">
           <IonButton
             size="small"
