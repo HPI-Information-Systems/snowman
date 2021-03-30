@@ -1,3 +1,10 @@
 .center {
   text-align: center;
 }
+
+.modal-close-icon {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}
