@@ -32,11 +32,11 @@ export default function DataViewerRaw({
   columns: Column<string[]>[];
   rows: string[][];
   onRowsRendered: (params: IndexRange) => void;
-  rowsUpdated: number;
+  rowsUpdated: unknown;
 }): JSX.Element {
   const columns = useMemo(() => rawColumns, [rawColumns]);
   const data = useMemo(() => {
-    return rawData;
+    return new Proxy(rawData, {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rawData, rowsUpdated]);
   const defaultColumn = React.useMemo(
@@ -94,7 +94,6 @@ export default function DataViewerRaw({
           </div>
         </div>
       );
-      console.log(scrollPosition);
       return result;
     },
     [prepareRow, rows, scrollPosition]

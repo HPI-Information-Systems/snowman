@@ -4,4 +4,5 @@ export type StateT = {
   requestedCount: number;
   resetVersion: number;
   rowsUpdated: number;
+  unmounted: { value: boolean };
 };
