@@ -10,6 +10,8 @@ nav:
     - Datasets: basic_usage/datasets.md
     - Experiments: basic_usage/experiments.md
     - Benchmark: basic_usage/benchmark.md
+  - Advanced setups:
+    - Remote instances: advanced_setups/remote_instances.md
   - Development:
     - Setup: dev_setup/introduction.md
     - Contributing: contributing/knowledge.md
@@ -29,3 +31,6 @@ theme:
 
 plugins:
   - search
+
+markdown_extensions:
+  - admonition
