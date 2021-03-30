@@ -86,7 +86,7 @@ const DatasetCardView = ({
         </IonCol>
       </IonRow>
       <IonRow>
-        <IonCol size="12" sizeMd="6">
+        <IonCol size="12" sizeMd="4">
           <IonButton
             size="small"
             fill="clear"
@@ -98,8 +98,8 @@ const DatasetCardView = ({
             Edit
           </IonButton>
         </IonCol>
-        {couldPreview ? (
-          <IonCol size="12" sizeMd="6">
+        <IonCol size="12" sizeMd="4">
+          {couldPreview ? (
             <IonButton
               size="small"
               fill="clear"
@@ -110,9 +110,9 @@ const DatasetCardView = ({
               <IonIcon slot="start" icon={telescopeOutline} />
               Preview
             </IonButton>
-          </IonCol>
-        ) : null}
-        <IonCol size="12" sizeMd="6">
+          ) : null}
+        </IonCol>
+        <IonCol size="12" sizeMd="4">
           <IonButton
             size="small"
             fill="clear"
