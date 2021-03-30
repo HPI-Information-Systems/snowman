@@ -3,14 +3,13 @@ import {
   InputChipAction,
   InputChipStore,
 } from 'components/InputChip/store/models';
-import { applyMiddleware, compose, createStore, Reducer, Store } from 'redux';
+import { applyMiddleware, createStore, Reducer, Store } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
 
-const composeEnhancer =
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ name: 'IonChipStore' }) ||
-  compose();
+const composeEnhancer = composeWithDevTools({
+  name: 'IonChipStore',
+});
 
 export const store: Store<InputChipStore> = createStore(
   InputChipReducer as Reducer<InputChipStore, InputChipAction>,
