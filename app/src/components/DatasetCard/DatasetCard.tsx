@@ -34,91 +34,89 @@ const DatasetCard = ({
   deleteDataset,
   editDataset,
   previewDataset,
-}: DatasetCardProps): JSX.Element => {
-  return (
-    <IonCard button={false}>
-      <IonCardHeader>
-        <IonCardSubtitle>{categories.join(', ').toUpperCase()}</IonCardSubtitle>
-        <IonCardTitle>
-          {datasetName}
-          <span onClick={selectDataset} style={{ cursor: 'pointer' }}>
-            {isSelected ? (
-              <IonIcon
-                className="ion-float-right"
-                icon={radioButtonOnOutline}
-                size="large"
-                color="primary"
-              />
-            ) : (
-              <IonIcon
-                className="ion-float-right"
-                icon={radioButtonOffOutline}
-                size="large"
-                color="medium"
-              />
-            )}
-          </span>
-        </IonCardTitle>
-      </IonCardHeader>
-      <IonCardContent>
-        {description !== null ? <p>{description}</p> : null}
-      </IonCardContent>
-      <IonGrid>
-        <IonRow>
-          <IonCol>
-            <IonChip
-              color="dark"
-              outline={false}
-              class="custom-disabled-chip"
-              disabled={uploadedCount === undefined}
-              onClick={(): void =>
-                uploadedCount !== undefined ? previewDataset() : undefined
-              }
-            >
-              <IonLabel>Total: {totalCount ?? 'unknown'}</IonLabel>
-            </IonChip>
-            <IonChip
-              color="dark"
-              outline={false}
-              class="custom-disabled-chip"
-              disabled={uploadedCount === undefined}
-              onClick={(): void =>
-                uploadedCount !== undefined ? previewDataset() : undefined
-              }
-            >
-              <IonLabel>Uploaded: {uploadedCount ?? 'none'}</IonLabel>
-            </IonChip>
-          </IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol size="12" sizeMd="6">
-            <IonButton
-              size="small"
-              fill="clear"
-              color="primary"
-              onClick={editDataset}
-              className="ion-float-left"
-            >
-              <IonIcon slot="start" icon={create} />
-              Edit
-            </IonButton>
-          </IonCol>
-          <IonCol size="12" sizeMd="6">
-            <IonButton
-              size="small"
-              fill="clear"
-              color="danger"
-              onClick={deleteDataset}
+}: DatasetCardProps): JSX.Element => (
+  <IonCard button={false}>
+    <IonCardHeader>
+      <IonCardSubtitle>{categories.join(', ').toUpperCase()}</IonCardSubtitle>
+      <IonCardTitle>
+        {datasetName}
+        <span onClick={selectDataset} style={{ cursor: 'pointer' }}>
+          {isSelected ? (
+            <IonIcon
               className="ion-float-right"
-            >
-              <IonIcon slot="start" icon={trash} />
-              Delete
-            </IonButton>
-          </IonCol>
-        </IonRow>
-      </IonGrid>
-    </IonCard>
-  );
-};
+              icon={radioButtonOnOutline}
+              size="large"
+              color="primary"
+            />
+          ) : (
+            <IonIcon
+              className="ion-float-right"
+              icon={radioButtonOffOutline}
+              size="large"
+              color="medium"
+            />
+          )}
+        </span>
+      </IonCardTitle>
+    </IonCardHeader>
+    <IonCardContent>
+      {description !== null ? <p>{description}</p> : null}
+    </IonCardContent>
+    <IonGrid>
+      <IonRow>
+        <IonCol>
+          <IonChip
+            color="dark"
+            outline={false}
+            class="custom-disabled-chip"
+            disabled={uploadedCount === undefined}
+            onClick={(): void =>
+              uploadedCount !== undefined ? previewDataset() : undefined
+            }
+          >
+            <IonLabel>Total: {totalCount ?? 'unknown'}</IonLabel>
+          </IonChip>
+          <IonChip
+            color="dark"
+            outline={false}
+            class="custom-disabled-chip"
+            disabled={uploadedCount === undefined}
+            onClick={(): void =>
+              uploadedCount !== undefined ? previewDataset() : undefined
+            }
+          >
+            <IonLabel>Uploaded: {uploadedCount ?? 'none'}</IonLabel>
+          </IonChip>
+        </IonCol>
+      </IonRow>
+      <IonRow>
+        <IonCol size="12" sizeMd="6">
+          <IonButton
+            size="small"
+            fill="clear"
+            color="primary"
+            onClick={editDataset}
+            className="ion-float-left"
+          >
+            <IonIcon slot="start" icon={create} />
+            Edit
+          </IonButton>
+        </IonCol>
+        <IonCol size="12" sizeMd="6">
+          <IonButton
+            size="small"
+            fill="clear"
+            color="danger"
+            onClick={deleteDataset}
+            className="ion-float-right"
+          >
+            <IonIcon slot="start" icon={trash} />
+            Delete
+          </IonButton>
+        </IonCol>
+      </IonRow>
+    </IonGrid>
+  </IonCard>
+);
 
 export default DatasetCard;
