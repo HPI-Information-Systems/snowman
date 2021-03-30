@@ -10,6 +10,8 @@ import {
   SnowmanThunkAction,
 } from 'store/messages';
 import { SUCCESS_TO_DELETE_EXPERIMENT } from 'structs/statusMessages';
+import { ExperimentBuckets } from 'types/ExperimentBuckets';
+import { TuplesLoader } from 'types/TuplesLoader';
 import { getDndDescriptorFromDropResult } from 'utils/dragNDropHelpers';
 import {
   easyPrimitiveAction,
@@ -30,7 +32,10 @@ export const dragNDropAnExperiment = (
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
     type: ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT,
-    payload: getDndDescriptorFromDropResult(aDropResult),
+    payload: getDndDescriptorFromDropResult<ExperimentBuckets>(
+      aDropResult,
+      ExperimentBuckets.AVAILABLE_EXPERIMENTS
+    ),
   });
 
 export const clickOnExperimentsFilterTool = (): easyPrimitiveActionReturn =>
@@ -69,3 +74,19 @@ export const deleteExperiment = (
     dispatch,
     SUCCESS_TO_DELETE_EXPERIMENT
   ).then((): Promise<void> => dispatch(getExperiments()));
+
+// Cache loaders to not trigger a rerender
+const experimentTuplesLoaders = new Map<number, TuplesLoader>();
+export const experimentTuplesLoader = (experimentId: number): TuplesLoader => {
+  let tuplesLoader = experimentTuplesLoaders.get(experimentId);
+  if (!tuplesLoader) {
+    tuplesLoader = (startAt, stop) =>
+      new ExperimentsApi().getExperimentFile({
+        experimentId: experimentId,
+        startAt,
+        limit: stop - startAt,
+      });
+    experimentTuplesLoaders.set(experimentId, tuplesLoader);
+  }
+  return tuplesLoader;
+};

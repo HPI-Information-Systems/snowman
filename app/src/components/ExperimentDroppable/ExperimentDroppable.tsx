@@ -7,6 +7,7 @@ import {
 } from 'components/ExperimentDroppable/ExperimentDroppableProps';
 import { connect } from 'react-redux';
 import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
+import { openPreviewer } from 'store/actions/ExperimentPreviewerActions';
 import { deleteExperiment } from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
@@ -38,6 +39,9 @@ const mapDispatchToProps = (
   },
   deleteExperiment(anExperiment: Experiment) {
     dispatch(deleteExperiment(anExperiment)).then();
+  },
+  previewExperiment(anExperiment: Experiment) {
+    dispatch(openPreviewer(anExperiment));
   },
 });
 

@@ -6,6 +6,7 @@ import {
 } from 'pages/DatasetsPage/DatasetsPageProps';
 import { connect } from 'react-redux';
 import { openChangeDialog } from 'store/actions/DatasetDialogStoreActions';
+import { openPreviewer } from 'store/actions/DatasetPreviewerActions';
 import {
   clickOnDataset,
   clickOnDatasetCategory,
@@ -49,6 +50,9 @@ const mapDispatchToProps = (
   },
   editDataset(aDataset: Dataset) {
     dispatch(openChangeDialog(aDataset)).then();
+  },
+  previewDataset(aDataset: Dataset) {
+    dispatch(openPreviewer(aDataset));
   },
 });
 

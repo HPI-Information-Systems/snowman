@@ -9,6 +9,7 @@ import {
   SnowmanThunkAction,
 } from 'store/messages';
 import { SUCCESS_TO_DELETE_DATASET } from 'structs/statusMessages';
+import { TuplesLoader } from 'types/TuplesLoader';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
@@ -58,3 +59,19 @@ export const deleteDataset = (
     dispatch,
     SUCCESS_TO_DELETE_DATASET
   ).then((): Promise<void> => dispatch(getDatasets()));
+
+// Cache loaders to not trigger a rerender
+const datasetTuplesLoaders = new Map<number, TuplesLoader>();
+export const datasetTuplesLoader = (datasetId: number): TuplesLoader => {
+  let tuplesLoader = datasetTuplesLoaders.get(datasetId);
+  if (!tuplesLoader) {
+    tuplesLoader = (startAt, stop) =>
+      new DatasetsApi().getDatasetFile({
+        datasetId: datasetId,
+        startAt,
+        limit: stop - startAt,
+      });
+    datasetTuplesLoaders.set(datasetId, tuplesLoader);
+  }
+  return tuplesLoader;
+};

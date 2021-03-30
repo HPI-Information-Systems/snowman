@@ -95,6 +95,24 @@ export interface BenchmarkConfigurationStore {
   showExperimentFilters: boolean;
 }
 
+export interface DatasetPreviewerStore {
+  isOpen: boolean;
+  dataset: Dataset | undefined;
+}
+
+export interface ExperimentPreviewerStore {
+  isOpen: boolean;
+  experiment: Experiment | undefined;
+}
+
+export interface IntersectionStore {
+  included: Experiment[];
+  excluded: Experiment[];
+  ignored: Experiment[];
+  // experiments are guaranteed to be sorted by intersectionCountSorter (see IntersectionStoreActions.ts)
+  counts: ExperimentIntersectionPairCountsItem[];
+}
+
 export interface BinaryMetricsStore {
   counts: ExperimentIntersectionPairCountsItem[];
   metrics: Metric[];
@@ -116,6 +134,9 @@ export interface ImmediateStore {
   GlobalIndicatorStore: GlobalIndicatorStore;
   InputChipStore: InputChipStore;
   SelectableInputStore: SelectableInputStore;
+  DatasetPreviewerStore: DatasetPreviewerStore;
+  ExperimentPreviewerStore: ExperimentPreviewerStore;
+  IntersectionStore: IntersectionStore;
 }
 
 export interface Store extends ImmediateStore {

@@ -11,10 +11,10 @@ export async function clusteringFromPilotExperiment(
   await new CSVReader(
     readFile(path),
     {
-      async readColumns() {
+      readColumns() {
         return;
       },
-      async readRow(row: CSVRow) {
+      readRow(row: CSVRow) {
         clustering.link([[parseInt(row.p1), parseInt(row.p2)]]);
       },
     },

@@ -3,6 +3,7 @@ import 'types/ExperimentFileFormats';
 import { Experiment, ExperimentsApi } from 'api';
 import { ExperimentDialogStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { getExperiments } from 'store/actions/ExperimentsPageActions';
+import { showToast } from 'store/actions/GlobalIndicatorActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
 import { MagicNotPossibleId } from 'structs/constants';
@@ -12,6 +13,7 @@ import {
   SUCCESS_TO_UPLOAD_EXPERIMENT_FILE,
 } from 'structs/statusMessages';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
+import { ToastType } from 'types/ToastTypes';
 import { getAlgorithmIdFromName } from 'utils/algorithmHelpers';
 import {
   easyPrimitiveAction,
@@ -106,7 +108,9 @@ export const changeSoftKPITimeToConfigure = (
     payload: aConfigurationTime,
   });
 
-const createNewExperiment = (): SnowmanThunkAction<Promise<number>> => async (
+const createNewExperiment = (
+  showSuccess = true
+): SnowmanThunkAction<Promise<number>> => async (
   dispatch: SnowmanDispatch
 ): Promise<number> =>
   RequestHandler<number>(
@@ -130,11 +134,12 @@ const createNewExperiment = (): SnowmanThunkAction<Promise<number>> => async (
         },
       }),
     dispatch,
-    SUCCESS_TO_ADD_NEW_EXPERIMENT
+    showSuccess ? SUCCESS_TO_ADD_NEW_EXPERIMENT : undefined
   );
 
 const uploadExperimentFile = (
-  id?: number
+  id?: number,
+  showSuccess = true
 ): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> => {
@@ -152,7 +157,7 @@ const uploadExperimentFile = (
           body: store.getState().ExperimentDialogStore.selectedFiles[0] as Blob,
         }),
       dispatch,
-      willUpload ? SUCCESS_TO_UPLOAD_EXPERIMENT_FILE : undefined,
+      showSuccess && willUpload ? SUCCESS_TO_UPLOAD_EXPERIMENT_FILE : undefined,
       true
     );
   }
@@ -193,10 +198,23 @@ const editExistingExperiment = (): SnowmanThunkAction<Promise<void>> => async (
 const addNewExperiment = (): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> => {
-  dispatch(createNewExperiment())
-    .then((id: number): Promise<void> => dispatch(uploadExperimentFile(id)))
-    .then((): void => dispatch(resetDialog()))
-    .finally((): void => {
+  dispatch(createNewExperiment(false))
+    .then((id) =>
+      dispatch(uploadExperimentFile(id, false)).catch((error) =>
+        RequestHandler(
+          () =>
+            new ExperimentsApi().deleteExperiment({
+              experimentId: id,
+            }),
+          dispatch
+        ).finally(() => Promise.reject(error))
+      )
+    )
+    .then(() => dispatch(resetDialog()))
+    .then(() =>
+      dispatch(showToast(SUCCESS_TO_ADD_NEW_EXPERIMENT, ToastType.Success))
+    )
+    .finally(() => {
       dispatch(getExperiments());
       dispatch(closeDialog());
     });

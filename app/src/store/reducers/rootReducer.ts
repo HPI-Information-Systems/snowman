@@ -1,21 +1,36 @@
 import { SnowmanAction } from 'store/messages';
-import { CoreStore, ImmediateStore, Store } from 'store/models';
+import {
+  BenchmarkConfigurationStore,
+  CoreStore,
+  ImmediateStore,
+  Store,
+} from 'store/models';
 import { AlgorithmDialogReducer } from 'store/reducers/AlgorithmDialogReducer';
 import { BenchmarkConfiguratorReducer } from 'store/reducers/BenchmarkConfiguratorReducer';
 import { BinaryMetricsReducer } from 'store/reducers/BinaryMetricsReducer';
 import { CoreReducer } from 'store/reducers/CoreReducer';
 import { DatasetDialogReducer } from 'store/reducers/DatasetDialogReducer';
+import { DatasetPreviewerReducer } from 'store/reducers/DatasetPreviewerReducer';
 import { ExperimentDialogReducer } from 'store/reducers/ExperimentDialogReducer';
+import { ExperimentPreviewerReducer } from 'store/reducers/ExperimentPreviewerReducer';
 import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
 import { InputChipReducer } from 'store/reducers/InputChipReducer';
+import { IntersectionReducer } from 'store/reducers/IntersectionReducer';
 import { NMetricsReducer } from 'store/reducers/NMetricsReducer';
 import { RenderLogicReducer } from 'store/reducers/RenderLogicReducer';
 import { SelectableInputReducer } from 'store/reducers/SelectableInputReducer';
 
 export const rootReducer = (state: Store, action: SnowmanAction): Store => {
   const coreState: CoreStore = CoreReducer(state?.CoreStore, action);
+  const benchmarkState: BenchmarkConfigurationStore = BenchmarkConfiguratorReducer(
+    state?.BenchmarkConfigurationStore,
+    coreState,
+    action
+  );
+
   const immediateState: ImmediateStore = {
     CoreStore: coreState,
+    BenchmarkConfigurationStore: benchmarkState,
     AlgorithmDialogStore: AlgorithmDialogReducer(
       state?.AlgorithmDialogStore,
       action
@@ -25,9 +40,12 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
       state?.ExperimentDialogStore,
       action
     ),
-    BenchmarkConfigurationStore: BenchmarkConfiguratorReducer(
-      state?.BenchmarkConfigurationStore,
-      coreState,
+    DatasetPreviewerStore: DatasetPreviewerReducer(
+      state?.DatasetPreviewerStore,
+      action
+    ),
+    ExperimentPreviewerStore: ExperimentPreviewerReducer(
+      state?.ExperimentPreviewerStore,
       action
     ),
     BinaryMetricsStore: BinaryMetricsReducer(state?.BinaryMetricsStore, action),
@@ -39,6 +57,11 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
     InputChipStore: InputChipReducer(state?.InputChipStore, action),
     SelectableInputStore: SelectableInputReducer(
       state?.SelectableInputStore,
+      action
+    ),
+    IntersectionStore: IntersectionReducer(
+      state?.IntersectionStore,
+      benchmarkState,
       action
     ),
   };

@@ -1,4 +1,5 @@
 import { drawFourSetVennDiagram } from 'components/VennDiagram/venn/fourSets';
+import { drawOneSetVennDiagram } from 'components/VennDiagram/venn/oneSet';
 import { drawThreeSetVennDiagram } from 'components/VennDiagram/venn/threeSets';
 import { VennDiagramTooltip } from 'components/VennDiagram/venn/tooltip';
 import { drawTwoSetVennDiagram } from 'components/VennDiagram/venn/twoSets';
@@ -20,7 +21,9 @@ export const VennDiagram = ({ config }: VennDiagramProps): JSX.Element => {
   useEffect((): void => {
     if (svgElement.current && tooltip) {
       const svg = select(svgElement.current);
-      if ('x11' in config) {
+      if ('x1' in config) {
+        drawOneSetVennDiagram(svg, tooltip, config);
+      } else if ('x11' in config) {
         drawTwoSetVennDiagram(svg, tooltip, config);
       } else if ('x111' in config) {
         drawThreeSetVennDiagram(svg, tooltip, config);
@@ -31,10 +34,10 @@ export const VennDiagram = ({ config }: VennDiagramProps): JSX.Element => {
   }, [config, svgElement, tooltip]);
 
   return (
-    <>
+    <div style={{ position: 'relative' }}>
       <div ref={tooltipElement} />
       <svg ref={svgElement} />
-    </>
+    </div>
   );
 };
 

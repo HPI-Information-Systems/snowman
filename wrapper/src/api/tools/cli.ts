@@ -60,6 +60,9 @@ export const cliOptions: dashdash.OptionWithoutAliases[] = [
   },
 ];
 
-export const cliArgs = dashdash.parse({
-  options: cliOptions,
-}) as CommandLineArguments;
+export const cliArgs = dashdash
+  .createParser({
+    allowUnknown: process.env.JEST_WORKER_ID !== undefined,
+    options: cliOptions,
+  })
+  .parse() as CommandLineArguments;

@@ -7,3 +7,25 @@ export const getExperimentNameFromId = (
   allExperiments.find(
     (anExperiment: Experiment): boolean => anExperiment.id === anId
   )?.name ?? '';
+
+export const insertExperimentAt = (
+  sourceList: Experiment[],
+  anExperiment: Experiment,
+  targetIndex: number
+): Experiment[] =>
+  sourceList.length === 0
+    ? [anExperiment]
+    : [
+        ...sourceList.slice(0, targetIndex),
+        anExperiment,
+        ...sourceList.slice(targetIndex),
+      ];
+
+export const filterOutAnExperiment = (
+  aBucket: Experiment[],
+  anExperiment: Experiment
+): Experiment[] =>
+  aBucket.filter(
+    (currentExperiment: Experiment): boolean =>
+      currentExperiment.id !== anExperiment.id
+  );

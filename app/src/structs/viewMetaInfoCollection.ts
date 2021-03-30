@@ -1,17 +1,19 @@
-import VennDiagramPageExample from 'components/VennDiagram/VennDiagramPageExample';
 import {
   albums,
   calculator,
+  colorFilter,
   documents,
-  flaskOutline,
+  grid,
   home,
   pauseCircle,
   rocket,
 } from 'ionicons/icons';
 import AlgorithmsPage from 'pages/AlgorithmsPage/AlgorithmsPage';
 import BinaryMetricsPage from 'pages/BinaryMetricsPage/BinaryMetricsPage';
+import DashboardPage from 'pages/DashboardPage/DashboardPage';
 import DatasetsPage from 'pages/DatasetsPage/DatasetsPage';
 import ExperimentsPage from 'pages/ExperimentsPage/ExperimentsPage';
+import IntersectionPage from 'pages/IntersectionPage/IntersectionPage';
 import NMetricsPage from 'pages/NMetricsPage/NMetricsPage';
 import RootPage from 'pages/RootPage/RootPage';
 import { menuCategories } from 'types/MenuCategories';
@@ -67,7 +69,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
   {
     key: ViewIDs.EXPERIMENTS,
     component: ExperimentsPage,
-    nextView: ViewIDs.BINARY_METRICS,
+    nextView: ViewIDs.DASHBOARD,
     accessGuard: accessGuards.couldEnterExperimentsSelector,
     shouldShowInMenu: true,
     menuCategory: menuCategories.CONFIGURATION,
@@ -77,13 +79,25 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     selectedOptionsReminder: selectedExperiments,
   },
   {
+    key: ViewIDs.DASHBOARD,
+    component: DashboardPage,
+    nextView: ViewIDs.DASHBOARD,
+    accessGuard: accessGuards.couldEnterDashboardPage,
+    shouldShowInMenu: true,
+    menuCategory: menuCategories.EVALUATION,
+    menuName: 'Dashboard',
+    menuIcon: grid,
+    menuSortKey: 5,
+    selectedOptionsReminder: emptySelectedOptions,
+  },
+  {
     key: ViewIDs.BINARY_METRICS,
     component: BinaryMetricsPage,
     nextView: ViewIDs.BINARY_METRICS,
     accessGuard: accessGuards.couldEnterBinaryMetricsPage,
     shouldShowInMenu: true,
     menuCategory: menuCategories.EVALUATION,
-    menuName: 'Binary Metrics',
+    menuName: 'Binary Comparison',
     menuIcon: pauseCircle,
     menuSortKey: 6,
     selectedOptionsReminder: emptySelectedOptions,
@@ -101,16 +115,15 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     selectedOptionsReminder: emptySelectedOptions,
   },
   {
-    key: ViewIDs.VENN_EXAMPLE,
-    component: VennDiagramPageExample,
-    nextView: ViewIDs.VENN_EXAMPLE,
-    accessGuard: accessGuards.couldAlwaysEnterPage,
+    key: ViewIDs.INTERSECTION,
+    component: IntersectionPage,
+    nextView: ViewIDs.N_METRICS,
+    accessGuard: accessGuards.couldEnterIntersectionPage,
     shouldShowInMenu: true,
     menuCategory: menuCategories.EVALUATION,
-    menuName: 'Venn Diagram Example',
-    menuIcon: flaskOutline,
+    menuName: 'Intersections',
+    menuIcon: colorFilter,
     menuSortKey: 8,
     selectedOptionsReminder: emptySelectedOptions,
   },
-  // Icon for n-visual: colorFilter
 ];

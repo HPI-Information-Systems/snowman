@@ -4,7 +4,7 @@ import {
   VennDiagramSet,
 } from 'components/VennDiagram/venn/types/types';
 
-export interface VennThreeSetsPayload {
+export interface VennDiagramThreeSetsConfig {
   x100: VennDiagramSet;
   x010: VennDiagramSet;
   x001: VennDiagramSet;
@@ -14,7 +14,7 @@ export interface VennThreeSetsPayload {
   x111: VennDiagramIntersection;
 }
 
-export const VennThreeSetsPayloadExample: VennThreeSetsPayload = {
+export const VennThreeSetsPayloadExample: VennDiagramThreeSetsConfig = {
   x100: {
     text: 'set 1',
     callback: (): void => {

@@ -3,3 +3,13 @@
   border-top: 2px solid var(--ion-color-medium);
   color: var(--ion-color-dark);
 }
+
+.table-row:hover {
+  background-color: #f1f1f1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .table-row:hover {
+    background-color: #323232;
+  }
+}

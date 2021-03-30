@@ -11,6 +11,10 @@ import { MagicNotPossibleId } from 'structs/constants';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import { ExperimentBuckets } from 'types/ExperimentBuckets';
 import { doesDatasetMatchTags } from 'utils/datasetHelper';
+import {
+  filterOutAnExperiment,
+  insertExperimentAt,
+} from 'utils/experimentsHelpers';
 import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: BenchmarkConfigurationStore = {
@@ -50,19 +54,6 @@ export const getExperimentBucketFromId = (
       return state.chosenGoldStandards;
   }
 };
-
-const insertExperimentAt = (
-  sourceList: Experiment[],
-  anExperiment: Experiment,
-  targetIndex: number
-): Experiment[] =>
-  sourceList.length === 0
-    ? [anExperiment]
-    : [
-        ...sourceList.slice(0, targetIndex),
-        anExperiment,
-        ...sourceList.slice(targetIndex),
-      ];
 
 const BenchmarkConfiguratorImmediateReducer = (
   ownState: BenchmarkConfigurationStore,
@@ -112,27 +103,24 @@ const BenchmarkConfiguratorImmediateReducer = (
       let chosenExperiments,
         chosenGoldstandards,
         availableExperiments: Experiment[];
-      const eventDescriptor: DragNDropDescriptor = action.payload as DragNDropDescriptor;
+      const eventDescriptor: DragNDropDescriptor<ExperimentBuckets> = action.payload as DragNDropDescriptor<ExperimentBuckets>;
       const draggedExperiment: Experiment | undefined = nth(
         getExperimentBucketFromId(ownState, eventDescriptor.sourceBucket),
         eventDescriptor.sourceIndex
       );
       if (draggedExperiment === undefined) return ownState;
-      const filterOutDraggedExperiment = (
-        aBucket: Experiment[]
-      ): Experiment[] =>
-        aBucket.filter(
-          (anExperiment: Experiment): boolean =>
-            anExperiment.id !== draggedExperiment.id
-        );
-      chosenGoldstandards = filterOutDraggedExperiment(
-        ownState.chosenGoldStandards
+
+      chosenGoldstandards = filterOutAnExperiment(
+        ownState.chosenGoldStandards,
+        draggedExperiment
       );
-      chosenExperiments = filterOutDraggedExperiment(
-        ownState.chosenExperiments
+      chosenExperiments = filterOutAnExperiment(
+        ownState.chosenExperiments,
+        draggedExperiment
       );
-      availableExperiments = filterOutDraggedExperiment(
-        ownState.availableExperiments
+      availableExperiments = filterOutAnExperiment(
+        ownState.availableExperiments,
+        draggedExperiment
       );
       switch (eventDescriptor.targetBucket) {
         case ExperimentBuckets.CHOSEN_GOLDSTANDARDS: {

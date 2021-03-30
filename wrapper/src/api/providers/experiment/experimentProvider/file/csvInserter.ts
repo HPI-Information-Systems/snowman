@@ -28,7 +28,7 @@ export abstract class CSVInserter
     }).read();
   }
 
-  async readColumns(columns: Set<CSVColumn>): Promise<void> {
+  readColumns(columns: Set<CSVColumn>): void {
     const unseenRequiredColumns = new Set(this.requiredColumns);
     for (const column of columns) {
       unseenRequiredColumns.delete(column);
@@ -44,7 +44,7 @@ export abstract class CSVInserter
     }
   }
 
-  async readRow(row: CSVRow): Promise<void> {
+  readRow(row: CSVRow): void {
     if (this.removedColumns) {
       for (const column of this.removedColumns) {
         delete row[column];

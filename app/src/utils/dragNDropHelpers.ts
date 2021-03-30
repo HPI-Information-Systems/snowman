@@ -1,13 +1,12 @@
 import { DropResult } from 'react-beautiful-dnd';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
-import { ExperimentBuckets } from 'types/ExperimentBuckets';
 
-export const getDndDescriptorFromDropResult = (
-  aDropResult: DropResult
-): DragNDropDescriptor => ({
-  sourceBucket: aDropResult.source.droppableId as ExperimentBuckets,
+export const getDndDescriptorFromDropResult = <T extends string>(
+  aDropResult: DropResult,
+  fallbackBucket: T
+): DragNDropDescriptor<T> => ({
+  sourceBucket: aDropResult.source.droppableId as T,
   sourceIndex: aDropResult.source.index,
-  targetBucket: (aDropResult.destination?.droppableId ??
-    ExperimentBuckets.AVAILABLE_EXPERIMENTS) as ExperimentBuckets,
+  targetBucket: (aDropResult.destination?.droppableId ?? fallbackBucket) as T,
   targetIndex: aDropResult.destination?.index ?? 0,
 });

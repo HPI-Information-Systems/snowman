@@ -119,6 +119,13 @@ const DataViewer = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadTuples]);
 
+  useEffect(() => {
+    getState(({ rows }) => {
+      requestRows(Math.min(rows.length + BATCH_SIZE, tuplesCount));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tuplesCount]);
+
   return (
     <InfiniteLoader
       loadMoreRows={({ stopIndex }) => requestRows(stopIndex + 1)}
