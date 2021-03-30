@@ -14,7 +14,6 @@ import { DatasetPreviewerReducer } from 'store/reducers/DatasetPreviewerReducer'
 import { ExperimentDialogReducer } from 'store/reducers/ExperimentDialogReducer';
 import { ExperimentPreviewerReducer } from 'store/reducers/ExperimentPreviewerReducer';
 import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
-import { InputChipReducer } from 'store/reducers/InputChipReducer';
 import { IntersectionReducer } from 'store/reducers/IntersectionReducer';
 import { NMetricsReducer } from 'store/reducers/NMetricsReducer';
 import { RenderLogicReducer } from 'store/reducers/RenderLogicReducer';
@@ -54,7 +53,6 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
       state?.GlobalIndicatorStore,
       action
     ),
-    InputChipStore: InputChipReducer(state?.InputChipStore, action),
     SelectableInputStore: SelectableInputReducer(
       state?.SelectableInputStore,
       action

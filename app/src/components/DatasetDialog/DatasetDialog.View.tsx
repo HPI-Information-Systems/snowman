@@ -195,7 +195,7 @@ const DatasetDialogView = ({
       <InputChip
         label="Add domain"
         placeholder="New domain's name"
-        addNewTag={addNewTagCallback}
+        submitValueCallback={addNewTagCallback}
       />
     </div>
     <div className="center button-row">

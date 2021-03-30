@@ -4,42 +4,59 @@ import {
   InputChipOwnProps,
   InputChipStateProps,
 } from 'components/InputChip/InputChipProps';
-import { connect } from 'react-redux';
 import {
   changeInputValue,
+  handleKeyboardInteraction,
   hideInput,
   showInput,
-} from 'store/actions/InputChipStoreActions';
-import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
-import { store } from 'store/store';
+  submitValue,
+} from 'components/InputChip/store/InputChipActions';
+import { store } from 'components/InputChip/store/InputChipStore';
+import {
+  InputChipDispatch,
+  InputChipStore,
+} from 'components/InputChip/store/models';
+import React from 'react';
+import { KeyboardEvent } from 'react';
+import { connect, Provider } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-const mapStateToProps = (state: Store): InputChipStateProps => ({
-  value: state.InputChipStore.newChipValue,
-  shouldShowInput: state.InputChipStore.shouldShowInput,
+const mapStateToProps = (state: InputChipStore): InputChipStateProps => ({
+  value: state.inputValue,
+  shouldShowInput: state.shouldShowInput,
 });
 
 const mapDispatchToProps = (
-  dispatch: SnowmanDispatch,
+  dispatch: InputChipDispatch,
   ownProps: InputChipOwnProps
 ): InputChipDispatchProps => ({
   onChangeValue(event: IonChangeEvent): void {
     dispatch(changeInputValue(event.detail.value as string));
   },
-  showInput() {
+  showInput(): void {
     dispatch(showInput());
+    console.log('open');
   },
-  hideInput() {
+  hideInput(): void {
     dispatch(hideInput());
   },
-  onSubmit() {
-    // call adding routine from higher hierarchy
-    ownProps.addNewTag(store.getState().InputChipStore.newChipValue);
-    dispatch(hideInput());
+  submitInput(): void {
+    dispatch(submitValue(ownProps.submitValueCallback));
+  },
+  handleKeyboardInteraction(event: KeyboardEvent<HTMLIonInputElement>) {
+    dispatch(handleKeyboardInteraction(event, ownProps.submitValueCallback));
   },
 });
 
-const InputChip = connect(mapStateToProps, mapDispatchToProps)(InputChipView);
+const InputChipHOC = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(InputChipView);
+
+const InputChip = (ownProps: InputChipOwnProps): JSX.Element => (
+  <Provider store={store}>
+    <InputChipHOC {...ownProps} />
+  </Provider>
+);
 
 export default InputChip;

@@ -1,9 +1,14 @@
+import { KeyboardEvent } from 'react';
 import { IonChangeEvent } from 'types/IonChangeEvent';
+
+export interface SubmitCallback {
+  (value: string): void;
+}
 
 export interface InputChipOwnProps {
   placeholder?: string;
   label?: string;
-  addNewTag(newChipValue: string): void;
+  submitValueCallback: SubmitCallback;
 }
 
 export interface InputChipStateProps {
@@ -13,9 +18,10 @@ export interface InputChipStateProps {
 
 export interface InputChipDispatchProps {
   onChangeValue(event: IonChangeEvent): void;
-  onSubmit(): void;
   showInput(): void;
   hideInput(): void;
+  submitInput(): void;
+  handleKeyboardInteraction(event: KeyboardEvent<HTMLIonInputElement>): void;
 }
 
 export type InputChipProps = InputChipStateProps &
