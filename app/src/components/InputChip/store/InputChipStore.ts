@@ -11,7 +11,7 @@ const composeEnhancer = composeWithDevTools({
   name: 'IonChipStore',
 });
 
-export const store: Store<InputChipStore> = createStore(
+export const store: Store<InputChipStore, InputChipAction> = createStore(
   InputChipReducer as Reducer<InputChipStore, InputChipAction>,
   composeEnhancer(applyMiddleware(thunk))
 );
