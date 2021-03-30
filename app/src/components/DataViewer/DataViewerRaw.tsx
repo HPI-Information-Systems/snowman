@@ -1,13 +1,11 @@
 import React, { useMemo, useState } from 'react';
 import {
   Column,
-  useAbsoluteLayout,
   useBlockLayout,
-  useFlexLayout,
   useResizeColumns,
   useTable,
 } from 'react-table';
-import { IndexRange } from 'react-virtualized';
+import { AutoSizer, IndexRange } from 'react-virtualized';
 import { FixedSizeList } from 'react-window';
 
 const scrollbarWidth = () => {
@@ -61,7 +59,7 @@ export default function DataViewerRaw({
       data,
       defaultColumn,
     },
-    useFlexLayout,
+    useBlockLayout,
     useResizeColumns
   );
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -75,6 +73,7 @@ export default function DataViewerRaw({
           style={{
             width: `${totalColumnsWidth + scrollBarSize}px`,
             transform: `translateX(-${scrollPosition}px)`,
+            position: 'relative',
           }}
         >
           <div
@@ -87,7 +86,15 @@ export default function DataViewerRaw({
               return (
                 // eslint-disable-next-line react/jsx-key
                 <div {...cell.getCellProps()} className="td">
-                  {cell.render('Cell')}
+                  <div
+                    style={{
+                      whiteSpace: 'nowrap',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {cell.render('Cell')}
+                  </div>
                 </div>
               );
             })}
@@ -96,12 +103,21 @@ export default function DataViewerRaw({
       );
       return result;
     },
-    [prepareRow, rows, scrollPosition]
+    [prepareRow, rows, scrollPosition, totalColumnsWidth]
   );
 
   // Render the UI for your table
   return (
-    <div {...getTableProps()} className="table" style={{ background: 'white' }}>
+    <div
+      {...getTableProps()}
+      className="table"
+      style={{
+        background: 'white',
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+      }}
+    >
       <div
         style={{
           width: `100%`,
@@ -112,6 +128,7 @@ export default function DataViewerRaw({
           style={{
             width: `${totalColumnsWidth + scrollBarSize}px`,
             transform: `translateX(-${scrollPosition}px)`,
+            height: '1.5rem',
           }}
         >
           {headerGroups.map((headerGroup) => (
@@ -120,15 +137,30 @@ export default function DataViewerRaw({
               {headerGroup.headers.map((column) => (
                 // eslint-disable-next-line react/jsx-key
                 <div {...column.getHeaderProps()} className="th">
-                  {column.render('Header')}
+                  <div
+                    style={{
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      width: '100%',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {column.render('Header')}
+                  </div>
                   {column.canResize && (
                     <div
                       {...column.getResizerProps()}
                       style={{
-                        width: '0.5rem',
+                        display: 'inline-block',
+                        background: 'blue',
+                        width: '10px',
                         height: '100%',
-                        background: 'orange',
-                        float: 'right',
+                        position: 'absolute',
+                        right: '0',
+                        top: '0',
+                        transform: 'translateX(50%)',
+                        zIndex: 1,
+                        touchAction: 'none',
                       }}
                     />
                   )}
@@ -139,38 +171,56 @@ export default function DataViewerRaw({
         </div>
       </div>
 
-      <div {...getTableBodyProps()}>
-        <FixedSizeList
-          onItemsRendered={(props) =>
-            onRowsRendered({
-              startIndex: props.visibleStartIndex,
-              stopIndex: props.visibleStopIndex,
-            })
-          }
-          height={370}
-          itemCount={rows.length}
-          itemSize={35}
-          width={'100%'}
-          style={{
-            overflowY: 'scroll',
-            overflowX: 'hidden',
-          }}
-        >
-          {RenderRow}
-        </FixedSizeList>
+      <div
+        {...getTableBodyProps()}
+        style={{
+          width: '100%',
+          height: `calc(100% - 1.5rem - ${scrollBarSize}px)`,
+        }}
+      >
+        <AutoSizer>
+          {({ height, width }) => (
+            <>
+              <FixedSizeList
+                onItemsRendered={(props) =>
+                  onRowsRendered({
+                    startIndex: props.visibleStartIndex,
+                    stopIndex: props.visibleStopIndex,
+                  })
+                }
+                height={height}
+                itemCount={rows.length}
+                itemSize={35}
+                width={width}
+                style={{
+                  overflowY: 'scroll',
+                  overflowX: 'hidden',
+                }}
+              >
+                {RenderRow}
+              </FixedSizeList>
+            </>
+          )}
+        </AutoSizer>
+      </div>
+      <div
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+          overflowY: 'hidden',
+          overflowX: 'scroll',
+        }}
+        onScroll={(e) => {
+          setScrollPosition(e.currentTarget.scrollLeft);
+        }}
+      >
         <div
-          style={{ width: '100%', overflowY: 'hidden', overflowX: 'scroll' }}
-          onScroll={(e) => {
-            setScrollPosition(e.currentTarget.scrollLeft);
+          style={{
+            width: `${totalColumnsWidth + scrollBarSize}px`,
+            height: '1px',
           }}
-        >
-          <div
-            style={{
-              width: `${totalColumnsWidth + scrollBarSize}px`,
-              height: '1px',
-            }}
-          ></div>
-        </div>
+        ></div>
       </div>
     </div>
   );
