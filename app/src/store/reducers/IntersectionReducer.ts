@@ -9,8 +9,7 @@ import { SnowmanAction } from 'store/messages';
 import { BenchmarkConfigurationStore, IntersectionStore } from 'store/models';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';
-import { filterOutAnElement } from 'utils/dragNDropHelpers';
-import { insertExperimentAt } from 'utils/experimentsHelpers';
+import { filterOutAnElement, insertElementAt } from 'utils/dragNDropHelpers';
 
 const initialState: IntersectionStore = {
   excluded: [],
@@ -68,21 +67,21 @@ export const IntersectionReducer = (
 
       switch (eventDescriptor.targetBucket) {
         case IntersectionBuckets.IGNORED:
-          newIgnored = insertExperimentAt(
+          newIgnored = insertElementAt<Experiment>(
             newIgnored,
             draggedExperiment,
             eventDescriptor.targetIndex
           );
           break;
         case IntersectionBuckets.INCLUDED:
-          newIncluded = insertExperimentAt(
+          newIncluded = insertElementAt<Experiment>(
             newIncluded,
             draggedExperiment,
             eventDescriptor.targetIndex
           );
           break;
         case IntersectionBuckets.EXCLUDED:
-          newExcluded = insertExperimentAt(
+          newExcluded = insertElementAt<Experiment>(
             newExcluded,
             draggedExperiment,
             eventDescriptor.targetIndex
