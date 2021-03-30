@@ -68,7 +68,7 @@ const DatasetCardView = ({
             color="dark"
             outline={false}
             class="custom-disabled-chip"
-            disabled={couldPreview}
+            disabled={!couldPreview}
             onClick={previewDataset}
           >
             <IonLabel>Total: {dataset.numberOfRecords ?? 'unknown'}</IonLabel>
@@ -77,7 +77,7 @@ const DatasetCardView = ({
             color="dark"
             outline={false}
             class="custom-disabled-chip"
-            disabled={couldPreview}
+            disabled={!couldPreview}
             onClick={previewDataset}
           >
             <IonLabel>

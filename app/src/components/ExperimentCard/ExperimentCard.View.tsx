@@ -41,7 +41,7 @@ const ExperimentCardView = ({
             color="dark"
             outline={false}
             class="custom-disabled-chip"
-            disabled={couldPreview}
+            disabled={!couldPreview}
             onClick={previewExperiment}
           >
             <IonLabel>
