@@ -6,7 +6,7 @@ import { Store as IStore } from 'store/models';
 import { rootReducer } from 'store/reducers/rootReducer';
 
 const composeEnhancer = composeWithDevTools({
-  name: 'IonChipStore',
+  name: 'MainStore',
 });
 
 export const store: Store<IStore, SnowmanAction> = createStore(
