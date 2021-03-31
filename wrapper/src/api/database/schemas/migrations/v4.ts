@@ -39,11 +39,6 @@ export class SchemaV3 extends SchemaVersion {
             os TEXT`
     );
     databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-         ADD COLUMN
-            timeToConfigure INTEGER`
-    );
-    databaseBackend().exec(
       `ALTER TABLE ${tables.meta.experiment.schema.name}
          ADD COLUMN
             implementationKnowHowLevel TEXT`
