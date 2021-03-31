@@ -16,11 +16,15 @@ export class AlgorithmProvider {
       {
         name: algorithm.name,
         description: algorithm.description,
+        interface: JSON.stringify(algorithm.softKPIs?.general?._interface),
+        costs: algorithm.softKPIs?.general?.costs,
+        inputFormat: JSON.stringify(algorithm.softKPIs?.general?.inputFormat),
+        matchingSolutionType: algorithm.softKPIs?.general?.matchingSolutionType,
+        useCase: JSON.stringify(algorithm.softKPIs?.general?.useCase),
         implementationKnowHowLevel:
-          algorithm.softKPIs?.implementationKnowHowLevel,
-        matchingSolutionType: algorithm.softKPIs?.matchingSolutionType,
-        timeToInstall: algorithm.softKPIs?.timeToInstall,
-        timeToConfigure: algorithm.softKPIs?.timeToConfigure,
+          algorithm.softKPIs?.installationCosts?.implementationKnowHowLevel,
+        timeToInstall: algorithm.softKPIs?.installationCosts?.timeToInstall,
+        os: JSON.stringify(algorithm.softKPIs?.installationCosts?.os),
       },
     ])[0];
   }
