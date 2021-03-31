@@ -12,6 +12,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
+  padding-right: min(20%, 1rem);
 }
 
 .table-root .table-header .resize, 

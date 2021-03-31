@@ -1,3 +1,5 @@
+import 'components/DataViewer/Table/TableRowStyles.css';
+
 import ScrollSync from 'components/DataViewer/Table/ScrollSync/ScrollSync';
 import { TableContext } from 'components/DataViewer/Table/TableContext';
 import React, { useContext } from 'react';
@@ -15,22 +17,14 @@ export default function TableRow({
       {...row.getRowProps({
         style,
       })}
-      className="tr"
+      className="table-row"
     >
       <ScrollSync>
         {row.cells.map((cell) => {
           return (
             // eslint-disable-next-line react/jsx-key
-            <div {...cell.getCellProps()} className="td">
-              <div
-                style={{
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                }}
-              >
-                {cell.render('Cell')}
-              </div>
+            <div {...cell.getCellProps()} className="cell">
+              {cell.render('Cell')}
             </div>
           );
         })}

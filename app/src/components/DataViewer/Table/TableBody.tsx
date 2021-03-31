@@ -29,7 +29,7 @@ export default function TableBody({
             }
             height={height}
             itemCount={rows.length}
-            itemSize={35}
+            itemSize={40}
             width={width}
             style={{
               overflowX: 'hidden',

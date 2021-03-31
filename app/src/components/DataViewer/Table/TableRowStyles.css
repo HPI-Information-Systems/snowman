@@ -1,0 +1,26 @@
+.table-root .table-row {
+  color: var(--ion-color-dark);
+  overflow: hidden;
+  vertical-align: middle;
+  height: 40px;
+  line-height: 40px;
+}
+
+.table-root .table-row .cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+  font-size: 1rem;
+  padding-right: min(20%, 1rem);
+}
+
+.table-root .table-row :hover {
+  background-color: #f1f1f1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .table-root .table-row :hover {
+    background-color: #323232;
+  }
+}
