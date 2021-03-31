@@ -2,8 +2,13 @@ import { setupDatabase } from '../../database';
 import {
   AlgorithmId,
   AlgorithmValues,
-  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
-  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
+  AlgorithmValuesSoftKPIsGeneralInputFormatEnum,
+  AlgorithmValuesSoftKPIsGeneralInterfaceEnum,
+  AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum,
+  AlgorithmValuesSoftKPIsGeneralUseCaseEnum,
+  AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum,
+  AlgorithmValuesSoftKPIsInstallationCostsOsEnum,
+  ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum,
 } from '../../server/types';
 import { DatasetProvider } from '../dataset/datasetProvider';
 import { ExperimentProvider } from '../experiment/experimentProvider';
@@ -16,24 +21,56 @@ describe('AlgorithmProvider', () => {
       description: 'Mock 1',
       name: 'Mock 1',
       softKPIs: {
-        timeToConfigure: 1,
-        timeToInstall: 2,
-        implementationKnowHowLevel:
-          AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
-        matchingSolutionType:
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Ml,
+        general: {
+          matchingSolutionType:
+            AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum.Ml,
+          costs: 300,
+          useCase: [
+            AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Deduplicate,
+            AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Merge,
+          ],
+          inputFormat: [AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Csv],
+          _interface: [
+            AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Cli,
+            AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Gui,
+          ],
+        },
+        installationCosts: {
+          implementationKnowHowLevel:
+            AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum.Starter,
+          timeToInstall: 3,
+          os: [
+            AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Linux,
+            AlgorithmValuesSoftKPIsInstallationCostsOsEnum.MacOs,
+            AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Windows,
+          ],
+        },
       },
     },
     {
       description: 'Mock 2',
       name: 'Mock 2',
       softKPIs: {
-        timeToConfigure: 3,
-        timeToInstall: 4,
-        implementationKnowHowLevel:
-          AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
-        matchingSolutionType:
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Ml,
+        general: {
+          matchingSolutionType:
+            AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum.Rulebased,
+          costs: 200,
+          useCase: [
+            AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Deduplicate,
+            AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Search,
+          ],
+          inputFormat: [AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Tsv],
+          _interface: [AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Cli],
+        },
+        installationCosts: {
+          implementationKnowHowLevel:
+            AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum.Starter,
+          timeToInstall: 2,
+          os: [
+            AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Linux,
+            AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Windows,
+          ],
+        },
       },
     },
   ];
@@ -64,12 +101,20 @@ describe('AlgorithmProvider', () => {
       description: 'Added Algorithm',
       name: 'Added Algorithm',
       softKPIs: {
-        timeToConfigure: 5,
-        timeToInstall: 6,
-        matchingSolutionType:
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Other,
-        implementationKnowHowLevel:
-          AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Intermediate,
+        general: {
+          matchingSolutionType:
+            AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum.Other,
+          costs: 350,
+          useCase: [AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Search],
+          inputFormat: [AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Csv],
+          _interface: [AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Gui],
+        },
+        installationCosts: {
+          implementationKnowHowLevel:
+            AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum.Expert,
+          timeToInstall: 9,
+          os: [AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Linux],
+        },
       },
     };
     const addedAlgorithmId = provider.addAlgorithm(addedAlgorithm);
@@ -96,12 +141,26 @@ describe('AlgorithmProvider', () => {
       name: 'Not Mock 1',
       description: 'Not Mock 1',
       softKPIs: {
-        timeToConfigure: 7,
-        timeToInstall: 8,
-        matchingSolutionType:
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Other,
-        implementationKnowHowLevel:
-          AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
+        general: {
+          matchingSolutionType:
+            AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum.ActiveLearning,
+          costs: 30,
+          useCase: [AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Deduplicate],
+          inputFormat: [
+            AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Csv,
+            AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Tsv,
+          ],
+          _interface: [AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Gui],
+        },
+        installationCosts: {
+          implementationKnowHowLevel:
+            AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum.Intermediate,
+          timeToInstall: 18,
+          os: [
+            AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Linux,
+            AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Windows,
+          ],
+        },
       },
     };
     provider.setAlgorithm(addedAlgorithmids[0], setAlgorithmValues);
@@ -139,6 +198,8 @@ describe('AlgorithmProvider', () => {
       name: 'Experiment Name',
       softKPIs: {
         timeToConfigure: 3,
+        implementationKnowHowLevel:
+          ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum.Intermediate,
       },
     });
     expect(() => provider.deleteAlgorithm(addedAlgorithmids[0])).toThrow();
