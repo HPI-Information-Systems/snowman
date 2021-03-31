@@ -634,17 +634,23 @@ components:
               type: object
               properties:
                 useCase:
-                  type: string
-                  enum: ["search", "deduplicate", "merge"]
+                  type: array
+                  items:
+                    type: string
+                    enum: ["search", "deduplicate", "merge"]
                 matchingSolutionType:
                   type: string
                   enum: ["ml", "rulebased", "activeLearning", "other"]
                 inputFormat:
-                  type: string
-                  enum: ["csv", "tsv"]
+                  type: array
+                  items:
+                    type: string
+                    enum: ["csv", "tsv"]
                 interface:
-                  type: string
-                  enum: ["cli", "gui"]
+                  type: array
+                  items:
+                    type: string
+                    enum: ["cli", "gui", "api"]
                 costs:
                   type: number
             installationCosts:
