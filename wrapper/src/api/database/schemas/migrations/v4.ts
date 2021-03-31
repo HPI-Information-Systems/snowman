@@ -10,8 +10,8 @@ export class SchemaV4 extends SchemaVersion {
   protected async migrateFromLastVersion(options: SetupOptions): Promise<void> {
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
-         DROP COLUMN
-            timeToConfigure`
+         RENAME COLUMN 
+            timeToConfigure TO deprecated1`
     );
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
