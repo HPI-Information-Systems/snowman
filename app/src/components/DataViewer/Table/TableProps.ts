@@ -15,3 +15,7 @@ export type TableContentProps = {
   width: number;
   height: number;
 };
+
+export type TableBodyProps = {
+  onRowsRendered: (params: IndexRange) => void;
+};

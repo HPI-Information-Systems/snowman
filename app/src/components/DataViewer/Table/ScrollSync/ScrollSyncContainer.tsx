@@ -14,7 +14,7 @@ export default function ScrollSyncContainer({
         style={{
           position: 'relative',
           width: '100%',
-          height: `calc(100% - ${scrollbarWidth()})`,
+          height: `calc(100% - ${scrollbarWidth()}px)`,
         }}
       >
         {children}

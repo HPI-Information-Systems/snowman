@@ -1,10 +1,8 @@
 import ScrollSyncContainer from 'components/DataViewer/Table/ScrollSync/ScrollSyncContainer';
+import TableBody from 'components/DataViewer/Table/TableBody';
 import { TableContext } from 'components/DataViewer/Table/TableContext';
-import TableHeader, {
-  tableHeaderHeight,
-} from 'components/DataViewer/Table/TableHeader';
+import TableHeader from 'components/DataViewer/Table/TableHeader';
 import { TableContentProps } from 'components/DataViewer/Table/TableProps';
-import TableRow from 'components/DataViewer/Table/TableRow';
 import React, { useMemo } from 'react';
 import {
   Column,
@@ -12,8 +10,6 @@ import {
   useResizeColumns,
   useTable,
 } from 'react-table';
-import { AutoSizer } from 'react-virtualized';
-import { FixedSizeList } from 'react-window';
 import { scrollbarWidth } from 'utils/scrollbarWidth';
 
 export default function TableContent({
@@ -49,7 +45,6 @@ export default function TableContent({
     totalColumnsWidth,
   ]);
 
-  // Render the UI for your table
   return (
     <ScrollSyncContainer scrollWidth={scrollWidth}>
       <TableContext.Provider
@@ -57,6 +52,7 @@ export default function TableContent({
           prepareRow,
           rows,
           headerGroups,
+          getTableBodyProps,
         }}
       >
         <div
@@ -70,35 +66,7 @@ export default function TableContent({
           }}
         >
           <TableHeader />
-          <div
-            {...getTableBodyProps()}
-            style={{
-              position: 'relative',
-              height: `calc(${height}px - ${tableHeaderHeight})`,
-            }}
-          >
-            <AutoSizer>
-              {({ height }) => (
-                <FixedSizeList
-                  onItemsRendered={(props) =>
-                    onRowsRendered({
-                      startIndex: props.visibleStartIndex,
-                      stopIndex: props.visibleStopIndex,
-                    })
-                  }
-                  height={height}
-                  itemCount={rows.length}
-                  itemSize={35}
-                  width={width}
-                  style={{
-                    overflowX: 'hidden',
-                  }}
-                >
-                  {TableRow}
-                </FixedSizeList>
-              )}
-            </AutoSizer>
-          </div>
+          <TableBody onRowsRendered={onRowsRendered} />
         </div>
       </TableContext.Provider>
     </ScrollSyncContainer>
