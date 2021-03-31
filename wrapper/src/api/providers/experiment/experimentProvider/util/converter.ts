@@ -1,6 +1,9 @@
 import { tableSchemas } from '../../../../database/schemas';
 import { ColumnValues } from '../../../../database/tools/types';
-import { Experiment } from '../../../../server/types';
+import {
+  Experiment,
+  ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum,
+} from '../../../../server/types';
 
 type StoredExperiment = ColumnValues<
   typeof tableSchemas['meta']['experiment']['columns']
@@ -9,13 +12,15 @@ type StoredExperiment = ColumnValues<
 export class ExperimentConverter {
   apiExperimentToStoredExperiment(apiExperiment: Experiment): StoredExperiment {
     return {
+      id: apiExperiment.id,
+      name: apiExperiment.name,
+      description: apiExperiment.description ?? null,
       algorithm: apiExperiment.algorithmId,
       dataset: apiExperiment.datasetId,
-      description: apiExperiment.description ?? null,
-      name: apiExperiment.name,
-      id: apiExperiment.id,
       numberOfUploadedRecords: apiExperiment.numberOfUploadedRecords ?? null,
       timeToConfigure: apiExperiment.softKPIs?.timeToConfigure ?? null,
+      implementationKnowHowLevel:
+        apiExperiment.softKPIs?.implementationKnowHowLevel ?? null,
     };
   }
 
@@ -32,6 +37,9 @@ export class ExperimentConverter {
         storedExperiment.numberOfUploadedRecords ?? undefined,
       softKPIs: {
         timeToConfigure: storedExperiment.timeToConfigure ?? undefined,
+        implementationKnowHowLevel:
+          (storedExperiment.implementationKnowHowLevel as ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum | null) ??
+          undefined,
       },
     };
   }
