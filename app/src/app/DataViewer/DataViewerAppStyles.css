@@ -1,0 +1,20 @@
+.data-viewer-app {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.data-viewer-app-loading {
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    color: var(--ion-color-dark);
+}
+
+.data-viewer-app-loading-spinner {
+    transform: translateY(0.2rem);
+    margin-right: 0.4rem;
+    display: inline-block;
+}

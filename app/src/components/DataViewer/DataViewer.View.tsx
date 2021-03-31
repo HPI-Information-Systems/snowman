@@ -1,6 +1,13 @@
+import { DataViewerAppHostContext } from 'app/DataViewer/Host/DataViewerAppHostContext';
 import { DataViewerProps } from 'components/DataViewer/DataViewerProps';
 import Table from 'components/DataViewer/Table/Table';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { InfiniteLoader } from 'react-virtualized';
 
 const DataViewerView = ({
@@ -8,7 +15,10 @@ const DataViewerView = ({
   loadTuples,
   wrapLoadTuples,
   BATCH_SIZE = 500,
+  title,
 }: DataViewerProps): JSX.Element => {
+  const { openDataViewerWindow } = useContext(DataViewerAppHostContext);
+
   const mounted = useRef(true);
   const requestedRowCount = useRef(0);
   const resetVersion = useRef(0);
@@ -39,10 +49,10 @@ const DataViewerView = ({
 
   const requestRows = useCallback(
     (rowCount: number, updateHeader = false) => {
-      rowCount = Math.min(rowCount, tuplesCount);
       const priorRowCount = requestedRowCount.current;
       const priorResetVersion = resetVersion.current;
-      if (rowCount > priorRowCount) {
+      rowCount = Math.max(Math.min(rowCount, tuplesCount), priorRowCount);
+      if (rowCount > priorRowCount || updateHeader) {
         requestedRowCount.current = rowCount;
         wrapLoadTuples(loadTuples, priorRowCount, rowCount).then(
           ({ header, data }) => {
@@ -96,6 +106,14 @@ const DataViewerView = ({
           columns={columns.current}
           rowsChanged={rowsChanged}
           columnsChanged={columnsChanged}
+          openDataViewerWindow={() =>
+            openDataViewerWindow({
+              tuplesCount,
+              loadTuples,
+              BATCH_SIZE,
+              title,
+            })
+          }
         />
       )}
     </InfiniteLoader>

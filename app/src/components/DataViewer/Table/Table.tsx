@@ -9,6 +9,7 @@ export default function Table({
   onRowsRendered,
   rowsChanged,
   columnsChanged,
+  openDataViewerWindow,
 }: TableProps): JSX.Element {
   const resetTable = useRef(true);
   const memoizedRows = useMemo(() => {
@@ -44,6 +45,7 @@ export default function Table({
             onRowsRendered={onRowsRendered}
             width={width}
             resetTable={resetTable}
+            openDataViewerWindow={openDataViewerWindow}
           ></TableContent>
         </div>
       )}

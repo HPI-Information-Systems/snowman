@@ -1,20 +1,13 @@
-import AppView from 'app/App.View';
-import { AppDispatchProps, AppStateProps } from 'app/AppProps';
-import { connect } from 'react-redux';
-import { getAlgorithms } from 'store/actions/AlgorithmsPageActions';
-import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import DataViewerApp from 'app/DataViewer/DataViewerApp';
+import DataViewerAppHost from 'app/DataViewer/Host/DataViewerAppHost';
+import { isDataviewerAppWindow } from 'app/DataViewer/Host/DataViewerAppHostContext';
+import DefaultApp from 'app/Default/DefaultApp';
+import React from 'react';
 
-const mapStateToProps = (state: Store): AppStateProps => ({
-  currentViewId: state.RenderLogicStore.currentViewID,
-});
-
-const mapDispatchToProps = (dispatch: SnowmanDispatch): AppDispatchProps => ({
-  loadInitialState() {
-    dispatch(getAlgorithms()).then();
-  },
-});
-
-const App = connect(mapStateToProps, mapDispatchToProps)(AppView);
-
-export default App;
+export default function App(): JSX.Element {
+  return (
+    <DataViewerAppHost>
+      {isDataviewerAppWindow() ? <DataViewerApp /> : <DefaultApp />}
+    </DataViewerAppHost>
+  );
+}

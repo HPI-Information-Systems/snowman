@@ -19,7 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'theme/overwrites.css';
 
 import { IonApp, IonPage, IonSplitPane } from '@ionic/react';
-import { AppProps } from 'app/AppProps';
+import { DefaultAppProps } from 'app/Default/DefaultAppProps';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
 import SideMenu from 'components/SideMenu/SideMenu';
 import React, { useEffect } from 'react';
@@ -27,10 +27,10 @@ import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 import { getViewComponentToViewId } from 'utils/viewMetaInfoHandlers';
 
-const AppView = ({
+const DefaultAppView = ({
   loadInitialState,
   currentViewId,
-}: AppProps): JSX.Element => {
+}: DefaultAppProps): JSX.Element => {
   useEffect(loadInitialState, [loadInitialState]);
   return (
     <IonApp>
@@ -63,4 +63,4 @@ const AppView = ({
   );
 };
 
-export default AppView;
+export default DefaultAppView;

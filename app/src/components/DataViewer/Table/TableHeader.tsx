@@ -1,7 +1,10 @@
 import 'components/DataViewer/Table/TableHeaderStyles.css';
 
+import { IonButton, IonIcon } from '@ionic/react';
+import { isDataviewerAppWindow } from 'app/DataViewer/Host/DataViewerAppHostContext';
 import ScrollSync from 'components/DataViewer/Table/ScrollSync/ScrollSync';
-import { TableHeaderProps } from 'components/DataViewer/Table/TableHeaderProps';
+import { TableHeaderProps } from 'components/DataViewer/Table/TableProps';
+import { open } from 'ionicons/icons';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { scrollbarWidth } from 'utils/scrollbarWidth';
 
@@ -11,8 +14,10 @@ export default function TableHeader({
   headerGroups,
   setColumnOrder,
   visibleColumns,
+  openDataViewerWindow,
 }: TableHeaderProps): JSX.Element {
   const draggedColumn = useRef<string>();
+  const setDragTimeout = useRef<number>();
   const [dragging, setDragging] = useState(false);
   const columnIds = useMemo(() => visibleColumns.map(({ id }) => id), [
     visibleColumns,
@@ -56,10 +61,14 @@ export default function TableHeader({
                   draggable
                   className="reorder"
                   onDragStart={() => {
-                    setTimeout(() => setDragging(true), 100);
+                    setDragTimeout.current = window.setTimeout(
+                      () => setDragging(true),
+                      100
+                    );
                     draggedColumn.current = column.id;
                   }}
                   onDragEnd={() => {
+                    window.clearTimeout(setDragTimeout.current);
                     setDragging(false);
                     draggedColumn.current = undefined;
                   }}
@@ -77,6 +86,18 @@ export default function TableHeader({
           </div>
         ))}
       </ScrollSync>
+      <IonButton
+        size="small"
+        color="light"
+        onClick={openDataViewerWindow}
+        style={{
+          height: `calc(${tableHeaderHeight} - 4px)`,
+          display: isDataviewerAppWindow() ? 'none' : '',
+        }}
+        className="open-data-viewer"
+      >
+        <IonIcon slot="icon-only" icon={open} />
+      </IonButton>
       {headerGroups.map((headerGroup) => (
         // eslint-disable-next-line react/jsx-key
         <div

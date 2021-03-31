@@ -23,3 +23,5 @@ export const SUCCESS_TO_UPDATE_EXPERIMENT =
 export const SUCCESS_TO_DELETE_DATASET = 'Successfully deleted the dataset!';
 export const SUCCESS_TO_DELETE_EXPERIMENT =
   'Successfully deleted the experiment!';
+export const COULD_NOT_OPEN_DATA_VIEWER_IN_CHILD_WINDOW_ERROR =
+  'Could not open data viewer in child window.';

@@ -15,7 +15,7 @@ import IntersectionVennDiagram from 'components/IntersectionVennDiagram/Intersec
 import { IntersectionVennDiagramIntersectionStrategy } from 'components/IntersectionVennDiagram/strategies/intersection';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { IntersectionPageProps } from 'pages/IntersectionPage/IntersectionPageProps';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { intersectionDescription } from 'utils/intersectionDescription';
 
 const IntersectionPageView = ({
@@ -47,6 +47,16 @@ const IntersectionPageView = ({
     );
   }, [included, excluded, ignored]);
 
+  const intersectionDescriptionString = useMemo(
+    () =>
+      intersectionDescription({
+        excluded: excluded.map(({ name }) => name),
+        included: included.map(({ name }) => name),
+        pairCount,
+      }),
+    [excluded, included, pairCount]
+  );
+
   return (
     <PageStruct title={'Intersections'}>
       <IonGrid>
@@ -68,20 +78,18 @@ const IntersectionPageView = ({
           <IonCol class="col-no-padding" size="12" sizeXl="6">
             <IonCard class="dataviewer-card-full">
               <IonCardHeader>
-                <b>
-                  {intersectionDescription({
-                    excluded: excluded.map(({ name }) => name),
-                    included: included.map(({ name }) => name),
-                    pairCount,
-                  })}
-                </b>
+                <b>{intersectionDescriptionString}</b>
               </IonCardHeader>
               <IonCardContent
                 style={{
                   height: '72vh',
                 }}
               >
-                <DataViewer loadTuples={loadTuples} tuplesCount={tuplesCount} />
+                <DataViewer
+                  loadTuples={loadTuples}
+                  tuplesCount={tuplesCount}
+                  title={intersectionDescriptionString}
+                />
               </IonCardContent>
             </IonCard>
           </IonCol>

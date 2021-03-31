@@ -21,6 +21,7 @@ export default function TableContent({
   onRowsRendered,
   width,
   resetTable,
+  openDataViewerWindow,
 }: TableContentProps): JSX.Element {
   const columns = useMemo<Column<string[]>[]>(
     () => new Proxy(rawColumns, {}),
@@ -73,6 +74,7 @@ export default function TableContent({
             headerGroups={headerGroups}
             visibleColumns={visibleColumns}
             setColumnOrder={setColumnOrder}
+            openDataViewerWindow={openDataViewerWindow}
           />
           <TableBody onRowsRendered={onRowsRendered} />
         </div>

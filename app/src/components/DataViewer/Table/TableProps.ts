@@ -1,5 +1,5 @@
 import { MutableRefObject } from 'react';
-import { Column } from 'react-table';
+import { Column, ColumnInstance, HeaderGroup } from 'react-table';
 import { IndexRange } from 'react-virtualized';
 
 export type TableProps = {
@@ -8,6 +8,7 @@ export type TableProps = {
   onRowsRendered: (params: IndexRange) => void;
   rowsChanged: unknown;
   columnsChanged: unknown;
+  openDataViewerWindow: () => void;
 };
 
 export type TableContentProps = {
@@ -16,8 +17,18 @@ export type TableContentProps = {
   onRowsRendered: (params: IndexRange) => void;
   width: number;
   resetTable: MutableRefObject<boolean>;
+  openDataViewerWindow: () => void;
 };
 
 export type TableBodyProps = {
   onRowsRendered: (params: IndexRange) => void;
+};
+
+export type TableHeaderProps = {
+  headerGroups: HeaderGroup<string[]>[];
+  visibleColumns: ColumnInstance<string[]>[];
+  setColumnOrder: (
+    updater: string[] | ((columnOrder: string[]) => string[])
+  ) => void;
+  openDataViewerWindow: () => void;
 };
