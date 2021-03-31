@@ -10,22 +10,22 @@
 
 .table-root .table-header .cell {
   overflow: hidden;
+  padding-right: min(20%, 1rem);
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-right: min(20%, 1rem);
 }
 
 .table-root .table-header .resize, 
 .table-root .table-header .resizing {
   display: inline-block;
-  width: 15px;
   height: 100%;
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 1;
   touch-action: none;
   transform: translate(30%);
+  width: 15px;
+  z-index: 1;
 }
 
 .table-root .table-header .cell:hover .resize-indicator,
@@ -35,12 +35,12 @@
 }
 
 .table-root .table-header .resize-indicator {
-  height: 100%;
-  width: 2px;
-  transition: background-color 0.15s ease;
   background-color: transparent;
-  position: absolute;
+  height: 100%;
   left: calc(50%);
-  transform: translateX(-50%);
+  position: absolute;
   top: 0;
+  transform: translateX(-50%);
+  transition: background-color 0.15s ease;
+  width: 2px;
 }

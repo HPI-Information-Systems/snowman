@@ -1,3 +1,5 @@
+import 'components/DataViewer/Table/TableContentStyles.css';
+
 import ScrollSyncContainer from 'components/DataViewer/Table/ScrollSync/ScrollSyncContainer';
 import TableBody from 'components/DataViewer/Table/TableBody';
 import { TableContext } from 'components/DataViewer/Table/TableContext';
@@ -63,14 +65,7 @@ export default function TableContent({
           getTableBodyProps,
         }}
       >
-        <div
-          {...getTableProps()}
-          style={{
-            width: '100%',
-            height: '100%',
-            position: 'relative',
-          }}
-        >
+        <div {...getTableProps()} className="table-root">
           <TableHeader />
           <TableBody onRowsRendered={onRowsRendered} />
         </div>
