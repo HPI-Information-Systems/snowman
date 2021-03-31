@@ -1,32 +1,40 @@
 import TableContent from 'components/DataViewer/Table/TableContent';
 import { TableProps } from 'components/DataViewer/Table/TableProps';
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { AutoSizer } from 'react-virtualized';
 
 export default function Table({
   columns,
   rows,
   onRowsRendered,
-  change,
+  rowsChanged,
+  columnsChanged,
 }: TableProps): JSX.Element {
+  const resetTable = useRef(true);
+  const memoizedRows = useMemo(() => {
+    resetTable.current = false;
+    return new Proxy(rows, {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rows, rowsChanged]);
   const memoizedColumns = useMemo(
-    () =>
-      columns.map((column, index) => ({
+    () => {
+      resetTable.current = true;
+      return columns.map((column, index) => ({
         Header: column,
         accessor: (row: string[]) => row[index],
-      })),
-    [columns]
+      }));
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [columns, columnsChanged]
   );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedRows = useMemo(() => new Proxy(rows, {}), [rows, change]);
 
   return (
     <AutoSizer>
-      {(size) => (
+      {({ width, height }) => (
         <div
           style={{
-            width: size.width,
-            height: size.height,
+            width,
+            height,
             position: 'relative',
           }}
         >
@@ -34,7 +42,8 @@ export default function Table({
             data={memoizedRows}
             columns={memoizedColumns}
             onRowsRendered={onRowsRendered}
-            {...size}
+            width={width}
+            resetTable={resetTable}
           ></TableContent>
         </div>
       )}

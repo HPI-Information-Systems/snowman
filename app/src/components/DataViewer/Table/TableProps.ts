@@ -1,11 +1,13 @@
-import { Column, Row } from 'react-table';
+import { MutableRefObject } from 'react';
+import { Column } from 'react-table';
 import { IndexRange } from 'react-virtualized';
 
 export type TableProps = {
   columns: string[];
   rows: string[][];
   onRowsRendered: (params: IndexRange) => void;
-  change: unknown;
+  rowsChanged: unknown;
+  columnsChanged: unknown;
 };
 
 export type TableContentProps = {
@@ -13,7 +15,7 @@ export type TableContentProps = {
   data: string[][];
   onRowsRendered: (params: IndexRange) => void;
   width: number;
-  height: number;
+  resetTable: MutableRefObject<boolean>;
 };
 
 export type TableBodyProps = {

@@ -13,17 +13,16 @@ import {
 import { scrollbarWidth } from 'utils/scrollbarWidth';
 
 export default function TableContent({
-  columns,
+  columns: rawColumns,
   data,
   onRowsRendered,
-  height,
   width,
+  resetTable,
 }: TableContentProps): JSX.Element {
-  const defaultColumn = useMemo<Partial<Column<string[]>>>(
-    () => ({
-      width: width / columns.length,
-    }),
-    [columns, width]
+  const columns = useMemo<Column<string[]>[]>(
+    () => new Proxy(rawColumns, {}),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [rawColumns, width]
   );
   const {
     getTableProps,
@@ -36,17 +35,25 @@ export default function TableContent({
     {
       columns,
       data,
-      defaultColumn,
+      defaultColumn: {
+        width: width / columns.length,
+      },
+      autoResetPage: resetTable.current,
+      autoResetExpanded: resetTable.current,
+      autoResetGroupBy: resetTable.current,
+      autoResetSelectedRows: resetTable.current,
+      autoResetSortBy: resetTable.current,
+      autoResetFilters: resetTable.current,
+      autoResetRowState: resetTable.current,
+      autoResetGlobalFilter: resetTable.current,
+      autoResetHiddenColumns: resetTable.current,
     },
     useBlockLayout,
     useResizeColumns
   );
-  const scrollWidth = useMemo(() => totalColumnsWidth + scrollbarWidth(), [
-    totalColumnsWidth,
-  ]);
 
   return (
-    <ScrollSyncContainer scrollWidth={scrollWidth}>
+    <ScrollSyncContainer scrollWidth={totalColumnsWidth + scrollbarWidth()}>
       <TableContext.Provider
         value={{
           prepareRow,

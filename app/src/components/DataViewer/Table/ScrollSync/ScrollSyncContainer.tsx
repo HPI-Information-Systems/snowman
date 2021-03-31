@@ -27,9 +27,9 @@ export default function ScrollSyncContainer({
           overflowY: 'hidden',
           overflowX: 'scroll',
         }}
-        onScroll={(e) => {
-          setScrollLeft(e.currentTarget.scrollLeft);
-        }}
+        onScroll={({ currentTarget: { scrollLeft } }) =>
+          setScrollLeft(scrollLeft)
+        }
       >
         <div
           style={{
