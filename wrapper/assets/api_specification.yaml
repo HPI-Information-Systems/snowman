@@ -765,10 +765,16 @@ components:
         softKPIs:
           general:
             costs: 0.8008281904610115
-            useCase: search
+            useCase:
+            - search
+            - search
             matchingSolutionType: ml
-            inputFormat: csv
-            interface: cli
+            inputFormat:
+            - csv
+            - csv
+            interface:
+            - cli
+            - cli
           installationCosts:
             timeToInstall: 3
             os:
@@ -1073,17 +1079,25 @@ components:
     AlgorithmValues_softKPIs_general:
       example:
         costs: 0.8008281904610115
-        useCase: search
+        useCase:
+        - search
+        - search
         matchingSolutionType: ml
-        inputFormat: csv
-        interface: cli
+        inputFormat:
+        - csv
+        - csv
+        interface:
+        - cli
+        - cli
       properties:
         useCase:
-          enum:
-          - search
-          - deduplicate
-          - merge
-          type: string
+          items:
+            enum:
+            - search
+            - deduplicate
+            - merge
+            type: string
+          type: array
         matchingSolutionType:
           enum:
           - ml
@@ -1092,15 +1106,20 @@ components:
           - other
           type: string
         inputFormat:
-          enum:
-          - csv
-          - tsv
-          type: string
+          items:
+            enum:
+            - csv
+            - tsv
+            type: string
+          type: array
         interface:
-          enum:
-          - cli
-          - gui
-          type: string
+          items:
+            enum:
+            - cli
+            - gui
+            - api
+            type: string
+          type: array
         costs:
           type: number
       type: object
@@ -1134,10 +1153,16 @@ components:
       example:
         general:
           costs: 0.8008281904610115
-          useCase: search
+          useCase:
+          - search
+          - search
           matchingSolutionType: ml
-          inputFormat: csv
-          interface: cli
+          inputFormat:
+          - csv
+          - csv
+          interface:
+          - cli
+          - cli
         installationCosts:
           timeToInstall: 3
           os:
