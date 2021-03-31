@@ -38,9 +38,25 @@ export const metaSchemas = assertType<
           name: 'timeToInstall' as const,
           dataType: 'INTEGER',
         },
-        timeToConfigure: {
-          name: 'timeToConfigure' as const,
+        useCase: {
+          name: 'useCase' as const,
+          dataType: 'TEXT',
+        },
+        inputFormat: {
+          name: 'inputFormat' as const,
+          dataType: 'TEXT',
+        },
+        interface: {
+          name: 'interface' as const,
+          dataType: 'TEXT',
+        },
+        costs: {
+          name: 'costs' as const,
           dataType: 'INTEGER',
+        },
+        os: {
+          name: 'os' as const,
+          dataType: 'TEXT',
         },
       },
     },
@@ -133,6 +149,10 @@ export const metaSchemas = assertType<
         timeToConfigure: {
           name: 'timeToConfigure' as const,
           dataType: 'INTEGER',
+        },
+        implementationKnowHowLevel: {
+          name: 'implementationKnowHowLevel' as const,
+          dataType: 'TEXT',
         },
       },
     },
