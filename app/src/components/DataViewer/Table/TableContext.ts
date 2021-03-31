@@ -1,15 +1,9 @@
 import { createContext } from 'react';
-import {
-  HeaderGroup,
-  Row,
-  TableBodyPropGetter,
-  TableBodyProps,
-} from 'react-table';
+import { Row, TableBodyPropGetter, TableBodyProps } from 'react-table';
 
 export const TableContext = createContext<{
   prepareRow: (row: Row<string[]>) => void;
   rows: Row<string[]>[];
-  headerGroups: HeaderGroup<string[]>[];
   getTableBodyProps: (
     propGetter?: TableBodyPropGetter<string[]> | undefined
   ) => TableBodyProps;
@@ -18,5 +12,4 @@ export const TableContext = createContext<{
   prepareRow: () => {},
   getTableBodyProps: () => ({}),
   rows: [],
-  headerGroups: [],
 });

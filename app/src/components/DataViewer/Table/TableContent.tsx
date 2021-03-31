@@ -9,6 +9,7 @@ import React, { useMemo } from 'react';
 import {
   Column,
   useBlockLayout,
+  useColumnOrder,
   useResizeColumns,
   useTable,
 } from 'react-table';
@@ -33,6 +34,8 @@ export default function TableContent({
     rows,
     totalColumnsWidth,
     prepareRow,
+    setColumnOrder,
+    visibleColumns,
   } = useTable(
     {
       columns,
@@ -52,7 +55,8 @@ export default function TableContent({
       autoResetHiddenColumns: resetTable.current,
     },
     useBlockLayout,
-    useResizeColumns
+    useResizeColumns,
+    useColumnOrder
   );
 
   return (
@@ -61,12 +65,15 @@ export default function TableContent({
         value={{
           prepareRow,
           rows,
-          headerGroups,
           getTableBodyProps,
         }}
       >
         <div {...getTableProps()} className="table-root">
-          <TableHeader />
+          <TableHeader
+            headerGroups={headerGroups}
+            visibleColumns={visibleColumns}
+            setColumnOrder={setColumnOrder}
+          />
           <TableBody onRowsRendered={onRowsRendered} />
         </div>
       </TableContext.Provider>
