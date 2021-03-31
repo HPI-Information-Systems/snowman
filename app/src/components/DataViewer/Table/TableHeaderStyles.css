@@ -36,11 +36,15 @@
   width: 2px;
   height: 100%;
   transform: translateX(-50%);
-  transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease, width 0.15s ease;
   background-color: transparent;
 }
 
-.table-root .table-header .resizing .resize-indicator,
+.table-root .table-header .resizing .resize-indicator {
+  width: 4px;
+  background-color: var(--ion-color-dark);
+}
+
 .table-root .table-header .resize:hover .resize-indicator {
   background-color: var(--ion-color-dark);
 }
