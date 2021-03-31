@@ -1,7 +1,5 @@
 # Benchmark
 
-> This step is currently undergoing larger changes. At the moment, you can only do a binary comparison.
-
 The following benchmarking options are currently available to be used in Snowman.
 You can use the dashboard to choose between each of them.
 
