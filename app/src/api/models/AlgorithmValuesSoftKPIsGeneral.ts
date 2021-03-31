@@ -21,10 +21,10 @@ import { exists, mapValues } from '../runtime';
 export interface AlgorithmValuesSoftKPIsGeneral {
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof AlgorithmValuesSoftKPIsGeneral
      */
-    useCase?: AlgorithmValuesSoftKPIsGeneralUseCaseEnum;
+    useCase?: Array<AlgorithmValuesSoftKPIsGeneralUseCaseEnum>;
     /**
      * 
      * @type {string}
@@ -33,16 +33,16 @@ export interface AlgorithmValuesSoftKPIsGeneral {
     matchingSolutionType?: AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof AlgorithmValuesSoftKPIsGeneral
      */
-    inputFormat?: AlgorithmValuesSoftKPIsGeneralInputFormatEnum;
+    inputFormat?: Array<AlgorithmValuesSoftKPIsGeneralInputFormatEnum>;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof AlgorithmValuesSoftKPIsGeneral
      */
-    _interface?: AlgorithmValuesSoftKPIsGeneralInterfaceEnum;
+    _interface?: Array<AlgorithmValuesSoftKPIsGeneralInterfaceEnum>;
     /**
      * 
      * @type {number}
@@ -81,7 +81,8 @@ export enum AlgorithmValuesSoftKPIsGeneralInputFormatEnum {
 */
 export enum AlgorithmValuesSoftKPIsGeneralInterfaceEnum {
     Cli = 'cli',
-    Gui = 'gui'
+    Gui = 'gui',
+    Api = 'api'
 }
 
 export function AlgorithmValuesSoftKPIsGeneralFromJSON(json: any): AlgorithmValuesSoftKPIsGeneral {
