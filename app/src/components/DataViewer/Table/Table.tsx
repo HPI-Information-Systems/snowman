@@ -37,6 +37,7 @@ export default function Table({
             height,
             position: 'relative',
           }}
+          className="table-root"
         >
           <TableContent
             data={memoizedRows}

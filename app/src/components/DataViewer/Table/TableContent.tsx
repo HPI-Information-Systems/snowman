@@ -64,9 +64,7 @@ export default function TableContent({
       >
         <div
           {...getTableProps()}
-          className="table"
           style={{
-            background: 'white',
             width: '100%',
             height: '100%',
             position: 'relative',
