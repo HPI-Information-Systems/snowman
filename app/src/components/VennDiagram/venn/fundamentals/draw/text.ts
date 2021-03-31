@@ -10,7 +10,8 @@ export const drawText = (
     .append('text')
     .attr('x', position.x)
     .attr('y', position.y)
-    .attr('fill', 'black')
+    .attr('fill', 'currentColor')
+    .style('font-weight', '1000')
     .attr('text-anchor', 'middle')
-    .text(text)
+    .text(text.length > 15 ? text.substring(0, 12).trimEnd() + '...' : text)
     .style('pointer-events', 'none');

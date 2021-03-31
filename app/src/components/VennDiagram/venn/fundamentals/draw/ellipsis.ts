@@ -31,25 +31,16 @@ export const drawEllipsis = ({
   angle,
   color,
   opacity = 0.4,
-  textPosition,
-  text,
 }: {
   svg: d3Selection;
   position: { x: number; y: number };
   dimensions: { x: number; y: number };
   angle?: number;
   color: string;
-  textPosition: { x: number; y: number };
-  text?: string;
 } & VennDiagramSet): d3Selection =>
   baseEllipsis(svg, position, dimensions, angle)
     .style('fill-opacity', opacity)
-    .style('fill', color)
-    .call(() => {
-      if (text) {
-        drawText(svg, textPosition, text);
-      }
-    });
+    .style('fill', color);
 
 export const drawEllipsisStroke = ({
   svg,
@@ -60,13 +51,22 @@ export const drawEllipsisStroke = ({
   tooltip,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   callback = () => {},
+  textPosition,
+  text,
 }: {
   svg: d3Selection;
   position: { x: number; y: number };
   dimensions: { x: number; y: number };
   angle?: number;
   tooltipDrawer: VennDiagramTooltip;
+  textPosition: { x: number; y: number };
 } & VennDiagramSet): d3Selection =>
-  baseEllipsis(svg, position, dimensions, angle).call((selection) =>
-    drawStroke(selection, callback, tooltipDrawer, tooltip)
-  );
+  baseEllipsis(svg, position, dimensions, angle)
+    .call((selection) =>
+      drawStroke(selection, callback, tooltipDrawer, tooltip)
+    )
+    .call(() => {
+      if (text) {
+        drawText(svg, textPosition, text);
+      }
+    });
