@@ -189,7 +189,7 @@ export const BenchmarkConfiguratorReducer = (
   const relevantExperiments: Experiment[] = coreState.experiments.filter(
     (anExperiment: Experiment): boolean =>
       anExperiment.datasetId ===
-      (ownState.selectedDataset?.id ?? MagicNotPossibleId)
+      (immediateState.selectedDataset?.id ?? MagicNotPossibleId)
   );
   const relevantExperimentIds: number[] = relevantExperiments.map(
     experimentToId

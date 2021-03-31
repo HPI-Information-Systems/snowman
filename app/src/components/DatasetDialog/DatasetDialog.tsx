@@ -59,7 +59,7 @@ const mapStateToProps = (state: Store): DatasetDialogStateProps => ({
   csvSeparator: state.DatasetDialogStore.csvSeparator,
   csvQuote: state.DatasetDialogStore.csvQuote,
   csvEscape: state.DatasetDialogStore.csvEscape,
-  isValidForm: isValidDatasetDialog(state),
+  isValidAnsweredDialog: isValidDatasetDialog(state),
 });
 
 const mapDispatchToProps = (
@@ -105,7 +105,7 @@ const mapDispatchToProps = (
   clickOnATag(aTag: string): void {
     dispatch(clickOnDatasetTag(aTag));
   },
-  addNewTagCallback(newTagValue: string): void {
+  createTag(newTagValue: string): void {
     dispatch(addNewTag(newTagValue));
   },
   clickOnSubmit(): void {

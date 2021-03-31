@@ -29,3 +29,6 @@ export const filterOutAnExperiment = (
     (currentExperiment: Experiment): boolean =>
       currentExperiment.id !== anExperiment.id
   );
+
+export const couldPreviewExperiment = (anExperiment: Experiment): boolean =>
+  anExperiment.numberOfUploadedRecords !== undefined;

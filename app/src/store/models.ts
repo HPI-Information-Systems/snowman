@@ -63,11 +63,6 @@ export interface GlobalIndicatorStore {
   ongoingRequestsCount: number;
 }
 
-export interface InputChipStore {
-  newChipValue: string;
-  shouldShowInput: boolean;
-}
-
 export interface SelectableInputStore {
   shouldShowPopover: boolean;
   eventPopover: Event | undefined;
@@ -132,7 +127,6 @@ export interface ImmediateStore {
   BinaryMetricsStore: BinaryMetricsStore;
   NMetricsStore: NMetricsStore;
   GlobalIndicatorStore: GlobalIndicatorStore;
-  InputChipStore: InputChipStore;
   SelectableInputStore: SelectableInputStore;
   DatasetPreviewerStore: DatasetPreviewerStore;
   ExperimentPreviewerStore: ExperimentPreviewerStore;
