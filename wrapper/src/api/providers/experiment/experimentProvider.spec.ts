@@ -3,10 +3,10 @@ import {
   AlgorithmValues,
   AlgorithmValuesSoftKPIsGeneralInputFormatEnum,
   AlgorithmValuesSoftKPIsGeneralInterfaceEnum,
+  AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum,
   AlgorithmValuesSoftKPIsGeneralUseCaseEnum,
-  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
+  AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum,
   AlgorithmValuesSoftKPIsInstallationCostsOsEnum,
-  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
   DatasetValues,
   ExperimentValues,
   ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum,
@@ -49,7 +49,7 @@ describe('ExperimentProvider', () => {
     softKPIs: {
       general: {
         matchingSolutionType:
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Ml,
+          AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum.Ml,
         costs: 300,
         useCase: [
           AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Deduplicate,
@@ -63,7 +63,7 @@ describe('ExperimentProvider', () => {
       },
       installationCosts: {
         implementationKnowHowLevel:
-          AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
+          AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum.Starter,
         timeToInstall: 3,
         os: [
           AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Linux,
