@@ -36,7 +36,7 @@ export default function TableContent({
       columns,
       data,
       defaultColumn: {
-        width: width / columns.length,
+        width: (width - scrollbarWidth()) / columns.length,
       },
       autoResetPage: resetTable.current,
       autoResetExpanded: resetTable.current,
