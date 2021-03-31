@@ -1,4 +1,5 @@
 .table-root .table-header {
+  position: relative;
   width: 100%;
   overflow: hidden;
   border-bottom: 1px solid var(--ion-color-medium-shade);
@@ -14,7 +15,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 
 .table-root .table-header .resize,
 .table-root .table-header .resizing {
@@ -47,9 +47,20 @@
 
 .table-root .table-header .cell .reorder {
   position: absolute;
-  left: 0;
   top: 0;
   bottom: 0;
+  left: 0;
   width: calc(100%);
   cursor: move;
+}
+
+.table-root .table-header .reordering-container {
+  position: relative !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+}
+
+.table-root .table-header .reordering-container .cell {
+  flex: 1 1 0 !important;
+  width: unset !important;
 }
