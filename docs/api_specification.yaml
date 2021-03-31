@@ -630,18 +630,37 @@ components:
         softKPIs:
           type: object
           properties:
-            implementationKnowHowLevel:
-              type: string
-              enum: ["starter", "intermediate", "expert"]
-            matchingSolutionType:
-              type: string
-              enum: ["ml", "rulebased", "other"]
-            timeToInstall:
-              type: number
-              example: 3
-            timeToConfigure:
-              type: number
-              example: 1
+            general:
+              type: object
+              properties:
+                useCase:
+                  type: string
+                  enum: ["search", "deduplicate", "merge"]
+                matchingSolutionType:
+                  type: string
+                  enum: ["ml", "rulebased", "activeLearning", "other"]
+                inputFormat:
+                  type: string
+                  enum: ["csv", "tsv"]
+                interface:
+                  type: string
+                  enum: ["cli", "gui"]
+                costs:
+                  type: number
+            installationCosts:
+              type: object
+              properties:
+                implementationKnowHowLevel:
+                  type: string
+                  enum: ["starter", "intermediate", "expert"]
+                timeToInstall:
+                  type: number
+                  example: 3
+                os:
+                  type: array
+                  items:
+                    type: string
+                    enum: ["windows", "macOS", "linux"]
     Algorithm:
       allOf:
         - type: object
@@ -716,6 +735,10 @@ components:
             timeToConfigure:
               type: number
               example: 1
+            implementationKnowHowLevel:
+                  type: string
+                  enum: ["starter", "intermediate", "expert"]
+
     Experiment:
       allOf:
         - type: object
