@@ -11,34 +11,46 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
 /**
  * 
  * @export
- * @interface ExperimentValuesSoftKPIs
+ * @interface AlgorithmValuesSoftKPIsInstallationCosts
  */
-export interface ExperimentValuesSoftKPIs {
-    /**
-     * 
-     * @type {number}
-     * @memberof ExperimentValuesSoftKPIs
-     */
-    timeToConfigure?: number;
+export interface AlgorithmValuesSoftKPIsInstallationCosts {
     /**
      * 
      * @type {string}
-     * @memberof ExperimentValuesSoftKPIs
+     * @memberof AlgorithmValuesSoftKPIsInstallationCosts
      */
-    implementationKnowHowLevel?: ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum;
+    implementationKnowHowLevel?: AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof AlgorithmValuesSoftKPIsInstallationCosts
+     */
+    timeToInstall?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AlgorithmValuesSoftKPIsInstallationCosts
+     */
+    os?: Array<AlgorithmValuesSoftKPIsInstallationCostsOsEnum>;
 }
 
 /**
 * @export
 * @enum {string}
 */
-export enum ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum {
+export enum AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum {
     Starter = 'starter',
     Intermediate = 'intermediate',
     Expert = 'expert'
+}/**
+* @export
+* @enum {string}
+*/
+export enum AlgorithmValuesSoftKPIsInstallationCostsOsEnum {
+    Windows = 'windows',
+    MacOs = 'macOS',
+    Linux = 'linux'
 }
-

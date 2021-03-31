@@ -12,6 +12,11 @@
  * Do not edit the class manually.
  */
 
+import {
+    AlgorithmValuesSoftKPIsGeneral,
+    AlgorithmValuesSoftKPIsInstallationCosts,
+} from './';
+
 /**
  * 
  * @export
@@ -20,45 +25,14 @@
 export interface AlgorithmValuesSoftKPIs {
     /**
      * 
-     * @type {string}
+     * @type {AlgorithmValuesSoftKPIsGeneral}
      * @memberof AlgorithmValuesSoftKPIs
      */
-    implementationKnowHowLevel?: AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum;
+    general?: AlgorithmValuesSoftKPIsGeneral;
     /**
      * 
-     * @type {string}
+     * @type {AlgorithmValuesSoftKPIsInstallationCosts}
      * @memberof AlgorithmValuesSoftKPIs
      */
-    matchingSolutionType?: AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof AlgorithmValuesSoftKPIs
-     */
-    timeToInstall?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AlgorithmValuesSoftKPIs
-     */
-    timeToConfigure?: number;
-}
-
-/**
-* @export
-* @enum {string}
-*/
-export enum AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum {
-    Starter = 'starter',
-    Intermediate = 'intermediate',
-    Expert = 'expert'
-}
-/**
-* @export
-* @enum {string}
-*/
-export enum AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum {
-    Ml = 'ml',
-    Rulebased = 'rulebased',
-    Other = 'other'
+    installationCosts?: AlgorithmValuesSoftKPIsInstallationCosts;
 }

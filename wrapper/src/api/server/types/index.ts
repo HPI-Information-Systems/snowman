@@ -3,6 +3,8 @@ export * from './AlgorithmAllOf';
 export * from './AlgorithmId';
 export * from './AlgorithmValues';
 export * from './AlgorithmValuesSoftKPIs';
+export * from './AlgorithmValuesSoftKPIsGeneral';
+export * from './AlgorithmValuesSoftKPIsInstallationCosts';
 export * from './Dataset';
 export * from './DatasetAllOf';
 export * from './DatasetId';
