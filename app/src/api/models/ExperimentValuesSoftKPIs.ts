@@ -25,6 +25,22 @@ export interface ExperimentValuesSoftKPIs {
      * @memberof ExperimentValuesSoftKPIs
      */
     timeToConfigure?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ExperimentValuesSoftKPIs
+     */
+    implementationKnowHowLevel?: ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum;
+}
+
+/**
+* @export
+* @enum {string}
+*/
+export enum ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum {
+    Starter = 'starter',
+    Intermediate = 'intermediate',
+    Expert = 'expert'
 }
 
 export function ExperimentValuesSoftKPIsFromJSON(json: any): ExperimentValuesSoftKPIs {
@@ -38,6 +54,7 @@ export function ExperimentValuesSoftKPIsFromJSONTyped(json: any, ignoreDiscrimin
     return {
         
         'timeToConfigure': !exists(json, 'timeToConfigure') ? undefined : json['timeToConfigure'],
+        'implementationKnowHowLevel': !exists(json, 'implementationKnowHowLevel') ? undefined : json['implementationKnowHowLevel'],
     };
 }
 
@@ -51,6 +68,7 @@ export function ExperimentValuesSoftKPIsToJSON(value?: ExperimentValuesSoftKPIs 
     return {
         
         'timeToConfigure': value.timeToConfigure,
+        'implementationKnowHowLevel': value.implementationKnowHowLevel,
     };
 }
 

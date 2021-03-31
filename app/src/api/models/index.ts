@@ -2,6 +2,8 @@ export * from './Algorithm';
 export * from './AlgorithmAllOf';
 export * from './AlgorithmValues';
 export * from './AlgorithmValuesSoftKPIs';
+export * from './AlgorithmValuesSoftKPIsGeneral';
+export * from './AlgorithmValuesSoftKPIsInstallationCosts';
 export * from './Dataset';
 export * from './DatasetAllOf';
 export * from './DatasetValues';

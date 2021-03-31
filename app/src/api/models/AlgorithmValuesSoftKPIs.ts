@@ -13,6 +13,17 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    AlgorithmValuesSoftKPIsGeneral,
+    AlgorithmValuesSoftKPIsGeneralFromJSON,
+    AlgorithmValuesSoftKPIsGeneralFromJSONTyped,
+    AlgorithmValuesSoftKPIsGeneralToJSON,
+    AlgorithmValuesSoftKPIsInstallationCosts,
+    AlgorithmValuesSoftKPIsInstallationCostsFromJSON,
+    AlgorithmValuesSoftKPIsInstallationCostsFromJSONTyped,
+    AlgorithmValuesSoftKPIsInstallationCostsToJSON,
+} from './';
+
 /**
  * 
  * @export
@@ -21,46 +32,16 @@ import { exists, mapValues } from '../runtime';
 export interface AlgorithmValuesSoftKPIs {
     /**
      * 
-     * @type {string}
+     * @type {AlgorithmValuesSoftKPIsGeneral}
      * @memberof AlgorithmValuesSoftKPIs
      */
-    implementationKnowHowLevel?: AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum;
+    general?: AlgorithmValuesSoftKPIsGeneral;
     /**
      * 
-     * @type {string}
+     * @type {AlgorithmValuesSoftKPIsInstallationCosts}
      * @memberof AlgorithmValuesSoftKPIs
      */
-    matchingSolutionType?: AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof AlgorithmValuesSoftKPIs
-     */
-    timeToInstall?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AlgorithmValuesSoftKPIs
-     */
-    timeToConfigure?: number;
-}
-
-/**
-* @export
-* @enum {string}
-*/
-export enum AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum {
-    Starter = 'starter',
-    Intermediate = 'intermediate',
-    Expert = 'expert'
-}/**
-* @export
-* @enum {string}
-*/
-export enum AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum {
-    Ml = 'ml',
-    Rulebased = 'rulebased',
-    Other = 'other'
+    installationCosts?: AlgorithmValuesSoftKPIsInstallationCosts;
 }
 
 export function AlgorithmValuesSoftKPIsFromJSON(json: any): AlgorithmValuesSoftKPIs {
@@ -73,10 +54,8 @@ export function AlgorithmValuesSoftKPIsFromJSONTyped(json: any, ignoreDiscrimina
     }
     return {
         
-        'implementationKnowHowLevel': !exists(json, 'implementationKnowHowLevel') ? undefined : json['implementationKnowHowLevel'],
-        'matchingSolutionType': !exists(json, 'matchingSolutionType') ? undefined : json['matchingSolutionType'],
-        'timeToInstall': !exists(json, 'timeToInstall') ? undefined : json['timeToInstall'],
-        'timeToConfigure': !exists(json, 'timeToConfigure') ? undefined : json['timeToConfigure'],
+        'general': !exists(json, 'general') ? undefined : AlgorithmValuesSoftKPIsGeneralFromJSON(json['general']),
+        'installationCosts': !exists(json, 'installationCosts') ? undefined : AlgorithmValuesSoftKPIsInstallationCostsFromJSON(json['installationCosts']),
     };
 }
 
@@ -89,10 +68,8 @@ export function AlgorithmValuesSoftKPIsToJSON(value?: AlgorithmValuesSoftKPIs | 
     }
     return {
         
-        'implementationKnowHowLevel': value.implementationKnowHowLevel,
-        'matchingSolutionType': value.matchingSolutionType,
-        'timeToInstall': value.timeToInstall,
-        'timeToConfigure': value.timeToConfigure,
+        'general': AlgorithmValuesSoftKPIsGeneralToJSON(value.general),
+        'installationCosts': AlgorithmValuesSoftKPIsInstallationCostsToJSON(value.installationCosts),
     };
 }
 
