@@ -9,21 +9,20 @@ export const tableHeaderHeight = '3rem';
 export default function TableHeader(): JSX.Element {
   const { headerGroups } = useContext(TableContext);
   return (
-    <ScrollSync>
-      {headerGroups.map((headerGroup) => (
-        // eslint-disable-next-line react/jsx-key
-        <div
-          {...headerGroup.getHeaderGroupProps()}
-          style={{
-            height: tableHeaderHeight,
-            lineHeight: tableHeaderHeight,
-          }}
-          className="table-header"
-        >
-          {headerGroup.headers.map((column) => (
-            // eslint-disable-next-line react/jsx-key
-            <div {...column.getHeaderProps()}>
-              <div className="cell">
+    <div className="table-header">
+      <ScrollSync>
+        {headerGroups.map((headerGroup) => (
+          // eslint-disable-next-line react/jsx-key
+          <div
+            {...headerGroup.getHeaderGroupProps()}
+            style={{
+              height: tableHeaderHeight,
+              lineHeight: tableHeaderHeight,
+            }}
+          >
+            {headerGroup.headers.map((column) => (
+              // eslint-disable-next-line react/jsx-key
+              <div {...column.getHeaderProps()} className="cell">
                 {column.render('Header')}
                 {column.canResize && (
                   <div
@@ -34,10 +33,10 @@ export default function TableHeader(): JSX.Element {
                   </div>
                 )}
               </div>
-            </div>
-          ))}
-        </div>
-      ))}
-    </ScrollSync>
+            ))}
+          </div>
+        ))}
+      </ScrollSync>
+    </div>
   );
 }

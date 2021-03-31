@@ -37,6 +37,7 @@ export default function TableContent({
       data,
       defaultColumn: {
         width: (width - scrollbarWidth()) / columns.length,
+        minWidth: 50,
       },
       autoResetPage: resetTable.current,
       autoResetExpanded: resetTable.current,

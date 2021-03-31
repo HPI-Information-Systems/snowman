@@ -5,13 +5,13 @@
   overflow: hidden;
   text-transform: uppercase;
   vertical-align: middle;
+  width: 100%;
 }
 
 .table-root .table-header .cell {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 100%;
   padding-right: min(20%, 1rem);
 }
 
