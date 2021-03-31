@@ -2,8 +2,8 @@ import 'react-virtualized/styles.css';
 import 'components/DataViewer/DataViewerStyles.css';
 
 import { DataViewerProps } from 'components/DataViewer/DataViewerProps';
-import DataViewerRaw from 'components/DataViewer/DataViewerRaw';
-import React, { useEffect, useRef, useState } from 'react';
+import Table from 'components/DataViewer/Table/Table';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Column } from 'react-table';
 import { InfiniteLoader } from 'react-virtualized';
 
@@ -17,44 +17,51 @@ const DataViewerView = ({
   const requestedRowCount = useRef(0);
   const resetVersion = useRef(0);
   const rows = useRef<string[][]>([]);
-  const columns = useRef<Column<string[]>[]>([]);
+  const columns = useRef<string[]>([]);
   const [change, triggerChange] = useState({});
 
-  function requestRows(rowCount: number): void {
-    rowCount = Math.min(rowCount, tuplesCount);
-    const priorRowCount = requestedRowCount.current;
-    const priorResetVersion = resetVersion.current;
-    if (rowCount > priorRowCount) {
-      requestedRowCount.current = rowCount;
-      wrapLoadTuples(loadTuples, priorRowCount, rowCount).then(
-        ({ header, data }) => {
-          if (mounted && priorResetVersion === resetVersion.current) {
-            columns.current = header.map((column, index) => ({
-              Header: column,
-              accessor: (row: string[]) => row[index],
-            }));
-            if (data.length > 0) {
-              while (rows.current.length < priorRowCount) {
-                rows.current.push(header.map(() => 'loading...'));
-              }
-              if (rows.current.length === priorRowCount) {
-                rows.current.push(...data);
-              } else {
-                for (
-                  let rowsIndex = priorRowCount, dataIndex = 0;
-                  dataIndex < data.length;
-                  rowsIndex++, dataIndex++
-                ) {
-                  rows.current[rowsIndex] = data[dataIndex];
-                }
-              }
-            }
-            triggerChange({});
+  const appendRows = useCallback(
+    (header: string[], data: string[][], insertAt: number) => {
+      columns.current = header;
+      if (data.length > 0) {
+        while (rows.current.length < insertAt) {
+          rows.current.push(header.map(() => 'loading...'));
+        }
+        if (rows.current.length === insertAt) {
+          rows.current.push(...data);
+        } else {
+          for (
+            let rowsIndex = insertAt, dataIndex = 0;
+            dataIndex < data.length;
+            rowsIndex++, dataIndex++
+          ) {
+            rows.current[rowsIndex] = data[dataIndex];
           }
         }
-      );
-    }
-  }
+      }
+      triggerChange({});
+    },
+    []
+  );
+
+  const requestRows = useCallback(
+    (rowCount: number) => {
+      rowCount = Math.min(rowCount, tuplesCount);
+      const priorRowCount = requestedRowCount.current;
+      const priorResetVersion = resetVersion.current;
+      if (rowCount > priorRowCount) {
+        requestedRowCount.current = rowCount;
+        wrapLoadTuples(loadTuples, priorRowCount, rowCount).then(
+          ({ header, data }) => {
+            if (mounted && priorResetVersion === resetVersion.current) {
+              appendRows(header, data, priorRowCount);
+            }
+          }
+        );
+      }
+    },
+    [appendRows, loadTuples, tuplesCount, wrapLoadTuples]
+  );
 
   useEffect(() => {
     ++resetVersion.current;
@@ -74,7 +81,6 @@ const DataViewerView = ({
     () => () => {
       mounted.current = false;
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -88,12 +94,12 @@ const DataViewerView = ({
       threshold={BATCH_SIZE}
       minimumBatchSize={BATCH_SIZE}
     >
-      {({ onRowsRendered, registerChild }) => (
-        <DataViewerRaw
+      {({ onRowsRendered }) => (
+        <Table
           onRowsRendered={onRowsRendered}
           columns={columns.current}
           rows={rows.current}
-          rowsUpdated={change}
+          change={change}
         />
       )}
     </InfiniteLoader>
