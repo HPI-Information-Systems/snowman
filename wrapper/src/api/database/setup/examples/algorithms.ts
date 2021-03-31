@@ -2,8 +2,10 @@ import { getProviders } from '../../../providers';
 import {
   AlgorithmId,
   AlgorithmValues,
-  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
-  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
+  AlgorithmValuesSoftKPIsGeneralInputFormatEnum,
+  AlgorithmValuesSoftKPIsGeneralInterfaceEnum,
+  AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum,
+  AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum,
 } from '../../../server/types';
 import { assertType } from '../../../tools/types';
 import { GoldStandardId, SilverStandardId } from './constants';
@@ -28,8 +30,10 @@ export const exampleAlgorithms = assertType<ExampleAlgorithms>()({
       name: 'Silver Standard',
       description: 'Incomplete list of all duplicates a dataset contains.',
       softKPIs: {
-        matchingSolutionType:
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Other,
+        general: {
+          matchingSolutionType:
+            AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum.Other,
+        },
       },
     },
     id: SilverStandardId,
@@ -39,8 +43,10 @@ export const exampleAlgorithms = assertType<ExampleAlgorithms>()({
       name: 'Gold Standard',
       description: 'Complete list of all duplicates a dataset contains.',
       softKPIs: {
-        matchingSolutionType:
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Other,
+        general: {
+          matchingSolutionType:
+            AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum.Other,
+        },
       },
     },
     id: GoldStandardId,
@@ -50,12 +56,17 @@ export const exampleAlgorithms = assertType<ExampleAlgorithms>()({
       name: 'Mock Solution',
       description: 'Experiments constructed for testing purposes only.',
       softKPIs: {
-        matchingSolutionType:
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Rulebased,
-        implementationKnowHowLevel:
-          AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
-        timeToConfigure: 200 * 60,
-        timeToInstall: 30 * 60,
+        general: {
+          matchingSolutionType:
+            AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum.Rulebased,
+          inputFormat: [AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Csv],
+          _interface: [AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Api],
+        },
+        installationCosts: {
+          implementationKnowHowLevel:
+            AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum.Starter,
+          timeToInstall: 30 * 60,
+        },
       },
     },
     id: -3,
