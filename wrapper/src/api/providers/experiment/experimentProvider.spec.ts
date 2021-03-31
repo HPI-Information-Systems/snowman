@@ -1,10 +1,15 @@
 import { setupDatabase, tables } from '../../database';
 import {
   AlgorithmValues,
+  AlgorithmValuesSoftKPIsGeneralInputFormatEnum,
+  AlgorithmValuesSoftKPIsGeneralInterfaceEnum,
+  AlgorithmValuesSoftKPIsGeneralUseCaseEnum,
   AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
+  AlgorithmValuesSoftKPIsInstallationCostsOsEnum,
   AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
   DatasetValues,
   ExperimentValues,
+  ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum,
 } from '../../server/types';
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
@@ -42,11 +47,30 @@ describe('ExperimentProvider', () => {
     description: 'Algorithm',
     name: 'Algorithm',
     softKPIs: {
-      timeToConfigure: 2,
-      timeToInstall: 3,
-      implementationKnowHowLevel:
-        AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
-      matchingSolutionType: AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Ml,
+      general: {
+        matchingSolutionType:
+          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Ml,
+        costs: 300,
+        useCase: [
+          AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Deduplicate,
+          AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Merge,
+        ],
+        inputFormat: [AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Csv],
+        _interface: [
+          AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Cli,
+          AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Gui,
+        ],
+      },
+      installationCosts: {
+        implementationKnowHowLevel:
+          AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
+        timeToInstall: 3,
+        os: [
+          AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Linux,
+          AlgorithmValuesSoftKPIsInstallationCostsOsEnum.MacOs,
+          AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Windows,
+        ],
+      },
     },
   };
   let addedAlgorithmId: number;
@@ -91,6 +115,8 @@ describe('ExperimentProvider', () => {
           name: 'No dataset file',
           softKPIs: {
             timeToConfigure: 4,
+            implementationKnowHowLevel:
+              ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum.Intermediate,
           },
         },
       },
@@ -102,6 +128,8 @@ describe('ExperimentProvider', () => {
           name: 'Dataset file',
           softKPIs: {
             timeToConfigure: 5,
+            implementationKnowHowLevel:
+              ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
           },
         },
         file: [
@@ -156,6 +184,8 @@ describe('ExperimentProvider', () => {
       name: 'Another Name',
       softKPIs: {
         timeToConfigure: 5,
+        implementationKnowHowLevel:
+          ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
       },
     };
     const id = provider.addExperiment(addedExperiment);
@@ -186,6 +216,8 @@ describe('ExperimentProvider', () => {
       name: 'A neeew name',
       softKPIs: {
         timeToConfigure: 6,
+        implementationKnowHowLevel:
+          ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum.Expert,
       },
     };
     provider.setExperiment(addedExperimentIds[0], updatedExperiment);
