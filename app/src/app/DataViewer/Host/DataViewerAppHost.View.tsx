@@ -4,6 +4,7 @@ import {
 } from 'app/DataViewer/DataViewerAppToClientActions';
 import {
   DataViewerAppHostContext,
+  dataViewerAppHref,
   dataViewerAppWindowName,
 } from 'app/DataViewer/Host/DataViewerAppHostContext';
 import { DataViewerAppHostProps } from 'app/DataViewer/Host/DataViewerAppHostProps';
@@ -22,7 +23,7 @@ export default function DataViewerAppHostView({
   const openDataViewerWindow = useCallback(
     ({ loadTuples, ...props }: DataViewerOwnProps) => {
       const targetWindow = window.open(
-        window.origin,
+        dataViewerAppHref,
         dataViewerAppWindowName()
       );
       if (targetWindow) {
