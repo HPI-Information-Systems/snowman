@@ -42,7 +42,7 @@ export interface AlgorithmValuesSoftKPIsGeneral {
      * @type {Array<string>}
      * @memberof AlgorithmValuesSoftKPIsGeneral
      */
-    _interface?: Array<AlgorithmValuesSoftKPIsGeneralInterfaceEnum>;
+    userInterface?: Array<AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum>;
     /**
      * 
      * @type {number}
@@ -79,7 +79,7 @@ export enum AlgorithmValuesSoftKPIsGeneralInputFormatEnum {
 * @export
 * @enum {string}
 */
-export enum AlgorithmValuesSoftKPIsGeneralInterfaceEnum {
+export enum AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum {
     Cli = 'cli',
     Gui = 'gui',
     Api = 'api'
@@ -98,7 +98,7 @@ export function AlgorithmValuesSoftKPIsGeneralFromJSONTyped(json: any, ignoreDis
         'useCase': !exists(json, 'useCase') ? undefined : json['useCase'],
         'matchingSolutionType': !exists(json, 'matchingSolutionType') ? undefined : json['matchingSolutionType'],
         'inputFormat': !exists(json, 'inputFormat') ? undefined : json['inputFormat'],
-        '_interface': !exists(json, 'interface') ? undefined : json['interface'],
+        'userInterface': !exists(json, 'userInterface') ? undefined : json['userInterface'],
         'costs': !exists(json, 'costs') ? undefined : json['costs'],
     };
 }
@@ -115,7 +115,7 @@ export function AlgorithmValuesSoftKPIsGeneralToJSON(value?: AlgorithmValuesSoft
         'useCase': value.useCase,
         'matchingSolutionType': value.matchingSolutionType,
         'inputFormat': value.inputFormat,
-        'interface': value._interface,
+        'userInterface': value.userInterface,
         'costs': value.costs,
     };
 }

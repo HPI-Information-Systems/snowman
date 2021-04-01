@@ -11,6 +11,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 /**
  * 
  * @export
@@ -51,6 +52,6 @@ export enum AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEn
 */
 export enum AlgorithmValuesSoftKPIsInstallationCostsOsEnum {
     Windows = 'windows',
-    MacOs = 'macOS',
+    Macos = 'macos',
     Linux = 'linux'
 }

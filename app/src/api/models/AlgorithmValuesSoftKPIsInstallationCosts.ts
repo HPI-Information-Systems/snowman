@@ -53,7 +53,7 @@ export enum AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEn
 */
 export enum AlgorithmValuesSoftKPIsInstallationCostsOsEnum {
     Windows = 'windows',
-    MacOs = 'macOS',
+    Macos = 'macos',
     Linux = 'linux'
 }
 

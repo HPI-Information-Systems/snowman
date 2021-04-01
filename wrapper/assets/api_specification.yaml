@@ -769,12 +769,12 @@ components:
             - search
             - search
             matchingSolutionType: ml
+            userInterface:
+            - cli
+            - cli
             inputFormat:
             - csv
             - csv
-            interface:
-            - cli
-            - cli
           installationCosts:
             timeToInstall: 3
             os:
@@ -1083,12 +1083,12 @@ components:
         - search
         - search
         matchingSolutionType: ml
+        userInterface:
+        - cli
+        - cli
         inputFormat:
         - csv
         - csv
-        interface:
-        - cli
-        - cli
       properties:
         useCase:
           items:
@@ -1112,7 +1112,7 @@ components:
             - tsv
             type: string
           type: array
-        interface:
+        userInterface:
           items:
             enum:
             - cli
@@ -1144,7 +1144,7 @@ components:
           items:
             enum:
             - windows
-            - macOS
+            - macos
             - linux
             type: string
           type: array
@@ -1157,12 +1157,12 @@ components:
           - search
           - search
           matchingSolutionType: ml
+          userInterface:
+          - cli
+          - cli
           inputFormat:
           - csv
           - csv
-          interface:
-          - cli
-          - cli
         installationCosts:
           timeToInstall: 3
           os:

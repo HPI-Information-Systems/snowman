@@ -41,7 +41,7 @@ export interface AlgorithmValuesSoftKPIsGeneral {
      * @type {Array<string>}
      * @memberof AlgorithmValuesSoftKPIsGeneral
      */
-    _interface?: Array<AlgorithmValuesSoftKPIsGeneralInterfaceEnum>;
+    userInterface?: Array<AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum>;
     /**
      * 
      * @type {number}
@@ -78,7 +78,7 @@ export enum AlgorithmValuesSoftKPIsGeneralInputFormatEnum {
 * @export
 * @enum {string}
 */
-export enum AlgorithmValuesSoftKPIsGeneralInterfaceEnum {
+export enum AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum {
     Cli = 'cli',
     Gui = 'gui',
     Api = 'api'
