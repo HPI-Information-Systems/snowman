@@ -4,6 +4,7 @@ import ExperimentDialogView from 'components/ExperimentDialog/ExperimentDialog.V
 import {
   ExperimentDialogDispatchProps,
   ExperimentDialogStateProps,
+  SoftKPIsTypesEnum,
 } from 'components/ExperimentDialog/ExperimentDialogProps';
 import { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
@@ -13,9 +14,9 @@ import {
   changeExperimentName,
   changeFileFormat,
   changeSelectedFiles,
-  changeSoftKPITimeToConfigure,
   clickOnMatchingSolutionTag,
   closeDialog,
+  updateSoftKPIs,
 } from 'store/actions/ExperimentDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
@@ -23,7 +24,6 @@ import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
-import { parseInputToNumberOrUndef } from 'utils/questionHelpers';
 
 const isValidExperimentDialog = (state: Store): boolean => {
   if (
@@ -49,7 +49,7 @@ const mapStateToProps = (state: Store): ExperimentDialogStateProps => ({
   isValidForm: isValidExperimentDialog(state),
   selectedFiles: state.ExperimentDialogStore.selectedFiles,
   experimentFileFormat: state.ExperimentDialogStore.experimentFileFormat,
-  timeToConfigure: state.ExperimentDialogStore.timeToConfigure,
+  softKPIs: state.ExperimentDialogStore.softKPIs,
 });
 
 const mapDispatchToProps = (
@@ -65,12 +65,9 @@ const mapDispatchToProps = (
     dispatch(changeFileFormat(anOption as experimentFileFormatEnum)),
   clickOnMatchingSolutionTag: (aTag: string): void =>
     dispatch(clickOnMatchingSolutionTag(aTag)),
-  changeTimeToConfigure(event: IonChangeEvent) {
-    dispatch(
-      changeSoftKPITimeToConfigure(
-        parseInputToNumberOrUndef(event.detail.value)
-      )
-    );
+  changeSoftKPIs(event: IonChangeEvent, type: SoftKPIsTypesEnum): void {
+    console.log(event, type);
+    dispatch(updateSoftKPIs(type, event.detail.value));
   },
   clickOnSubmit: (): void => {
     dispatch(addOrUpdateExperiment()).then();
