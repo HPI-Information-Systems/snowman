@@ -119,12 +119,12 @@ const ExperimentDialogView = ({
         <IonLabel>Implementation Know How Level</IonLabel>
         <IonSelect
           multiple={false}
-          value={softKPIs.implementationKnowHowLevel}
+          value={softKPIs.implementationKnowHowLevel ?? 'undefined'}
           onIonChange={(event: IonChangeEvent): void =>
             changeSoftKPIs(event, SoftKPIsTypesEnum.implementationKnowHowLevel)
           }
         >
-          <IonSelectOption value={undefined}>-</IonSelectOption>
+          <IonSelectOption value="undefined">-</IonSelectOption>
           {Object.keys(
             ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum
           ).map(
