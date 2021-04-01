@@ -5,6 +5,7 @@ import {
   Dataset,
   Experiment,
   ExperimentIntersectionPairCountsItem,
+  ExperimentValuesSoftKPIs,
   Metric,
 } from 'api';
 import { DatasetTypes } from 'types/DatasetTypes';
@@ -46,7 +47,7 @@ export interface ExperimentDialogStore {
   experimentId: number | null;
   experimentName: string;
   experimentDescription: string;
-  timeToConfigure: number | undefined;
+  softKPIs: ExperimentValuesSoftKPIs;
   experimentFileFormat: experimentFileFormatEnum;
   selectedTags: string[];
   selectedFiles: File[];

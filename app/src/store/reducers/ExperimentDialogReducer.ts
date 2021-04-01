@@ -1,10 +1,17 @@
-import { Algorithm, Experiment } from 'api';
+import {
+  Algorithm,
+  Experiment,
+  ExperimentValuesSoftKPIs,
+  ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum,
+} from 'api';
+import { SoftKPIsTypesEnum } from 'components/ExperimentDialog/ExperimentDialogProps';
 import { ExperimentDialogStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { ExperimentDialogStore } from 'store/models';
 import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { getAlgorithmNameFromId } from 'utils/algorithmHelpers';
+import { parseInputToNumberOrUndef } from 'utils/questionHelpers';
 import { toggleSelectionArraySingleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: ExperimentDialogStore = {
@@ -13,7 +20,7 @@ const initialState: ExperimentDialogStore = {
   experimentId: null,
   experimentName: '',
   experimentDescription: '',
-  timeToConfigure: undefined,
+  softKPIs: {},
   experimentFileFormat: experimentFileFormatEnum.Pilot,
   selectedTags: [],
   selectedFiles: [],
@@ -38,6 +45,7 @@ export const ExperimentDialogReducer = (
         experimentId: (action.payload as Experiment).id,
         experimentName: (action.payload as Experiment).name,
         experimentDescription: (action.payload as Experiment).description ?? '',
+        softKPIs: (action.payload as Experiment).softKPIs ?? {},
         selectedTags: [
           getAlgorithmNameFromId(
             (action.payload as Experiment).algorithmId,
@@ -70,10 +78,10 @@ export const ExperimentDialogReducer = (
         ...state,
         experimentFileFormat: action.payload as experimentFileFormatEnum,
       };
-    case actionTypes.CHANGE_SOFT_KPI_TIME_TO_CONFIGURE:
+    case actionTypes.UPDATE_SOFT_KPIS:
       return {
         ...state,
-        timeToConfigure: action.payload as number | undefined,
+        softKPIs: SoftKPIsReducer(state.softKPIs, action),
       };
     case actionTypes.RESET_DIALOG:
       return initialState;
@@ -89,6 +97,28 @@ export const ExperimentDialogReducer = (
           state.selectedTags,
           action.payload as string
         ),
+      };
+    default:
+      return state;
+  }
+};
+
+const SoftKPIsReducer = (
+  state: ExperimentValuesSoftKPIs,
+  action: SnowmanAction
+): ExperimentValuesSoftKPIs => {
+  switch (action.payload as SoftKPIsTypesEnum) {
+    case SoftKPIsTypesEnum.timeToConfigure:
+      return {
+        ...state,
+        timeToConfigure: parseInputToNumberOrUndef(
+          action.optionalPayload as string | undefined
+        ),
+      };
+    case SoftKPIsTypesEnum.implementationKnowHowLevel:
+      return {
+        ...state,
+        implementationKnowHowLevel: action.optionalPayload as ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum,
       };
     default:
       return state;

@@ -33,11 +33,11 @@ export interface AlgorithmDialogDispatchProps {
   changeAlgorithmDescription(event: IonChangeEvent): void;
   changeSoftKPIsGeneral(
     event: IonChangeEvent,
-    key: SoftKPIsGeneralTypesEnum
+    type: SoftKPIsGeneralTypesEnum
   ): void;
   changeSoftKPIsInstallation(
     event: IonChangeEvent,
-    key: SoftKPIsInstallationTypesEnum
+    type: SoftKPIsInstallationTypesEnum
   ): void;
   clickOnSubmit(): void;
 }

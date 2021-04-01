@@ -1,6 +1,7 @@
 import 'types/ExperimentFileFormats';
 
 import { Experiment, ExperimentsApi } from 'api';
+import { SoftKPIsTypesEnum } from 'components/ExperimentDialog/ExperimentDialogProps';
 import { ExperimentDialogStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { getExperiments } from 'store/actions/ExperimentsPageActions';
 import { showToast } from 'store/actions/GlobalIndicatorActions';
@@ -100,12 +101,14 @@ export const changeSelectedFiles = (files: File[]): easyPrimitiveActionReturn =>
     payload: files,
   });
 
-export const changeSoftKPITimeToConfigure = (
-  aConfigurationTime: number | undefined
+export const updateSoftKPIs = (
+  type: SoftKPIsTypesEnum,
+  value: unknown
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: actionTypes.CHANGE_SOFT_KPI_TIME_TO_CONFIGURE,
-    payload: aConfigurationTime,
+    type: actionTypes.UPDATE_SOFT_KPIS,
+    payload: type,
+    optionalPayload: value,
   });
 
 const createNewExperiment = (
@@ -120,10 +123,7 @@ const createNewExperiment = (
           name: store.getState().ExperimentDialogStore.experimentName,
           description: store.getState().ExperimentDialogStore
             .experimentDescription,
-          softKPIs: {
-            timeToConfigure: store.getState().ExperimentDialogStore
-              .timeToConfigure,
-          },
+          softKPIs: store.getState().ExperimentDialogStore.softKPIs,
           datasetId:
             store.getState().BenchmarkConfigurationStore.selectedDataset?.id ??
             MagicNotPossibleId,
@@ -177,10 +177,7 @@ const editExistingExperiment = (): SnowmanThunkAction<Promise<void>> => async (
           name: store.getState().ExperimentDialogStore.experimentName,
           description: store.getState().ExperimentDialogStore
             .experimentDescription,
-          softKPIs: {
-            timeToConfigure: store.getState().ExperimentDialogStore
-              .timeToConfigure,
-          },
+          softKPIs: store.getState().ExperimentDialogStore.softKPIs,
           datasetId:
             store.getState().BenchmarkConfigurationStore.selectedDataset?.id ??
             MagicNotPossibleId,

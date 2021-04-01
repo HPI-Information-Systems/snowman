@@ -8,9 +8,15 @@ import {
   IonLabel,
   IonList,
   IonNote,
+  IonSelect,
+  IonSelectOption,
   IonTextarea,
 } from '@ionic/react';
-import { ExperimentDialogProps } from 'components/ExperimentDialog/ExperimentDialogProps';
+import { ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum } from 'api';
+import {
+  ExperimentDialogProps,
+  SoftKPIsTypesEnum,
+} from 'components/ExperimentDialog/ExperimentDialogProps';
 import FileInput from 'components/FileInput/FileInput';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
 import SelectableInput from 'components/SelectableInput/SelectableInput';
@@ -18,6 +24,7 @@ import { addCircleOutline, closeCircleOutline } from 'ionicons/icons';
 import React from 'react';
 import { $enum } from 'ts-enum-util';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
+import { IonChangeEvent } from 'types/IonChangeEvent';
 
 const ExperimentDialogView = ({
   isOpen,
@@ -27,7 +34,7 @@ const ExperimentDialogView = ({
   experimentName,
   experimentDescription,
   experimentFileFormat,
-  timeToConfigure,
+  softKPIs,
   tags,
   selectedTags,
   changeExperimentDescription,
@@ -38,7 +45,7 @@ const ExperimentDialogView = ({
   isValidForm,
   selectedFiles,
   changeSelectedFiles,
-  changeTimeToConfigure,
+  changeSoftKPIs,
 }: ExperimentDialogProps): JSX.Element => (
   <ModalDialog
     heading={isAddDialog ? 'Add New Experiment' : 'Update Existing Experiment'}
@@ -101,10 +108,40 @@ const ExperimentDialogView = ({
         <IonInput
           clearInput
           type="number"
-          value={timeToConfigure}
-          onIonChange={changeTimeToConfigure}
+          value={softKPIs.timeToConfigure}
+          onIonChange={(event: IonChangeEvent): void =>
+            changeSoftKPIs(event, SoftKPIsTypesEnum.timeToConfigure)
+          }
           className="input-align-right"
         />
+      </IonItem>
+      <IonItem>
+        <IonLabel>Implementation Know How Level</IonLabel>
+        <IonSelect
+          multiple={false}
+          value={softKPIs.implementationKnowHowLevel}
+          onIonChange={(event: IonChangeEvent): void =>
+            changeSoftKPIs(event, SoftKPIsTypesEnum.implementationKnowHowLevel)
+          }
+        >
+          <IonSelectOption value={undefined}>-</IonSelectOption>
+          {Object.keys(
+            ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum
+          ).map(
+            (aType: string): JSX.Element => (
+              <IonSelectOption
+                key={aType}
+                value={
+                  ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum[
+                    aType as keyof typeof ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum
+                  ]
+                }
+              >
+                {aType}
+              </IonSelectOption>
+            )
+          )}
+        </IonSelect>
       </IonItem>
       <IonItemDivider>
         <IonLabel>USED MATCHING SOLUTION</IonLabel>
