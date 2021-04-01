@@ -2,9 +2,9 @@ import {
   Algorithm,
   AlgorithmValuesSoftKPIsGeneral,
   AlgorithmValuesSoftKPIsGeneralInputFormatEnum,
-  AlgorithmValuesSoftKPIsGeneralInterfaceEnum,
   AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum,
   AlgorithmValuesSoftKPIsGeneralUseCaseEnum,
+  AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum,
   AlgorithmValuesSoftKPIsInstallationCosts,
   AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum,
   AlgorithmValuesSoftKPIsInstallationCostsOsEnum,
@@ -112,11 +112,11 @@ const SoftKPIsGeneralReducer = (
         ...state,
         inputFormat: action.optionalPayload as AlgorithmValuesSoftKPIsGeneralInputFormatEnum[],
       };
-    case SoftKPIsGeneralTypesEnum._interface:
+    case SoftKPIsGeneralTypesEnum.userInterface:
       console.log('in charge', action.optionalPayload);
       return {
         ...state,
-        _interface: action.optionalPayload as AlgorithmValuesSoftKPIsGeneralInterfaceEnum[],
+        userInterface: action.optionalPayload as AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum[],
       };
     case SoftKPIsGeneralTypesEnum.costs:
       return {

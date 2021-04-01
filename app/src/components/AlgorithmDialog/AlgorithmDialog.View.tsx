@@ -14,9 +14,9 @@ import {
 } from '@ionic/react';
 import {
   AlgorithmValuesSoftKPIsGeneralInputFormatEnum,
-  AlgorithmValuesSoftKPIsGeneralInterfaceEnum,
   AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum,
   AlgorithmValuesSoftKPIsGeneralUseCaseEnum,
+  AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum,
   AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum,
   AlgorithmValuesSoftKPIsInstallationCostsOsEnum,
 } from 'api';
@@ -163,19 +163,19 @@ const AlgorithmDialogView = ({
         <IonLabel>Solution Interfaces</IonLabel>
         <IonSelect
           multiple={true}
-          value={softKPIsGeneral._interface}
+          value={softKPIsGeneral.userInterface}
           onIonChange={(event: IonChangeEvent): void =>
-            changeSoftKPIsGeneral(event, SoftKPIsGeneralTypesEnum._interface)
+            changeSoftKPIsGeneral(event, SoftKPIsGeneralTypesEnum.userInterface)
           }
         >
           <IonSelectOption value={undefined}>-</IonSelectOption>
-          {Object.keys(AlgorithmValuesSoftKPIsGeneralInterfaceEnum).map(
+          {Object.keys(AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum).map(
             (aType: string): JSX.Element => (
               <IonSelectOption
                 key={aType}
                 value={
-                  AlgorithmValuesSoftKPIsGeneralInterfaceEnum[
-                    aType as keyof typeof AlgorithmValuesSoftKPIsGeneralInterfaceEnum
+                  AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum[
+                    aType as keyof typeof AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum
                   ]
                 }
               >

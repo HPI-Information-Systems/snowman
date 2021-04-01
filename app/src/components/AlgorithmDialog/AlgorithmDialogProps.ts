@@ -8,7 +8,7 @@ export enum SoftKPIsGeneralTypesEnum {
   useCase,
   matchingSolutionType,
   inputFormat,
-  _interface,
+  userInterface,
   costs,
 }
 export enum SoftKPIsInstallationTypesEnum {
