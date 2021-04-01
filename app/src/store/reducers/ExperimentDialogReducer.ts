@@ -45,6 +45,7 @@ export const ExperimentDialogReducer = (
         experimentId: (action.payload as Experiment).id,
         experimentName: (action.payload as Experiment).name,
         experimentDescription: (action.payload as Experiment).description ?? '',
+        softKPIs: (action.payload as Experiment).softKPIs ?? {},
         selectedTags: [
           getAlgorithmNameFromId(
             (action.payload as Experiment).algorithmId,
