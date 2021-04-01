@@ -17,6 +17,7 @@ import {
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 import { IonChangeEvent } from 'types/IonChangeEvent';
+import { parseStringUndefined } from 'utils/parseStringUndefined';
 
 const mapStateToProps = (state: Store): AlgorithmDialogStateProps => ({
   isAddDialog: state.AlgorithmDialogStore.algorithmId === null,
@@ -49,13 +50,17 @@ const mapDispatchToProps = (
     event: IonChangeEvent,
     type: SoftKPIsGeneralTypesEnum
   ): void {
-    dispatch(updateSoftKPIsGeneral(type, event.detail.value));
+    dispatch(
+      updateSoftKPIsGeneral(type, parseStringUndefined(event.detail.value))
+    );
   },
   changeSoftKPIsInstallation(
     event: IonChangeEvent,
     type: SoftKPIsInstallationTypesEnum
   ): void {
-    dispatch(updateSoftKPIsInstallation(type, event.detail.value));
+    dispatch(
+      updateSoftKPIsInstallation(type, parseStringUndefined(event.detail.value))
+    );
   },
 });
 

@@ -24,6 +24,7 @@ import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
+import { parseStringUndefined } from 'utils/parseStringUndefined';
 
 const isValidExperimentDialog = (state: Store): boolean => {
   if (
@@ -66,7 +67,7 @@ const mapDispatchToProps = (
   clickOnMatchingSolutionTag: (aTag: string): void =>
     dispatch(clickOnMatchingSolutionTag(aTag)),
   changeSoftKPIs(event: IonChangeEvent, type: SoftKPIsTypesEnum): void {
-    dispatch(updateSoftKPIs(type, event.detail.value));
+    dispatch(updateSoftKPIs(type, parseStringUndefined(event.detail.value)));
   },
   clickOnSubmit: (): void => {
     dispatch(addOrUpdateExperiment()).then();
