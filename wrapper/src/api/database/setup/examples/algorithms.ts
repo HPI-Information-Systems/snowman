@@ -3,8 +3,8 @@ import {
   AlgorithmId,
   AlgorithmValues,
   AlgorithmValuesSoftKPIsGeneralInputFormatEnum,
-  AlgorithmValuesSoftKPIsGeneralInterfaceEnum,
   AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum,
+  AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum,
   AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum,
 } from '../../../server/types';
 import { assertType } from '../../../tools/types';
@@ -60,7 +60,7 @@ export const exampleAlgorithms = assertType<ExampleAlgorithms>()({
           matchingSolutionType:
             AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum.Rulebased,
           inputFormat: [AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Csv],
-          _interface: [AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Api],
+          _interface: [AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum.Api],
         },
         installationCosts: {
           implementationKnowHowLevel:

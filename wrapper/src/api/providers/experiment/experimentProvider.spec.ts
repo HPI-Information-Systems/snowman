@@ -2,9 +2,9 @@ import { setupDatabase, tables } from '../../database';
 import {
   AlgorithmValues,
   AlgorithmValuesSoftKPIsGeneralInputFormatEnum,
-  AlgorithmValuesSoftKPIsGeneralInterfaceEnum,
   AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum,
   AlgorithmValuesSoftKPIsGeneralUseCaseEnum,
+  AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum,
   AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum,
   AlgorithmValuesSoftKPIsInstallationCostsOsEnum,
   DatasetValues,
@@ -56,9 +56,9 @@ describe('ExperimentProvider', () => {
           AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Merge,
         ],
         inputFormat: [AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Csv],
-        _interface: [
-          AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Cli,
-          AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Gui,
+        userInterface: [
+          AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum.Cli,
+          AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum.Gui,
         ],
       },
       installationCosts: {
@@ -67,7 +67,7 @@ describe('ExperimentProvider', () => {
         timeToInstall: 3,
         os: [
           AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Linux,
-          AlgorithmValuesSoftKPIsInstallationCostsOsEnum.MacOs,
+          AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Macos,
           AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Windows,
         ],
       },

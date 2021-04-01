@@ -3,9 +3,9 @@ import {
   AlgorithmId,
   AlgorithmValues,
   AlgorithmValuesSoftKPIsGeneralInputFormatEnum,
-  AlgorithmValuesSoftKPIsGeneralInterfaceEnum,
   AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum,
   AlgorithmValuesSoftKPIsGeneralUseCaseEnum,
+  AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum,
   AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum,
   AlgorithmValuesSoftKPIsInstallationCostsOsEnum,
   ExperimentValuesSoftKPIsImplementationKnowHowLevelEnum,
@@ -30,9 +30,9 @@ describe('AlgorithmProvider', () => {
             AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Merge,
           ],
           inputFormat: [AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Csv],
-          _interface: [
-            AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Cli,
-            AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Gui,
+          userInterface: [
+            AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum.Cli,
+            AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum.Gui,
           ],
         },
         installationCosts: {
@@ -41,7 +41,7 @@ describe('AlgorithmProvider', () => {
           timeToInstall: 3,
           os: [
             AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Linux,
-            AlgorithmValuesSoftKPIsInstallationCostsOsEnum.MacOs,
+            AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Macos,
             AlgorithmValuesSoftKPIsInstallationCostsOsEnum.Windows,
           ],
         },
@@ -60,7 +60,7 @@ describe('AlgorithmProvider', () => {
             AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Search,
           ],
           inputFormat: [AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Tsv],
-          _interface: [AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Cli],
+          userInterface: [AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum.Cli],
         },
         installationCosts: {
           implementationKnowHowLevel:
@@ -107,7 +107,7 @@ describe('AlgorithmProvider', () => {
           costs: 350,
           useCase: [AlgorithmValuesSoftKPIsGeneralUseCaseEnum.Search],
           inputFormat: [AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Csv],
-          _interface: [AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Gui],
+          userInterface: [AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum.Gui],
         },
         installationCosts: {
           implementationKnowHowLevel:
@@ -150,7 +150,7 @@ describe('AlgorithmProvider', () => {
             AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Csv,
             AlgorithmValuesSoftKPIsGeneralInputFormatEnum.Tsv,
           ],
-          _interface: [AlgorithmValuesSoftKPIsGeneralInterfaceEnum.Gui],
+          userInterface: [AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum.Gui],
         },
         installationCosts: {
           implementationKnowHowLevel:

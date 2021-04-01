@@ -46,7 +46,7 @@ export const metaSchemas = assertType<
           name: 'inputFormat' as const,
           dataType: 'TEXT',
         },
-        interface: {
+        userInterface: {
           name: 'interface' as const,
           dataType: 'TEXT',
         },

@@ -3,9 +3,9 @@ import { ColumnValues } from '../../../database/tools/types';
 import {
   Algorithm,
   AlgorithmValuesSoftKPIsGeneralInputFormatEnum,
-  AlgorithmValuesSoftKPIsGeneralInterfaceEnum,
   AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum,
   AlgorithmValuesSoftKPIsGeneralUseCaseEnum,
+  AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum,
   AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum,
   AlgorithmValuesSoftKPIsInstallationCostsOsEnum,
 } from '../../../server/types';
@@ -22,7 +22,8 @@ export class AlgorithmConverter {
       matchingSolutionType: api.softKPIs?.general?.matchingSolutionType ?? null,
       useCase: JSON.stringify(api.softKPIs?.general?.useCase) ?? null,
       inputFormat: JSON.stringify(api.softKPIs?.general?.inputFormat) ?? null,
-      interface: JSON.stringify(api.softKPIs?.general?._interface) ?? null,
+      userInterface:
+        JSON.stringify(api.softKPIs?.general?.userInterface) ?? null,
       costs: api.softKPIs?.general?.costs ?? null,
 
       implementationKnowHowLevel:
@@ -51,10 +52,10 @@ export class AlgorithmConverter {
                 stored.inputFormat
               ) as Array<AlgorithmValuesSoftKPIsGeneralInputFormatEnum>)
             : undefined,
-          _interface: stored.interface
+          userInterface: stored.userInterface
             ? (JSON.parse(
-                stored.interface
-              ) as Array<AlgorithmValuesSoftKPIsGeneralInterfaceEnum>)
+                stored.userInterface
+              ) as Array<AlgorithmValuesSoftKPIsGeneralUserInterfaceEnum>)
             : undefined,
           costs: stored.costs ?? undefined,
         },

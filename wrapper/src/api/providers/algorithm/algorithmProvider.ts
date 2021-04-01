@@ -16,7 +16,9 @@ export class AlgorithmProvider {
       {
         name: algorithm.name,
         description: algorithm.description,
-        interface: JSON.stringify(algorithm.softKPIs?.general?._interface),
+        userInterface: JSON.stringify(
+          algorithm.softKPIs?.general?.userInterface
+        ),
         costs: algorithm.softKPIs?.general?.costs,
         inputFormat: JSON.stringify(algorithm.softKPIs?.general?.inputFormat),
         matchingSolutionType: algorithm.softKPIs?.general?.matchingSolutionType,
