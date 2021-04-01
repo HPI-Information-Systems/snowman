@@ -31,7 +31,25 @@ const AlgorithmCardView = ({
           {algorithm.softKPIs?.general?.useCase !== undefined ? (
             <IonChip>
               <IonLabel>
-                {`Use case: ${algorithm.softKPIs?.general.useCase.join(', ')}`}
+                {algorithm.softKPIs?.general.useCase.join(', ')}
+              </IonLabel>
+            </IonChip>
+          ) : null}
+          {algorithm.softKPIs?.general?.matchingSolutionType !== undefined ? (
+            <IonChip>
+              <IonLabel>
+                {algorithm.softKPIs?.general.matchingSolutionType}
+              </IonLabel>
+            </IonChip>
+          ) : null}
+          {algorithm.softKPIs?.installationCosts?.implementationKnowHowLevel !==
+          undefined ? (
+            <IonChip>
+              <IonLabel>
+                {
+                  algorithm.softKPIs?.installationCosts
+                    ?.implementationKnowHowLevel
+                }
               </IonLabel>
             </IonChip>
           ) : null}

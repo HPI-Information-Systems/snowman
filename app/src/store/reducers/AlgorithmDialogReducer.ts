@@ -113,6 +113,7 @@ const SoftKPIsGeneralReducer = (
         inputFormat: action.optionalPayload as AlgorithmValuesSoftKPIsGeneralInputFormatEnum[],
       };
     case SoftKPIsGeneralTypesEnum._interface:
+      console.log('in charge', action.optionalPayload);
       return {
         ...state,
         _interface: action.optionalPayload as AlgorithmValuesSoftKPIsGeneralInterfaceEnum[],
