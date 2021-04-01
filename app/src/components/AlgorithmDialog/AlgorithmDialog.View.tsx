@@ -85,7 +85,7 @@ const AlgorithmDialogView = ({
             changeSoftKPIsGeneral(event, SoftKPIsGeneralTypesEnum.useCase)
           }
         >
-          <IonSelectOption value={undefined}>---</IonSelectOption>
+          <IonSelectOption value={undefined}>-</IonSelectOption>
           {Object.keys(AlgorithmValuesSoftKPIsGeneralUseCaseEnum).map(
             (aType: string): JSX.Element => (
               <IonSelectOption
@@ -114,7 +114,7 @@ const AlgorithmDialogView = ({
             )
           }
         >
-          <IonSelectOption value={undefined}>---</IonSelectOption>
+          <IonSelectOption value={undefined}>-</IonSelectOption>
           {Object.keys(
             AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum
           ).map(
@@ -142,7 +142,7 @@ const AlgorithmDialogView = ({
             changeSoftKPIsGeneral(event, SoftKPIsGeneralTypesEnum.inputFormat)
           }
         >
-          <IonSelectOption value={undefined}>---</IonSelectOption>
+          <IonSelectOption value={undefined}>-</IonSelectOption>
           {Object.keys(AlgorithmValuesSoftKPIsGeneralInputFormatEnum).map(
             (aType: string): JSX.Element => (
               <IonSelectOption
@@ -168,7 +168,7 @@ const AlgorithmDialogView = ({
             changeSoftKPIsGeneral(event, SoftKPIsGeneralTypesEnum._interface)
           }
         >
-          <IonSelectOption value={undefined}>---</IonSelectOption>
+          <IonSelectOption value={undefined}>-</IonSelectOption>
           {Object.keys(AlgorithmValuesSoftKPIsGeneralInterfaceEnum).map(
             (aType: string): JSX.Element => (
               <IonSelectOption
@@ -212,7 +212,7 @@ const AlgorithmDialogView = ({
             )
           }
         >
-          <IonSelectOption value={undefined}>---</IonSelectOption>
+          <IonSelectOption value={undefined}>-</IonSelectOption>
           {Object.keys(
             AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum
           ).map(
@@ -255,7 +255,7 @@ const AlgorithmDialogView = ({
             changeSoftKPIsInstallation(event, SoftKPIsInstallationTypesEnum.os)
           }
         >
-          <IonSelectOption value={undefined}>---</IonSelectOption>
+          <IonSelectOption value={undefined}>-</IonSelectOption>
           {Object.keys(AlgorithmValuesSoftKPIsInstallationCostsOsEnum).map(
             (aType: string): JSX.Element => (
               <IonSelectOption
