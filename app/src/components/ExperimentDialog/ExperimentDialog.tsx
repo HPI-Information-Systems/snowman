@@ -66,7 +66,6 @@ const mapDispatchToProps = (
   clickOnMatchingSolutionTag: (aTag: string): void =>
     dispatch(clickOnMatchingSolutionTag(aTag)),
   changeSoftKPIs(event: IonChangeEvent, type: SoftKPIsTypesEnum): void {
-    console.log(event, type);
     dispatch(updateSoftKPIs(type, event.detail.value));
   },
   clickOnSubmit: (): void => {

@@ -49,14 +49,12 @@ const mapDispatchToProps = (
     event: IonChangeEvent,
     type: SoftKPIsGeneralTypesEnum
   ): void {
-    console.log(type, event);
     dispatch(updateSoftKPIsGeneral(type, event.detail.value));
   },
   changeSoftKPIsInstallation(
     event: IonChangeEvent,
     type: SoftKPIsInstallationTypesEnum
   ): void {
-    console.log(type, event);
     dispatch(updateSoftKPIsInstallation(type, event.detail.value));
   },
 });
