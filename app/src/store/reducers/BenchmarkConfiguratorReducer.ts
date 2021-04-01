@@ -11,10 +11,7 @@ import { MagicNotPossibleId } from 'structs/constants';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import { ExperimentBuckets } from 'types/ExperimentBuckets';
 import { doesDatasetMatchTags } from 'utils/datasetHelper';
-import {
-  filterOutAnExperiment,
-  insertExperimentAt,
-} from 'utils/experimentsHelpers';
+import { filterOutAnElement, insertElementAt } from 'utils/dragNDropHelpers';
 import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: BenchmarkConfigurationStore = {
@@ -110,15 +107,15 @@ const BenchmarkConfiguratorImmediateReducer = (
       );
       if (draggedExperiment === undefined) return ownState;
 
-      chosenGoldstandards = filterOutAnExperiment(
+      chosenGoldstandards = filterOutAnElement<Experiment>(
         ownState.chosenGoldStandards,
         draggedExperiment
       );
-      chosenExperiments = filterOutAnExperiment(
+      chosenExperiments = filterOutAnElement<Experiment>(
         ownState.chosenExperiments,
         draggedExperiment
       );
-      availableExperiments = filterOutAnExperiment(
+      availableExperiments = filterOutAnElement<Experiment>(
         ownState.availableExperiments,
         draggedExperiment
       );
@@ -128,7 +125,7 @@ const BenchmarkConfiguratorImmediateReducer = (
             ...availableExperiments,
             ...chosenGoldstandards,
           ];
-          chosenGoldstandards = insertExperimentAt(
+          chosenGoldstandards = insertElementAt<Experiment>(
             chosenGoldstandards,
             draggedExperiment,
             eventDescriptor.targetIndex
@@ -136,14 +133,14 @@ const BenchmarkConfiguratorImmediateReducer = (
           break;
         }
         case ExperimentBuckets.CHOSEN_EXPERIMENTS:
-          chosenExperiments = insertExperimentAt(
+          chosenExperiments = insertElementAt<Experiment>(
             chosenExperiments,
             draggedExperiment,
             eventDescriptor.targetIndex
           );
           break;
         case ExperimentBuckets.AVAILABLE_EXPERIMENTS:
-          availableExperiments = insertExperimentAt(
+          availableExperiments = insertElementAt<Experiment>(
             availableExperiments,
             draggedExperiment,
             eventDescriptor.targetIndex
