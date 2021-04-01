@@ -1,0 +1,99 @@
+{
+	"folders": [
+		{
+			"name": "wrapper",
+			"path": "..\\wrapper"
+		},
+		{
+			"name": "app",
+			"path": "..\\app"
+		},
+		{
+			"name": "snowman",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"editor.formatOnSave": true,
+		"editor.codeActionsOnSave": {
+			"source.fixAll": true
+		},
+		"eslint.validate": [
+			"javascript",
+			"typescript"
+		],
+		"eslint.options": {
+			"configFile": ".eslintrc.json"
+		},
+		"[typescript]": {
+			"editor.formatOnSave": false
+		},
+		"[javascript]": {
+			"editor.formatOnSave": false
+		},
+		"[typescriptreact]": {
+			"editor.formatOnSave": false
+		},
+		"[javascriptreact]": {
+			"editor.formatOnSave": false
+		},
+		"typescript.tsdk": "node_modules/typescript/lib",
+		"jest.disabledWorkspaceFolders": [
+			"app"
+		],
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/CVS": true,
+			"**/.DS_Store": true,
+			"app/": true,
+			"wrapper/": true
+		}
+	},
+	"launch": {
+		"configurations": [
+			{
+				"command": "npm run test",
+				"name": "Test",
+				"request": "launch",
+				"type": "node-terminal",
+				"cwd": "${workspaceFolder:wrapper}"
+			},
+			{
+				"type": "pwa-chrome",
+				"request": "launch",
+				"name": "chrome",
+				"url": "http://localhost:3000",
+				"webRoot": "${workspaceFolder:snowman}"
+			},
+			{
+				"command": "npm start",
+				"name": "start-app",
+				"request": "launch",
+				"type": "node-terminal",
+				"cwd": "${workspaceFolder:app}",
+				"env": {
+					"BROWSER": "none"
+				}
+			},
+			{
+				"command": "npm run start-api",
+				"name": "start-api",
+				"request": "launch",
+				"type": "node-terminal",
+				"cwd": "${workspaceFolder:wrapper}"
+			}
+		],
+		"compounds": [
+			{
+				"name": "Start Stack",
+				"configurations": [
+					"chrome",
+					"start-app",
+					"start-api"
+				]
+			}
+		]
+	}
+}
