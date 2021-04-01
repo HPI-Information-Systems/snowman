@@ -1,12 +1,23 @@
 import {
   Algorithm,
-  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
-  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
+  AlgorithmValuesSoftKPIsGeneral,
+  AlgorithmValuesSoftKPIsGeneralInputFormatEnum,
+  AlgorithmValuesSoftKPIsGeneralInterfaceEnum,
+  AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum,
+  AlgorithmValuesSoftKPIsGeneralUseCaseEnum,
+  AlgorithmValuesSoftKPIsInstallationCosts,
+  AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum,
+  AlgorithmValuesSoftKPIsInstallationCostsOsEnum,
 } from 'api';
+import {
+  SoftKPIsGeneralTypesEnum,
+  SoftKPIsInstallationTypesEnum,
+} from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import { AlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { AlgorithmDialogStore } from 'store/models';
 import { DialogTypes } from 'types/DialogTypes';
+import { parseInputToNumberOrUndef } from 'utils/questionHelpers';
 
 const initialState: AlgorithmDialogStore = {
   isOpen: false,
@@ -14,10 +25,8 @@ const initialState: AlgorithmDialogStore = {
   algorithmName: '',
   algorithmDescription: '',
   dialogType: DialogTypes.ADD_DIALOG,
-  implementationKnowHowLevel: undefined,
-  matchingSolutionType: undefined,
-  timeToConfigure: undefined,
-  timeToInstall: undefined,
+  softKPIsGeneral: {},
+  softKPIsInstallation: {},
 };
 
 export const AlgorithmDialogReducer = (
@@ -38,11 +47,9 @@ export const AlgorithmDialogReducer = (
         algorithmId: (action.payload as Algorithm).id,
         algorithmName: (action.payload as Algorithm).name,
         algorithmDescription: (action.payload as Algorithm).description ?? '',
-        matchingSolutionType: (action.payload as Algorithm).softKPIs
-          ?.matchingSolutionType,
-        timeToConfigure: (action.payload as Algorithm).softKPIs
-          ?.timeToConfigure,
-        timeToInstall: (action.payload as Algorithm).softKPIs?.timeToInstall,
+        softKPIsGeneral: (action.payload as Algorithm).softKPIs?.general ?? {},
+        softKPIsInstallation:
+          (action.payload as Algorithm).softKPIs?.installationCosts ?? {},
         dialogType: DialogTypes.CHANGE_DIALOG,
       };
     case DialogActions.CLOSE_DIALOG:
@@ -60,34 +67,89 @@ export const AlgorithmDialogReducer = (
         ...state,
         algorithmName: action.payload as string,
       };
-    case DialogActions.CHANGE_SOFT_KPI_IMPLEMENTATION_KNOW_HOW_LEVEL:
-      return {
-        ...state,
-        implementationKnowHowLevel: action.payload as
-          | AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
-          | undefined,
-      };
-    case DialogActions.CHANGE_SOFT_KPI_MATCHING_SOLUTION_TYPE:
-      return {
-        ...state,
-        matchingSolutionType: action.payload as AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
-      };
-    case DialogActions.CHANGE_SOFT_KPI_TIME_TO_INSTALL:
-      return {
-        ...state,
-        timeToInstall: action.payload as number | undefined,
-      };
-    case DialogActions.CHANGE_SOFT_KPI_TIME_TO_CONFIGURE:
-      return {
-        ...state,
-        timeToConfigure: action.payload as number | undefined,
-      };
-    case DialogActions.RESET_DIALOG:
-      return initialState;
     case DialogActions.CHANGE_ALGORITHM_DESCRIPTION:
       return {
         ...state,
         algorithmDescription: action.payload as string,
+      };
+    case DialogActions.UPDATE_SOFT_KPIS_GENERAL:
+      return {
+        ...state,
+        softKPIsGeneral: SoftKPIsGeneralReducer(state.softKPIsGeneral, action),
+      };
+    case DialogActions.UPDATE_SOFT_KPIS_INSTALLATION:
+      return {
+        ...state,
+        softKPIsInstallation: SoftKPIsInstallationReducer(
+          state.softKPIsInstallation,
+          action
+        ),
+      };
+    case DialogActions.RESET_DIALOG:
+      return initialState;
+    default:
+      return state;
+  }
+};
+
+const SoftKPIsGeneralReducer = (
+  state: AlgorithmValuesSoftKPIsGeneral,
+  action: SnowmanAction
+): AlgorithmValuesSoftKPIsGeneral => {
+  switch (action.payload as SoftKPIsGeneralTypesEnum) {
+    case SoftKPIsGeneralTypesEnum.useCase:
+      return {
+        ...state,
+        useCase: action.optionalPayload as AlgorithmValuesSoftKPIsGeneralUseCaseEnum[],
+      };
+    case SoftKPIsGeneralTypesEnum.matchingSolutionType:
+      return {
+        ...state,
+        matchingSolutionType: action.optionalPayload as AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum,
+      };
+    case SoftKPIsGeneralTypesEnum.inputFormat:
+      return {
+        ...state,
+        inputFormat: action.optionalPayload as AlgorithmValuesSoftKPIsGeneralInputFormatEnum[],
+      };
+    case SoftKPIsGeneralTypesEnum._interface:
+      return {
+        ...state,
+        _interface: action.optionalPayload as AlgorithmValuesSoftKPIsGeneralInterfaceEnum[],
+      };
+    case SoftKPIsGeneralTypesEnum.costs:
+      return {
+        ...state,
+        costs: parseInputToNumberOrUndef(
+          action.optionalPayload as string | undefined
+        ),
+      };
+    default:
+      return state;
+  }
+};
+
+const SoftKPIsInstallationReducer = (
+  state: AlgorithmValuesSoftKPIsInstallationCosts,
+  action: SnowmanAction
+): AlgorithmValuesSoftKPIsInstallationCosts => {
+  switch (action.payload as SoftKPIsInstallationTypesEnum) {
+    case SoftKPIsInstallationTypesEnum.implementationKnowHowLevel:
+      return {
+        ...state,
+        implementationKnowHowLevel: action.optionalPayload as AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum,
+      };
+    case SoftKPIsInstallationTypesEnum.timeToInstall:
+      return {
+        ...state,
+        timeToInstall: parseInputToNumberOrUndef(
+          action.optionalPayload as string | undefined
+        ),
+      };
+    case SoftKPIsInstallationTypesEnum.os:
+      return {
+        ...state,
+        os: action.optionalPayload as AlgorithmValuesSoftKPIsInstallationCostsOsEnum[],
       };
     default:
       return state;

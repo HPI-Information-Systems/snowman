@@ -28,31 +28,10 @@ const AlgorithmCardView = ({
     <IonGrid>
       <IonRow>
         <IonCol>
-          {algorithm.softKPIs?.matchingSolutionType !== undefined ? (
+          {algorithm.softKPIs?.general?.useCase !== undefined ? (
             <IonChip>
               <IonLabel>
-                {`Type: ${algorithm.softKPIs?.matchingSolutionType}`}
-              </IonLabel>
-            </IonChip>
-          ) : null}
-          {algorithm.softKPIs?.implementationKnowHowLevel !== undefined ? (
-            <IonChip>
-              <IonLabel>
-                {`KnowHow Level: ${algorithm.softKPIs?.implementationKnowHowLevel}`}
-              </IonLabel>
-            </IonChip>
-          ) : null}
-          {algorithm.softKPIs?.timeToInstall !== undefined ? (
-            <IonChip>
-              <IonLabel>
-                {`Install Time: ${algorithm.softKPIs?.timeToInstall}`}
-              </IonLabel>
-            </IonChip>
-          ) : null}
-          {algorithm.softKPIs?.timeToConfigure !== undefined ? (
-            <IonChip>
-              <IonLabel>
-                {`Config Time: ${algorithm.softKPIs?.timeToConfigure}`}
+                {`Use case: ${algorithm.softKPIs?.general.useCase.join(', ')}`}
               </IonLabel>
             </IonChip>
           ) : null}

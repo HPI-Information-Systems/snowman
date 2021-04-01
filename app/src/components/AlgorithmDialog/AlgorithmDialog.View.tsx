@@ -13,10 +13,18 @@ import {
   IonTextarea,
 } from '@ionic/react';
 import {
-  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
-  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
+  AlgorithmValuesSoftKPIsGeneralInputFormatEnum,
+  AlgorithmValuesSoftKPIsGeneralInterfaceEnum,
+  AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum,
+  AlgorithmValuesSoftKPIsGeneralUseCaseEnum,
+  AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum,
+  AlgorithmValuesSoftKPIsInstallationCostsOsEnum,
 } from 'api';
-import { AlgorithmDialogProps } from 'components/AlgorithmDialog/AlgorithmDialogProps';
+import {
+  AlgorithmDialogProps,
+  SoftKPIsGeneralTypesEnum,
+  SoftKPIsInstallationTypesEnum,
+} from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
 import {
   addCircleOutline,
@@ -24,25 +32,22 @@ import {
   closeCircleOutline,
 } from 'ionicons/icons';
 import React from 'react';
+import { IonChangeEvent } from 'types/IonChangeEvent';
 
 const AlgorithmDialogView = ({
   algorithmDescription,
   algorithmName,
-  implementationKnowHowLevel,
-  matchingSolutionType,
-  timeToConfigure,
-  timeToInstall,
   isOpen,
   isAddDialog,
   clickOnCancel,
   clickOnSubmit,
   changeAlgorithmDescription,
   changeAlgorithmName,
-  changeImplementationKnowHowLevel,
-  changeMatchingSolutionType,
-  changeTimeToConfigure,
-  changeTimeToInstall,
   closeDialog,
+  softKPIsGeneral,
+  changeSoftKPIsGeneral,
+  softKPIsInstallation,
+  changeSoftKPIsInstallation,
 }: AlgorithmDialogProps): JSX.Element => (
   <ModalDialog
     heading={`${isAddDialog ? 'Add New' : 'Update'} Matching Solution`}
@@ -69,23 +74,25 @@ const AlgorithmDialogView = ({
         />
       </IonItem>
       <IonItemDivider>
-        <IonLabel>SPECIFY SOFT KPIS</IonLabel>
+        <IonLabel>SPECIFY GENERAL SOFT KPIS</IonLabel>
       </IonItemDivider>
       <IonItem>
-        <IonLabel>Matching Solution Type</IonLabel>
+        <IonLabel>Solution Use Case</IonLabel>
         <IonSelect
-          multiple={false}
-          value={matchingSolutionType}
-          onIonChange={changeMatchingSolutionType}
+          multiple={true}
+          value={softKPIsGeneral.useCase}
+          onIonChange={(event: IonChangeEvent): void =>
+            changeSoftKPIsGeneral(event, SoftKPIsGeneralTypesEnum.useCase)
+          }
         >
           <IonSelectOption value={undefined}>---</IonSelectOption>
-          {Object.keys(AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum).map(
+          {Object.keys(AlgorithmValuesSoftKPIsGeneralUseCaseEnum).map(
             (aType: string): JSX.Element => (
               <IonSelectOption
                 key={aType}
                 value={
-                  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum[
-                    aType as keyof typeof AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum
+                  AlgorithmValuesSoftKPIsGeneralUseCaseEnum[
+                    aType as keyof typeof AlgorithmValuesSoftKPIsGeneralUseCaseEnum
                   ]
                 }
               >
@@ -96,26 +103,129 @@ const AlgorithmDialogView = ({
         </IonSelect>
       </IonItem>
       <IonItem>
-        <IonLabel>Implementation Know How Level</IonLabel>
+        <IonLabel>Matching Solution Type</IonLabel>
         <IonSelect
           multiple={false}
-          value={implementationKnowHowLevel}
-          onIonChange={changeImplementationKnowHowLevel}
+          value={softKPIsGeneral.matchingSolutionType}
+          onIonChange={(event: IonChangeEvent): void =>
+            changeSoftKPIsGeneral(
+              event,
+              SoftKPIsGeneralTypesEnum.matchingSolutionType
+            )
+          }
         >
           <IonSelectOption value={undefined}>---</IonSelectOption>
           {Object.keys(
-            AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
+            AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum
           ).map(
-            (aLevel: string): JSX.Element => (
+            (aType: string): JSX.Element => (
               <IonSelectOption
-                key={aLevel}
+                key={aType}
                 value={
-                  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum[
-                    aLevel as keyof typeof AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
+                  AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum[
+                    aType as keyof typeof AlgorithmValuesSoftKPIsGeneralMatchingSolutionTypeEnum
                   ]
                 }
               >
-                {aLevel}
+                {aType}
+              </IonSelectOption>
+            )
+          )}
+        </IonSelect>
+      </IonItem>
+      <IonItem>
+        <IonLabel>Solution Input Format</IonLabel>
+        <IonSelect
+          multiple={true}
+          value={softKPIsGeneral.inputFormat}
+          onIonChange={(event: IonChangeEvent): void =>
+            changeSoftKPIsGeneral(event, SoftKPIsGeneralTypesEnum.inputFormat)
+          }
+        >
+          <IonSelectOption value={undefined}>---</IonSelectOption>
+          {Object.keys(AlgorithmValuesSoftKPIsGeneralInputFormatEnum).map(
+            (aType: string): JSX.Element => (
+              <IonSelectOption
+                key={aType}
+                value={
+                  AlgorithmValuesSoftKPIsGeneralInputFormatEnum[
+                    aType as keyof typeof AlgorithmValuesSoftKPIsGeneralInputFormatEnum
+                  ]
+                }
+              >
+                {aType}
+              </IonSelectOption>
+            )
+          )}
+        </IonSelect>
+      </IonItem>
+      <IonItem>
+        <IonLabel>Solution Interfaces</IonLabel>
+        <IonSelect
+          multiple={true}
+          value={softKPIsGeneral._interface}
+          onIonChange={(event: IonChangeEvent): void =>
+            changeSoftKPIsGeneral(event, SoftKPIsGeneralTypesEnum._interface)
+          }
+        >
+          <IonSelectOption value={undefined}>---</IonSelectOption>
+          {Object.keys(AlgorithmValuesSoftKPIsGeneralInterfaceEnum).map(
+            (aType: string): JSX.Element => (
+              <IonSelectOption
+                key={aType}
+                value={
+                  AlgorithmValuesSoftKPIsGeneralInterfaceEnum[
+                    aType as keyof typeof AlgorithmValuesSoftKPIsGeneralInterfaceEnum
+                  ]
+                }
+              >
+                {aType}
+              </IonSelectOption>
+            )
+          )}
+        </IonSelect>
+      </IonItem>
+      <IonItem>
+        <IonLabel>Procurement Cost</IonLabel>
+        <IonInput
+          clearInput
+          type="number"
+          className="input-align-right"
+          value={softKPIsGeneral.costs}
+          onIonChange={(event: IonChangeEvent): void =>
+            changeSoftKPIsGeneral(event, SoftKPIsGeneralTypesEnum.costs)
+          }
+        />
+      </IonItem>
+      <IonItemDivider>
+        <IonLabel>SPECIFY INSTALLATION COSTS</IonLabel>
+      </IonItemDivider>
+      <IonItem>
+        <IonLabel>Implementation Know How Level</IonLabel>
+        <IonSelect
+          multiple={false}
+          value={softKPIsInstallation.implementationKnowHowLevel}
+          onIonChange={(event: IonChangeEvent): void =>
+            changeSoftKPIsInstallation(
+              event,
+              SoftKPIsInstallationTypesEnum.implementationKnowHowLevel
+            )
+          }
+        >
+          <IonSelectOption value={undefined}>---</IonSelectOption>
+          {Object.keys(
+            AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum
+          ).map(
+            (aType: string): JSX.Element => (
+              <IonSelectOption
+                key={aType}
+                value={
+                  AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum[
+                    aType as keyof typeof AlgorithmValuesSoftKPIsInstallationCostsImplementationKnowHowLevelEnum
+                  ]
+                }
+              >
+                {aType}
               </IonSelectOption>
             )
           )}
@@ -126,20 +236,41 @@ const AlgorithmDialogView = ({
         <IonInput
           clearInput
           type="number"
-          value={timeToInstall}
-          onIonChange={changeTimeToInstall}
           className="input-align-right"
+          value={softKPIsInstallation.timeToInstall}
+          onIonChange={(event: IonChangeEvent): void =>
+            changeSoftKPIsInstallation(
+              event,
+              SoftKPIsInstallationTypesEnum.timeToInstall
+            )
+          }
         />
       </IonItem>
       <IonItem>
-        <IonLabel>Time To Configure</IonLabel>
-        <IonInput
-          clearInput
-          type="number"
-          value={timeToConfigure}
-          onIonChange={changeTimeToConfigure}
-          className="input-align-right"
-        />
+        <IonLabel>Supported Operating Systems</IonLabel>
+        <IonSelect
+          multiple={true}
+          value={softKPIsInstallation.os}
+          onIonChange={(event: IonChangeEvent): void =>
+            changeSoftKPIsInstallation(event, SoftKPIsInstallationTypesEnum.os)
+          }
+        >
+          <IonSelectOption value={undefined}>---</IonSelectOption>
+          {Object.keys(AlgorithmValuesSoftKPIsInstallationCostsOsEnum).map(
+            (aType: string): JSX.Element => (
+              <IonSelectOption
+                key={aType}
+                value={
+                  AlgorithmValuesSoftKPIsInstallationCostsOsEnum[
+                    aType as keyof typeof AlgorithmValuesSoftKPIsInstallationCostsOsEnum
+                  ]
+                }
+              >
+                {aType}
+              </IonSelectOption>
+            )
+          )}
+        </IonSelect>
       </IonItem>
     </IonList>
     <div className="center button-row">

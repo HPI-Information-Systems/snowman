@@ -1,22 +1,29 @@
 import {
-  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
-  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
+  AlgorithmValuesSoftKPIsGeneral,
+  AlgorithmValuesSoftKPIsInstallationCosts,
 } from 'api';
 import { IonChangeEvent } from 'types/IonChangeEvent';
+
+export enum SoftKPIsGeneralTypesEnum {
+  useCase,
+  matchingSolutionType,
+  inputFormat,
+  _interface,
+  costs,
+}
+export enum SoftKPIsInstallationTypesEnum {
+  implementationKnowHowLevel,
+  timeToInstall,
+  os,
+}
 
 export interface AlgorithmDialogStateProps {
   algorithmName: string;
   isOpen: boolean;
   algorithmDescription: string;
   isAddDialog: boolean;
-  implementationKnowHowLevel:
-    | AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
-    | undefined;
-  matchingSolutionType:
-    | AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum
-    | undefined;
-  timeToInstall: number | undefined;
-  timeToConfigure: number | undefined;
+  softKPIsGeneral: AlgorithmValuesSoftKPIsGeneral;
+  softKPIsInstallation: AlgorithmValuesSoftKPIsInstallationCosts;
 }
 
 export interface AlgorithmDialogDispatchProps {
@@ -24,10 +31,14 @@ export interface AlgorithmDialogDispatchProps {
   closeDialog(): void;
   changeAlgorithmName(event: IonChangeEvent): void;
   changeAlgorithmDescription(event: IonChangeEvent): void;
-  changeImplementationKnowHowLevel(event: IonChangeEvent): void;
-  changeMatchingSolutionType(event: IonChangeEvent): void;
-  changeTimeToInstall(event: IonChangeEvent): void;
-  changeTimeToConfigure(event: IonChangeEvent): void;
+  changeSoftKPIsGeneral(
+    event: IonChangeEvent,
+    key: SoftKPIsGeneralTypesEnum
+  ): void;
+  changeSoftKPIsInstallation(
+    event: IonChangeEvent,
+    key: SoftKPIsInstallationTypesEnum
+  ): void;
   clickOnSubmit(): void;
 }
 

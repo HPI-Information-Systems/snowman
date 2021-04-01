@@ -1,10 +1,8 @@
+import { Algorithm, AlgorithmApi, AlgorithmValues } from 'api';
 import {
-  Algorithm,
-  AlgorithmApi,
-  AlgorithmValues,
-  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
-  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
-} from 'api';
+  SoftKPIsGeneralTypesEnum,
+  SoftKPIsInstallationTypesEnum,
+} from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import { AlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
 import { getAlgorithms } from 'store/actions/AlgorithmsPageActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
@@ -68,36 +66,24 @@ export const changeAlgorithmDescription = (
     payload: aDescription,
   });
 
-export const changeSoftKPIImplementationKnowHowLevel = (
-  anLevel: AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum | undefined
+export const updateSoftKPIsGeneral = (
+  type: SoftKPIsGeneralTypesEnum,
+  value: unknown
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CHANGE_SOFT_KPI_IMPLEMENTATION_KNOW_HOW_LEVEL,
-    payload: anLevel,
+    type: DialogActions.UPDATE_SOFT_KPIS_GENERAL,
+    payload: type,
+    optionalPayload: value,
   });
 
-export const changeSoftKPIMatchingSolutionType = (
-  aType: AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum
+export const updateSoftKPIsInstallation = (
+  type: SoftKPIsInstallationTypesEnum,
+  value: unknown
 ): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: DialogActions.CHANGE_SOFT_KPI_MATCHING_SOLUTION_TYPE,
-    payload: aType,
-  });
-
-export const changeSoftKPITimeToInstall = (
-  anInstallTime: number | undefined
-): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
-    type: DialogActions.CHANGE_SOFT_KPI_TIME_TO_INSTALL,
-    payload: anInstallTime,
-  });
-
-export const changeSoftKPITimeToConfigure = (
-  aConfigureTime: number | undefined
-): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
-    type: DialogActions.CHANGE_SOFT_KPI_TIME_TO_CONFIGURE,
-    payload: aConfigureTime,
+    type: DialogActions.UPDATE_SOFT_KPIS_INSTALLATION,
+    payload: type,
+    optionalPayload: value,
   });
 
 export const resetDialog = (): easyPrimitiveActionReturn =>
@@ -111,12 +97,9 @@ const getAlgorithmValues = (): AlgorithmValues => ({
   name: store.getState().AlgorithmDialogStore.algorithmName,
   description: store.getState().AlgorithmDialogStore.algorithmDescription,
   softKPIs: {
-    implementationKnowHowLevel: store.getState().AlgorithmDialogStore
-      .implementationKnowHowLevel,
-    matchingSolutionType: store.getState().AlgorithmDialogStore
-      .matchingSolutionType,
-    timeToConfigure: store.getState().AlgorithmDialogStore.timeToConfigure,
-    timeToInstall: store.getState().AlgorithmDialogStore.timeToInstall,
+    general: store.getState().AlgorithmDialogStore.softKPIsGeneral,
+    installationCosts: store.getState().AlgorithmDialogStore
+      .softKPIsInstallation,
   },
 });
 

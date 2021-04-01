@@ -28,6 +28,7 @@ type ActionPayload =
   | Dataset[]
   | number
   | undefined
+  | unknown
   | Experiment[]
   | Experiment
   | Event
