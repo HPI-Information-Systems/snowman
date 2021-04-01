@@ -47,7 +47,7 @@ export const metaSchemas = assertType<
           dataType: 'TEXT',
         },
         userInterface: {
-          name: 'interface' as const,
+          name: 'userInterface' as const,
           dataType: 'TEXT',
         },
         costs: {
