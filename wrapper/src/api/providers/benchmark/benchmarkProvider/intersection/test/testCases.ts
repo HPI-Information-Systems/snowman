@@ -2,9 +2,10 @@ import {
   AlgorithmId,
   DatasetId,
   ExperimentId,
+  SetExperimentFileFormatEnum,
 } from '../../../../../server/types';
 import { fileToReadable } from '../../../../../tools/test/filtToReadable';
-import { getProviders } from '../../../..';
+import { providers } from '../../../..';
 import {
   RelaxedClustering,
   relaxedClusteringToArray,
@@ -235,14 +236,14 @@ async function loadExperiment(
   algorithmId: AlgorithmId,
   experiment: NodeID[][]
 ): Promise<number> {
-  const experimentId = getProviders().experiment.addExperiment({
+  const experimentId = providers.experiment.addExperiment({
     algorithmId,
     datasetId,
     name: '',
   });
-  await getProviders().experiment.setExperimentFile(
+  await providers.experiment.setExperimentFile(
     experimentId,
-    'pilot',
+    SetExperimentFileFormatEnum.Pilot,
     fileToReadable([
       ['p1', 'p2'],
       ...experiment.flatMap((cluster) => {
@@ -274,10 +275,10 @@ export async function loadTestCase(
     (prev, cur) => prev + cur.length,
     0
   );
-  const datasetId = getProviders().dataset.addDataset({
+  const datasetId = providers.dataset.addDataset({
     name: '',
   });
-  await getProviders().dataset.setDatasetFile(
+  await providers.dataset.setDatasetFile(
     datasetId,
     fileToReadable([
       ['id'],
@@ -290,7 +291,7 @@ export async function loadTestCase(
     "'",
     ','
   );
-  const algorithmId = getProviders().algorithm.addAlgorithm({
+  const algorithmId = providers.algorithm.addAlgorithm({
     name: '',
   });
   return [

@@ -1,5 +1,9 @@
 import { setupDatabase } from '../../database';
-import { DatasetValues, ExperimentValues } from '../../server/types';
+import {
+  DatasetValues,
+  ExperimentValues,
+  SetExperimentFileFormatEnum,
+} from '../../server/types';
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
 import { DatasetProvider } from '../dataset/datasetProvider';
@@ -138,7 +142,7 @@ beforeAll(async () => {
     const id = experimentProvider.addExperiment(experiment.data.meta);
     await experimentProvider.setExperimentFile(
       id,
-      'pilot',
+      SetExperimentFileFormatEnum.Pilot,
       fileToReadable(experiment.data.file)
     );
     experimentIds[experiment.name] = id;

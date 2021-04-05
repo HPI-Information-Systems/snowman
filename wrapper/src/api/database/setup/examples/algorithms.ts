@@ -1,4 +1,4 @@
-import { getProviders } from '../../../providers';
+import { providers } from '../../../providers';
 import {
   AlgorithmId,
   AlgorithmValues,
@@ -16,7 +16,7 @@ export type ExampleAlgorithms = {
 };
 
 export function loadExampleAlgorithms(algorithms: ExampleAlgorithms): void {
-  const algorithmProvider = getProviders().algorithm;
+  const algorithmProvider = providers.algorithm;
   for (const { id, meta } of Object.values(algorithms)) {
     algorithmProvider.setAlgorithm(id, meta);
   }

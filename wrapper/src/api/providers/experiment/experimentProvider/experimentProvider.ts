@@ -1,13 +1,13 @@
 import { Readable } from 'stream';
 
 import { databaseBackend, tables } from '../../../database';
-import { ExperimentValues, FileResponse } from '../../../server/types';
 import {
-  Experiment,
-  ExperimentFileFormat,
-  ExperimentId,
+  ExperimentValues,
+  FileResponse,
+  SetExperimentFileFormatEnum,
 } from '../../../server/types';
-import { getProviders } from '../..';
+import { Experiment, ExperimentId } from '../../../server/types';
+import { providers } from '../..';
 import { invalidateCaches } from '../../benchmark/benchmarkProvider/intersection/cache';
 import { DatasetIDMapper } from '../../dataset/datasetProvider/util/idMapper';
 import { ExperimentFileGetter } from '../../experiment/experimentProvider/file/getter';
@@ -85,20 +85,20 @@ export class ExperimentProvider {
   ): FileResponse {
     return new ExperimentFileGetter(
       id,
-      getProviders().experiment.getExperiment(id).datasetId
+      providers.experiment.getExperiment(id).datasetId
     ).get(startAt, limit, sortBy);
   }
 
   async setExperimentFile(
     id: ExperimentId,
-    format: ExperimentFileFormat,
+    format: SetExperimentFileFormatEnum,
     file: Readable
   ): Promise<void> {
     this.checks.throwIfLocked(id);
     return this.checks.sync.call(async () => {
       this.deleteExperimentFileNoChecks(id);
       const { datasetId } = this.getExperiment(id);
-      const dataset = getProviders().dataset.getDataset(datasetId);
+      const dataset = providers.dataset.getDataset(datasetId);
 
       const datasetIDMapper = new DatasetIDMapper(datasetId);
       const ExperimentInserter = getExperimentInserter(format);

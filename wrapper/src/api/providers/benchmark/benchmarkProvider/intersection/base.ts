@@ -1,6 +1,6 @@
 import { DatasetId, ExperimentId } from '../../../../server/types';
 import { LazyProperty } from '../../../../tools/lazyProperty';
-import { getProviders } from '../../..';
+import { providers } from '../../..';
 import { Clustering } from '../cluster/types';
 import { UnionFind } from '../cluster/unionFind';
 import type { Intersection as IntersectionSubclass } from '.';
@@ -46,7 +46,7 @@ export class IntersectionBase {
         'Creating a clustering which excludes experiments is not supported.'
       );
     }
-    const numberOfRecords = getProviders().dataset.getDataset(this.datasetId[0])
+    const numberOfRecords = providers.dataset.getDataset(this.datasetId[0])
       .numberOfRecords;
     if (numberOfRecords === undefined) {
       throw new Error('The dataset does not specify number of records.');

@@ -510,6 +510,8 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/SimilarityThresholdFunction"
+        404:
+          description: Not Found
 
     post:
       tags:

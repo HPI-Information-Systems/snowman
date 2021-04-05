@@ -1,9 +1,7 @@
 import {
   ExperimentId,
   ExperimentIntersectionCount,
-  ExperimentIntersectionPairCountsItem,
-  ExperimentIntersectionPairCountsRequestExperiments,
-  ExperimentIntersectionRequestExperiments,
+  ExperimentIntersectionItem,
   FileResponse,
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
@@ -33,22 +31,22 @@ import { ConfusionMatrix } from './metrics/confusionMatrix';
 
 export class BenchmarkProvider {
   calculateExperimentIntersectionCount({
-    config,
+    intersection: experiments,
   }: {
-    config: ExperimentIntersectionRequestExperiments[];
+    intersection: ExperimentIntersectionItem[];
   }): ExperimentIntersectionCount {
-    const intersection = this.intersection(config);
+    const intersection = this.intersection(experiments);
     return {
+      experiments,
       numberPairs: intersection.numberPairs,
       numberRows: intersection.rowCount,
     };
   }
 
-  calculateExperimentIntersectionPairCounts(
-    config: ExperimentIntersectionPairCountsRequestExperiments[]
-  ): ExperimentIntersectionPairCountsItem[] {
-    const experimentIds = config.map(({ experimentId }) => experimentId);
-    const datasetId = datasetFromExperimentIds(experimentIds).id;
+  calculateExperimentIntersectionCounts(
+    experiments: ExperimentId[]
+  ): ExperimentIntersectionCount[] {
+    const datasetId = datasetFromExperimentIds(experiments).id;
     enum ExperimentState {
       IRRELEVANT,
       INCLUDED,
@@ -59,8 +57,8 @@ export class BenchmarkProvider {
       ExperimentState.INCLUDED,
       ExperimentState.EXCLUDED,
     ];
-    const state = config.map(() => ExperimentState.IRRELEVANT);
-    const counts: ExperimentIntersectionPairCountsItem[] = [];
+    const state = experiments.map(() => ExperimentState.IRRELEVANT);
+    const counts: ExperimentIntersectionCount[] = [];
     function nextState() {
       let index = 0;
       do {
@@ -77,12 +75,12 @@ export class BenchmarkProvider {
     do {
       const included = state
         .map((state, index) =>
-          state === ExperimentState.INCLUDED ? experimentIds[index] : undefined
+          state === ExperimentState.INCLUDED ? experiments[index] : undefined
         )
         .filter((index) => index !== undefined) as ExperimentId[];
       const excluded = state
         .map((state, index) =>
-          state === ExperimentState.EXCLUDED ? experimentIds[index] : undefined
+          state === ExperimentState.EXCLUDED ? experiments[index] : undefined
         )
         .filter((index) => index !== undefined) as ExperimentId[];
       counts.push({
@@ -110,25 +108,31 @@ export class BenchmarkProvider {
   }
 
   calculateExperimentIntersectionRecords({
-    config,
+    intersection: experiments,
     startAt,
     limit,
   }: {
-    config: ExperimentIntersectionRequestExperiments[];
+    intersection: ExperimentIntersectionItem[];
     startAt?: number;
     limit?: number;
   }): FileResponse {
-    const intersection = this.intersection(config);
+    const intersection = this.intersection(experiments);
     return idClustersToRecordClusters(
       intersection.clusters(startAt, limit),
-      datasetFromExperimentIds(config.map(({ experimentId }) => experimentId))
-        .id
+      datasetFromExperimentIds(
+        experiments.map(({ experimentId }) => experimentId)
+      ).id
     );
   }
 
-  getBinaryMetrics(goldstandardId: number, experimentId: number): Metric[] {
-    const datasetId = datasetFromExperimentIds([goldstandardId, experimentId])
-      .id;
+  getBinaryMetrics(
+    groundTruthExperimentId: ExperimentId,
+    predictedExperimentId: ExperimentId
+  ): Metric[] {
+    const datasetId = datasetFromExperimentIds([
+      groundTruthExperimentId,
+      predictedExperimentId,
+    ]).id;
     const metrics = [
       Accuracy,
       Precision,
@@ -152,23 +156,23 @@ export class BenchmarkProvider {
     ];
     const matrix: ConfusionMatrix = {
       truePositives: IntersectionCache.get(
-        [goldstandardId, experimentId],
+        [groundTruthExperimentId, predictedExperimentId],
         [],
         [datasetId]
       ).numberPairs,
       falsePositives: IntersectionCache.get(
-        [experimentId],
-        [goldstandardId],
+        [predictedExperimentId],
+        [groundTruthExperimentId],
         [datasetId]
       ).numberPairs,
       falseNegatives: IntersectionCache.get(
-        [goldstandardId],
-        [experimentId],
+        [groundTruthExperimentId],
+        [predictedExperimentId],
         [datasetId]
       ).numberPairs,
       trueNegatives: IntersectionCache.get(
         [],
-        [goldstandardId, experimentId],
+        [groundTruthExperimentId, predictedExperimentId],
         [datasetId]
       ).numberPairs,
     };
@@ -187,18 +191,19 @@ export class BenchmarkProvider {
   }
 
   protected intersection(
-    config: ExperimentIntersectionRequestExperiments[]
+    experiments: ExperimentIntersectionItem[]
   ): Intersection {
     return IntersectionCache.get(
-      config
+      experiments
         .filter(({ predictedCondition }) => predictedCondition)
         .map(({ experimentId }) => experimentId),
-      config
+      experiments
         .filter(({ predictedCondition }) => !predictedCondition)
         .map(({ experimentId }) => experimentId),
       [
-        datasetFromExperimentIds(config.map(({ experimentId }) => experimentId))
-          .id,
+        datasetFromExperimentIds(
+          experiments.map(({ experimentId }) => experimentId)
+        ).id,
       ]
     );
   }

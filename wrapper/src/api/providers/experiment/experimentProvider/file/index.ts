@@ -28,7 +28,7 @@ const experimentInserters = new Map<string, InstantiableExperimentInserter>(
 );
 
 export function getExperimentInserter(
-  formatId: string
+  formatId: typeof experimentFormats[number][0]
 ): InstantiableExperimentInserter {
   const ExperimentLoader = experimentInserters.get(formatId);
   if (!ExperimentLoader) {

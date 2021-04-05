@@ -1,7 +1,7 @@
 import path from 'path';
 
 import { DATABASE_SETUP_DIR } from '../../../config';
-import { getProviders } from '../../../providers';
+import { providers } from '../../../providers';
 import { DatasetId, DatasetValues } from '../../../server/types';
 import { readFile } from '../../../tools/readFile';
 import { assertType } from '../../../tools/types';
@@ -26,7 +26,7 @@ export type ExampleDatasets = {
 export async function loadExampleDatasets(
   datasets: ExampleDatasets
 ): Promise<void> {
-  const datasetProvider = getProviders().dataset;
+  const datasetProvider = providers.dataset;
   for (const { id, meta, file } of Object.values(datasets)) {
     datasetProvider.setDataset(id, meta);
     if (file) {

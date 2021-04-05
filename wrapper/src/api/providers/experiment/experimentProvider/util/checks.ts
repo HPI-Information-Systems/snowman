@@ -1,20 +1,20 @@
 import { AlgorithmId, DatasetId, ExperimentId } from '../../../../server/types';
 import { ExecuteSynchronized } from '../../../../tools/executeSynchronized';
-import { getProviders } from '../../..';
+import { providers } from '../../..';
 
 export class ExperimentConsistencyChecks {
   readonly sync = new ExecuteSynchronized();
 
   throwIfDatasetNotExists(datasetId: DatasetId): void {
-    getProviders().dataset.getDataset(datasetId);
+    providers.dataset.getDataset(datasetId);
   }
 
   throwIfAlgorithmNotExists(algorithmId: AlgorithmId): void {
-    getProviders().algorithm.getAlgorithm(algorithmId);
+    providers.algorithm.getAlgorithm(algorithmId);
   }
 
   throwIfExperimentNotExists(experimentId: ExperimentId): void {
-    getProviders().experiment.getExperiment(experimentId);
+    providers.experiment.getExperiment(experimentId);
   }
 
   throwIfLocked(experimentId: ExperimentId): void {

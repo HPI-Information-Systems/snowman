@@ -26,14 +26,14 @@ export async function calculateExperimentIntersectionRecords(
   );
 }
 
-export async function calculateExperimentIntersectionPairCounts(
+export async function calculateExperimentIntersectionCounts(
   request: Request,
   response: Response
 ): Promise<void> {
   await Controller.handleRequest(
     request,
     response,
-    service.calculateExperimentIntersectionPairCounts
+    service.calculateExperimentIntersectionCounts
   );
 }
 

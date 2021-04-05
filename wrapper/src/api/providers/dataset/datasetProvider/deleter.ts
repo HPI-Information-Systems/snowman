@@ -1,5 +1,5 @@
 import { databaseBackend, tables } from '../../../database';
-import { getProviders } from '../..';
+import { providers } from '../..';
 import { DatasetIDMapper } from './util/idMapper';
 
 export class DatasetDeleter {
@@ -27,7 +27,7 @@ export class DatasetDeleter {
   }
 
   private deleteExperimentsUsingThisDataset(): void {
-    const experimentProvider = getProviders().experiment;
+    const experimentProvider = providers.experiment;
     for (const { id } of tables.meta.experiment.all({
       dataset: this.datasetId,
     })) {

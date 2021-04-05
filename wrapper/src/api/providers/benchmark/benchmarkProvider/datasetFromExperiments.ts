@@ -1,11 +1,11 @@
 import { Dataset, ExperimentId } from '../../../server/types';
-import { getProviders } from '../..';
+import { providers } from '../..';
 
 export function datasetFromExperimentIds(
   experimentIds: ExperimentId[]
 ): Dataset & { numberOfRecords: number } {
-  const datasetProvider = getProviders().dataset;
-  const experimentProvider = getProviders().experiment;
+  const datasetProvider = providers.dataset;
+  const experimentProvider = providers.experiment;
   const datasetIds = experimentIds.map(
     (experimentId) => experimentProvider.getExperiment(experimentId).datasetId
   );
