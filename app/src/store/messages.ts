@@ -2,7 +2,7 @@ import {
   Algorithm,
   Dataset,
   Experiment,
-  ExperimentIntersectionPairCountsItem,
+  ExperimentIntersectionCount,
   FileResponse,
   Metric,
 } from 'api';
@@ -32,7 +32,7 @@ type ActionPayload =
   | Experiment
   | Event
   | DragNDropDescriptor<string>
-  | ExperimentIntersectionPairCountsItem[]
+  | ExperimentIntersectionCount[]
   | {
       excluded: Experiment[];
       included: Experiment[];

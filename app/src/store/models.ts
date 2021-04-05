@@ -4,7 +4,7 @@ import {
   AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
   Dataset,
   Experiment,
-  ExperimentIntersectionPairCountsItem,
+  ExperimentIntersectionCount,
   Metric,
 } from 'api';
 import { DatasetTypes } from 'types/DatasetTypes';
@@ -105,11 +105,11 @@ export interface IntersectionStore {
   excluded: Experiment[];
   ignored: Experiment[];
   // experiments are guaranteed to be sorted by intersectionCountSorter (see IntersectionStoreActions.ts)
-  counts: ExperimentIntersectionPairCountsItem[];
+  counts: ExperimentIntersectionCount[];
 }
 
 export interface BinaryMetricsStore {
-  counts: ExperimentIntersectionPairCountsItem[];
+  counts: ExperimentIntersectionCount[];
   metrics: Metric[];
   selectedDataView: MetricsTuplesCategories;
 }

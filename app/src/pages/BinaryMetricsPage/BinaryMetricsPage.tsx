@@ -1,4 +1,4 @@
-import { ExperimentIntersectionPairCountsItem } from 'api';
+import { ExperimentIntersectionCount } from 'api';
 import { BinaryMetricsPageView } from 'pages/BinaryMetricsPage/BinaryMetricsPage.View';
 import {
   BinaryMetricsPageDispatchProps,
@@ -24,7 +24,7 @@ import { TuplesLoader } from 'types/TuplesLoader';
 const getCountsByTuplesCategory = (
   store: Store,
   aMetricsTuplesCategory: MetricsTuplesCategories
-): ExperimentIntersectionPairCountsItem | undefined => {
+): ExperimentIntersectionCount | undefined => {
   const counts = store.BinaryMetricsStore.counts
     .filter(({ experiments }) => experiments.length === 2)
     .filter(({ experiments }) =>

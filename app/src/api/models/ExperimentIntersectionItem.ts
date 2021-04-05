@@ -16,40 +16,28 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface ExperimentIntersectionRequestExperiments
+ * @interface ExperimentIntersectionItem
  */
-export interface ExperimentIntersectionRequestExperiments {
+export interface ExperimentIntersectionItem {
     /**
      * 
      * @type {number}
-     * @memberof ExperimentIntersectionRequestExperiments
+     * @memberof ExperimentIntersectionItem
      */
     experimentId: number;
     /**
      * 
      * @type {boolean}
-     * @memberof ExperimentIntersectionRequestExperiments
+     * @memberof ExperimentIntersectionItem
      */
     predictedCondition: boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExperimentIntersectionRequestExperiments
-     */
-    similarityAttribute?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ExperimentIntersectionRequestExperiments
-     */
-    similarityScore?: number;
 }
 
-export function ExperimentIntersectionRequestExperimentsFromJSON(json: any): ExperimentIntersectionRequestExperiments {
-    return ExperimentIntersectionRequestExperimentsFromJSONTyped(json, false);
+export function ExperimentIntersectionItemFromJSON(json: any): ExperimentIntersectionItem {
+    return ExperimentIntersectionItemFromJSONTyped(json, false);
 }
 
-export function ExperimentIntersectionRequestExperimentsFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExperimentIntersectionRequestExperiments {
+export function ExperimentIntersectionItemFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExperimentIntersectionItem {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -57,12 +45,10 @@ export function ExperimentIntersectionRequestExperimentsFromJSONTyped(json: any,
         
         'experimentId': json['experimentId'],
         'predictedCondition': json['predictedCondition'],
-        'similarityAttribute': !exists(json, 'similarityAttribute') ? undefined : json['similarityAttribute'],
-        'similarityScore': !exists(json, 'similarityScore') ? undefined : json['similarityScore'],
     };
 }
 
-export function ExperimentIntersectionRequestExperimentsToJSON(value?: ExperimentIntersectionRequestExperiments | null): any {
+export function ExperimentIntersectionItemToJSON(value?: ExperimentIntersectionItem | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -73,8 +59,6 @@ export function ExperimentIntersectionRequestExperimentsToJSON(value?: Experimen
         
         'experimentId': value.experimentId,
         'predictedCondition': value.predictedCondition,
-        'similarityAttribute': value.similarityAttribute,
-        'similarityScore': value.similarityScore,
     };
 }
 

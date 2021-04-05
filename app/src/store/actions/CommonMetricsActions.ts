@@ -18,8 +18,8 @@ export const getMetrics = (
   return RequestHandler<Metric[]>(
     () =>
       new BenchmarkApi().getBinaryMetrics({
-        experimentId1: getGroundTruthId(),
-        experimentId2: experimentId,
+        groundTruthExperimentId: getGroundTruthId(),
+        predictedExperimentId: experimentId,
       }),
     dispatch,
     successMessage,

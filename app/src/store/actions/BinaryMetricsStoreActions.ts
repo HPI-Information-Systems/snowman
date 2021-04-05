@@ -1,4 +1,9 @@
-import { BenchmarkApi, FileResponse, Metric } from 'api';
+import {
+  BenchmarkApi,
+  CalculateExperimentIntersectionRecordsRequest,
+  FileResponse,
+  Metric,
+} from 'api';
 import { BinaryMetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import {
   getGroundTruthId,
@@ -35,66 +40,58 @@ export const loadMetrics = (): SnowmanThunkAction<Promise<void>> => async (
 const getRequestBodyForTruePositives = (
   experimentId1: number,
   experimentId2: number
-) => ({
-  experimentIntersectionRequestExperiments: [
-    {
-      experimentId: experimentId1,
-      predictedCondition: true,
-    },
-    {
-      experimentId: experimentId2,
-      predictedCondition: true,
-    },
-  ],
-});
+): CalculateExperimentIntersectionRecordsRequest['intersection'] => [
+  {
+    experimentId: experimentId1,
+    predictedCondition: true,
+  },
+  {
+    experimentId: experimentId2,
+    predictedCondition: true,
+  },
+];
 
 const getRequestBodyForFalsePositives = (
   experimentId1: number,
   experimentId2: number
-) => ({
-  experimentIntersectionRequestExperiments: [
-    {
-      experimentId: experimentId1,
-      predictedCondition: false,
-    },
-    {
-      experimentId: experimentId2,
-      predictedCondition: true,
-    },
-  ],
-});
+): CalculateExperimentIntersectionRecordsRequest['intersection'] => [
+  {
+    experimentId: experimentId1,
+    predictedCondition: false,
+  },
+  {
+    experimentId: experimentId2,
+    predictedCondition: true,
+  },
+];
 
 const getRequestBodyForFalseNegatives = (
   experimentId1: number,
   experimentId2: number
-) => ({
-  experimentIntersectionRequestExperiments: [
-    {
-      experimentId: experimentId1,
-      predictedCondition: true,
-    },
-    {
-      experimentId: experimentId2,
-      predictedCondition: false,
-    },
-  ],
-});
+): CalculateExperimentIntersectionRecordsRequest['intersection'] => [
+  {
+    experimentId: experimentId1,
+    predictedCondition: true,
+  },
+  {
+    experimentId: experimentId2,
+    predictedCondition: false,
+  },
+];
 
 const getRequestBodyForTrueNegatives = (
   experimentId1: number,
   experimentId2: number
-) => ({
-  experimentIntersectionRequestExperiments: [
-    {
-      experimentId: experimentId1,
-      predictedCondition: false,
-    },
-    {
-      experimentId: experimentId2,
-      predictedCondition: false,
-    },
-  ],
-});
+): CalculateExperimentIntersectionRecordsRequest['intersection'] => [
+  {
+    experimentId: experimentId1,
+    predictedCondition: false,
+  },
+  {
+    experimentId: experimentId2,
+    predictedCondition: false,
+  },
+];
 
 type LoadTuplesRequestBody = ReturnType<typeof getRequestBodyForTruePositives>;
 
@@ -104,13 +101,13 @@ const getExperimentsComparisonTuple = (): [number, number] => [
 ];
 
 const loadTuples = (
-  requestBody: LoadTuplesRequestBody,
+  intersection: LoadTuplesRequestBody,
   startAt: number,
   stopAt: number
 ): Promise<FileResponse> =>
   new BenchmarkApi().calculateExperimentIntersectionRecords({
-    ...requestBody,
-    startAt: startAt,
+    intersection,
+    startAt,
     limit: stopAt - startAt,
   });
 
@@ -160,12 +157,8 @@ export const loadBinaryMetricsTuplesCounts = (): SnowmanThunkAction<
   RequestHandler(
     () =>
       new BenchmarkApi()
-        .calculateExperimentIntersectionPairCounts({
-          experimentIntersectionPairCountsRequestExperiments: getExperimentsComparisonTuple().map(
-            (experimentId) => ({
-              experimentId,
-            })
-          ),
+        .calculateExperimentIntersectionCounts({
+          experiments: getExperimentsComparisonTuple(),
         })
         .then((counts) =>
           dispatch({
