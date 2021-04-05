@@ -38,9 +38,6 @@
 			"editor.formatOnSave": false
 		},
 		"typescript.tsdk": "node_modules/typescript/lib",
-		"jest.disabledWorkspaceFolders": [
-			"app"
-		],
 		"files.exclude": {
 			"**/.git": true,
 			"**/.svn": true,
@@ -54,7 +51,7 @@
 	"launch": {
 		"configurations": [
 			{
-				"command": "npm run test",
+				"command": "npm run test -- --watchAll",
 				"name": "Test",
 				"request": "launch",
 				"type": "node-terminal",
