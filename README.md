@@ -28,6 +28,10 @@ _After reaching milestone 3, we plan to continue to work on further features whi
 Contribution guidelines will follow soon. Until then, feel free to open an issue to report a bug or request a feature.  
 In case you want to contribute code, please first open an associated issue and afterwards a pull request containing the proposed solution.
 
+### Development
+
+See our [development guide](https://hpi-information-systems.github.io/snowman/dev_setup/introduction/) for more information on how to get started.
+
 ## Documentation
 
 Please see our documentation for further information: [Snowman Docs](https://hpi-information-systems.github.io/snowman/)

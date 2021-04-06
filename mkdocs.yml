@@ -15,7 +15,7 @@ nav:
     - Connect your code: advanced_setups/code_connection.md
   - Development:
     - Setup: dev_setup/introduction.md
-    - Contributing: contributing/knowledge.md
+    - Contributing: dev_setup/contrib-knowledge.md
     - REST API: ./swagger
   - SIGMOD2021: sigmod2021.md
 
