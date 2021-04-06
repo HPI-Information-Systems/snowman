@@ -6,6 +6,12 @@ You can use the dashboard to choose between each of them.
 !!! info
     Some benchmarking options depend on how many experiments and gold standards were selected.
 
+## Dashboard
+
+Although the dashboard is no real benchmarking or evaluation step by itself, it serves as an overview of what is
+possible with the currently selected experiment layout. You can directly click on segments in the Venn Diagram
+to start the investigation process or use the proposed actions on the right.
+
 ## Binary Comparison
 
 ![Screenshot3](../assets/benchmark-binary.png "Binary comparison")
