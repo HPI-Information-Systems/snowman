@@ -32,7 +32,7 @@ export const ExperimentDialogReducer = (
       };
     case actionTypes.OPEN_CHANGE_DIALOG:
       return {
-        ...state,
+        ...initialState,
         dialogType: DialogTypes.CHANGE_DIALOG,
         isOpen: true,
         experimentId: (action.payload as Experiment).id,
