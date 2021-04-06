@@ -27,7 +27,6 @@ const ExperimentDialogView = ({
   experimentName,
   experimentDescription,
   experimentFileFormat,
-  timeToConfigure,
   tags,
   selectedTags,
   changeExperimentDescription,
@@ -38,7 +37,6 @@ const ExperimentDialogView = ({
   isValidForm,
   selectedFiles,
   changeSelectedFiles,
-  changeTimeToConfigure,
 }: ExperimentDialogProps): JSX.Element => (
   <ModalDialog
     heading={isAddDialog ? 'Add New Experiment' : 'Update Existing Experiment'}
@@ -93,22 +91,6 @@ const ExperimentDialogView = ({
           </IonNote>
         </div>
       ) : null}
-      <IonItemDivider>
-        <IonLabel>SPECIFY SOFT KPIS</IonLabel>
-      </IonItemDivider>
-      <IonItem>
-        <IonLabel>Time to Configure</IonLabel>
-        <IonInput
-          clearInput
-          type="number"
-          value={timeToConfigure}
-          onIonChange={changeTimeToConfigure}
-          className="input-align-right"
-        />
-      </IonItem>
-      <IonItemDivider>
-        <IonLabel>USED MATCHING SOLUTION</IonLabel>
-      </IonItemDivider>
     </IonList>
     <div className="center tag-view">
       {tags.map(

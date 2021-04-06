@@ -70,11 +70,6 @@ export const ExperimentDialogReducer = (
         ...state,
         experimentFileFormat: action.payload as experimentFileFormatEnum,
       };
-    case actionTypes.CHANGE_SOFT_KPI_TIME_TO_CONFIGURE:
-      return {
-        ...state,
-        timeToConfigure: action.payload as number | undefined,
-      };
     case actionTypes.RESET_DIALOG:
       return initialState;
     case actionTypes.CHANGE_SELECTED_FILES:
