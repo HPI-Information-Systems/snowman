@@ -25,7 +25,7 @@ export const AlgorithmDialogReducer = (
       };
     case DialogActions.OPEN_CHANGE_DIALOG:
       return {
-        ...state,
+        ...initialState,
         isOpen: true,
         algorithmId: (action.payload as Algorithm).id,
         algorithmName: (action.payload as Algorithm).name,

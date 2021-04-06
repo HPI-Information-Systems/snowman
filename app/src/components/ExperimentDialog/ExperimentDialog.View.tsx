@@ -14,7 +14,11 @@ import { ExperimentDialogProps } from 'components/ExperimentDialog/ExperimentDia
 import FileInput from 'components/FileInput/FileInput';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
 import SelectableInput from 'components/SelectableInput/SelectableInput';
-import { addCircleOutline, closeCircleOutline } from 'ionicons/icons';
+import {
+  addCircleOutline,
+  checkmarkCircleOutline,
+  closeCircleOutline,
+} from 'ionicons/icons';
 import React from 'react';
 import { $enum } from 'ts-enum-util';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
@@ -80,14 +84,14 @@ const ExperimentDialogView = ({
         <FileInput
           selectedFiles={selectedFiles}
           onChange={changeSelectedFiles}
+          allowMultiple={false}
+          disabled={!isAddDialog}
         />
       </IonItem>
       {!isAddDialog ? (
         <div className="center">
           <IonNote color="medium">
-            <b>Note: Uploading a file is optional here!</b>
-            <br />
-            If no file is selected, the stored records will remain unchanged.
+            Note: This option is disabled for experiment updates.
           </IonNote>
         </div>
       ) : null}
@@ -112,7 +116,10 @@ const ExperimentDialogView = ({
         onClick={clickOnSubmit}
         disabled={!isValidForm}
       >
-        <IonIcon slot="start" icon={addCircleOutline} />
+        <IonIcon
+          slot="start"
+          icon={isAddDialog ? addCircleOutline : checkmarkCircleOutline}
+        />
         {isAddDialog ? 'Add' : 'Update'}
       </IonButton>
       <IonButton
