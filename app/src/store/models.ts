@@ -1,7 +1,5 @@
 import {
   Algorithm,
-  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
-  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
   Dataset,
   Experiment,
   ExperimentIntersectionPairCountsItem,
@@ -17,14 +15,6 @@ export interface AlgorithmDialogStore {
   algorithmId: number | null;
   algorithmName: string;
   algorithmDescription: string;
-  implementationKnowHowLevel:
-    | AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
-    | undefined;
-  matchingSolutionType:
-    | AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum
-    | undefined;
-  timeToConfigure: number | undefined;
-  timeToInstall: number | undefined;
   isOpen: boolean;
   dialogType: DialogTypes;
 }
