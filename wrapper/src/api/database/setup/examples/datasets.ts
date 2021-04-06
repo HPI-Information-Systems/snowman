@@ -161,4 +161,20 @@ export const exampleDatasets = assertType<ExampleDatasets>()({
       numberOfRecords: 337,
     },
   },
+  altoSight: {
+    meta: {
+      name: 'SIGMOD-AltoSight-X4',
+      description: 'This is the altoSight dataset (X4) of the SIGMOD-contest.',
+      tags: ['SIGMOD'],
+    },
+    id: -8,
+    file: {
+      path: path.join(EXAMPLE_DATASET_DIR, 'sigmod_altosight_X4.csv'),
+      idColumn: 'instance_id',
+      separator: ',',
+      quote: '"',
+      escape: '"',
+      numberOfRecords: 835,
+    },
+  },
 });
