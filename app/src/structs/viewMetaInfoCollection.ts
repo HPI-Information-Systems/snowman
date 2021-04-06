@@ -24,7 +24,6 @@ import {
   emptySelectedOptions,
   selectedDataset,
   selectedExperiments,
-  selectedMatchingSolutions,
 } from 'utils/optionReminders';
 
 export const PrimaryViewMetaInformation: ViewMetaInformation = {
@@ -52,7 +51,7 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuIcon: rocket,
     menuName: 'Matching Solutions',
     menuSortKey: 2,
-    selectedOptionsReminder: selectedMatchingSolutions,
+    selectedOptionsReminder: emptySelectedOptions,
   },
   {
     key: ViewIDs.DATASETS,

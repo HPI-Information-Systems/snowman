@@ -37,7 +37,7 @@ export const DatasetDialogReducer = (
       };
     case DialogActions.OPEN_CHANGE_DIALOG:
       return {
-        ...state,
+        ...initialState,
         isOpen: true,
         dialogType: DialogTypes.CHANGE_DIALOG,
         datasetId: (action.payload as Dataset).id,

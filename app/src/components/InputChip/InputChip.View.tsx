@@ -6,16 +6,18 @@ import {
   closeCircleOutline,
 } from 'ionicons/icons';
 import React, { useEffect, useRef } from 'react';
+import { couldSubmitValue } from 'utils/inputChipHelpers';
 
 const InputChipView = ({
   placeholder = 'New item',
   value,
   label = 'Add',
   onChangeValue,
-  showInput,
   shouldShowInput,
+  showInput,
   hideInput,
-  onSubmit,
+  submitInput,
+  handleKeyboardInteraction,
 }: InputChipProps): JSX.Element => {
   const inputRef = useRef<HTMLIonInputElement>(null);
   useEffect(() => {
@@ -43,23 +45,15 @@ const InputChipView = ({
               value={value}
               onIonChange={onChangeValue}
               placeholder={placeholder}
-              onKeyUp={(e) => {
-                if (e.key === 'Enter' && value.length > 0) {
-                  onSubmit();
-                } else if (e.key === 'Escape') {
-                  hideInput();
-                  e.preventDefault();
-                  e.stopPropagation();
-                }
-              }}
+              onKeyUp={handleKeyboardInteraction}
             />
           </IonLabel>
-          {value !== '' ? (
+          {couldSubmitValue(value) ? (
             <IonIcon
               key="inputchip-submit"
               color="success"
               icon={checkmarkCircleOutline}
-              onClick={onSubmit}
+              onClick={submitInput}
             />
           ) : (
             <IonIcon

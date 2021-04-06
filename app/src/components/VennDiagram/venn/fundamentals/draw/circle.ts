@@ -15,8 +15,6 @@ export const drawCircle = (
     radius: number;
     position: { x: number; y: number };
     color: string;
-    textPosition: { x: number; y: number };
-    text?: string;
   } & VennDiagramSet
 ): d3Selection =>
   drawEllipsis({
@@ -31,6 +29,7 @@ export const drawCircleStroke = (
     radius: number;
     position: { x: number; y: number };
     tooltipDrawer: VennDiagramTooltip;
+    textPosition: { x: number; y: number };
   } & VennDiagramSet
 ): d3Selection =>
   drawEllipsisStroke({

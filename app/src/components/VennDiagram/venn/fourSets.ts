@@ -36,7 +36,6 @@ export const drawFourSetVennDiagram = (
     angle: 45,
     position: { x: 196, y: 246 },
     dimensions: { x: 200, y: 110 },
-    textPosition: { x: 110, y: 240 },
     ...payload.x1000,
     color: payload.x1000.color ?? 'red',
   });
@@ -45,7 +44,6 @@ export const drawFourSetVennDiagram = (
     angle: 45,
     position: { x: 266, y: 176 },
     dimensions: { x: 200, y: 110 },
-    textPosition: { x: 180, y: 65 },
     ...payload.x0100,
     color: payload.x0100.color ?? '#9400D3',
   });
@@ -53,7 +51,6 @@ export const drawFourSetVennDiagram = (
     svg,
     angle: 135,
     position: { x: 326, y: 176 },
-    textPosition: { x: 410, y: 65 },
     dimensions: { x: 200, y: 110 },
     ...payload.x0010,
     color: payload.x0010.color ?? 'cyan',
@@ -63,7 +60,6 @@ export const drawFourSetVennDiagram = (
     angle: 135,
     position: { x: 396, y: 246 },
     dimensions: { x: 200, y: 110 },
-    textPosition: { x: 480, y: 240 },
     ...payload.x0001,
     color: payload.x0001.color ?? 'orange',
   });
@@ -130,8 +126,8 @@ export const drawFourSetVennDiagram = (
     angle: 45,
     position: { x: 196, y: 246 },
     dimensions: { x: 200, y: 110 },
+    textPosition: { x: 110, y: 240 },
     ...payload.x1000,
-    color: payload.x1000.color ?? 'red',
   });
   drawEllipsisStroke({
     svg,
@@ -139,8 +135,8 @@ export const drawFourSetVennDiagram = (
     angle: 45,
     position: { x: 266, y: 176 },
     dimensions: { x: 200, y: 110 },
+    textPosition: { x: 180, y: 65 },
     ...payload.x0100,
-    color: payload.x0100.color ?? '#9400D3',
   });
   drawEllipsisStroke({
     svg,
@@ -148,8 +144,8 @@ export const drawFourSetVennDiagram = (
     angle: 135,
     position: { x: 326, y: 176 },
     dimensions: { x: 200, y: 110 },
+    textPosition: { x: 410, y: 65 },
     ...payload.x0010,
-    color: payload.x0010.color ?? 'cyan',
   });
   drawEllipsisStroke({
     svg,
@@ -157,8 +153,8 @@ export const drawFourSetVennDiagram = (
     angle: 135,
     position: { x: 396, y: 246 },
     dimensions: { x: 200, y: 110 },
+    textPosition: { x: 480, y: 240 },
     ...payload.x0001,
-    color: payload.x0001.color ?? 'orange',
   });
   drawIntersectionStroke({
     svg,

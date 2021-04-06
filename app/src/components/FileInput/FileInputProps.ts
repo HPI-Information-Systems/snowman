@@ -4,4 +4,5 @@ export type FileInputProps = {
   onChange(event: ChangeEvent<HTMLInputElement>): void;
   selectedFiles: File[];
   allowMultiple?: boolean;
+  disabled?: boolean;
 };

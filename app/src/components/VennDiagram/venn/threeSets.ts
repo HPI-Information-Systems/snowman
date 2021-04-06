@@ -31,7 +31,6 @@ export const drawThreeSetVennDiagram = (
       x: 230,
       y: 256,
     },
-    textPosition: { x: 180, y: 275 },
     ...payload.x100,
     color: payload.x100.color ?? 'cyan',
   });
@@ -42,7 +41,6 @@ export const drawThreeSetVennDiagram = (
       x: 370,
       y: 256,
     },
-    textPosition: { x: 420, y: 275 },
     ...payload.x010,
     color: payload.x010.color ?? '#9400D3',
   });
@@ -53,7 +51,6 @@ export const drawThreeSetVennDiagram = (
       x: 300,
       y: 135,
     },
-    textPosition: { x: 300, y: 90 },
     ...payload.x001,
     color: payload.x001.color ?? 'orange',
   });
@@ -87,8 +84,8 @@ export const drawThreeSetVennDiagram = (
       x: 230,
       y: 256,
     },
+    textPosition: { x: 180, y: 275 },
     ...payload.x100,
-    color: payload.x100.color ?? '#00bf00',
   });
   drawCircleStroke({
     svg,
@@ -98,8 +95,8 @@ export const drawThreeSetVennDiagram = (
       x: 370,
       y: 256,
     },
+    textPosition: { x: 420, y: 275 },
     ...payload.x010,
-    color: payload.x010.color ?? '#007fff',
   });
   drawCircleStroke({
     svg,
@@ -109,8 +106,8 @@ export const drawThreeSetVennDiagram = (
       x: 300,
       y: 135,
     },
+    textPosition: { x: 300, y: 90 },
     ...payload.x001,
-    color: payload.x001.color ?? '#ff3433',
   });
   drawIntersectionStroke({
     svg,

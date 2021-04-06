@@ -26,7 +26,6 @@ export const drawTwoSetVennDiagram = (
       x: 230,
       y: 156,
     },
-    textPosition: { x: 180, y: 125 },
     ...payload.x10,
     color: payload.x10.color ?? '#9400D3',
   });
@@ -37,7 +36,6 @@ export const drawTwoSetVennDiagram = (
       x: 370,
       y: 156,
     },
-    textPosition: { x: 420, y: 125 },
     ...payload.x01,
     color: payload.x01.color ?? 'orange',
   });
@@ -55,8 +53,8 @@ export const drawTwoSetVennDiagram = (
       x: 230,
       y: 156,
     },
+    textPosition: { x: 180, y: 125 },
     ...payload.x10,
-    color: payload.x10.color ?? '#9400D3',
   });
   drawCircleStroke({
     svg,
@@ -66,8 +64,8 @@ export const drawTwoSetVennDiagram = (
       x: 370,
       y: 156,
     },
+    textPosition: { x: 420, y: 125 },
     ...payload.x01,
-    color: payload.x01.color ?? 'orange',
   });
   drawIntersectionStroke({
     svg,

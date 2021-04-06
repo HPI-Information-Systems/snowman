@@ -23,7 +23,6 @@ export const drawOneSetVennDiagram = (
       x: 300,
       y: 150,
     },
-    textPosition: { x: 300, y: 150 },
     ...payload.x1,
     color: payload.x1.color ?? '#9400D3',
   });
@@ -36,7 +35,7 @@ export const drawOneSetVennDiagram = (
       x: 300,
       y: 150,
     },
+    textPosition: { x: 300, y: 150 },
     ...payload.x1,
-    color: payload.x1.color ?? '#9400D3',
   });
 };

@@ -57,7 +57,9 @@ const SideMenuView = ({
                       <h2>{aCategoryItem.name}</h2>
                       {aCategoryItem.selectedOptions.map(
                         (anOption: SelectedOptionItem): JSX.Element => (
-                          <p key={anOption.displayName}>
+                          <p
+                            key={`smenuitem-${aCategoryItem.key}-${anOption.id}`}
+                          >
                             {anOption.iconStart !== undefined ? (
                               <IonIcon
                                 className="sm-option-middle"
