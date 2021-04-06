@@ -176,33 +176,35 @@ export const BenchmarkConfiguratorReducer = (
   );
   const experimentToId = (oneExperiment: Experiment): number =>
     oneExperiment.id;
-  const filterOutIrrelevantExperiments = (
-    theRelevantExperimentIds: number[],
-    aBucket: Experiment[]
+  const syncExperimentSubsetWith = (
+    aSubset: Experiment[],
+    aUniverse: Experiment[]
   ): Experiment[] =>
-    aBucket.filter((oneExperiment: Experiment): boolean =>
-      theRelevantExperimentIds.includes(oneExperiment.id)
-    );
+    aSubset.reduce((acc: Experiment[], cur: Experiment): Experiment[] => {
+      const foundEntity = aUniverse.find(
+        (val: Experiment): boolean => val.id === cur.id
+      );
+      return foundEntity === undefined ? acc : [...acc, foundEntity];
+    }, []);
+
   const relevantExperiments: Experiment[] = coreState.experiments.filter(
     (anExperiment: Experiment): boolean =>
       anExperiment.datasetId ===
       (immediateState.selectedDataset?.id ?? MagicNotPossibleId)
   );
-  const relevantExperimentIds: number[] = relevantExperiments.map(
-    experimentToId
+  const finalChosenExperiments: Experiment[] = syncExperimentSubsetWith(
+    immediateState.chosenExperiments,
+    relevantExperiments
   );
-  const finalChosenExperiments: Experiment[] = filterOutIrrelevantExperiments(
-    relevantExperimentIds,
-    immediateState.chosenExperiments
+  const finalChosenGoldStandards: Experiment[] = syncExperimentSubsetWith(
+    immediateState.chosenGoldStandards,
+    relevantExperiments
   );
-  const finalChosenGoldStandards: Experiment[] = filterOutIrrelevantExperiments(
-    relevantExperimentIds,
-    immediateState.chosenGoldStandards
-  );
+
   const finalAvailableExperiments: Experiment[] = ((): Experiment[] => {
-    const knownAvailableExperiments: Experiment[] = filterOutIrrelevantExperiments(
-      relevantExperimentIds,
-      immediateState.availableExperiments
+    const knownAvailableExperiments: Experiment[] = syncExperimentSubsetWith(
+      immediateState.availableExperiments,
+      relevantExperiments
     );
     const alreadyChosenExperimentIds: number[] = [
       ...finalChosenGoldStandards.map(experimentToId),
