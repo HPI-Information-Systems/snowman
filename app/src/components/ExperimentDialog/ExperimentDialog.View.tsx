@@ -86,14 +86,14 @@ const ExperimentDialogView = ({
         <FileInput
           selectedFiles={selectedFiles}
           onChange={changeSelectedFiles}
+          allowMultiple={false}
+          disabled={!isAddDialog}
         />
       </IonItem>
       {!isAddDialog ? (
         <div className="center">
           <IonNote color="medium">
-            <b>Note: Uploading a file is optional here!</b>
-            <br />
-            If no file is selected, the stored records will remain unchanged.
+            Note: This option is disabled for experiment updates.
           </IonNote>
         </div>
       ) : null}
