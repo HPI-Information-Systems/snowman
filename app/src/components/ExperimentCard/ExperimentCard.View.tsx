@@ -47,13 +47,6 @@ const ExperimentCardView = ({
               Count: {experiment.numberOfUploadedRecords ?? 'none'}
             </IonLabel>
           </IonChip>
-          {experiment.softKPIs?.timeToConfigure !== undefined ? (
-            <IonChip color="dark" outline={false}>
-              <IonLabel>
-                Config Time: {experiment.softKPIs.timeToConfigure}
-              </IonLabel>
-            </IonChip>
-          ) : null}
         </IonCol>
       </IonRow>
       <IonRow>

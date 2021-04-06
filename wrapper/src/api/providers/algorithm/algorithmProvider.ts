@@ -16,11 +16,6 @@ export class AlgorithmProvider {
       {
         name: algorithm.name,
         description: algorithm.description,
-        implementationKnowHowLevel:
-          algorithm.softKPIs?.implementationKnowHowLevel,
-        matchingSolutionType: algorithm.softKPIs?.matchingSolutionType,
-        timeToInstall: algorithm.softKPIs?.timeToInstall,
-        timeToConfigure: algorithm.softKPIs?.timeToConfigure,
       },
     ])[0];
   }

@@ -9,6 +9,7 @@ const FileInput = ({
   onChange,
   selectedFiles,
   allowMultiple = false,
+  disabled = true,
 }: FileInputProps): JSX.Element => {
   /* This is a bit hacky, but seems to work as expected. */
   const fileInput = useRef<HTMLInputElement>(null);
@@ -26,9 +27,14 @@ const FileInput = ({
       >
         {selectedFiles.length > 0
           ? selectedFiles.map((f: File): string => f.name).join(', ')
-          : '(none selected)'}
+          : 'none'}
       </IonText>
-      <IonButton fill="outline" slot="end" onClick={openFileInput}>
+      <IonButton
+        fill="outline"
+        slot="end"
+        onClick={openFileInput}
+        disabled={disabled}
+      >
         <IonIcon icon={cloudUploadOutline} slot="start" />
         Select file
       </IonButton>

@@ -36,9 +36,9 @@ class IdClustersToRecordClusters {
     protected readonly table: Table<DatasetSchema>,
     protected readonly idMapper: DatasetIDMapper
   ) {
-    this.columns = Object.values(this.table.schema.columns).filter((column) =>
-      column.name.startsWith(datasetCustomColumnPrefix)
-    );
+    this.columns = Object.values(this.table.schema.columns)
+      .filter((column) => column.name.startsWith(datasetCustomColumnPrefix))
+      .sort(({ name: name1 }, { name: name2 }) => name1.localeCompare(name2));
     this.columnNames = this.columns.map((column) => column.name);
   }
 

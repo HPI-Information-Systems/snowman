@@ -11,10 +11,7 @@ import { MagicNotPossibleId } from 'structs/constants';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import { ExperimentBuckets } from 'types/ExperimentBuckets';
 import { doesDatasetMatchTags } from 'utils/datasetHelper';
-import {
-  filterOutAnExperiment,
-  insertExperimentAt,
-} from 'utils/experimentsHelpers';
+import { filterOutAnElement, insertElementAt } from 'utils/dragNDropHelpers';
 import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: BenchmarkConfigurationStore = {
@@ -110,15 +107,15 @@ const BenchmarkConfiguratorImmediateReducer = (
       );
       if (draggedExperiment === undefined) return ownState;
 
-      chosenGoldstandards = filterOutAnExperiment(
+      chosenGoldstandards = filterOutAnElement<Experiment>(
         ownState.chosenGoldStandards,
         draggedExperiment
       );
-      chosenExperiments = filterOutAnExperiment(
+      chosenExperiments = filterOutAnElement<Experiment>(
         ownState.chosenExperiments,
         draggedExperiment
       );
-      availableExperiments = filterOutAnExperiment(
+      availableExperiments = filterOutAnElement<Experiment>(
         ownState.availableExperiments,
         draggedExperiment
       );
@@ -128,7 +125,7 @@ const BenchmarkConfiguratorImmediateReducer = (
             ...availableExperiments,
             ...chosenGoldstandards,
           ];
-          chosenGoldstandards = insertExperimentAt(
+          chosenGoldstandards = insertElementAt<Experiment>(
             chosenGoldstandards,
             draggedExperiment,
             eventDescriptor.targetIndex
@@ -136,14 +133,14 @@ const BenchmarkConfiguratorImmediateReducer = (
           break;
         }
         case ExperimentBuckets.CHOSEN_EXPERIMENTS:
-          chosenExperiments = insertExperimentAt(
+          chosenExperiments = insertElementAt<Experiment>(
             chosenExperiments,
             draggedExperiment,
             eventDescriptor.targetIndex
           );
           break;
         case ExperimentBuckets.AVAILABLE_EXPERIMENTS:
-          availableExperiments = insertExperimentAt(
+          availableExperiments = insertElementAt<Experiment>(
             availableExperiments,
             draggedExperiment,
             eventDescriptor.targetIndex
@@ -179,33 +176,35 @@ export const BenchmarkConfiguratorReducer = (
   );
   const experimentToId = (oneExperiment: Experiment): number =>
     oneExperiment.id;
-  const filterOutIrrelevantExperiments = (
-    theRelevantExperimentIds: number[],
-    aBucket: Experiment[]
+  const syncExperimentSubsetWith = (
+    aSubset: Experiment[],
+    aUniverse: Experiment[]
   ): Experiment[] =>
-    aBucket.filter((oneExperiment: Experiment): boolean =>
-      theRelevantExperimentIds.includes(oneExperiment.id)
-    );
+    aSubset.reduce((acc: Experiment[], cur: Experiment): Experiment[] => {
+      const foundEntity = aUniverse.find(
+        (val: Experiment): boolean => val.id === cur.id
+      );
+      return foundEntity === undefined ? acc : [...acc, foundEntity];
+    }, []);
+
   const relevantExperiments: Experiment[] = coreState.experiments.filter(
     (anExperiment: Experiment): boolean =>
       anExperiment.datasetId ===
       (immediateState.selectedDataset?.id ?? MagicNotPossibleId)
   );
-  const relevantExperimentIds: number[] = relevantExperiments.map(
-    experimentToId
+  const finalChosenExperiments: Experiment[] = syncExperimentSubsetWith(
+    immediateState.chosenExperiments,
+    relevantExperiments
   );
-  const finalChosenExperiments: Experiment[] = filterOutIrrelevantExperiments(
-    relevantExperimentIds,
-    immediateState.chosenExperiments
+  const finalChosenGoldStandards: Experiment[] = syncExperimentSubsetWith(
+    immediateState.chosenGoldStandards,
+    relevantExperiments
   );
-  const finalChosenGoldStandards: Experiment[] = filterOutIrrelevantExperiments(
-    relevantExperimentIds,
-    immediateState.chosenGoldStandards
-  );
+
   const finalAvailableExperiments: Experiment[] = ((): Experiment[] => {
-    const knownAvailableExperiments: Experiment[] = filterOutIrrelevantExperiments(
-      relevantExperimentIds,
-      immediateState.availableExperiments
+    const knownAvailableExperiments: Experiment[] = syncExperimentSubsetWith(
+      immediateState.availableExperiments,
+      relevantExperiments
     );
     const alreadyChosenExperimentIds: number[] = [
       ...finalChosenGoldStandards.map(experimentToId),

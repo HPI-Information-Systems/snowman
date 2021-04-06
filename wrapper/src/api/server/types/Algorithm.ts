@@ -12,8 +12,6 @@
  * Do not edit the class manually.
  */
 
-import { AlgorithmValuesSoftKPIs } from './';
-
 /**
  * 
  * @export
@@ -38,10 +36,4 @@ export interface Algorithm {
      * @memberof Algorithm
      */
     description?: string;
-    /**
-     * 
-     * @type {AlgorithmValuesSoftKPIs}
-     * @memberof Algorithm
-     */
-    softKPIs?: AlgorithmValuesSoftKPIs;
 }
