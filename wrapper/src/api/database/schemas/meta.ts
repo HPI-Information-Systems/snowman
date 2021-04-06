@@ -26,22 +26,6 @@ export const metaSchemas = assertType<
           name: 'description' as const,
           dataType: 'TEXT',
         },
-        implementationKnowHowLevel: {
-          name: 'implementationKnowHowLevel' as const,
-          dataType: 'TEXT',
-        },
-        matchingSolutionType: {
-          name: 'matchingSolutionType' as const,
-          dataType: 'TEXT',
-        },
-        timeToInstall: {
-          name: 'timeToInstall' as const,
-          dataType: 'INTEGER',
-        },
-        timeToConfigure: {
-          name: 'timeToConfigure' as const,
-          dataType: 'INTEGER',
-        },
       },
     },
     dataset: {
@@ -125,14 +109,6 @@ export const metaSchemas = assertType<
         description: {
           name: 'description' as const,
           dataType: 'TEXT',
-        },
-        numberOfUploadedRecords: {
-          name: 'numberOfUploadedRecords' as const,
-          dataType: 'INTEGER',
-        },
-        timeToConfigure: {
-          name: 'timeToConfigure' as const,
-          dataType: 'INTEGER',
         },
       },
     },
