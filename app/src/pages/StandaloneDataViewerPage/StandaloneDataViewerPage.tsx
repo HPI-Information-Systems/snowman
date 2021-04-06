@@ -1,21 +1,21 @@
-import 'app/DataViewer/DataViewerAppStyles.css';
+import 'pages/StandaloneDataViewerPage/StandaloneDataViewerStyles.css';
 
 import { IonSpinner } from '@ionic/react';
+import DataViewer from 'components/DataViewer/DataViewer';
+import { DataViewerOwnPropsNoTuplesLoader } from 'components/DataViewer/DataViewerProps';
 import {
   DataViewerAppToClientActionType,
   onActionFromHost,
-} from 'app/DataViewer/DataViewerAppToClientActions';
+} from 'pages/StandaloneDataViewerPage/actionsToClient';
 import {
   DataViewerAppToHostActionType,
   postActionToHost,
-} from 'app/DataViewer/Host/DataViewerAppToHostActions';
-import DataViewer from 'components/DataViewer/DataViewer';
-import { DataViewerOwnPropsNoTuplesLoader } from 'components/DataViewer/DataViewerProps';
+} from 'pages/StandaloneDataViewerPage/actionsToHost';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { TuplesLoader } from 'types/TuplesLoader';
 import { Await } from 'types/util';
 
-export default function DataViewerApp(): JSX.Element {
+export default function StandaloneDataViewerPage(): JSX.Element {
   const [params, setParams] = useState<DataViewerOwnPropsNoTuplesLoader>();
   const pendingLoadTuples = useRef<
     Map<

@@ -5,7 +5,8 @@ export interface DefaultAppDispatchProps {
 }
 
 export interface DefaultAppStateProps {
-  currentViewId: ViewIDs;
+  currentViewID: ViewIDs;
+  showSideMenu: boolean;
 }
 
 export type DefaultAppProps = DefaultAppStateProps & DefaultAppDispatchProps;

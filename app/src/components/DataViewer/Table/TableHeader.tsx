@@ -1,131 +1,20 @@
-import 'components/DataViewer/Table/TableHeaderStyles.css';
+import TableHeaderView from 'components/DataViewer/Table/TableHeader.View';
+import {
+  TableHeaderDispatchProps,
+  TableHeaderOwnProps,
+} from 'components/DataViewer/Table/TableProps';
+import { connect } from 'react-redux';
+import { SnowmanDispatch } from 'store/messages';
 
-import { IonButton, IonIcon } from '@ionic/react';
-import { isDataviewerAppWindow } from 'app/DataViewer/Host/DataViewerAppHostContext';
-import ScrollSync from 'components/DataViewer/Table/ScrollSync/ScrollSync';
-import { TableHeaderProps } from 'components/DataViewer/Table/TableProps';
-import { open } from 'ionicons/icons';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { scrollbarWidth } from 'utils/scrollbarWidth';
+const mapDispatchToProps = (
+  dispatch: SnowmanDispatch,
+  { openDataViewerWindow }: TableHeaderOwnProps
+): TableHeaderDispatchProps => ({
+  performOpenDataViewerWindow() {
+    dispatch(openDataViewerWindow());
+  },
+});
 
-export const tableHeaderHeight = '3rem';
+const TableHeader = connect(undefined, mapDispatchToProps)(TableHeaderView);
 
-export default function TableHeader({
-  headerGroups,
-  setColumnOrder,
-  visibleColumns,
-  openDataViewerWindow,
-}: TableHeaderProps): JSX.Element {
-  const draggedColumn = useRef<string>();
-  const setDragTimeout = useRef<number>();
-  const [dragging, setDragging] = useState(false);
-  const columnIds = useMemo(() => visibleColumns.map(({ id }) => id), [
-    visibleColumns,
-  ]);
-
-  const reorderColumns = useCallback(
-    (targetId: string) => {
-      if (draggedColumn.current !== undefined) {
-        const from = columnIds.indexOf(draggedColumn.current);
-        const to = columnIds.indexOf(targetId);
-        if (from !== to && from !== -1 && to !== -1) {
-          const newColumnOrder = [
-            ...columnIds.slice(0, from),
-            ...columnIds.slice(from + 1),
-          ];
-          newColumnOrder.splice(to, 0, draggedColumn.current);
-          setColumnOrder(newColumnOrder);
-        }
-      }
-    },
-    [columnIds, setColumnOrder]
-  );
-  return (
-    <div className="table-header">
-      <ScrollSync>
-        {headerGroups.map((headerGroup) => (
-          // eslint-disable-next-line react/jsx-key
-          <div
-            {...headerGroup.getHeaderGroupProps()}
-            style={{
-              height: tableHeaderHeight,
-              lineHeight: tableHeaderHeight,
-              display: dragging ? 'none' : '',
-            }}
-          >
-            {headerGroup.headers.map((column) => (
-              // eslint-disable-next-line react/jsx-key
-              <div {...column.getHeaderProps()} className="cell">
-                {column.render('Header')}
-                <div
-                  draggable
-                  className="reorder"
-                  onDragStart={() => {
-                    setDragTimeout.current = window.setTimeout(
-                      () => setDragging(true),
-                      100
-                    );
-                    draggedColumn.current = column.id;
-                  }}
-                  onDragEnd={() => {
-                    window.clearTimeout(setDragTimeout.current);
-                    setDragging(false);
-                    draggedColumn.current = undefined;
-                  }}
-                />
-                {column.canResize && (
-                  <div
-                    {...column.getResizerProps()}
-                    className={column.isResizing ? 'resizing' : 'resize'}
-                  >
-                    <div className="resize-indicator" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        ))}
-      </ScrollSync>
-      <IonButton
-        size="small"
-        color="light"
-        onClick={openDataViewerWindow}
-        style={{
-          height: `calc(${tableHeaderHeight} - 4px)`,
-          display: isDataviewerAppWindow() ? 'none' : '',
-        }}
-        className="open-data-viewer"
-      >
-        <IonIcon slot="icon-only" icon={open} />
-      </IonButton>
-      {headerGroups.map((headerGroup) => (
-        // eslint-disable-next-line react/jsx-key
-        <div
-          {...headerGroup.getHeaderGroupProps()}
-          style={{
-            height: tableHeaderHeight,
-            lineHeight: tableHeaderHeight,
-            display: dragging ? 'flex' : 'none',
-            width: `calc(100% - ${scrollbarWidth()}px)`,
-          }}
-          className="reordering-container"
-        >
-          {headerGroup.headers.map((column) => (
-            // eslint-disable-next-line react/jsx-key
-            <div
-              {...column.getHeaderProps()}
-              className="cell"
-              onDragOver={(e) => {
-                reorderColumns(column.id);
-                e.preventDefault();
-              }}
-              onDrop={() => reorderColumns(column.id)}
-            >
-              {column.render('Header')}
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-}
+export default TableHeader;

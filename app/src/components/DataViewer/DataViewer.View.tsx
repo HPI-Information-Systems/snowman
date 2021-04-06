@@ -1,14 +1,8 @@
-import { DataViewerAppHostContext } from 'app/DataViewer/Host/DataViewerAppHostContext';
 import { DataViewerProps } from 'components/DataViewer/DataViewerProps';
 import Table from 'components/DataViewer/Table/Table';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { InfiniteLoader } from 'react-virtualized';
+import { openStandaloneDataViewerWindow } from 'store/actions/RenderStoreActions';
 
 const DataViewerView = ({
   tuplesCount,
@@ -17,8 +11,6 @@ const DataViewerView = ({
   BATCH_SIZE = 500,
   title,
 }: DataViewerProps): JSX.Element => {
-  const { openDataViewerWindow } = useContext(DataViewerAppHostContext);
-
   const mounted = useRef(true);
   const requestedRowCount = useRef(0);
   const resetVersion = useRef(0);
@@ -107,7 +99,7 @@ const DataViewerView = ({
           rowsChanged={rowsChanged}
           columnsChanged={columnsChanged}
           openDataViewerWindow={() =>
-            openDataViewerWindow({
+            openStandaloneDataViewerWindow({
               tuplesCount,
               loadTuples,
               BATCH_SIZE,
