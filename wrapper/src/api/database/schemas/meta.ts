@@ -110,6 +110,10 @@ export const metaSchemas = assertType<
           name: 'description' as const,
           dataType: 'TEXT',
         },
+        numberOfUploadedRecords: {
+          name: 'numberOfUploadedRecords' as const,
+          dataType: 'INTEGER',
+        },
       },
     },
   },
