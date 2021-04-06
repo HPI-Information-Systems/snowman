@@ -144,4 +144,21 @@ export const exampleDatasets = assertType<ExampleDatasets>()({
       numberOfRecords: 1879,
     },
   },
+  notebookLarge: {
+    meta: {
+      name: 'SIGMOD-NotebookLarge-X3',
+      description:
+        'This is the notebook large dataset (X3) of the SIGMOD-contest.',
+      tags: ['SIGMOD'],
+    },
+    id: -7,
+    file: {
+      path: path.join(EXAMPLE_DATASET_DIR, 'sigmod_notebookLarge_X3.csv'),
+      idColumn: 'instance_id',
+      separator: ',',
+      quote: '"',
+      escape: '"',
+      numberOfRecords: 337,
+    },
+  },
 });
