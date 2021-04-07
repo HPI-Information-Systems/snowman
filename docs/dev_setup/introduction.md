@@ -40,9 +40,6 @@ Run the `Start Stack` compound to start frontend and backend and open Chrome. Yo
 
 - run `npm run release` in `./` to build the frontend and backend and package them in an executable file
   - the executable will be located at `./wrapper/build/<platform>/`
-- run `npm rebuild` in `./wrapper`
-  - during the build process the dependencies are rebuilded for the NodeJS version of electron
-  - this reverts that process and makes sure starting the backend still works
 
 ## Testing
 

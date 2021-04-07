@@ -15,7 +15,7 @@
     "erebuild:default": "electron-rebuild",
     "test": "jest --testPathIgnorePatterns=\".only-ci.spec.ts$\"",
     "test-ci": "jest",
-    "release": "rimraf ./build/* && npm run build && electron-builder"
+    "release": "rimraf ./build/* && npm run build && npm run erebuild && electron-builder && npm rebuild"
   },
   "build": {
     "asar": "true",
@@ -77,7 +77,7 @@
     "@types/node": "^14.14.14",
     "@types/rimraf": "^3.0.0",
     "electron": "^11.1.0",
-    "electron-builder": "^22.9.1",
+    "electron-builder": "^22.10.5",
     "electron-rebuild": "^2.3.5",
     "jest": "^26.6.3",
     "rimraf": "^3.0.2",

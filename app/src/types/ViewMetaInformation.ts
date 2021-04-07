@@ -16,6 +16,7 @@ export interface ViewMetaInformation {
   menuIcon: string | null;
   // we use -1 if it does not matters
   menuSortKey: number;
+  hideSideMenu?: boolean;
 
   accessGuard(aState: ImmediateStore): boolean;
 

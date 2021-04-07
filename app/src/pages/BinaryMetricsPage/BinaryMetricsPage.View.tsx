@@ -32,6 +32,7 @@ export const BinaryMetricsPageView = ({
   rowCount,
   tuplesLoader,
   confusionMatrix,
+  dataViewerTitle,
 }: BinaryMetricsPageProps): JSX.Element => {
   useEffect(loadMetrics, [loadMetrics]);
   useEffect(preloadTuplesCounts, [preloadTuplesCounts]);
@@ -151,7 +152,11 @@ export const BinaryMetricsPageView = ({
           selectedPaneTitle={selectedMetricsTuplesCategory}
         />
         <IonCardContent class="table-housing">
-          <DataViewer tuplesCount={rowCount} loadTuples={tuplesLoader} />
+          <DataViewer
+            tuplesCount={rowCount}
+            loadTuples={tuplesLoader}
+            title={dataViewerTitle}
+          />
         </IonCardContent>
       </IonCard>
     </PageStruct>
