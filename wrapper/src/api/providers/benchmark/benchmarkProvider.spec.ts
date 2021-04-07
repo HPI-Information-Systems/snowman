@@ -165,6 +165,7 @@ describe('test benchmark functions', () => {
             { name: 'balanced accuracy', value: '0.5598' },
             { name: 'bookmaker informedness', value: '0.1195' },
             { name: 'f1 score', value: '0.2000' },
+            { name: 'f* score', value: '0.1111' },
             { name: 'false discovery rate', value: '0.5000' },
             { name: 'false negative rate', value: '0.8750' },
             { name: 'false omission rate', value: '0.0372' },

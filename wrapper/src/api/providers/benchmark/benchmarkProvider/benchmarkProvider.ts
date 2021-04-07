@@ -20,6 +20,7 @@ import {
   FalseOmissionRate,
   FalsePositiveRate,
   FowlkesMallowsIndex,
+  FStarScore,
   Markedness,
   MatthewsCorrelationCoefficient,
   NegativePredictiveValue,
@@ -134,6 +135,7 @@ export class BenchmarkProvider {
       Precision,
       Recall,
       F1Score,
+      FStarScore,
 
       FalsePositiveRate,
       FalseNegativeRate,

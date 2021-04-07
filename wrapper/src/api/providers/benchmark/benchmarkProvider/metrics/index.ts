@@ -2,6 +2,7 @@ export * from './advanced/accuracy';
 export * from './advanced/accuracy';
 export * from './advanced/balancedAccuracy';
 export * from './advanced/bookmaker_informedness';
+export * from './advanced/f_star';
 export * from './advanced/f1_score';
 export * from './advanced/fowlkes-mallows_index';
 export * from './advanced/markedness';
