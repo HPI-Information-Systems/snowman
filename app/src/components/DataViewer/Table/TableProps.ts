@@ -38,4 +38,10 @@ export type TableHeaderDispatchProps = {
   performOpenDataViewerWindow: () => void;
 };
 
-export type TableHeaderProps = TableHeaderOwnProps & TableHeaderDispatchProps;
+export type TableHeaderStateProps = {
+  isStandalone: boolean;
+};
+
+export type TableHeaderProps = TableHeaderOwnProps &
+  TableHeaderStateProps &
+  TableHeaderDispatchProps;

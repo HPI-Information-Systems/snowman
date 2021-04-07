@@ -46,7 +46,7 @@ export default function Table({
             width={width}
             resetTable={resetTable}
             openDataViewerWindow={openDataViewerWindow}
-          ></TableContent>
+          />
         </div>
       )}
     </AutoSizer>
