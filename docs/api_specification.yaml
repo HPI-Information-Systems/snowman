@@ -466,14 +466,6 @@ paths:
           description: No Content
         400:
           description: Bad Request
-    delete:
-      tags:
-        - Experiments
-      summary: Deletes an experiment file
-      operationId: deleteExperimentFile
-      responses:
-        204:
-          description: No Content
 
   #### BENCHMARK ####
   /benchmark/{experimentId1}/{experimentId2}/metrics:
