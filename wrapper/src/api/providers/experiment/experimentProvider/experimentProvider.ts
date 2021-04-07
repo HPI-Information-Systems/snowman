@@ -121,11 +121,6 @@ export class ExperimentProvider {
     }, id);
   }
 
-  deleteExperimentFile(id: ExperimentId): void {
-    this.checks.throwIfLocked(id);
-    this.deleteExperimentFileNoChecks(id);
-  }
-
   private deleteExperimentFileNoChecks(id: ExperimentId): void {
     tables.experiment.experiment(id).dropTable(false);
     const storedExperiment = tables.meta.experiment.get({ id });
