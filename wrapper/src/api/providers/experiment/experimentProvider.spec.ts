@@ -89,11 +89,6 @@ describe('ExperimentProvider', () => {
           description: 'Dataset file',
           name: 'Dataset file',
         },
-        file: [
-          ['p1', 'p2'],
-          ['id1', 'id2'],
-        ],
-        numberOfUploadedRecords: 1,
       },
     ];
     addedExperimentIds = [];
@@ -198,16 +193,6 @@ describe('ExperimentProvider', () => {
     );
     expect(tables.experiment.experiment(addedExperimentIds[0]).exists()).toBe(
       true
-    );
-  });
-
-  test('delete file deletes file', () => {
-    expect(tables.experiment.experiment(addedExperimentIds[1]).exists()).toBe(
-      true
-    );
-    provider.deleteExperimentFile(addedExperimentIds[1]);
-    expect(tables.experiment.experiment(addedExperimentIds[1]).exists()).toBe(
-      false
     );
   });
 
