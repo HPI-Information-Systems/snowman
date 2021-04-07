@@ -93,11 +93,7 @@ export class ExperimentProvider {
     format: ExperimentFileFormat,
     file: Readable
   ): Promise<void> {
-    if (tables.experiment.experiment(id).exists()) {
-      throw new Error(
-        `An experiment file for the experiment with the id ${id} already exists. It is not possible to edit an uploaded experiment file. Please create a new experiment if you want to upload this file.`
-      );
-    }
+    this.checks.throwIfExperimentFileAlreadyExists(id);
     this.checks.throwIfLocked(id);
     return this.checks.sync.call(async () => {
       const { datasetId } = this.getExperiment(id);
