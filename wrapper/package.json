@@ -49,10 +49,12 @@
     }
   },
   "dependencies": {
+    "@types/chmodr": "^1.0.0",
     "@types/tmp": "^0.2.0",
     "axios": "^0.21.1",
     "better-sqlite3": "git+https://github.com/phpfs/better-sqlite3.git",
     "binary-search": "^1.3.6",
+    "chmodr": "^1.2.0",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "csv-parse": "^4.15.1",
