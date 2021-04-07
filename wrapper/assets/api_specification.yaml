@@ -4,7 +4,7 @@ info:
     email: snowman@groups.sap.com
     url: https://github.com
   description: |
-    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms.
+    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
   license:
     name: LICENSE (MIT)
     url: https://github.com
@@ -490,24 +490,6 @@ paths:
       - Experiments
       x-eov-operation-handler: controllers/ExperimentsController
   /experiments/{experimentId}/file:
-    delete:
-      operationId: deleteExperimentFile
-      parameters:
-      - description: The id of an experiment
-        explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
-      responses:
-        "204":
-          description: No Content
-      summary: Deletes an experiment file
-      tags:
-      - Experiments
-      x-eov-operation-handler: controllers/ExperimentsController
     get:
       operationId: getExperimentFile
       parameters:
@@ -597,7 +579,7 @@ paths:
           description: No Content
         "400":
           description: Bad Request
-      summary: Updates or creates an experiment file
+      summary: Creates an experiment file
       tags:
       - Experiments
       x-eov-operation-handler: controllers/ExperimentsController

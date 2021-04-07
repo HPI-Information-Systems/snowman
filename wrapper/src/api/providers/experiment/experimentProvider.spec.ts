@@ -89,11 +89,6 @@ describe('ExperimentProvider', () => {
           description: 'Dataset file',
           name: 'Dataset file',
         },
-        file: [
-          ['p1', 'p2'],
-          ['id1', 'id2'],
-        ],
-        numberOfUploadedRecords: 1,
       },
     ];
     addedExperimentIds = [];
@@ -201,28 +196,17 @@ describe('ExperimentProvider', () => {
     );
   });
 
-  test('delete file deletes file', () => {
-    expect(tables.experiment.experiment(addedExperimentIds[1]).exists()).toBe(
-      true
-    );
-    provider.deleteExperimentFile(addedExperimentIds[1]);
-    expect(tables.experiment.experiment(addedExperimentIds[1]).exists()).toBe(
-      false
-    );
-  });
-
   test('set file throws error when adding unknown / too many ids', async () => {
     const file = [
       ['p1', 'p2'],
       ['unknown id1', 'unknown id2'],
     ];
-    await expect(
-      async () =>
-        await provider.setExperimentFile(
-          addedExperimentIds[1],
-          'pilot',
-          fileToReadable(file)
-        )
+    await expect(() =>
+      provider.setExperimentFile(
+        addedExperimentIds[1],
+        'pilot',
+        fileToReadable(file)
+      )
     ).rejects.toThrowError();
     expect(() =>
       provider.getExperimentFile(addedExperimentIds[1])

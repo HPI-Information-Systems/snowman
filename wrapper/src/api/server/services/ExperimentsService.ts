@@ -145,21 +145,3 @@ export async function setExperimentFile(
     400
   );
 }
-
-/**
- * Deletes an experiment file
- *
- * experimentId Integer The id of an experiment
- * no response value expected for this operation
- * */
-export async function deleteExperimentFile({
-  experimentId,
-}: {
-  experimentId: ExperimentId;
-}): Promise<SuccessResponse<void>> {
-  return Service.response(
-    () => provider().deleteExperimentFile(experimentId),
-    204,
-    400
-  );
-}

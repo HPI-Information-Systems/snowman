@@ -93,9 +93,9 @@ export class ExperimentProvider {
     format: ExperimentFileFormat,
     file: Readable
   ): Promise<void> {
+    this.checks.throwIfExperimentFileAlreadyExists(id);
     this.checks.throwIfLocked(id);
     return this.checks.sync.call(async () => {
-      this.deleteExperimentFileNoChecks(id);
       const { datasetId } = this.getExperiment(id);
       const dataset = getProviders().dataset.getDataset(datasetId);
 
@@ -119,11 +119,6 @@ export class ExperimentProvider {
       }
       invalidateCaches(id);
     }, id);
-  }
-
-  deleteExperimentFile(id: ExperimentId): void {
-    this.checks.throwIfLocked(id);
-    this.deleteExperimentFileNoChecks(id);
   }
 
   private deleteExperimentFileNoChecks(id: ExperimentId): void {
