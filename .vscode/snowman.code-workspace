@@ -2,11 +2,11 @@
 	"folders": [
 		{
 			"name": "wrapper",
-			"path": "..\\wrapper"
+			"path": "../wrapper"
 		},
 		{
 			"name": "app",
-			"path": "..\\app"
+			"path": "../app"
 		},
 		{
 			"name": "snowman",
