@@ -2,7 +2,7 @@ import { BaseMetric } from '../base';
 import { F1Score } from './f1_score';
 
 export class FStarScore extends BaseMetric {
-  name = 'F* score';
+  name = 'f* score';
   range: [number, number] = [0, 1];
   formula = '\\frac{F1-Score}{2 - F1-Score}';
   info =
