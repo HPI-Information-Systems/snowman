@@ -41,9 +41,14 @@ const ExperimentDialogView = ({
   isValidForm,
   selectedFiles,
   changeSelectedFiles,
+  experimentId,
 }: ExperimentDialogProps): JSX.Element => (
   <ModalDialog
-    heading={isAddDialog ? 'Add New Experiment' : 'Update Existing Experiment'}
+    heading={
+      isAddDialog
+        ? 'Add New Experiment'
+        : `Update Existing Experiment (ID: ${experimentId})`
+    }
     isOpen={isOpen}
     closeDialog={closeDialog}
   >

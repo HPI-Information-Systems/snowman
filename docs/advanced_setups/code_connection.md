@@ -1,26 +1,23 @@
 # Connect your code
 
-To more easily pipe results from your code right into Snowman, you can make use of its API.
+To more easily pipe results from your code into Snowman, you can make use of its [REST API](../swagger/index.html).
 The following guide will outline the necessary steps and give you a brief introduction.
 
 ## Snowman API
 
-Whenever a local Snowman instance is running, the API is listening at `http://localhost:8123/api`
-for requests to arrive. This interface is also used by the Snowman frontend itself.
+Whenever a local Snowman instance is running, the API is listening at `http://localhost:8123/api` (can be [configured via command line arguments](../dev_setup/introduction.md#command-line-arguments)).
+This interface is also used by the Snowman frontend.
 
-As no further authorization is implemented, every process on your computer is able to fully make
-use of Snowman's capabilities. Adding it your application is therefore pretty easy.
+**Be advised: We have not yet implemented any security features or authorization.** That means every process on your computer is able to access the API.
 
-Uploading results consists of two steps:
+You can upload results in two steps:
 
-0. Add the dataset to Snowman.
 1. Create a new experiment.
 2. Upload data to it.
 
 ## Use case
 
-In this example, we want to export our results from a python script running an ML mode for
-duplicate detection. Consider the following example:
+In this example, we want to export our results from a python script running a ML matching solution. Consider the following code:
 
 ```python
 import io
@@ -29,7 +26,7 @@ import csv
 ...
 
 # Results produced by the ML solution
-results = ...
+candidate_pairs = ...
 
 # Create a new string builder to write to
 output = io.StringIO()
@@ -38,43 +35,44 @@ writer = csv.writer(output, quoting=csv.QUOTE_NONNUMERIC)
 # Write the CSV header
 writer.writerow(['p1', 'p2', 'prediction'])
 
-for row in results:
-    # Write each row, prediction is either 0 (no duplicate) or 1 (duplicate)
-    writer.writerow([row['id1'], row['id2'], row['label']])
+for candidate_pair in candidate_pairs:
+    # Write each row, prediction/label is either 0 (no duplicate) or 1 (duplicate)
+    writer.writerow([candidate_pair['id1'], candidate_pair['id2'], candidate_pair['label']])
 
 # CSV string to upload to Snowman
-csvString = output.getvalue()
-print(csvString)
+csv_string = output.getvalue()
+print(csv_string)
 ```
 
-With this code, we are able to convert the previously labeled data into the csv format
+With this code, we are able to convert the results into a csv format
 the API is able to understand - in this case, the [`pilot`](/basic_usage/experiments) format.
 
-It remains now to upload the csv data.
+It remains to upload the csv data.
 
 ## Upload results
 
 As outlined above, this procedure consists of two steps.
 
-First, create a new experiment. You will need the `datasetId` and `algorithmId` you want the experiment to be assigned to.  
+First, create a new experiment. *Note: You will need a `datasetId` and `algorithmId` to assign the experiment to. We recommend creating (or selecting) a dataset and matching solution (algorithm) with the UI. The IDs are shown in brackets behind the header of all edit dialogs.*
+
 ```python
 import requests
 
-newExpPayload = {'datasetId': 5, 'algorithmId': 2, 'name':'myexample-run01','description':'automatic-upload'}
-resultCreate = requests.post('http://localhost:8123/api/v1/experiments', json=newExpPayload)
-print(resultCreate.text)
-newExpId = resultCreate.text
+new_experiment_payload = {'datasetId': 5, 'algorithmId': 2, 'name':'my-example-run-01','description':'automatic-upload'}
+create_experiment_response = requests.post('http://localhost:8123/api/v1/experiments', json=new_experiment_payload)
+new_experiment_id = create_experiment_response.text
+print(new_experiment_id)
 ```
+
 This will return the new experiment's id which you will need in the next step.
 
-Secondly, upload the data we already exported to csv:
+Now upload the data we already exported to csv:
+
 ```python
 import requests
 
-resultUpload = requests.put('http://localhost:8123/api/v1/experiments/' + newExpId + '/file?format=pilot', data=csvString, headers={'Content-Type': 'text/csv'})
-print(resultUpload.status_code)
+upload_pairs_response = requests.put(f'http://localhost:8123/api/v1/experiments/{new_experiment_id}/file?format=pilot', data=csv_string, headers={'Content-Type': 'text/csv'})
+print(upload_pairs_response.status_code)
 ```
-If this second request runs fine, the upload process is complete.
 
-As you saw, it is quite is to upload a new experiment. You do not need any manual steps if
-`datasetId` and `algorithmId` are already known and hard-coded :)
+If both request return a 200er status code, the upload process is complete.
