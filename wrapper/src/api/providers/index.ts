@@ -1,5 +1,5 @@
 import { AlgorithmProvider } from './algorithm/algorithmProvider';
-import { BenchmarkProvider } from './benchmark/benchmarkProvider/benchmarkProvider';
+import { BenchmarkProvider } from './benchmark/benchmarkProvider';
 import { DatasetProvider } from './dataset/datasetProvider';
 import { ExperimentProvider } from './experiment/experimentProvider';
 import { SimilarityThresholdsProvider } from './similarityThresholds/similarityThresholdsProvider';

@@ -10,7 +10,7 @@ import {
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
 import { DatasetProvider } from '../dataset/datasetProvider';
-import { ExperimentProvider } from './experimentProvider/experimentProvider';
+import { ExperimentProvider } from './experimentProvider';
 
 describe('ExperimentProvider', () => {
   let provider: ExperimentProvider;

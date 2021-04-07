@@ -8,7 +8,7 @@ import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
 import { DatasetProvider } from '../dataset/datasetProvider';
 import { ExperimentProvider } from '../experiment/experimentProvider';
-import { BenchmarkProvider } from './benchmarkProvider/benchmarkProvider';
+import { BenchmarkProvider } from './benchmarkProvider';
 
 interface metaDataset {
   name: string;

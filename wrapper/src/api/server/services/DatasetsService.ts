@@ -3,7 +3,6 @@ import {
   AddDatasetRequest,
   Dataset,
   DatasetId,
-  DatasetValues,
   DeleteDatasetFileRequest,
   DeleteDatasetRequest,
   FileResponse,
