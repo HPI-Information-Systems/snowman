@@ -22,9 +22,6 @@
 			"javascript",
 			"typescript"
 		],
-		"eslint.options": {
-			"configFile": ".eslintrc.json"
-		},
 		"[typescript]": {
 			"editor.formatOnSave": false
 		},
