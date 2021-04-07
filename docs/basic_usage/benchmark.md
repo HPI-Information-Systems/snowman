@@ -8,39 +8,40 @@ You can use the dashboard to choose between each of them.
 
 ## Dashboard
 
-Although the dashboard is no real benchmarking or evaluation step by itself, it serves as an overview of what is
-possible with the currently selected experiment layout. You can directly click on segments in the Venn Diagram
-to start the investigation process or use the proposed actions on the right.
+The dashboard serves as an overview of what is possible with the currently selected experiments (and possibly gold standard). You can click on segments in the Venn Diagram
+to investige the selected intersection or use the proposed actions on the right.
+
+**Keep in mind that it may take some time to calculate the results on all evaluation pages.**
 
 ## Binary Comparison
 
-![Screenshot3](../assets/benchmark-binary.png "Binary comparison")
+![Binary Comparison](../assets/benchmark-binary.png "Binary Comparison")
 
 _This benchmarking option requires you to select a single gold standard and a single experiment._
 
 For this option, binary metrics will be calculated and shown in the top carousel. You can step
 through all the available metrics cards and get an overview over the quality of the experiment. Keep in mind that
 these metrics are only as reliable as the gold standard is! Some metrics may be unreliable when calculated with a silver
-standard - our tool will highlight such metrics if the `1.` experiment was flagged silver standard.
+standard - in the future our tool will highlight such metrics (see [this issue](https://github.com/HPI-Information-Systems/snowman/issues/4)).
 
-Also, you'll be able to further inspect the experiment's performance by taking a look at the reported false negatives,
-false positives and true positives shown in the table below.
+Also, you will be able to further inspect the experiment's performance by taking a look at the true positives, false positives, false negatives and true negatives shown in the table below.
 
-**Keep in mind that it may take some time to calculate the results shown on this page!**
-
-## N-Metrics Viewer
+## N-ary Metrics
 
 _This benchmarking option requires you to select a single gold standard and at least one experiment._
 
 Whenever you want to compare multiple experiments against a single ground truth, you can make use
-of the N-Metrics viewer. It extends the Binary Comparison across multiple experiments and presents
+of the N-ary Metrics page. It extends the Binary Comparison across multiple experiments and presents
 the result in a table format.
 
-By clicking on an experiment title, you can browse to the above Binary Comparison view with the
-current experiment pre-selected against the given gold standard.
+Clicking on an experiment title opens the [Binary Comparison page](#binary-comparison) for this experiment.
 
-## Intersection Viewer
+## Intersections
 
-_This benchmarking option requires you to select one or multiple gold standards and experiments._
+_This benchmarking option requires you to select one or multiple gold standards or experiments._
 
-tbd
+This page allows you to browse intersections of experiments. It can for example answer the question which duplicate pairs have been found by two experiments but are not present in the gold standard (a gold standard is not required for this page though).
+
+![Intersections](../assets/intersection-page.png "Intersections")
+
+Clicking on an area in the Venn diagram intersects all experiments which are present in this area. By using the drag'n'drop selector below the Venn diagram, other experiments can now be excluded from the intersection. The example above could therefore be achieved by first clicking on the green area in the picture and then dragging the goldstandard from `available` to `exclude`.
