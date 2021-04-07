@@ -438,7 +438,7 @@ paths:
     put:
       tags:
         - Experiments
-      summary: Updates or creates an experiment file
+      summary: Creates an experiment file
       operationId: setExperimentFile
       parameters:
         - in: query
