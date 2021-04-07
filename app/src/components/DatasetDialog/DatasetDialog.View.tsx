@@ -60,9 +60,14 @@ const DatasetDialogView = ({
   clickOnATag,
   createTag,
   clickOnSubmit,
+  datasetId,
 }: DatasetDialogProps): JSX.Element => (
   <ModalDialog
-    heading={isAddDialog ? 'Add New Dataset' : 'Update Existing Dataset'}
+    heading={
+      isAddDialog
+        ? 'Add New Dataset'
+        : `Update Existing Dataset (ID: ${datasetId})`
+    }
     isOpen={isOpen}
     closeDialog={closeDialog}
   >

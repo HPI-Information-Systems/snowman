@@ -12,6 +12,7 @@ import {
 } from 'store/actions/AlgorithmDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
+import { MagicNotPossibleId } from 'structs/constants';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
 const mapStateToProps = (state: Store): AlgorithmDialogStateProps => ({
@@ -19,6 +20,7 @@ const mapStateToProps = (state: Store): AlgorithmDialogStateProps => ({
   isOpen: state.AlgorithmDialogStore.isOpen,
   algorithmDescription: state.AlgorithmDialogStore.algorithmDescription,
   algorithmName: state.AlgorithmDialogStore.algorithmName,
+  algorithmId: state.AlgorithmDialogStore.algorithmId ?? MagicNotPossibleId,
 });
 
 const mapDispatchToProps = (
