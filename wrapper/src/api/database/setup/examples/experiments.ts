@@ -187,4 +187,40 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       numberOfPairs: 767,
     },
   },
+  notebookLargeSigmodGoldstandard: {
+    meta: {
+      name: 'SIGMOD-notebooklarge-goldstandard-Y3',
+      description:
+        'Complete list of duplicate pairs in the notebook large dataset (X3) of the SIGMOD contest.',
+      algorithmId: exampleAlgorithms.gold.id,
+      datasetId: exampleDatasets.notebookLarge.id,
+    },
+    id: -10,
+    file: {
+      format: 'sigmod2021',
+      path: path.join(
+        EXAMPLE_EXPERIMENT_DIR,
+        'sigmod_notebooklarge_goldstandard.csv'
+      ),
+      numberOfPairs: 56616,
+    },
+  },
+  altoSightSigmodGoldstandard: {
+    meta: {
+      name: 'SIGMOD-altosight-goldstandard-Y4',
+      description:
+        'Complete list of duplicate pairs in the altoSight dataset (X4) of the SIGMOD contest.',
+      algorithmId: exampleAlgorithms.gold.id,
+      datasetId: exampleDatasets.altoSight.id,
+    },
+    id: -11,
+    file: {
+      format: 'sigmod2021',
+      path: path.join(
+        EXAMPLE_EXPERIMENT_DIR,
+        'sigmod_altosight_goldstandard.csv'
+      ),
+      numberOfPairs: 348195,
+    },
+  },
 });
