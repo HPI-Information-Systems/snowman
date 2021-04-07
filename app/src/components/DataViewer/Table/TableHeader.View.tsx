@@ -13,6 +13,7 @@ export default function TableHeaderView({
   headerGroups,
   setColumnOrder,
   visibleColumns,
+  isStandalone,
   performOpenDataViewerWindow,
 }: TableHeaderProps): JSX.Element {
   const draggedColumn = useRef<string>();
@@ -85,17 +86,19 @@ export default function TableHeaderView({
           </div>
         ))}
       </ScrollSync>
-      <IonButton
-        size="small"
-        color="light"
-        onClick={performOpenDataViewerWindow}
-        style={{
-          height: `calc(${tableHeaderHeight} - 4px)`,
-        }}
-        className="open-data-viewer"
-      >
-        <IonIcon slot="icon-only" icon={open} />
-      </IonButton>
+      {!isStandalone ? (
+        <IonButton
+          size="small"
+          color="light"
+          onClick={performOpenDataViewerWindow}
+          style={{
+            height: `calc(${tableHeaderHeight} - 4px)`,
+          }}
+          className="open-data-viewer"
+        >
+          <IonIcon slot="icon-only" icon={open} />
+        </IonButton>
+      ) : null}
       {headerGroups.map((headerGroup) => (
         // eslint-disable-next-line react/jsx-key
         <div
