@@ -13,10 +13,11 @@ Each workflow occurs upon a single dataset. As a first step, you'll have to spec
 5. If you want to upload the dataset, select "Full upload" as contents, specify the csv parameters and select a file to upload.
 6. Click on "Add dataset" - this process may take several minutes to complete as indexes have to be created!
 
-### Upload failed
+## Edit a dataset
 
-Since creating the dataset and uploading its contents are two separate steps, you may receive an error message stating
-that the file upload failed. In this case, the dataset itself was created (most likely) empty with no records.
-In this case, simply delete the dataset and start over again.
+After the initial dataset creation, you can still change some attributes of the dataset. Additionally, you are able to
+replace the uploaded file's content.
 
-Future versions will allow you to further differentiate and change the records later on.
+## Preview a dataset
+
+Once records were uploaded, you can preview the records in the internal Snowman format.

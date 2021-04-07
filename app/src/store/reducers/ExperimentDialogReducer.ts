@@ -32,7 +32,7 @@ export const ExperimentDialogReducer = (
       };
     case actionTypes.OPEN_CHANGE_DIALOG:
       return {
-        ...state,
+        ...initialState,
         dialogType: DialogTypes.CHANGE_DIALOG,
         isOpen: true,
         experimentId: (action.payload as Experiment).id,
@@ -69,11 +69,6 @@ export const ExperimentDialogReducer = (
       return {
         ...state,
         experimentFileFormat: action.payload as experimentFileFormatEnum,
-      };
-    case actionTypes.CHANGE_SOFT_KPI_TIME_TO_CONFIGURE:
-      return {
-        ...state,
-        timeToConfigure: action.payload as number | undefined,
       };
     case actionTypes.RESET_DIALOG:
       return initialState;

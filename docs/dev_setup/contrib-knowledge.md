@@ -1,4 +1,4 @@
-# Contributing Knowledge
+# Contribution Knowledge
 
 This document contains information about how to extend the codebase in specific cases. For general contributing guidelines see [here](https://github.com/HPI-Information-Systems/snowman#Contributing).
 
