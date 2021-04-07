@@ -9,7 +9,7 @@ const FileInput = ({
   onChange,
   selectedFiles,
   allowMultiple = false,
-  disabled = true,
+  disabled = false,
 }: FileInputProps): JSX.Element => {
   /* This is a bit hacky, but seems to work as expected. */
   const fileInput = useRef<HTMLInputElement>(null);
