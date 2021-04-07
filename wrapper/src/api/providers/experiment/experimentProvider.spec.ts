@@ -201,13 +201,12 @@ describe('ExperimentProvider', () => {
       ['p1', 'p2'],
       ['unknown id1', 'unknown id2'],
     ];
-    await expect(
-      async () =>
-        await provider.setExperimentFile(
-          addedExperimentIds[1],
-          'pilot',
-          fileToReadable(file)
-        )
+    await expect(() =>
+      provider.setExperimentFile(
+        addedExperimentIds[1],
+        'pilot',
+        fileToReadable(file)
+      )
     ).rejects.toThrowError();
     expect(() =>
       provider.getExperimentFile(addedExperimentIds[1])
