@@ -1,3 +1,5 @@
+import { formatLargeNumber } from 'utils/formatLargeNumber';
+
 export function intersectionDescription({
   excluded = [],
   included = [],
@@ -14,6 +16,7 @@ export function intersectionDescription({
     description += 'Ω';
   }
   description += ['', ...excluded].join(' \\ ');
-  description += pairCount === undefined ? '' : ` (${pairCount} pairs)`;
+  description +=
+    pairCount === undefined ? '' : ` (${formatLargeNumber(pairCount)} pairs)`;
   return description;
 }
