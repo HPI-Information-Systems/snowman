@@ -18,6 +18,7 @@ import {
 } from 'store/actions/ExperimentDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
+import { MagicNotPossibleId } from 'structs/constants';
 import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { IonChangeEvent } from 'types/IonChangeEvent';
@@ -47,6 +48,7 @@ const mapStateToProps = (state: Store): ExperimentDialogStateProps => ({
   isValidForm: isValidExperimentDialog(state),
   selectedFiles: state.ExperimentDialogStore.selectedFiles,
   experimentFileFormat: state.ExperimentDialogStore.experimentFileFormat,
+  experimentId: state.ExperimentDialogStore.experimentId ?? MagicNotPossibleId,
 });
 
 const mapDispatchToProps = (

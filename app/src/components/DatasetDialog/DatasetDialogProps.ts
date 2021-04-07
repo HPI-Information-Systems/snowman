@@ -34,6 +34,7 @@ export interface DatasetDialogStateProps {
   tags: string[];
   selectedTags: string[];
   selectedFiles: File[];
+  datasetId: number;
 }
 
 export type DatasetDialogProps = DatasetDialogDispatchProps &

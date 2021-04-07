@@ -23,6 +23,7 @@ export interface ExperimentDialogStateProps {
   selectedTags: string[];
   isValidForm: boolean;
   selectedFiles: File[];
+  experimentId: number;
 }
 
 export type ExperimentDialogProps = ExperimentDialogStateProps &
