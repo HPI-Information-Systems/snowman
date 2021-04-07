@@ -59,7 +59,8 @@ const NMetricsPageView = ({
                       <td
                         key={`${experiments[experimentIndex].id}-metric-${index}`}
                       >
-                        {metricsOfAnExperiment[index]?.value ?? 'unknown'}
+                        {metricsOfAnExperiment[index]?.value.toPrecision(8) ??
+                          'unknown'}
                       </td>
                     )
                   )}
