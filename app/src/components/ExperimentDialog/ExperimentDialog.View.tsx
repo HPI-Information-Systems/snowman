@@ -7,7 +7,6 @@ import {
   IonItemDivider,
   IonLabel,
   IonList,
-  IonNote,
   IonTextarea,
 } from '@ionic/react';
 import { ExperimentDialogProps } from 'components/ExperimentDialog/ExperimentDialogProps';
@@ -71,35 +70,34 @@ const ExperimentDialogView = ({
           placeholder="e.g. Randomly assigned pairs for testing purposes."
         />
       </IonItem>
-      <IonItemDivider>
-        <IonLabel>UPLOAD CONTENT</IonLabel>
-      </IonItemDivider>
-      <IonItem>
-        <IonLabel position="fixed">File Format:</IonLabel>
-        <SelectableInput
-          allOptions={$enum(experimentFileFormatEnum).map(
-            (form) => form as string
-          )}
-          currentOption={experimentFileFormat}
-          setOption={changeExperimentFileFormat}
-        />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">Source File:</IonLabel>
-        <FileInput
-          selectedFiles={selectedFiles}
-          onChange={changeSelectedFiles}
-          allowMultiple={false}
-          disabled={!isAddDialog}
-        />
-      </IonItem>
-      {!isAddDialog ? (
-        <div className="center">
-          <IonNote color="medium">
-            Note: This option is disabled for experiment updates.
-          </IonNote>
-        </div>
-      ) : null}
+      {isAddDialog ? (
+        <>
+          <IonItemDivider>
+            <IonLabel>UPLOAD CONTENT</IonLabel>
+          </IonItemDivider>
+          <IonItem>
+            <IonLabel position="fixed">File Format:</IonLabel>
+            <SelectableInput
+              allOptions={$enum(experimentFileFormatEnum).map(
+                (form) => form as string
+              )}
+              currentOption={experimentFileFormat}
+              setOption={changeExperimentFileFormat}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="fixed">Source File:</IonLabel>
+            <FileInput
+              selectedFiles={selectedFiles}
+              onChange={changeSelectedFiles}
+              allowMultiple={false}
+              disabled={!isAddDialog}
+            />
+          </IonItem>
+        </>
+      ) : (
+        ''
+      )}
     </IonList>
     <div className="center tag-view">
       {tags.map(
