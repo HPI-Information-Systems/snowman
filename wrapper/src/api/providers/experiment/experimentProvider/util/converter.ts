@@ -15,6 +15,7 @@ export class ExperimentConverter {
       name: apiExperiment.name,
       id: apiExperiment.id,
       numberOfUploadedRecords: apiExperiment.numberOfUploadedRecords ?? null,
+      timeToConfigure: apiExperiment.timeToConfigure ?? null,
     };
   }
 
@@ -29,6 +30,7 @@ export class ExperimentConverter {
       name: storedExperiment.name,
       numberOfUploadedRecords:
         storedExperiment.numberOfUploadedRecords ?? undefined,
+      timeToConfigure: storedExperiment.timeToConfigure ?? undefined,
     };
   }
 }
