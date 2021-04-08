@@ -1,6 +1,7 @@
 import { getProviders } from '../../../providers';
 import { AlgorithmId, AlgorithmValues } from '../../../server/types';
 import { assertType } from '../../../tools/types';
+import { GoldStandardId, SilverStandardId } from './constants';
 
 export type ExampleAlgorithms = {
   [key: string]: {
@@ -22,20 +23,20 @@ export const exampleAlgorithms = assertType<ExampleAlgorithms>()({
       name: 'Silver Standard',
       description: 'Incomplete list of all duplicates a dataset contains.',
     },
-    id: 1,
+    id: SilverStandardId,
   },
   gold: {
     meta: {
       name: 'Gold Standard',
       description: 'Complete list of all duplicates a dataset contains.',
     },
-    id: 2,
+    id: GoldStandardId,
   },
   mock: {
     meta: {
       name: 'Mock Solution',
       description: 'Experiments constructed for testing purposes only.',
     },
-    id: 3,
+    id: -3,
   },
 });

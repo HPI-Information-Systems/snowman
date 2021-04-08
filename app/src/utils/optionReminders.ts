@@ -1,20 +1,32 @@
-import { Dataset } from 'api';
+import { Experiment } from 'api';
+import { sparklesOutline } from 'ionicons/icons';
+import { ImmediateStore } from 'store/models';
+import { SelectedOptionItem } from 'types/SelectedOptionItem';
 
-export interface ISelectedOptionsMap {
-  dataset: Dataset | null;
-  experiments: string[];
-}
-
-export const emptySelectedOptions = (): string[] => [];
-export const selectedDataset = (
-  selectedOptions: ISelectedOptionsMap
-): string[] =>
-  selectedOptions.dataset === null ? [] : [selectedOptions.dataset.name];
+export const emptySelectedOptions = (): SelectedOptionItem[] => [];
+export const selectedDataset = (aState: ImmediateStore): SelectedOptionItem[] =>
+  aState.BenchmarkConfigurationStore.selectedDataset === null
+    ? []
+    : [
+        {
+          id: aState.BenchmarkConfigurationStore.selectedDataset.id,
+          displayName: aState.BenchmarkConfigurationStore.selectedDataset.name,
+        },
+      ];
 export const selectedExperiments = (
-  selectedOptions: ISelectedOptionsMap
-): string[] =>
-  selectedOptions.experiments.map(
-    (value: string, index: number) => `${index + 1}. ${value}`
-  );
-
-export const selectedMetrics = (): string[] => ['Binary Comparison'];
+  aState: ImmediateStore
+): SelectedOptionItem[] => [
+  ...aState.BenchmarkConfigurationStore.chosenGoldStandards.map(
+    (anExperiment: Experiment): SelectedOptionItem => ({
+      id: anExperiment.id,
+      displayName: anExperiment.name,
+      iconEnd: sparklesOutline,
+    })
+  ),
+  ...aState.BenchmarkConfigurationStore.chosenExperiments.map(
+    (anExperiment: Experiment): SelectedOptionItem => ({
+      id: anExperiment.id,
+      displayName: anExperiment.name,
+    })
+  ),
+];

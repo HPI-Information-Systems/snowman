@@ -18,58 +18,57 @@ import 'react-toastify/dist/ReactToastify.css';
 /* Overwrite variables */
 import 'theme/overwrites.css';
 
-import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
-import { IonReactRouter } from '@ionic/react-router';
-import { AppProps } from 'app/AppProps';
+import { IonApp, IonPage, IonSplitPane } from '@ionic/react';
+import { DefaultAppProps } from 'app/AppProps';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
 import SideMenu from 'components/SideMenu/SideMenu';
 import React, { useEffect } from 'react';
-import { Redirect, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
-import history from 'utils/history';
-import {
-  getEmptyPath,
-  getPathResolution,
-  getPathToRootPage,
-  IPathMapper,
-} from 'utils/pathHandlers';
+import { getViewComponentToViewId } from 'utils/viewMetaInfoHandlers';
 
-const AppView = ({ loadInitialState }: AppProps): JSX.Element => {
-  useEffect((): void => loadInitialState(), [loadInitialState]);
+const DefaultAppView = ({
+  loadInitialState,
+  currentViewID: currentViewId,
+  showSideMenu,
+}: DefaultAppProps): JSX.Element => {
+  useEffect(loadInitialState, [loadInitialState]);
+  const page = (
+    <IonPage id="mainViewContentId">
+      {React.createElement(getViewComponentToViewId(currentViewId))}
+    </IonPage>
+  );
   return (
     <IonApp>
-      <IonReactRouter history={history}>
-        <IonSplitPane when="lg" contentId="main" class="split-pane-fixed">
-          {/*--  Side Menu  --*/}
-          <SideMenu />
+      {showSideMenu ? (
+        <IonSplitPane
+          when="lg"
+          contentId="mainViewContentId"
+          class="split-pane-fixed"
+        >
+          {/* Side Menu (mainViewContentId used here!) */}
+          <SideMenu contentId="mainViewContentId" />
           {/* Page Content */}
-          <IonRouterOutlet id="main">
-            <Redirect exact from={getEmptyPath()} to={getPathToRootPage()} />
-            {getPathResolution().map((aPathMapper: IPathMapper) => (
-              <Route
-                key={aPathMapper.key}
-                component={aPathMapper.component}
-                exact={aPathMapper.path != null}
-                path={aPathMapper.path}
-              />
-            ))}
-          </IonRouterOutlet>
+          {page}
         </IonSplitPane>
-      </IonReactRouter>
+      ) : (
+        page
+      )}
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <GlobalLoading />
       <ToastContainer
         autoClose={5000}
+        closeButton={false}
         pauseOnHover={true}
         pauseOnFocusLoss={true}
         closeOnClick={true}
         newestOnTop={true}
         limit={5}
         position={'top-right'}
+        bodyClassName="Toastify__body-wrap"
       />
     </IonApp>
   );
 };
 
-export default AppView;
+export default DefaultAppView;

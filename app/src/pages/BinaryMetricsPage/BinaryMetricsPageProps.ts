@@ -1,20 +1,23 @@
 import { Metric } from 'api';
-import { ColumnDescriptor } from 'components/DataViewer/ColumnDescriptor';
+import { ConfusionMatrix } from 'types/ConfusionMatrix';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
+import { TuplesLoader } from 'types/TuplesLoader';
 
-export interface BinaryMetricsPageStateProps {
+export interface BinaryMetricsPageDispatchProps {
   loadMetrics(): void;
-  loadTuples(): void;
+  preloadTuplesCounts(): void;
   selectPane(aMetricsTuplesCategory: MetricsTuplesCategories): void;
 }
 
-export interface BinaryMetricsDispatchProps {
+export interface BinaryMetricsPageStateProps {
+  rowCount: number;
   metrics: Metric[];
   selectedMetricsTuplesCategory: MetricsTuplesCategories;
   metricsTuplesCategories: MetricsTuplesCategories[];
-  dataViewerHeader: ColumnDescriptor[];
-  dataViewerTuples: unknown[];
+  tuplesLoader: TuplesLoader;
+  confusionMatrix: ConfusionMatrix;
+  dataViewerTitle: string;
 }
 
 export type BinaryMetricsPageProps = BinaryMetricsPageStateProps &
-  BinaryMetricsDispatchProps;
+  BinaryMetricsPageDispatchProps;

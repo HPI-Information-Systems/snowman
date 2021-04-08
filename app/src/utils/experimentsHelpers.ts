@@ -7,3 +7,6 @@ export const getExperimentNameFromId = (
   allExperiments.find(
     (anExperiment: Experiment): boolean => anExperiment.id === anId
   )?.name ?? '';
+
+export const couldPreviewExperiment = (anExperiment: Experiment): boolean =>
+  anExperiment.numberOfUploadedRecords !== undefined;

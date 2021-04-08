@@ -1,7 +1,6 @@
-import { Readable } from 'stream';
-
 import { setupDatabase } from '../../database';
 import { DatasetValues, ExperimentValues } from '../../server/types';
+import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
 import { DatasetProvider } from '../dataset/datasetProvider';
 import { ExperimentProvider } from '../experiment/experimentProvider';
@@ -14,9 +13,6 @@ interface metaDataset {
 interface metaExperiment {
   name: string;
   data: { meta: ExperimentValues; file: string[][] };
-}
-function fileToReadable(file: string[][]) {
-  return Readable.from(file.map((row) => row.join(',')).join('\n'));
 }
 
 let datasetProvider: DatasetProvider;
@@ -155,7 +151,7 @@ describe('test benchmark functions', () => {
     test('test metrics calculation', () => {
       expect(
         benchmarkProvider
-          .calculateMetrics(
+          .getBinaryMetrics(
             experimentIds.goldstandard,
             experimentIds.experiment1
           )
@@ -169,6 +165,7 @@ describe('test benchmark functions', () => {
             { name: 'balanced accuracy', value: '0.5598' },
             { name: 'bookmaker informedness', value: '0.1195' },
             { name: 'f1 score', value: '0.2000' },
+            { name: 'f* score', value: '0.1111' },
             { name: 'false discovery rate', value: '0.5000' },
             { name: 'false negative rate', value: '0.8750' },
             { name: 'false omission rate', value: '0.0372' },
@@ -188,7 +185,7 @@ describe('test benchmark functions', () => {
     });
     test('throw error at empty datasetAmount', () => {
       expect(() =>
-        benchmarkProvider.calculateMetrics(
+        benchmarkProvider.getBinaryMetrics(
           experimentIds.goldstandard,
           experimentIds.experiment2
         )
@@ -196,7 +193,7 @@ describe('test benchmark functions', () => {
     });
     test('throw error when tests belong to different datasets', () => {
       expect(() =>
-        benchmarkProvider.calculateMetrics(
+        benchmarkProvider.getBinaryMetrics(
           experimentIds.experiment2,
           experimentIds.experiment_dataset2
         )

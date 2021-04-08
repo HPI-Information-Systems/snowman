@@ -1,7 +1,6 @@
-import { Readable } from 'stream';
-
 import { setupDatabase } from '../../database';
 import { DatasetId, DatasetValues } from '../../server/types';
+import { fileToReadable } from '../../tools/test/filtToReadable';
 import { DatasetProvider } from './datasetProvider';
 
 function getNumberOfColumns(file: string[][]) {
@@ -48,10 +47,6 @@ function assertFilesMatch(file1: string[][], file2: string[][]) {
   expect(file1.slice(1).sort(rowsSorter)).toMatchObject(
     file2.slice(1).sort(rowsSorter)
   );
-}
-
-function fileToReadable(file: string[][]) {
-  return Readable.from(file.map((row) => row.join(',')).join('\n'));
 }
 
 describe('DatasetProvider', () => {
@@ -140,9 +135,7 @@ describe('DatasetProvider', () => {
       ...addedDataset,
       id: addedDatasetId,
     });
-    expect(() =>
-      provider.getDatasetFile(addedDatasetId, 0, 10).next()
-    ).toThrowError();
+    expect(() => provider.getDatasetFile(addedDatasetId, 0, 10)).toThrowError();
   });
 
   test('get returns dataset', () => {
@@ -185,7 +178,7 @@ describe('DatasetProvider', () => {
         .findIndex((dataset) => dataset.id === addedDatasetIds[1])
     ).toEqual(-1);
     expect(() =>
-      provider.getDatasetFile(addedDatasetIds[1], 0, 10000).next()
+      provider.getDatasetFile(addedDatasetIds[1], 0, 10000)
     ).toThrowError();
   });
 
@@ -193,14 +186,18 @@ describe('DatasetProvider', () => {
     for (let index = 0; index < addedDatasets.length; index++) {
       const file = addedDatasets[index].file;
       if (file) {
-        const readFile = [
-          ...provider.getDatasetFile(addedDatasetIds[index], 0, 100000),
-        ];
-        expect(() => assertFilesMatch(file, readFile)).not.toThrowError();
+        const readFile = provider.getDatasetFile(
+          addedDatasetIds[index],
+          0,
+          100000
+        );
+        expect(() =>
+          assertFilesMatch(file, [readFile.header, ...readFile.data])
+        ).not.toThrowError();
       } else {
         // eslint-disable-next-line no-loop-func
         expect(() =>
-          provider.getDatasetFile(addedDatasetIds[index], 0, 10).next()
+          provider.getDatasetFile(addedDatasetIds[index], 0, 10)
         ).toThrowError();
       }
     }
@@ -221,10 +218,10 @@ describe('DatasetProvider', () => {
       "'",
       ','
     );
-    const readFile = [
-      ...provider.getDatasetFile(addedDatasetIds[1], 0, 100000),
-    ];
-    expect(() => assertFilesMatch(newFile, readFile)).not.toThrowError();
+    const readFile = provider.getDatasetFile(addedDatasetIds[1], 0, 100000);
+    expect(() =>
+      assertFilesMatch(newFile, [readFile.header, ...readFile.data])
+    ).not.toThrowError();
   });
 
   test('setFile throws warning when row ids miss', async () => {

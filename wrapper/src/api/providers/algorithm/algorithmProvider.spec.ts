@@ -7,8 +7,14 @@ import { AlgorithmProvider } from './algorithmProvider';
 describe('AlgorithmProvider', () => {
   let provider: AlgorithmProvider;
   const addedAlgorithms: AlgorithmValues[] = [
-    { description: 'Mock 1', name: 'Mock 1' },
-    { description: 'Mock 2', name: 'Mock 2' },
+    {
+      description: 'Mock 1',
+      name: 'Mock 1',
+    },
+    {
+      description: 'Mock 2',
+      name: 'Mock 2',
+    },
   ];
   let addedAlgorithmids: AlgorithmId[];
 

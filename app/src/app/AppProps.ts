@@ -1,5 +1,12 @@
-export interface AppDispatchProps {
+import { ViewIDs } from 'types/ViewIDs';
+
+export interface DefaultAppDispatchProps {
   loadInitialState(): void;
 }
 
-export type AppProps = AppDispatchProps;
+export interface DefaultAppStateProps {
+  currentViewID: ViewIDs;
+  showSideMenu: boolean;
+}
+
+export type DefaultAppProps = DefaultAppStateProps & DefaultAppDispatchProps;

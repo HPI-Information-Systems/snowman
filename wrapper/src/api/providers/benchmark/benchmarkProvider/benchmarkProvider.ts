@@ -1,14 +1,15 @@
 import {
-  Dataset,
   ExperimentId,
-  ExperimentIntersection,
-  ExperimentIntersectionMode,
+  ExperimentIntersectionCount,
+  ExperimentIntersectionPairCountsItem,
+  ExperimentIntersectionPairCountsRequestExperiments,
+  ExperimentIntersectionRequestExperiments,
+  FileResponse,
 } from '../../../server/types';
 import { Metric } from '../../../server/types';
-import { getProviders } from '../..';
-import { BaseBenchmarkProvider } from '../baseBenchmarkProvider';
-import { EvaluatorCache } from './helper/evaluator';
-import { idClustersToRecordClusters } from './helper/idsToRecords';
+import { datasetFromExperimentIds } from './datasetFromExperiments';
+import { idClustersToRecordClusters } from './idsToRecords';
+import { Intersection, IntersectionCache } from './intersection';
 import {
   Accuracy,
   BalancedAccuracy,
@@ -19,6 +20,7 @@ import {
   FalseOmissionRate,
   FalsePositiveRate,
   FowlkesMallowsIndex,
+  FStarScore,
   Markedness,
   MatthewsCorrelationCoefficient,
   NegativePredictiveValue,
@@ -28,46 +30,112 @@ import {
   Specificity,
   ThreatScore,
 } from './metrics';
+import { ConfusionMatrix } from './metrics/confusionMatrix';
 
-export class BenchmarkProvider extends BaseBenchmarkProvider {
-  protected readonly evaluatorCache = new EvaluatorCache();
-
-  getConfusionTuples(
-    goldstandardId: number,
-    experimentId: number,
-    goldStandardDuplicates: boolean,
-    experimentDuplicates: boolean,
-    mode: ExperimentIntersectionMode
-  ): ExperimentIntersection {
-    const dataset = this.getDatasetByExperimentIds(
-      goldstandardId,
-      experimentId
-    );
-    const tuples = this.evaluatorCache
-      .evaluate(goldstandardId, experimentId, dataset.numberOfRecords)
-      .confusionMatrixTuples(mode);
-
-    let idClusters: number[][];
-    if (goldStandardDuplicates && experimentDuplicates) {
-      idClusters = tuples.truePositives;
-    } else if (goldStandardDuplicates && !experimentDuplicates) {
-      idClusters = tuples.falseNegatives;
-    } else if (!goldStandardDuplicates && experimentDuplicates) {
-      idClusters = tuples.falsePositives;
-    } else {
-      throw new Error(
-        'Please notice that getting the true negative records is not supported!'
-      );
-    }
-    return idClustersToRecordClusters(idClusters, dataset.id);
+export class BenchmarkProvider {
+  calculateExperimentIntersectionCount({
+    config,
+  }: {
+    config: ExperimentIntersectionRequestExperiments[];
+  }): ExperimentIntersectionCount {
+    const intersection = this.intersection(config);
+    return {
+      numberPairs: intersection.numberPairs,
+      numberRows: intersection.rowCount,
+    };
   }
 
-  calculateMetrics(goldstandardId: number, experimentId: number): Metric[] {
+  calculateExperimentIntersectionPairCounts(
+    config: ExperimentIntersectionPairCountsRequestExperiments[]
+  ): ExperimentIntersectionPairCountsItem[] {
+    const experimentIds = config.map(({ experimentId }) => experimentId);
+    const datasetId = datasetFromExperimentIds(experimentIds).id;
+    enum ExperimentState {
+      IRRELEVANT,
+      INCLUDED,
+      EXCLUDED,
+    }
+    const states = [
+      ExperimentState.IRRELEVANT,
+      ExperimentState.INCLUDED,
+      ExperimentState.EXCLUDED,
+    ];
+    const state = config.map(() => ExperimentState.IRRELEVANT);
+    const counts: ExperimentIntersectionPairCountsItem[] = [];
+    function nextState() {
+      let index = 0;
+      do {
+        state[index]++;
+        if (state[index] === states.length) {
+          state[index] = 0;
+        } else {
+          return true;
+        }
+      } while (++index < state.length);
+      return false;
+    }
+    // eslint-disable-next-line no-constant-condition
+    do {
+      const included = state
+        .map((state, index) =>
+          state === ExperimentState.INCLUDED ? experimentIds[index] : undefined
+        )
+        .filter((index) => index !== undefined) as ExperimentId[];
+      const excluded = state
+        .map((state, index) =>
+          state === ExperimentState.EXCLUDED ? experimentIds[index] : undefined
+        )
+        .filter((index) => index !== undefined) as ExperimentId[];
+      counts.push({
+        experiments: [
+          ...included.map((experimentId) => {
+            return {
+              experimentId,
+              predictedCondition: true,
+            };
+          }),
+          ...excluded.map((experimentId) => {
+            return {
+              experimentId,
+              predictedCondition: false,
+            };
+          }),
+        ],
+        numberPairs: IntersectionCache.get(included, excluded, [datasetId])
+          .numberPairs,
+        numberRows: IntersectionCache.get(included, excluded, [datasetId])
+          .rowCount,
+      });
+    } while (nextState());
+    return counts;
+  }
+
+  calculateExperimentIntersectionRecords({
+    config,
+    startAt,
+    limit,
+  }: {
+    config: ExperimentIntersectionRequestExperiments[];
+    startAt?: number;
+    limit?: number;
+  }): FileResponse {
+    const intersection = this.intersection(config);
+    return idClustersToRecordClusters(
+      intersection.clusters(startAt, limit),
+      datasetFromExperimentIds(config.map(({ experimentId }) => experimentId))
+        .id
+    );
+  }
+
+  getBinaryMetrics(goldstandardId: number, experimentId: number): Metric[] {
+    const datasetId = datasetFromExperimentIds([goldstandardId, experimentId])
+      .id;
     const metrics = [
       Accuracy,
       Precision,
       Recall,
       F1Score,
+      FStarScore,
 
       FalsePositiveRate,
       FalseNegativeRate,
@@ -84,16 +152,28 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
       PrevalenceThreshold,
       ThreatScore,
     ];
-
-    const dataset = this.getDatasetByExperimentIds(
-      goldstandardId,
-      experimentId
-    );
-    const matrix = this.evaluatorCache.evaluate(
-      goldstandardId,
-      experimentId,
-      dataset.numberOfRecords
-    ).confusionMatrixCounts;
+    const matrix: ConfusionMatrix = {
+      truePositives: IntersectionCache.get(
+        [goldstandardId, experimentId],
+        [],
+        [datasetId]
+      ).numberPairs,
+      falsePositives: IntersectionCache.get(
+        [experimentId],
+        [goldstandardId],
+        [datasetId]
+      ).numberPairs,
+      falseNegatives: IntersectionCache.get(
+        [goldstandardId],
+        [experimentId],
+        [datasetId]
+      ).numberPairs,
+      trueNegatives: IntersectionCache.get(
+        [],
+        [goldstandardId, experimentId],
+        [datasetId]
+      ).numberPairs,
+    };
     return metrics
       .map((Metric) => new Metric(matrix))
       .map(({ value, formula, name, range, info, infoLink }) => {
@@ -108,22 +188,20 @@ export class BenchmarkProvider extends BaseBenchmarkProvider {
       });
   }
 
-  protected getDatasetByExperimentIds(
-    ...experimentIds: ExperimentId[]
-  ): Dataset & { numberOfRecords: number } {
-    const datasetProvider = getProviders().dataset;
-    const experimentProvider = getProviders().experiment;
-    const datasetIds = experimentIds.map(
-      (experimentId) => experimentProvider.getExperiment(experimentId).datasetId
+  protected intersection(
+    config: ExperimentIntersectionRequestExperiments[]
+  ): Intersection {
+    return IntersectionCache.get(
+      config
+        .filter(({ predictedCondition }) => predictedCondition)
+        .map(({ experimentId }) => experimentId),
+      config
+        .filter(({ predictedCondition }) => !predictedCondition)
+        .map(({ experimentId }) => experimentId),
+      [
+        datasetFromExperimentIds(config.map(({ experimentId }) => experimentId))
+          .id,
+      ]
     );
-    const dataset = datasetProvider.getDataset(datasetIds[0]);
-
-    if (!datasetIds.every((datasetId) => datasetId === dataset.id)) {
-      throw new Error('The given experiments belong to different datasets.');
-    }
-    if (dataset.numberOfRecords === undefined) {
-      throw new Error('The dataset does not specify a number of records.');
-    }
-    return dataset as Dataset & { numberOfRecords: number };
   }
 }

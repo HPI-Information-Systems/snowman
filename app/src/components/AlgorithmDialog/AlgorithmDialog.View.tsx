@@ -28,9 +28,14 @@ const AlgorithmDialogView = ({
   changeAlgorithmDescription,
   changeAlgorithmName,
   closeDialog,
+  algorithmId,
 }: AlgorithmDialogProps): JSX.Element => (
   <ModalDialog
-    heading={`${isAddDialog ? 'Add New' : 'Update'} Matching Solution`}
+    heading={
+      isAddDialog
+        ? 'Add New Matching Solution'
+        : `Update Matching Solution (ID: ${algorithmId})`
+    }
     isOpen={isOpen}
     closeDialog={closeDialog}
   >

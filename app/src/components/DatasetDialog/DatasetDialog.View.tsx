@@ -22,7 +22,11 @@ import { DatasetDialogProps } from 'components/DatasetDialog/DatasetDialogProps'
 import FileInput from 'components/FileInput/FileInput';
 import InputChip from 'components/InputChip/InputChip';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
-import { addCircleOutline, closeCircleOutline } from 'ionicons/icons';
+import {
+  addCircleOutline,
+  checkmarkCircleOutline,
+  closeCircleOutline,
+} from 'ionicons/icons';
 import React from 'react';
 import { $enum } from 'ts-enum-util';
 import { DatasetTypes } from 'types/DatasetTypes';
@@ -30,7 +34,7 @@ import { DatasetTypes } from 'types/DatasetTypes';
 const DatasetDialogView = ({
   isOpen,
   isAddDialog,
-  isValidForm,
+  isValidAnsweredDialog,
   closeDialog,
   clickOnCancel,
   datasetName,
@@ -54,11 +58,16 @@ const DatasetDialogView = ({
   datasetDescription,
   changeDatasetDescription,
   clickOnATag,
-  addNewTagCallback,
+  createTag,
   clickOnSubmit,
+  datasetId,
 }: DatasetDialogProps): JSX.Element => (
   <ModalDialog
-    heading={isAddDialog ? 'Add New Dataset' : 'Update Existing Dataset'}
+    heading={
+      isAddDialog
+        ? 'Add New Dataset'
+        : `Update Existing Dataset (ID: ${datasetId})`
+    }
     isOpen={isOpen}
     closeDialog={closeDialog}
   >
@@ -99,7 +108,7 @@ const DatasetDialogView = ({
       </IonItemGroup>
       {datasetType === DatasetTypes.skeleton ? (
         <IonItemGroup>
-          <IonItemDivider>DATASET SETTING</IonItemDivider>
+          <IonItemDivider>DATASET SETTINGS</IonItemDivider>
           <IonItem>
             <IonLabel position="fixed">Records:</IonLabel>
             <IonInput
@@ -195,16 +204,19 @@ const DatasetDialogView = ({
       <InputChip
         label="Add domain"
         placeholder="New domain's name"
-        addNewTag={addNewTagCallback}
+        submitValueCallback={createTag}
       />
     </div>
     <div className="center button-row">
       <IonButton
         className="button-hugh button-padding"
         onClick={clickOnSubmit}
-        disabled={!isValidForm}
+        disabled={!isValidAnsweredDialog}
       >
-        <IonIcon slot="start" icon={addCircleOutline} />
+        <IonIcon
+          slot="start"
+          icon={isAddDialog ? addCircleOutline : checkmarkCircleOutline}
+        />
         {isAddDialog ? 'Add' : 'Update'}
       </IonButton>
       <IonButton

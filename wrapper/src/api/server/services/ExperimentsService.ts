@@ -1,5 +1,11 @@
 import { getProviders } from '../../providers';
-import { Experiment, ExperimentId, ExperimentValues, Request } from '../types';
+import {
+  Experiment,
+  ExperimentId,
+  ExperimentValues,
+  FileResponse,
+  Request,
+} from '../types';
 import { ExperimentFileFormat } from '../types/ExperimentFileFormat';
 import { Service, SuccessResponse } from './Service';
 
@@ -107,7 +113,7 @@ export async function getExperimentFile({
   startAt?: number;
   limit?: number;
   sortBy?: string;
-}): Promise<SuccessResponse<IterableIterator<string[]>>> {
+}): Promise<SuccessResponse<FileResponse>> {
   return Service.response(
     () => provider().getExperimentFile(experimentId, startAt, limit, sortBy),
     200,
@@ -135,24 +141,6 @@ export async function setExperimentFile(
 ): Promise<SuccessResponse<void>> {
   return Service.response(
     () => provider().setExperimentFile(experimentId, format, request),
-    204,
-    400
-  );
-}
-
-/**
- * Deletes an experiment file
- *
- * experimentId Integer The id of an experiment
- * no response value expected for this operation
- * */
-export async function deleteExperimentFile({
-  experimentId,
-}: {
-  experimentId: ExperimentId;
-}): Promise<SuccessResponse<void>> {
-  return Service.response(
-    () => provider().deleteExperimentFile(experimentId),
     204,
     400
   );

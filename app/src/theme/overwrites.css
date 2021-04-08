@@ -1,3 +1,8 @@
+/** Setup "Roboto" font **/
+* {
+  font-family: "Roboto", sans-serif;
+}
+
 /** Overwrite Ionic CSS Variables **/
 :root {
   /** primary **/
@@ -57,7 +62,29 @@
   background-color: var(--ion-color-danger);
 }
 
+.Toastify__body-wrap {
+  width: 100%;
+  overflow-wrap: break-word !important;
+}
+
 /* Tooltip */
 .tooltip-fixed {
   max-width: 450px;
+}
+
+/* Ionic Grid */
+.grid-no-padding {
+  --ion-grid-padding: 0;
+}
+
+.grid-5px-padding {
+  --ion-grid-padding: 5px;
+}
+
+.col-no-padding {
+  --ion-grid-column-padding: 0;
+}
+
+.col-5px-padding {
+  --ion-grid-column-padding: 5px;
 }

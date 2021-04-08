@@ -25,28 +25,24 @@ const AlgorithmCardView = ({
     <IonCardContent>{algorithm.description}</IonCardContent>
     <IonGrid>
       <IonRow>
-        <IonCol size="6">
+        <IonCol size="6" class="ion-text-left">
           <IonButton
             size="small"
             fill="clear"
             color="primary"
             onClick={editAlgorithm}
-            className="ion-float-left"
           >
-            <IonIcon slot="start" icon={create} />
-            Edit
+            <IonIcon slot="icon-only" icon={create} />
           </IonButton>
         </IonCol>
-        <IonCol size="6">
+        <IonCol size="6" class="ion-text-right">
           <IonButton
             size="small"
             fill="clear"
             color="danger"
             onClick={deleteAlgorithm}
-            className="ion-float-right"
           >
-            <IonIcon slot="start" icon={trash} />
-            Delete
+            <IonIcon slot="icon-only" icon={trash} />
           </IonButton>
         </IonCol>
       </IonRow>

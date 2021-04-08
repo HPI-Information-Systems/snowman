@@ -1,84 +1,41 @@
-import { databaseBackend, Table } from '../../database';
-import { latest } from '../../database/schemas';
+import { tables } from '../../database';
 import { Algorithm, AlgorithmId, AlgorithmValues } from '../../server/types';
-import { BaseAlgorithmProvider } from './baseAlgorithmProvider';
+import { AlgorithmConverter } from './util/converter';
 
-export class AlgorithmProvider extends BaseAlgorithmProvider {
-  protected readonly schema = latest.tableSchemas.meta.algorithm;
-  protected readonly table = new Table(this.schema);
-  protected readonly listAlgorithmsQuery = databaseBackend().prepare(
-    `SELECT "${this.schema.columns.name.name}" as name,
-            "${this.schema.columns.description.name}" as description,
-            "${this.schema.columns.id.name}" as id
-       FROM ${this.table}`
-  );
-  protected readonly getAlgorithmQuery = databaseBackend().prepare(
-    `SELECT "${this.schema.columns.name.name}" as name,
-            "${this.schema.columns.description.name}" as description,
-            "${this.schema.columns.id.name}" as id
-       FROM ${this.table}
-      WHERE "${this.schema.columns.id.name}" = ?`
-  );
-  protected readonly setAlgorithmQuery = databaseBackend().prepare(
-    `INSERT OR REPLACE INTO ${this.table}("${this.schema.columns.id.name}", 
-                                          "${this.schema.columns.name.name}",
-                                          "${this.schema.columns.description.name}")
-                                   VALUES(@id,
-                                          @name,
-                                          @description)`
-  );
-  protected readonly deleteAlgorithmQuery = databaseBackend().prepare(
-    `DELETE FROM ${this.table}
-      WHERE "${this.schema.columns.id.name}" = ?`
-  );
-  protected readonly algorithmUsagesQuery = databaseBackend().prepare(
-    `SELECT "${
-      latest.tableSchemas.meta.experiment.columns.name.name
-    }" as experimentName,
-            "${
-              latest.tableSchemas.meta.experiment.columns.id.name
-            }" as experimentId
-     FROM ${new Table(latest.tableSchemas.meta.experiment)}
-     WHERE "${latest.tableSchemas.meta.experiment.columns.algorithm.name}" = ?`
-  );
+export class AlgorithmProvider {
+  protected readonly converter = new AlgorithmConverter();
 
   listAlgorithms(): Algorithm[] {
-    return this.listAlgorithmsQuery.all();
+    return tables.meta.algorithm
+      .all()
+      .map((stored) => this.converter.storedToApi(stored));
   }
 
   addAlgorithm(algorithm: AlgorithmValues): AlgorithmId {
-    return this.table.insert([
+    return tables.meta.algorithm.upsert([
       {
-        column: this.schema.columns.name,
-        value: algorithm.name,
-      },
-      {
-        column: this.schema.columns.description,
-        value: algorithm.description || null,
+        name: algorithm.name,
+        description: algorithm.description,
       },
     ])[0];
   }
 
   getAlgorithm(id: AlgorithmId): Algorithm {
-    const algorithm = this.getAlgorithmQuery.all(id);
-    if (algorithm.length === 0) {
+    const algorithm = tables.meta.algorithm.get({ id });
+    if (!algorithm) {
       throw new Error(`A matching solution with the id ${id} does not exist.`);
     }
-    return algorithm[0];
+    return this.converter.storedToApi(algorithm);
   }
 
   setAlgorithm(id: AlgorithmId, algorithm: AlgorithmValues): void {
-    this.setAlgorithmQuery.run({
-      id,
-      name: algorithm.name,
-      description: algorithm.description || null,
-    });
+    tables.meta.algorithm.upsert([
+      this.converter.apiToStored({ ...algorithm, id }),
+    ]);
   }
 
-  private algorithmUsages(
-    id: AlgorithmId
-  ): { experimentId: number; experimentName: string }[] {
-    return this.algorithmUsagesQuery.all(id);
+  private algorithmUsages(id: AlgorithmId) {
+    return tables.meta.experiment.all({ algorithm: id });
   }
 
   private throwIfAlgorithmIsUsed(id: AlgorithmId) {
@@ -86,10 +43,7 @@ export class AlgorithmProvider extends BaseAlgorithmProvider {
     if (usages.length > 0) {
       const algorithm = this.getAlgorithm(id);
       const experiments = usages
-        .map(
-          ({ experimentId, experimentName }) =>
-            `${experimentName} (${experimentId})`
-        )
+        .map(({ id, name }) => `${name} (${id})`)
         .join(', ');
       throw new Error(
         `The matching solution ${algorithm.name} (${algorithm.id}) is used by the experiments ${experiments}.`
@@ -99,6 +53,6 @@ export class AlgorithmProvider extends BaseAlgorithmProvider {
 
   deleteAlgorithm(id: AlgorithmId): void {
     this.throwIfAlgorithmIsUsed(id);
-    this.deleteAlgorithmQuery.run(id);
+    tables.meta.algorithm.delete({ id });
   }
 }

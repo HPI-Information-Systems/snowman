@@ -13,8 +13,8 @@ jobs:
       - name: Set up Python 3.x
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
-          architecture: 'x64'
+          python-version: "3.x"
+          architecture: "x64"
       - name: Install pip dependencies
         run: pip install -r requirements.txt
       - name: Use Node.js 14.x
@@ -33,6 +33,8 @@ jobs:
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
             ${{ runner.os }}-
+      - name: Force HTTPs for Git
+        run: 'git config --global url."https://github.com/".insteadOf ssh://git@github.com/'
       - name: Run (root) npm install
         run: npm ci
         working-directory: ./

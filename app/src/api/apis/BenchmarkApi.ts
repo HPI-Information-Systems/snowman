@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._  Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -15,31 +15,38 @@
 
 import * as runtime from '../runtime';
 import {
-    ExperimentIntersection,
-    ExperimentIntersectionFromJSON,
-    ExperimentIntersectionToJSON,
     ExperimentIntersectionCount,
     ExperimentIntersectionCountFromJSON,
     ExperimentIntersectionCountToJSON,
-    ExperimentIntersectionMode,
-    ExperimentIntersectionModeFromJSON,
-    ExperimentIntersectionModeToJSON,
+    ExperimentIntersectionPairCountsItem,
+    ExperimentIntersectionPairCountsItemFromJSON,
+    ExperimentIntersectionPairCountsItemToJSON,
+    ExperimentIntersectionPairCountsRequestExperiments,
+    ExperimentIntersectionPairCountsRequestExperimentsFromJSON,
+    ExperimentIntersectionPairCountsRequestExperimentsToJSON,
+    ExperimentIntersectionRequestExperiments,
+    ExperimentIntersectionRequestExperimentsFromJSON,
+    ExperimentIntersectionRequestExperimentsToJSON,
+    FileResponse,
+    FileResponseFromJSON,
+    FileResponseToJSON,
     Metric,
     MetricFromJSON,
     MetricToJSON,
 } from '../models';
 
 export interface CalculateExperimentIntersectionCountRequest {
-    requestBody: Array<object>;
-    mode?: ExperimentIntersectionMode;
+    experimentIntersectionRequestExperiments: Array<ExperimentIntersectionRequestExperiments>;
+}
+
+export interface CalculateExperimentIntersectionPairCountsRequest {
+    experimentIntersectionPairCountsRequestExperiments: Array<ExperimentIntersectionPairCountsRequestExperiments>;
 }
 
 export interface CalculateExperimentIntersectionRecordsRequest {
-    requestBody: Array<object>;
+    experimentIntersectionRequestExperiments: Array<ExperimentIntersectionRequestExperiments>;
     startAt?: number;
     limit?: number;
-    sortBy?: string;
-    mode?: ExperimentIntersectionMode;
 }
 
 export interface GetBinaryMetricsRequest {
@@ -58,18 +65,13 @@ export class BenchmarkApi extends runtime.BaseAPI {
 
     /**
      * intersects multiple experiments and returns the counts of the number of records. This can be used to calculate the confusion-matrix
-     * Triggers the comparison of multiple experiments and returns tuples classified as false_negative, etc. and limited by limit
      */
     async calculateExperimentIntersectionCountRaw(requestParameters: CalculateExperimentIntersectionCountRequest): Promise<runtime.ApiResponse<ExperimentIntersectionCount>> {
-        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
-            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling calculateExperimentIntersectionCount.');
+        if (requestParameters.experimentIntersectionRequestExperiments === null || requestParameters.experimentIntersectionRequestExperiments === undefined) {
+            throw new runtime.RequiredError('experimentIntersectionRequestExperiments','Required parameter requestParameters.experimentIntersectionRequestExperiments was null or undefined when calling calculateExperimentIntersectionCount.');
         }
 
         const queryParameters: any = {};
-
-        if (requestParameters.mode !== undefined) {
-            queryParameters['mode'] = requestParameters.mode;
-        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -80,7 +82,7 @@ export class BenchmarkApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.requestBody,
+            body: requestParameters.experimentIntersectionRequestExperiments.map(ExperimentIntersectionRequestExperimentsToJSON),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => ExperimentIntersectionCountFromJSON(jsonValue));
@@ -88,7 +90,6 @@ export class BenchmarkApi extends runtime.BaseAPI {
 
     /**
      * intersects multiple experiments and returns the counts of the number of records. This can be used to calculate the confusion-matrix
-     * Triggers the comparison of multiple experiments and returns tuples classified as false_negative, etc. and limited by limit
      */
     async calculateExperimentIntersectionCount(requestParameters: CalculateExperimentIntersectionCountRequest): Promise<ExperimentIntersectionCount> {
         const response = await this.calculateExperimentIntersectionCountRaw(requestParameters);
@@ -96,12 +97,44 @@ export class BenchmarkApi extends runtime.BaseAPI {
     }
 
     /**
-     * intersects multiple experiments and returns the resulting records. This can be used to calculate the confusion-matrix. Up to now exactly two experiment objects are required. The first one represents the groundTruth, the second one the predicted experiment.
-     * Triggers the comparison of multiple experiments and returns tuples classified as false_negative, etc. and limited by limit
+     * returns the count of pairs of all possible intersections of the given experiments
      */
-    async calculateExperimentIntersectionRecordsRaw(requestParameters: CalculateExperimentIntersectionRecordsRequest): Promise<runtime.ApiResponse<ExperimentIntersection>> {
-        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
-            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling calculateExperimentIntersectionRecords.');
+    async calculateExperimentIntersectionPairCountsRaw(requestParameters: CalculateExperimentIntersectionPairCountsRequest): Promise<runtime.ApiResponse<Array<ExperimentIntersectionPairCountsItem>>> {
+        if (requestParameters.experimentIntersectionPairCountsRequestExperiments === null || requestParameters.experimentIntersectionPairCountsRequestExperiments === undefined) {
+            throw new runtime.RequiredError('experimentIntersectionPairCountsRequestExperiments','Required parameter requestParameters.experimentIntersectionPairCountsRequestExperiments was null or undefined when calling calculateExperimentIntersectionPairCounts.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/benchmark/experiment-intersection/pair-counts`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.experimentIntersectionPairCountsRequestExperiments.map(ExperimentIntersectionPairCountsRequestExperimentsToJSON),
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ExperimentIntersectionPairCountsItemFromJSON));
+    }
+
+    /**
+     * returns the count of pairs of all possible intersections of the given experiments
+     */
+    async calculateExperimentIntersectionPairCounts(requestParameters: CalculateExperimentIntersectionPairCountsRequest): Promise<Array<ExperimentIntersectionPairCountsItem>> {
+        const response = await this.calculateExperimentIntersectionPairCountsRaw(requestParameters);
+        return await response.value();
+    }
+
+    /**
+     * intersects multiple experiments and returns the resulting records. This can be used to calculate the confusion-matrix.
+     */
+    async calculateExperimentIntersectionRecordsRaw(requestParameters: CalculateExperimentIntersectionRecordsRequest): Promise<runtime.ApiResponse<FileResponse>> {
+        if (requestParameters.experimentIntersectionRequestExperiments === null || requestParameters.experimentIntersectionRequestExperiments === undefined) {
+            throw new runtime.RequiredError('experimentIntersectionRequestExperiments','Required parameter requestParameters.experimentIntersectionRequestExperiments was null or undefined when calling calculateExperimentIntersectionRecords.');
         }
 
         const queryParameters: any = {};
@@ -114,14 +147,6 @@ export class BenchmarkApi extends runtime.BaseAPI {
             queryParameters['limit'] = requestParameters.limit;
         }
 
-        if (requestParameters.sortBy !== undefined) {
-            queryParameters['sortBy'] = requestParameters.sortBy;
-        }
-
-        if (requestParameters.mode !== undefined) {
-            queryParameters['mode'] = requestParameters.mode;
-        }
-
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
@@ -131,17 +156,16 @@ export class BenchmarkApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.requestBody,
+            body: requestParameters.experimentIntersectionRequestExperiments.map(ExperimentIntersectionRequestExperimentsToJSON),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => ExperimentIntersectionFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => FileResponseFromJSON(jsonValue));
     }
 
     /**
-     * intersects multiple experiments and returns the resulting records. This can be used to calculate the confusion-matrix. Up to now exactly two experiment objects are required. The first one represents the groundTruth, the second one the predicted experiment.
-     * Triggers the comparison of multiple experiments and returns tuples classified as false_negative, etc. and limited by limit
+     * intersects multiple experiments and returns the resulting records. This can be used to calculate the confusion-matrix.
      */
-    async calculateExperimentIntersectionRecords(requestParameters: CalculateExperimentIntersectionRecordsRequest): Promise<ExperimentIntersection> {
+    async calculateExperimentIntersectionRecords(requestParameters: CalculateExperimentIntersectionRecordsRequest): Promise<FileResponse> {
         const response = await this.calculateExperimentIntersectionRecordsRaw(requestParameters);
         return await response.value();
     }

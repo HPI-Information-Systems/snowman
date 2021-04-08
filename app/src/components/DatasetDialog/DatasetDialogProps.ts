@@ -5,7 +5,7 @@ import { IonChangeEvent } from 'types/IonChangeEvent';
 export interface DatasetDialogDispatchProps {
   closeDialog(): void;
   clickOnCancel(): void;
-  addNewTagCallback(newTagValue: string): void;
+  createTag(newTagValue: string): void;
   changeDatasetName(event: IonChangeEvent): void;
   changeDatasetDescription(event: IonChangeEvent): void;
   changeDatasetType(event: IonChangeEvent): void;
@@ -22,7 +22,7 @@ export interface DatasetDialogDispatchProps {
 export interface DatasetDialogStateProps {
   isOpen: boolean;
   isAddDialog: boolean;
-  isValidForm: boolean; //Todo: Rename
+  isValidAnsweredDialog: boolean;
   datasetName: string;
   datasetDescription: string;
   datasetType: DatasetTypes;
@@ -34,6 +34,7 @@ export interface DatasetDialogStateProps {
   tags: string[];
   selectedTags: string[];
   selectedFiles: File[];
+  datasetId: number;
 }
 
 export type DatasetDialogProps = DatasetDialogDispatchProps &

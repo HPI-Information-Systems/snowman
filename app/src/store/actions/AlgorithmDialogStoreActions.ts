@@ -1,18 +1,18 @@
-import { Algorithm, AlgorithmApi } from 'api';
+import { Algorithm, AlgorithmApi, AlgorithmValues } from 'api';
 import { AlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
-import { getAlgorithms } from 'store/actions/AlgorithmsStoreActions';
+import { getAlgorithms } from 'store/actions/AlgorithmsPageActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
-import { MagicNotPossibleId } from 'utils/constants';
+import { MagicNotPossibleId } from 'structs/constants';
+import {
+  SUCCESS_TO_ADD_NEW_ALGORITHM,
+  SUCCESS_TO_UPDATE_ALGORITHM,
+} from 'structs/statusMessages';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
-import {
-  SUCCESS_TO_ADD_NEW_ALGORITHM,
-  SUCCESS_TO_UPDATE_ALGORITHM,
-} from 'utils/statusMessages';
 
 export const openAddDialog = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
@@ -69,6 +69,11 @@ export const resetDialog = (): easyPrimitiveActionReturn =>
     payload: false,
   });
 
+const getAlgorithmValues = (): AlgorithmValues => ({
+  name: store.getState().AlgorithmDialogStore.algorithmName,
+  description: store.getState().AlgorithmDialogStore.algorithmDescription,
+});
+
 const addAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> =>
@@ -76,11 +81,7 @@ const addAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
     (): Promise<void> =>
       new AlgorithmApi()
         .addAlgorithm({
-          algorithmValues: {
-            name: store.getState().AlgorithmDialogStore.algorithmName,
-            description: store.getState().AlgorithmDialogStore
-              .algorithmDescription,
-          },
+          algorithmValues: getAlgorithmValues(),
         })
         .then((): void => {
           dispatch(resetDialog());
@@ -103,11 +104,7 @@ const updateAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
           algorithmId:
             store.getState().AlgorithmDialogStore.algorithmId ??
             MagicNotPossibleId,
-          algorithmValues: {
-            description: store.getState().AlgorithmDialogStore
-              .algorithmDescription,
-            name: store.getState().AlgorithmDialogStore.algorithmName,
-          },
+          algorithmValues: getAlgorithmValues(),
         })
         .then((): void => dispatch(resetDialog()))
         .finally((): void => {

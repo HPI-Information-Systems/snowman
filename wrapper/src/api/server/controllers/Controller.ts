@@ -1,6 +1,6 @@
-import stringify from 'csv-stringify';
 import { Response } from 'express';
 
+import { logger } from '../../tools/logger';
 import { ErrorResponse, SuccessResponse } from '../services/Service';
 import { Request } from '../types/util';
 
@@ -24,32 +24,26 @@ export class Controller {
     response.status(payload.code || 200).send(responsePayload);
   }
 
-  static sendFileResponse(
+  static sendError(
+    request: Request,
     response: Response,
-    payload: SuccessResponse<IterableIterator<string[]>>
+    error: ErrorResponse<unknown>
   ): void {
-    const stringifier = stringify();
-    stringifier.pipe(response);
-    stringifier.on('finish', () => {
-      response.end();
-    });
-    try {
-      for (const line of payload.payload) {
-        stringifier.write(line);
-      }
-      response.status(payload.code);
-    } catch (e) {
-      response.status(404).send(e.message || e);
-    }
-    stringifier.end();
-  }
-
-  static sendError(response: Response, error: ErrorResponse<unknown>): void {
     let payload = error.error;
     if (typeof payload === 'number') {
       payload = payload.toString();
     }
-    response.status(error.code || 500).send(payload);
+    logger.error((payload as string).toString());
+    if (request.complete) {
+      response.status(error.code || 500).send(payload);
+    } else {
+      request.on('end', () => {
+        response.status(error.code || 500).send(payload);
+      });
+      request.on('error', () => {
+        response.status(error.code || 500).send(payload);
+      });
+    }
   }
 
   static collectRequestParams<ParamsT extends RequestParameters>(
@@ -106,7 +100,6 @@ export class Controller {
         ) => Promise<SuccessResponse<ResponseT>>)
       | ((params: ParamsT) => Promise<SuccessResponse<ResponseT>>),
     options: {
-      responseIsFile?: boolean;
       requestIsFile?: boolean;
     } = {}
   ): Promise<void> {
@@ -120,19 +113,9 @@ export class Controller {
           params: ParamsT
         ) => Promise<SuccessResponse<ResponseT>>)(params);
       }
-
-      if ('responseIsFile' in options && options.responseIsFile) {
-        Controller.sendFileResponse(
-          response,
-          (serviceResponse as unknown) as SuccessResponse<
-            IterableIterator<string[]>
-          >
-        );
-      } else {
-        Controller.sendResponse(response, serviceResponse);
-      }
+      Controller.sendResponse(response, serviceResponse);
     } catch (error) {
-      Controller.sendError(response, error);
+      Controller.sendError(request, response, error);
     }
   }
 }

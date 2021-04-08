@@ -1,5 +1,3 @@
-interface ChangeEvent {
-  value: string | undefined | null;
-}
+import { InputChangeEventDetail } from '@ionic/core';
 
-export type IonChangeEvent = CustomEvent<ChangeEvent>;
+export type IonChangeEvent = CustomEvent<InputChangeEventDetail>;

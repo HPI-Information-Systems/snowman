@@ -7,6 +7,7 @@ interface CommandLineArguments extends dashdash.Results {
   hostname: string;
   port: number;
   headless: boolean;
+  help: boolean;
 }
 
 export const STORAGE_DIRECTORY_CLI_FLAG = 'storageDirectory';
@@ -58,8 +59,39 @@ export const cliOptions: dashdash.OptionWithoutAliases[] = [
     default: (false as unknown) as string,
     help: 'If present, does not show the UI but starts the API directly.',
   },
+  {
+    name: 'help',
+    type: 'bool',
+    default: (false as unknown) as string,
+    help: 'Shows this help message.',
+  },
 ];
 
-export const cliArgs = dashdash.parse({
+const parser = dashdash.createParser({
+  allowUnknown: process.env.JEST_WORKER_ID !== undefined,
   options: cliOptions,
-}) as CommandLineArguments;
+});
+
+function showHelp() {
+  console.log('available options:');
+  console.log(parser.help());
+}
+
+function parse(): [CommandLineArguments, boolean] {
+  let args: CommandLineArguments;
+  let shouldShowHelp: boolean;
+  try {
+    args = parser.parse() as CommandLineArguments;
+    shouldShowHelp = args.help;
+  } catch (e) {
+    console.error(e.message + '\n');
+    args = parser.parse([]) as CommandLineArguments;
+    shouldShowHelp = true;
+  }
+  if (shouldShowHelp) {
+    showHelp();
+  }
+  return [args, shouldShowHelp];
+}
+
+export const [cliArgs, doNotStartApplication] = parse();

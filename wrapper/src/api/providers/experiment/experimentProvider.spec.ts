@@ -1,20 +1,14 @@
-import { Readable } from 'stream';
-
-import { setupDatabase } from '../../database';
-import { latest } from '../../database/schemas';
-import { throwIfTableNotExists } from '../../database/table/loader';
+import { setupDatabase, tables } from '../../database';
 import {
   AlgorithmValues,
   DatasetValues,
   ExperimentValues,
 } from '../../server/types';
+import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
 import { DatasetProvider } from '../dataset/datasetProvider';
 import { ExperimentProvider } from './experimentProvider/experimentProvider';
 
-function fileToReadable(file: string[][]) {
-  return Readable.from(file.map((row) => row.join(',')).join('\n'));
-}
 describe('ExperimentProvider', () => {
   let provider: ExperimentProvider;
 
@@ -95,11 +89,6 @@ describe('ExperimentProvider', () => {
           description: 'Dataset file',
           name: 'Dataset file',
         },
-        file: [
-          ['p1', 'p2'],
-          ['id1', 'id2'],
-        ],
-        numberOfUploadedRecords: 1,
       },
     ];
     addedExperimentIds = [];
@@ -190,11 +179,9 @@ describe('ExperimentProvider', () => {
   });
 
   test('set file sets file', async () => {
-    expect(() =>
-      throwIfTableNotExists(
-        latest.tableSchemas.experiment.experiment(addedExperimentIds[0])
-      )
-    ).toThrowError();
+    expect(tables.experiment.experiment(addedExperimentIds[0]).exists()).toBe(
+      false
+    );
     const file = [
       ['p1', 'p2'],
       ['id1', 'id1'],
@@ -204,39 +191,25 @@ describe('ExperimentProvider', () => {
       'pilot',
       fileToReadable(file)
     );
-    expect(() =>
-      throwIfTableNotExists(
-        latest.tableSchemas.experiment.experiment(addedExperimentIds[0])
-      )
-    ).not.toThrowError();
+    expect(tables.experiment.experiment(addedExperimentIds[0]).exists()).toBe(
+      true
+    );
   });
 
-  test('delete file deletes file', () => {
-    expect(() =>
-      throwIfTableNotExists(
-        latest.tableSchemas.experiment.experiment(addedExperimentIds[1])
-      )
-    ).not.toThrowError();
-    provider.deleteExperimentFile(addedExperimentIds[1]);
-    expect(() =>
-      throwIfTableNotExists(
-        latest.tableSchemas.experiment.experiment(addedExperimentIds[1])
-      )
-    ).toThrowError();
-  });
-
-  test('set file throws warning when adding unknown / too many ids', async () => {
+  test('set file throws error when adding unknown / too many ids', async () => {
     const file = [
       ['p1', 'p2'],
       ['unknown id1', 'unknown id2'],
     ];
-    await expect(
-      async () =>
-        await provider.setExperimentFile(
-          addedExperimentIds[1],
-          'pilot',
-          fileToReadable(file)
-        )
+    await expect(() =>
+      provider.setExperimentFile(
+        addedExperimentIds[1],
+        'pilot',
+        fileToReadable(file)
+      )
     ).rejects.toThrowError();
+    expect(() =>
+      provider.getExperimentFile(addedExperimentIds[1])
+    ).toThrowError();
   });
 });

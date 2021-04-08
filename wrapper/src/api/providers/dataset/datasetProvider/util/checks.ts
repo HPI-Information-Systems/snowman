@@ -1,5 +1,4 @@
-import { latest } from '../../../../database/schemas';
-import { tableExists } from '../../../../database/table/loader';
+import { tables } from '../../../../database';
 import { DatasetId } from '../../../../server/types';
 import { ExecuteSynchronized } from '../../../../tools/executeSynchronized';
 import { DatasetIDMapper } from './idMapper';
@@ -37,7 +36,7 @@ export class DatasetConsistencyChecks {
   }
 
   datasetFileUploaded(datasetId: DatasetId): boolean {
-    return tableExists(latest.tableSchemas.dataset.dataset(datasetId));
+    return tables.dataset.dataset(datasetId).exists();
   }
 
   throwIfLocked(datasetId: DatasetId): void {

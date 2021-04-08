@@ -10,9 +10,12 @@ nav:
     - Datasets: basic_usage/datasets.md
     - Experiments: basic_usage/experiments.md
     - Benchmark: basic_usage/benchmark.md
+  - Advanced setups:
+    - Remote instances: advanced_setups/remote_instances.md
+    - Connect your code: advanced_setups/code_connection.md
   - Development:
     - Setup: dev_setup/introduction.md
-    - Contributing: contributing/knowledge.md
+    - Contributing: dev_setup/contrib-knowledge.md
     - REST API: ./swagger
   - SIGMOD2021: sigmod2021.md
 
@@ -29,3 +32,6 @@ theme:
 
 plugins:
   - search
+
+markdown_extensions:
+  - admonition

@@ -1,5 +1,8 @@
 .metric-number {
+  overflow: hidden;
   font-size: 2.5em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .metric-name {
@@ -10,7 +13,24 @@
   width: 200px;
 }
 
+.card-placeholder {
+  width: 200px;
+  height: 120px;
+}
+
 .table-housing {
   height: 500px;
   padding-bottom: 20px;
+}
+
+.count-chip {
+  opacity: 1 !important;
+}
+
+.info-icon-fixed {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: larger;
+  cursor: pointer;
 }

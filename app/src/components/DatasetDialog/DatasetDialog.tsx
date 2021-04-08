@@ -22,6 +22,7 @@ import {
 } from 'store/actions/DatasetDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
+import { MagicNotPossibleId } from 'structs/constants';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
@@ -59,7 +60,8 @@ const mapStateToProps = (state: Store): DatasetDialogStateProps => ({
   csvSeparator: state.DatasetDialogStore.csvSeparator,
   csvQuote: state.DatasetDialogStore.csvQuote,
   csvEscape: state.DatasetDialogStore.csvEscape,
-  isValidForm: isValidDatasetDialog(state),
+  isValidAnsweredDialog: isValidDatasetDialog(state),
+  datasetId: state.DatasetDialogStore.datasetId ?? MagicNotPossibleId,
 });
 
 const mapDispatchToProps = (
@@ -105,7 +107,7 @@ const mapDispatchToProps = (
   clickOnATag(aTag: string): void {
     dispatch(clickOnDatasetTag(aTag));
   },
-  addNewTagCallback(newTagValue: string): void {
+  createTag(newTagValue: string): void {
     dispatch(addNewTag(newTagValue));
   },
   clickOnSubmit(): void {

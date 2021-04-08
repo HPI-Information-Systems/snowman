@@ -4,7 +4,7 @@ import { SnowmanAction } from 'store/messages';
 import { ExperimentDialogStore } from 'store/models';
 import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
-import { getAlgorithmTagFromId } from 'utils/algorithmHelpers';
+import { getAlgorithmNameFromId } from 'utils/algorithmHelpers';
 import { toggleSelectionArraySingleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: ExperimentDialogStore = {
@@ -13,6 +13,7 @@ const initialState: ExperimentDialogStore = {
   experimentId: null,
   experimentName: '',
   experimentDescription: '',
+  timeToConfigure: undefined,
   experimentFileFormat: experimentFileFormatEnum.Pilot,
   selectedTags: [],
   selectedFiles: [],
@@ -31,14 +32,14 @@ export const ExperimentDialogReducer = (
       };
     case actionTypes.OPEN_CHANGE_DIALOG:
       return {
-        ...state,
+        ...initialState,
         dialogType: DialogTypes.CHANGE_DIALOG,
         isOpen: true,
         experimentId: (action.payload as Experiment).id,
         experimentName: (action.payload as Experiment).name,
         experimentDescription: (action.payload as Experiment).description ?? '',
         selectedTags: [
-          getAlgorithmTagFromId(
+          getAlgorithmNameFromId(
             (action.payload as Experiment).algorithmId,
             action.optionalPayload as Algorithm[]
           ),
@@ -84,6 +85,7 @@ export const ExperimentDialogReducer = (
           action.payload as string
         ),
       };
+    default:
+      return state;
   }
-  return state;
 };

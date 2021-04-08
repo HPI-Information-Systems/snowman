@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._  Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -21,6 +21,9 @@ import {
     ExperimentValues,
     ExperimentValuesFromJSON,
     ExperimentValuesToJSON,
+    FileResponse,
+    FileResponseFromJSON,
+    FileResponseToJSON,
 } from '../models';
 
 export interface AddExperimentRequest {
@@ -28,10 +31,6 @@ export interface AddExperimentRequest {
 }
 
 export interface DeleteExperimentRequest {
-    experimentId: number;
-}
-
-export interface DeleteExperimentFileRequest {
     experimentId: number;
 }
 
@@ -125,35 +124,6 @@ export class ExperimentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Deletes an experiment file
-     */
-    async deleteExperimentFileRaw(requestParameters: DeleteExperimentFileRequest): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
-            throw new runtime.RequiredError('experimentId','Required parameter requestParameters.experimentId was null or undefined when calling deleteExperimentFile.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/experiments/{experimentId}/file`.replace(`{${"experimentId"}}`, encodeURIComponent(String(requestParameters.experimentId))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Deletes an experiment file
-     */
-    async deleteExperimentFile(requestParameters: DeleteExperimentFileRequest): Promise<void> {
-        await this.deleteExperimentFileRaw(requestParameters);
-    }
-
-    /**
      * Gets experiment by id
      */
     async getExperimentRaw(requestParameters: GetExperimentRequest): Promise<runtime.ApiResponse<Experiment>> {
@@ -186,7 +156,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
     /**
      * Get an experiment file
      */
-    async getExperimentFileRaw(requestParameters: GetExperimentFileRequest): Promise<runtime.ApiResponse<Blob>> {
+    async getExperimentFileRaw(requestParameters: GetExperimentFileRequest): Promise<runtime.ApiResponse<FileResponse>> {
         if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
             throw new runtime.RequiredError('experimentId','Required parameter requestParameters.experimentId was null or undefined when calling getExperimentFile.');
         }
@@ -214,13 +184,13 @@ export class ExperimentsApi extends runtime.BaseAPI {
             query: queryParameters,
         });
 
-        return new runtime.BlobApiResponse(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => FileResponseFromJSON(jsonValue));
     }
 
     /**
      * Get an experiment file
      */
-    async getExperimentFile(requestParameters: GetExperimentFileRequest): Promise<Blob> {
+    async getExperimentFile(requestParameters: GetExperimentFileRequest): Promise<FileResponse> {
         const response = await this.getExperimentFileRaw(requestParameters);
         return await response.value();
     }
@@ -288,7 +258,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates or creates an experiment file
+     * Creates an experiment file
      */
     async setExperimentFileRaw(requestParameters: SetExperimentFileRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
@@ -325,7 +295,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates or creates an experiment file
+     * Creates an experiment file
      */
     async setExperimentFile(requestParameters: SetExperimentFileRequest): Promise<void> {
         await this.setExperimentFileRaw(requestParameters);

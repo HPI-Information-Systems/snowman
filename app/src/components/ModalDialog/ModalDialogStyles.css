@@ -2,7 +2,9 @@
   text-align: center;
 }
 
-.modal-content {
-  margin: 15px;
-  overflow-y: auto;
+.modal-close-icon {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
 }

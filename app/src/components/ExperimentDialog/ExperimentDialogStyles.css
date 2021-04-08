@@ -7,7 +7,7 @@
 }
 
 .tag-view {
-  padding-top: 15px;
+  padding-top: 0;
   padding-bottom: 15px;
 }
 
@@ -21,6 +21,6 @@
   padding-bottom: 15px;
 }
 
-.upload-notice {
-  padding: 0 20px 10px 20px;
+.input-align-right {
+  text-align: right;
 }

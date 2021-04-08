@@ -37,7 +37,7 @@ export const DatasetDialogReducer = (
       };
     case DialogActions.OPEN_CHANGE_DIALOG:
       return {
-        ...state,
+        ...initialState,
         isOpen: true,
         dialogType: DialogTypes.CHANGE_DIALOG,
         datasetId: (action.payload as Dataset).id,
@@ -120,6 +120,7 @@ export const DatasetDialogReducer = (
       return {
         ...state,
         availableTags: uniq([...state.availableTags, action.payload as string]),
+        selectedTags: uniq([...state.selectedTags, action.payload as string]),
       };
     default:
       return state;

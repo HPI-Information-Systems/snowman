@@ -1,0 +1,27 @@
+.droppable-zone {
+  border-width: 1px;
+  border-style: dashed;
+  border-color: #3b4151;
+}
+
+.dropzone-title {
+  display: inline-block;
+  width: 100%;
+  font-size: x-large;
+}
+
+.dropzone-title span {
+  display: inline-block;
+  padding-bottom: 4px;
+  vertical-align: middle;
+}
+
+.dropzone-title .ion-icon {
+  display: inline-block;
+  float: right;
+  vertical-align: middle;
+}
+
+.ms-tags-container {
+  padding: 2px 15px;
+}

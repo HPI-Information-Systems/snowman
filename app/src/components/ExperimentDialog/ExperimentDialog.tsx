@@ -18,6 +18,7 @@ import {
 } from 'store/actions/ExperimentDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
+import { MagicNotPossibleId } from 'structs/constants';
 import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { IonChangeEvent } from 'types/IonChangeEvent';
@@ -40,13 +41,14 @@ const mapStateToProps = (state: Store): ExperimentDialogStateProps => ({
   isAddDialog: state.ExperimentDialogStore.experimentId === null,
   experimentName: state.ExperimentDialogStore.experimentName,
   experimentDescription: state.ExperimentDialogStore.experimentDescription,
-  tags: state.AlgorithmsStore.algorithms.map(
+  tags: state.CoreStore.algorithms.map(
     (anAlgorithm: Algorithm): string => anAlgorithm.name
   ),
   selectedTags: state.ExperimentDialogStore.selectedTags,
   isValidForm: isValidExperimentDialog(state),
   selectedFiles: state.ExperimentDialogStore.selectedFiles,
   experimentFileFormat: state.ExperimentDialogStore.experimentFileFormat,
+  experimentId: state.ExperimentDialogStore.experimentId ?? MagicNotPossibleId,
 });
 
 const mapDispatchToProps = (
@@ -58,8 +60,8 @@ const mapDispatchToProps = (
     dispatch(changeExperimentName(event.detail.value as string)),
   changeExperimentDescription: (event: IonChangeEvent): void =>
     dispatch(changeExperimentDescription(event.detail.value as string)),
-  changeExperimentFileFormat: (event: IonChangeEvent): void =>
-    dispatch(changeFileFormat(event.detail.value as experimentFileFormatEnum)),
+  changeExperimentFileFormat: (anOption: string): void =>
+    dispatch(changeFileFormat(anOption as experimentFileFormatEnum)),
   clickOnMatchingSolutionTag: (aTag: string): void =>
     dispatch(clickOnMatchingSolutionTag(aTag)),
   clickOnSubmit: (): void => {

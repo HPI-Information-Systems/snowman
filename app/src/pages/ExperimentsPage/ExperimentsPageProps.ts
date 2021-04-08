@@ -1,18 +1,17 @@
-import { Option } from 'types/Option';
+import { Algorithm } from 'api';
+import { DropResult } from 'react-beautiful-dnd';
 
 export interface ExperimentsPageStateProps {
-  matchingSolutions: string[];
-  selectedMatchingSolutions: string[];
-  experiments: Option[];
-  selectedExperiments: number[];
+  matchingSolutions: Algorithm[];
+  selectedMatchingSolutions: Algorithm[];
+  showExperimentFilters: boolean;
 }
 
 export interface ExperimentsPageDispatchProps {
-  clickOnTag(aTag: string): void;
-  clickOnExperiment(anExperimentId: number): void;
   loadExperiments(): void;
-  deleteExperiment(anExperimentId: number): void;
-  editExperiment(anExperimentId: number): void;
+  clickOnMatchingSolution(aMatchingSolution: Algorithm): void;
+  dragExperiment(dragResult: DropResult): void;
+  clickOnExperimentFilterTool(): void;
 }
 
 export type ExperimentsPageProps = ExperimentsPageDispatchProps &

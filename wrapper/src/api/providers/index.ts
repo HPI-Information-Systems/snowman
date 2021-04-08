@@ -1,17 +1,13 @@
 import { AlgorithmProvider } from './algorithm/algorithmProvider';
-import { BaseAlgorithmProvider } from './algorithm/baseAlgorithmProvider';
-import { BaseBenchmarkProvider } from './benchmark/baseBenchmarkProvider';
 import { BenchmarkProvider } from './benchmark/benchmarkProvider/benchmarkProvider';
-import { BaseDatasetProvider } from './dataset/baseDatasetProvider';
 import { DatasetProvider } from './dataset/datasetProvider';
-import { BaseExperimentProvider } from './experiment/baseExperimentProvider';
 import { ExperimentProvider } from './experiment/experimentProvider';
 
 type Providers = {
-  algorithm: BaseAlgorithmProvider;
-  dataset: BaseDatasetProvider;
-  experiment: BaseExperimentProvider;
-  benchmark: BaseBenchmarkProvider;
+  algorithm: AlgorithmProvider;
+  dataset: DatasetProvider;
+  experiment: ExperimentProvider;
+  benchmark: BenchmarkProvider;
 };
 
 let providers: Providers;

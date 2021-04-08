@@ -1,0 +1,1 @@
+export const MAX_VENN_DIAGRAM_DIMENSION = 4;

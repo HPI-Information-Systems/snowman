@@ -1,6 +1,6 @@
 import { setupDatabase } from './database';
 import { APIServer } from './server/apiServer';
-import { cliArgs } from './tools/cli';
+import { cliArgs, doNotStartApplication } from './tools/cli';
 import { logger } from './tools/logger';
 
 async function launch(): Promise<void> {
@@ -14,19 +14,22 @@ async function launch(): Promise<void> {
     temporary: cliArgs.inMemory,
     appPath: cliArgs.storageDirectory,
     loadExampleEntries: true,
+    usePreBuiltDatabase: true,
   });
   logger.info('Starting webserver...');
   APIServer.launch();
   logger.info('Ready');
 }
 
-launch().catch((e) => {
-  if (e instanceof Error) {
-    logger.error(e.message, {
-      name: e.name,
-      stack: e.stack,
-    });
-  } else {
-    logger.error(e);
-  }
-});
+if (!doNotStartApplication) {
+  launch().catch((e) => {
+    if (e instanceof Error) {
+      logger.error(e.message, {
+        name: e.name,
+        stack: e.stack,
+      });
+    } else {
+      logger.error(e);
+    }
+  });
+}

@@ -1,10 +1,12 @@
 import Database, { Database as DatabaseType } from 'better-sqlite3';
 import { mkdirSync } from 'fs';
+import { Subject } from 'rxjs';
 
 import { databaseFolder, mainDatabaseFile } from '../tools/storageStructure';
 import { configureDatabase } from './configureDatabase';
 
 let _databaseBackend: DatabaseType | undefined;
+export const databaseBackendSubject = new Subject<DatabaseType>();
 
 export function databaseBackend(): DatabaseType {
   if (!_databaseBackend) {

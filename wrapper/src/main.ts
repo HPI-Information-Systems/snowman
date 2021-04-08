@@ -81,6 +81,7 @@ function createWindow() {
     webPreferences: {
       preload: path.join(app.getAppPath(), './preload/index.js'),
       contextIsolation: true,
+      nativeWindowOpen: true,
     },
     title: 'Snowman',
   });
@@ -88,7 +89,7 @@ function createWindow() {
   showLauncherPage();
 }
 
-ipcMain.on('open_benchmark', (event, url) => {
+ipcMain.on('open_benchmark', (_: unknown, url: string) => {
   if (!initOccured) {
     if (url === 'init_local()') {
       spawnLocalServer();
