@@ -4,7 +4,7 @@ info:
     email: snowman@groups.sap.com
     url: https://github.com
   description: |
-    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
+    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms.
   license:
     name: LICENSE (MIT)
     url: https://github.com
@@ -801,6 +801,7 @@ components:
     ExperimentValues:
       example:
         name: Experiment1
+        timeToConfigure: 0.8008281904610115
         description: This is an experiment using a fancy algorithm
         datasetId: 1
         algorithmId: 1
@@ -818,6 +819,8 @@ components:
         algorithmId:
           example: 1
           type: integer
+        timeToConfigure:
+          type: number
       required:
       - algorithmId
       - datasetId
