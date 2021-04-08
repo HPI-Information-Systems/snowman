@@ -88,7 +88,7 @@ class DatabaseSetup {
           errorOnExist: true,
         }
       );
-      chmodr.sync(databaseFolder(this.options.appPath), 0o660);
+      chmodr.sync(databaseFolder(this.options.appPath), 0o600);
       this.isInitialSetup = false;
     }
   }
