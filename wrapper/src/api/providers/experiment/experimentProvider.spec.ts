@@ -46,6 +46,7 @@ describe('ExperimentProvider', () => {
     meta: ExperimentValues;
     file?: string[][];
     numberOfUploadedRecords?: number;
+    timeToConfigure?: number;
   }[];
   let addedExperimentIds: number[];
 
@@ -80,6 +81,7 @@ describe('ExperimentProvider', () => {
           datasetId: addedDatasetIds[0],
           description: 'No dataset file',
           name: 'No dataset file',
+          timeToConfigure: 3,
         },
       },
       {
@@ -88,6 +90,7 @@ describe('ExperimentProvider', () => {
           datasetId: addedDatasetIds[1],
           description: 'Dataset file',
           name: 'Dataset file',
+          timeToConfigure: 2,
         },
       },
     ];
