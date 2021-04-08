@@ -64,6 +64,7 @@
     "express-openapi-validator": "^4.10.10",
     "fs-extra": "^9.1.0",
     "rxjs": "^6.6.6",
+    "snowman-library": "file:../library",
     "tmp": "^0.2.1",
     "topological-sort": "^0.3.0",
     "wait-for-localhost": "^3.3.0",
