@@ -66,6 +66,12 @@ export interface Experiment {
      * @memberof Experiment
      */
     algorithmId: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Experiment
+     */
+    timeToConfigure?: number;
 }
 
 export function ExperimentFromJSON(json: any): Experiment {
@@ -84,6 +90,7 @@ export function ExperimentFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'description': !exists(json, 'description') ? undefined : json['description'],
         'datasetId': json['datasetId'],
         'algorithmId': json['algorithmId'],
+        'timeToConfigure': !exists(json, 'timeToConfigure') ? undefined : json['timeToConfigure'],
     };
 }
 
@@ -102,6 +109,7 @@ export function ExperimentToJSON(value?: Experiment | null): any {
         'description': value.description,
         'datasetId': value.datasetId,
         'algorithmId': value.algorithmId,
+        'timeToConfigure': value.timeToConfigure,
     };
 }
 
