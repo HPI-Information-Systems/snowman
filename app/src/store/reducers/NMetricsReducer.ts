@@ -1,5 +1,6 @@
 import { Metric } from 'api';
 import {
+  CoreStoreActionTypes,
   DatasetsPageActionTypes,
   ExperimentsPageActionTypes,
   NMetricsPageActionTypes as actionTypes,
@@ -21,6 +22,7 @@ export const NMetricsReducer = (
         ...state,
         metrics: action.payload as Metric[][],
       };
+    case CoreStoreActionTypes.SET_ALL_EXPERIMENTS:
     case ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT:
     case DatasetsPageActionTypes.CLICK_ON_DATASET:
     case actionTypes.RESET_METRICS:
