@@ -197,7 +197,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -10,
     file: {
-      format: 'sigmod2021',
+      format: SetExperimentFileFormatEnum.Sigmod2021,
       path: path.join(
         EXAMPLE_EXPERIMENT_DIR,
         'sigmod_notebooklarge_goldstandard.csv'
@@ -215,7 +215,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -11,
     file: {
-      format: 'sigmod2021',
+      format: SetExperimentFileFormatEnum.Sigmod2021,
       path: path.join(
         EXAMPLE_EXPERIMENT_DIR,
         'sigmod_altosight_goldstandard.csv'

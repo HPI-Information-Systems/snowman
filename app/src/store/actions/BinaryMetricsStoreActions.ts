@@ -1,6 +1,7 @@
 import {
   BenchmarkApi,
   CalculateExperimentIntersectionRecordsRequest,
+  Experiment,
   FileResponse,
   Metric,
 } from 'api';
