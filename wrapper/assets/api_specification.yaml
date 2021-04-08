@@ -801,7 +801,7 @@ components:
     ExperimentValues:
       example:
         name: Experiment1
-        timeToConfigure: 0.8008281904610115
+        timeToConfigure: 0
         description: This is an experiment using a fancy algorithm
         datasetId: 1
         algorithmId: 1
@@ -820,7 +820,7 @@ components:
           example: 1
           type: integer
         timeToConfigure:
-          type: number
+          type: integer
       required:
       - algorithmId
       - datasetId

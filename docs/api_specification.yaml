@@ -688,7 +688,7 @@ components:
         algorithmId:
           $ref: "#/components/schemas/AlgorithmId"
         timeToConfigure:
-          type: number
+          type: integer
     Experiment:
       allOf:
         - type: object
