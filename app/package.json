@@ -35,6 +35,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "snowman-library": "file:../library",
     "styled-components": "^5.2.1",
     "ts-enum-util": "^4.0.2"
   },
