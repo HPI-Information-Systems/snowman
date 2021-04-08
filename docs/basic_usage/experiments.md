@@ -16,18 +16,21 @@ a list of configuration parameters, or the time spent labeling data.
 5. Select a file containing the result set and choose the correct import format. _(see below)_
 6. Click on "Add experiment" - this process may take several minutes to complete as indexes have to be created!
 
-### Upload failed
+## Edit an experiment
 
-Since creating the experiment and uploading its contents are two separate steps, you may receive an error message stating
-that the file upload failed. In this case, the experiment itself was created (most likely) empty with no pairs.
-In this case, simply delete the experiment and start over again.
+After the initial experiment creation, you can still change some attributes of the dataset.
+
+**Attention:** To prevent inconsistencies, it is not possible to replace an experiment's record pairs once created!
+
+## Preview an experiment
+
+Once records were uploaded, you can preview the records in the internal Snowman format.
 
 ## Selecting experiments
 
-You can select experiments to use for the further workflow steps by clicking on the gray square of each experiment card.
-Within the side menu on the left, you can then see the order in which the experiments will be used.
-
-> For now, you'll have to select the experiment used as a **gold standard** in the following steps with `1.` - this is compulsory!
+With the newest Snowman release, a new drag'n'drop UI was introduced.  
+Simply drag experiments either to the selected goldstandards or the selected experiments column. Depending on what you
+selected, the different benchmarking options will become (un)available. See section "Benchmarking" for details.
 
 ## Import formats
 

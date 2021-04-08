@@ -1,8 +1,6 @@
 import { setupDatabase, tables } from '../../database';
 import {
   AlgorithmValues,
-  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
-  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
   DatasetValues,
   ExperimentValues,
   SetExperimentFileFormatEnum,
@@ -42,13 +40,6 @@ describe('ExperimentProvider', () => {
   const addedAlgorithm: AlgorithmValues = {
     description: 'Algorithm',
     name: 'Algorithm',
-    softKPIs: {
-      timeToConfigure: 2,
-      timeToInstall: 3,
-      implementationKnowHowLevel:
-        AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
-      matchingSolutionType: AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Ml,
-    },
   };
   let addedAlgorithmId: number;
 
@@ -90,9 +81,6 @@ describe('ExperimentProvider', () => {
           datasetId: addedDatasetIds[0],
           description: 'No dataset file',
           name: 'No dataset file',
-          softKPIs: {
-            timeToConfigure: 4,
-          },
         },
       },
       {
@@ -101,15 +89,7 @@ describe('ExperimentProvider', () => {
           datasetId: addedDatasetIds[1],
           description: 'Dataset file',
           name: 'Dataset file',
-          softKPIs: {
-            timeToConfigure: 5,
-          },
         },
-        file: [
-          ['p1', 'p2'],
-          ['id1', 'id2'],
-        ],
-        numberOfUploadedRecords: 1,
       },
     ];
     addedExperimentIds = [];
@@ -155,9 +135,6 @@ describe('ExperimentProvider', () => {
       datasetId: addedDatasetIds[0],
       description: 'Another one',
       name: 'Another Name',
-      softKPIs: {
-        timeToConfigure: 5,
-      },
     };
     const id = provider.addExperiment(addedExperiment);
     expect(provider.getExperiment(id)).toMatchObject({
@@ -185,9 +162,6 @@ describe('ExperimentProvider', () => {
       datasetId: addedDatasetIds[0],
       description: ' A new description',
       name: 'A neeew name',
-      softKPIs: {
-        timeToConfigure: 6,
-      },
     };
     provider.setExperiment(addedExperimentIds[0], updatedExperiment);
     expect(provider.getExperiment(addedExperimentIds[0])).toMatchObject({
@@ -223,28 +197,17 @@ describe('ExperimentProvider', () => {
     );
   });
 
-  test('delete file deletes file', () => {
-    expect(tables.experiment.experiment(addedExperimentIds[1]).exists()).toBe(
-      true
-    );
-    provider.deleteExperimentFile(addedExperimentIds[1]);
-    expect(tables.experiment.experiment(addedExperimentIds[1]).exists()).toBe(
-      false
-    );
-  });
-
   test('set file throws error when adding unknown / too many ids', async () => {
     const file = [
       ['p1', 'p2'],
       ['unknown id1', 'unknown id2'],
     ];
-    await expect(
-      async () =>
-        await provider.setExperimentFile(
-          addedExperimentIds[1],
-          SetExperimentFileFormatEnum.Pilot,
-          fileToReadable(file)
-        )
+    await expect(() =>
+      provider.setExperimentFile(
+        addedExperimentIds[1],
+        SetExperimentFileFormatEnum.Pilot,
+        fileToReadable(file)
+      )
     ).rejects.toThrowError();
     expect(() =>
       provider.getExperimentFile(addedExperimentIds[1])

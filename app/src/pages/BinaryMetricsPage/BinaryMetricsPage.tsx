@@ -7,6 +7,7 @@ import {
 import { connect } from 'react-redux';
 import {
   clickOnPane,
+  getExperiment1,
   getExperiment1Id,
   loadBinaryMetricsTuplesCounts,
   loadFalseNegatives,
@@ -15,11 +16,15 @@ import {
   loadTrueNegatives,
   loadTruePositives,
 } from 'store/actions/BinaryMetricsStoreActions';
-import { getGroundTruthId } from 'store/actions/CommonMetricsActions';
+import {
+  getGroundTruth,
+  getGroundTruthId,
+} from 'store/actions/CommonMetricsActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { TuplesLoader } from 'types/TuplesLoader';
+import { intersectionDescription } from 'utils/intersectionDescription';
 
 const getCountsByTuplesCategory = (
   store: Store,
@@ -134,6 +139,28 @@ const mapStateToProps = (state: Store): BinaryMetricsPageStateProps => ({
       MetricsTuplesCategories.truePositives
     ),
   },
+  dataViewerTitle: intersectionDescription(
+    state.BinaryMetricsStore.selectedDataView ===
+      MetricsTuplesCategories.truePositives
+      ? {
+          included: [getExperiment1(state).name, getGroundTruth(state).name],
+        }
+      : state.BinaryMetricsStore.selectedDataView ===
+        MetricsTuplesCategories.falsePositives
+      ? {
+          included: [getExperiment1(state).name],
+          excluded: [getGroundTruth(state).name],
+        }
+      : state.BinaryMetricsStore.selectedDataView ===
+        MetricsTuplesCategories.falseNegatives
+      ? {
+          excluded: [getExperiment1(state).name],
+          included: [getGroundTruth(state).name],
+        }
+      : {
+          excluded: [getExperiment1(state).name, getGroundTruth(state).name],
+        }
+  ),
 });
 
 const mapDispatchToProps = (

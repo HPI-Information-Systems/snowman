@@ -21,7 +21,11 @@ const FilePreviewerView = ({
         height: '100%',
       }}
     >
-      <DataViewer loadTuples={loadTuples} tuplesCount={rowCount} />
+      <DataViewer
+        loadTuples={loadTuples}
+        tuplesCount={rowCount}
+        title={fileName}
+      />
     </div>
   </ModalDialog>
 );

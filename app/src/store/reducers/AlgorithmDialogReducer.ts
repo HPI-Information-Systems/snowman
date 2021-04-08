@@ -1,8 +1,4 @@
-import {
-  Algorithm,
-  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
-  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
-} from 'api';
+import { Algorithm } from 'api';
 import { AlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { AlgorithmDialogStore } from 'store/models';
@@ -14,10 +10,6 @@ const initialState: AlgorithmDialogStore = {
   algorithmName: '',
   algorithmDescription: '',
   dialogType: DialogTypes.ADD_DIALOG,
-  implementationKnowHowLevel: undefined,
-  matchingSolutionType: undefined,
-  timeToConfigure: undefined,
-  timeToInstall: undefined,
 };
 
 export const AlgorithmDialogReducer = (
@@ -33,16 +25,11 @@ export const AlgorithmDialogReducer = (
       };
     case DialogActions.OPEN_CHANGE_DIALOG:
       return {
-        ...state,
+        ...initialState,
         isOpen: true,
         algorithmId: (action.payload as Algorithm).id,
         algorithmName: (action.payload as Algorithm).name,
         algorithmDescription: (action.payload as Algorithm).description ?? '',
-        matchingSolutionType: (action.payload as Algorithm).softKPIs
-          ?.matchingSolutionType,
-        timeToConfigure: (action.payload as Algorithm).softKPIs
-          ?.timeToConfigure,
-        timeToInstall: (action.payload as Algorithm).softKPIs?.timeToInstall,
         dialogType: DialogTypes.CHANGE_DIALOG,
       };
     case DialogActions.CLOSE_DIALOG:
@@ -59,28 +46,6 @@ export const AlgorithmDialogReducer = (
       return {
         ...state,
         algorithmName: action.payload as string,
-      };
-    case DialogActions.CHANGE_SOFT_KPI_IMPLEMENTATION_KNOW_HOW_LEVEL:
-      return {
-        ...state,
-        implementationKnowHowLevel: action.payload as
-          | AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum
-          | undefined,
-      };
-    case DialogActions.CHANGE_SOFT_KPI_MATCHING_SOLUTION_TYPE:
-      return {
-        ...state,
-        matchingSolutionType: action.payload as AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
-      };
-    case DialogActions.CHANGE_SOFT_KPI_TIME_TO_INSTALL:
-      return {
-        ...state,
-        timeToInstall: action.payload as number | undefined,
-      };
-    case DialogActions.CHANGE_SOFT_KPI_TIME_TO_CONFIGURE:
-      return {
-        ...state,
-        timeToConfigure: action.payload as number | undefined,
       };
     case DialogActions.RESET_DIALOG:
       return initialState;

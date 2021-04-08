@@ -9,6 +9,8 @@ Comparing data matching algorithms is still an unsolved topic in both industry a
 With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms.
 Besides traditional metrics, the tool will also consider economic aspects like Soft KPIs.
 
+![Intersection Page](docs/assets/intersection-page.png "Intersection Page")
+
 _This tool is developed as part of a bachelor's project in collaboration with SAP SE._
 
 ## Current state
@@ -16,8 +18,8 @@ _This tool is developed as part of a bachelor's project in collaboration with SA
 In Q1 and Q2 of 2021, we aim to reach the following milestones:
 
 [x] **Milestone 1:** Ability to add/delete datasets, experiments and matching solutions; binary comparison and basic behavior analysis; executable on all major platform  
-[ ] **Milestone 2:** Compare more than two experiments and create new experiments based on results; survey Soft KPIs, allow comparison based on KPIs  
-[ ] **Milestone 3:** Allow dynamic analysis based on threshold values; complex evaluations like precision/recall diagrams; group/cluster view for result sets
+[x] **Milestone 2:** Compare more than two experiments and create new experiments based on results; survey Soft KPIs, allow comparison based on KPIs  
+[ ] **Milestone 3:** Allow individual thresholds for experiments, extend Soft KPIs further and allow advanced evaluation of matching solutions
 
 The precise progress is tracked through Github issues and project boards. Please get in touch in case you want a special feature included :)
 
@@ -27,6 +29,10 @@ _After reaching milestone 3, we plan to continue to work on further features whi
 
 Contribution guidelines will follow soon. Until then, feel free to open an issue to report a bug or request a feature.  
 In case you want to contribute code, please first open an associated issue and afterwards a pull request containing the proposed solution.
+
+### Development
+
+See our [development guide](https://hpi-information-systems.github.io/snowman/dev_setup/introduction/) for more information on how to get started.
 
 ## Documentation
 

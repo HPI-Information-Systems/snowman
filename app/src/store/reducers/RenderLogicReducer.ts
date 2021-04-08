@@ -1,11 +1,24 @@
 import { RenderStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { ImmediateStore, RenderLogicStore, Store } from 'store/models';
+import { viewIdQueryParam } from 'types/ViewIdQueryParam';
 import { ViewIDs } from 'types/ViewIDs';
 import { couldNavigateToView, getNextViewId } from 'utils/viewMetaInfoHandlers';
 
+const getInitialViewId = (): ViewIDs => {
+  const params = new URLSearchParams(window.location.search);
+  const viewId = params.get(viewIdQueryParam);
+  if (viewId) {
+    const parsedViewId = parseInt(viewId);
+    if (parsedViewId in ViewIDs) {
+      return parsedViewId;
+    }
+  }
+  return ViewIDs.HOME;
+};
+
 const initialRenderLogicState: RenderLogicStore = {
-  currentViewID: ViewIDs.HOME,
+  currentViewID: getInitialViewId(),
   couldGoNext: true,
 };
 

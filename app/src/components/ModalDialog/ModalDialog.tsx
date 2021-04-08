@@ -3,9 +3,10 @@ import 'components/ModalDialog/ModalDialogStyles.css';
 import { IonIcon, IonModal, IonText } from '@ionic/react';
 import { ModalDialogProps } from 'components/ModalDialog/ModalDialogProps';
 import { closeOutline } from 'ionicons/icons';
-import React, { useRef } from 'react';
+import React from 'react';
 
 const margin = 15;
+const fontSize = '2rem';
 
 const ModalDialog = ({
   heading,
@@ -14,7 +15,6 @@ const ModalDialog = ({
   children,
   provideScrollingMechanism = true,
 }: ModalDialogProps): JSX.Element => {
-  const headerRef = useRef<HTMLHeadingElement>(null);
   return (
     <IonModal isOpen={isOpen} onDidDismiss={closeDialog}>
       <div
@@ -27,11 +27,11 @@ const ModalDialog = ({
       >
         <IonText color="dark">
           <h1
-            ref={headerRef}
             className="center"
             style={{
               marginTop: `${margin}px`,
               marginBottom: `${margin}px`,
+              fontSize,
             }}
           >
             {heading}
@@ -48,9 +48,7 @@ const ModalDialog = ({
             position: 'relative',
             height: provideScrollingMechanism
               ? 'auto'
-              : `calc(100% - ${headerRef.current?.clientHeight ?? 0}px - ${
-                  3 * margin
-                }px)`,
+              : `calc(100% - ${fontSize} - ${3 * margin}px)`,
           }}
         >
           {children}

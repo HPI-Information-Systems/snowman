@@ -82,13 +82,3 @@ export async function setExperimentFile(
     400
   );
 }
-
-export async function deleteExperimentFile({
-  experimentId,
-}: DeleteExperimentFileRequest): Promise<SuccessResponse<void>> {
-  return Service.response(
-    () => provider().deleteExperimentFile(experimentId),
-    204,
-    400
-  );
-}

@@ -16,6 +16,7 @@ import ExperimentsPage from 'pages/ExperimentsPage/ExperimentsPage';
 import IntersectionPage from 'pages/IntersectionPage/IntersectionPage';
 import NMetricsPage from 'pages/NMetricsPage/NMetricsPage';
 import RootPage from 'pages/RootPage/RootPage';
+import StandaloneDataViewerPage from 'pages/StandaloneDataViewerPage/StandaloneDataViewerPage';
 import { menuCategories } from 'types/MenuCategories';
 import { ViewIDs } from 'types/ViewIDs';
 import { ViewMetaInformation } from 'types/ViewMetaInformation';
@@ -124,5 +125,18 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuIcon: colorFilter,
     menuSortKey: 8,
     selectedOptionsReminder: emptySelectedOptions,
+  },
+  {
+    key: ViewIDs.STANDALONE_DATA_VIEWER,
+    component: StandaloneDataViewerPage,
+    nextView: ViewIDs.STANDALONE_DATA_VIEWER,
+    accessGuard: accessGuards.couldNeverEnterPage,
+    shouldShowInMenu: false,
+    menuCategory: menuCategories.UNCATEGORIZED,
+    menuName: '',
+    menuIcon: null,
+    menuSortKey: -1,
+    selectedOptionsReminder: emptySelectedOptions,
+    hideSideMenu: true,
   },
 ];

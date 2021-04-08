@@ -7,4 +7,5 @@ export enum ViewIDs {
   N_METRICS,
   INTERSECTION,
   DASHBOARD,
+  STANDALONE_DATA_VIEWER,
 }

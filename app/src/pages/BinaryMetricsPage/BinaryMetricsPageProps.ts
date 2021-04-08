@@ -16,6 +16,7 @@ export interface BinaryMetricsPageStateProps {
   metricsTuplesCategories: MetricsTuplesCategories[];
   tuplesLoader: TuplesLoader;
   confusionMatrix: ConfusionMatrix;
+  dataViewerTitle: string;
 }
 
 export type BinaryMetricsPageProps = BinaryMetricsPageStateProps &

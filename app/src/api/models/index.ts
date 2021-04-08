@@ -1,7 +1,6 @@
 export * from './Algorithm';
 export * from './AlgorithmAllOf';
 export * from './AlgorithmValues';
-export * from './AlgorithmValuesSoftKPIs';
 export * from './Dataset';
 export * from './DatasetAllOf';
 export * from './DatasetValues';
@@ -10,7 +9,6 @@ export * from './ExperimentAllOf';
 export * from './ExperimentIntersectionCount';
 export * from './ExperimentIntersectionItem';
 export * from './ExperimentValues';
-export * from './ExperimentValuesSoftKPIs';
 export * from './FileResponse';
 export * from './Metric';
 export * from './SimilarityThresholdFunction';

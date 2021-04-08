@@ -1,5 +1,10 @@
 import { ExperimentIntersectionCount, Metric } from 'api';
-import { BinaryMetricsStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
+import {
+  BinaryMetricsStoreActionTypes as actionTypes,
+  CoreStoreActionTypes,
+  DatasetsPageActionTypes,
+  ExperimentsPageActionTypes,
+} from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { BinaryMetricsStore } from 'store/models';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
@@ -15,6 +20,9 @@ export const BinaryMetricsReducer = (
   action: SnowmanAction
 ): BinaryMetricsStore => {
   switch (action.type) {
+    case CoreStoreActionTypes.SET_ALL_EXPERIMENTS:
+    case ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT:
+    case DatasetsPageActionTypes.CLICK_ON_DATASET:
     case actionTypes.RESET_METRICS:
       return {
         ...state,

@@ -1,3 +1,4 @@
+import chmodr from 'chmodr';
 import { existsSync } from 'fs';
 import { copySync, removeSync } from 'fs-extra';
 
@@ -87,6 +88,7 @@ class DatabaseSetup {
           errorOnExist: true,
         }
       );
+      chmodr.sync(databaseFolder(this.options.appPath), 0o660);
       this.isInitialSetup = false;
     }
   }

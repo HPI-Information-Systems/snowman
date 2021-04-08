@@ -479,23 +479,6 @@ paths:
       x-codegen-request-body-name: experiment
       x-eov-operation-handler: controllers/ExperimentsController
   /experiments/{experimentId}/file:
-    delete:
-      operationId: deleteExperimentFile
-      parameters:
-        - explode: false
-          in: path
-          name: experimentId
-          required: true
-          schema:
-            $ref: "#/components/schemas/ExperimentId"
-          style: simple
-      responses:
-        "204":
-          description: No Content
-      summary: Deletes an experiment file
-      tags:
-        - Experiments
-      x-eov-operation-handler: controllers/ExperimentsController
     get:
       operationId: getExperimentFile
       parameters:
@@ -583,7 +566,7 @@ paths:
           description: No Content
         "400":
           description: Bad Request
-      summary: Updates or creates an experiment file
+      summary: Creates an experiment file
       tags:
         - Experiments
       x-codegen-request-body-name: file
@@ -868,11 +851,6 @@ components:
       type: integer
     AlgorithmValues:
       example:
-        softKPIs:
-          timeToInstall: 3
-          matchingSolutionType: ml
-          implementationKnowHowLevel: starter
-          timeToConfigure: 1
         name: Magellan
         description: This is an open source python library
       properties:
@@ -883,8 +861,6 @@ components:
         description:
           example: This is an open source python library
           type: string
-        softKPIs:
-          $ref: "#/components/schemas/AlgorithmValues_softKPIs"
       required:
         - name
       type: object
@@ -931,8 +907,6 @@ components:
       type: integer
     ExperimentValues:
       example:
-        softKPIs:
-          timeToConfigure: 1
         name: Experiment1
         description: This is an experiment using a fancy algorithm
         datasetId: 1
@@ -951,8 +925,6 @@ components:
         algorithmId:
           example: 1
           type: integer
-        softKPIs:
-          $ref: "#/components/schemas/ExperimentValues_softKPIs"
       required:
         - algorithmId
         - datasetId
@@ -1147,32 +1119,6 @@ components:
         - data
         - header
       type: object
-    AlgorithmValues_softKPIs:
-      example:
-        timeToInstall: 3
-        matchingSolutionType: ml
-        implementationKnowHowLevel: starter
-        timeToConfigure: 1
-      properties:
-        implementationKnowHowLevel:
-          enum:
-            - starter
-            - intermediate
-            - expert
-          type: string
-        matchingSolutionType:
-          enum:
-            - ml
-            - rulebased
-            - other
-          type: string
-        timeToInstall:
-          example: 3
-          type: number
-        timeToConfigure:
-          example: 1
-          type: number
-      type: object
     Algorithm_allOf:
       properties:
         id:
@@ -1191,14 +1137,6 @@ components:
           type: integer
       required:
         - id
-      type: object
-    ExperimentValues_softKPIs:
-      example:
-        timeToConfigure: 1
-      properties:
-        timeToConfigure:
-          example: 1
-          type: number
       type: object
     Experiment_allOf:
       properties:

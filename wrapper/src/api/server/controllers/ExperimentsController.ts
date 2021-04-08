@@ -54,14 +54,3 @@ export async function setExperimentFile(
     requestIsFile: true,
   });
 }
-
-export async function deleteExperimentFile(
-  request: Request,
-  response: Response
-): Promise<void> {
-  await Controller.handleRequest(
-    request,
-    response,
-    service.deleteExperimentFile
-  );
-}

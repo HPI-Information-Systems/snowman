@@ -1,3 +1,4 @@
+import { tables } from '../../../database';
 import { AlgorithmId, DatasetId, ExperimentId } from '../../../server/types';
 import { ExecuteSynchronized } from '../../../tools/executeSynchronized';
 import { providers } from '../..';
@@ -5,16 +6,24 @@ import { providers } from '../..';
 export class ExperimentConsistencyChecks {
   readonly sync = new ExecuteSynchronized();
 
-  throwIfDatasetNotExists(datasetId: DatasetId): void {
-    providers.dataset.getDataset(datasetId);
-  }
-
   throwIfAlgorithmNotExists(algorithmId: AlgorithmId): void {
     providers.algorithm.getAlgorithm(algorithmId);
   }
 
+  throwIfDatasetNotExists(datasetId: DatasetId): void {
+    providers.dataset.getDataset(datasetId);
+  }
+
   throwIfExperimentNotExists(experimentId: ExperimentId): void {
     providers.experiment.getExperiment(experimentId);
+  }
+
+  throwIfExperimentFileAlreadyExists(experimentId: ExperimentId): void {
+    if (tables.experiment.experiment(experimentId).exists()) {
+      throw new Error(
+        `An experiment file for the experiment with the id ${experimentId} already exists. It is not possible to edit an uploaded experiment file. Please create a new experiment if you want to upload this file.`
+      );
+    }
   }
 
   throwIfLocked(experimentId: ExperimentId): void {

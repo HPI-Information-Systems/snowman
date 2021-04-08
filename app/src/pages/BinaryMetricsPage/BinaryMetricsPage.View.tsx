@@ -21,6 +21,7 @@ import { renderToString } from 'katex';
 import { BinaryMetricsPageProps } from 'pages/BinaryMetricsPage/BinaryMetricsPageProps';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
+import { formatLargeNumber } from 'utils/formatLargeNumber';
 
 export const BinaryMetricsPageView = ({
   loadMetrics,
@@ -32,6 +33,7 @@ export const BinaryMetricsPageView = ({
   rowCount,
   tuplesLoader,
   confusionMatrix,
+  dataViewerTitle,
 }: BinaryMetricsPageProps): JSX.Element => {
   useEffect(loadMetrics, [loadMetrics]);
   useEffect(preloadTuplesCounts, [preloadTuplesCounts]);
@@ -105,7 +107,7 @@ export const BinaryMetricsPageView = ({
       <div>
         {confusionMatrix.totalCount !== undefined ? (
           <IonChip outline={true} color="dark" disabled className="count-chip">
-            Total Count: {confusionMatrix.totalCount}
+            Total Count: {formatLargeNumber(confusionMatrix.totalCount)}
           </IonChip>
         ) : null}
         {confusionMatrix.truePositives !== undefined ? (
@@ -115,7 +117,7 @@ export const BinaryMetricsPageView = ({
             disabled
             className="count-chip"
           >
-            True Positives: {confusionMatrix.truePositives}
+            True Positives: {formatLargeNumber(confusionMatrix.truePositives)}
           </IonChip>
         ) : null}
         {confusionMatrix.falsePositives !== undefined ? (
@@ -125,7 +127,7 @@ export const BinaryMetricsPageView = ({
             disabled
             className="count-chip"
           >
-            False Positives: {confusionMatrix.falsePositives}
+            False Positives: {formatLargeNumber(confusionMatrix.falsePositives)}
           </IonChip>
         ) : null}
         {confusionMatrix.falseNegatives !== undefined ? (
@@ -135,12 +137,12 @@ export const BinaryMetricsPageView = ({
             disabled
             className="count-chip"
           >
-            False Negatives: {confusionMatrix.falseNegatives}
+            False Negatives: {formatLargeNumber(confusionMatrix.falseNegatives)}
           </IonChip>
         ) : null}
         {confusionMatrix.trueNegatives !== undefined ? (
           <IonChip outline={true} color="success" disabled class="count-chip">
-            True Negatives: {confusionMatrix.trueNegatives}
+            True Negatives: {formatLargeNumber(confusionMatrix.trueNegatives)}
           </IonChip>
         ) : null}
       </div>
@@ -151,7 +153,11 @@ export const BinaryMetricsPageView = ({
           selectedPaneTitle={selectedMetricsTuplesCategory}
         />
         <IonCardContent class="table-housing">
-          <DataViewer tuplesCount={rowCount} loadTuples={tuplesLoader} />
+          <DataViewer
+            tuplesCount={rowCount}
+            loadTuples={tuplesLoader}
+            title={dataViewerTitle}
+          />
         </IonCardContent>
       </IonCard>
     </PageStruct>

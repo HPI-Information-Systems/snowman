@@ -20,8 +20,12 @@ import { SUCCESS_LOAD_BINARY_METRICS } from 'structs/statusMessages';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import RequestHandler from 'utils/requestHandler';
 
+export const getExperiment1 = (state: Store = store.getState()): Experiment => {
+  return state.BenchmarkConfigurationStore.chosenExperiments[0];
+};
+
 export const getExperiment1Id = (state: Store = store.getState()): number => {
-  return state.BenchmarkConfigurationStore.chosenExperiments[0].id;
+  return getExperiment1(state).id;
 };
 
 export const loadMetrics = (): SnowmanThunkAction<Promise<void>> => async (

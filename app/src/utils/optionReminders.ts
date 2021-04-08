@@ -9,6 +9,7 @@ export const selectedDataset = (aState: ImmediateStore): SelectedOptionItem[] =>
     ? []
     : [
         {
+          id: aState.BenchmarkConfigurationStore.selectedDataset.id,
           displayName: aState.BenchmarkConfigurationStore.selectedDataset.name,
         },
       ];
@@ -17,12 +18,14 @@ export const selectedExperiments = (
 ): SelectedOptionItem[] => [
   ...aState.BenchmarkConfigurationStore.chosenGoldStandards.map(
     (anExperiment: Experiment): SelectedOptionItem => ({
+      id: anExperiment.id,
       displayName: anExperiment.name,
       iconEnd: sparklesOutline,
     })
   ),
   ...aState.BenchmarkConfigurationStore.chosenExperiments.map(
     (anExperiment: Experiment): SelectedOptionItem => ({
+      id: anExperiment.id,
       displayName: anExperiment.name,
     })
   ),

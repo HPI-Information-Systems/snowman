@@ -1,6 +1,7 @@
 import { Experiment, ExperimentIntersectionCount } from 'api';
 import { difference, nth } from 'lodash';
 import {
+  CoreStoreActionTypes,
   DatasetsPageActionTypes,
   ExperimentsPageActionTypes,
   IntersectionStoreActionTypes as actionTypes,
@@ -108,6 +109,7 @@ export const IntersectionReducer = (
         included: action.payload as Experiment[],
         excluded: [],
       };
+    case CoreStoreActionTypes.SET_ALL_EXPERIMENTS:
     case ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT:
     case DatasetsPageActionTypes.CLICK_ON_DATASET:
     case actionTypes.RESET_INTERSECTION:

@@ -1,10 +1,5 @@
 import { setupDatabase } from '../../database';
-import {
-  AlgorithmId,
-  AlgorithmValues,
-  AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum,
-  AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum,
-} from '../../server/types';
+import { AlgorithmId, AlgorithmValues } from '../../server/types';
 import { DatasetProvider } from '../dataset/datasetProvider';
 import { ExperimentProvider } from '../experiment/experimentProvider';
 import { AlgorithmProvider } from './algorithmProvider';
@@ -15,26 +10,10 @@ describe('AlgorithmProvider', () => {
     {
       description: 'Mock 1',
       name: 'Mock 1',
-      softKPIs: {
-        timeToConfigure: 1,
-        timeToInstall: 2,
-        implementationKnowHowLevel:
-          AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
-        matchingSolutionType:
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Ml,
-      },
     },
     {
       description: 'Mock 2',
       name: 'Mock 2',
-      softKPIs: {
-        timeToConfigure: 3,
-        timeToInstall: 4,
-        implementationKnowHowLevel:
-          AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
-        matchingSolutionType:
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Ml,
-      },
     },
   ];
   let addedAlgorithmids: AlgorithmId[];
@@ -63,14 +42,6 @@ describe('AlgorithmProvider', () => {
     const addedAlgorithm: AlgorithmValues = {
       description: 'Added Algorithm',
       name: 'Added Algorithm',
-      softKPIs: {
-        timeToConfigure: 5,
-        timeToInstall: 6,
-        matchingSolutionType:
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Other,
-        implementationKnowHowLevel:
-          AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Intermediate,
-      },
     };
     const addedAlgorithmId = provider.addAlgorithm(addedAlgorithm);
     const newAlgorithmsCount = provider.listAlgorithms().length;
@@ -95,14 +66,6 @@ describe('AlgorithmProvider', () => {
     const setAlgorithmValues: AlgorithmValues = {
       name: 'Not Mock 1',
       description: 'Not Mock 1',
-      softKPIs: {
-        timeToConfigure: 7,
-        timeToInstall: 8,
-        matchingSolutionType:
-          AlgorithmValuesSoftKPIsMatchingSolutionTypeEnum.Other,
-        implementationKnowHowLevel:
-          AlgorithmValuesSoftKPIsImplementationKnowHowLevelEnum.Starter,
-      },
     };
     provider.setAlgorithm(addedAlgorithmids[0], setAlgorithmValues);
     expect(provider.getAlgorithm(addedAlgorithmids[0])).toEqual({
@@ -137,9 +100,6 @@ describe('AlgorithmProvider', () => {
       datasetId,
       description: 'Experiment Description',
       name: 'Experiment Name',
-      softKPIs: {
-        timeToConfigure: 3,
-      },
     });
     expect(() => provider.deleteAlgorithm(addedAlgorithmids[0])).toThrow();
   });

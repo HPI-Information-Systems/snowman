@@ -2,7 +2,7 @@
   "name": "snowman-app",
   "author": "Snowman Team",
   "description": "Compare data matching algorithms with each other",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "license": "MIT",
   "homepage": "./",
   "scripts": {
@@ -14,6 +14,8 @@
   "dependencies": {
     "@ionic/react": "^5.0.7",
     "@types/react-beautiful-dnd": "^13.0.0",
+    "@types/react-table": "^7.0.29",
+    "@types/react-window": "^1.8.2",
     "d3": "^6.6.0",
     "immutable": "^4.0.0-rc.12",
     "ionicons": "^5.4.0",
@@ -25,12 +27,15 @@
     "react-elastic-carousel": "^0.11.0",
     "react-redux": "^7.2.2",
     "react-scripts": "4.0.1",
+    "react-table": "^7.6.3",
     "react-toastify": "^7.0.3",
     "react-tooltip": "^4.2.14",
     "react-virtualized": "^9.22.3",
+    "react-window": "^1.8.6",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "snowman-library": "file:../library",
     "styled-components": "^5.2.1",
     "ts-enum-util": "^4.0.2"
   },

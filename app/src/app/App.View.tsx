@@ -19,7 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'theme/overwrites.css';
 
 import { IonApp, IonPage, IonSplitPane } from '@ionic/react';
-import { AppProps } from 'app/AppProps';
+import { DefaultAppProps } from 'app/AppProps';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
 import SideMenu from 'components/SideMenu/SideMenu';
 import React, { useEffect } from 'react';
@@ -27,25 +27,33 @@ import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 import { getViewComponentToViewId } from 'utils/viewMetaInfoHandlers';
 
-const AppView = ({
+const DefaultAppView = ({
   loadInitialState,
-  currentViewId,
-}: AppProps): JSX.Element => {
+  currentViewID: currentViewId,
+  showSideMenu,
+}: DefaultAppProps): JSX.Element => {
   useEffect(loadInitialState, [loadInitialState]);
+  const page = (
+    <IonPage id="mainViewContentId">
+      {React.createElement(getViewComponentToViewId(currentViewId))}
+    </IonPage>
+  );
   return (
     <IonApp>
-      <IonSplitPane
-        when="lg"
-        contentId="mainViewContentId"
-        class="split-pane-fixed"
-      >
-        {/* Side Menu (mainViewContentId used here!) */}
-        <SideMenu contentId="mainViewContentId" />
-        {/* Page Content */}
-        <IonPage id="mainViewContentId">
-          {React.createElement(getViewComponentToViewId(currentViewId))}
-        </IonPage>
-      </IonSplitPane>
+      {showSideMenu ? (
+        <IonSplitPane
+          when="lg"
+          contentId="mainViewContentId"
+          class="split-pane-fixed"
+        >
+          {/* Side Menu (mainViewContentId used here!) */}
+          <SideMenu contentId="mainViewContentId" />
+          {/* Page Content */}
+          {page}
+        </IonSplitPane>
+      ) : (
+        page
+      )}
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <GlobalLoading />
       <ToastContainer
@@ -63,4 +71,4 @@ const AppView = ({
   );
 };
 
-export default AppView;
+export default DefaultAppView;

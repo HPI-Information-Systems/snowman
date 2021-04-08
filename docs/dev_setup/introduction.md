@@ -13,7 +13,10 @@ The benchmark is split into three separate packages:
 1. install [NodeJS](https://nodejs.org/en/) version `14.x` or later
 2. install a C++ compiler and add it to your PATH
    - the easiest way to accomplish this on Windows is installing the [VisualStudio BuildTools for C++](https://visualstudio.microsoft.com/de/downloads/) (+ reboot)
-3. run `npm install` in the folders `./`, `./app` and `./wrapper`
+3. install [Python3](https://www.python.org/) for your distribution
+4. Run `npm install` in `./`, `./app` and `./wrapper`
+
+Python3 and C++ are required to build the native extensions for sqlite3.
 
 ## Running
 
@@ -37,9 +40,6 @@ Run the `Start Stack` compound to start frontend and backend and open Chrome. Yo
 
 - run `npm run release` in `./` to build the frontend and backend and package them in an executable file
   - the executable will be located at `./wrapper/build/<platform>/`
-- run `npm rebuild` in `./wrapper`
-  - during the build process the dependencies are rebuilded for the NodeJS version of electron
-  - this reverts that process and makes sure starting the backend still works
 
 ## Testing
 

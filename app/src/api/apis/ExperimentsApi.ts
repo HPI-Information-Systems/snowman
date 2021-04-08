@@ -34,10 +34,6 @@ export interface DeleteExperimentRequest {
     experimentId: number;
 }
 
-export interface DeleteExperimentFileRequest {
-    experimentId: number;
-}
-
 export interface GetExperimentRequest {
     experimentId: number;
 }
@@ -125,35 +121,6 @@ export class ExperimentsApi extends runtime.BaseAPI {
      */
     async deleteExperiment(requestParameters: DeleteExperimentRequest): Promise<void> {
         await this.deleteExperimentRaw(requestParameters);
-    }
-
-    /**
-     * Deletes an experiment file
-     */
-    async deleteExperimentFileRaw(requestParameters: DeleteExperimentFileRequest): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
-            throw new runtime.RequiredError('experimentId','Required parameter requestParameters.experimentId was null or undefined when calling deleteExperimentFile.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/experiments/{experimentId}/file`.replace(`{${"experimentId"}}`, encodeURIComponent(String(requestParameters.experimentId))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Deletes an experiment file
-     */
-    async deleteExperimentFile(requestParameters: DeleteExperimentFileRequest): Promise<void> {
-        await this.deleteExperimentFileRaw(requestParameters);
     }
 
     /**
@@ -291,7 +258,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates or creates an experiment file
+     * Creates an experiment file
      */
     async setExperimentFileRaw(requestParameters: SetExperimentFileRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
@@ -328,7 +295,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Updates or creates an experiment file
+     * Creates an experiment file
      */
     async setExperimentFile(requestParameters: SetExperimentFileRequest): Promise<void> {
         await this.setExperimentFileRaw(requestParameters);
