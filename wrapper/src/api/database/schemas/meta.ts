@@ -2,7 +2,7 @@ import { assertType } from '../../tools/types';
 import { ForeignKeys, Schemas } from '../tools/types';
 
 export const metaSchemas = assertType<
-  Schemas<'meta', ['algorithm', 'dataset', 'experiment']>
+  Schemas<'meta', ['algorithm', 'dataset', 'experiment', 'similarityfunction']>
 >()({
   meta: {
     algorithm: {
@@ -113,6 +113,38 @@ export const metaSchemas = assertType<
         numberOfUploadedRecords: {
           name: 'numberOfUploadedRecords' as const,
           dataType: 'INTEGER',
+        },
+      },
+    },
+    similarityfunction: {
+      name: 'similarityfunction',
+      schema: 'meta',
+      autoInstall: true,
+      columns: {
+        id: {
+          name: 'id',
+          dataType: 'INTEGER',
+          autoIncrement: true,
+          notNull: true,
+          primaryKey: true,
+        },
+        experiment: {
+          name: 'experiment',
+          dataType: 'INTEGER',
+          notNull: true,
+          foreignKeys: (): ForeignKeys => {
+            return [
+              {
+                table: metaSchemas.meta.experiment,
+                column: metaSchemas.meta.experiment.columns.id,
+              },
+            ];
+          },
+        },
+        expression: {
+          name: 'expression',
+          dataType: 'TEXT',
+          notNull: true,
         },
       },
     },

@@ -1,3 +1,4 @@
+import { tables } from '../../database';
 import {
   AddSimilarityThresholdFunctionRequest,
   DeleteSimilarityThresholdFunctionRequest,
@@ -6,40 +7,62 @@ import {
   SetSimilarityThresholdFunctionRequest,
   SimilarityThresholdFunction,
   SimilarityThresholdFunctionId,
-  SimilarityThresholdFunctionTypeEnum,
 } from '../../server/types';
+import { providers } from '..';
+import { SimilarityThresholdFunctionConverter } from './util/converter';
 
-// TODO
 export class SimilarityThresholdsProvider {
+  protected converter = new SimilarityThresholdFunctionConverter();
+
   addSimilarityThresholdFunction({
     experimentId,
     similarityThresholdFunction,
   }: AddSimilarityThresholdFunctionRequest): SimilarityThresholdFunctionId {
-    return 0;
+    providers.experiment.getExperiment(experimentId);
+    return tables.meta.similarityfunction.upsert([
+      {
+        experiment: experimentId,
+        expression: this.converter.convertSimilarityThresholdFunctionToExpression(
+          similarityThresholdFunction
+        ),
+      },
+    ])[0];
   }
 
   deleteSimilarityThresholdFunction({
     experimentId,
     functionId,
   }: DeleteSimilarityThresholdFunctionRequest): void {
-    return;
+    tables.meta.similarityfunction.delete({
+      experiment: experimentId,
+      id: functionId,
+    });
   }
 
   getSimilarityThresholdFunction({
     experimentId,
     functionId,
   }: GetSimilarityThresholdFunctionRequest): SimilarityThresholdFunction {
-    return {
-      id: 0,
-      type: SimilarityThresholdFunctionTypeEnum.SimilarityThreshold,
-      similarityThreshold: 'test',
-    };
+    const func = tables.meta.similarityfunction.get({
+      experiment: experimentId,
+      id: functionId,
+    });
+    if (!func) {
+      throw new Error(
+        `A similarity threshold function with the id ${functionId} does not exist in the experiment ${experimentId}.`
+      );
+    }
+    return this.converter.storedFunctionToApiFunction(func);
   }
 
   getSimilarityThresholdFunctions({
     experimentId,
   }: GetSimilarityThresholdFunctionsRequest): SimilarityThresholdFunction[] {
-    return [];
+    return tables.meta.similarityfunction
+      .all({
+        experiment: experimentId,
+      })
+      .map((func) => this.converter.storedFunctionToApiFunction(func));
   }
 
   setSimilarityThresholdFunction({
@@ -47,6 +70,15 @@ export class SimilarityThresholdsProvider {
     functionId,
     similarityThresholdFunction,
   }: SetSimilarityThresholdFunctionRequest): void {
-    return;
+    providers.experiment.getExperiment(experimentId);
+    tables.meta.similarityfunction.upsert([
+      {
+        experiment: experimentId,
+        expression: this.converter.convertSimilarityThresholdFunctionToExpression(
+          similarityThresholdFunction
+        ),
+        id: functionId,
+      },
+    ]);
   }
 }
