@@ -1,3 +1,4 @@
 webpack.config.js
 /app/src/api/api.ts
 cypress
+/library/lib
