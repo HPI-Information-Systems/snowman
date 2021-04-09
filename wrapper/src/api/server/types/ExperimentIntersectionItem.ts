@@ -1,3 +1,5 @@
+import { ExperimentConfigItemSimilarity } from './ExperimentConfigItemSimilarity';
+
 /**
  *
  * @export
@@ -10,6 +12,12 @@ export interface ExperimentIntersectionItem {
    * @memberof ExperimentIntersectionItem
    */
   experimentId: number;
+  /**
+   *
+   * @type {ExperimentConfigItemSimilarity}
+   * @memberof ExperimentIntersectionItem
+   */
+  similarity?: ExperimentConfigItemSimilarity;
   /**
    *
    * @type {boolean}

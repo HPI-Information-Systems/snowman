@@ -1,3 +1,4 @@
+import { ExperimentConfigItem } from './ExperimentConfigItem';
 import { ExperimentIntersectionItem } from './ExperimentIntersectionItem';
 
 export interface CalculateExperimentIntersectionCountRequest {
@@ -5,7 +6,7 @@ export interface CalculateExperimentIntersectionCountRequest {
 }
 
 export interface CalculateExperimentIntersectionCountsRequest {
-  experiments: Array<number>;
+  experiments: Array<ExperimentConfigItem>;
 }
 
 export interface CalculateExperimentIntersectionRecordsRequest {
@@ -17,4 +18,8 @@ export interface CalculateExperimentIntersectionRecordsRequest {
 export interface GetBinaryMetricsRequest {
   groundTruthExperimentId: number;
   predictedExperimentId: number;
+  groundTruthSimilarityThresholdFunction?: number;
+  groundTruthSimilarityThreshold?: number;
+  predictedSimilarityThresholdFunction?: number;
+  predictedSimilarityThreshold?: number;
 }

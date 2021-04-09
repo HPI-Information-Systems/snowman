@@ -40,6 +40,8 @@ export interface GetExperimentRequest {
 
 export interface GetExperimentFileRequest {
     experimentId: number;
+    similarityThresholdFunction?: number;
+    similarityThreshold?: number;
     startAt?: number;
     limit?: number;
     sortBy?: string;
@@ -54,6 +56,8 @@ export interface SetExperimentFileRequest {
     experimentId: number;
     format: SetExperimentFileFormatEnum;
     file: Blob;
+    similarityThresholdFunction?: number;
+    similarityThreshold?: number;
 }
 
 /**
@@ -163,6 +167,14 @@ export class ExperimentsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.similarityThresholdFunction !== undefined) {
+            queryParameters['similarityThresholdFunction'] = requestParameters.similarityThresholdFunction;
+        }
+
+        if (requestParameters.similarityThreshold !== undefined) {
+            queryParameters['similarityThreshold'] = requestParameters.similarityThreshold;
+        }
+
         if (requestParameters.startAt !== undefined) {
             queryParameters['startAt'] = requestParameters.startAt;
         }
@@ -258,7 +270,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates an experiment file
+     * Creates an experiment file (cannot overwrite existing)
      */
     async setExperimentFileRaw(requestParameters: SetExperimentFileRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
@@ -274,6 +286,14 @@ export class ExperimentsApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.similarityThresholdFunction !== undefined) {
+            queryParameters['similarityThresholdFunction'] = requestParameters.similarityThresholdFunction;
+        }
+
+        if (requestParameters.similarityThreshold !== undefined) {
+            queryParameters['similarityThreshold'] = requestParameters.similarityThreshold;
+        }
 
         if (requestParameters.format !== undefined) {
             queryParameters['format'] = requestParameters.format;
@@ -295,7 +315,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates an experiment file
+     * Creates an experiment file (cannot overwrite existing)
      */
     async setExperimentFile(requestParameters: SetExperimentFileRequest): Promise<void> {
         await this.setExperimentFileRaw(requestParameters);

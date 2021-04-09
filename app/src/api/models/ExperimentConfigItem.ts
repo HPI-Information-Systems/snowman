@@ -14,51 +14,37 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    ExperimentConfigItem,
-    ExperimentConfigItemFromJSON,
-    ExperimentConfigItemFromJSONTyped,
-    ExperimentConfigItemToJSON,
     ExperimentConfigItemSimilarity,
     ExperimentConfigItemSimilarityFromJSON,
     ExperimentConfigItemSimilarityFromJSONTyped,
     ExperimentConfigItemSimilarityToJSON,
-    ExperimentIntersectionItemAllOf,
-    ExperimentIntersectionItemAllOfFromJSON,
-    ExperimentIntersectionItemAllOfFromJSONTyped,
-    ExperimentIntersectionItemAllOfToJSON,
 } from './';
 
 /**
  * 
  * @export
- * @interface ExperimentIntersectionItem
+ * @interface ExperimentConfigItem
  */
-export interface ExperimentIntersectionItem {
+export interface ExperimentConfigItem {
     /**
      * 
      * @type {number}
-     * @memberof ExperimentIntersectionItem
+     * @memberof ExperimentConfigItem
      */
     experimentId: number;
     /**
      * 
      * @type {ExperimentConfigItemSimilarity}
-     * @memberof ExperimentIntersectionItem
+     * @memberof ExperimentConfigItem
      */
     similarity?: ExperimentConfigItemSimilarity;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ExperimentIntersectionItem
-     */
-    predictedCondition: boolean;
 }
 
-export function ExperimentIntersectionItemFromJSON(json: any): ExperimentIntersectionItem {
-    return ExperimentIntersectionItemFromJSONTyped(json, false);
+export function ExperimentConfigItemFromJSON(json: any): ExperimentConfigItem {
+    return ExperimentConfigItemFromJSONTyped(json, false);
 }
 
-export function ExperimentIntersectionItemFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExperimentIntersectionItem {
+export function ExperimentConfigItemFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExperimentConfigItem {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -66,11 +52,10 @@ export function ExperimentIntersectionItemFromJSONTyped(json: any, ignoreDiscrim
         
         'experimentId': json['experimentId'],
         'similarity': !exists(json, 'similarity') ? undefined : ExperimentConfigItemSimilarityFromJSON(json['similarity']),
-        'predictedCondition': json['predictedCondition'],
     };
 }
 
-export function ExperimentIntersectionItemToJSON(value?: ExperimentIntersectionItem | null): any {
+export function ExperimentConfigItemToJSON(value?: ExperimentConfigItem | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -81,7 +66,6 @@ export function ExperimentIntersectionItemToJSON(value?: ExperimentIntersectionI
         
         'experimentId': value.experimentId,
         'similarity': ExperimentConfigItemSimilarityToJSON(value.similarity),
-        'predictedCondition': value.predictedCondition,
     };
 }
 

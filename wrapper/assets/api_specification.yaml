@@ -489,6 +489,22 @@ paths:
           schema:
             $ref: "#/components/schemas/ExperimentId"
           style: simple
+        - description: only use in combination with similarityThreshold
+          explode: true
+          in: query
+          name: similarityThresholdFunction
+          required: false
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          style: form
+        - description: only use in combination with similarityThresholdFunction
+          explode: true
+          in: query
+          name: similarityThreshold
+          required: false
+          schema:
+            type: number
+          style: form
         - explode: true
           in: query
           name: startAt
@@ -540,6 +556,22 @@ paths:
           schema:
             $ref: "#/components/schemas/ExperimentId"
           style: simple
+        - description: only use in combination with similarityThreshold
+          explode: true
+          in: query
+          name: similarityThresholdFunction
+          required: false
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          style: form
+        - description: only use in combination with similarityThresholdFunction
+          explode: true
+          in: query
+          name: similarityThreshold
+          required: false
+          schema:
+            type: number
+          style: form
         - description: "Documentation on the formats can be found here: https://hpi-information-systems.github.io/snowman/basic_usage/experiments/#import-formats"
           explode: true
           in: query
@@ -566,7 +598,7 @@ paths:
           description: No Content
         "400":
           description: Bad Request
-      summary: Creates an experiment file
+      summary: Creates an experiment file (cannot overwrite existing)
       tags:
         - Experiments
       x-codegen-request-body-name: file
@@ -618,7 +650,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SimilarityThresholdId"
+                $ref: "#/components/schemas/SimilarityThresholdFunctionId"
           description: Created
         "400":
           description: Bad Request
@@ -643,7 +675,7 @@ paths:
           name: functionId
           required: true
           schema:
-            $ref: "#/components/schemas/SimilarityThresholdId"
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
           style: simple
       responses:
         "204":
@@ -667,7 +699,7 @@ paths:
           name: functionId
           required: true
           schema:
-            $ref: "#/components/schemas/SimilarityThresholdId"
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
           style: simple
       responses:
         "200":
@@ -697,7 +729,7 @@ paths:
           name: functionId
           required: true
           schema:
-            $ref: "#/components/schemas/SimilarityThresholdId"
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
           style: simple
       requestBody:
         content:
@@ -726,12 +758,44 @@ paths:
           schema:
             $ref: "#/components/schemas/ExperimentId"
           style: form
+        - description: only use in combination with groundTruthSimilarityThreshold
+          explode: true
+          in: query
+          name: groundTruthSimilarityThresholdFunction
+          required: false
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          style: form
+        - description: only use in combination with groundTruthSimilarityThresholdFunction
+          explode: true
+          in: query
+          name: groundTruthSimilarityThreshold
+          required: false
+          schema:
+            type: number
+          style: form
         - explode: true
           in: query
           name: predictedExperimentId
           required: true
           schema:
             $ref: "#/components/schemas/ExperimentId"
+          style: form
+        - description: only use in combination with predictedSimilarityThreshold
+          explode: true
+          in: query
+          name: predictedSimilarityThresholdFunction
+          required: false
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          style: form
+        - description: only use in combination with predictedSimilarityThresholdFunction
+          explode: true
+          in: query
+          name: predictedSimilarityThreshold
+          required: false
+          schema:
+            type: number
           style: form
       responses:
         "200":
@@ -819,7 +883,7 @@ paths:
           application/json:
             schema:
               items:
-                $ref: "#/components/schemas/ExperimentId"
+                $ref: "#/components/schemas/ExperimentConfigItem"
               type: array
         required: true
       responses:
@@ -934,11 +998,11 @@ components:
       allOf:
         - $ref: "#/components/schemas/Experiment_allOf"
         - $ref: "#/components/schemas/ExperimentValues"
-    SimilarityThresholdId:
+    SimilarityThresholdFunctionId:
       type: integer
     SimilarityThreshold:
       type: string
-    SimilarityThresholdOperator:
+    SimilarityThresholdFunctionOperator:
       example:
         operator: ADD
       properties:
@@ -973,7 +1037,7 @@ components:
         similarityThreshold:
           type: string
         operator:
-          $ref: "#/components/schemas/SimilarityThresholdOperator"
+          $ref: "#/components/schemas/SimilarityThresholdFunctionOperator"
       required:
         - type
       type: object
@@ -1022,20 +1086,25 @@ components:
         - range
         - value
       type: object
-    ExperimentIntersectionItem:
+    ExperimentConfigItem:
       example:
-        predictedCondition: true
+        similarity:
+          func: 0
+          threshold: 6.027456183070403
         experimentId: 1
       properties:
         experimentId:
           example: 1
           type: integer
-        predictedCondition:
-          type: boolean
+        similarity:
+          $ref: "#/components/schemas/ExperimentConfigItem_similarity"
       required:
         - experimentId
-        - predictedCondition
       type: object
+    ExperimentIntersectionItem:
+      allOf:
+        - $ref: "#/components/schemas/ExperimentConfigItem"
+        - $ref: "#/components/schemas/ExperimentIntersectionItem_allOf"
     ExperimentIntersection:
       items:
         $ref: "#/components/schemas/ExperimentIntersectionItem"
@@ -1043,10 +1112,8 @@ components:
     ExperimentIntersectionCount:
       example:
         experiments:
-          - predictedCondition: true
-            experimentId: 1
-          - predictedCondition: true
-            experimentId: 1
+          - null
+          - null
         numberRows: 5
         numberPairs: 10
       properties:
@@ -1155,4 +1222,24 @@ components:
           type: integer
       required:
         - id
+      type: object
+    ExperimentConfigItem_similarity:
+      example:
+        func: 0
+        threshold: 6.027456183070403
+      properties:
+        func:
+          type: integer
+        threshold:
+          type: number
+      required:
+        - func
+        - threshold
+      type: object
+    ExperimentIntersectionItem_allOf:
+      properties:
+        predictedCondition:
+          type: boolean
+      required:
+        - predictedCondition
       type: object

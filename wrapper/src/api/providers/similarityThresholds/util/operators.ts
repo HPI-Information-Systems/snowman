@@ -1,10 +1,10 @@
-import { SimilarityThresholdOperatorOperatorEnum } from '../../../server/types';
+import { SimilarityThresholdFunctionOperatorOperatorEnum } from '../../../server/types';
 
-const operators: [SimilarityThresholdOperatorOperatorEnum, string][] = [
-  [SimilarityThresholdOperatorOperatorEnum.Add, '+'],
-  [SimilarityThresholdOperatorOperatorEnum.Divide, '/'],
-  [SimilarityThresholdOperatorOperatorEnum.Multiply, '*'],
-  [SimilarityThresholdOperatorOperatorEnum.Subtract, '-'],
+const operators: [SimilarityThresholdFunctionOperatorOperatorEnum, string][] = [
+  [SimilarityThresholdFunctionOperatorOperatorEnum.Add, '+'],
+  [SimilarityThresholdFunctionOperatorOperatorEnum.Divide, '/'],
+  [SimilarityThresholdFunctionOperatorOperatorEnum.Multiply, '*'],
+  [SimilarityThresholdFunctionOperatorOperatorEnum.Subtract, '-'],
 ];
 export const enumToOperator = new Map(operators);
 export const operatorToEnum = new Map(

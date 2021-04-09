@@ -409,7 +409,18 @@ paths:
         required: true
         schema:
           $ref: "#/components/schemas/ExperimentId"
-
+      - name: similarityThresholdFunction
+        in: query
+        required: false
+        description: only use in combination with similarityThreshold
+        schema:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+      - name: similarityThreshold
+        in: query
+        required: false
+        description: only use in combination with similarityThresholdFunction
+        schema:
+          type: number
     get:
       tags:
         - Experiments
@@ -449,7 +460,7 @@ paths:
     put:
       tags:
         - Experiments
-      summary: Creates an experiment file
+      summary: Creates an experiment file (cannot overwrite existing)
       operationId: setExperimentFile
       parameters:
         - in: query
@@ -522,7 +533,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SimilarityThresholdId"
+                $ref: "#/components/schemas/SimilarityThresholdFunctionId"
         400:
           description: Bad Request
 
@@ -537,7 +548,7 @@ paths:
         in: path
         required: true
         schema:
-          $ref: "#/components/schemas/SimilarityThresholdId"
+          $ref: "#/components/schemas/SimilarityThresholdFunctionId"
 
     get:
       tags:
@@ -593,11 +604,35 @@ paths:
           required: true
           schema:
             $ref: "#/components/schemas/ExperimentId"
+        - name: groundTruthSimilarityThresholdFunction
+          in: query
+          required: false
+          description: only use in combination with groundTruthSimilarityThreshold
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+        - name: groundTruthSimilarityThreshold
+          in: query
+          required: false
+          description: only use in combination with groundTruthSimilarityThresholdFunction
+          schema:
+            type: number
         - name: predictedExperimentId
           in: query
           required: true
           schema:
             $ref: "#/components/schemas/ExperimentId"
+        - name: predictedSimilarityThresholdFunction
+          in: query
+          required: false
+          description: only use in combination with predictedSimilarityThreshold
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+        - name: predictedSimilarityThreshold
+          in: query
+          required: false
+          description: only use in combination with predictedSimilarityThresholdFunction
+          schema:
+            type: number
       summary: Compares two experiments and returns binary metrics
       responses:
         200:
@@ -677,7 +712,7 @@ paths:
           application/json:
             schema:
               items:
-                $ref: "#/components/schemas/ExperimentId"
+                $ref: "#/components/schemas/ExperimentConfigItem"
               type: array
         required: true
       responses:
@@ -805,13 +840,13 @@ components:
         - $ref: "#/components/schemas/ExperimentValues"
 
     #### SIMILARITY THRESHOLDS ####
-    SimilarityThresholdId:
+    SimilarityThresholdFunctionId:
       type: integer
 
     SimilarityThreshold:
       type: string
 
-    SimilarityThresholdOperator:
+    SimilarityThresholdFunctionOperator:
       type: object
       properties:
         left:
@@ -835,7 +870,7 @@ components:
         similarityThreshold:
           $ref: "#/components/schemas/SimilarityThreshold"
         operator:
-          $ref: "#/components/schemas/SimilarityThresholdOperator"
+          $ref: "#/components/schemas/SimilarityThresholdFunctionOperator"
       required:
         - type
 
@@ -843,7 +878,7 @@ components:
       allOf:
         - properties:
             id:
-              $ref: "#/components/schemas/SimilarityThresholdId"
+              $ref: "#/components/schemas/SimilarityThresholdFunctionId"
           required:
             - id
           type: object
@@ -881,16 +916,33 @@ components:
         - value
         - range
 
-    ExperimentIntersectionItem:
+    ExperimentConfigItem:
       type: object
       properties:
         experimentId:
           $ref: "#/components/schemas/ExperimentId"
-        predictedCondition:
-          type: boolean
+        similarity:
+          type: object
+          properties:
+            func:
+              $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+            threshold:
+              type: number
+          required:
+            - func
+            - threshold
       required:
         - experimentId
-        - predictedCondition
+
+    ExperimentIntersectionItem:
+      allOf:
+        - $ref: "#/components/schemas/ExperimentConfigItem"
+        - type: object
+          properties:
+            predictedCondition:
+              type: boolean
+          required:
+            - predictedCondition
     ExperimentIntersection:
       type: array
       items:

@@ -1,4 +1,5 @@
 import {
+  ExperimentConfigItem,
   ExperimentId,
   ExperimentIntersectionCount,
   ExperimentIntersectionItem,
@@ -45,9 +46,11 @@ export class BenchmarkProvider {
   }
 
   calculateExperimentIntersectionCounts(
-    experiments: ExperimentId[]
+    experiments: ExperimentConfigItem[]
   ): ExperimentIntersectionCount[] {
-    const datasetId = datasetFromExperimentIds(experiments).id;
+    const datasetId = datasetFromExperimentIds(
+      experiments.map(({ experimentId }) => experimentId)
+    ).id;
     enum ExperimentState {
       IRRELEVANT,
       INCLUDED,
@@ -76,12 +79,16 @@ export class BenchmarkProvider {
     do {
       const included = state
         .map((state, index) =>
-          state === ExperimentState.INCLUDED ? experiments[index] : undefined
+          state === ExperimentState.INCLUDED
+            ? experiments[index].experimentId
+            : undefined
         )
         .filter((index) => index !== undefined) as ExperimentId[];
       const excluded = state
         .map((state, index) =>
-          state === ExperimentState.EXCLUDED ? experiments[index] : undefined
+          state === ExperimentState.EXCLUDED
+            ? experiments[index].experimentId
+            : undefined
         )
         .filter((index) => index !== undefined) as ExperimentId[];
       counts.push({

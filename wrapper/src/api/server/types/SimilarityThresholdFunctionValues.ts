@@ -1,4 +1,4 @@
-import { SimilarityThresholdOperator } from './';
+import { SimilarityThresholdFunctionOperator } from './SimilarityThresholdFunctionOperator';
 
 /**
  *
@@ -23,7 +23,7 @@ export interface SimilarityThresholdFunctionValues {
    * @type {SimilarityThresholdOperator}
    * @memberof SimilarityThresholdFunctionValues
    */
-  operator?: SimilarityThresholdOperator;
+  operator?: SimilarityThresholdFunctionOperator;
 }
 
 /**

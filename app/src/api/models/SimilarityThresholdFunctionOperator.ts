@@ -23,45 +23,45 @@ import {
 /**
  * 
  * @export
- * @interface SimilarityThresholdOperator
+ * @interface SimilarityThresholdFunctionOperator
  */
-export interface SimilarityThresholdOperator {
+export interface SimilarityThresholdFunctionOperator {
     /**
      * 
      * @type {SimilarityThresholdFunctionValues}
-     * @memberof SimilarityThresholdOperator
+     * @memberof SimilarityThresholdFunctionOperator
      */
     left: SimilarityThresholdFunctionValues;
     /**
      * 
      * @type {SimilarityThresholdFunctionValues}
-     * @memberof SimilarityThresholdOperator
+     * @memberof SimilarityThresholdFunctionOperator
      */
     right: SimilarityThresholdFunctionValues;
     /**
      * 
      * @type {string}
-     * @memberof SimilarityThresholdOperator
+     * @memberof SimilarityThresholdFunctionOperator
      */
-    operator: SimilarityThresholdOperatorOperatorEnum;
+    operator: SimilarityThresholdFunctionOperatorOperatorEnum;
 }
 
 /**
 * @export
 * @enum {string}
 */
-export enum SimilarityThresholdOperatorOperatorEnum {
+export enum SimilarityThresholdFunctionOperatorOperatorEnum {
     Add = 'ADD',
     Subtract = 'SUBTRACT',
     Multiply = 'MULTIPLY',
     Divide = 'DIVIDE'
 }
 
-export function SimilarityThresholdOperatorFromJSON(json: any): SimilarityThresholdOperator {
-    return SimilarityThresholdOperatorFromJSONTyped(json, false);
+export function SimilarityThresholdFunctionOperatorFromJSON(json: any): SimilarityThresholdFunctionOperator {
+    return SimilarityThresholdFunctionOperatorFromJSONTyped(json, false);
 }
 
-export function SimilarityThresholdOperatorFromJSONTyped(json: any, ignoreDiscriminator: boolean): SimilarityThresholdOperator {
+export function SimilarityThresholdFunctionOperatorFromJSONTyped(json: any, ignoreDiscriminator: boolean): SimilarityThresholdFunctionOperator {
     if ((json === undefined) || (json === null)) {
         return json;
     }
@@ -73,7 +73,7 @@ export function SimilarityThresholdOperatorFromJSONTyped(json: any, ignoreDiscri
     };
 }
 
-export function SimilarityThresholdOperatorToJSON(value?: SimilarityThresholdOperator | null): any {
+export function SimilarityThresholdFunctionOperatorToJSON(value?: SimilarityThresholdFunctionOperator | null): any {
     if (value === undefined) {
         return undefined;
     }

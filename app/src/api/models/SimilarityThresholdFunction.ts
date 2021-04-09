@@ -18,14 +18,14 @@ import {
     SimilarityThresholdFunctionAllOfFromJSON,
     SimilarityThresholdFunctionAllOfFromJSONTyped,
     SimilarityThresholdFunctionAllOfToJSON,
+    SimilarityThresholdFunctionOperator,
+    SimilarityThresholdFunctionOperatorFromJSON,
+    SimilarityThresholdFunctionOperatorFromJSONTyped,
+    SimilarityThresholdFunctionOperatorToJSON,
     SimilarityThresholdFunctionValues,
     SimilarityThresholdFunctionValuesFromJSON,
     SimilarityThresholdFunctionValuesFromJSONTyped,
     SimilarityThresholdFunctionValuesToJSON,
-    SimilarityThresholdOperator,
-    SimilarityThresholdOperatorFromJSON,
-    SimilarityThresholdOperatorFromJSONTyped,
-    SimilarityThresholdOperatorToJSON,
 } from './';
 
 /**
@@ -54,10 +54,10 @@ export interface SimilarityThresholdFunction {
     similarityThreshold?: string;
     /**
      * 
-     * @type {SimilarityThresholdOperator}
+     * @type {SimilarityThresholdFunctionOperator}
      * @memberof SimilarityThresholdFunction
      */
-    operator?: SimilarityThresholdOperator;
+    operator?: SimilarityThresholdFunctionOperator;
 }
 
 /**
@@ -82,7 +82,7 @@ export function SimilarityThresholdFunctionFromJSONTyped(json: any, ignoreDiscri
         'id': json['id'],
         'type': json['type'],
         'similarityThreshold': !exists(json, 'similarityThreshold') ? undefined : json['similarityThreshold'],
-        'operator': !exists(json, 'operator') ? undefined : SimilarityThresholdOperatorFromJSON(json['operator']),
+        'operator': !exists(json, 'operator') ? undefined : SimilarityThresholdFunctionOperatorFromJSON(json['operator']),
     };
 }
 
@@ -98,7 +98,7 @@ export function SimilarityThresholdFunctionToJSON(value?: SimilarityThresholdFun
         'id': value.id,
         'type': value.type,
         'similarityThreshold': value.similarityThreshold,
-        'operator': SimilarityThresholdOperatorToJSON(value.operator),
+        'operator': SimilarityThresholdFunctionOperatorToJSON(value.operator),
     };
 }
 

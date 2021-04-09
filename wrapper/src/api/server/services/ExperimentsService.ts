@@ -1,7 +1,6 @@
 import { providers } from '../../providers';
 import {
   AddExperimentRequest,
-  DeleteExperimentFileRequest,
   DeleteExperimentRequest,
   Experiment,
   ExperimentId,

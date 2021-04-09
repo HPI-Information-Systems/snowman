@@ -8,16 +8,14 @@ export interface DeleteExperimentRequest {
   experimentId: number;
 }
 
-export interface DeleteExperimentFileRequest {
-  experimentId: number;
-}
-
 export interface GetExperimentRequest {
   experimentId: number;
 }
 
 export interface GetExperimentFileRequest {
   experimentId: number;
+  similarityThresholdFunction?: number;
+  similarityThreshold?: number;
   startAt?: number;
   limit?: number;
   sortBy?: string;
@@ -32,6 +30,8 @@ export interface SetExperimentFileRequest {
   experimentId: number;
   format: SetExperimentFileFormatEnum;
   file: Blob;
+  similarityThresholdFunction?: number;
+  similarityThreshold?: number;
 }
 
 /**
