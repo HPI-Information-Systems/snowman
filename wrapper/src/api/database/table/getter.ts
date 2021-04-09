@@ -1,4 +1,5 @@
-import { PartiallySortedCache } from '../../tools/cache/partiallySorted';
+import { Cache } from '../../tools/cache/base';
+import { Primitive } from '../../tools/types';
 import { databaseBackend } from '../setup/backend';
 import {
   ColumnDataType,
@@ -9,32 +10,27 @@ import {
 import { Table } from './table';
 
 type OptionsT<ColumnsT extends TableSchema['columns'], RawT extends boolean> = {
-  returnedColumns?: readonly (keyof ColumnsT)[];
+  returnedColumns?: readonly (keyof ColumnsT | string)[];
   raw?: RawT;
   limit?: number;
   startAt?: number;
-  sortBy?: keyof ColumnsT;
+  sortBy?: keyof ColumnsT | string;
 };
 
 export class TableGetter<Schema extends TableSchema> {
-  protected readonly statementCache = new PartiallySortedCache(
-    (filterColumns: string[], returnColumns: string[], [sortBy]: [string]) =>
+  protected readonly statementCache = new Cache(
+    (filters: string[], returnColumns: string[], [sortBy]: [string]) =>
       databaseBackend().prepare(
-        this.createQuery(filterColumns, returnColumns, sortBy)
-      ),
-    [
-      {
-        sortBy: 0,
-        toSort: [0],
-      },
-    ]
+        this.createQuery(filters, returnColumns, sortBy)
+      )
   );
 
   constructor(protected readonly table: Table<Schema>) {}
 
   private query(
     operation: 'get' | 'all',
-    filter: NullableColumnValues<Schema['columns']> = {},
+    filters: NullableColumnValues<Schema['columns']> &
+      Record<string, Primitive> = {},
     {
       returnedColumns = [],
       raw = false,
@@ -43,52 +39,60 @@ export class TableGetter<Schema extends TableSchema> {
       sortBy = undefined,
     }: OptionsT<Schema['columns'], boolean> = {}
   ) {
-    const filters = Object.keys(filter).sort();
+    const filterKeys = Object.keys(filters).sort();
     return this.statementCache
-      .get(filters, returnedColumns as string[], [sortBy as string])
+      .get(filterKeys, returnedColumns as string[], [sortBy as string])
       .raw(raw)
-      [operation](...filters.map((key) => filter[key]), limit, startAt);
+      [operation](...filterKeys.map((key) => filters[key]), limit, startAt);
   }
 
+  /**
+   * !DOES NOT ESCAPE FILTER KEYS, RETURNED COLUMNS OR SORTBY
+   */
   get<RawT extends boolean = false>(
-    filter: NullableColumnValues<Schema['columns']> = {},
+    filters: NullableColumnValues<Schema['columns']> &
+      Record<string, Primitive> = {},
     options?: OptionsT<Schema['columns'], RawT>
   ):
     | undefined
     | (RawT extends false
         ? ColumnValues<Schema['columns']>
         : ColumnDataType<Schema['columns'][keyof Schema['columns']]>[]) {
-    return this.query('get', filter, options);
+    return this.query('get', filters, options);
   }
 
+  /**
+   * !DOES NOT ESCAPE FILTER KEYS, RETURNED COLUMNS OR SORTBY
+   */
   all<RawT extends boolean = false>(
-    filter: NullableColumnValues<Schema['columns']> = {},
+    filters: NullableColumnValues<Schema['columns']> &
+      Record<string, Primitive> = {},
     options?: OptionsT<Schema['columns'], RawT>
   ): RawT extends false
     ? ColumnValues<Schema['columns']>[]
     : ColumnDataType<Schema['columns'][keyof Schema['columns']]>[][] {
-    return this.query('all', filter, options);
+    return this.query('all', filters, options);
   }
 
   protected createQuery(
-    filterColumns: string[],
+    filters: string[],
     returnColumns: string[],
     sortBy: string
   ): string {
     let selectQuery = 'SELECT ';
     if (returnColumns.length > 0) {
-      selectQuery += returnColumns.map((column) => `"${column}"`).join(',');
+      selectQuery += returnColumns.map((column) => `${column}`).join(',');
     } else {
       selectQuery += '*';
     }
     selectQuery += ` FROM ${this.table}`;
-    if (filterColumns.length > 0) {
-      selectQuery += ` WHERE ${filterColumns
-        .map((column) => `"${column}" = ?`)
+    if (filters.length > 0) {
+      selectQuery += ` WHERE ${filters
+        .map((filter) => `${filter} = ?`)
         .join(' AND ')}`;
     }
     if (sortBy) {
-      selectQuery += ` ORDER BY "${sortBy}"`;
+      selectQuery += ` ORDER BY ${sortBy}`;
     }
     selectQuery += ` LIMIT ? OFFSET ?`;
     return selectQuery;

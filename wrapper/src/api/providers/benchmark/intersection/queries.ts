@@ -10,7 +10,7 @@ export class IntersectionQueries {
         returnedColumns: [
           table.schema.columns.id1.name,
           table.schema.columns.id2.name,
-        ],
+        ].map((col) => `"${col}"`),
         raw: true,
       }
     ) as [number, number][];

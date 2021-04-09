@@ -35,7 +35,7 @@ export class ExperimentFileGetter {
   }
 
   get(startAt?: number, limit?: number, sortBy?: string): FileResponse {
-    sortBy = this.getSortedColumn(sortBy);
+    sortBy = `"${this.getSortedColumn(sortBy)}"`;
     let result: FileResponse;
     databaseBackend().transaction(
       () =>
@@ -49,7 +49,7 @@ export class ExperimentFileGetter {
             .all(
               {},
               {
-                returnedColumns: this.columns,
+                returnedColumns: this.columns.map((col) => `"${col}"`),
                 raw: true,
                 limit,
                 startAt,
