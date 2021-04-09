@@ -83,7 +83,7 @@ const loadCountsRequestBody = (): CalculateExperimentIntersectionCountsRequest =
     experiments: [
       ...BenchmarkConfigurationStore.chosenExperiments,
       ...BenchmarkConfigurationStore.chosenGoldStandards,
-    ].map(({ id }) => id),
+    ].map(({ id }) => ({ experimentId: id })),
   };
 };
 

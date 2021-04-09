@@ -2,6 +2,7 @@ import {
   BenchmarkApi,
   CalculateExperimentIntersectionRecordsRequest,
   Experiment,
+  ExperimentConfigItem,
   FileResponse,
   Metric,
 } from 'api';
@@ -43,66 +44,69 @@ export const loadMetrics = (): SnowmanThunkAction<Promise<void>> => async (
 };
 
 const getRequestBodyForTruePositives = (
-  experimentId1: number,
-  experimentId2: number
+  experimentConfig1: ExperimentConfigItem,
+  experimentConfig2: ExperimentConfigItem
 ): CalculateExperimentIntersectionRecordsRequest['intersection'] => [
   {
-    experimentId: experimentId1,
+    ...experimentConfig1,
     predictedCondition: true,
   },
   {
-    experimentId: experimentId2,
+    ...experimentConfig2,
     predictedCondition: true,
   },
 ];
 
 const getRequestBodyForFalsePositives = (
-  experimentId1: number,
-  experimentId2: number
+  experimentConfig1: ExperimentConfigItem,
+  experimentConfig2: ExperimentConfigItem
 ): CalculateExperimentIntersectionRecordsRequest['intersection'] => [
   {
-    experimentId: experimentId1,
+    ...experimentConfig1,
     predictedCondition: false,
   },
   {
-    experimentId: experimentId2,
+    ...experimentConfig2,
     predictedCondition: true,
   },
 ];
 
 const getRequestBodyForFalseNegatives = (
-  experimentId1: number,
-  experimentId2: number
+  experimentConfig1: ExperimentConfigItem,
+  experimentConfig2: ExperimentConfigItem
 ): CalculateExperimentIntersectionRecordsRequest['intersection'] => [
   {
-    experimentId: experimentId1,
+    ...experimentConfig1,
     predictedCondition: true,
   },
   {
-    experimentId: experimentId2,
+    ...experimentConfig2,
     predictedCondition: false,
   },
 ];
 
 const getRequestBodyForTrueNegatives = (
-  experimentId1: number,
-  experimentId2: number
+  experimentConfig1: ExperimentConfigItem,
+  experimentConfig2: ExperimentConfigItem
 ): CalculateExperimentIntersectionRecordsRequest['intersection'] => [
   {
-    experimentId: experimentId1,
+    ...experimentConfig1,
     predictedCondition: false,
   },
   {
-    experimentId: experimentId2,
+    ...experimentConfig2,
     predictedCondition: false,
   },
 ];
 
 type LoadTuplesRequestBody = ReturnType<typeof getRequestBodyForTruePositives>;
 
-const getExperimentsComparisonTuple = (): [number, number] => [
-  getGroundTruthId(),
-  getExperiment1Id(),
+const getExperimentsComparisonTuple = (): [
+  ExperimentConfigItem,
+  ExperimentConfigItem
+] => [
+  { experimentId: getGroundTruthId() },
+  { experimentId: getExperiment1Id() },
 ];
 
 const loadTuples = (
