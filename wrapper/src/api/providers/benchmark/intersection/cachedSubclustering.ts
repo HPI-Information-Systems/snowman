@@ -47,6 +47,17 @@ export class CachedSubclusting {
     )[]
   ) {}
 
+  static entangledConstructorParameters = [
+    {
+      sortBy: 0,
+      toSort: [0, 3, 4],
+    },
+    {
+      sortBy: 1,
+      toSort: [1, 5, 6],
+    },
+  ];
+
   get clustering(): Subclustering {
     return this._clustering.value;
   }

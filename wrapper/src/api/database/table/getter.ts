@@ -1,4 +1,4 @@
-import { Cache } from '../../tools/cache';
+import { SortedCache } from '../../tools/cache/sorted';
 import { databaseBackend } from '../setup/backend';
 import {
   ColumnDataType,
@@ -15,7 +15,7 @@ type OptionsT<ColumnT extends string | number | symbol> = {
 };
 
 export class TableGetter<Schema extends TableSchema> {
-  protected readonly statementCache = new Cache(
+  protected readonly statementCache = new SortedCache(
     (filterColumns: string[], returnColumns: string[], [sortBy]: [string]) =>
       databaseBackend().prepare(
         this.createQuery(filterColumns, returnColumns, sortBy)

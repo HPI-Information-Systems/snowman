@@ -1,6 +1,6 @@
 import { Statement } from 'better-sqlite3';
 
-import { Cache } from '../../tools/cache';
+import { SortedCache } from '../../tools/cache/sorted';
 import { databaseBackend } from '../setup/backend';
 import type {
   BasicDataType,
@@ -11,7 +11,7 @@ import type {
 import type { Table } from './table';
 
 export class TableUpserter<Schema extends TableSchema> {
-  protected readonly statementCache = new Cache((columns: string[]) =>
+  protected readonly statementCache = new SortedCache((columns: string[]) =>
     this.createInsertStatement(columns)
   );
   protected readonly cachedRows: (() => InsertColumnValues<

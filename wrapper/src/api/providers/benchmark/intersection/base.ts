@@ -11,6 +11,17 @@ import type { Intersection as IntersectionSubclass } from '.';
 import { IntersectionCache, SubclusterCache } from './cache';
 import { IntersectionQueries } from './queries';
 
+export const entangledIntersectionBaseParams = [
+  {
+    sortBy: 0,
+    toSort: [0, 3, 4],
+  },
+  {
+    sortBy: 1,
+    toSort: [1, 5, 6],
+  },
+];
+
 export class IntersectionBase {
   get clustering(): Clustering {
     return this._clustering.value;
