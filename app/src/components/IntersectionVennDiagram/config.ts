@@ -1,4 +1,4 @@
-import { Experiment, ExperimentIntersectionPairCountsItem } from 'api';
+import { Experiment, ExperimentIntersectionCount } from 'api';
 import {
   VennDiagramEntity,
   VennDiagramIntersection,
@@ -18,13 +18,13 @@ export interface IntersectionVennDiagramConfigStrategy {
 }
 
 export class IntersectionVennDiagramConfig {
-  protected readonly intersectionCounts: ExperimentIntersectionPairCountsItem[];
-  protected readonly experimentCounts: ExperimentIntersectionPairCountsItem[];
+  protected readonly intersectionCounts: ExperimentIntersectionCount[];
+  protected readonly experimentCounts: ExperimentIntersectionCount[];
   protected readonly experimentsMap: Map<number, Experiment>;
 
   constructor(
     protected readonly experiments: Experiment[],
-    counts: ExperimentIntersectionPairCountsItem[],
+    counts: ExperimentIntersectionCount[],
     protected readonly select: (experiments: Experiment[]) => void
   ) {
     this.experimentsMap = new Map(
@@ -68,7 +68,7 @@ export class IntersectionVennDiagramConfig {
   }
 
   protected mapCounts(
-    counts: ExperimentIntersectionPairCountsItem[],
+    counts: ExperimentIntersectionCount[],
     strategy: IntersectionVennDiagramConfigStrategy,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     map: (experiments: Experiment[], numberPairs: number) => Record<string, any>

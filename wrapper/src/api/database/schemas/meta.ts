@@ -2,7 +2,7 @@ import { assertType } from '../../tools/types';
 import { ForeignKeys, Schemas } from '../tools/types';
 
 export const metaSchemas = assertType<
-  Schemas<'meta', ['algorithm', 'dataset', 'experiment']>
+  Schemas<'meta', ['algorithm', 'dataset', 'experiment', 'similarityfunction']>
 >()({
   meta: {
     algorithm: {
@@ -84,27 +84,23 @@ export const metaSchemas = assertType<
           name: 'algorithm' as const,
           dataType: 'INTEGER',
           notNull: true,
-          foreignKeys: (): ForeignKeys => {
-            return [
-              {
-                table: metaSchemas.meta.algorithm,
-                column: metaSchemas.meta.algorithm.columns.id,
-              },
-            ];
-          },
+          foreignKeys: (): ForeignKeys => [
+            {
+              table: metaSchemas.meta.algorithm,
+              column: metaSchemas.meta.algorithm.columns.id,
+            },
+          ],
         },
         dataset: {
           name: 'dataset' as const,
           dataType: 'INTEGER',
           notNull: true,
-          foreignKeys: (): ForeignKeys => {
-            return [
-              {
-                table: metaSchemas.meta.dataset,
-                column: metaSchemas.meta.dataset.columns.id,
-              },
-            ];
-          },
+          foreignKeys: (): ForeignKeys => [
+            {
+              table: metaSchemas.meta.dataset,
+              column: metaSchemas.meta.dataset.columns.id,
+            },
+          ],
         },
         description: {
           name: 'description' as const,
@@ -113,6 +109,36 @@ export const metaSchemas = assertType<
         numberOfUploadedRecords: {
           name: 'numberOfUploadedRecords' as const,
           dataType: 'INTEGER',
+        },
+      },
+    },
+    similarityfunction: {
+      name: 'similarityfunction',
+      schema: 'meta',
+      autoInstall: true,
+      columns: {
+        id: {
+          name: 'id',
+          dataType: 'INTEGER',
+          autoIncrement: true,
+          notNull: true,
+          primaryKey: true,
+        },
+        experiment: {
+          name: 'experiment',
+          dataType: 'INTEGER',
+          notNull: true,
+          foreignKeys: (): ForeignKeys => [
+            {
+              table: metaSchemas.meta.experiment,
+              column: metaSchemas.meta.experiment.columns.id,
+            },
+          ],
+        },
+        expression: {
+          name: 'expression',
+          dataType: 'TEXT',
+          notNull: true,
         },
       },
     },

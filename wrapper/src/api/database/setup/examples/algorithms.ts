@@ -1,6 +1,6 @@
 import { GoldStandardId, SilverStandardId } from 'snowman-library';
 
-import { getProviders } from '../../../providers';
+import { providers } from '../../../providers';
 import { AlgorithmId, AlgorithmValues } from '../../../server/types';
 import { assertType } from '../../../tools/types';
 
@@ -12,7 +12,7 @@ export type ExampleAlgorithms = {
 };
 
 export function loadExampleAlgorithms(algorithms: ExampleAlgorithms): void {
-  const algorithmProvider = getProviders().algorithm;
+  const algorithmProvider = providers.algorithm;
   for (const { id, meta } of Object.values(algorithms)) {
     algorithmProvider.setAlgorithm(id, meta);
   }

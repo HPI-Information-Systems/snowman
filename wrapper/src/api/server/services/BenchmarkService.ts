@@ -1,63 +1,45 @@
-import { getProviders } from '../../providers';
+import { providers } from '../../providers';
 import {
-  ExperimentId,
+  CalculateExperimentIntersectionCountRequest,
+  CalculateExperimentIntersectionCountsRequest,
+  CalculateExperimentIntersectionRecordsRequest,
   ExperimentIntersectionCount,
-  ExperimentIntersectionPairCountsItem,
-  ExperimentIntersectionPairCountsRequestExperiments,
-  ExperimentIntersectionRequestExperiments,
   FileResponse,
+  GetBinaryMetricsRequest,
   Metric,
 } from '../types';
 import { Service, SuccessResponse } from './Service';
 
 function provider() {
-  return getProviders().benchmark;
+  return providers.benchmark;
 }
 
-/**
- * Triggers the comparison of multiple experiments and returns tuples classified as false_negative, etc. and limited by limit
- * intersects multiple experiments and returns the counts of the number of records. This can be used to calculate the confusion-matrix
- *
- * object List
- * returns ExperimentIntersectionCount
- * */
 export async function calculateExperimentIntersectionCount({
-  body: config,
-}: {
-  body: ExperimentIntersectionRequestExperiments[];
-}): Promise<SuccessResponse<ExperimentIntersectionCount>> {
+  intersection,
+}: CalculateExperimentIntersectionCountRequest): Promise<
+  SuccessResponse<ExperimentIntersectionCount>
+> {
   return Service.response(
     () =>
       provider().calculateExperimentIntersectionCount({
-        config,
+        intersection,
       }),
     200,
     404
   );
 }
 
-/**
- * Triggers the comparison of multiple experiments and returns tuples classified as false_negative, etc. and limited by limit
- * intersects multiple experiments and returns the resulting records. This can be used to calculate the confusion-matrix
- *
- * object List
- * startAt Integer  (optional)
- * limit Integer  (optional)
- * returns String
- * */
 export async function calculateExperimentIntersectionRecords({
-  body: config,
+  intersection,
   startAt,
   limit,
-}: {
-  body: ExperimentIntersectionRequestExperiments[];
-  startAt?: number;
-  limit?: number;
-}): Promise<SuccessResponse<FileResponse>> {
+}: CalculateExperimentIntersectionRecordsRequest): Promise<
+  SuccessResponse<FileResponse>
+> {
   return Service.response(
     () =>
       provider().calculateExperimentIntersectionRecords({
-        config,
+        intersection,
         startAt,
         limit,
       }),
@@ -66,46 +48,28 @@ export async function calculateExperimentIntersectionRecords({
   );
 }
 
-export async function calculateExperimentIntersectionPairCounts({
-  body: config,
-}: {
-  body: ExperimentIntersectionPairCountsRequestExperiments[];
-}): Promise<SuccessResponse<ExperimentIntersectionPairCountsItem[]>> {
+export async function calculateExperimentIntersectionCounts({
+  experiments,
+}: CalculateExperimentIntersectionCountsRequest): Promise<
+  SuccessResponse<ExperimentIntersectionCount[]>
+> {
   return Service.response(
-    () => provider().calculateExperimentIntersectionPairCounts(config),
+    () => provider().calculateExperimentIntersectionCounts(experiments),
     200,
     404
   );
 }
 
-/**
- * Compares two experiments and returns binary metrics
- *
- * experimentId1 Integer The id of an experiment
- * experimentId2 Integer The id of an experiment
- * similarityThresholdUnderscoreexperiment1 BigDecimal  (optional)
- * similarityAttributeUnderscoreexperiment1 String  (optional)
- * similarityThresholdUnderscoreexperiment2 BigDecimal  (optional)
- * similarityAttributeUnderscoreexperiment2 String  (optional)
- * returns Array<Metric>
- * */
 export async function getBinaryMetrics({
-  experimentId1,
-  experimentId2,
-  similarityThresholdUnderscoreexperiment1,
-  similarityAttributeUnderscoreexperiment1,
-  similarityThresholdUnderscoreexperiment2,
-  similarityAttributeUnderscoreexperiment2,
-}: {
-  experimentId1: ExperimentId;
-  experimentId2: ExperimentId;
-  similarityThresholdUnderscoreexperiment1?: number;
-  similarityAttributeUnderscoreexperiment1?: string;
-  similarityThresholdUnderscoreexperiment2?: number;
-  similarityAttributeUnderscoreexperiment2?: string;
-}): Promise<SuccessResponse<Array<Metric>>> {
+  groundTruthExperimentId,
+  predictedExperimentId,
+}: GetBinaryMetricsRequest): Promise<SuccessResponse<Array<Metric>>> {
   return Service.response(
-    () => provider().getBinaryMetrics(experimentId1, experimentId2),
+    () =>
+      provider().getBinaryMetrics(
+        groundTruthExperimentId,
+        predictedExperimentId
+      ),
     200,
     400
   );
