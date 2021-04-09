@@ -30,11 +30,16 @@ export class DatasetFileGetter {
       header: this.customColumns.map((column) =>
         column.substring(datasetCustomColumnPrefix.length)
       ),
-      data: this.table.all({}, this.customColumns, true, {
-        limit: this.limit,
-        startAt: this.startAt,
-        sortBy: this.sortedColumn,
-      }) as string[][],
+      data: this.table.all(
+        {},
+        {
+          returnedColumns: this.customColumns,
+          raw: true,
+          limit: this.limit,
+          startAt: this.startAt,
+          sortBy: this.sortedColumn,
+        }
+      ) as string[][],
     };
   }
 

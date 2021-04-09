@@ -46,11 +46,16 @@ export class ExperimentFileGetter {
               : column
           ),
           data: this.table
-            .all({}, this.columns, true, {
-              limit,
-              startAt,
-              sortBy,
-            })
+            .all(
+              {},
+              {
+                returnedColumns: this.columns,
+                raw: true,
+                limit,
+                startAt,
+                sortBy,
+              }
+            )
             .map((row) => {
               for (const idIndex of this.idIndices) {
                 row[idIndex] =

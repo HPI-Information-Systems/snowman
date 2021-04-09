@@ -1,4 +1,4 @@
-import { SortedCache } from '../../tools/cache/sorted';
+import { PartiallySortedCache } from '../../tools/cache/partiallySorted';
 import { databaseBackend } from '../setup/backend';
 import {
   ColumnDataType,
@@ -8,18 +8,26 @@ import {
 } from '../tools/types';
 import { Table } from './table';
 
-type OptionsT<ColumnT extends string | number | symbol> = {
+type OptionsT<ColumnsT extends TableSchema['columns'], RawT extends boolean> = {
+  returnedColumns?: readonly (keyof ColumnsT)[];
+  raw?: RawT;
   limit?: number;
   startAt?: number;
-  sortBy?: ColumnT;
+  sortBy?: keyof ColumnsT;
 };
 
 export class TableGetter<Schema extends TableSchema> {
-  protected readonly statementCache = new SortedCache(
+  protected readonly statementCache = new PartiallySortedCache(
     (filterColumns: string[], returnColumns: string[], [sortBy]: [string]) =>
       databaseBackend().prepare(
         this.createQuery(filterColumns, returnColumns, sortBy)
-      )
+      ),
+    [
+      {
+        sortBy: 0,
+        toSort: [0],
+      },
+    ]
   );
 
   constructor(protected readonly table: Table<Schema>) {}
@@ -27,13 +35,13 @@ export class TableGetter<Schema extends TableSchema> {
   private query(
     operation: 'get' | 'all',
     filter: NullableColumnValues<Schema['columns']> = {},
-    returnedColumns: readonly (keyof Schema['columns'])[] = [],
-    raw = false,
     {
+      returnedColumns = [],
+      raw = false,
       limit = -1,
       startAt = 0,
       sortBy = undefined,
-    }: OptionsT<keyof Schema['columns']> = {}
+    }: OptionsT<Schema['columns'], boolean> = {}
   ) {
     const filters = Object.keys(filter).sort();
     return this.statementCache
@@ -42,40 +50,24 @@ export class TableGetter<Schema extends TableSchema> {
       [operation](...filters.map((key) => filter[key]), limit, startAt);
   }
 
-  /**
-   * !WARNING: If raw returns columns in ASCENDING SORTED ORDER
-   */
-  get<
-    RawT extends boolean = false,
-    ReturnedColumnsT extends readonly (keyof Schema['columns'])[] = []
-  >(
+  get<RawT extends boolean = false>(
     filter: NullableColumnValues<Schema['columns']> = {},
-    returnedColumns?: ReturnedColumnsT,
-    raw?: RawT,
-    options?: OptionsT<keyof Schema['columns']>
+    options?: OptionsT<Schema['columns'], RawT>
   ):
     | undefined
     | (RawT extends false
         ? ColumnValues<Schema['columns']>
-        : ColumnDataType<Schema['columns'][ReturnedColumnsT[number]]>[]) {
-    return this.query('get', filter, returnedColumns, raw, options);
+        : ColumnDataType<Schema['columns'][keyof Schema['columns']]>[]) {
+    return this.query('get', filter, options);
   }
 
-  /**
-   * !WARNING: If raw returns columns in ASCENDING SORTED ORDER
-   */
-  all<
-    RawT extends boolean = false,
-    ReturnedColumnsT extends readonly (keyof Schema['columns'])[] = []
-  >(
+  all<RawT extends boolean = false>(
     filter: NullableColumnValues<Schema['columns']> = {},
-    returnedColumns?: ReturnedColumnsT,
-    raw?: RawT,
-    options?: OptionsT<keyof Schema['columns']>
+    options?: OptionsT<Schema['columns'], RawT>
   ): RawT extends false
     ? ColumnValues<Schema['columns']>[]
-    : ColumnDataType<Schema['columns'][ReturnedColumnsT[number]]>[][] {
-    return this.query('all', filter, returnedColumns, raw, options);
+    : ColumnDataType<Schema['columns'][keyof Schema['columns']]>[][] {
+    return this.query('all', filter, options);
   }
 
   protected createQuery(

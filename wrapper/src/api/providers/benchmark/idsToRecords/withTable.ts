@@ -62,8 +62,10 @@ class IdClustersToRecordClusters {
   }
 
   protected getRecord(id: number): string[] {
-    return (this.table.get({ id }, this.columnNames, true) ??
-      this.getNonExistingRecord(id)) as string[];
+    return (this.table.get(
+      { id },
+      { returnedColumns: this.columnNames, raw: true }
+    ) ?? this.getNonExistingRecord(id)) as string[];
   }
 
   protected getNonExistingRecord(id: number): string[] {
