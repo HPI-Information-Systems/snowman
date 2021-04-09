@@ -4,8 +4,6 @@ import { logger } from '../../tools/logger';
 import { ErrorResponse, SuccessResponse } from '../services/Service';
 import { Request } from '../types/util';
 
-type RequestParameters = { [key: string]: unknown };
-
 export class Controller {
   static sendResponse(
     response: Response,
@@ -46,15 +44,17 @@ export class Controller {
     }
   }
 
-  static collectRequestParams<ParamsT extends RequestParameters>(
-    request: Request
-  ): ParamsT {
-    const requestParams: RequestParameters = {};
+  static collectRequestParams<ParamsT>(request: Request): ParamsT {
+    const requestParams: Record<string, unknown> = {};
     if (request.openapi.schema.requestBody) {
       if ('content' in request.openapi.schema.requestBody) {
         const { content } = request.openapi.schema.requestBody;
         if (content['application/json']) {
-          requestParams['body'] = request.body;
+          requestParams[
+            (request.openapi.schema[
+              'x-codegen-request-body-name' as keyof typeof request['openapi']['schema']
+            ] as string | undefined) ?? 'body'
+          ] = request.body;
         } else if (
           'multipart/form-data' in content &&
           content['multipart/form-data'].schema &&
@@ -90,7 +90,7 @@ export class Controller {
     return (requestParams as unknown) as ParamsT;
   }
 
-  static async handleRequest<ParamsT extends RequestParameters, ResponseT>(
+  static async handleRequest<ParamsT, ResponseT>(
     request: Request,
     response: Response,
     serviceOperation:

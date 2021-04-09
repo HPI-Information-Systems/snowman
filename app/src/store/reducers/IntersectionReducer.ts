@@ -1,4 +1,4 @@
-import { Experiment, ExperimentIntersectionPairCountsItem } from 'api';
+import { Experiment, ExperimentIntersectionCount } from 'api';
 import { difference, nth } from 'lodash';
 import {
   CoreStoreActionTypes,
@@ -42,7 +42,7 @@ export const IntersectionReducer = (
     case actionTypes.SET_COUNTS:
       return {
         ...ownState,
-        counts: action.payload as ExperimentIntersectionPairCountsItem[],
+        counts: action.payload as ExperimentIntersectionCount[],
       };
     case actionTypes.DRAG_N_DROP_EXPERIMENT: {
       let newIgnored, newIncluded, newExcluded: Experiment[];

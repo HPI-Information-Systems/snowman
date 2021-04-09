@@ -1,4 +1,4 @@
-import { Experiment, ExperimentIntersectionPairCountsItem } from 'api';
+import { Experiment, ExperimentIntersectionCount } from 'api';
 import { IntersectionVennDiagramConfigStrategy } from 'components/IntersectionVennDiagram/config';
 
 export interface IntersectionVennDiagramOwnProps {
@@ -9,7 +9,7 @@ export interface IntersectionVennDiagramOwnProps {
 export interface IntersectionVennDiagramStateProps {
   experiments: Experiment[];
   included: Experiment[];
-  counts: ExperimentIntersectionPairCountsItem[];
+  counts: ExperimentIntersectionCount[];
   countsLoaded: boolean;
 }
 

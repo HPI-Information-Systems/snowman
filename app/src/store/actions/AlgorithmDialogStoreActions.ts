@@ -81,7 +81,7 @@ const addAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
     (): Promise<void> =>
       new AlgorithmApi()
         .addAlgorithm({
-          algorithmValues: getAlgorithmValues(),
+          algorithm: getAlgorithmValues(),
         })
         .then((): void => {
           dispatch(resetDialog());
@@ -104,7 +104,7 @@ const updateAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
           algorithmId:
             store.getState().AlgorithmDialogStore.algorithmId ??
             MagicNotPossibleId,
-          algorithmValues: getAlgorithmValues(),
+          algorithm: getAlgorithmValues(),
         })
         .then((): void => dispatch(resetDialog()))
         .finally((): void => {

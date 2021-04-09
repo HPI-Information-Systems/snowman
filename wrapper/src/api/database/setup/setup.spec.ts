@@ -1,6 +1,6 @@
 import { dirSync } from 'tmp';
 
-import { getProviders } from '../../providers';
+import { providers } from '../../providers';
 import { tableSchemas } from '../schemas';
 import { tables } from '../tables';
 import { InsertColumnValues } from '../tools/types';
@@ -36,7 +36,7 @@ describe('database setup', () => {
       temporary: false,
       usePreBuiltDatabase: true,
     });
-    expect(getProviders().algorithm.listAlgorithms()).toMatchObject([
+    expect(providers.algorithm.listAlgorithms()).toMatchObject([
       addedAlgorithm,
     ]);
   });
@@ -49,6 +49,6 @@ describe('database setup', () => {
       temporary: false,
       usePreBuiltDatabase: false,
     });
-    expect(getProviders().algorithm.listAlgorithms()).toMatchObject([]);
+    expect(providers.algorithm.listAlgorithms()).toMatchObject([]);
   });
 });

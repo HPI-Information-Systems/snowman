@@ -1,4 +1,4 @@
-import { ExperimentIntersectionPairCountsItem, Metric } from 'api';
+import { ExperimentIntersectionCount, Metric } from 'api';
 import {
   BinaryMetricsStoreActionTypes as actionTypes,
   CoreStoreActionTypes,
@@ -36,7 +36,7 @@ export const BinaryMetricsReducer = (
     case actionTypes.SET_ALL_COUNTS:
       return {
         ...state,
-        counts: action.payload as ExperimentIntersectionPairCountsItem[],
+        counts: action.payload as ExperimentIntersectionCount[],
       };
     case actionTypes.CLICK_ON_PANE:
       return {

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -12,212 +12,257 @@
  * Do not edit the class manually.
  */
 
-
-import * as runtime from '../runtime';
+import * as runtime from "../runtime";
 import {
-    ExperimentIntersectionCount,
-    ExperimentIntersectionCountFromJSON,
-    ExperimentIntersectionCountToJSON,
-    ExperimentIntersectionPairCountsItem,
-    ExperimentIntersectionPairCountsItemFromJSON,
-    ExperimentIntersectionPairCountsItemToJSON,
-    ExperimentIntersectionPairCountsRequestExperiments,
-    ExperimentIntersectionPairCountsRequestExperimentsFromJSON,
-    ExperimentIntersectionPairCountsRequestExperimentsToJSON,
-    ExperimentIntersectionRequestExperiments,
-    ExperimentIntersectionRequestExperimentsFromJSON,
-    ExperimentIntersectionRequestExperimentsToJSON,
-    FileResponse,
-    FileResponseFromJSON,
-    FileResponseToJSON,
-    Metric,
-    MetricFromJSON,
-    MetricToJSON,
-} from '../models';
+  ExperimentIntersectionCount,
+  ExperimentIntersectionCountFromJSON,
+  ExperimentIntersectionCountToJSON,
+  ExperimentIntersectionItem,
+  ExperimentIntersectionItemFromJSON,
+  ExperimentIntersectionItemToJSON,
+  FileResponse,
+  FileResponseFromJSON,
+  FileResponseToJSON,
+  Metric,
+  MetricFromJSON,
+  MetricToJSON,
+} from "../models";
 
 export interface CalculateExperimentIntersectionCountRequest {
-    experimentIntersectionRequestExperiments: Array<ExperimentIntersectionRequestExperiments>;
+  intersection: Array<ExperimentIntersectionItem>;
 }
 
-export interface CalculateExperimentIntersectionPairCountsRequest {
-    experimentIntersectionPairCountsRequestExperiments: Array<ExperimentIntersectionPairCountsRequestExperiments>;
+export interface CalculateExperimentIntersectionCountsRequest {
+  experiments: Array<number>;
 }
 
 export interface CalculateExperimentIntersectionRecordsRequest {
-    experimentIntersectionRequestExperiments: Array<ExperimentIntersectionRequestExperiments>;
-    startAt?: number;
-    limit?: number;
+  intersection: Array<ExperimentIntersectionItem>;
+  startAt?: number;
+  limit?: number;
 }
 
 export interface GetBinaryMetricsRequest {
-    experimentId1: number;
-    experimentId2: number;
-    similarityThresholdExperiment1?: number;
-    similarityAttributeExperiment1?: string;
-    similarityThresholdExperiment2?: number;
-    similarityAttributeExperiment2?: string;
+  groundTruthExperimentId: number;
+  predictedExperimentId: number;
 }
 
 /**
- * 
+ *
  */
 export class BenchmarkApi extends runtime.BaseAPI {
-
-    /**
-     * intersects multiple experiments and returns the counts of the number of records. This can be used to calculate the confusion-matrix
-     */
-    async calculateExperimentIntersectionCountRaw(requestParameters: CalculateExperimentIntersectionCountRequest): Promise<runtime.ApiResponse<ExperimentIntersectionCount>> {
-        if (requestParameters.experimentIntersectionRequestExperiments === null || requestParameters.experimentIntersectionRequestExperiments === undefined) {
-            throw new runtime.RequiredError('experimentIntersectionRequestExperiments','Required parameter requestParameters.experimentIntersectionRequestExperiments was null or undefined when calling calculateExperimentIntersectionCount.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/benchmark/experiment-intersection/count`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters.experimentIntersectionRequestExperiments.map(ExperimentIntersectionRequestExperimentsToJSON),
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => ExperimentIntersectionCountFromJSON(jsonValue));
+  /**
+   * Intersects multiple experiments and returns the count of pairs and the count of rows. This can be used to calculate the confusion-matrix.
+   */
+  async calculateExperimentIntersectionCountRaw(
+    requestParameters: CalculateExperimentIntersectionCountRequest
+  ): Promise<runtime.ApiResponse<ExperimentIntersectionCount>> {
+    if (
+      requestParameters.intersection === null ||
+      requestParameters.intersection === undefined
+    ) {
+      throw new runtime.RequiredError(
+        "intersection",
+        "Required parameter requestParameters.intersection was null or undefined when calling calculateExperimentIntersectionCount."
+      );
     }
 
-    /**
-     * intersects multiple experiments and returns the counts of the number of records. This can be used to calculate the confusion-matrix
-     */
-    async calculateExperimentIntersectionCount(requestParameters: CalculateExperimentIntersectionCountRequest): Promise<ExperimentIntersectionCount> {
-        const response = await this.calculateExperimentIntersectionCountRaw(requestParameters);
-        return await response.value();
+    const queryParameters: any = {};
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    headerParameters["Content-Type"] = "application/json";
+
+    const response = await this.request({
+      path: `/benchmark/experiment-intersection/count`,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: requestParameters.intersection.map(
+        ExperimentIntersectionItemToJSON
+      ),
+    });
+
+    return new runtime.JSONApiResponse(response, (jsonValue) =>
+      ExperimentIntersectionCountFromJSON(jsonValue)
+    );
+  }
+
+  /**
+   * Intersects multiple experiments and returns the count of pairs and the count of rows. This can be used to calculate the confusion-matrix.
+   */
+  async calculateExperimentIntersectionCount(
+    requestParameters: CalculateExperimentIntersectionCountRequest
+  ): Promise<ExperimentIntersectionCount> {
+    const response = await this.calculateExperimentIntersectionCountRaw(
+      requestParameters
+    );
+    return await response.value();
+  }
+
+  /**
+   * Returns the pair and row counts of all possible intersections of the given experiments.
+   */
+  async calculateExperimentIntersectionCountsRaw(
+    requestParameters: CalculateExperimentIntersectionCountsRequest
+  ): Promise<runtime.ApiResponse<Array<ExperimentIntersectionCount>>> {
+    if (
+      requestParameters.experiments === null ||
+      requestParameters.experiments === undefined
+    ) {
+      throw new runtime.RequiredError(
+        "experiments",
+        "Required parameter requestParameters.experiments was null or undefined when calling calculateExperimentIntersectionCounts."
+      );
     }
 
-    /**
-     * returns the count of pairs of all possible intersections of the given experiments
-     */
-    async calculateExperimentIntersectionPairCountsRaw(requestParameters: CalculateExperimentIntersectionPairCountsRequest): Promise<runtime.ApiResponse<Array<ExperimentIntersectionPairCountsItem>>> {
-        if (requestParameters.experimentIntersectionPairCountsRequestExperiments === null || requestParameters.experimentIntersectionPairCountsRequestExperiments === undefined) {
-            throw new runtime.RequiredError('experimentIntersectionPairCountsRequestExperiments','Required parameter requestParameters.experimentIntersectionPairCountsRequestExperiments was null or undefined when calling calculateExperimentIntersectionPairCounts.');
-        }
+    const queryParameters: any = {};
 
-        const queryParameters: any = {};
+    const headerParameters: runtime.HTTPHeaders = {};
 
-        const headerParameters: runtime.HTTPHeaders = {};
+    headerParameters["Content-Type"] = "application/json";
 
-        headerParameters['Content-Type'] = 'application/json';
+    const response = await this.request({
+      path: `/benchmark/experiment-intersection/counts`,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: requestParameters.experiments,
+    });
 
-        const response = await this.request({
-            path: `/benchmark/experiment-intersection/pair-counts`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters.experimentIntersectionPairCountsRequestExperiments.map(ExperimentIntersectionPairCountsRequestExperimentsToJSON),
-        });
+    return new runtime.JSONApiResponse(response, (jsonValue) =>
+      jsonValue.map(ExperimentIntersectionCountFromJSON)
+    );
+  }
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(ExperimentIntersectionPairCountsItemFromJSON));
+  /**
+   * Returns the pair and row counts of all possible intersections of the given experiments.
+   */
+  async calculateExperimentIntersectionCounts(
+    requestParameters: CalculateExperimentIntersectionCountsRequest
+  ): Promise<Array<ExperimentIntersectionCount>> {
+    const response = await this.calculateExperimentIntersectionCountsRaw(
+      requestParameters
+    );
+    return await response.value();
+  }
+
+  /**
+   * intersects multiple experiments and returns the resulting records. This can be used to calculate the confusion-matrix.
+   */
+  async calculateExperimentIntersectionRecordsRaw(
+    requestParameters: CalculateExperimentIntersectionRecordsRequest
+  ): Promise<runtime.ApiResponse<FileResponse>> {
+    if (
+      requestParameters.intersection === null ||
+      requestParameters.intersection === undefined
+    ) {
+      throw new runtime.RequiredError(
+        "intersection",
+        "Required parameter requestParameters.intersection was null or undefined when calling calculateExperimentIntersectionRecords."
+      );
     }
 
-    /**
-     * returns the count of pairs of all possible intersections of the given experiments
-     */
-    async calculateExperimentIntersectionPairCounts(requestParameters: CalculateExperimentIntersectionPairCountsRequest): Promise<Array<ExperimentIntersectionPairCountsItem>> {
-        const response = await this.calculateExperimentIntersectionPairCountsRaw(requestParameters);
-        return await response.value();
+    const queryParameters: any = {};
+
+    if (requestParameters.startAt !== undefined) {
+      queryParameters["startAt"] = requestParameters.startAt;
     }
 
-    /**
-     * intersects multiple experiments and returns the resulting records. This can be used to calculate the confusion-matrix.
-     */
-    async calculateExperimentIntersectionRecordsRaw(requestParameters: CalculateExperimentIntersectionRecordsRequest): Promise<runtime.ApiResponse<FileResponse>> {
-        if (requestParameters.experimentIntersectionRequestExperiments === null || requestParameters.experimentIntersectionRequestExperiments === undefined) {
-            throw new runtime.RequiredError('experimentIntersectionRequestExperiments','Required parameter requestParameters.experimentIntersectionRequestExperiments was null or undefined when calling calculateExperimentIntersectionRecords.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.startAt !== undefined) {
-            queryParameters['startAt'] = requestParameters.startAt;
-        }
-
-        if (requestParameters.limit !== undefined) {
-            queryParameters['limit'] = requestParameters.limit;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        const response = await this.request({
-            path: `/benchmark/experiment-intersection/records`,
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: requestParameters.experimentIntersectionRequestExperiments.map(ExperimentIntersectionRequestExperimentsToJSON),
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => FileResponseFromJSON(jsonValue));
+    if (requestParameters.limit !== undefined) {
+      queryParameters["limit"] = requestParameters.limit;
     }
 
-    /**
-     * intersects multiple experiments and returns the resulting records. This can be used to calculate the confusion-matrix.
-     */
-    async calculateExperimentIntersectionRecords(requestParameters: CalculateExperimentIntersectionRecordsRequest): Promise<FileResponse> {
-        const response = await this.calculateExperimentIntersectionRecordsRaw(requestParameters);
-        return await response.value();
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    headerParameters["Content-Type"] = "application/json";
+
+    const response = await this.request({
+      path: `/benchmark/experiment-intersection/records`,
+      method: "POST",
+      headers: headerParameters,
+      query: queryParameters,
+      body: requestParameters.intersection.map(
+        ExperimentIntersectionItemToJSON
+      ),
+    });
+
+    return new runtime.JSONApiResponse(response, (jsonValue) =>
+      FileResponseFromJSON(jsonValue)
+    );
+  }
+
+  /**
+   * intersects multiple experiments and returns the resulting records. This can be used to calculate the confusion-matrix.
+   */
+  async calculateExperimentIntersectionRecords(
+    requestParameters: CalculateExperimentIntersectionRecordsRequest
+  ): Promise<FileResponse> {
+    const response = await this.calculateExperimentIntersectionRecordsRaw(
+      requestParameters
+    );
+    return await response.value();
+  }
+
+  /**
+   * Compares two experiments and returns binary metrics
+   */
+  async getBinaryMetricsRaw(
+    requestParameters: GetBinaryMetricsRequest
+  ): Promise<runtime.ApiResponse<Array<Metric>>> {
+    if (
+      requestParameters.groundTruthExperimentId === null ||
+      requestParameters.groundTruthExperimentId === undefined
+    ) {
+      throw new runtime.RequiredError(
+        "groundTruthExperimentId",
+        "Required parameter requestParameters.groundTruthExperimentId was null or undefined when calling getBinaryMetrics."
+      );
     }
 
-    /**
-     * Compares two experiments and returns binary metrics
-     */
-    async getBinaryMetricsRaw(requestParameters: GetBinaryMetricsRequest): Promise<runtime.ApiResponse<Array<Metric>>> {
-        if (requestParameters.experimentId1 === null || requestParameters.experimentId1 === undefined) {
-            throw new runtime.RequiredError('experimentId1','Required parameter requestParameters.experimentId1 was null or undefined when calling getBinaryMetrics.');
-        }
-
-        if (requestParameters.experimentId2 === null || requestParameters.experimentId2 === undefined) {
-            throw new runtime.RequiredError('experimentId2','Required parameter requestParameters.experimentId2 was null or undefined when calling getBinaryMetrics.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.similarityThresholdExperiment1 !== undefined) {
-            queryParameters['similarityThreshold_experiment1'] = requestParameters.similarityThresholdExperiment1;
-        }
-
-        if (requestParameters.similarityAttributeExperiment1 !== undefined) {
-            queryParameters['similarityAttribute_experiment1'] = requestParameters.similarityAttributeExperiment1;
-        }
-
-        if (requestParameters.similarityThresholdExperiment2 !== undefined) {
-            queryParameters['similarityThreshold_experiment2'] = requestParameters.similarityThresholdExperiment2;
-        }
-
-        if (requestParameters.similarityAttributeExperiment2 !== undefined) {
-            queryParameters['similarityAttribute_experiment2'] = requestParameters.similarityAttributeExperiment2;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        const response = await this.request({
-            path: `/benchmark/{experimentId1}/{experimentId2}/metrics`.replace(`{${"experimentId1"}}`, encodeURIComponent(String(requestParameters.experimentId1))).replace(`{${"experimentId2"}}`, encodeURIComponent(String(requestParameters.experimentId2))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        });
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(MetricFromJSON));
+    if (
+      requestParameters.predictedExperimentId === null ||
+      requestParameters.predictedExperimentId === undefined
+    ) {
+      throw new runtime.RequiredError(
+        "predictedExperimentId",
+        "Required parameter requestParameters.predictedExperimentId was null or undefined when calling getBinaryMetrics."
+      );
     }
 
-    /**
-     * Compares two experiments and returns binary metrics
-     */
-    async getBinaryMetrics(requestParameters: GetBinaryMetricsRequest): Promise<Array<Metric>> {
-        const response = await this.getBinaryMetricsRaw(requestParameters);
-        return await response.value();
+    const queryParameters: any = {};
+
+    if (requestParameters.groundTruthExperimentId !== undefined) {
+      queryParameters["groundTruthExperimentId"] =
+        requestParameters.groundTruthExperimentId;
     }
 
+    if (requestParameters.predictedExperimentId !== undefined) {
+      queryParameters["predictedExperimentId"] =
+        requestParameters.predictedExperimentId;
+    }
+
+    const headerParameters: runtime.HTTPHeaders = {};
+
+    const response = await this.request({
+      path: `/benchmark/metrics`,
+      method: "GET",
+      headers: headerParameters,
+      query: queryParameters,
+    });
+
+    return new runtime.JSONApiResponse(response, (jsonValue) =>
+      jsonValue.map(MetricFromJSON)
+    );
+  }
+
+  /**
+   * Compares two experiments and returns binary metrics
+   */
+  async getBinaryMetrics(
+    requestParameters: GetBinaryMetricsRequest
+  ): Promise<Array<Metric>> {
+    const response = await this.getBinaryMetricsRaw(requestParameters);
+    return await response.value();
+  }
 }
