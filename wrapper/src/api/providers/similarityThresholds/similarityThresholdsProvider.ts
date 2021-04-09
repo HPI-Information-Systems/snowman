@@ -10,6 +10,7 @@ import {
 } from '../../server/types';
 import { providers } from '..';
 import { SimilarityThresholdFunctionConverter } from './util/converter';
+import { functionToExpression } from './util/functionToExpression';
 
 export class SimilarityThresholdsProvider {
   protected converter = new SimilarityThresholdFunctionConverter();
@@ -22,8 +23,9 @@ export class SimilarityThresholdsProvider {
     return tables.meta.similarityfunction.upsert([
       {
         experiment: experimentId,
-        expression: this.converter.convertSimilarityThresholdFunctionToExpression(
-          similarityThresholdFunction
+        expression: functionToExpression(
+          similarityThresholdFunction,
+          tables.experiment.experiment(experimentId).schema.columns
         ),
       },
     ])[0];
@@ -74,8 +76,9 @@ export class SimilarityThresholdsProvider {
     tables.meta.similarityfunction.upsert([
       {
         experiment: experimentId,
-        expression: this.converter.convertSimilarityThresholdFunctionToExpression(
-          similarityThresholdFunction
+        expression: functionToExpression(
+          similarityThresholdFunction,
+          tables.experiment.experiment(experimentId).schema.columns
         ),
         id: functionId,
       },
