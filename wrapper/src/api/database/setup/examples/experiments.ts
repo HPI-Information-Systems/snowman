@@ -12,7 +12,10 @@ import { assertType } from '../../../tools/types';
 import { exampleAlgorithms } from './algorithms';
 import { exampleDatasets } from './datasets';
 
-const EXAMPLE_EXPERIMENT_DIR = path.join(DATABASE_SETUP_DIR, 'experiments');
+export const EXAMPLE_EXPERIMENT_DIR = path.join(
+  DATABASE_SETUP_DIR,
+  'experiments'
+);
 
 export type ExampleExperiments = {
   [key: string]: {

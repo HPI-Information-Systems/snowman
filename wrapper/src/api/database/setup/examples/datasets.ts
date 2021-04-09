@@ -6,7 +6,7 @@ import { DatasetId, DatasetValues } from '../../../server/types';
 import { readFile } from '../../../tools/readFile';
 import { assertType } from '../../../tools/types';
 
-const EXAMPLE_DATASET_DIR = path.join(DATABASE_SETUP_DIR, 'datasets');
+export const EXAMPLE_DATASET_DIR = path.join(DATABASE_SETUP_DIR, 'datasets');
 
 export type ExampleDatasets = {
   [key: string]: {
