@@ -10,8 +10,6 @@ export class FStarScore extends BaseMetric {
   infoLink = 'https://link.springer.com/article/10.1007/s10994-021-05964-1';
   get value(): number {
     const f1Score = new F1Score(this.matrix).value;
-    return (
-      f1Score / (2 - f1Score)
-    );
+    return f1Score / (2 - f1Score);
   }
 }
