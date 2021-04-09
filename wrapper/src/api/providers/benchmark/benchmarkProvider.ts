@@ -134,20 +134,20 @@ export class BenchmarkProvider {
           }),
         ],
         numberPairs: IntersectionCache.get(
-          includedIds,
-          excludedIds,
           [datasetId],
+          includedIds,
           includedThresholds,
           includedFunctions,
+          excludedIds,
           excludedThresholds,
           excludedFunctions
         ).numberPairs,
         numberRows: IntersectionCache.get(
-          includedIds,
-          excludedIds,
           [datasetId],
+          includedIds,
           includedThresholds,
           includedFunctions,
+          excludedIds,
           excludedThresholds,
           excludedFunctions
         ).rowCount,
@@ -206,9 +206,8 @@ export class BenchmarkProvider {
     ];
     const matrix: ConfusionMatrix = {
       truePositives: IntersectionCache.get(
-        [groundTruthExperiment.experimentId, predictedExperiment.experimentId],
-        [],
         [datasetId],
+        [groundTruthExperiment.experimentId, predictedExperiment.experimentId],
         [
           groundTruthExperiment.similarity?.threshold,
           predictedExperiment.similarity?.threshold,
@@ -218,32 +217,33 @@ export class BenchmarkProvider {
           predictedExperiment.similarity?.func,
         ],
         [],
+        [],
         []
       ).numberPairs,
       falsePositives: IntersectionCache.get(
-        [predictedExperiment.experimentId],
-        [groundTruthExperiment.experimentId],
         [datasetId],
+        [predictedExperiment.experimentId],
         [predictedExperiment.similarity?.threshold],
         [predictedExperiment.similarity?.func],
+        [groundTruthExperiment.experimentId],
         [groundTruthExperiment.similarity?.threshold],
         [groundTruthExperiment.similarity?.func]
       ).numberPairs,
       falseNegatives: IntersectionCache.get(
-        [groundTruthExperiment.experimentId],
-        [predictedExperiment.experimentId],
         [datasetId],
+        [groundTruthExperiment.experimentId],
         [groundTruthExperiment.similarity?.threshold],
         [groundTruthExperiment.similarity?.func],
+        [predictedExperiment.experimentId],
         [predictedExperiment.similarity?.threshold],
         [predictedExperiment.similarity?.func]
       ).numberPairs,
       trueNegatives: IntersectionCache.get(
-        [],
-        [groundTruthExperiment.experimentId, predictedExperiment.experimentId],
         [datasetId],
         [],
         [],
+        [],
+        [groundTruthExperiment.experimentId, predictedExperiment.experimentId],
         [
           groundTruthExperiment.similarity?.threshold,
           predictedExperiment.similarity?.threshold,
@@ -278,15 +278,15 @@ export class BenchmarkProvider {
       ({ predictedCondition }) => !predictedCondition
     );
     return IntersectionCache.get(
-      included.map(({ experimentId }) => experimentId),
-      excluded.map(({ experimentId }) => experimentId),
       [
         datasetFromExperimentIds(
           experiments.map(({ experimentId }) => experimentId)
         ).id,
       ],
+      included.map(({ experimentId }) => experimentId),
       included.map(({ similarity }) => similarity?.threshold),
       included.map(({ similarity }) => similarity?.func),
+      excluded.map(({ experimentId }) => experimentId),
       excluded.map(({ similarity }) => similarity?.threshold),
       excluded.map(({ similarity }) => similarity?.func)
     );

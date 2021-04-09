@@ -13,12 +13,12 @@ import { IntersectionQueries } from './queries';
 
 export const entangledIntersectionBaseParams = [
   {
-    sortBy: 0,
-    toSort: [0, 3, 4],
+    sortBy: 1,
+    toSort: [1, 2, 3],
   },
   {
-    sortBy: 1,
-    toSort: [1, 5, 6],
+    sortBy: 4,
+    toSort: [4, 5, 6],
   },
 ];
 
@@ -34,14 +34,14 @@ export class IntersectionBase {
   protected readonly queries = new IntersectionQueries();
 
   constructor(
-    public readonly predictedConditionPositive: ExperimentId[],
-    public readonly predictedConditionNegative: ExperimentId[],
     public readonly datasetId: [DatasetId],
+    public readonly positive: ExperimentId[],
     public readonly positiveSimilarityThresholds: (number | undefined)[],
     public readonly positiveSimilarityFunctions: (
       | SimilarityThresholdFunctionId
       | undefined
     )[],
+    public readonly negative: ExperimentId[],
     public readonly negativeSimilarityThresholds: (number | undefined)[],
     public readonly negativeSimilarityFunctions: (
       | SimilarityThresholdFunctionId
@@ -51,11 +51,11 @@ export class IntersectionBase {
 
   get positiveIntersection(): IntersectionSubclass {
     return IntersectionCache.get(
-      this.predictedConditionPositive,
-      [],
       this.datasetId,
+      this.positive,
       this.positiveSimilarityThresholds,
       this.positiveSimilarityFunctions,
+      [],
       [],
       []
     );
@@ -63,18 +63,18 @@ export class IntersectionBase {
 
   get negativeIntersection(): IntersectionSubclass {
     return IntersectionCache.get(
-      this.predictedConditionNegative,
-      [],
       this.datasetId,
+      this.negative,
       this.negativeSimilarityThresholds,
       this.negativeSimilarityFunctions,
+      [],
       [],
       []
     );
   }
 
   protected createClustering(): Clustering {
-    if (this.predictedConditionNegative.length > 0) {
+    if (this.negative.length > 0) {
       throw new Error(
         'Creating a clustering which excludes experiments is not supported.'
       );
@@ -84,21 +84,21 @@ export class IntersectionBase {
     if (numberOfRecords === undefined) {
       throw new Error('The dataset does not specify number of records.');
     }
-    if (this.predictedConditionPositive.length === 0) {
+    if (this.positive.length === 0) {
       const clustering = new UnionFind(numberOfRecords);
       for (let index = 1; index < numberOfRecords; index++) {
         clustering.link([[index, index - 1]]);
       }
       return clustering;
-    } else if (this.predictedConditionPositive.length === 1) {
+    } else if (this.positive.length === 1) {
       return new UnionFind(numberOfRecords).link(
-        this.queries.experimentLinks(this.predictedConditionPositive[0])
+        this.queries.experimentLinks(this.positive[0])
       );
     } else {
-      const splitIndex = Math.floor(this.predictedConditionPositive.length / 2);
+      const splitIndex = Math.floor(this.positive.length / 2);
       return SubclusterCache.get(
-        this.predictedConditionPositive.slice(0, splitIndex),
-        this.predictedConditionPositive.slice(splitIndex),
+        this.positive.slice(0, splitIndex),
+        this.positive.slice(splitIndex),
         this.datasetId,
         this.positiveSimilarityThresholds.slice(0, splitIndex),
         this.positiveSimilarityFunctions.slice(0, splitIndex),

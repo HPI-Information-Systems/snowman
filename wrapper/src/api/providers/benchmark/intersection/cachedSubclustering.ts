@@ -12,20 +12,20 @@ export class CachedSubclusting {
     () =>
       new Subclustering(
         IntersectionCache.get(
-          this.base,
-          [],
           this.datasetId,
+          this.base,
           this.baseSimilarityThresholds,
           this.baseSimilarityFunctions,
+          [],
           [],
           []
         ).clustering,
         IntersectionCache.get(
-          this.partition,
-          [],
           this.datasetId,
+          this.partition,
           this.partitionSimilarityThresholds,
           this.partitionSimilarityFunctions,
+          [],
           [],
           []
         ).clustering

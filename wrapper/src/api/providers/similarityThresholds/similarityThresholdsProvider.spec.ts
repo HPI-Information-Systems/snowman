@@ -301,11 +301,11 @@ describe('Similarity Threshold Provider', () => {
     ]);
     expectClusteringsToEqual(
       IntersectionCache.get(
-        [experimentId],
-        [],
         [datasetId],
+        [experimentId],
         [undefined],
         [undefined],
+        [],
         [],
         []
       ).clustering,
@@ -313,11 +313,11 @@ describe('Similarity Threshold Provider', () => {
     );
     expectClusteringsToEqual(
       IntersectionCache.get(
-        [experimentId],
-        [],
         [datasetId],
+        [experimentId],
         [3],
         [functionId],
+        [],
         [],
         []
       ).clustering,
@@ -325,11 +325,11 @@ describe('Similarity Threshold Provider', () => {
     );
     expectClusteringsToEqual(
       IntersectionCache.get(
-        [experimentId],
-        [],
         [datasetId],
+        [experimentId],
         [2],
         [functionId],
+        [],
         [],
         []
       ).clustering,
@@ -337,11 +337,11 @@ describe('Similarity Threshold Provider', () => {
     );
     expectClusteringsToEqual(
       IntersectionCache.get(
-        [experimentId],
-        [],
         [datasetId],
+        [experimentId],
         [1],
         [functionId],
+        [],
         [],
         []
       ).clustering,

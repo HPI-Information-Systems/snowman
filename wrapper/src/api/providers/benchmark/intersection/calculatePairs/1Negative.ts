@@ -11,8 +11,8 @@ export class CalculatePairs1Negative extends CalculatePairs {
     this.rows = [];
     this.skipRemains = this.skip;
     this.subclusters = SubclusterCache.get(
-      this.intersection.predictedConditionPositive,
-      this.intersection.predictedConditionNegative,
+      this.intersection.positive,
+      this.intersection.negative,
       this.intersection.datasetId,
       this.intersection.positiveSimilarityThresholds,
       this.intersection.positiveSimilarityFunctions,

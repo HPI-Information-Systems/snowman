@@ -36,11 +36,11 @@ function testConfig(
 ) {
   expectClusteringsToEqual(
     getClustering(
-      pos,
-      neg,
       datasetId,
+      pos,
       pos.map(() => undefined),
       pos.map(() => undefined),
+      neg,
       neg.map(() => undefined),
       neg.map(() => undefined)
     ),
@@ -48,59 +48,59 @@ function testConfig(
   );
   expect(
     IntersectionCache.get(
-      pos,
-      neg,
       datasetId,
+      pos,
       pos.map(() => undefined),
       pos.map(() => undefined),
+      neg,
       neg.map(() => undefined),
       neg.map(() => undefined)
     ).numberPairs
   ).toBe(expected.reduce((prev, cur) => prev + numberOfPairs(cur.length), 0));
   const result = [
     ...IntersectionCache.get(
-      pos,
-      neg,
       datasetId,
+      pos,
       pos.map(() => undefined),
       pos.map(() => undefined),
+      neg,
       neg.map(() => undefined),
       neg.map(() => undefined)
     ).clusters(0, 1),
     ...IntersectionCache.get(
-      pos,
-      neg,
       datasetId,
+      pos,
       pos.map(() => undefined),
       pos.map(() => undefined),
+      neg,
       neg.map(() => undefined),
       neg.map(() => undefined)
     ).clusters(1, 2),
     ...IntersectionCache.get(
-      pos,
-      neg,
       datasetId,
+      pos,
       pos.map(() => undefined),
       pos.map(() => undefined),
+      neg,
       neg.map(() => undefined),
       neg.map(() => undefined)
     ).clusters(3, 97),
     ...IntersectionCache.get(
-      pos,
-      neg,
       datasetId,
+      pos,
       pos.map(() => undefined),
       pos.map(() => undefined),
+      neg,
       neg.map(() => undefined),
       neg.map(() => undefined)
     ).clusters(100),
   ];
   const expectedClusters = IntersectionCache.get(
-    pos,
-    neg,
     datasetId,
+    pos,
     pos.map(() => undefined),
     pos.map(() => undefined),
+    neg,
     neg.map(() => undefined),
     neg.map(() => undefined)
   ).clusters();
