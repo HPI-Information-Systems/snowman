@@ -72,6 +72,7 @@ export class ExperimentProvider {
     this.checks.throwIfLocked(id);
     databaseBackend().transaction(() => {
       this.deleteExperimentFileNoChecks(id);
+      this.deleteSimilarityThresholdFunctions(id);
       tables.meta.experiment.delete({ id });
     })();
   }
@@ -129,5 +130,18 @@ export class ExperimentProvider {
       tables.meta.experiment.upsert([storedExperiment]);
     }
     invalidateCaches(id);
+  }
+
+  private deleteSimilarityThresholdFunctions(experimentId: ExperimentId): void {
+    for (const {
+      id: functionId,
+    } of providers.similarityThresholds.getSimilarityThresholdFunctions({
+      experimentId,
+    })) {
+      providers.similarityThresholds.deleteSimilarityThresholdFunction({
+        experimentId,
+        functionId,
+      });
+    }
   }
 }

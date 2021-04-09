@@ -1,4 +1,4 @@
-import { setupDatabase } from '../../database';
+import { setupDatabase, tables } from '../../database';
 import {
   AlgorithmId,
   DatasetId,
@@ -182,5 +182,25 @@ describe('Similarity Threshold Provider', () => {
       type: SimilarityThresholdFunctionTypeEnum.SimilarityThreshold,
       similarityThreshold: 'sim2',
     });
+  });
+
+  test('throws error on non existent similarity threshold', () => {
+    expect(() =>
+      providers.similarityThresholds.addSimilarityThresholdFunction({
+        experimentId,
+        similarityThresholdFunction: {
+          type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+          similarityThreshold: 'nonExistentSimilarityThreshold',
+        },
+      })
+    ).toThrowError();
+  });
+
+  test('deleting experiment deletes similarity thresholds', () => {
+    addFunctions(addedFunctions);
+    providers.experiment.deleteExperiment(experimentId);
+    expect(
+      tables.meta.similarityfunction.all({ experiment: experimentId }).length
+    ).toBe(0);
   });
 });
