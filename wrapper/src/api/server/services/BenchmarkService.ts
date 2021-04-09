@@ -3,10 +3,12 @@ import {
   CalculateExperimentIntersectionCountRequest,
   CalculateExperimentIntersectionCountsRequest,
   CalculateExperimentIntersectionRecordsRequest,
+  ExperimentConfigItemSimilarity,
   ExperimentIntersectionCount,
   FileResponse,
   GetBinaryMetricsRequest,
   Metric,
+  SimilarityThresholdFunctionId,
 } from '../types';
 import { Service, SuccessResponse } from './Service';
 
@@ -60,15 +62,49 @@ export async function calculateExperimentIntersectionCounts({
   );
 }
 
+function getSimilarity(
+  threshold?: number,
+  func?: SimilarityThresholdFunctionId
+): ExperimentConfigItemSimilarity | undefined {
+  if (threshold !== undefined && func !== undefined) {
+    return {
+      func,
+      threshold,
+    };
+  } else if (threshold !== undefined || func !== undefined) {
+    throw new Error(
+      'Similarity function and threshold must either both be set or omitted.'
+    );
+  } else {
+    return undefined;
+  }
+}
+
 export async function getBinaryMetrics({
   groundTruthExperimentId,
   predictedExperimentId,
+  groundTruthSimilarityThreshold,
+  groundTruthSimilarityThresholdFunction,
+  predictedSimilarityThreshold,
+  predictedSimilarityThresholdFunction,
 }: GetBinaryMetricsRequest): Promise<SuccessResponse<Array<Metric>>> {
   return Service.response(
     () =>
       provider().getBinaryMetrics(
-        groundTruthExperimentId,
-        predictedExperimentId
+        {
+          experimentId: groundTruthExperimentId,
+          similarity: getSimilarity(
+            groundTruthSimilarityThreshold,
+            groundTruthSimilarityThresholdFunction
+          ),
+        },
+        {
+          experimentId: predictedExperimentId,
+          similarity: getSimilarity(
+            predictedSimilarityThreshold,
+            predictedSimilarityThresholdFunction
+          ),
+        }
       ),
     200,
     400

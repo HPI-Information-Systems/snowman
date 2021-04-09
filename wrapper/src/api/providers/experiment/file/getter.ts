@@ -4,6 +4,7 @@ import {
   tableSchemas,
 } from '../../../database/schemas';
 import { DatasetId, ExperimentId, FileResponse } from '../../../server/types';
+import { SimilarityThresholdFunctionId } from '../../../server/types/SimilarityThresholdFunctionId';
 import { DatasetIDMapper } from '../../dataset/util/idMapper';
 
 type ExperimentSchema = ReturnType<
@@ -16,7 +17,12 @@ export class ExperimentFileGetter {
   protected idIndices: number[];
   protected idMapper: DatasetIDMapper;
 
-  constructor(id: ExperimentId, datasetId: DatasetId) {
+  constructor(
+    id: ExperimentId,
+    datasetId: DatasetId,
+    protected readonly similarityThreshold?: number,
+    protected readonly similarityThresholdFunction?: SimilarityThresholdFunctionId
+  ) {
     this.table = tables.experiment.experiment(id);
     this.columns = Object.values(this.table.schema.columns)
       .map((column) => column.name)

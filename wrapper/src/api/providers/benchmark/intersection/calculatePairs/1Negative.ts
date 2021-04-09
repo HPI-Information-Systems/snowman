@@ -13,7 +13,11 @@ export class CalculatePairs1Negative extends CalculatePairs {
     this.subclusters = SubclusterCache.get(
       this.intersection.predictedConditionPositive,
       this.intersection.predictedConditionNegative,
-      this.intersection.datasetId
+      this.intersection.datasetId,
+      this.intersection.positiveSimilarityThresholds,
+      this.intersection.positiveSimilarityFunctions,
+      this.intersection.negativeSimilarityThresholds,
+      this.intersection.negativeSimilarityFunctions
     ).clustering.subclustersFromClusterId(this.clusterId);
     this.calculatePairsPrepared();
     return [this.skip - this.skipRemains, this.rows];

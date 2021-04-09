@@ -156,8 +156,10 @@ describe('test benchmark functions', () => {
       expect(
         benchmarkProvider
           .getBinaryMetrics(
-            experimentIds.goldstandard,
-            experimentIds.experiment1
+            {
+              experimentId: experimentIds.goldstandard,
+            },
+            { experimentId: experimentIds.experiment1 }
           )
           .map(({ name, value }) => {
             return { name, value: value.toFixed(4) };
@@ -190,16 +192,16 @@ describe('test benchmark functions', () => {
     test('throw error at empty datasetAmount', () => {
       expect(() =>
         benchmarkProvider.getBinaryMetrics(
-          experimentIds.goldstandard,
-          experimentIds.experiment2
+          { experimentId: experimentIds.goldstandard },
+          { experimentId: experimentIds.experiment2 }
         )
       ).toThrowError();
     });
     test('throw error when tests belong to different datasets', () => {
       expect(() =>
         benchmarkProvider.getBinaryMetrics(
-          experimentIds.experiment2,
-          experimentIds.experiment_dataset2
+          { experimentId: experimentIds.experiment2 },
+          { experimentId: experimentIds.experiment_dataset2 }
         )
       ).toThrowError();
     });

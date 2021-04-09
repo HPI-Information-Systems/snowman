@@ -13,7 +13,11 @@ export class CalculatePairsManyNegative extends CalculatePairs {
     return SubclusterCache.get(
       this.intersection.predictedConditionPositive,
       this.intersection.predictedConditionNegative.slice(0, 1),
-      this.intersection.datasetId
+      this.intersection.datasetId,
+      this.intersection.positiveSimilarityThresholds,
+      this.intersection.positiveSimilarityFunctions,
+      this.intersection.negativeSimilarityThresholds.slice(0, 1),
+      this.intersection.negativeSimilarityFunctions.slice(0, 1)
     ).clustering;
   }
 
@@ -28,9 +32,16 @@ export class CalculatePairsManyNegative extends CalculatePairs {
     this.negativeClusterings = this.intersection.predictedConditionNegative
       .slice(1)
       .map(
-        (experimentId) =>
-          IntersectionCache.get([experimentId], [], this.intersection.datasetId)
-            .clustering
+        (experimentId, index) =>
+          IntersectionCache.get(
+            [experimentId],
+            [],
+            this.intersection.datasetId,
+            [this.intersection.negativeSimilarityThresholds[index + 1]],
+            [this.intersection.negativeSimilarityFunctions[index + 1]],
+            [],
+            []
+          ).clustering
       );
     this.rows = [];
     this.skipRemains = this.skip;

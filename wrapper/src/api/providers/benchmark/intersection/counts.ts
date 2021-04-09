@@ -39,7 +39,17 @@ export class IntersectionCounts extends IntersectionBase {
             this.predictedConditionNegative[index],
           ],
           this.predictedConditionNegative.slice(0, index),
-          this.datasetId
+          this.datasetId,
+          [
+            ...this.positiveSimilarityThresholds,
+            this.negativeSimilarityThresholds[index],
+          ],
+          [
+            ...this.positiveSimilarityFunctions,
+            this.negativeSimilarityFunctions[index],
+          ],
+          this.negativeSimilarityThresholds.slice(0, index),
+          this.negativeSimilarityFunctions.slice(0, index)
         ).numberPairs;
       }
       return numberPairs;

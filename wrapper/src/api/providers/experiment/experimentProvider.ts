@@ -1,12 +1,12 @@
 import { Readable } from 'stream';
 
 import { databaseBackend, tables } from '../../database';
-import {
-  ExperimentValues,
-  FileResponse,
-  SetExperimentFileFormatEnum,
-} from '../../server/types';
+import { ExperimentValues, FileResponse } from '../../server/types';
 import { Experiment, ExperimentId } from '../../server/types';
+import {
+  GetExperimentFileRequest,
+  SetExperimentFileFormatEnum,
+} from '../../server/types/ExperimentRequests';
 import { providers } from '..';
 import { invalidateCaches } from '../benchmark/intersection/cache';
 import { DatasetIDMapper } from '../dataset/util/idMapper';
@@ -77,15 +77,19 @@ export class ExperimentProvider {
     })();
   }
 
-  getExperimentFile(
-    id: ExperimentId,
-    startAt?: number,
-    limit?: number,
-    sortBy?: string
-  ): FileResponse {
+  getExperimentFile({
+    experimentId,
+    startAt,
+    limit,
+    sortBy,
+    similarityThreshold,
+    similarityThresholdFunction,
+  }: GetExperimentFileRequest): FileResponse {
     return new ExperimentFileGetter(
-      id,
-      providers.experiment.getExperiment(id).datasetId
+      experimentId,
+      providers.experiment.getExperiment(experimentId).datasetId,
+      similarityThreshold,
+      similarityThresholdFunction
     ).get(startAt, limit, sortBy);
   }
 

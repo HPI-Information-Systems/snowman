@@ -3,6 +3,7 @@ import {
   AlgorithmId,
   DatasetId,
   ExperimentId,
+  FileResponse,
   SetExperimentFileFormatEnum,
   SimilarityThresholdFunction,
   SimilarityThresholdFunctionId,
@@ -13,8 +14,11 @@ import {
 } from '../../server/types';
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { providers } from '..';
+import { expectClusteringsToEqual } from '../benchmark/cluster/test/utility';
+import { IntersectionCache } from '../benchmark/intersection';
+import { assertFilesMatch } from '../dataset/test/assertFilesMatch';
 
-const numberOfRecords = 20;
+const numberOfRecords = 5;
 
 describe('Similarity Threshold Provider', () => {
   let algorithmId: AlgorithmId;
@@ -43,6 +47,19 @@ describe('Similarity Threshold Provider', () => {
       name: '',
       numberOfRecords,
     });
+    await providers.dataset.setDatasetFile(
+      datasetId,
+      fileToReadable([
+        ['id'],
+        ...new Array(numberOfRecords)
+          .fill(0)
+          .map((_, index) => [index.toString()]),
+      ]),
+      'id',
+      '"',
+      "'",
+      ','
+    );
     experimentId = providers.experiment.addExperiment({
       algorithmId,
       datasetId,
@@ -53,9 +70,9 @@ describe('Similarity Threshold Provider', () => {
       SetExperimentFileFormatEnum.Pilot,
       fileToReadable([
         ['p1', 'p2', 'sim1', 'sim2'],
-        ['0', '1', '1', '1'],
+        ['0', '1', '1', '3'],
         ['1', '2', '2', '2'],
-        ['2', '3', '3', '3'],
+        ['2', '3', '3', '1'],
       ])
     );
     addedFunctions = [
@@ -203,5 +220,132 @@ describe('Similarity Threshold Provider', () => {
     expect(
       tables.meta.similarityfunction.all({ experiment: experimentId }).length
     ).toBe(0);
+  });
+
+  function fileResponseToFile(fileResponse: FileResponse): string[][] {
+    return [fileResponse.header, ...fileResponse.data].map((vals) =>
+      vals.map((val) => val.toString())
+    );
+  }
+
+  test('function impacts experiment', () => {
+    const [functionId] = addFunctions([
+      {
+        id: 0,
+        type: SimilarityThresholdFunctionTypeEnum.SimilarityThreshold,
+        similarityThreshold: 'sim1',
+      },
+    ]);
+    assertFilesMatch(
+      fileResponseToFile(
+        providers.experiment.getExperimentFile({ experimentId })
+      ),
+      [
+        ['id1', 'id2', 'isDuplicate', 'sim1', 'sim2'],
+        ['0', '1', '1', '1', '3'],
+        ['1', '2', '1', '2', '2'],
+        ['2', '3', '1', '3', '1'],
+      ]
+    );
+    assertFilesMatch(
+      fileResponseToFile(
+        providers.experiment.getExperimentFile({
+          experimentId,
+          similarityThreshold: 1,
+          similarityThresholdFunction: functionId,
+        })
+      ),
+      [
+        ['id1', 'id2', 'isDuplicate', 'sim1', 'sim2'],
+        ['0', '1', '1', '1', '3'],
+        ['1', '2', '1', '2', '2'],
+        ['2', '3', '1', '3', '1'],
+      ]
+    );
+    assertFilesMatch(
+      fileResponseToFile(
+        providers.experiment.getExperimentFile({
+          experimentId,
+          similarityThreshold: 2,
+          similarityThresholdFunction: functionId,
+        })
+      ),
+      [
+        ['id1', 'id2', 'isDuplicate', 'sim1', 'sim2'],
+        ['0', '1', '1', '1', '3'],
+        ['1', '2', '1', '2', '2'],
+      ]
+    );
+    assertFilesMatch(
+      fileResponseToFile(
+        providers.experiment.getExperimentFile({
+          experimentId,
+          similarityThreshold: 3,
+          similarityThresholdFunction: functionId,
+        })
+      ),
+      [
+        ['id1', 'id2', 'isDuplicate', 'sim1', 'sim2'],
+        ['0', '1', '1', '1', '3'],
+      ]
+    );
+  });
+
+  test('function impacts intersection', () => {
+    const [functionId] = addFunctions([
+      {
+        id: 0,
+        type: SimilarityThresholdFunctionTypeEnum.SimilarityThreshold,
+        similarityThreshold: 'sim1',
+      },
+    ]);
+    expectClusteringsToEqual(
+      IntersectionCache.get(
+        [experimentId],
+        [],
+        [datasetId],
+        [undefined],
+        [undefined],
+        [],
+        []
+      ).clustering,
+      [[0, 1, 2, 3], [4]]
+    );
+    expectClusteringsToEqual(
+      IntersectionCache.get(
+        [experimentId],
+        [],
+        [datasetId],
+        [3],
+        [functionId],
+        [],
+        []
+      ).clustering,
+      [[0], [1], [2, 3], [4]]
+    );
+    expectClusteringsToEqual(
+      IntersectionCache.get(
+        [experimentId],
+        [],
+        [datasetId],
+        [2],
+        [functionId],
+        [],
+        []
+      ).clustering,
+      [[0], [1, 2, 3], [4]]
+    );
+    expectClusteringsToEqual(
+      IntersectionCache.get(
+        [experimentId],
+        [],
+        [datasetId],
+        [1],
+        [functionId],
+        [],
+        []
+      ).clustering,
+      [[0, 1, 2, 3], [4]]
+    );
   });
 });

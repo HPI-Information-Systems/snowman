@@ -1,4 +1,8 @@
-import { DatasetId, ExperimentId } from '../../../server/types';
+import {
+  DatasetId,
+  ExperimentId,
+  SimilarityThresholdFunctionId,
+} from '../../../server/types';
 import { LazyProperty } from '../../../tools/lazyProperty';
 import { providers } from '../..';
 import { Clustering } from '../cluster/types';
@@ -21,14 +25,28 @@ export class IntersectionBase {
   constructor(
     public readonly predictedConditionPositive: ExperimentId[],
     public readonly predictedConditionNegative: ExperimentId[],
-    public readonly datasetId: [DatasetId]
+    public readonly datasetId: [DatasetId],
+    public readonly positiveSimilarityThresholds: (number | undefined)[],
+    public readonly positiveSimilarityFunctions: (
+      | SimilarityThresholdFunctionId
+      | undefined
+    )[],
+    public readonly negativeSimilarityThresholds: (number | undefined)[],
+    public readonly negativeSimilarityFunctions: (
+      | SimilarityThresholdFunctionId
+      | undefined
+    )[]
   ) {}
 
   get positiveIntersection(): IntersectionSubclass {
     return IntersectionCache.get(
       this.predictedConditionPositive,
       [],
-      this.datasetId
+      this.datasetId,
+      this.positiveSimilarityThresholds,
+      this.positiveSimilarityFunctions,
+      [],
+      []
     );
   }
 
@@ -36,7 +54,11 @@ export class IntersectionBase {
     return IntersectionCache.get(
       this.predictedConditionNegative,
       [],
-      this.datasetId
+      this.datasetId,
+      this.negativeSimilarityThresholds,
+      this.negativeSimilarityFunctions,
+      [],
+      []
     );
   }
 
@@ -66,7 +88,11 @@ export class IntersectionBase {
       return SubclusterCache.get(
         this.predictedConditionPositive.slice(0, splitIndex),
         this.predictedConditionPositive.slice(splitIndex),
-        this.datasetId
+        this.datasetId,
+        this.positiveSimilarityThresholds.slice(0, splitIndex),
+        this.positiveSimilarityFunctions.slice(0, splitIndex),
+        this.positiveSimilarityThresholds.slice(splitIndex),
+        this.positiveSimilarityFunctions.slice(splitIndex)
       ).clustering;
     }
   }
