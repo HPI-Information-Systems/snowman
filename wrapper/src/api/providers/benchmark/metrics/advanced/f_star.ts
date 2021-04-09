@@ -9,8 +9,9 @@ export class FStarScore extends BaseMetric {
     'The F*-Score has been proposed as an alternative to the F1-Score because it is debated in research community.';
   infoLink = 'https://link.springer.com/article/10.1007/s10994-021-05964-1';
   get value(): number {
+    const f1Score = new F1Score(this.matrix).value;
     return (
-      new F1Score(this.matrix).value / (2 - new F1Score(this.matrix).value)
+      f1Score / (2 - f1Score)
     );
   }
 }
