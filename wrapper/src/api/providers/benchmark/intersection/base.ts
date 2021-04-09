@@ -97,11 +97,11 @@ export class IntersectionBase {
     } else {
       const splitIndex = Math.floor(this.positive.length / 2);
       return SubclusterCache.get(
-        this.positive.slice(0, splitIndex),
-        this.positive.slice(splitIndex),
         this.datasetId,
+        this.positive.slice(0, splitIndex),
         this.positiveSimilarityThresholds.slice(0, splitIndex),
         this.positiveSimilarityFunctions.slice(0, splitIndex),
+        this.positive.slice(splitIndex),
         this.positiveSimilarityThresholds.slice(splitIndex),
         this.positiveSimilarityFunctions.slice(splitIndex)
       ).clustering;

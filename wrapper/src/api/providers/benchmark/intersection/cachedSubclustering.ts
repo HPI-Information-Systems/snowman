@@ -32,14 +32,14 @@ export class CachedSubclusting {
       )
   );
   constructor(
-    protected readonly base: ExperimentId[],
-    protected readonly partition: ExperimentId[],
     protected readonly datasetId: [DatasetId],
+    protected readonly base: ExperimentId[],
     protected readonly baseSimilarityThresholds: (number | undefined)[],
     protected readonly baseSimilarityFunctions: (
       | SimilarityThresholdFunctionId
       | undefined
     )[],
+    protected readonly partition: ExperimentId[],
     protected readonly partitionSimilarityThresholds: (number | undefined)[],
     protected readonly partitionSimilarityFunctions: (
       | SimilarityThresholdFunctionId
@@ -49,12 +49,12 @@ export class CachedSubclusting {
 
   static entangledConstructorParameters = [
     {
-      sortBy: 0,
-      toSort: [0, 3, 4],
+      sortBy: 1,
+      toSort: [1, 2, 3],
     },
     {
-      sortBy: 1,
-      toSort: [1, 5, 6],
+      sortBy: 4,
+      toSort: [4, 5, 6],
     },
   ];
 

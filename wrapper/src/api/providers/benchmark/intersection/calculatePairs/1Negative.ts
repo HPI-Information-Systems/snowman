@@ -11,11 +11,11 @@ export class CalculatePairs1Negative extends CalculatePairs {
     this.rows = [];
     this.skipRemains = this.skip;
     this.subclusters = SubclusterCache.get(
-      this.intersection.positive,
-      this.intersection.negative,
       this.intersection.datasetId,
+      this.intersection.positive,
       this.intersection.positiveSimilarityThresholds,
       this.intersection.positiveSimilarityFunctions,
+      this.intersection.negative,
       this.intersection.negativeSimilarityThresholds,
       this.intersection.negativeSimilarityFunctions
     ).clustering.subclustersFromClusterId(this.clusterId);
