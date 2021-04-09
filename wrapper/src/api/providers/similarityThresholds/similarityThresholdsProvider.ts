@@ -9,6 +9,7 @@ import {
   SimilarityThresholdFunctionId,
 } from '../../server/types';
 import { providers } from '..';
+import { invalidateCaches } from '../benchmark/intersection/cache';
 import { SimilarityThresholdFunctionConverter } from './util/converter';
 import { functionToExpression } from './util/functionToExpression';
 
@@ -39,6 +40,7 @@ export class SimilarityThresholdsProvider {
       experiment: experimentId,
       id: functionId,
     });
+    invalidateCaches(functionId);
   }
 
   getSimilarityThresholdFunction({
@@ -83,5 +85,6 @@ export class SimilarityThresholdsProvider {
         id: functionId,
       },
     ]);
+    invalidateCaches(functionId);
   }
 }
