@@ -119,12 +119,10 @@ export const loadCounts = (): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> => {
   if (!countsMatchCurrentConfiguration()) {
-    const counts = await RequestHandler(
-      () =>
-        new BenchmarkApi().calculateExperimentIntersectionPairCounts(
-          loadCountsRequestBody()
-        ),
-      dispatch
+    const counts = await RequestHandler(() =>
+      new BenchmarkApi().calculateExperimentIntersectionPairCounts(
+        loadCountsRequestBody()
+      )
     );
     if (
       !countsMatchCurrentConfiguration() &&

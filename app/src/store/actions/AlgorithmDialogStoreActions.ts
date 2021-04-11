@@ -36,8 +36,7 @@ export const openChangeDialog = (
             payload: anAlgorithm,
           })
         )
-        .then(),
-    dispatch
+        .then()
   );
 };
 
@@ -90,7 +89,6 @@ const addAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
           dispatch(closeDialog());
           dispatch(getAlgorithms());
         }),
-    dispatch,
     SUCCESS_TO_ADD_NEW_ALGORITHM
   );
 
@@ -111,7 +109,6 @@ const updateAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
           dispatch(closeDialog());
           dispatch(getAlgorithms());
         }),
-    dispatch,
     SUCCESS_TO_UPDATE_ALGORITHM
   );
 

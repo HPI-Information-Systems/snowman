@@ -6,7 +6,6 @@ import {
   unregisterOngoingRequest,
 } from 'store/actions/GlobalIndicatorActions';
 import { SnowmanGlobalSimpleDispatch } from 'store/globalStoreInteractor';
-import { SnowmanDispatch } from 'store/messages';
 import { UNKNOWN_ERROR } from 'structs/statusMessages';
 import { ToastType } from 'types/ToastTypes';
 
@@ -23,7 +22,6 @@ export const unwrapError = async (error: unknown): Promise<string> => {
 
 const RequestHandler = async <T = void>(
   wrapped: () => Promise<T>,
-  dispatch: SnowmanDispatch,
   successMessage?: string,
   shouldShowLoadingBlocker?: boolean
 ): Promise<T> => {
@@ -49,7 +47,7 @@ const RequestHandler = async <T = void>(
     )
     .finally((): void => {
       SnowmanGlobalSimpleDispatch(unregisterOngoingRequest());
-      if (shouldShowLoadingBlocker) dispatch(hideLoading());
+      if (shouldShowLoadingBlocker) SnowmanGlobalSimpleDispatch(hideLoading());
     });
 };
 
