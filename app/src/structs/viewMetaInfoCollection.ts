@@ -1,5 +1,6 @@
 import {
   albums,
+  analytics,
   calculator,
   colorFilter,
   documents,
@@ -14,6 +15,7 @@ import DashboardPage from 'pages/DashboardPage/DashboardPage';
 import DatasetsPage from 'pages/DatasetsPage/DatasetsPage';
 import ExperimentsPage from 'pages/ExperimentsPage/ExperimentsPage';
 import IntersectionPage from 'pages/IntersectionPage/IntersectionPage';
+import KPIDiagramPage from 'pages/KPIDiagramPage/KPIDiagramPage';
 import NMetricsPage from 'pages/NMetricsPage/NMetricsPage';
 import RootPage from 'pages/RootPage/RootPage';
 import StandaloneDataViewerPage from 'pages/StandaloneDataViewerPage/StandaloneDataViewerPage';
@@ -125,6 +127,19 @@ export const ViewMetaInformationCollection: ViewMetaInformation[] = [
     menuIcon: colorFilter,
     menuSortKey: 8,
     selectedOptionsReminder: emptySelectedOptions,
+  },
+  {
+    key: ViewIDs.KPIDIAGRAM,
+    component: KPIDiagramPage,
+    nextView: ViewIDs.KPIDIAGRAM,
+    accessGuard: accessGuards.couldAlwaysEnterPage,
+    shouldShowInMenu: true,
+    menuCategory: menuCategories.EVALUATION,
+    menuName: 'KPI Diagrams',
+    menuIcon: analytics,
+    menuSortKey: 9,
+    selectedOptionsReminder: emptySelectedOptions,
+    hideSideMenu: false,
   },
   {
     key: ViewIDs.STANDALONE_DATA_VIEWER,
