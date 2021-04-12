@@ -3,6 +3,7 @@ import {
   ExperimentId,
   SimilarityThresholdFunctionId,
 } from '../../../server/types';
+import { getSimilarity } from '../../../tools/getSimilarity';
 import { LazyProperty } from '../../../tools/lazyProperty';
 import { providers } from '../..';
 import { Clustering } from '../cluster/types';
@@ -92,7 +93,13 @@ export class IntersectionBase {
       return clustering;
     } else if (this.positive.length === 1) {
       return new UnionFind(numberOfRecords).link(
-        this.queries.experimentLinks(this.positive[0])
+        this.queries.experimentLinks(
+          this.positive[0],
+          getSimilarity(
+            this.positiveSimilarityThresholds[0],
+            this.positiveSimilarityFunctions[0]
+          )
+        )
       );
     } else {
       const splitIndex = Math.floor(this.positive.length / 2);
