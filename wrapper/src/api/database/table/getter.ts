@@ -9,7 +9,10 @@ import {
 } from '../tools/types';
 import { Table } from './table';
 
-type OptionsT<ColumnsT extends TableSchema['columns'], RawT extends boolean> = {
+export type GetterOptionsT<
+  ColumnsT extends TableSchema['columns'],
+  RawT extends boolean
+> = {
   returnedColumns?: readonly (keyof ColumnsT | string)[];
   raw?: RawT;
   limit?: number;
@@ -43,7 +46,7 @@ export class TableGetter<Schema extends TableSchema> {
       startAt = 0,
       filterType = '=',
       sortBy,
-    }: OptionsT<Schema['columns'], boolean> = {}
+    }: GetterOptionsT<Schema['columns'], boolean> = {}
   ) {
     const filterKeys = Object.keys(filters).sort();
     return this.statementCache
@@ -61,7 +64,7 @@ export class TableGetter<Schema extends TableSchema> {
   get<RawT extends boolean = false>(
     filters: NullableColumnValues<Schema['columns']> &
       Record<string, Primitive> = {},
-    options?: OptionsT<Schema['columns'], RawT>
+    options?: GetterOptionsT<Schema['columns'], RawT>
   ):
     | undefined
     | (RawT extends false
@@ -76,7 +79,7 @@ export class TableGetter<Schema extends TableSchema> {
   all<RawT extends boolean = false>(
     filters: NullableColumnValues<Schema['columns']> &
       Record<string, Primitive> = {},
-    options?: OptionsT<Schema['columns'], RawT>
+    options?: GetterOptionsT<Schema['columns'], RawT>
   ): RawT extends false
     ? ColumnValues<Schema['columns']>[]
     : ColumnDataType<Schema['columns'][keyof Schema['columns']]>[][] {

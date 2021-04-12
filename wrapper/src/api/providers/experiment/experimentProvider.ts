@@ -7,11 +7,13 @@ import {
   GetExperimentFileRequest,
   SetExperimentFileFormatEnum,
 } from '../../server/types/ExperimentRequests';
+import { getSimilarity } from '../../tools/getSimilarity';
 import { providers } from '..';
 import { invalidateCaches } from '../benchmark/intersection/cache';
 import { DatasetIDMapper } from '../dataset/util/idMapper';
-import { ExperimentFileGetter } from '../experiment/file/getter';
 import { getExperimentInserter } from './file';
+import { rawGetter } from './file/rawGetter';
+import { similarityGetter } from './file/similarityGetter';
 import { ExperimentConsistencyChecks } from './util/checks';
 import { ExperimentConverter } from './util/converter';
 
@@ -85,12 +87,19 @@ export class ExperimentProvider {
     similarityThreshold,
     similarityThresholdFunction,
   }: GetExperimentFileRequest): FileResponse {
-    return new ExperimentFileGetter(
-      experimentId,
-      providers.experiment.getExperiment(experimentId).datasetId,
+    const similarity = getSimilarity(
       similarityThreshold,
       similarityThresholdFunction
-    ).get(startAt, limit, sortBy);
+    );
+    if (similarity) {
+      return similarityGetter(experimentId, similarity).get(
+        startAt,
+        limit,
+        sortBy
+      );
+    } else {
+      return rawGetter(experimentId).get(startAt, limit, sortBy);
+    }
   }
 
   async setExperimentFile(

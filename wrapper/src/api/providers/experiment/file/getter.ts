@@ -1,41 +1,40 @@
-import { databaseBackend, Table, tables } from '../../../database';
+import { databaseBackend, Table } from '../../../database';
+import { experimentCustomColumnPrefix } from '../../../database/schemas';
+import { GetterOptionsT } from '../../../database/table/getter';
 import {
-  experimentCustomColumnPrefix,
-  tableSchemas,
-} from '../../../database/schemas';
-import { DatasetId, ExperimentId, FileResponse } from '../../../server/types';
-import { SimilarityThresholdFunctionId } from '../../../server/types/SimilarityThresholdFunctionId';
+  Column,
+  NullableColumnValues,
+  TableSchema,
+} from '../../../database/tools/types';
+import { ExperimentId, FileResponse } from '../../../server/types';
+import { Primitive } from '../../../tools/types';
+import { datasetFromExperimentIds } from '../../benchmark/datasetFromExperiments';
 import { DatasetIDMapper } from '../../dataset/util/idMapper';
 
-type ExperimentSchema = ReturnType<
-  typeof tableSchemas['experiment']['experiment']
->;
+export interface GetterStrategy<Schema extends TableSchema> {
+  table: Table<Schema>;
+  idColumns: Column[];
+  filter: NullableColumnValues<Schema['columns']>;
+  filterType: GetterOptionsT<Schema['columns'], boolean>['filterType'];
+}
 
-export class ExperimentFileGetter {
-  protected table: Table<ExperimentSchema>;
-  protected columns: string[];
+export class ExperimentFileGetter<Schema extends TableSchema> {
   protected idIndices: number[];
+  protected columns: string[];
   protected idMapper: DatasetIDMapper;
 
-  constructor(
-    id: ExperimentId,
-    datasetId: DatasetId,
-    protected readonly similarityThreshold?: number,
-    protected readonly similarityThresholdFunction?: SimilarityThresholdFunctionId
-  ) {
-    this.table = tables.experiment.experiment(id);
-    this.columns = Object.values(this.table.schema.columns)
+  constructor(protected strategy: GetterStrategy<Schema>, id: ExperimentId) {
+    this.columns = Object.values(this.strategy.table.schema.columns)
       .map((column) => column.name)
       .sort();
-    this.idIndices = [
-      this.columns.indexOf(this.table.schema.columns.id1.name),
-      this.columns.indexOf(this.table.schema.columns.id2.name),
-    ];
-    this.idMapper = new DatasetIDMapper(datasetId);
+    this.idIndices = strategy.idColumns.map(({ name }) =>
+      this.columns.indexOf(name)
+    );
+    this.idMapper = new DatasetIDMapper(datasetFromExperimentIds([id]).id);
   }
 
   get(startAt?: number, limit?: number, sortBy?: string): FileResponse {
-    sortBy = `"${this.getSortedColumn(sortBy)}"`;
+    sortBy = this.getSortedColumn(sortBy);
     let result: FileResponse;
     databaseBackend().transaction(
       () =>
@@ -45,24 +44,27 @@ export class ExperimentFileGetter {
               ? column.substring(experimentCustomColumnPrefix.length)
               : column
           ),
-          data: this.table
+          data: this.strategy.table
             .all(
-              {},
+              this.strategy.filter as NullableColumnValues<Schema['columns']> &
+                Record<string, Primitive>,
               {
                 returnedColumns: this.columns.map((col) => `"${col}"`),
                 raw: true,
                 limit,
                 startAt,
                 sortBy,
+                filterType: this.strategy.filterType,
               }
             )
             .map((row) => {
+              const resultRow = row.map((element) => `${element}`);
               for (const idIndex of this.idIndices) {
-                row[idIndex] =
+                resultRow[idIndex] =
                   this.idMapper.mapReversed(row[idIndex] as number) ??
                   `mapped: ${row[idIndex]}`;
               }
-              return row;
+              return resultRow;
             }) as string[][],
         })
     )();
@@ -72,20 +74,20 @@ export class ExperimentFileGetter {
 
   protected getSortedColumn(sortBy?: string): string {
     if (sortBy) {
-      if (sortBy in this.table.schema.columns) {
-        return sortBy;
+      if (sortBy in this.strategy.table.schema.columns) {
+        return `"${sortBy}"`;
       } else if (
         experimentCustomColumnPrefix + sortBy in
-        this.table.schema.columns
+        this.strategy.table.schema.columns
       ) {
-        return experimentCustomColumnPrefix + sortBy;
+        return `"${experimentCustomColumnPrefix + sortBy}"`;
       } else {
         throw new Error(
           `Cannot sort by ${sortBy} as this column does not exist.`
         );
       }
     } else {
-      return this.table.schema.columns.id1.name;
+      return this.strategy.idColumns.map(({ name }) => `"${name}"`).join(',');
     }
   }
 }
