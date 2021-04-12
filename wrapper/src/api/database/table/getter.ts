@@ -15,13 +15,18 @@ type OptionsT<ColumnsT extends TableSchema['columns'], RawT extends boolean> = {
   limit?: number;
   startAt?: number;
   sortBy?: keyof ColumnsT | string;
+  filterType?: '=' | '<' | '>' | '>=' | '<=';
 };
 
 export class TableGetter<Schema extends TableSchema> {
   protected readonly statementCache = new Cache(
-    (filters: string[], returnColumns: string[], [sortBy]: [string]) =>
+    (
+      filters: string[],
+      returnColumns: string[],
+      [sortBy, filterType]: [string | undefined, string]
+    ) =>
       databaseBackend().prepare(
-        this.createQuery(filters, returnColumns, sortBy)
+        this.createQuery(filters, returnColumns, sortBy, filterType)
       )
   );
 
@@ -36,12 +41,16 @@ export class TableGetter<Schema extends TableSchema> {
       raw = false,
       limit = -1,
       startAt = 0,
-      sortBy = undefined,
+      filterType = '=',
+      sortBy,
     }: OptionsT<Schema['columns'], boolean> = {}
   ) {
     const filterKeys = Object.keys(filters).sort();
     return this.statementCache
-      .get(filterKeys, returnedColumns as string[], [sortBy as string])
+      .get(filterKeys, returnedColumns as string[], [
+        sortBy as string,
+        filterType,
+      ])
       .raw(raw)
       [operation](...filterKeys.map((key) => filters[key]), limit, startAt);
   }
@@ -77,7 +86,8 @@ export class TableGetter<Schema extends TableSchema> {
   protected createQuery(
     filters: string[],
     returnColumns: string[],
-    sortBy: string
+    sortBy: string | undefined,
+    filterType: string
   ): string {
     let selectQuery = 'SELECT ';
     if (returnColumns.length > 0) {
@@ -88,7 +98,7 @@ export class TableGetter<Schema extends TableSchema> {
     selectQuery += ` FROM ${this.table}`;
     if (filters.length > 0) {
       selectQuery += ` WHERE ${filters
-        .map((filter) => `${filter} = ?`)
+        .map((filter) => `${filter} ${filterType} ?`)
         .join(' AND ')}`;
     }
     if (sortBy) {
