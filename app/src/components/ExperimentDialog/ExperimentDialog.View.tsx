@@ -42,6 +42,8 @@ const ExperimentDialogView = ({
   selectedFiles,
   changeSelectedFiles,
   experimentId,
+  timeToConfigure,
+  changeTimeToConfigure,
 }: ExperimentDialogProps): JSX.Element => (
   <ModalDialog
     heading={
@@ -100,6 +102,19 @@ const ExperimentDialogView = ({
           </IonNote>
         </div>
       ) : null}
+      <IonItemDivider>
+        <IonLabel>SPECIFY SOFT KPIS</IonLabel>
+      </IonItemDivider>
+      <IonItem>
+        <IonLabel>Time to Configure</IonLabel>
+        <IonInput
+          clearInput
+          type="number"
+          value={timeToConfigure}
+          onIonChange={changeTimeToConfigure}
+          className="input-align-right"
+        />
+      </IonItem>
     </IonList>
     <div className="center tag-view">
       {tags.map(

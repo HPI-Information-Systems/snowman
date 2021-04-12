@@ -63,6 +63,14 @@ export const changeExperimentName = (
     payload: aName,
   });
 
+export const changeTimeToConfigure = (
+  aNumberOrUndefined: number | undefined
+): easyPrimitiveActionReturn =>
+  easyPrimitiveAction({
+    type: actionTypes.CHANGE_TIME_TO_CONFIGURE,
+    payload: aNumberOrUndefined,
+  });
+
 export const changeExperimentDescription = (
   aDescription: string
 ): easyPrimitiveActionReturn =>
@@ -119,6 +127,8 @@ const createNewExperiment = (
             store.getState().ExperimentDialogStore.selectedTags[0] ?? [],
             store.getState().CoreStore.algorithms
           ),
+          timeToConfigure: store.getState().ExperimentDialogStore
+            .timeToConfigure,
         },
       }),
     dispatch,
@@ -172,6 +182,8 @@ const editExistingExperiment = (): SnowmanThunkAction<Promise<void>> => async (
             store.getState().ExperimentDialogStore.selectedTags[0] ?? 'Unknown',
             store.getState().CoreStore.algorithms
           ),
+          timeToConfigure: store.getState().ExperimentDialogStore
+            .timeToConfigure,
         },
       }),
     dispatch,

@@ -38,6 +38,7 @@ export const ExperimentDialogReducer = (
         experimentId: (action.payload as Experiment).id,
         experimentName: (action.payload as Experiment).name,
         experimentDescription: (action.payload as Experiment).description ?? '',
+        timeToConfigure: (action.payload as Experiment).timeToConfigure,
         selectedTags: [
           getAlgorithmNameFromId(
             (action.payload as Experiment).algorithmId,
@@ -84,6 +85,11 @@ export const ExperimentDialogReducer = (
           state.selectedTags,
           action.payload as string
         ),
+      };
+    case actionTypes.CHANGE_TIME_TO_CONFIGURE:
+      return {
+        ...state,
+        timeToConfigure: action.payload as number | undefined,
       };
     default:
       return state;

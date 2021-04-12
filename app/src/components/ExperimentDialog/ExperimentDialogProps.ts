@@ -8,6 +8,7 @@ export interface ExperimentDialogDispatchProps {
   changeExperimentName(event: IonChangeEvent): void;
   changeExperimentDescription(event: IonChangeEvent): void;
   changeExperimentFileFormat(anOption: string): void;
+  changeTimeToConfigure(event: IonChangeEvent): void;
   clickOnMatchingSolutionTag(aTag: string): void;
   clickOnSubmit(): void;
   changeSelectedFiles(event: ChangeEvent<HTMLInputElement>): void;
@@ -24,6 +25,7 @@ export interface ExperimentDialogStateProps {
   isValidForm: boolean;
   selectedFiles: File[];
   experimentId: number;
+  timeToConfigure: number | undefined;
 }
 
 export type ExperimentDialogProps = ExperimentDialogStateProps &
