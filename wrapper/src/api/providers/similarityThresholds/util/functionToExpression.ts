@@ -52,6 +52,18 @@ function operatorToExpression(
   }
 }
 
+function constantToExpression(
+  constant: SimilarityThresholdFunctionValues['constant']
+): string {
+  if (typeof constant === 'number') {
+    return `${constant}/*END*/`;
+  } else {
+    throw new Error(
+      'Similarity threshold function constant is missing required property constant.'
+    );
+  }
+}
+
 export function functionToExpression(
   similarityThresholdFunction: SimilarityThresholdFunctionValues,
   columns: Columns
@@ -67,6 +79,8 @@ export function functionToExpression(
         similarityThresholdFunction.operator,
         columns
       );
+    case SimilarityThresholdFunctionValuesTypeEnum.Constant:
+      return constantToExpression(similarityThresholdFunction.constant);
     default:
       throw new Error(
         `Unknown similarity threshold function type: ${similarityThresholdFunction.type}`

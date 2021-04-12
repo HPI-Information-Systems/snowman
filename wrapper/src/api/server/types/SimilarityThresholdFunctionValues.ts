@@ -24,6 +24,12 @@ export interface SimilarityThresholdFunctionValues {
    * @memberof SimilarityThresholdFunctionValues
    */
   operator?: SimilarityThresholdFunctionOperator;
+  /**
+   *
+   * @type {number}
+   * @memberof SimilarityThresholdFunctionValues
+   */
+  constant?: number;
 }
 
 /**
@@ -33,4 +39,5 @@ export interface SimilarityThresholdFunctionValues {
 export enum SimilarityThresholdFunctionValuesTypeEnum {
   SimilarityThreshold = 'SimilarityThreshold',
   Operator = 'Operator',
+  Constant = 'Constant',
 }

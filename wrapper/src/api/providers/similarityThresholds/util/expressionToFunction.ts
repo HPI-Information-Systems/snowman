@@ -12,9 +12,14 @@ function operatorIndex(expression: string): number {
   } else if (expression[1] === '(') {
     return findClosingBracket(expression, 2) + 1;
   } else {
-    throw new Error(
-      `Error while parsing expression ${expression}. Unknown left hand operator.`
-    );
+    const index = expression.indexOf('/*END*/');
+    if (index === -1) {
+      throw new Error(
+        `Error while parsing expression ${expression}. Unknown left hand operator.`
+      );
+    } else {
+      return index + 7;
+    }
   }
 }
 
@@ -52,12 +57,23 @@ function expressionToThreshold(
   };
 }
 
+function expressionToConstant(
+  expression: string
+): SimilarityThresholdFunctionValues {
+  return {
+    type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
+    constant: parseFloat(expression.substring(0, expression.length - 7)),
+  };
+}
+
 export function expressionToFunction(
   expression: string
 ): SimilarityThresholdFunctionValues {
   if (expression.startsWith('(')) {
     return expressionToOperator(expression);
-  } else {
+  } else if (expression.startsWith('"')) {
     return expressionToThreshold(expression);
+  } else {
+    return expressionToConstant(expression);
   }
 }

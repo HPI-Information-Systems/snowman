@@ -97,9 +97,8 @@ describe('Similarity Threshold Provider', () => {
                 type: SimilarityThresholdFunctionValuesTypeEnum.Operator,
                 operator: {
                   left: {
-                    type:
-                      SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-                    similarityThreshold: 'sim2',
+                    type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
+                    constant: 0,
                   },
                   operator:
                     SimilarityThresholdFunctionOperatorOperatorEnum.Multiply,
@@ -112,9 +111,8 @@ describe('Similarity Threshold Provider', () => {
               },
               operator: SimilarityThresholdFunctionOperatorOperatorEnum.Divide,
               right: {
-                type:
-                  SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-                similarityThreshold: 'sim1',
+                type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
+                constant: -22.2412,
               },
             },
           },

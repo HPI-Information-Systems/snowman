@@ -1002,6 +1002,8 @@ components:
       type: integer
     SimilarityThreshold:
       type: string
+    SimilarityThresholdFunctionConstant:
+      type: number
     SimilarityThresholdFunctionOperator:
       example:
         operator: ADD
@@ -1024,6 +1026,7 @@ components:
       type: object
     SimilarityThresholdFunctionValues:
       example:
+        constant: 0.8008281904610115
         similarityThreshold: similarityThreshold
         type: SimilarityThreshold
         operator:
@@ -1033,11 +1036,14 @@ components:
           enum:
             - SimilarityThreshold
             - Operator
+            - Constant
           type: string
         similarityThreshold:
           type: string
         operator:
           $ref: "#/components/schemas/SimilarityThresholdFunctionOperator"
+        constant:
+          type: number
       required:
         - type
       type: object

@@ -846,6 +846,9 @@ components:
     SimilarityThreshold:
       type: string
 
+    SimilarityThresholdFunctionConstant:
+      type: number
+
     SimilarityThresholdFunctionOperator:
       type: object
       properties:
@@ -866,11 +869,13 @@ components:
       properties:
         type:
           type: string
-          enum: [SimilarityThreshold, Operator]
+          enum: [SimilarityThreshold, Operator, Constant]
         similarityThreshold:
           $ref: "#/components/schemas/SimilarityThreshold"
         operator:
           $ref: "#/components/schemas/SimilarityThresholdFunctionOperator"
+        constant:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionConstant"
       required:
         - type
 

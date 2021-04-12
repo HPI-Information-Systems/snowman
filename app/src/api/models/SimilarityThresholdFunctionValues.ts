@@ -44,6 +44,12 @@ export interface SimilarityThresholdFunctionValues {
      * @memberof SimilarityThresholdFunctionValues
      */
     operator?: SimilarityThresholdFunctionOperator;
+    /**
+     * 
+     * @type {number}
+     * @memberof SimilarityThresholdFunctionValues
+     */
+     constant?: number;
 }
 
 /**
@@ -52,7 +58,8 @@ export interface SimilarityThresholdFunctionValues {
 */
 export enum SimilarityThresholdFunctionValuesTypeEnum {
     SimilarityThreshold = 'SimilarityThreshold',
-    Operator = 'Operator'
+    Operator = 'Operator',
+    Constant = 'Constant'
 }
 
 export function SimilarityThresholdFunctionValuesFromJSON(json: any): SimilarityThresholdFunctionValues {
@@ -68,6 +75,7 @@ export function SimilarityThresholdFunctionValuesFromJSONTyped(json: any, ignore
         'type': json['type'],
         'similarityThreshold': !exists(json, 'similarityThreshold') ? undefined : json['similarityThreshold'],
         'operator': !exists(json, 'operator') ? undefined : SimilarityThresholdFunctionOperatorFromJSON(json['operator']),
+        'constant': !exists(json, 'constant') ? undefined : json['constant'],
     };
 }
 
@@ -83,6 +91,7 @@ export function SimilarityThresholdFunctionValuesToJSON(value?: SimilarityThresh
         'type': value.type,
         'similarityThreshold': value.similarityThreshold,
         'operator': SimilarityThresholdFunctionOperatorToJSON(value.operator),
+        'constant': value.constant,
     };
 }
 
