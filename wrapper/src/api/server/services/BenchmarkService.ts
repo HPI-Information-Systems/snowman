@@ -1,14 +1,13 @@
 import { providers } from '../../providers';
+import { getSimilarity } from '../../tools/getSimilarity';
 import {
   CalculateExperimentIntersectionCountRequest,
   CalculateExperimentIntersectionCountsRequest,
   CalculateExperimentIntersectionRecordsRequest,
-  ExperimentConfigItemSimilarity,
   ExperimentIntersectionCount,
   FileResponse,
   GetBinaryMetricsRequest,
   Metric,
-  SimilarityThresholdFunctionId,
 } from '../types';
 import { Service, SuccessResponse } from './Service';
 
@@ -60,24 +59,6 @@ export async function calculateExperimentIntersectionCounts({
     200,
     404
   );
-}
-
-function getSimilarity(
-  threshold?: number,
-  func?: SimilarityThresholdFunctionId
-): ExperimentConfigItemSimilarity | undefined {
-  if (threshold !== undefined && func !== undefined) {
-    return {
-      func,
-      threshold,
-    };
-  } else if (threshold !== undefined || func !== undefined) {
-    throw new Error(
-      'Similarity function and threshold must either both be set or omitted.'
-    );
-  } else {
-    return undefined;
-  }
 }
 
 export async function getBinaryMetrics({

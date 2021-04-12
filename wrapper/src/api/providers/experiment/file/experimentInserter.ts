@@ -77,7 +77,7 @@ export abstract class ExperimentInserter {
     return this.table;
   }
 
-  private columnsFromNames(columns: string[]): Column[] {
+  private columnsFromNames(columns: string[]): Column<'REAL'>[] {
     return columns.map((column) => {
       return {
         name: column,

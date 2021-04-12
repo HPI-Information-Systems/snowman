@@ -256,10 +256,10 @@ describe('Similarity Threshold Provider', () => {
         })
       ),
       [
-        ['id1', 'id2', 'isDuplicate', 'sim1', 'sim2'],
-        ['0', '1', '1', '1', '3'],
-        ['1', '2', '1', '2', '2'],
-        ['2', '3', '1', '3', '1'],
+        ['id1', 'id2', 'similarity'],
+        ['0', '1', '1'],
+        ['1', '2', '2'],
+        ['2', '3', '3'],
       ]
     );
     assertFilesMatch(
@@ -271,9 +271,9 @@ describe('Similarity Threshold Provider', () => {
         })
       ),
       [
-        ['id1', 'id2', 'isDuplicate', 'sim1', 'sim2'],
-        ['0', '1', '1', '1', '3'],
-        ['1', '2', '1', '2', '2'],
+        ['id1', 'id2', 'similarity'],
+        ['1', '2', '2'],
+        ['2', '3', '3'],
       ]
     );
     assertFilesMatch(
@@ -285,8 +285,8 @@ describe('Similarity Threshold Provider', () => {
         })
       ),
       [
-        ['id1', 'id2', 'isDuplicate', 'sim1', 'sim2'],
-        ['0', '1', '1', '1', '3'],
+        ['id1', 'id2', 'similarity'],
+        ['2', '3', '3'],
       ]
     );
   });
