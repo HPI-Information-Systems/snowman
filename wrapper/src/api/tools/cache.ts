@@ -57,6 +57,7 @@ export class Cache<KeyItemT extends Primitive, T, KeyT extends KeyItemT[][]> {
     this.directSubcaches.clear();
     this.nestedSubcache.clear();
   }
+
   invalidate(key: KeyItemT): void {
     if (this.key === key) {
       this.clear();

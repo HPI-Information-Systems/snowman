@@ -1,4 +1,4 @@
-import { getProviders } from '../../../providers';
+import { providers } from '../../../providers';
 import { idSorter } from '../../tools/idSorter';
 import { setupDatabase } from '../setup';
 import { expectedAlgorithms } from './expected.algorithms';
@@ -8,7 +8,6 @@ import { expectedExperiments } from './expected.experiments';
 describe('Automatic Database Setup', () => {
   test('does not load example entries when disabled', async () => {
     await setupDatabase({ temporary: true, loadExampleEntries: false });
-    const providers = getProviders();
     const uploadedAlgorithms = providers.algorithm.listAlgorithms();
     const uploadedDatasets = providers.dataset.listDatasets();
     const uploadedExperiments = providers.experiment.listExperiments();
@@ -18,7 +17,6 @@ describe('Automatic Database Setup', () => {
   });
   test('loads example entries when enabled', async () => {
     await setupDatabase({ temporary: true, loadExampleEntries: true });
-    const providers = getProviders();
     const uploadedAlgorithms = providers.algorithm
       .listAlgorithms()
       .sort(idSorter);

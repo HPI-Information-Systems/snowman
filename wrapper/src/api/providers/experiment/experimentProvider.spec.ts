@@ -3,11 +3,12 @@ import {
   AlgorithmValues,
   DatasetValues,
   ExperimentValues,
+  SetExperimentFileFormatEnum,
 } from '../../server/types';
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
 import { DatasetProvider } from '../dataset/datasetProvider';
-import { ExperimentProvider } from './experimentProvider/experimentProvider';
+import { ExperimentProvider } from './experimentProvider';
 
 describe('ExperimentProvider', () => {
   let provider: ExperimentProvider;
@@ -101,7 +102,7 @@ describe('ExperimentProvider', () => {
       if (experiment.file) {
         await provider.setExperimentFile(
           id,
-          'pilot',
+          SetExperimentFileFormatEnum.Pilot,
           fileToReadable(experiment.file)
         );
       }
@@ -191,7 +192,7 @@ describe('ExperimentProvider', () => {
     ];
     await provider.setExperimentFile(
       addedExperimentIds[0],
-      'pilot',
+      SetExperimentFileFormatEnum.Pilot,
       fileToReadable(file)
     );
     expect(tables.experiment.experiment(addedExperimentIds[0]).exists()).toBe(
@@ -207,7 +208,7 @@ describe('ExperimentProvider', () => {
     await expect(() =>
       provider.setExperimentFile(
         addedExperimentIds[1],
-        'pilot',
+        SetExperimentFileFormatEnum.Pilot,
         fileToReadable(file)
       )
     ).rejects.toThrowError();

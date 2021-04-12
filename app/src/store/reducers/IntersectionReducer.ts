@@ -1,10 +1,11 @@
-import { Experiment, ExperimentIntersectionPairCountsItem } from 'api';
+import { Experiment, ExperimentIntersectionCount } from 'api';
 import { difference, nth } from 'lodash';
 import {
   CoreStoreActionTypes,
   DatasetsPageActionTypes,
   ExperimentsPageActionTypes,
   IntersectionStoreActionTypes as actionTypes,
+  NMetricsPageActionTypes,
 } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { BenchmarkConfigurationStore, IntersectionStore } from 'store/models';
@@ -42,7 +43,7 @@ export const IntersectionReducer = (
     case actionTypes.SET_COUNTS:
       return {
         ...ownState,
-        counts: action.payload as ExperimentIntersectionPairCountsItem[],
+        counts: action.payload as ExperimentIntersectionCount[],
       };
     case actionTypes.DRAG_N_DROP_EXPERIMENT: {
       let newIgnored, newIncluded, newExcluded: Experiment[];
@@ -112,6 +113,7 @@ export const IntersectionReducer = (
     case CoreStoreActionTypes.SET_ALL_EXPERIMENTS:
     case ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT:
     case DatasetsPageActionTypes.CLICK_ON_DATASET:
+    case NMetricsPageActionTypes.INSPECT_AN_EXPERIMENT:
     case actionTypes.RESET_INTERSECTION:
       return {
         ...initialState,

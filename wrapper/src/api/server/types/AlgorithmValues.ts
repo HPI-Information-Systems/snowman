@@ -13,7 +13,7 @@
  */
 
 /**
- * 
+ *
  * @export
  * @interface AlgorithmValues
  */
