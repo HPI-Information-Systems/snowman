@@ -34,7 +34,6 @@ export class ExperimentFileGetter<Schema extends TableSchema> {
   }
 
   get(startAt?: number, limit?: number, sortBy?: string): FileResponse {
-    sortBy = this.getSortedColumn(sortBy);
     let result: FileResponse;
     databaseBackend().transaction(
       () =>
@@ -49,11 +48,11 @@ export class ExperimentFileGetter<Schema extends TableSchema> {
               this.strategy.filter as NullableColumnValues<Schema['columns']> &
                 Record<string, Primitive>,
               {
-                returnedColumns: this.columns.map((col) => `"${col}"`),
+                returnedColumns: this.columns,
                 raw: true,
                 limit,
                 startAt,
-                sortBy,
+                sortBy: this.getSortedColumns(sortBy),
                 filterType: this.strategy.filterType,
               }
             )
@@ -72,22 +71,22 @@ export class ExperimentFileGetter<Schema extends TableSchema> {
     return result!;
   }
 
-  protected getSortedColumn(sortBy?: string): string {
+  protected getSortedColumns(sortBy?: string): string[] {
     if (sortBy) {
       if (sortBy in this.strategy.table.schema.columns) {
-        return `"${sortBy}"`;
+        return [sortBy];
       } else if (
         experimentCustomColumnPrefix + sortBy in
         this.strategy.table.schema.columns
       ) {
-        return `"${experimentCustomColumnPrefix + sortBy}"`;
+        return [experimentCustomColumnPrefix + sortBy];
       } else {
         throw new Error(
           `Cannot sort by ${sortBy} as this column does not exist.`
         );
       }
     } else {
-      return this.strategy.idColumns.map(({ name }) => `"${name}"`).join(',');
+      return this.strategy.idColumns.map(({ name }) => name);
     }
   }
 }

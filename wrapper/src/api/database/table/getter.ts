@@ -13,11 +13,11 @@ export type GetterOptionsT<
   ColumnsT extends TableSchema['columns'],
   RawT extends boolean
 > = {
-  returnedColumns?: readonly (keyof ColumnsT | string)[];
+  returnedColumns?: (keyof ColumnsT)[];
   raw?: RawT;
   limit?: number;
   startAt?: number;
-  sortBy?: keyof ColumnsT | string;
+  sortBy?: (keyof ColumnsT)[];
   filterType?: '=' | '<' | '>' | '>=' | '<=';
 };
 
@@ -26,7 +26,8 @@ export class TableGetter<Schema extends TableSchema> {
     (
       filters: string[],
       returnColumns: string[],
-      [sortBy, filterType]: [string | undefined, string]
+      sortBy: string[],
+      [filterType]: [string]
     ) =>
       databaseBackend().prepare(
         this.createQuery(filters, returnColumns, sortBy, filterType)
@@ -45,22 +46,18 @@ export class TableGetter<Schema extends TableSchema> {
       limit = -1,
       startAt = 0,
       filterType = '=',
-      sortBy,
+      sortBy = [],
     }: GetterOptionsT<Schema['columns'], boolean> = {}
   ) {
     const filterKeys = Object.keys(filters).sort();
     return this.statementCache
-      .get(filterKeys, returnedColumns as string[], [
-        sortBy as string,
+      .get(filterKeys, returnedColumns as string[], sortBy as string[], [
         filterType,
       ])
       .raw(raw)
       [operation](...filterKeys.map((key) => filters[key]), limit, startAt);
   }
 
-  /**
-   * !DOES NOT ESCAPE FILTER KEYS, RETURNED COLUMNS OR SORTBY
-   */
   get<RawT extends boolean = false>(
     filters: NullableColumnValues<Schema['columns']> &
       Record<string, Primitive> = {},
@@ -73,9 +70,6 @@ export class TableGetter<Schema extends TableSchema> {
     return this.query('get', filters, options);
   }
 
-  /**
-   * !DOES NOT ESCAPE FILTER KEYS, RETURNED COLUMNS OR SORTBY
-   */
   all<RawT extends boolean = false>(
     filters: NullableColumnValues<Schema['columns']> &
       Record<string, Primitive> = {},
@@ -89,23 +83,25 @@ export class TableGetter<Schema extends TableSchema> {
   protected createQuery(
     filters: string[],
     returnColumns: string[],
-    sortBy: string | undefined,
+    sortBy: string[],
     filterType: string
   ): string {
     let selectQuery = 'SELECT ';
     if (returnColumns.length > 0) {
-      selectQuery += returnColumns.map((column) => `${column}`).join(',');
+      selectQuery += returnColumns.map((column) => `"${column}"`).join(',');
     } else {
       selectQuery += '*';
     }
     selectQuery += ` FROM ${this.table}`;
     if (filters.length > 0) {
       selectQuery += ` WHERE ${filters
-        .map((filter) => `${filter} ${filterType} ?`)
+        .map((column) => `"${column}" ${filterType} ?`)
         .join(' AND ')}`;
     }
-    if (sortBy) {
-      selectQuery += ` ORDER BY ${sortBy}`;
+    if (sortBy.length > 0) {
+      selectQuery += ` ORDER BY ${sortBy
+        .map((column) => `"${column}"`)
+        .join(',')}`;
     }
     selectQuery += ` LIMIT ? OFFSET ?`;
     return selectQuery;

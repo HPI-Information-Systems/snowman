@@ -33,11 +33,11 @@ export class DatasetFileGetter {
       data: this.table.all(
         {},
         {
-          returnedColumns: this.customColumns.map((col) => `"${col}"`),
+          returnedColumns: this.customColumns,
           raw: true,
           limit: this.limit,
           startAt: this.startAt,
-          sortBy: `"${this.sortedColumn}"`,
+          sortBy: [this.sortedColumn],
         }
       ) as string[][],
     };

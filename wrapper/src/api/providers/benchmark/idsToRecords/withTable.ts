@@ -29,7 +29,7 @@ export function idClustersToRecordClustersWithTable(
 
 class IdClustersToRecordClusters {
   protected readonly columns: readonly Column[];
-  protected readonly columnNames: readonly string[];
+  protected readonly columnNames: string[];
 
   constructor(
     protected readonly idClusters: (NodeID | undefined)[],
