@@ -9,8 +9,7 @@ This document contains information about how to extend the codebase in specific 
    - we also provide a [`CSVInserter`](https://github.com/HPI-Information-Systems/snowman/blob/5f9ea889c3e2b273e6da3c584eb7baae438e6683/wrapper/src/api/providers/experiment/experimentProvider/file/csvInserter.ts) which can be subclassed for csv experiment formats
 2. give the format a unique name and register it with the server by adding it to [this](https://github.com/HPI-Information-Systems/snowman/blob/5f9ea889c3e2b273e6da3c584eb7baae438e6683/wrapper/src/api/providers/experiment/experimentProvider/file/index.ts#L16) map.
 3. add the format to the [api specification](https://github.com/HPI-Information-Systems/snowman/blob/5f9ea889c3e2b273e6da3c584eb7baae438e6683/docs/api_specification.yaml#L452-L455) (**under docs**)
-4. regenerate the client api and generated api specification
-   - the server types do not need to be updated
+4. regenerate the types and generated api specification
 
 ## Updating the database schema
 
