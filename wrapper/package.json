@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "better-sqlite3": "git+https://github.com/phpfs/better-sqlite3.git",
+    "better-sqlite3": "git+https://github.com/martingraf4/better-sqlite3.git",
     "binary-search": "^1.3.6",
     "chmodr": "git+https://github.com/phpfs/chmodr.git",
     "cookie-parser": "^1.4.4",

@@ -22,6 +22,10 @@ import {
     SimilarityThresholdFunctionOperatorFromJSON,
     SimilarityThresholdFunctionOperatorFromJSONTyped,
     SimilarityThresholdFunctionOperatorToJSON,
+    SimilarityThresholdFunctionUnaryOperator,
+    SimilarityThresholdFunctionUnaryOperatorFromJSON,
+    SimilarityThresholdFunctionUnaryOperatorFromJSONTyped,
+    SimilarityThresholdFunctionUnaryOperatorToJSON,
     SimilarityThresholdFunctionValues,
     SimilarityThresholdFunctionValuesFromJSON,
     SimilarityThresholdFunctionValuesFromJSONTyped,
@@ -63,18 +67,25 @@ export interface SimilarityThresholdFunction {
      * @type {number}
      * @memberof SimilarityThresholdFunction
      */
-     constant?: number;
-}
-
-/**
-* @export
-* @enum {string}
-*/
-export enum SimilarityThresholdFunctionTypeEnum {
-    SimilarityThreshold = 'SimilarityThreshold',
-    Operator = 'Operator',
-    Constant = 'Constant'
-}
+    constant?: number;
+    /**
+     * 
+     * @type {SimilarityThresholdFunctionUnaryOperator}
+     * @memberof SimilarityThresholdFunction
+     */
+     unaryOperator?: SimilarityThresholdFunctionUnaryOperator;
+    }
+    
+    /**
+    * @export
+    * @enum {string}
+    */
+    export enum SimilarityThresholdFunctionTypeEnum {
+        SimilarityThreshold = 'SimilarityThreshold',
+        Operator = 'Operator',
+        Constant = 'Constant',
+        UnaryOperator = 'UnaryOperator'
+    }
 
 export function SimilarityThresholdFunctionFromJSON(json: any): SimilarityThresholdFunction {
     return SimilarityThresholdFunctionFromJSONTyped(json, false);
@@ -91,6 +102,7 @@ export function SimilarityThresholdFunctionFromJSONTyped(json: any, ignoreDiscri
         'similarityThreshold': !exists(json, 'similarityThreshold') ? undefined : json['similarityThreshold'],
         'operator': !exists(json, 'operator') ? undefined : SimilarityThresholdFunctionOperatorFromJSON(json['operator']),
         'constant': !exists(json, 'constant') ? undefined : json['constant'],
+        'unaryOperator': !exists(json, 'unaryOperator') ? undefined : SimilarityThresholdFunctionUnaryOperatorFromJSON(json['unaryOperator']),
     };
 }
 
@@ -108,6 +120,7 @@ export function SimilarityThresholdFunctionToJSON(value?: SimilarityThresholdFun
         'similarityThreshold': value.similarityThreshold,
         'operator': SimilarityThresholdFunctionOperatorToJSON(value.operator),
         'constant': value.constant,
+        'unaryOperator': SimilarityThresholdFunctionUnaryOperatorToJSON(value.unaryOperator),
     };
 }
 

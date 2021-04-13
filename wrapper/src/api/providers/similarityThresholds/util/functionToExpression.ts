@@ -14,7 +14,7 @@ function thresholdToExpression(
   if (threshold) {
     const column = escapeColumnName(threshold, experimentCustomColumnPrefix);
     if (column in columns) {
-      return `"${column}"`;
+      return `/*THRESHOLD*/"${column}"`;
     } else {
       throw new Error(
         `Similarity threshold function has non existent similarity threhold ${threshold}`
@@ -29,22 +29,18 @@ function thresholdToExpression(
 
 function operatorToExpression(
   operator: SimilarityThresholdFunctionValues['operator'],
-  columns: Columns
+  columns: Columns,
+  expression: { index: number }
 ): string {
   if (operator) {
     const operatorString = enumToOperator.get(operator.operator);
-    if (!operatorString) {
-      throw new Error(
-        'Unknown operator in similarity threshold function: ' + operator
-      );
+    const left = functionToExpression(operator.left, columns, expression);
+    const right = functionToExpression(operator.right, columns, expression);
+    if (operatorString) {
+      return '/*BASIC_OPERATOR*/(' + left + operatorString + right + ')';
+    } else {
+      return `/*ADVANCED_OPERATOR*/${operator.operator.toLowerCase()}(${left},${right})`;
     }
-    return (
-      '(' +
-      functionToExpression(operator.left, columns) +
-      operatorString +
-      functionToExpression(operator.right, columns) +
-      ')'
-    );
   } else {
     throw new Error(
       `Similarity threshold function operator is missing required property operator.`
@@ -56,7 +52,7 @@ function constantToExpression(
   constant: SimilarityThresholdFunctionValues['constant']
 ): string {
   if (typeof constant === 'number') {
-    return `${constant}/*END*/`;
+    return `/*CONSTANT*/${constant}`;
   } else {
     throw new Error(
       'Similarity threshold function constant is missing required property constant.'
@@ -64,26 +60,68 @@ function constantToExpression(
   }
 }
 
+function unaryOperatorToExpression(
+  unaryOperator: SimilarityThresholdFunctionValues['unaryOperator'],
+  columns: Columns,
+  expression: { index: number }
+): string {
+  if (unaryOperator) {
+    return `/*UNARY_OPERATOR*/${unaryOperator.operator.toLowerCase()}(${functionToExpression(
+      unaryOperator.func,
+      columns,
+      expression
+    )})`;
+  } else {
+    throw new Error(
+      'Similarity threshold function unary operator is missing required property unaryOperator.'
+    );
+  }
+}
+
+function wrapExpression(
+  expressionString: string,
+  expression: { index: number }
+): string {
+  expression.index++;
+  return `/*START_${expression.index}*/${expressionString}/*END_${expression.index}*/`;
+}
+
 export function functionToExpression(
   similarityThresholdFunction: SimilarityThresholdFunctionValues,
-  columns: Columns
+  columns: Columns,
+  expression: { index: number } = { index: 0 }
 ): string {
+  let expressionStr: string;
   switch (similarityThresholdFunction.type) {
     case SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold:
-      return thresholdToExpression(
+      expressionStr = thresholdToExpression(
         similarityThresholdFunction.similarityThreshold,
         columns
       );
+      break;
     case SimilarityThresholdFunctionValuesTypeEnum.Operator:
-      return operatorToExpression(
+      expressionStr = operatorToExpression(
         similarityThresholdFunction.operator,
-        columns
+        columns,
+        expression
       );
+      break;
     case SimilarityThresholdFunctionValuesTypeEnum.Constant:
-      return constantToExpression(similarityThresholdFunction.constant);
+      expressionStr = constantToExpression(
+        similarityThresholdFunction.constant
+      );
+      break;
+    case SimilarityThresholdFunctionValuesTypeEnum.UnaryOperator:
+      expressionStr = unaryOperatorToExpression(
+        similarityThresholdFunction.unaryOperator,
+        columns,
+        expression
+      );
+      break;
     default:
       throw new Error(
         `Unknown similarity threshold function type: ${similarityThresholdFunction.type}`
       );
   }
+  return wrapExpression(expressionStr, expression);
 }

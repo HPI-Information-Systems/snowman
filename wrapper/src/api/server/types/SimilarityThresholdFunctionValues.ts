@@ -1,5 +1,5 @@
 import { SimilarityThresholdFunctionOperator } from './SimilarityThresholdFunctionOperator';
-
+import { SimilarityThresholdFunctionUnaryOperator } from './SimilarityThresholdFunctionUnaryOperator';
 /**
  *
  * @export
@@ -30,6 +30,12 @@ export interface SimilarityThresholdFunctionValues {
    * @memberof SimilarityThresholdFunctionValues
    */
   constant?: number;
+  /**
+   *
+   * @type {SimilarityThresholdFunctionUnaryOperator}
+   * @memberof SimilarityThresholdFunctionValues
+   */
+  unaryOperator?: SimilarityThresholdFunctionUnaryOperator;
 }
 
 /**
@@ -40,4 +46,5 @@ export enum SimilarityThresholdFunctionValuesTypeEnum {
   SimilarityThreshold = 'SimilarityThreshold',
   Operator = 'Operator',
   Constant = 'Constant',
+  UnaryOperator = 'UnaryOperator',
 }

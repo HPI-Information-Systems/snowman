@@ -17,4 +17,5 @@ export * from './Metric';
 export * from './SimilarityThresholdFunction';
 export * from './SimilarityThresholdFunctionAllOf';
 export * from './SimilarityThresholdFunctionOperator';
+export * from './SimilarityThresholdFunctionUnaryOperator';
 export * from './SimilarityThresholdFunctionValues';

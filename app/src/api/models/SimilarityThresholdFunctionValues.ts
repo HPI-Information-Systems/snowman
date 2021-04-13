@@ -18,6 +18,10 @@ import {
     SimilarityThresholdFunctionOperatorFromJSON,
     SimilarityThresholdFunctionOperatorFromJSONTyped,
     SimilarityThresholdFunctionOperatorToJSON,
+    SimilarityThresholdFunctionUnaryOperator,
+    SimilarityThresholdFunctionUnaryOperatorFromJSON,
+    SimilarityThresholdFunctionUnaryOperatorFromJSONTyped,
+    SimilarityThresholdFunctionUnaryOperatorToJSON,
 } from './';
 
 /**
@@ -49,7 +53,13 @@ export interface SimilarityThresholdFunctionValues {
      * @type {number}
      * @memberof SimilarityThresholdFunctionValues
      */
-     constant?: number;
+    constant?: number;
+    /**
+     * 
+     * @type {SimilarityThresholdFunctionUnaryOperator}
+     * @memberof SimilarityThresholdFunctionValues
+     */
+    unaryOperator?: SimilarityThresholdFunctionUnaryOperator;
 }
 
 /**
@@ -59,7 +69,8 @@ export interface SimilarityThresholdFunctionValues {
 export enum SimilarityThresholdFunctionValuesTypeEnum {
     SimilarityThreshold = 'SimilarityThreshold',
     Operator = 'Operator',
-    Constant = 'Constant'
+    Constant = 'Constant',
+    UnaryOperator = 'UnaryOperator'
 }
 
 export function SimilarityThresholdFunctionValuesFromJSON(json: any): SimilarityThresholdFunctionValues {
@@ -76,6 +87,7 @@ export function SimilarityThresholdFunctionValuesFromJSONTyped(json: any, ignore
         'similarityThreshold': !exists(json, 'similarityThreshold') ? undefined : json['similarityThreshold'],
         'operator': !exists(json, 'operator') ? undefined : SimilarityThresholdFunctionOperatorFromJSON(json['operator']),
         'constant': !exists(json, 'constant') ? undefined : json['constant'],
+        'unaryOperator': !exists(json, 'unaryOperator') ? undefined : SimilarityThresholdFunctionUnaryOperatorFromJSON(json['unaryOperator']),
     };
 }
 
@@ -92,6 +104,7 @@ export function SimilarityThresholdFunctionValuesToJSON(value?: SimilarityThresh
         'similarityThreshold': value.similarityThreshold,
         'operator': SimilarityThresholdFunctionOperatorToJSON(value.operator),
         'constant': value.constant,
+        'unaryOperator': SimilarityThresholdFunctionUnaryOperatorToJSON(value.unaryOperator),
     };
 }
 

@@ -858,10 +858,46 @@ components:
           $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
         operator:
           type: string
-          enum: [ADD, SUBTRACT, MULTIPLY, DIVIDE]
+          enum: [ADD, SUBTRACT, MULTIPLY, DIVIDE, POWER, POW, ATAN2, LOG, MOD]
       required:
         - left
         - right
+        - operator
+
+    SimilarityThresholdFunctionUnaryOperator:
+      type: object
+      properties:
+        func:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+        operator:
+          type: string
+          enum:
+            - ACOS
+            - ACOSH
+            - ASIN
+            - ASINH
+            - ATAN
+            - ATANH
+            - CEIL
+            - CEILING
+            - COS
+            - COSH
+            - DEGREES
+            - EXP
+            - FLOOR
+            - LN
+            - LOG
+            - LOG10
+            - LOG2
+            - RADIANS
+            - SIN
+            - SINH
+            - SQRT
+            - TAN
+            - TANH
+            - TRUNC
+      required:
+        - func
         - operator
 
     SimilarityThresholdFunctionValues:
@@ -869,13 +905,15 @@ components:
       properties:
         type:
           type: string
-          enum: [SimilarityThreshold, Operator, Constant]
+          enum: [SimilarityThreshold, Operator, Constant, UnaryOperator]
         similarityThreshold:
           $ref: "#/components/schemas/SimilarityThreshold"
         operator:
           $ref: "#/components/schemas/SimilarityThresholdFunctionOperator"
         constant:
           $ref: "#/components/schemas/SimilarityThresholdFunctionConstant"
+        unaryOperator:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionUnaryOperator"
       required:
         - type
 
