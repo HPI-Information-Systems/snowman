@@ -15,16 +15,13 @@ export function idClustersToRecordClustersWithTable(
   table: Table<DatasetSchema>,
   datasetId: DatasetId
 ): FileResponse {
-  let result: FileResponse;
-  databaseBackend().transaction(() => {
-    result = new IdClustersToRecordClusters(
+  return databaseBackend().transaction(() =>
+    new IdClustersToRecordClusters(
       idClusters,
       table,
       new DatasetIDMapper(datasetId)
-    ).run();
-  })();
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return result!;
+    ).run()
+  )();
 }
 
 class IdClustersToRecordClusters {

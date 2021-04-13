@@ -34,41 +34,35 @@ export class ExperimentFileGetter<Schema extends TableSchema> {
   }
 
   get(startAt?: number, limit?: number, sortBy?: string): FileResponse {
-    let result: FileResponse;
-    databaseBackend().transaction(
-      () =>
-        (result = {
-          header: this.columns.map((column) =>
-            column.startsWith(experimentCustomColumnPrefix)
-              ? column.substring(experimentCustomColumnPrefix.length)
-              : column
-          ),
-          data: this.strategy.table
-            .all(
-              this.strategy.filter as NullableColumnValues<Schema['columns']> &
-                Record<string, Primitive>,
-              {
-                returnedColumns: this.columns,
-                raw: true,
-                limit,
-                startAt,
-                sortBy: this.getSortedColumns(sortBy),
-                filterType: this.strategy.filterType,
-              }
-            )
-            .map((row) => {
-              const resultRow = row.map((element) => `${element}`);
-              for (const idIndex of this.idIndices) {
-                resultRow[idIndex] =
-                  this.idMapper.mapReversed(row[idIndex] as number) ??
-                  `mapped: ${row[idIndex]}`;
-              }
-              return resultRow;
-            }) as string[][],
-        })
-    )();
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return result!;
+    return databaseBackend().transaction(() => ({
+      header: this.columns.map((column) =>
+        column.startsWith(experimentCustomColumnPrefix)
+          ? column.substring(experimentCustomColumnPrefix.length)
+          : column
+      ),
+      data: this.strategy.table
+        .all(
+          this.strategy.filter as NullableColumnValues<Schema['columns']> &
+            Record<string, Primitive>,
+          {
+            returnedColumns: this.columns,
+            raw: true,
+            limit,
+            startAt,
+            sortBy: this.getSortedColumns(sortBy),
+            filterType: this.strategy.filterType,
+          }
+        )
+        .map((row) => {
+          const resultRow = row.map((element) => `${element}`);
+          for (const idIndex of this.idIndices) {
+            resultRow[idIndex] =
+              this.idMapper.mapReversed(row[idIndex] as number) ??
+              `mapped: ${row[idIndex]}`;
+          }
+          return resultRow;
+        }) as string[][],
+    }))();
   }
 
   protected getSortedColumns(sortBy?: string): string[] {
