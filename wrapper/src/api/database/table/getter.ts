@@ -18,7 +18,7 @@ export type GetterOptionsT<
   limit?: number;
   startAt?: number;
   sortBy?: (keyof ColumnsT)[];
-  filterType?: '=' | '<' | '>' | '>=' | '<=';
+  filterType?: '=' | '<' | '>' | '>=' | '<=' | 'LIKE';
 };
 
 export class TableGetter<Schema extends TableSchema> {

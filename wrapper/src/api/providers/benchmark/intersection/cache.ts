@@ -1,4 +1,9 @@
-import { DatasetId, ExperimentId } from '../../../server/types';
+import { tables } from '../../../database';
+import {
+  DatasetId,
+  ExperimentId,
+  SimilarityThresholdFunctionId,
+} from '../../../server/types';
 import { PartiallySortedCache } from '../../../tools/cache/partiallySorted';
 import { Intersection } from '.';
 import { entangledIntersectionBaseParams } from './base';
@@ -16,7 +21,15 @@ export const SubclusterCache = new PartiallySortedCache(
   CachedSubclusting.entangledConstructorParameters
 );
 
-export function invalidateCaches(id: ExperimentId | DatasetId): void {
+export function invalidateCaches(
+  id: ExperimentId | DatasetId | SimilarityThresholdFunctionId
+): void {
   IntersectionCache.invalidate(id);
   SubclusterCache.invalidate(id);
+  tables.cache.intersectionCounts.delete(
+    {
+      key: `%${id}%`,
+    },
+    'LIKE'
+  );
 }

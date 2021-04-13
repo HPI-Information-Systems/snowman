@@ -1,7 +1,12 @@
+import { tables } from '../../../database';
 import { LazyProperty } from '../../../tools/lazyProperty';
 import { numberOfPairs } from '../../../tools/numberOfPairs';
 import { IntersectionBase } from './base';
 import { IntersectionCache } from './cache';
+
+function toString(value: unknown): string {
+  return `${value}`;
+}
 
 export class IntersectionCounts extends IntersectionBase {
   get numberPairs(): number {
@@ -11,12 +16,64 @@ export class IntersectionCounts extends IntersectionBase {
     return this._rowCount.value;
   }
 
-  protected readonly _pairCount = new LazyProperty<number>(() =>
-    this.calculatePairCount()
+  protected readonly _pairCount = new LazyProperty<number>(
+    () =>
+      this.getCachedPairCount() ??
+      this.cachePairCount(this.calculatePairCount())
   );
-  protected readonly _rowCount = new LazyProperty<number>(() =>
-    this.calculateRowCount()
+  protected readonly _rowCount = new LazyProperty<number>(
+    () =>
+      this.getCachedRowCount() ?? this.cacheRowCount(this.calculateRowCount())
   );
+
+  protected get pairsCacheKey(): string {
+    return this._cacheKey.value + '-pairs';
+  }
+
+  protected get rowsCacheKey(): string {
+    return this._cacheKey.value + '-rows';
+  }
+
+  protected readonly _cacheKey = new LazyProperty<string>(() =>
+    (([
+      this.datasetId,
+      this.positive,
+      this.positiveSimilarityThresholds,
+      this.positiveSimilarityFunctions,
+      this.negative,
+      this.negativeSimilarityThresholds,
+      this.negativeSimilarityFunctions,
+    ] as ConstructorParameters<typeof IntersectionBase>) as (
+      | number
+      | undefined
+    )[][])
+      .map((ids) => ids.map(toString).join(';'))
+      .join('/')
+  );
+
+  protected getCachedPairCount(): number | undefined {
+    return tables.cache.intersectionCounts.get({ key: this.pairsCacheKey })
+      ?.value;
+  }
+
+  protected getCachedRowCount(): number | undefined {
+    return tables.cache.intersectionCounts.get({ key: this.rowsCacheKey })
+      ?.value;
+  }
+
+  protected cachePairCount(pairCount: number): number {
+    tables.cache.intersectionCounts.upsert([
+      { key: this.pairsCacheKey, value: pairCount },
+    ]);
+    return pairCount;
+  }
+
+  protected cacheRowCount(rowCount: number): number {
+    tables.cache.intersectionCounts.upsert([
+      { key: this.rowsCacheKey, value: rowCount },
+    ]);
+    return rowCount;
+  }
 
   protected calculatePairCount(): number {
     if (this.negative.length === 0) {

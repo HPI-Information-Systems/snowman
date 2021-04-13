@@ -1,28 +1,38 @@
 import { SortedCache } from '../../tools/cache/sorted';
 import { databaseBackend } from '../setup/backend';
 import type { NullableColumnValues, TableSchema } from '../tools/types';
+import { GetterOptionsT } from './getter';
 import type { Table } from './table';
 
 export class TableDeleter<Schema extends TableSchema> {
   protected readonly deleteRowStatementCache = new SortedCache(
-    (columns: string[]) =>
-      databaseBackend().prepare(this.createDeleteRowQuery(columns))
+    (...args: Parameters<TableDeleter<Schema>['createDeleteRowQuery']>) =>
+      databaseBackend().prepare(this.createDeleteRowQuery(...args))
   );
 
   constructor(private readonly table: Table<Schema>) {}
 
-  delete(filter: NullableColumnValues<Schema['columns']> = {}): void {
+  delete(
+    filter: NullableColumnValues<Schema['columns']> = {},
+    filterType: GetterOptionsT<
+      TableSchema['columns'],
+      boolean
+    >['filterType'] = '='
+  ): void {
     const filters = Object.keys(filter).sort();
     this.deleteRowStatementCache
-      .get(filters)
+      .get(filters, [filterType])
       .run(...filters.map((key) => filter[key]));
   }
 
-  protected createDeleteRowQuery(columns: string[]): string {
+  protected createDeleteRowQuery(
+    filter: string[],
+    [filterType]: [string]
+  ): string {
     let deleteQuery = `DELETE FROM ${this.table}`;
-    if (columns.length > 0) {
-      deleteQuery += ` WHERE ${columns
-        .map((column) => `"${column}" = ?`)
+    if (filter.length > 0) {
+      deleteQuery += ` WHERE ${filter
+        .map((column) => `"${column}" ${filterType} ?`)
         .join(' AND ')}`;
     }
     return deleteQuery;
