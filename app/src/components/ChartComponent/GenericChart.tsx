@@ -1,13 +1,24 @@
-import { Chart, ChartConfiguration, ChartData, registerables } from 'chart.js';
+import {
+  Chart,
+  ChartConfiguration,
+  ChartData,
+  ChartType,
+  DefaultDataPoint,
+  registerables,
+} from 'chart.js';
 import { isEqual } from 'lodash';
 import React, { Component } from 'react';
 
 // See: https://www.chartjs.org/docs/latest/getting-started/integration.html#bundlers-webpack-rollup-etc
 Chart.register(...registerables);
 
-export default class GenericChart extends Component<ChartConfiguration> {
+export default class GenericChart<
+  TType extends ChartType = ChartType,
+  TData = DefaultDataPoint<TType>,
+  TLabel = unknown
+> extends Component<ChartConfiguration<TType, TData, TLabel>> {
   chartRef = React.createRef<HTMLCanvasElement>();
-  chartInstance: Chart | undefined = undefined;
+  chartInstance: Chart<TType, TData, TLabel> | undefined = undefined;
 
   componentDidMount(): void {
     this.draw();
@@ -26,7 +37,9 @@ export default class GenericChart extends Component<ChartConfiguration> {
     }
   }
 
-  shouldComponentUpdate(nextProps: Readonly<ChartConfiguration>): boolean {
+  shouldComponentUpdate(
+    nextProps: Readonly<ChartConfiguration<TType, TData, TLabel>>
+  ): boolean {
     if (
       !isEqual(nextProps.type, this.props.type) ||
       !isEqual(nextProps.options, this.props.options) ||
@@ -49,7 +62,7 @@ export default class GenericChart extends Component<ChartConfiguration> {
     );
   }
 
-  updateData(data: ChartData): void {
+  updateData(data: ChartData<TType, TData, TLabel>): void {
     if (this.chartInstance !== undefined) {
       this.chartInstance.data = data;
       this.chartInstance.update();
