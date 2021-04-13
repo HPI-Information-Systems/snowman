@@ -49,13 +49,17 @@ describe.each([
       },
     ],
   },
-] as CacheTestCase[])('Cache', (testCase: CacheTestCase) => {
+] as CacheTestCase[])('Cache', ({ entangledKeys, keys }: CacheTestCase) => {
   test('sorts items in correct order', () => {
     let nextTestCase: CacheTestCase['keys'][number]['targetKey'];
-    new PartiallySortedCache(
+    const cache = new PartiallySortedCache(
       (...key: CacheTestCase['keys'][number]['key']) =>
         expect(key).toEqual(nextTestCase),
-      testCase.entangledKeys
+      entangledKeys
     );
+    for (const { key, targetKey } of keys) {
+      nextTestCase = targetKey;
+      cache.get(...key);
+    }
   });
 });
