@@ -81,8 +81,8 @@ export function SimilarityThresholdFunctionUnaryOperatorFromJSONTyped(json: any,
     }
     return {
         
-        'func': !exists(json, 'func') ? undefined : SimilarityThresholdFunctionValuesFromJSON(json['func']),
-        'operator': !exists(json, 'operator') ? undefined : json['operator'],
+        'func': SimilarityThresholdFunctionValuesFromJSON(json['func']),
+        'operator': json['operator'],
     };
 }
 
