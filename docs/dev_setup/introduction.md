@@ -29,7 +29,7 @@ If you want to start the electron wrapper:
 
 - run `npm run release-app` in `./` to build and copy the app to `./wrapper`
 - run `npm run erebuild` in `./wrapper` to recompile the dependencies to the NodeJS version of electron
-- run `npm run start` in `./wrapper` to
+- run `npm run start` in `./wrapper` to start backend and frontend inside electron
 - run `npm run rebuild` in `./wrapper` to recompile the dependencies back to the global NodeJS version
 
 ### VSCode
