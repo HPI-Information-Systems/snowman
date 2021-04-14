@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -15,6 +15,9 @@
 
 import * as runtime from '../runtime';
 import {
+    DiagramCoordinates,
+    DiagramCoordinatesFromJSON,
+    DiagramCoordinatesToJSON,
     ExperimentConfigItem,
     ExperimentConfigItemFromJSON,
     ExperimentConfigItemToJSON,
@@ -30,7 +33,16 @@ import {
     Metric,
     MetricFromJSON,
     MetricToJSON,
+    MetricsEnum,
+    MetricsEnumFromJSON,
+    MetricsEnumToJSON,
 } from '../models';
+
+export interface CalculateDiagramDataRequest {
+    xAxis: MetricsEnum;
+    yAxis: MetricsEnum;
+    requestBody: Array<object>;
+}
 
 export interface CalculateExperimentIntersectionCountRequest {
     intersection: Array<ExperimentIntersectionItem>;
@@ -59,6 +71,55 @@ export interface GetBinaryMetricsRequest {
  * 
  */
 export class BenchmarkApi extends runtime.BaseAPI {
+
+    /**
+     * returns diagram data based on two metrics and multiple experiments
+     */
+    async calculateDiagramDataRaw(requestParameters: CalculateDiagramDataRequest): Promise<runtime.ApiResponse<DiagramCoordinates>> {
+        if (requestParameters.xAxis === null || requestParameters.xAxis === undefined) {
+            throw new runtime.RequiredError('xAxis','Required parameter requestParameters.xAxis was null or undefined when calling calculateDiagramData.');
+        }
+
+        if (requestParameters.yAxis === null || requestParameters.yAxis === undefined) {
+            throw new runtime.RequiredError('yAxis','Required parameter requestParameters.yAxis was null or undefined when calling calculateDiagramData.');
+        }
+
+        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
+            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling calculateDiagramData.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.xAxis !== undefined) {
+            queryParameters['xAxis'] = requestParameters.xAxis;
+        }
+
+        if (requestParameters.yAxis !== undefined) {
+            queryParameters['yAxis'] = requestParameters.yAxis;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/benchmark/diagram`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.requestBody,
+        });
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => DiagramCoordinatesFromJSON(jsonValue));
+    }
+
+    /**
+     * returns diagram data based on two metrics and multiple experiments
+     */
+    async calculateDiagramData(requestParameters: CalculateDiagramDataRequest): Promise<DiagramCoordinates> {
+        const response = await this.calculateDiagramDataRaw(requestParameters);
+        return await response.value();
+    }
 
     /**
      * Intersects multiple experiments and returns the count of pairs and the count of rows. This can be used to calculate the confusion-matrix.
