@@ -862,8 +862,6 @@ components:
           $ref: "#/components/schemas/DatasetId"
         algorithmId:
           $ref: "#/components/schemas/AlgorithmId"
-        timeToConfigure:
-          type: integer
     Experiment:
       allOf:
         - type: object
@@ -1005,9 +1003,9 @@ components:
       items:
         properties:
           experimentId:
-            $ref: "#/components/schemas/ExperimentId"
+            $ref: "#/components/schemas/ExperimentConfigItem"
           groundTruthId:
-            $ref: "#/components/schemas/ExperimentId"
+            $ref: "#/components/schemas/ExperimentConfigItem"
         type: object
       type: array
     DiagramCoordinates:
@@ -1041,7 +1039,8 @@ components:
         - f1Score
         - fowlkesMallowsIndex
         - markedness
-        - matthewsCorrelationCoefficient
+        - matthewsCorrelationCoefficien
+
     #### GENERAL ####
     CSVFile:
       type: string
