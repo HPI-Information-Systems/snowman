@@ -28,7 +28,7 @@ const SideMenuView = ({
 }: SideMenuProps): JSX.Element => (
   <IonMenu contentId={contentId}>
     <IonHeader>
-      <IonToolbar color="primary">
+      <IonToolbar color="primary-dark">
         <IonTitle>Snowman - Benchmark</IonTitle>
       </IonToolbar>
     </IonHeader>
