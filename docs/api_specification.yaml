@@ -3,8 +3,8 @@ info:
   description: >
     _This document describes the REST API of the snowman data matching benchmark
     tool._
-    Comparing data matching algorithms is still an unsolved topic in both industry and research. 
-    With snowman, developers and researchers will be able to compare the performance of different data matching 
+    Comparing data matching algorithms is still an unsolved topic in both industry and research.
+    With snowman, developers and researchers will be able to compare the performance of different data matching
     solutions or improve new algorithms.
   version: 1.0.0
   title: Snowman API
@@ -862,6 +862,8 @@ components:
           $ref: "#/components/schemas/DatasetId"
         algorithmId:
           $ref: "#/components/schemas/AlgorithmId"
+        timeToConfigure:
+          type: integer
     Experiment:
       allOf:
         - type: object
@@ -999,14 +1001,16 @@ components:
         - numberRows
         - numberPairs
         - experiments
+    DiagramExperimentItem:
+      properties:
+        experimentId:
+          $ref: "#/components/schemas/ExperimentConfigItem"
+        groundTruthId:
+          $ref: "#/components/schemas/ExperimentConfigItem"
+      type: object
     DiagramExperiments:
       items:
-        properties:
-          experimentId:
-            $ref: "#/components/schemas/ExperimentConfigItem"
-          groundTruthId:
-            $ref: "#/components/schemas/ExperimentConfigItem"
-        type: object
+        $ref: "#/components/schemas/DiagramExperimentItem"
       type: array
     DiagramCoordinates:
       properties:
