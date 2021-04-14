@@ -726,6 +726,42 @@ paths:
                 type: array
         404:
           description: Not Found
+  /benchmark/diagram:
+    post:
+      tags:
+        - Benchmark
+      description: returns diagram data based on two metrics and multiple experiments
+      operationId: calculateDiagramData
+      parameters:
+      - name: xAxis
+        in: query
+        schema:
+          $ref: "#/components/schemas/MetricsEnum"
+        required: true
+        description: metric to be visualised on the x-axis of the diagram
+      - name: yAxis
+        in: query
+        schema:
+          $ref: "#/components/schemas/MetricsEnum"
+        description: metric to be visualised on the y-axis of the diagram
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiagramExperiments"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiagramCoordinates"
+        403:
+          description: Forbidden
+        404:
+          description: Experiments or metrics not found
 
 components:
   requestBodies:
@@ -965,7 +1001,47 @@ components:
         - numberRows
         - numberPairs
         - experiments
-
+    DiagramExperiments:
+      items:
+        properties:
+          experimentId:
+            $ref: "#/components/schemas/ExperimentId"
+          groundTruthId:
+            $ref: "#/components/schemas/ExperimentId"
+        type: object
+      type: array
+    DiagramCoordinates:
+      properties:
+        x:
+          items:
+            type: number
+          type: array
+        y:
+          items:
+            type: number
+          type: array
+    MetricsEnum:
+      type: string
+      enum:
+        - timeToConfigure
+        - falseDiscoveryRate
+        - falseNegativeRate
+        - falseOmissionRate
+        - falsePositiveRate
+        - negativePredictiveValue
+        - precision
+        - prevalenceThreshold
+        - recall
+        - specificity
+        - threatScore
+        - accuracy
+        - balancedAccuracy
+        - bookmakerInformedness
+        - fStarScore
+        - f1Score
+        - fowlkesMallowsIndex
+        - markedness
+        - matthewsCorrelationCoefficient
     #### GENERAL ####
     CSVFile:
       type: string
