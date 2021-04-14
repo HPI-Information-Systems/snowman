@@ -1,10 +1,7 @@
 import { Writeable } from '../../tools/types';
 import { Column } from './types';
 
-export function escapeColumnName(
-  columnName: string,
-  addPrefix: string
-): string {
+export function escapeColumnName(columnName: string, addPrefix = ''): string {
   return (addPrefix + columnName).replace(/[^a-zA-Z0-9 _-]/gi, '');
 }
 

@@ -1,6 +1,6 @@
 import { Statement } from 'better-sqlite3';
 
-import { Cache } from '../../tools/cache';
+import { SortedCache } from '../../tools/cache/sorted';
 import { databaseBackend } from '../setup/backend';
 import type {
   BasicDataType,
@@ -11,7 +11,7 @@ import type {
 import type { Table } from './table';
 
 export class TableUpserter<Schema extends TableSchema> {
-  protected readonly statementCache = new Cache((columns: string[]) =>
+  protected readonly statementCache = new SortedCache((columns: string[]) =>
     this.createInsertStatement(columns)
   );
   protected readonly cachedRows: (() => InsertColumnValues<
@@ -21,8 +21,8 @@ export class TableUpserter<Schema extends TableSchema> {
   constructor(protected readonly table: Table<Schema>) {}
 
   upsert(rows: InsertColumnValues<Schema['columns']>[]): number[] {
-    const insertedRowIds: number[] = [];
-    databaseBackend().transaction(() => {
+    return databaseBackend().transaction(() => {
+      const insertedRowIds: number[] = [];
       for (const row of rows) {
         const columns = Object.keys(row)
           .filter((column) => column !== undefined)
@@ -37,8 +37,8 @@ export class TableUpserter<Schema extends TableSchema> {
             ).lastInsertRowid
         );
       }
+      return insertedRowIds;
     })();
-    return insertedRowIds;
   }
 
   batchUpsert(
@@ -57,13 +57,13 @@ export class TableUpserter<Schema extends TableSchema> {
   }
 
   flushBatchUpsert(): number[] {
-    let rowIds: number[];
-    databaseBackend().transaction(() => {
-      rowIds = this.upsert(this.cachedRows.map((rowGetter) => rowGetter()));
+    return databaseBackend().transaction(() => {
+      const rowIds = this.upsert(
+        this.cachedRows.map((rowGetter) => rowGetter())
+      );
+      this.cachedRows.length = 0;
+      return rowIds;
     })();
-    this.cachedRows.length = 0;
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return rowIds!;
   }
 
   private createInsertStatement(

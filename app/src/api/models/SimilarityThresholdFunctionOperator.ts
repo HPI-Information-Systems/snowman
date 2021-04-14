@@ -54,7 +54,12 @@ export enum SimilarityThresholdFunctionOperatorOperatorEnum {
     Add = 'ADD',
     Subtract = 'SUBTRACT',
     Multiply = 'MULTIPLY',
-    Divide = 'DIVIDE'
+    Divide = 'DIVIDE',
+    Power = 'POWER',
+    Pow = 'POW',
+    Atan2 = 'ATAN2',
+    Log = 'LOG',
+    Mod = 'MOD'
 }
 
 export function SimilarityThresholdFunctionOperatorFromJSON(json: any): SimilarityThresholdFunctionOperator {

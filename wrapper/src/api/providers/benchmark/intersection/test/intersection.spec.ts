@@ -34,20 +34,75 @@ function testConfig(
   expected: NodeID[][],
   datasetId: [DatasetId]
 ) {
-  expectClusteringsToEqual(getClustering(pos, neg, datasetId), expected);
-  expect(IntersectionCache.get(pos, neg, datasetId).numberPairs).toBe(
-    expected.reduce((prev, cur) => prev + numberOfPairs(cur.length), 0)
+  expectClusteringsToEqual(
+    getClustering(
+      datasetId,
+      pos,
+      pos.map(() => undefined),
+      pos.map(() => undefined),
+      neg,
+      neg.map(() => undefined),
+      neg.map(() => undefined)
+    ),
+    expected
   );
+  expect(
+    IntersectionCache.get(
+      datasetId,
+      pos,
+      pos.map(() => undefined),
+      pos.map(() => undefined),
+      neg,
+      neg.map(() => undefined),
+      neg.map(() => undefined)
+    ).numberPairs
+  ).toBe(expected.reduce((prev, cur) => prev + numberOfPairs(cur.length), 0));
   const result = [
-    ...IntersectionCache.get(pos, neg, datasetId).clusters(0, 1),
-    ...IntersectionCache.get(pos, neg, datasetId).clusters(1, 2),
-    ...IntersectionCache.get(pos, neg, datasetId).clusters(3, 97),
-    ...IntersectionCache.get(pos, neg, datasetId).clusters(100),
+    ...IntersectionCache.get(
+      datasetId,
+      pos,
+      pos.map(() => undefined),
+      pos.map(() => undefined),
+      neg,
+      neg.map(() => undefined),
+      neg.map(() => undefined)
+    ).clusters(0, 1),
+    ...IntersectionCache.get(
+      datasetId,
+      pos,
+      pos.map(() => undefined),
+      pos.map(() => undefined),
+      neg,
+      neg.map(() => undefined),
+      neg.map(() => undefined)
+    ).clusters(1, 2),
+    ...IntersectionCache.get(
+      datasetId,
+      pos,
+      pos.map(() => undefined),
+      pos.map(() => undefined),
+      neg,
+      neg.map(() => undefined),
+      neg.map(() => undefined)
+    ).clusters(3, 97),
+    ...IntersectionCache.get(
+      datasetId,
+      pos,
+      pos.map(() => undefined),
+      pos.map(() => undefined),
+      neg,
+      neg.map(() => undefined),
+      neg.map(() => undefined)
+    ).clusters(100),
   ];
   const expectedClusters = IntersectionCache.get(
+    datasetId,
     pos,
+    pos.map(() => undefined),
+    pos.map(() => undefined),
     neg,
-    datasetId
+    neg.map(() => undefined),
+    neg.map(() => undefined)
   ).clusters();
   expect(result).toEqual(expectedClusters);
 }

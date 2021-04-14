@@ -7,7 +7,7 @@ export function assertType<Base>(): <Extends extends Base>(
   return <Extends extends Base>(x: Extends): Extends => x;
 }
 
-export type Primitive = string | number | boolean;
+export type Primitive = string | number | boolean | undefined;
 export type NestedArray<T> = T | NestedArray<T>[];
 
 export type UndefinedKeys<T> = {

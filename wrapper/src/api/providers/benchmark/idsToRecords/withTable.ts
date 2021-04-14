@@ -15,21 +15,18 @@ export function idClustersToRecordClustersWithTable(
   table: Table<DatasetSchema>,
   datasetId: DatasetId
 ): FileResponse {
-  let result: FileResponse;
-  databaseBackend().transaction(() => {
-    result = new IdClustersToRecordClusters(
+  return databaseBackend().transaction(() =>
+    new IdClustersToRecordClusters(
       idClusters,
       table,
       new DatasetIDMapper(datasetId)
-    ).run();
-  })();
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return result!;
+    ).run()
+  )();
 }
 
 class IdClustersToRecordClusters {
   protected readonly columns: readonly Column[];
-  protected readonly columnNames: readonly string[];
+  protected readonly columnNames: string[];
 
   constructor(
     protected readonly idClusters: (NodeID | undefined)[],
@@ -62,8 +59,10 @@ class IdClustersToRecordClusters {
   }
 
   protected getRecord(id: number): string[] {
-    return (this.table.get({ id }, this.columnNames, true) ??
-      this.getNonExistingRecord(id)) as string[];
+    return (this.table.get(
+      { id },
+      { returnedColumns: this.columnNames, raw: true }
+    ) ?? this.getNonExistingRecord(id)) as string[];
   }
 
   protected getNonExistingRecord(id: number): string[] {

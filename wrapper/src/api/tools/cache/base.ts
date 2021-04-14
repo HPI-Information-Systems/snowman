@@ -1,5 +1,5 @@
-import { LazyProperty } from './lazyProperty';
-import { Primitive } from './types';
+import { LazyProperty } from '../lazyProperty';
+import { Primitive } from '../types';
 
 export class Cache<KeyItemT extends Primitive, T, KeyT extends KeyItemT[][]> {
   protected value?: T;
@@ -27,7 +27,7 @@ export class Cache<KeyItemT extends Primitive, T, KeyT extends KeyItemT[][]> {
     return subcache;
   }
 
-  protected getSorted(key: KeyT, xOffset = 0, yOffset = 0): T {
+  protected getInternal(key: KeyT, xOffset = 0, yOffset = 0): T {
     if (xOffset === key.length) {
       if (!this.value) {
         this.value = this.create(...key);
@@ -36,9 +36,9 @@ export class Cache<KeyItemT extends Primitive, T, KeyT extends KeyItemT[][]> {
     } else {
       const subKey = key[xOffset];
       if (yOffset === subKey.length) {
-        return this.nestedSubcache.value.getSorted(key, xOffset + 1, 0);
+        return this.nestedSubcache.value.getInternal(key, xOffset + 1, 0);
       } else {
-        return this.getOrAddDirectSubcache(subKey[yOffset]).getSorted(
+        return this.getOrAddDirectSubcache(subKey[yOffset]).getInternal(
           key,
           xOffset,
           yOffset + 1
@@ -48,8 +48,7 @@ export class Cache<KeyItemT extends Primitive, T, KeyT extends KeyItemT[][]> {
   }
 
   get(...key: KeyT): T {
-    key.forEach((subKey) => subKey.sort());
-    return this.getSorted(key);
+    return this.getInternal(key);
   }
 
   clear(): void {

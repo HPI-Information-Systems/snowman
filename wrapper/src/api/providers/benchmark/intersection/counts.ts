@@ -19,7 +19,7 @@ export class IntersectionCounts extends IntersectionBase {
   );
 
   protected calculatePairCount(): number {
-    if (this.predictedConditionNegative.length === 0) {
+    if (this.negative.length === 0) {
       let numberPairs = 0;
       for (const cluster of this.clustering.clusters()) {
         numberPairs += numberOfPairs(cluster.length);
@@ -28,18 +28,21 @@ export class IntersectionCounts extends IntersectionBase {
     } else {
       // |A without B without C without D ...| = |A| - |A intersected B|  - |A without B intersected C| - |A without B without C intersected D| - ...
       let numberPairs = this.positiveIntersection.numberPairs;
-      for (
-        let index = 0;
-        index < this.predictedConditionNegative.length;
-        ++index
-      ) {
+      for (let index = 0; index < this.negative.length; ++index) {
         numberPairs -= IntersectionCache.get(
+          this.datasetId,
+          [...this.positive, this.negative[index]],
           [
-            ...this.predictedConditionPositive,
-            this.predictedConditionNegative[index],
+            ...this.positiveSimilarityThresholds,
+            this.negativeSimilarityThresholds[index],
           ],
-          this.predictedConditionNegative.slice(0, index),
-          this.datasetId
+          [
+            ...this.positiveSimilarityFunctions,
+            this.negativeSimilarityFunctions[index],
+          ],
+          this.negative.slice(0, index),
+          this.negativeSimilarityThresholds.slice(0, index),
+          this.negativeSimilarityFunctions.slice(0, index)
         ).numberPairs;
       }
       return numberPairs;
@@ -47,7 +50,7 @@ export class IntersectionCounts extends IntersectionBase {
   }
 
   protected calculateRowCount(): number {
-    if (this.predictedConditionNegative.length === 0) {
+    if (this.negative.length === 0) {
       let rowCount = 0;
       let clusterCount = 0;
       for (const cluster of this.clustering.clusters()) {

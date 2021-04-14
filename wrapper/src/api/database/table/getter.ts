@@ -1,4 +1,5 @@
-import { Cache } from '../../tools/cache';
+import { Cache } from '../../tools/cache/base';
+import { Primitive } from '../../tools/types';
 import { databaseBackend } from '../setup/backend';
 import {
   ColumnDataType,
@@ -8,17 +9,28 @@ import {
 } from '../tools/types';
 import { Table } from './table';
 
-type OptionsT<ColumnT extends string | number | symbol> = {
+export type GetterOptionsT<
+  ColumnsT extends TableSchema['columns'],
+  RawT extends boolean
+> = {
+  returnedColumns?: (keyof ColumnsT)[];
+  raw?: RawT;
   limit?: number;
   startAt?: number;
-  sortBy?: ColumnT;
+  sortBy?: (keyof ColumnsT)[];
+  filterType?: '=' | '<' | '>' | '>=' | '<=';
 };
 
 export class TableGetter<Schema extends TableSchema> {
   protected readonly statementCache = new Cache(
-    (filterColumns: string[], returnColumns: string[], [sortBy]: [string]) =>
+    (
+      filters: string[],
+      returnColumns: string[],
+      sortBy: string[],
+      [filterType]: [string]
+    ) =>
       databaseBackend().prepare(
-        this.createQuery(filterColumns, returnColumns, sortBy)
+        this.createQuery(filters, returnColumns, sortBy, filterType)
       )
   );
 
@@ -26,62 +38,53 @@ export class TableGetter<Schema extends TableSchema> {
 
   private query(
     operation: 'get' | 'all',
-    filter: NullableColumnValues<Schema['columns']> = {},
-    returnedColumns: readonly (keyof Schema['columns'])[] = [],
-    raw = false,
+    filters: NullableColumnValues<Schema['columns']> &
+      Record<string, Primitive> = {},
     {
+      returnedColumns = [],
+      raw = false,
       limit = -1,
       startAt = 0,
-      sortBy = undefined,
-    }: OptionsT<keyof Schema['columns']> = {}
+      filterType = '=',
+      sortBy = [],
+    }: GetterOptionsT<Schema['columns'], boolean> = {}
   ) {
-    const filters = Object.keys(filter).sort();
+    const filterKeys = Object.keys(filters).sort();
     return this.statementCache
-      .get(filters, returnedColumns as string[], [sortBy as string])
+      .get(filterKeys, returnedColumns as string[], sortBy as string[], [
+        filterType,
+      ])
       .raw(raw)
-      [operation](...filters.map((key) => filter[key]), limit, startAt);
+      [operation](...filterKeys.map((key) => filters[key]), limit, startAt);
   }
 
-  /**
-   * !WARNING: If raw returns columns in ASCENDING SORTED ORDER
-   */
-  get<
-    RawT extends boolean = false,
-    ReturnedColumnsT extends readonly (keyof Schema['columns'])[] = []
-  >(
-    filter: NullableColumnValues<Schema['columns']> = {},
-    returnedColumns?: ReturnedColumnsT,
-    raw?: RawT,
-    options?: OptionsT<keyof Schema['columns']>
+  get<RawT extends boolean = false>(
+    filters: NullableColumnValues<Schema['columns']> &
+      Record<string, Primitive> = {},
+    options?: GetterOptionsT<Schema['columns'], RawT>
   ):
     | undefined
     | (RawT extends false
         ? ColumnValues<Schema['columns']>
-        : ColumnDataType<Schema['columns'][ReturnedColumnsT[number]]>[]) {
-    return this.query('get', filter, returnedColumns, raw, options);
+        : ColumnDataType<Schema['columns'][keyof Schema['columns']]>[]) {
+    return this.query('get', filters, options);
   }
 
-  /**
-   * !WARNING: If raw returns columns in ASCENDING SORTED ORDER
-   */
-  all<
-    RawT extends boolean = false,
-    ReturnedColumnsT extends readonly (keyof Schema['columns'])[] = []
-  >(
-    filter: NullableColumnValues<Schema['columns']> = {},
-    returnedColumns?: ReturnedColumnsT,
-    raw?: RawT,
-    options?: OptionsT<keyof Schema['columns']>
+  all<RawT extends boolean = false>(
+    filters: NullableColumnValues<Schema['columns']> &
+      Record<string, Primitive> = {},
+    options?: GetterOptionsT<Schema['columns'], RawT>
   ): RawT extends false
     ? ColumnValues<Schema['columns']>[]
-    : ColumnDataType<Schema['columns'][ReturnedColumnsT[number]]>[][] {
-    return this.query('all', filter, returnedColumns, raw, options);
+    : ColumnDataType<Schema['columns'][keyof Schema['columns']]>[][] {
+    return this.query('all', filters, options);
   }
 
   protected createQuery(
-    filterColumns: string[],
+    filters: string[],
     returnColumns: string[],
-    sortBy: string
+    sortBy: string[],
+    filterType: string
   ): string {
     let selectQuery = 'SELECT ';
     if (returnColumns.length > 0) {
@@ -90,13 +93,15 @@ export class TableGetter<Schema extends TableSchema> {
       selectQuery += '*';
     }
     selectQuery += ` FROM ${this.table}`;
-    if (filterColumns.length > 0) {
-      selectQuery += ` WHERE ${filterColumns
-        .map((column) => `"${column}" = ?`)
+    if (filters.length > 0) {
+      selectQuery += ` WHERE ${filters
+        .map((column) => `"${column}" ${filterType} ?`)
         .join(' AND ')}`;
     }
-    if (sortBy) {
-      selectQuery += ` ORDER BY "${sortBy}"`;
+    if (sortBy.length > 0) {
+      selectQuery += ` ORDER BY ${sortBy
+        .map((column) => `"${column}"`)
+        .join(',')}`;
     }
     selectQuery += ` LIMIT ? OFFSET ?`;
     return selectQuery;
