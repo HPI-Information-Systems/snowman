@@ -16,32 +16,39 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface SimilarityThresholdFunctionAllOf
+ * @interface DiagramCoordinates
  */
-export interface SimilarityThresholdFunctionAllOf {
+export interface DiagramCoordinates {
     /**
      * 
-     * @type {number}
-     * @memberof SimilarityThresholdFunctionAllOf
+     * @type {Array<number>}
+     * @memberof DiagramCoordinates
      */
-    id: number;
+    x?: Array<number>;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof DiagramCoordinates
+     */
+    y?: Array<number>;
 }
 
-export function SimilarityThresholdFunctionAllOfFromJSON(json: any): SimilarityThresholdFunctionAllOf {
-    return SimilarityThresholdFunctionAllOfFromJSONTyped(json, false);
+export function DiagramCoordinatesFromJSON(json: any): DiagramCoordinates {
+    return DiagramCoordinatesFromJSONTyped(json, false);
 }
 
-export function SimilarityThresholdFunctionAllOfFromJSONTyped(json: any, ignoreDiscriminator: boolean): SimilarityThresholdFunctionAllOf {
+export function DiagramCoordinatesFromJSONTyped(json: any, ignoreDiscriminator: boolean): DiagramCoordinates {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'id': json['id'],
+        'x': !exists(json, 'x') ? undefined : json['x'],
+        'y': !exists(json, 'y') ? undefined : json['y'],
     };
 }
 
-export function SimilarityThresholdFunctionAllOfToJSON(value?: SimilarityThresholdFunctionAllOf | null): any {
+export function DiagramCoordinatesToJSON(value?: DiagramCoordinates | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -50,7 +57,8 @@ export function SimilarityThresholdFunctionAllOfToJSON(value?: SimilarityThresho
     }
     return {
         
-        'id': value.id,
+        'x': value.x,
+        'y': value.y,
     };
 }
 
