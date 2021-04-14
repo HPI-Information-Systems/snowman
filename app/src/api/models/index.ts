@@ -5,6 +5,7 @@ export * from './Dataset';
 export * from './DatasetAllOf';
 export * from './DatasetValues';
 export * from './DiagramCoordinates';
+export * from './DiagramExperimentItem';
 export * from './Experiment';
 export * from './ExperimentAllOf';
 export * from './ExperimentConfigItem';

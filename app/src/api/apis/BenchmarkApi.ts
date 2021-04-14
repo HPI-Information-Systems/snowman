@@ -18,6 +18,9 @@ import {
     DiagramCoordinates,
     DiagramCoordinatesFromJSON,
     DiagramCoordinatesToJSON,
+    DiagramExperimentItem,
+    DiagramExperimentItemFromJSON,
+    DiagramExperimentItemToJSON,
     ExperimentConfigItem,
     ExperimentConfigItemFromJSON,
     ExperimentConfigItemToJSON,
@@ -41,7 +44,7 @@ import {
 export interface CalculateDiagramDataRequest {
     xAxis: MetricsEnum;
     yAxis: MetricsEnum;
-    requestBody: Array<object>;
+    diagramExperimentItem: Array<DiagramExperimentItem>;
 }
 
 export interface CalculateExperimentIntersectionCountRequest {
@@ -84,8 +87,8 @@ export class BenchmarkApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('yAxis','Required parameter requestParameters.yAxis was null or undefined when calling calculateDiagramData.');
         }
 
-        if (requestParameters.requestBody === null || requestParameters.requestBody === undefined) {
-            throw new runtime.RequiredError('requestBody','Required parameter requestParameters.requestBody was null or undefined when calling calculateDiagramData.');
+        if (requestParameters.diagramExperimentItem === null || requestParameters.diagramExperimentItem === undefined) {
+            throw new runtime.RequiredError('diagramExperimentItem','Required parameter requestParameters.diagramExperimentItem was null or undefined when calling calculateDiagramData.');
         }
 
         const queryParameters: any = {};
@@ -107,7 +110,7 @@ export class BenchmarkApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.requestBody,
+            body: requestParameters.diagramExperimentItem.map(DiagramExperimentItemToJSON),
         });
 
         return new runtime.JSONApiResponse(response, (jsonValue) => DiagramCoordinatesFromJSON(jsonValue));
