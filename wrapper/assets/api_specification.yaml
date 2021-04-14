@@ -1170,14 +1170,27 @@ components:
       - numberPairs
       - numberRows
       type: object
+    DiagramExperimentItem:
+      example:
+        experimentId:
+          similarity:
+            func: 0
+            threshold: 6.027456183070403
+          experimentId: 1
+        groundTruthId:
+          similarity:
+            func: 0
+            threshold: 6.027456183070403
+          experimentId: 1
+      properties:
+        experimentId:
+          $ref: '#/components/schemas/ExperimentConfigItem'
+        groundTruthId:
+          $ref: '#/components/schemas/ExperimentConfigItem'
+      type: object
     DiagramExperiments:
       items:
-        properties:
-          experimentId:
-            $ref: '#/components/schemas/ExperimentConfigItem'
-          groundTruthId:
-            $ref: '#/components/schemas/ExperimentConfigItem'
-        type: object
+        $ref: '#/components/schemas/DiagramExperimentItem'
       type: array
     DiagramCoordinates:
       example:
