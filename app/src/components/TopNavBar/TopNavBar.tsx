@@ -1,17 +1,33 @@
-import 'components/TopNavBar/TopNavBarStyles.css';
-
-import { IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons } from '@ionic/react';
+import styles from 'components/TopNavBar/TopNavBarStyles.module.css';
 import React from 'react';
+import style from 'theme/style';
 
 const TopNavBar = (): JSX.Element => (
-  <IonToolbar color="primary">
-    <div className="top-navbar-container">
-      <span className="top-navbar-element active">BENCHMARK</span>
-      <span className="top-navbar-element">DATASETS</span>
-      <span className="top-navbar-element">EXPERIMENTS</span>
-      <span className="top-navbar-element">MATCHING SOLUTIONS</span>
+  <div className={styles.toolbar}>
+    <div className={styles.toolbarContainer}>
+      <slot name="start">
+        <IonButtons slot="start" class={styles.buttonContainer}>
+          <IonButton
+            fill="clear"
+            size="large"
+            class={style(styles.buttonElement, styles.active)}
+          >
+            Benchmark
+          </IonButton>
+          <IonButton fill="clear" class={styles.buttonElement}>
+            Datasets
+          </IonButton>
+          <IonButton fill="clear" class={styles.buttonElement}>
+            Experiments
+          </IonButton>
+          <IonButton fill="clear" class={styles.buttonElement}>
+            Matching Solutions
+          </IonButton>
+        </IonButtons>
+      </slot>
     </div>
-  </IonToolbar>
+  </div>
 );
 
 export default TopNavBar;
