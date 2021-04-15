@@ -16,46 +16,39 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface AlgorithmAllOf
+ * @interface ExperimentValuesSoftKPIs
  */
-export interface AlgorithmAllOf {
+export interface ExperimentValuesSoftKPIs {
     /**
      * 
      * @type {number}
-     * @memberof AlgorithmAllOf
+     * @memberof ExperimentValuesSoftKPIs
      */
-    id: number;
+    timeToConfigure?: number;
     /**
      * 
      * @type {number}
-     * @memberof AlgorithmAllOf
+     * @memberof ExperimentValuesSoftKPIs
      */
-    matchingSolutionEffort?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AlgorithmAllOf
-     */
-    domainEffort?: number;
+    expertiseLevel?: number;
 }
 
-export function AlgorithmAllOfFromJSON(json: any): AlgorithmAllOf {
-    return AlgorithmAllOfFromJSONTyped(json, false);
+export function ExperimentValuesSoftKPIsFromJSON(json: any): ExperimentValuesSoftKPIs {
+    return ExperimentValuesSoftKPIsFromJSONTyped(json, false);
 }
 
-export function AlgorithmAllOfFromJSONTyped(json: any, ignoreDiscriminator: boolean): AlgorithmAllOf {
+export function ExperimentValuesSoftKPIsFromJSONTyped(json: any, ignoreDiscriminator: boolean): ExperimentValuesSoftKPIs {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'id': json['id'],
-        'matchingSolutionEffort': !exists(json, 'matchingSolutionEffort') ? undefined : json['matchingSolutionEffort'],
-        'domainEffort': !exists(json, 'domainEffort') ? undefined : json['domainEffort'],
+        'timeToConfigure': !exists(json, 'timeToConfigure') ? undefined : json['timeToConfigure'],
+        'expertiseLevel': !exists(json, 'expertiseLevel') ? undefined : json['expertiseLevel'],
     };
 }
 
-export function AlgorithmAllOfToJSON(value?: AlgorithmAllOf | null): any {
+export function ExperimentValuesSoftKPIsToJSON(value?: ExperimentValuesSoftKPIs | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -64,9 +57,8 @@ export function AlgorithmAllOfToJSON(value?: AlgorithmAllOf | null): any {
     }
     return {
         
-        'id': value.id,
-        'matchingSolutionEffort': value.matchingSolutionEffort,
-        'domainEffort': value.domainEffort,
+        'timeToConfigure': value.timeToConfigure,
+        'expertiseLevel': value.expertiseLevel,
     };
 }
 

@@ -16,46 +16,39 @@ import { exists, mapValues } from '../runtime';
 /**
  * 
  * @export
- * @interface AlgorithmAllOf
+ * @interface Effort
  */
-export interface AlgorithmAllOf {
+export interface Effort {
     /**
      * 
      * @type {number}
-     * @memberof AlgorithmAllOf
+     * @memberof Effort
      */
-    id: number;
+    expertise?: number;
     /**
      * 
      * @type {number}
-     * @memberof AlgorithmAllOf
+     * @memberof Effort
      */
-    matchingSolutionEffort?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AlgorithmAllOf
-     */
-    domainEffort?: number;
+    hrAmmount?: number;
 }
 
-export function AlgorithmAllOfFromJSON(json: any): AlgorithmAllOf {
-    return AlgorithmAllOfFromJSONTyped(json, false);
+export function EffortFromJSON(json: any): Effort {
+    return EffortFromJSONTyped(json, false);
 }
 
-export function AlgorithmAllOfFromJSONTyped(json: any, ignoreDiscriminator: boolean): AlgorithmAllOf {
+export function EffortFromJSONTyped(json: any, ignoreDiscriminator: boolean): Effort {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'id': json['id'],
-        'matchingSolutionEffort': !exists(json, 'matchingSolutionEffort') ? undefined : json['matchingSolutionEffort'],
-        'domainEffort': !exists(json, 'domainEffort') ? undefined : json['domainEffort'],
+        'expertise': !exists(json, 'expertise') ? undefined : json['expertise'],
+        'hrAmmount': !exists(json, 'hrAmmount') ? undefined : json['hrAmmount'],
     };
 }
 
-export function AlgorithmAllOfToJSON(value?: AlgorithmAllOf | null): any {
+export function EffortToJSON(value?: Effort | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -64,9 +57,8 @@ export function AlgorithmAllOfToJSON(value?: AlgorithmAllOf | null): any {
     }
     return {
         
-        'id': value.id,
-        'matchingSolutionEffort': value.matchingSolutionEffort,
-        'domainEffort': value.domainEffort,
+        'expertise': value.expertise,
+        'hrAmmount': value.hrAmmount,
     };
 }
 
