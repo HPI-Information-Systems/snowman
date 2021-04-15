@@ -16,6 +16,29 @@ export class AlgorithmProvider {
       {
         name: algorithm.name,
         description: algorithm.description,
+        integrationTime: algorithm.softKPIs?.integrationEffort?.integrationTime,
+        deploymentType: JSON.stringify(
+          algorithm.softKPIs?.integrationEffort?.deploymentType
+        ),
+        solutionType: JSON.stringify(
+          algorithm.softKPIs?.integrationEffort?.solutionType
+        ),
+        useCase: JSON.stringify(algorithm.softKPIs?.integrationEffort?.useCase),
+        generalCosts: algorithm.softKPIs?.integrationEffort?.generalCosts,
+        matchingSolutionExpertise:
+          algorithm.softKPIs?.configurationEffort?.matchingSolution?.expertise,
+        matchingSolutionHrAmount:
+          algorithm.softKPIs?.configurationEffort?.matchingSolution?.hrAmmount,
+        domainExpertise:
+          algorithm.softKPIs?.configurationEffort?.domain?.expertise,
+        domainHrAmount:
+          algorithm.softKPIs?.configurationEffort?.domain?.hrAmmount,
+        interfaces: JSON.stringify(
+          algorithm.softKPIs?.configurationEffort?.interfaces
+        ),
+        supportedOS: JSON.stringify(
+          algorithm.softKPIs?.configurationEffort?.supportedOS
+        ),
       },
     ])[0];
   }
