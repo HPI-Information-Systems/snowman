@@ -10,10 +10,52 @@ describe('AlgorithmProvider', () => {
     {
       description: 'Mock 1',
       name: 'Mock 1',
+      softKPIs: {
+        integrationEffort: {
+          integrationTime: 0,
+          deploymentType: ['cloud'],
+          solutionType: ['rulebased'],
+          useCase: ['merging'],
+          generalCosts: 0,
+        },
+        configurationEffort: {
+          matchingSolution: {
+            expertise: 0,
+            hrAmmount: 0,
+          },
+          domain: {
+            expertise: 0,
+            hrAmmount: 0,
+          },
+          interfaces: ['GUI'],
+          supportedOS: ['Windows'],
+        },
+      },
     },
     {
       description: 'Mock 2',
       name: 'Mock 2',
+      softKPIs: {
+        integrationEffort: {
+          integrationTime: 20,
+          deploymentType: ['on-premise', 'cloud'],
+          solutionType: ['activeLearning'],
+          useCase: ['merging', 'search'],
+          generalCosts: 30,
+        },
+        configurationEffort: {
+          matchingSolution: {
+            expertise: 100,
+            hrAmmount: 20,
+          },
+          domain: {
+            expertise: 10,
+            hrAmmount: 0,
+          },
+          interfaces: ['GUI', 'CLI'],
+          supportedOS: ['Windows', 'MacOS'],
+        },
+      },
     },
   ];
   let addedAlgorithmids: AlgorithmId[];
