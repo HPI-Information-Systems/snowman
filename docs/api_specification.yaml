@@ -3,8 +3,8 @@ info:
   description: >
     _This document describes the REST API of the snowman data matching benchmark
     tool._
-    Comparing data matching algorithms is still an unsolved topic in both industry and research.
-    With snowman, developers and researchers will be able to compare the performance of different data matching
+    Comparing data matching algorithms is still an unsolved topic in both industry and research. 
+    With snowman, developers and researchers will be able to compare the performance of different data matching 
     solutions or improve new algorithms.
   version: 1.0.0
   title: Snowman API
@@ -98,7 +98,6 @@ paths:
                 $ref: "#/components/schemas/Algorithm"
         404:
           description: Not Found
-
     put:
       tags:
         - Algorithm
@@ -791,6 +790,48 @@ components:
         description:
           type: string
           example: This is an open source python library
+        softKPIs:
+          properties:
+            integrationEffort:
+              properties:
+                integrationTime:
+                  type: integer
+                deploymentType:
+                  items:
+                    type: string
+                    example: "cloud"
+                  type: array
+                solutionType:
+                  items:
+                    type: string
+                    example: "rulebased"
+                  type: array
+                useCase:
+                  items:
+                    type: string
+                    example: "merging"
+                  type: array
+                generalCosts:
+                  type: integer
+              type: object
+            configurationEffort:
+              properties:
+                matchingSolution:
+                  $ref: "#/components/schemas/Effort"
+                domain:
+                  $ref: "#/components/schemas/Effort"
+                interfaces:
+                  items:
+                    type: string
+                    example: "GUI"
+                  type: array
+                supportedOS:
+                  items:
+                    type: string
+                    example: "Windows"
+                  type: array
+              type: object
+          type: object
     Algorithm:
       allOf:
         - type: object
@@ -799,6 +840,22 @@ components:
           properties:
             id:
               $ref: "#/components/schemas/AlgorithmId"
+            softKPIs:
+              properties:
+                configurationEffort:
+                  properties:
+                    matchingSolution:
+                      properties:
+                        effort:
+                          type: integer
+                      type: object
+                    domain:
+                      properties:
+                        effort:
+                          type: integer
+                      type: object
+                  type: object
+              type: object
         - $ref: "#/components/schemas/AlgorithmValues"
 
     #### DATASET ####
@@ -862,8 +919,13 @@ components:
           $ref: "#/components/schemas/DatasetId"
         algorithmId:
           $ref: "#/components/schemas/AlgorithmId"
-        timeToConfigure:
-          type: integer
+        softKPIs:
+          properties:
+            timeToConfigure:
+              type: integer
+            expertiseLevel:
+              type: integer
+          type: object
     Experiment:
       allOf:
         - type: object
@@ -1001,6 +1063,13 @@ components:
         - numberRows
         - numberPairs
         - experiments
+    Effort:
+      properties:
+        expertise:
+          type: integer
+        hrAmmount:
+          type: integer
+      type: object
     DiagramExperimentItem:
       properties:
         experimentId:
