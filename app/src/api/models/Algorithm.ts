@@ -26,6 +26,10 @@ import {
     AlgorithmValuesSoftKPIsFromJSON,
     AlgorithmValuesSoftKPIsFromJSONTyped,
     AlgorithmValuesSoftKPIsToJSON,
+    Metric,
+    MetricFromJSON,
+    MetricFromJSONTyped,
+    MetricToJSON,
 } from './';
 
 /**
@@ -42,16 +46,16 @@ export interface Algorithm {
     id: number;
     /**
      * 
-     * @type {number}
+     * @type {Metric}
      * @memberof Algorithm
      */
-    matchingSolutionEffort?: number;
+    matchingSolutionEffort?: Metric;
     /**
      * 
-     * @type {number}
+     * @type {Metric}
      * @memberof Algorithm
      */
-    domainEffort?: number;
+    domainEffort?: Metric;
     /**
      * 
      * @type {string}
@@ -83,8 +87,8 @@ export function AlgorithmFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     return {
         
         'id': json['id'],
-        'matchingSolutionEffort': !exists(json, 'matchingSolutionEffort') ? undefined : json['matchingSolutionEffort'],
-        'domainEffort': !exists(json, 'domainEffort') ? undefined : json['domainEffort'],
+        'matchingSolutionEffort': !exists(json, 'matchingSolutionEffort') ? undefined : MetricFromJSON(json['matchingSolutionEffort']),
+        'domainEffort': !exists(json, 'domainEffort') ? undefined : MetricFromJSON(json['domainEffort']),
         'name': json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'softKPIs': !exists(json, 'softKPIs') ? undefined : AlgorithmValuesSoftKPIsFromJSON(json['softKPIs']),
@@ -101,8 +105,8 @@ export function AlgorithmToJSON(value?: Algorithm | null): any {
     return {
         
         'id': value.id,
-        'matchingSolutionEffort': value.matchingSolutionEffort,
-        'domainEffort': value.domainEffort,
+        'matchingSolutionEffort': MetricToJSON(value.matchingSolutionEffort),
+        'domainEffort': MetricToJSON(value.domainEffort),
         'name': value.name,
         'description': value.description,
         'softKPIs': AlgorithmValuesSoftKPIsToJSON(value.softKPIs),

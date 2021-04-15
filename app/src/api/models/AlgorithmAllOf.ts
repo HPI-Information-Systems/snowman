@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    Metric,
+    MetricFromJSON,
+    MetricFromJSONTyped,
+    MetricToJSON,
+} from './';
+
 /**
  * 
  * @export
@@ -27,16 +34,16 @@ export interface AlgorithmAllOf {
     id: number;
     /**
      * 
-     * @type {number}
+     * @type {Metric}
      * @memberof AlgorithmAllOf
      */
-    matchingSolutionEffort?: number;
+    matchingSolutionEffort?: Metric;
     /**
      * 
-     * @type {number}
+     * @type {Metric}
      * @memberof AlgorithmAllOf
      */
-    domainEffort?: number;
+    domainEffort?: Metric;
 }
 
 export function AlgorithmAllOfFromJSON(json: any): AlgorithmAllOf {
@@ -50,8 +57,8 @@ export function AlgorithmAllOfFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'id': json['id'],
-        'matchingSolutionEffort': !exists(json, 'matchingSolutionEffort') ? undefined : json['matchingSolutionEffort'],
-        'domainEffort': !exists(json, 'domainEffort') ? undefined : json['domainEffort'],
+        'matchingSolutionEffort': !exists(json, 'matchingSolutionEffort') ? undefined : MetricFromJSON(json['matchingSolutionEffort']),
+        'domainEffort': !exists(json, 'domainEffort') ? undefined : MetricFromJSON(json['domainEffort']),
     };
 }
 
@@ -65,8 +72,8 @@ export function AlgorithmAllOfToJSON(value?: AlgorithmAllOf | null): any {
     return {
         
         'id': value.id,
-        'matchingSolutionEffort': value.matchingSolutionEffort,
-        'domainEffort': value.domainEffort,
+        'matchingSolutionEffort': MetricToJSON(value.matchingSolutionEffort),
+        'domainEffort': MetricToJSON(value.domainEffort),
     };
 }
 
