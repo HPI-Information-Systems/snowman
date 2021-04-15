@@ -1,9 +1,9 @@
 .buttonElement {
-  margin: 0;
+  margin: 0 !important;
   padding-right: 40px;
   padding-left: 40px;
   color: rgba(255, 255, 255, 0.5);
-  font-size: 17px !important;
+  font-size: 16px !important;
   font-weight: 500;
   height: 100% !important;
   border: none;
@@ -11,7 +11,7 @@
 
 .buttonElement.active {
   color: white;
-  border-bottom: var(--ion-color-primary-light) 4px solid;
+  background-color: var(--ion-color-primary);
 }
 
 .buttonContainer {
@@ -24,7 +24,7 @@
   padding: 0;
   margin: 0;
   width: 100%;
-  background-color: var(--ion-color-primary);
+  background-color: var(--ion-color-primary-dark);
 }
 
 .toolbarContainer {
@@ -39,5 +39,5 @@
   padding: 0;
   margin: 0;
   position: relative;
-  min-height: 56px;
+  min-height: 44px;
 }

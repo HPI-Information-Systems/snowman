@@ -14,12 +14,12 @@
   --ion-color-primary-tint: #8bf6ff;
 
   /** primary-dark **/
-  --ion-color-primary-dark: #0093c5;
-  --ion-color-primary-dark-rgb: 0, 147, 197;
-  --ion-color-primary-dark-contrast: #fff;
-  --ion-color-primary-dark-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-dark-shade: #0081ad;
-  --ion-color-primary-dark-tint: #1a9ecb;
+  --ion-color-primary-dark: #28627c;
+  --ion-color-primary-dark-rgb: 40,98,124;
+  --ion-color-primary-dark-contrast: #ffffff;
+  --ion-color-primary-dark-contrast-rgb: 255,255,255;
+  --ion-color-primary-dark-shade: #23566d;
+  --ion-color-primary-dark-tint: #3e7289;
 
   /** primary-light **/
   --ion-color-primary-light: #8bf6ff;
@@ -31,12 +31,12 @@
 }
 
 .ion-color-primary-dark {
-  --ion-color-base: var(--ion-color-primary-dark);
-  --ion-color-base-rgb: var(--ion-color-primary-dark-rgb);
-  --ion-color-contrast: var(--ion-color-primary-dark-contrast);
-  --ion-color-contrast-rgb: var(--ion-color-primary-dark-contrast-rgb);
-  --ion-color-shade: var(--ion-color-primary-dark-shade);
-  --ion-color-tint: var(--ion-color-primary-dark-tint);
+  --ion-color-primary-dark: #28627c;
+  --ion-color-primary-dark-rgb: 40,98,124;
+  --ion-color-primary-dark-contrast: #ffffff;
+  --ion-color-primary-dark-contrast-rgb: 255,255,255;
+  --ion-color-primary-dark-shade: #23566d;
+  --ion-color-primary-dark-tint: #3e7289;
 }
 
 .ion-color-primary-light {
@@ -65,12 +65,12 @@
     --ion-color-primary-light: #8bf6ff;
 
     /** primary-dark **/
-    --ion-color-primary-dark: #0093c5;
-    --ion-color-primary-dark-rgb: 0, 147, 197;
-    --ion-color-primary-dark-contrast: #fff;
-    --ion-color-primary-dark-contrast-rgb: 255, 255, 255;
-    --ion-color-primary-dark-shade: #0081ad;
-    --ion-color-primary-dark-tint: #1a9ecb;
+    --ion-color-primary-dark: #28627c;
+    --ion-color-primary-dark-rgb: 40,98,124;
+    --ion-color-primary-dark-contrast: #ffffff;
+    --ion-color-primary-dark-contrast-rgb: 255,255,255;
+    --ion-color-primary-dark-shade: #23566d;
+    --ion-color-primary-dark-tint: #3e7289;
 
     /** primary-light **/
     --ion-color-primary-light: #8bf6ff;

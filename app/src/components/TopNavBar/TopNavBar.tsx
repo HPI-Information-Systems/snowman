@@ -6,26 +6,24 @@ import style from 'theme/style';
 const TopNavBar = (): JSX.Element => (
   <div className={styles.toolbar}>
     <div className={styles.toolbarContainer}>
-      <slot name="start">
-        <IonButtons slot="start" class={styles.buttonContainer}>
-          <IonButton
-            fill="clear"
-            size="large"
-            class={style(styles.buttonElement, styles.active)}
-          >
-            Benchmark
-          </IonButton>
-          <IonButton fill="clear" class={styles.buttonElement}>
-            Datasets
-          </IonButton>
-          <IonButton fill="clear" class={styles.buttonElement}>
-            Experiments
-          </IonButton>
-          <IonButton fill="clear" class={styles.buttonElement}>
-            Matching Solutions
-          </IonButton>
-        </IonButtons>
-      </slot>
+      <IonButtons slot="start" class={styles.buttonContainer}>
+        <IonButton
+          fill="clear"
+          size="large"
+          class={style(styles.buttonElement, styles.active)}
+        >
+          Benchmark
+        </IonButton>
+        <IonButton fill="clear" class={styles.buttonElement}>
+          Datasets
+        </IonButton>
+        <IonButton fill="clear" class={styles.buttonElement}>
+          Experiments
+        </IonButton>
+        <IonButton fill="clear" class={styles.buttonElement}>
+          Matching Solutions
+        </IonButton>
+      </IonButtons>
     </div>
   </div>
 );

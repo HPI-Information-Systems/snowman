@@ -22,7 +22,7 @@ const PageStructView = ({
   return (
     <>
       <IonHeader>
-        <IonToolbar color="primary-dark">
+        <IonToolbar color="primary">
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
