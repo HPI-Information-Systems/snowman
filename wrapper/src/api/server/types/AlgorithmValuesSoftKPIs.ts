@@ -12,28 +12,27 @@
  * Do not edit the class manually.
  */
 
+import {
+    AlgorithmValuesSoftKPIsConfigurationEffort,
+    AlgorithmValuesSoftKPIsIntegrationEffort,
+} from './';
+
 /**
  * 
  * @export
- * @interface AlgorithmAllOf
+ * @interface AlgorithmValuesSoftKPIs
  */
-export interface AlgorithmAllOf {
+export interface AlgorithmValuesSoftKPIs {
     /**
      * 
-     * @type {number}
-     * @memberof AlgorithmAllOf
+     * @type {AlgorithmValuesSoftKPIsIntegrationEffort}
+     * @memberof AlgorithmValuesSoftKPIs
      */
-    id: number;
+    integrationEffort?: AlgorithmValuesSoftKPIsIntegrationEffort;
     /**
      * 
-     * @type {number}
-     * @memberof AlgorithmAllOf
+     * @type {AlgorithmValuesSoftKPIsConfigurationEffort}
+     * @memberof AlgorithmValuesSoftKPIs
      */
-    matchingSolutionEffort?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AlgorithmAllOf
-     */
-    domainEffort?: number;
+    configurationEffort?: AlgorithmValuesSoftKPIsConfigurationEffort;
 }

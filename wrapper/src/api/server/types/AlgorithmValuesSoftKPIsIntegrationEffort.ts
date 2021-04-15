@@ -15,25 +15,37 @@
 /**
  * 
  * @export
- * @interface AlgorithmAllOf
+ * @interface AlgorithmValuesSoftKPIsIntegrationEffort
  */
-export interface AlgorithmAllOf {
+export interface AlgorithmValuesSoftKPIsIntegrationEffort {
     /**
      * 
      * @type {number}
-     * @memberof AlgorithmAllOf
+     * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
      */
-    id: number;
+    integrationTime?: number;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
+     */
+    deploymentType?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
+     */
+    solutionType?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
+     */
+    useCase?: Array<string>;
     /**
      * 
      * @type {number}
-     * @memberof AlgorithmAllOf
+     * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
      */
-    matchingSolutionEffort?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AlgorithmAllOf
-     */
-    domainEffort?: number;
+    generalCosts?: number;
 }

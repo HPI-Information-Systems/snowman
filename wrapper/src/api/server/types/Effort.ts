@@ -15,25 +15,19 @@
 /**
  * 
  * @export
- * @interface AlgorithmAllOf
+ * @interface Effort
  */
-export interface AlgorithmAllOf {
+export interface Effort {
     /**
      * 
      * @type {number}
-     * @memberof AlgorithmAllOf
+     * @memberof Effort
      */
-    id: number;
+    expertise?: number;
     /**
      * 
      * @type {number}
-     * @memberof AlgorithmAllOf
+     * @memberof Effort
      */
-    matchingSolutionEffort?: number;
-    /**
-     * 
-     * @type {number}
-     * @memberof AlgorithmAllOf
-     */
-    domainEffort?: number;
+    hrAmmount?: number;
 }
