@@ -1,5 +1,13 @@
+import { DiagramExperimentItem } from './DiagramExperimentItem';
 import { ExperimentConfigItem } from './ExperimentConfigItem';
 import { ExperimentIntersectionItem } from './ExperimentIntersectionItem';
+import { MetricsEnum } from './MetricsEnum';
+
+export interface CalculateDiagramDataRequest {
+  xAxis: MetricsEnum;
+  yAxis: MetricsEnum;
+  diagramExperimentItem: Array<DiagramExperimentItem>;
+}
 
 export interface CalculateExperimentIntersectionCountRequest {
   intersection: Array<ExperimentIntersectionItem>;
