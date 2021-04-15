@@ -12,20 +12,20 @@ describe('AlgorithmProvider', () => {
       name: 'Mock 1',
       softKPIs: {
         integrationEffort: {
-          integrationTime: 0,
+          integrationTime: 340,
           deploymentType: ['cloud'],
           solutionType: ['rulebased'],
           useCase: ['merging'],
-          generalCosts: 0,
+          generalCosts: 20,
         },
         configurationEffort: {
           matchingSolution: {
-            expertise: 0,
-            hrAmmount: 0,
+            expertise: 20,
+            hrAmmount: 120,
           },
           domain: {
-            expertise: 0,
-            hrAmmount: 0,
+            expertise: 220,
+            hrAmmount: 20,
           },
           interfaces: ['GUI'],
           supportedOS: ['Windows'],
@@ -50,7 +50,7 @@ describe('AlgorithmProvider', () => {
           },
           domain: {
             expertise: 10,
-            hrAmmount: 0,
+            hrAmmount: 70,
           },
           interfaces: ['GUI', 'CLI'],
           supportedOS: ['Windows', 'MacOS'],
@@ -84,6 +84,27 @@ describe('AlgorithmProvider', () => {
     const addedAlgorithm: AlgorithmValues = {
       description: 'Added Algorithm',
       name: 'Added Algorithm',
+      softKPIs: {
+        integrationEffort: {
+          integrationTime: 330,
+          deploymentType: ['cloud'],
+          solutionType: ['rulebased'],
+          useCase: ['merging'],
+          generalCosts: 201,
+        },
+        configurationEffort: {
+          matchingSolution: {
+            expertise: 202,
+            hrAmmount: 1202,
+          },
+          domain: {
+            expertise: 22,
+            hrAmmount: 22,
+          },
+          interfaces: ['GUI'],
+          supportedOS: ['Windows'],
+        },
+      },
     };
     const addedAlgorithmId = provider.addAlgorithm(addedAlgorithm);
     const newAlgorithmsCount = provider.listAlgorithms().length;
@@ -108,6 +129,27 @@ describe('AlgorithmProvider', () => {
     const setAlgorithmValues: AlgorithmValues = {
       name: 'Not Mock 1',
       description: 'Not Mock 1',
+      softKPIs: {
+        integrationEffort: {
+          integrationTime: 240,
+          deploymentType: ['onPremise'],
+          solutionType: ['rulebased', 'activeLearning'],
+          useCase: ['search'],
+          generalCosts: 14,
+        },
+        configurationEffort: {
+          matchingSolution: {
+            expertise: 21,
+            hrAmmount: 121,
+          },
+          domain: {
+            expertise: 221,
+            hrAmmount: 99,
+          },
+          interfaces: ['GUI'],
+          supportedOS: ['Windows', 'Linux'],
+        },
+      },
     };
     provider.setAlgorithm(addedAlgorithmids[0], setAlgorithmValues);
     expect(provider.getAlgorithm(addedAlgorithmids[0])).toEqual({

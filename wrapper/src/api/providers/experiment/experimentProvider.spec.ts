@@ -47,7 +47,6 @@ describe('ExperimentProvider', () => {
     meta: ExperimentValues;
     file?: string[][];
     numberOfUploadedRecords?: number;
-    timeToConfigure?: number;
   }[];
   let addedExperimentIds: number[];
 
@@ -82,7 +81,10 @@ describe('ExperimentProvider', () => {
           datasetId: addedDatasetIds[0],
           description: 'No dataset file',
           name: 'No dataset file',
-          timeToConfigure: 3,
+          softKPIs: {
+            timeToConfigure: 3,
+            expertiseLevel: 2,
+          },
         },
       },
       {
@@ -91,7 +93,10 @@ describe('ExperimentProvider', () => {
           datasetId: addedDatasetIds[1],
           description: 'Dataset file',
           name: 'Dataset file',
-          timeToConfigure: 2,
+          softKPIs: {
+            timeToConfigure: 2,
+            expertiseLevel: 3,
+          },
         },
       },
     ];
@@ -138,6 +143,10 @@ describe('ExperimentProvider', () => {
       datasetId: addedDatasetIds[0],
       description: 'Another one',
       name: 'Another Name',
+      softKPIs: {
+        timeToConfigure: 5,
+        expertiseLevel: 7,
+      },
     };
     const id = provider.addExperiment(addedExperiment);
     expect(provider.getExperiment(id)).toMatchObject({
@@ -165,6 +174,10 @@ describe('ExperimentProvider', () => {
       datasetId: addedDatasetIds[0],
       description: ' A new description',
       name: 'A neeew name',
+      softKPIs: {
+        timeToConfigure: 5,
+        expertiseLevel: 7,
+      },
     };
     provider.setExperiment(addedExperimentIds[0], updatedExperiment);
     expect(provider.getExperiment(addedExperimentIds[0])).toMatchObject({
