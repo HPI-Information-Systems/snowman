@@ -4,7 +4,7 @@ info:
     email: snowman@groups.sap.com
     url: https://github.com/HPI-Information-Systems/snowman
   description: |
-    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms.
+    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
   license:
     name: LICENSE (MIT)
     url: https://github.com/HPI-Information-Systems/snowman/blob/main/LICENSE
@@ -950,6 +950,32 @@ components:
       type: integer
     AlgorithmValues:
       example:
+        softKPIs:
+          integrationEffort:
+            deploymentType:
+            - cloud
+            - cloud
+            useCase:
+            - merging
+            - merging
+            generalCosts: 6
+            integrationTime: 0
+            solutionType:
+            - rulebased
+            - rulebased
+          configurationEffort:
+            interfaces:
+            - GUI
+            - GUI
+            matchingSolution:
+              expertise: 1
+              hrAmmount: 5
+            domain:
+              expertise: 1
+              hrAmmount: 5
+            supportedOS:
+            - Windows
+            - Windows
         name: Magellan
         description: This is an open source python library
       properties:
@@ -960,6 +986,8 @@ components:
         description:
           example: This is an open source python library
           type: string
+        softKPIs:
+          $ref: '#/components/schemas/AlgorithmValues_softKPIs'
       required:
       - name
       type: object
@@ -1006,8 +1034,10 @@ components:
       type: integer
     ExperimentValues:
       example:
+        softKPIs:
+          expertiseLevel: 6
+          timeToConfigure: 0
         name: Experiment1
-        timeToConfigure: 0
         description: This is an experiment using a fancy algorithm
         datasetId: 1
         algorithmId: 1
@@ -1025,8 +1055,8 @@ components:
         algorithmId:
           example: 1
           type: integer
-        timeToConfigure:
-          type: integer
+        softKPIs:
+          $ref: '#/components/schemas/ExperimentValues_softKPIs'
       required:
       - algorithmId
       - datasetId
@@ -1170,6 +1200,16 @@ components:
       - numberPairs
       - numberRows
       type: object
+    Effort:
+      example:
+        expertise: 1
+        hrAmmount: 5
+      properties:
+        expertise:
+          type: integer
+        hrAmmount:
+          type: integer
+      type: object
     DiagramExperimentItem:
       example:
         experimentId:
@@ -1285,11 +1325,112 @@ components:
       - data
       - header
       type: object
+    AlgorithmValues_softKPIs_integrationEffort:
+      example:
+        deploymentType:
+        - cloud
+        - cloud
+        useCase:
+        - merging
+        - merging
+        generalCosts: 6
+        integrationTime: 0
+        solutionType:
+        - rulebased
+        - rulebased
+      properties:
+        integrationTime:
+          type: integer
+        deploymentType:
+          items:
+            example: cloud
+            type: string
+          type: array
+        solutionType:
+          items:
+            example: rulebased
+            type: string
+          type: array
+        useCase:
+          items:
+            example: merging
+            type: string
+          type: array
+        generalCosts:
+          type: integer
+      type: object
+    AlgorithmValues_softKPIs_configurationEffort:
+      example:
+        interfaces:
+        - GUI
+        - GUI
+        matchingSolution:
+          expertise: 1
+          hrAmmount: 5
+        domain:
+          expertise: 1
+          hrAmmount: 5
+        supportedOS:
+        - Windows
+        - Windows
+      properties:
+        matchingSolution:
+          $ref: '#/components/schemas/Effort'
+        domain:
+          $ref: '#/components/schemas/Effort'
+        interfaces:
+          items:
+            example: GUI
+            type: string
+          type: array
+        supportedOS:
+          items:
+            example: Windows
+            type: string
+          type: array
+      type: object
+    AlgorithmValues_softKPIs:
+      example:
+        integrationEffort:
+          deploymentType:
+          - cloud
+          - cloud
+          useCase:
+          - merging
+          - merging
+          generalCosts: 6
+          integrationTime: 0
+          solutionType:
+          - rulebased
+          - rulebased
+        configurationEffort:
+          interfaces:
+          - GUI
+          - GUI
+          matchingSolution:
+            expertise: 1
+            hrAmmount: 5
+          domain:
+            expertise: 1
+            hrAmmount: 5
+          supportedOS:
+          - Windows
+          - Windows
+      properties:
+        integrationEffort:
+          $ref: '#/components/schemas/AlgorithmValues_softKPIs_integrationEffort'
+        configurationEffort:
+          $ref: '#/components/schemas/AlgorithmValues_softKPIs_configurationEffort'
+      type: object
     Algorithm_allOf:
       properties:
         id:
           example: 1
           type: integer
+        matchingSolutionEffort:
+          type: number
+        domainEffort:
+          type: number
       required:
       - id
       type: object
@@ -1303,6 +1444,16 @@ components:
           type: integer
       required:
       - id
+      type: object
+    ExperimentValues_softKPIs:
+      example:
+        expertiseLevel: 6
+        timeToConfigure: 0
+      properties:
+        timeToConfigure:
+          type: integer
+        expertiseLevel:
+          type: integer
       type: object
     Experiment_allOf:
       properties:
