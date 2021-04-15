@@ -1,8 +1,10 @@
 import { providers } from '../../providers';
 import {
+  CalculateDiagramDataRequest,
   CalculateExperimentIntersectionCountRequest,
   CalculateExperimentIntersectionCountsRequest,
   CalculateExperimentIntersectionRecordsRequest,
+  DiagramCoordinates,
   ExperimentIntersectionCount,
   FileResponse,
   GetBinaryMetricsRequest,
@@ -12,6 +14,23 @@ import { Service, SuccessResponse } from './Service';
 
 function provider() {
   return providers.benchmark;
+}
+
+export async function calculateDiagramData({
+  xAxis,
+  yAxis,
+  diagramExperimentItem,
+}: CalculateDiagramDataRequest): Promise<SuccessResponse<DiagramCoordinates>> {
+  return Service.response(
+    () =>
+      provider().calculateDiagramData({
+        xAxis,
+        yAxis,
+        diagramExperimentItem,
+      }),
+    200,
+    404
+  );
 }
 
 export async function calculateExperimentIntersectionCount({

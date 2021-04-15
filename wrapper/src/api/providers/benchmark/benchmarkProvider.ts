@@ -1,4 +1,6 @@
 import {
+  CalculateDiagramDataRequest,
+  DiagramCoordinates,
   ExperimentConfigItem,
   ExperimentId,
   ExperimentIntersectionCount,
@@ -32,6 +34,16 @@ import {
 import { ConfusionMatrix } from './metrics/confusionMatrix';
 
 export class BenchmarkProvider {
+  calculateDiagramData({
+    xAxis,
+    yAxis,
+    diagramExperimentItem,
+  }: CalculateDiagramDataRequest): DiagramCoordinates {
+    return {
+      x: [],
+      y: [],
+    };
+  }
   calculateExperimentIntersectionCount({
     intersection: experiments,
   }: {
