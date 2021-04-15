@@ -840,22 +840,10 @@ components:
           properties:
             id:
               $ref: "#/components/schemas/AlgorithmId"
-            softKPIs:
-              properties:
-                configurationEffort:
-                  properties:
-                    matchingSolution:
-                      properties:
-                        effort:
-                          type: integer
-                      type: object
-                    domain:
-                      properties:
-                        effort:
-                          type: integer
-                      type: object
-                  type: object
-              type: object
+            matchingSolutionEffort:
+              type: number
+            domainEffort:
+              type: number
         - $ref: "#/components/schemas/AlgorithmValues"
 
     #### DATASET ####
