@@ -841,9 +841,9 @@ components:
             id:
               $ref: "#/components/schemas/AlgorithmId"
             matchingSolutionEffort:
-              type: number
+              $ref: "#/components/schemas/Metric"
             domainEffort:
-              type: number
+              $ref: "#/components/schemas/Metric"
         - $ref: "#/components/schemas/AlgorithmValues"
 
     #### DATASET ####
