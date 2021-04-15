@@ -12,6 +12,10 @@
  * Do not edit the class manually.
  */
 
+import {
+    Metric,
+} from './';
+
 /**
  * 
  * @export
@@ -26,14 +30,14 @@ export interface AlgorithmAllOf {
     id: number;
     /**
      * 
-     * @type {number}
+     * @type {Metric}
      * @memberof AlgorithmAllOf
      */
-    matchingSolutionEffort?: number;
+    matchingSolutionEffort?: Metric;
     /**
      * 
-     * @type {number}
+     * @type {Metric}
      * @memberof AlgorithmAllOf
      */
-    domainEffort?: number;
+    domainEffort?: Metric;
 }

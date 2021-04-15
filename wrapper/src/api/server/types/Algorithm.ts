@@ -14,6 +14,7 @@
 
 import {
     AlgorithmValuesSoftKPIs,
+    Metric,
 } from './';
 
 /**
@@ -30,16 +31,16 @@ export interface Algorithm {
     id: number;
     /**
      * 
-     * @type {number}
+     * @type {Metric}
      * @memberof Algorithm
      */
-    matchingSolutionEffort?: number;
+    matchingSolutionEffort?: Metric;
     /**
      * 
-     * @type {number}
+     * @type {Metric}
      * @memberof Algorithm
      */
-    domainEffort?: number;
+    domainEffort?: Metric;
     /**
      * 
      * @type {string}

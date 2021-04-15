@@ -1428,9 +1428,9 @@ components:
           example: 1
           type: integer
         matchingSolutionEffort:
-          type: number
+          $ref: '#/components/schemas/Metric'
         domainEffort:
-          type: number
+          $ref: '#/components/schemas/Metric'
       required:
       - id
       type: object
