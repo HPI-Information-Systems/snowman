@@ -12,44 +12,22 @@
  * Do not edit the class manually.
  */
 
-import {
-    ExperimentValuesSoftKPIs,
-} from './';
-
 /**
  * 
  * @export
- * @interface ExperimentValues
+ * @interface ExperimentValuesSoftKPIs
  */
-export interface ExperimentValues {
-    /**
-     * 
-     * @type {string}
-     * @memberof ExperimentValues
-     */
-    name: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ExperimentValues
-     */
-    description?: string;
+export interface ExperimentValuesSoftKPIs {
     /**
      * 
      * @type {number}
-     * @memberof ExperimentValues
+     * @memberof ExperimentValuesSoftKPIs
      */
-    datasetId: number;
+    timeToConfigure?: number;
     /**
      * 
      * @type {number}
-     * @memberof ExperimentValues
+     * @memberof ExperimentValuesSoftKPIs
      */
-    algorithmId: number;
-    /**
-     * 
-     * @type {ExperimentValuesSoftKPIs}
-     * @memberof ExperimentValues
-     */
-    softKPIs?: ExperimentValuesSoftKPIs;
+    expertiseLevel?: number;
 }
