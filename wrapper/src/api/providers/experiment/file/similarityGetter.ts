@@ -17,8 +17,7 @@ export function similarityGetter(
   const table = tables.experiment.similarityThresholdFunction(experiment, func);
   return new ExperimentFileGetter(
     {
-      filter: { similarity: threshold },
-      filterType: '>=',
+      filters: [['similarity', '>=', threshold]],
       table,
       idColumns: [table.schema.columns.id1, table.schema.columns.id2],
     },

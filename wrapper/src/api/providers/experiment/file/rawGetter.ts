@@ -13,8 +13,7 @@ export function rawGetter(
   const table = tables.experiment.experiment(experiment);
   return new ExperimentFileGetter(
     {
-      filter: {},
-      filterType: '=',
+      filters: [],
       table,
       idColumns: [table.schema.columns.id1, table.schema.columns.id2],
     },

@@ -1,7 +1,7 @@
 import { SortedCache } from '../../tools/cache/sorted';
 import { databaseBackend } from '../setup/backend';
 import type { NullableColumnValues, TableSchema } from '../tools/types';
-import { GetterOptionsT } from './getter';
+import { FilterT } from './getter';
 import type { Table } from './table';
 
 export class TableDeleter<Schema extends TableSchema> {
@@ -14,10 +14,7 @@ export class TableDeleter<Schema extends TableSchema> {
 
   delete(
     filter: NullableColumnValues<Schema['columns']> = {},
-    filterType: GetterOptionsT<
-      TableSchema['columns'],
-      boolean
-    >['filterType'] = '='
+    filterType: FilterT = '='
   ): void {
     const filters = Object.keys(filter).sort();
     this.deleteRowStatementCache

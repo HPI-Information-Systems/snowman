@@ -15,14 +15,14 @@ export class IntersectionQueries {
         similarity.func
       );
       return table.all(
-        { similarity: similarity.threshold },
+        {},
         {
           returnedColumns: [
             table.schema.columns.id1.name,
             table.schema.columns.id2.name,
           ],
           raw: true,
-          filterType: '>=',
+          advancedFilters: [['similarity', '>=', similarity.threshold]],
         }
       ) as [number, number][];
     } else {
