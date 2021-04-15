@@ -26,6 +26,50 @@ export const metaSchemas = assertType<
           name: 'description' as const,
           dataType: 'TEXT',
         },
+        integrationTime: {
+          name: 'integrationTime' as const,
+          dataType: 'INTEGER',
+        },
+        deploymentType: {
+          name: 'deploymentType' as const,
+          dataType: 'TEXT',
+        },
+        solutionType: {
+          name: 'solutionType' as const,
+          dataType: 'TEXT',
+        },
+        useCase: {
+          name: 'useCase' as const,
+          dataType: 'TEXT',
+        },
+        generalCosts: {
+          name: 'generalCosts' as const,
+          dataType: 'INTEGER',
+        },
+        matchingSolutionExpertise: {
+          name: 'matchingSolutionExpertise' as const,
+          dataType: 'INTEGER',
+        },
+        matchingSolutionHrAmount: {
+          name: 'matchingSolutionHrAmount' as const,
+          dataType: 'INTEGER',
+        },
+        domainExpertise: {
+          name: 'domainExpertise' as const,
+          dataType: 'INTEGER',
+        },
+        domainHrAmount: {
+          name: 'domainHrAmount' as const,
+          dataType: 'INTEGER',
+        },
+        interfaces: {
+          name: 'interfaces' as const,
+          dataType: 'TEXT',
+        },
+        supportedOS: {
+          name: 'supportedOS' as const,
+          dataType: 'TEXT',
+        },
       },
     },
     dataset: {
@@ -112,6 +156,10 @@ export const metaSchemas = assertType<
         },
         timeToConfigure: {
           name: 'timeToConfigure' as const,
+          dataType: 'INTEGER',
+        },
+        expertiseLevel: {
+          name: 'expertiseLevel' as const,
           dataType: 'INTEGER',
         },
       },
