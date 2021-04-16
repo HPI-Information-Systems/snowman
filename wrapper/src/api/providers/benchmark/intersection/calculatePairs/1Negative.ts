@@ -18,7 +18,7 @@ export class CalculatePairs1Negative extends CalculatePairs {
       this.intersection.negative,
       this.intersection.negativeSimilarityThresholds,
       this.intersection.negativeSimilarityFunctions
-    ).clustering.subclustersFromClusterId(this.clusterId);
+    ).clustering.subclustersFromBaseClusterId(this.clusterId);
     this.calculatePairsPrepared();
     return [this.skip - this.skipRemains, this.rows];
   }

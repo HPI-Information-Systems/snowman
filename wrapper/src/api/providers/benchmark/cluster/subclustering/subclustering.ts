@@ -1,16 +1,21 @@
-import { LazyProperty } from '../../../tools/lazyProperty';
-import { numberOfPairs } from '../../../tools/numberOfPairs';
-import { getTmpArray } from '../../../tools/tmpArray';
+import { LazyProperty } from '../../../../tools/lazyProperty';
+import { numberOfPairs } from '../../../../tools/numberOfPairs';
+import { getTmpArray } from '../../../../tools/tmpArray';
 import {
   Cluster,
   ClusterID,
   Clustering,
   NodeID,
+  Subcluster,
   Subclustering as SubclusteringSpec,
-} from './types';
+} from '../types';
 
-class ClusterArray extends Array<NodeID> implements Cluster {
-  constructor(public readonly id: number) {
+class ArraySubcluster extends Array<NodeID> implements Subcluster {
+  constructor(
+    public readonly id: ClusterID,
+    public readonly baseID: ClusterID,
+    public readonly partitionID: ClusterID
+  ) {
     super();
   }
 }
@@ -22,7 +27,7 @@ export class Subclustering implements SubclusteringSpec {
   protected readonly clusterIdToSubcluster = new LazyProperty(() =>
     this.createClusterIdToSubcluster()
   );
-  protected readonly subclusterArray: Array<Array<ClusterArray>>;
+  protected readonly subclusterArray: Array<Array<ArraySubcluster>>;
 
   readonly numberNodes: number;
   readonly numberClusters: number;
@@ -39,11 +44,11 @@ export class Subclustering implements SubclusteringSpec {
     ] = this.createSubclusterArray(base, partition);
   }
 
-  subclusters(): Array<Array<Cluster>> {
+  subclusters(): Array<Array<ArraySubcluster>> {
     return this.subclusterArray;
   }
 
-  subclustersFromClusterId(clusterId: number): Array<Cluster> {
+  subclustersFromBaseClusterId(clusterId: number): Array<ArraySubcluster> {
     return this.subclusterArray[clusterId];
   }
 
@@ -66,23 +71,29 @@ export class Subclustering implements SubclusteringSpec {
     numberClusters: number,
     numberPairs: number,
     numberRows: number,
-    subclusterArray: Array<Array<ClusterArray>>
+    subclusterArray: Array<Array<ArraySubcluster>>
   ] {
     let numberClusters = 0;
     let numberPairs = 0;
     let numberRows = 0;
-    const subclusterArray = new Array<Array<ClusterArray>>(base.numberClusters);
-    const partitionClusterIdToSubcluster = getTmpArray<ClusterArray>(
+    const subclusterArray = new Array<Array<ArraySubcluster>>(
+      base.numberClusters
+    );
+    const partitionClusterIdToSubcluster = getTmpArray<ArraySubcluster>(
       partition.numberClusters
     );
-    for (const cluster of base.clusters()) {
+    for (const baseCluster of base.clusters()) {
       let numberSubclusters = 0;
       const partitionedClusterIds: ClusterID[] = [];
-      for (const nodeId of cluster) {
+      for (const nodeId of baseCluster) {
         const partitionClusterId = partition.clusterFromNodeId(nodeId).id;
         let subcluster = partitionClusterIdToSubcluster[partitionClusterId];
         if (!subcluster) {
-          subcluster = new ClusterArray(numberClusters++);
+          subcluster = new ArraySubcluster(
+            numberClusters++,
+            baseCluster.id,
+            partitionClusterId
+          );
           partitionedClusterIds.push(partitionClusterId);
           partitionClusterIdToSubcluster[partitionClusterId] = subcluster;
           ++numberSubclusters;
@@ -90,8 +101,8 @@ export class Subclustering implements SubclusteringSpec {
         subcluster.push(nodeId);
       }
 
-      const subclusters = new Array<ClusterArray>(numberSubclusters);
-      subclusterArray[cluster.id] = subclusters;
+      const subclusters = new Array<ArraySubcluster>(numberSubclusters);
+      subclusterArray[baseCluster.id] = subclusters;
 
       for (const partitionClusterId of partitionedClusterIds) {
         const subcluster = partitionClusterIdToSubcluster[partitionClusterId];
@@ -113,8 +124,10 @@ export class Subclustering implements SubclusteringSpec {
     ];
   }
 
-  protected createClusterIdToSubcluster(): ClusterArray[] {
-    const clusterIdToSubcluster = new Array<ClusterArray>(this.numberClusters);
+  protected createClusterIdToSubcluster(): ArraySubcluster[] {
+    const clusterIdToSubcluster = new Array<ArraySubcluster>(
+      this.numberClusters
+    );
     for (const subclusters of this.subclusterArray) {
       for (const subcluster of subclusters) {
         clusterIdToSubcluster[subcluster.id] = subcluster;
@@ -123,7 +136,7 @@ export class Subclustering implements SubclusteringSpec {
     return clusterIdToSubcluster;
   }
 
-  protected createNodeToSubcluster(): ClusterArray[] {
+  protected createNodeToSubcluster(): ArraySubcluster[] {
     const nodeToSubcluster = new Array(this.numberNodes);
     for (const subclusters of this.subclusterArray) {
       for (const subcluster of subclusters) {

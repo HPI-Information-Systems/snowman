@@ -45,7 +45,7 @@ export class CalculatePairsManyNegative extends CalculatePairs {
       );
     this.rows = [];
     this.skipRemains = this.skip;
-    this.subclusters = this.subclustering.subclustersFromClusterId(
+    this.subclusters = this.subclustering.subclustersFromBaseClusterId(
       this.clusterId
     );
     this.calculatePairsPrepared();

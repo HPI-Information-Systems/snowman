@@ -1,10 +1,10 @@
-import { Subclustering } from './subclustering';
-import { relaxedClusteringToClustering } from './test/relaxedClusterings';
-import { subclusteringTestCases } from './test/testCases';
+import { relaxedClusteringToClustering } from '../test/relaxedClusterings';
+import { subclusteringTestCases } from '../test/testCases';
 import {
   expectClusteringsToEqual,
   expectSubClusteringsToEqual,
-} from './test/utility';
+} from '../test/utility';
+import { Subclustering } from './subclustering';
 
 describe.each(subclusteringTestCases)(
   'Subclustering',

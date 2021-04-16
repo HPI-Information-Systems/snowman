@@ -23,12 +23,17 @@ export interface Clustering {
   clusterFromClusterId(clusterId: ClusterID): Cluster;
 }
 
+export interface Subcluster extends Cluster {
+  readonly baseID: ClusterID;
+  readonly partitionID: ClusterID;
+}
+
 export interface Subclustering extends Clustering {
   /**
-   * guaranteed to return clusters in order (their cluster id is strict monotonically increasing)
+   * guaranteed to return subclusters in order such that partitionID is strict monotonically increasing
    */
-  subclusters(): readonly (readonly Cluster[])[];
-  subclustersFromClusterId(clusterId: ClusterID): readonly Cluster[];
+  subclusters(): readonly (readonly Subcluster[])[];
+  subclustersFromBaseClusterId(clusterId: ClusterID): readonly Subcluster[];
 }
 
 export type MergesT = {
@@ -38,5 +43,5 @@ export type MergesT = {
     // ID of combined cluster after swaps and merges
     target: ClusterID;
   }[];
-  clusterIDSwaps: [ClusterID, ClusterID][];
+  clusterIDSwaps: [from: ClusterID, to: ClusterID][];
 };

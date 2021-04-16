@@ -1,6 +1,7 @@
 import { clusteringTestCases } from '../test/testCases';
 import { expectClusteringsToEqual } from '../test/utility';
 import { MergesT } from '../types';
+import { TrackableUnionFind } from './trackableUnionFind';
 import { UnionFind } from './unionFind';
 
 function prepareMergesForMatching(merges: MergesT) {
@@ -24,7 +25,7 @@ describe.each(clusteringTestCases)(
       expectClusteringsToEqual(clustering, expectedClustering);
     });
     test('tracks correct links', () => {
-      const clustering = new UnionFind(numberNodes);
+      const clustering = new TrackableUnionFind(numberNodes);
       let from = 0;
       for (const { merges, linkNext } of trackedSteps) {
         const to = from + linkNext;
