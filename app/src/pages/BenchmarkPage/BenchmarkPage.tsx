@@ -50,7 +50,7 @@ const BenchmarkPage = (): JSX.Element => {
                 </IonText>
               </IonCardContent>
               <IonButton expand="full" fill="clear">
-                Start Benchmarking
+                Start Benchmark
               </IonButton>
             </IonCard>
           </IonCol>
@@ -85,7 +85,7 @@ const BenchmarkPage = (): JSX.Element => {
                 </IonText>
               </IonCardContent>
               <IonButton expand="full" fill="clear">
-                Start Benchmarking
+                Start Benchmark
               </IonButton>
             </IonCard>
           </IonCol>
@@ -119,7 +119,7 @@ const BenchmarkPage = (): JSX.Element => {
                 </IonText>
               </IonCardContent>
               <IonButton expand="full" fill="clear">
-                Start Benchmarking
+                Start Benchmark
               </IonButton>
             </IonCard>
           </IonCol>
@@ -153,7 +153,7 @@ const BenchmarkPage = (): JSX.Element => {
                 </IonText>
               </IonCardContent>
               <IonButton expand="full" fill="clear">
-                Start Benchmarking
+                Start Benchmark
               </IonButton>
             </IonCard>
           </IonCol>
