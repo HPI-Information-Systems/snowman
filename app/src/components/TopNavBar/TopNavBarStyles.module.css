@@ -1,0 +1,43 @@
+.buttonElement {
+  margin: 0 !important;
+  padding-right: 40px;
+  padding-left: 40px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 16px !important;
+  font-weight: 500;
+  height: 100% !important;
+  border: none;
+}
+
+.buttonElement.active {
+  color: white;
+  background-color: var(--ion-color-primary);
+}
+
+.buttonContainer {
+  position: relative;
+}
+
+.toolbar {
+  position: relative;
+  display: block;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  background-color: var(--ion-color-primary-dark);
+}
+
+.toolbarContainer {
+  align-items: stretch;
+  box-sizing: border-box;
+  contain: content;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  min-height: 44px;
+}

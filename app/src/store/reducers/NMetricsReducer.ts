@@ -4,6 +4,7 @@ import {
   DatasetsPageActionTypes,
   ExperimentsPageActionTypes,
   NMetricsPageActionTypes as actionTypes,
+  NMetricsPageActionTypes,
 } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { NMetricsStore } from 'store/models';
@@ -25,6 +26,7 @@ export const NMetricsReducer = (
     case CoreStoreActionTypes.SET_ALL_EXPERIMENTS:
     case ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT:
     case DatasetsPageActionTypes.CLICK_ON_DATASET:
+    case NMetricsPageActionTypes.INSPECT_AN_EXPERIMENT:
     case actionTypes.RESET_METRICS:
       return {
         ...state,

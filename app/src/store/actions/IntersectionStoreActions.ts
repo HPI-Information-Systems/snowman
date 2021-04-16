@@ -1,9 +1,9 @@
 import {
   BenchmarkApi,
-  CalculateExperimentIntersectionPairCountsRequest,
+  CalculateExperimentIntersectionCountsRequest,
   Experiment,
-  ExperimentIntersectionPairCountsExperiments,
-  ExperimentIntersectionPairCountsItem,
+  ExperimentIntersectionCount,
+  ExperimentIntersectionItem,
 } from 'api';
 import { DropResult } from 'react-beautiful-dnd';
 import { IntersectionStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
@@ -45,13 +45,13 @@ export const resetIncludedExperiments = (
   });
 
 export const countsMatchConfiguration = (
-  counts: ExperimentIntersectionPairCountsItem[],
+  counts: ExperimentIntersectionCount[],
   ...chosenExperiments: Experiment[][]
 ): boolean => {
   const countsExperimentIds = new Set(
     counts
       .reduce<{
-        experiments: ExperimentIntersectionPairCountsExperiments[];
+        experiments: ExperimentIntersectionItem[];
       }>(
         (prev, current) =>
           current.experiments.length > prev.experiments.length ? current : prev,
@@ -77,28 +77,24 @@ export const countsMatchCurrentConfiguration = (
   );
 };
 
-const loadCountsRequestBody = (): CalculateExperimentIntersectionPairCountsRequest => {
+const loadCountsRequestBody = (): CalculateExperimentIntersectionCountsRequest => {
   const { BenchmarkConfigurationStore } = store.getState();
   return {
-    experimentIntersectionPairCountsRequestExperiments: [
-      ...BenchmarkConfigurationStore.chosenExperiments.map(({ id }) => ({
-        experimentId: id,
-      })),
-      ...BenchmarkConfigurationStore.chosenGoldStandards.map(({ id }) => ({
-        experimentId: id,
-      })),
-    ],
+    experiments: [
+      ...BenchmarkConfigurationStore.chosenExperiments,
+      ...BenchmarkConfigurationStore.chosenGoldStandards,
+    ].map(({ id }) => ({ experimentId: id })),
   };
 };
 
 export const intersectionSorter = (
-  e1: ExperimentIntersectionPairCountsExperiments,
-  e2: ExperimentIntersectionPairCountsExperiments
+  e1: ExperimentIntersectionItem,
+  e2: ExperimentIntersectionItem
 ): number => e1.experimentId - e2.experimentId;
 
 export const intersectionsMatch = (
-  sortedConfig1: ExperimentIntersectionPairCountsExperiments[],
-  sortedConfig2: ExperimentIntersectionPairCountsExperiments[]
+  sortedConfig1: ExperimentIntersectionItem[],
+  sortedConfig2: ExperimentIntersectionItem[]
 ): boolean =>
   sortedConfig1.length === sortedConfig2.length &&
   sortedConfig1.every(
@@ -108,9 +104,9 @@ export const intersectionsMatch = (
   );
 
 export const getCountsForIntersection = (
-  sortedCounts: ExperimentIntersectionPairCountsItem[],
-  sortedConfig: ExperimentIntersectionPairCountsExperiments[]
-): ExperimentIntersectionPairCountsItem | undefined =>
+  sortedCounts: ExperimentIntersectionCount[],
+  sortedConfig: ExperimentIntersectionItem[]
+): ExperimentIntersectionCount | undefined =>
   sortedCounts.find(({ experiments }) =>
     intersectionsMatch(experiments, sortedConfig)
   );
@@ -119,10 +115,12 @@ export const loadCounts = (): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> => {
   if (!countsMatchCurrentConfiguration()) {
-    const counts = await RequestHandler(() =>
-      new BenchmarkApi().calculateExperimentIntersectionPairCounts(
-        loadCountsRequestBody()
-      )
+    const counts = await RequestHandler(
+      () =>
+        new BenchmarkApi().calculateExperimentIntersectionCounts(
+          loadCountsRequestBody()
+        ),
+      dispatch
     );
     if (
       !countsMatchCurrentConfiguration() &&
@@ -139,7 +137,7 @@ export const loadCounts = (): SnowmanThunkAction<Promise<void>> => async (
 
 const intersectionTuplesLoaders = new Map<string, TuplesLoader>();
 const serializeIntersection = (
-  sortedConfig: ExperimentIntersectionPairCountsExperiments[]
+  sortedConfig: ExperimentIntersectionItem[]
 ): string =>
   sortedConfig
     .map(
@@ -148,7 +146,7 @@ const serializeIntersection = (
     )
     .join(':');
 export const intersectionTuplesLoader = (
-  sortedConfig: ExperimentIntersectionPairCountsExperiments[],
+  sortedConfig: ExperimentIntersectionItem[],
   dataset: number
 ): TuplesLoader => {
   if (sortedConfig.length > 0) {
@@ -159,7 +157,7 @@ export const intersectionTuplesLoader = (
         new BenchmarkApi().calculateExperimentIntersectionRecords({
           startAt,
           limit: stop - startAt,
-          experimentIntersectionRequestExperiments: sortedConfig,
+          intersection: sortedConfig,
         });
       intersectionTuplesLoaders.set(serializedConfig, tuplesLoader);
     }

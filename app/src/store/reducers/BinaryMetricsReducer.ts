@@ -1,9 +1,10 @@
-import { ExperimentIntersectionPairCountsItem, Metric } from 'api';
+import { ExperimentIntersectionCount, Metric } from 'api';
 import {
   BinaryMetricsStoreActionTypes as actionTypes,
   CoreStoreActionTypes,
   DatasetsPageActionTypes,
   ExperimentsPageActionTypes,
+  NMetricsPageActionTypes,
 } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { BinaryMetricsStore } from 'store/models';
@@ -23,6 +24,7 @@ export const BinaryMetricsReducer = (
     case CoreStoreActionTypes.SET_ALL_EXPERIMENTS:
     case ExperimentsPageActionTypes.DRAG_N_DROP_EXPERIMENT:
     case DatasetsPageActionTypes.CLICK_ON_DATASET:
+    case NMetricsPageActionTypes.INSPECT_AN_EXPERIMENT:
     case actionTypes.RESET_METRICS:
       return {
         ...state,
@@ -36,7 +38,7 @@ export const BinaryMetricsReducer = (
     case actionTypes.SET_ALL_COUNTS:
       return {
         ...state,
-        counts: action.payload as ExperimentIntersectionPairCountsItem[],
+        counts: action.payload as ExperimentIntersectionCount[],
       };
     case actionTypes.CLICK_ON_PANE:
       return {

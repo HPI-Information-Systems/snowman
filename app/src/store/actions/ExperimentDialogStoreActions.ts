@@ -105,7 +105,7 @@ const createNewExperiment = (
   RequestHandler<number>(
     () =>
       new ExperimentsApi().addExperiment({
-        experimentValues: {
+        experiment: {
           name: store.getState().ExperimentDialogStore.experimentName,
           description: store.getState().ExperimentDialogStore
             .experimentDescription,
@@ -136,7 +136,7 @@ const uploadExperimentFile = (
             store.getState().ExperimentDialogStore.experimentId ??
             MagicNotPossibleId,
           format: store.getState().ExperimentDialogStore.experimentFileFormat,
-          body: store.getState().ExperimentDialogStore.selectedFiles[0] as Blob,
+          file: store.getState().ExperimentDialogStore.selectedFiles[0] as Blob,
         }),
       showSuccess && willUpload ? SUCCESS_TO_UPLOAD_EXPERIMENT_FILE : undefined,
       true
@@ -154,7 +154,7 @@ const editExistingExperiment = (): SnowmanThunkAction<Promise<void>> => async (
         experimentId:
           store.getState().ExperimentDialogStore.experimentId ??
           MagicNotPossibleId,
-        experimentValues: {
+        experiment: {
           name: store.getState().ExperimentDialogStore.experimentName,
           description: store.getState().ExperimentDialogStore
             .experimentDescription,

@@ -157,7 +157,7 @@ const createNewDataset = (
   RequestHandler<number>(
     (): Promise<number> =>
       new DatasetsApi().addDataset({
-        datasetValues: {
+        dataset: {
           name: store.getState().DatasetDialogStore.datasetName,
           description: store.getState().DatasetDialogStore.datasetDescription,
           numberOfRecords:
@@ -179,7 +179,7 @@ const setExistingDataset = (): SnowmanThunkAction<
       new DatasetsApi().setDataset({
         datasetId:
           store.getState().DatasetDialogStore.datasetId ?? MagicNotPossibleId,
-        datasetValues: {
+        dataset: {
           name: store.getState().DatasetDialogStore.datasetName,
           description: store.getState().DatasetDialogStore.datasetDescription,
           tags: store.getState().DatasetDialogStore.selectedTags,
@@ -210,7 +210,7 @@ const uploadDatasetFile = (
           quote: store.getState().DatasetDialogStore.csvQuote,
           escape: store.getState().DatasetDialogStore.csvEscape,
           separator: store.getState().DatasetDialogStore.csvSeparator,
-          body: store.getState().DatasetDialogStore.selectedFiles[0] as Blob,
+          file: store.getState().DatasetDialogStore.selectedFiles[0] as Blob,
         });
       return Promise.resolve();
     },

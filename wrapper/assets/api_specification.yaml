@@ -2,33 +2,35 @@ openapi: 3.0.0
 info:
   contact:
     email: snowman@groups.sap.com
-    url: https://github.com
+    url: https://github.com/HPI-Information-Systems/snowman
   description: |
     _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
   license:
     name: LICENSE (MIT)
-    url: https://github.com
+    url: https://github.com/HPI-Information-Systems/snowman/blob/main/LICENSE
   title: Snowman API
   version: 1.0.0
 servers:
-- url: '{protocol}://{server}/api/v1'
-  variables:
-    protocol:
-      default: http
-      enum:
-      - http
-      - https
-    server:
-      default: localhost:8123
+  - url: "{protocol}://{server}/api/v1"
+    variables:
+      protocol:
+        default: http
+        enum:
+          - http
+          - https
+      server:
+        default: localhost:8123
 tags:
-- description: Operations about algorithms
-  name: Algorithm
-- description: Operations about datasets
-  name: Datasets
-- description: Operations about experiments
-  name: Experiments
-- description: Operations about comparing multiple experiments
-  name: Benchmark
+  - description: Operations about algorithms
+    name: Algorithm
+  - description: Operations about datasets
+    name: Datasets
+  - description: Operations about experiments
+    name: Experiments
+  - description: Operations about similarity thresholds of experiments
+    name: Similarity Thresholds
+  - description: Operations about comparing multiple experiments
+    name: Benchmark
 paths:
   /algorithms:
     get:
@@ -39,12 +41,12 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/Algorithm'
+                  $ref: "#/components/schemas/Algorithm"
                 type: array
           description: OK
       summary: Get all algorithms
       tags:
-      - Algorithm
+        - Algorithm
       x-eov-operation-handler: controllers/AlgorithmController
     post:
       operationId: addAlgorithm
@@ -52,82 +54,78 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AlgorithmValues'
-        description: Algorithm object which will be stored
+              $ref: "#/components/schemas/AlgorithmValues"
         required: true
       responses:
         "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AlgorithmId'
+                $ref: "#/components/schemas/AlgorithmId"
           description: Created
         "400":
           description: Bad Request
       summary: Creates a new algorithm
       tags:
-      - Algorithm
+        - Algorithm
+      x-codegen-request-body-name: algorithm
       x-eov-operation-handler: controllers/AlgorithmController
   /algorithms/{algorithmId}:
     delete:
       operationId: deleteAlgorithm
       parameters:
-      - description: The id of an algorithm
-        explode: false
-        in: path
-        name: algorithmId
-        required: true
-        schema:
-          $ref: '#/components/schemas/AlgorithmId'
-        style: simple
+        - explode: false
+          in: path
+          name: algorithmId
+          required: true
+          schema:
+            $ref: "#/components/schemas/AlgorithmId"
+          style: simple
       responses:
         "204":
           description: No Content
       summary: Deletes an algorithm by id
       tags:
-      - Algorithm
+        - Algorithm
       x-eov-operation-handler: controllers/AlgorithmController
     get:
       operationId: getAlgorithm
       parameters:
-      - description: The id of an algorithm
-        explode: false
-        in: path
-        name: algorithmId
-        required: true
-        schema:
-          $ref: '#/components/schemas/AlgorithmId'
-        style: simple
+        - explode: false
+          in: path
+          name: algorithmId
+          required: true
+          schema:
+            $ref: "#/components/schemas/AlgorithmId"
+          style: simple
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Algorithm'
+                $ref: "#/components/schemas/Algorithm"
           description: OK
         "404":
           description: Not Found
       summary: Gets an algorithm by id
       tags:
-      - Algorithm
+        - Algorithm
       x-eov-operation-handler: controllers/AlgorithmController
     put:
       operationId: setAlgorithm
       parameters:
-      - description: The id of an algorithm
-        explode: false
-        in: path
-        name: algorithmId
-        required: true
-        schema:
-          $ref: '#/components/schemas/AlgorithmId'
-        style: simple
+        - explode: false
+          in: path
+          name: algorithmId
+          required: true
+          schema:
+            $ref: "#/components/schemas/AlgorithmId"
+          style: simple
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AlgorithmValues'
-        description: updated Algorithm object
+              $ref: "#/components/schemas/AlgorithmValues"
         required: true
       responses:
         "204":
@@ -136,7 +134,8 @@ paths:
           description: Bad Request
       summary: Updates or creates an algorithm
       tags:
-      - Algorithm
+        - Algorithm
+      x-codegen-request-body-name: algorithm
       x-eov-operation-handler: controllers/AlgorithmController
   /datasets:
     get:
@@ -147,12 +146,12 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/Dataset'
+                  $ref: "#/components/schemas/Dataset"
                 type: array
           description: OK
       summary: Returns all Datasets
       tags:
-      - Datasets
+        - Datasets
       x-eov-operation-handler: controllers/DatasetsController
     post:
       operationId: addDataset
@@ -160,82 +159,78 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DatasetValues'
-        description: Metainformation of a dataset
+              $ref: "#/components/schemas/DatasetValues"
         required: true
       responses:
         "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DatasetId'
+                $ref: "#/components/schemas/DatasetId"
           description: Created
         "400":
           description: Bad Request
       summary: Creates a new dataset with metainformation
       tags:
-      - Datasets
+        - Datasets
+      x-codegen-request-body-name: dataset
       x-eov-operation-handler: controllers/DatasetsController
   /datasets/{datasetId}:
     delete:
       operationId: deleteDataset
       parameters:
-      - description: The id of a dataset
-        explode: false
-        in: path
-        name: datasetId
-        required: true
-        schema:
-          $ref: '#/components/schemas/DatasetId'
-        style: simple
+        - explode: false
+          in: path
+          name: datasetId
+          required: true
+          schema:
+            $ref: "#/components/schemas/DatasetId"
+          style: simple
       responses:
         "204":
           description: No Content
       summary: Deletes a whole dataset by id
       tags:
-      - Datasets
+        - Datasets
       x-eov-operation-handler: controllers/DatasetsController
     get:
       operationId: getDataset
       parameters:
-      - description: The id of a dataset
-        explode: false
-        in: path
-        name: datasetId
-        required: true
-        schema:
-          $ref: '#/components/schemas/DatasetId'
-        style: simple
+        - explode: false
+          in: path
+          name: datasetId
+          required: true
+          schema:
+            $ref: "#/components/schemas/DatasetId"
+          style: simple
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Dataset'
+                $ref: "#/components/schemas/Dataset"
           description: OK
         "404":
           description: Not Found
       summary: Gets dataset by id
       tags:
-      - Datasets
+        - Datasets
       x-eov-operation-handler: controllers/DatasetsController
     put:
       operationId: setDataset
       parameters:
-      - description: The id of a dataset
-        explode: false
-        in: path
-        name: datasetId
-        required: true
-        schema:
-          $ref: '#/components/schemas/DatasetId'
-        style: simple
+        - explode: false
+          in: path
+          name: datasetId
+          required: true
+          schema:
+            $ref: "#/components/schemas/DatasetId"
+          style: simple
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DatasetValues'
-        description: updated Dataset object
+              $ref: "#/components/schemas/DatasetValues"
         required: true
       responses:
         "204":
@@ -244,133 +239,129 @@ paths:
           description: Bad Request
       summary: Updates or creates a dataset
       tags:
-      - Datasets
+        - Datasets
+      x-codegen-request-body-name: dataset
       x-eov-operation-handler: controllers/DatasetsController
   /datasets/{datasetId}/file:
     delete:
       operationId: deleteDatasetFile
       parameters:
-      - description: The id of a dataset file
-        explode: false
-        in: path
-        name: datasetId
-        required: true
-        schema:
-          $ref: '#/components/schemas/DatasetId'
-        style: simple
+        - explode: false
+          in: path
+          name: datasetId
+          required: true
+          schema:
+            $ref: "#/components/schemas/DatasetId"
+          style: simple
       responses:
         "204":
           description: No Content
       summary: Deletes a dataset file (but not the dataset)
       tags:
-      - Datasets
+        - Datasets
       x-eov-operation-handler: controllers/DatasetsController
     get:
-      description: Always returns one row with column names followed by the requested
+      description:
+        Always returns one row with column names followed by the requested
         amount of rows. To only return the column names, pass startAt=0 and limit=0.
       operationId: getDatasetFile
       parameters:
-      - description: The id of a dataset file
-        explode: false
-        in: path
-        name: datasetId
-        required: true
-        schema:
-          $ref: '#/components/schemas/DatasetId'
-        style: simple
-      - explode: true
-        in: query
-        name: startAt
-        required: false
-        schema:
-          default: 0
-          type: integer
-        style: form
-      - explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: -1
-          description: -1 returns all remaining records
-          type: integer
-        style: form
-      - explode: true
-        in: query
-        name: sortBy
-        required: false
-        schema:
-          description: guarantees same order of records even if not specified (startAt,
-            limit can be used without specifying sortBy)
-          example: first_name
-          type: string
-        style: form
+        - explode: false
+          in: path
+          name: datasetId
+          required: true
+          schema:
+            $ref: "#/components/schemas/DatasetId"
+          style: simple
+        - explode: true
+          in: query
+          name: startAt
+          required: false
+          schema:
+            default: 0
+            type: integer
+          style: form
+        - description: -1 returns all remaining records
+          explode: true
+          in: query
+          name: limit
+          required: false
+          schema:
+            default: -1
+            type: integer
+          style: form
+        - description:
+            startAt and limit can be used without specifying sortBy (guarantees
+            same order of records even if not specified)
+          explode: true
+          in: query
+          name: sortBy
+          required: false
+          schema:
+            example: first_name
+            type: string
+          style: form
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FileResponse'
+                $ref: "#/components/schemas/FileResponse"
           description: OK
         "404":
           description: Not Found
       summary: Gets a dataset file by id
       tags:
-      - Datasets
+        - Datasets
       x-eov-operation-handler: controllers/DatasetsController
     put:
       operationId: setDatasetFile
       parameters:
-      - description: The id of a dataset file
-        explode: false
-        in: path
-        name: datasetId
-        required: true
-        schema:
-          $ref: '#/components/schemas/DatasetId'
-        style: simple
-      - description: The name of the alphanumeric id column in the uploaded dataset.
-        explode: true
-        in: query
-        name: idColumn
-        required: true
-        schema:
-          example: id
-          type: string
-        style: form
-      - description: The quote symbol used in the dataset
-        explode: true
-        in: query
-        name: quote
-        required: true
-        schema:
-          example: '"'
-          type: string
-        style: form
-      - description: The escape symbol used in the dataset
-        explode: true
-        in: query
-        name: escape
-        required: true
-        schema:
-          example: ''''
-          type: string
-        style: form
-      - description: The separator symbol used in the dataset
-        explode: true
-        in: query
-        name: separator
-        required: true
-        schema:
-          example: ','
-          type: string
-        style: form
+        - explode: false
+          in: path
+          name: datasetId
+          required: true
+          schema:
+            $ref: "#/components/schemas/DatasetId"
+          style: simple
+        - description: The name of the alphanumeric id column in the uploaded dataset.
+          explode: true
+          in: query
+          name: idColumn
+          required: true
+          schema:
+            example: id
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: quote
+          required: true
+          schema:
+            example: '"'
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: escape
+          required: true
+          schema:
+            example: "'"
+            type: string
+          style: form
+        - explode: true
+          in: query
+          name: separator
+          required: true
+          schema:
+            example: ","
+            type: string
+          style: form
       requestBody:
         content:
           text/csv:
             schema:
-              $ref: '#/components/schemas/CSVFile'
-        description: updated csv object
+              $ref: "#/components/schemas/CSVFile"
         required: true
       responses:
         "204":
@@ -379,7 +370,8 @@ paths:
           description: Bad Request
       summary: Updates or creates a dataset file
       tags:
-      - Datasets
+        - Datasets
+      x-codegen-request-body-name: file
       x-eov-operation-handler: controllers/DatasetsController
   /experiments:
     get:
@@ -390,12 +382,12 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/Experiment'
+                  $ref: "#/components/schemas/Experiment"
                 type: array
           description: OK
       summary: Get all experiments
       tags:
-      - Experiments
+        - Experiments
       x-eov-operation-handler: controllers/ExperimentsController
     post:
       operationId: addExperiment
@@ -403,82 +395,78 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExperimentValues'
-        description: ExperimentObject which will be stored
+              $ref: "#/components/schemas/ExperimentValues"
         required: true
       responses:
         "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExperimentId'
+                $ref: "#/components/schemas/ExperimentId"
           description: Created
         "400":
           description: Bad Request
       summary: Creates a new Experiment
       tags:
-      - Experiments
+        - Experiments
+      x-codegen-request-body-name: experiment
       x-eov-operation-handler: controllers/ExperimentsController
   /experiments/{experimentId}:
     delete:
       operationId: deleteExperiment
       parameters:
-      - description: The id of an experiment
-        explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
+        - explode: false
+          in: path
+          name: experimentId
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          style: simple
       responses:
         "204":
           description: No Content
       summary: Deletes an experiment (including experiment file)
       tags:
-      - Experiments
+        - Experiments
       x-eov-operation-handler: controllers/ExperimentsController
     get:
       operationId: getExperiment
       parameters:
-      - description: The id of an experiment
-        explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
+        - explode: false
+          in: path
+          name: experimentId
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          style: simple
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Experiment'
+                $ref: "#/components/schemas/Experiment"
           description: OK
         "404":
           description: Not Found
       summary: Gets experiment by id
       tags:
-      - Experiments
+        - Experiments
       x-eov-operation-handler: controllers/ExperimentsController
     put:
       operationId: setExperiment
       parameters:
-      - description: The id of an experiment
-        explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
+        - explode: false
+          in: path
+          name: experimentId
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          style: simple
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExperimentValues'
-        description: updated Experiment object
+              $ref: "#/components/schemas/ExperimentValues"
         required: true
       responses:
         "204":
@@ -487,256 +475,439 @@ paths:
           description: Bad Request
       summary: Updates or creates an Experiment
       tags:
-      - Experiments
+        - Experiments
+      x-codegen-request-body-name: experiment
       x-eov-operation-handler: controllers/ExperimentsController
   /experiments/{experimentId}/file:
     get:
       operationId: getExperimentFile
       parameters:
-      - description: The id of an experiment
-        explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
-      - explode: true
-        in: query
-        name: startAt
-        required: false
-        schema:
-          default: 0
-          type: integer
-        style: form
-      - explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: -1
-          description: -1 returns all remaining records
-          type: integer
-        style: form
-      - explode: true
-        in: query
-        name: sortBy
-        required: false
-        schema:
-          description: guarantees same order of records even if not specified (startAt,
-            limit can be used without specifying sortBy)
-          example: first_name
-          type: string
-        style: form
+        - explode: false
+          in: path
+          name: experimentId
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          style: simple
+        - description: only use in combination with similarityThreshold
+          explode: true
+          in: query
+          name: similarityThresholdFunction
+          required: false
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          style: form
+        - description: only use in combination with similarityThresholdFunction
+          explode: true
+          in: query
+          name: similarityThreshold
+          required: false
+          schema:
+            type: number
+          style: form
+        - explode: true
+          in: query
+          name: startAt
+          required: false
+          schema:
+            default: 0
+            type: integer
+          style: form
+        - description: -1 returns all remaining records
+          explode: true
+          in: query
+          name: limit
+          required: false
+          schema:
+            default: -1
+            type: integer
+          style: form
+        - description:
+            startAt and limit can be used without specifying sortBy (guarantees
+            same order of records even if not specified)
+          explode: true
+          in: query
+          name: sortBy
+          required: false
+          schema:
+            example: first_name
+            type: string
+          style: form
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FileResponse'
+                $ref: "#/components/schemas/FileResponse"
           description: OK
         "404":
           description: Not Found
       summary: Get an experiment file
       tags:
-      - Experiments
+        - Experiments
       x-eov-operation-handler: controllers/ExperimentsController
     put:
       operationId: setExperimentFile
       parameters:
-      - description: The id of an experiment
-        explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
-      - description: the format of the experiment file
-        explode: true
-        in: query
-        name: format
-        required: true
-        schema:
-          enum:
-          - magellan
-          - clusterER
-          - pilot
-          - sigmod2021
-          - BHANA
-          - BPIES
-          type: string
-        style: form
+        - explode: false
+          in: path
+          name: experimentId
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          style: simple
+        - description: only use in combination with similarityThreshold
+          explode: true
+          in: query
+          name: similarityThresholdFunction
+          required: false
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          style: form
+        - description: only use in combination with similarityThresholdFunction
+          explode: true
+          in: query
+          name: similarityThreshold
+          required: false
+          schema:
+            type: number
+          style: form
+        - description: "Documentation on the formats can be found here: https://hpi-information-systems.github.io/snowman/basic_usage/experiments/#import-formats"
+          explode: true
+          in: query
+          name: format
+          required: true
+          schema:
+            enum:
+              - magellan
+              - clusterER
+              - pilot
+              - sigmod2021
+              - BHANA
+              - BPIES
+            type: string
+          style: form
       requestBody:
         content:
           text/csv:
             schema:
-              $ref: '#/components/schemas/CSVFile'
-        description: updated experiment file
+              $ref: "#/components/schemas/CSVFile"
         required: true
       responses:
         "204":
           description: No Content
         "400":
           description: Bad Request
-      summary: Creates an experiment file
+      summary: Creates an experiment file (cannot overwrite existing)
       tags:
-      - Experiments
+        - Experiments
+      x-codegen-request-body-name: file
       x-eov-operation-handler: controllers/ExperimentsController
-  /benchmark/{experimentId1}/{experimentId2}/metrics:
+  /experiments/{experimentId}/similarity-threshold-functions:
     get:
-      operationId: getBinaryMetrics
+      operationId: getSimilarityThresholdFunctions
       parameters:
-      - description: The id of the groundTruth
-        explode: false
-        in: path
-        name: experimentId1
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
-      - description: The id of the predicted Experiment
-        explode: false
-        in: path
-        name: experimentId2
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
-      - explode: true
-        in: query
-        name: similarityThreshold_experiment1
-        required: false
-        schema:
-          type: number
-        style: form
-      - explode: true
-        in: query
-        name: similarityAttribute_experiment1
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: true
-        in: query
-        name: similarityThreshold_experiment2
-        required: false
-        schema:
-          type: number
-        style: form
-      - explode: true
-        in: query
-        name: similarityAttribute_experiment2
-        required: false
-        schema:
-          type: string
-        style: form
+        - explode: false
+          in: path
+          name: experimentId
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          style: simple
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Metrics'
+                items:
+                  $ref: "#/components/schemas/SimilarityThresholdFunction"
+                type: array
           description: OK
-        "403":
-          description: Forbidden
         "404":
-          description: Experiments not found
+          description: Not Found
+      summary: Get all similarity threshold functions of an experiment
+      tags:
+        - Similarity Thresholds
+      x-eov-operation-handler: controllers/SimilarityThresholdsController
+    post:
+      operationId: addSimilarityThresholdFunction
+      parameters:
+        - explode: false
+          in: path
+          name: experimentId
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          description: Created
+        "400":
+          description: Bad Request
+      summary: Creates a new similarity threshold function
+      tags:
+        - Similarity Thresholds
+      x-codegen-request-body-name: similarityThresholdFunction
+      x-eov-operation-handler: controllers/SimilarityThresholdsController
+  /experiments/{experimentId}/similarity-threshold-functions/{functionId}:
+    delete:
+      operationId: deleteSimilarityThresholdFunction
+      parameters:
+        - explode: false
+          in: path
+          name: experimentId
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          style: simple
+        - explode: false
+          in: path
+          name: functionId
+          required: true
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          style: simple
+      responses:
+        "204":
+          description: No Content
+      summary: Deletes a similarity threshold function
+      tags:
+        - Similarity Thresholds
+      x-eov-operation-handler: controllers/SimilarityThresholdsController
+    get:
+      operationId: getSimilarityThresholdFunction
+      parameters:
+        - explode: false
+          in: path
+          name: experimentId
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          style: simple
+        - explode: false
+          in: path
+          name: functionId
+          required: true
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimilarityThresholdFunction"
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get a similarity threshold function
+      tags:
+        - Similarity Thresholds
+      x-eov-operation-handler: controllers/SimilarityThresholdsController
+    put:
+      operationId: setSimilarityThresholdFunction
+      parameters:
+        - explode: false
+          in: path
+          name: experimentId
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          style: simple
+        - explode: false
+          in: path
+          name: functionId
+          required: true
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+        required: true
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+      summary: Updates or creates a similarity threshold function
+      tags:
+        - Similarity Thresholds
+      x-codegen-request-body-name: similarityThresholdFunction
+      x-eov-operation-handler: controllers/SimilarityThresholdsController
+  /benchmark/metrics:
+    get:
+      operationId: getBinaryMetrics
+      parameters:
+        - explode: true
+          in: query
+          name: groundTruthExperimentId
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          style: form
+        - description: only use in combination with groundTruthSimilarityThreshold
+          explode: true
+          in: query
+          name: groundTruthSimilarityThresholdFunction
+          required: false
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          style: form
+        - description: only use in combination with groundTruthSimilarityThresholdFunction
+          explode: true
+          in: query
+          name: groundTruthSimilarityThreshold
+          required: false
+          schema:
+            type: number
+          style: form
+        - explode: true
+          in: query
+          name: predictedExperimentId
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          style: form
+        - description: only use in combination with predictedSimilarityThreshold
+          explode: true
+          in: query
+          name: predictedSimilarityThresholdFunction
+          required: false
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          style: form
+        - description: only use in combination with predictedSimilarityThresholdFunction
+          explode: true
+          in: query
+          name: predictedSimilarityThreshold
+          required: false
+          schema:
+            type: number
+          style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Metric"
+                type: array
+          description: OK
+        "404":
+          description: Not Found
       summary: Compares two experiments and returns binary metrics
       tags:
-      - Benchmark
+        - Benchmark
       x-eov-operation-handler: controllers/BenchmarkController
   /benchmark/experiment-intersection/records:
     post:
       operationId: calculateExperimentIntersectionRecords
       parameters:
-      - explode: true
-        in: query
-        name: startAt
-        required: false
-        schema:
-          default: 0
-          type: integer
-        style: form
-      - explode: true
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: -1
-          type: integer
-        style: form
+        - explode: true
+          in: query
+          name: startAt
+          required: false
+          schema:
+            default: 0
+            type: integer
+          style: form
+        - description: -1 returns all remaining records
+          explode: true
+          in: query
+          name: limit
+          required: false
+          schema:
+            default: -1
+            type: integer
+          style: form
       requestBody:
-        $ref: '#/components/requestBodies/ExperimentIntersectionConfiguration'
+        $ref: "#/components/requestBodies/ExperimentIntersection"
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FileResponse'
+                $ref: "#/components/schemas/FileResponse"
           description: OK
-        "403":
-          description: Forbidden
         "404":
-          description: Experiments not found
-      summary: intersects multiple experiments and returns the resulting records.
+          description: Not Found
+      summary:
+        intersects multiple experiments and returns the resulting records.
         This can be used to calculate the confusion-matrix.
       tags:
-      - Benchmark
+        - Benchmark
+      x-codegen-request-body-name: intersection
       x-eov-operation-handler: controllers/BenchmarkController
   /benchmark/experiment-intersection/count:
     post:
       operationId: calculateExperimentIntersectionCount
       requestBody:
-        $ref: '#/components/requestBodies/ExperimentIntersectionConfiguration'
+        $ref: "#/components/requestBodies/ExperimentIntersection"
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExperimentIntersectionCount'
+                $ref: "#/components/schemas/ExperimentIntersectionCount"
           description: OK
-        "403":
-          description: Forbidden
         "404":
-          description: Experiments not found
-      summary: intersects multiple experiments and returns the counts of the number
-        of records. This can be used to calculate the confusion-matrix
+          description: Not Found
+      summary:
+        Intersects multiple experiments and returns the count of pairs and
+        the count of rows. This can be used to calculate the confusion-matrix.
       tags:
-      - Benchmark
+        - Benchmark
+      x-codegen-request-body-name: intersection
       x-eov-operation-handler: controllers/BenchmarkController
-  /benchmark/experiment-intersection/pair-counts:
+  /benchmark/experiment-intersection/counts:
     post:
-      description: returns the count of pairs of all possible intersections of the
-        given experiments
-      operationId: calculateExperimentIntersectionPairCounts
+      description:
+        Returns the pair and row counts of all possible intersections of
+        the given experiments.
+      operationId: calculateExperimentIntersectionCounts
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExperimentIntersectionPairCountsConfiguration'
+              items:
+                $ref: "#/components/schemas/ExperimentConfigItem"
+              type: array
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExperimentIntersectionPairCounts'
+                items:
+                  $ref: "#/components/schemas/ExperimentIntersectionCount"
+                type: array
           description: OK
-        "403":
-          description: Forbidden
         "404":
-          description: Experiments not found
+          description: Not Found
       tags:
-      - Benchmark
+        - Benchmark
+      x-codegen-request-body-name: experiments
       x-eov-operation-handler: controllers/BenchmarkController
 components:
   requestBodies:
-    ExperimentIntersectionConfiguration:
+    ExperimentIntersection:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ExperimentIntersectionConfiguration'
+            $ref: "#/components/schemas/ExperimentIntersection"
       required: true
   schemas:
     AlgorithmId:
@@ -755,12 +926,12 @@ components:
           example: This is an open source python library
           type: string
       required:
-      - name
+        - name
       type: object
     Algorithm:
       allOf:
-      - $ref: '#/components/schemas/Algorithm_allOf'
-      - $ref: '#/components/schemas/AlgorithmValues'
+        - $ref: "#/components/schemas/Algorithm_allOf"
+        - $ref: "#/components/schemas/AlgorithmValues"
     DatasetId:
       example: 1
       type: integer
@@ -770,8 +941,8 @@ components:
         name: Dataset1
         description: This is a dataset file about Restaurants.
         tags:
-        - restaurants
-        - restaurants
+          - restaurants
+          - restaurants
       properties:
         name:
           example: Dataset1
@@ -789,12 +960,12 @@ components:
             type: string
           type: array
       required:
-      - name
+        - name
       type: object
     Dataset:
       allOf:
-      - $ref: '#/components/schemas/Dataset_allOf'
-      - $ref: '#/components/schemas/DatasetValues'
+        - $ref: "#/components/schemas/Dataset_allOf"
+        - $ref: "#/components/schemas/DatasetValues"
     ExperimentId:
       example: 1
       type: integer
@@ -819,21 +990,68 @@ components:
           example: 1
           type: integer
       required:
-      - algorithmId
-      - datasetId
-      - name
+        - algorithmId
+        - datasetId
+        - name
       type: object
     Experiment:
       allOf:
-      - $ref: '#/components/schemas/Experiment_allOf'
-      - $ref: '#/components/schemas/ExperimentValues'
+        - $ref: "#/components/schemas/Experiment_allOf"
+        - $ref: "#/components/schemas/ExperimentValues"
+    SimilarityThresholdFunctionId:
+      type: integer
+    SimilarityThreshold:
+      type: string
+    SimilarityThresholdFunctionOperator:
+      example:
+        operator: ADD
+      properties:
+        left:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+        right:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+        operator:
+          enum:
+            - ADD
+            - SUBTRACT
+            - MULTIPLY
+            - DIVIDE
+          type: string
+      required:
+        - left
+        - operator
+        - right
+      type: object
+    SimilarityThresholdFunctionValues:
+      example:
+        similarityThreshold: similarityThreshold
+        type: SimilarityThreshold
+        operator:
+          operator: ADD
+      properties:
+        type:
+          enum:
+            - SimilarityThreshold
+            - Operator
+          type: string
+        similarityThreshold:
+          type: string
+        operator:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionOperator"
+      required:
+        - type
+      type: object
+    SimilarityThresholdFunction:
+      allOf:
+        - $ref: "#/components/schemas/SimilarityThresholdFunction_allOf"
+        - $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
     Metric:
       example:
         name: precision
         formula: \frac{truePositives}{truePositives + falsePositives}
         range:
-        - 0
-        - 1
+          - 0
+          - 1
         value: 0.75
         info: The meaningfulness of the f1 score is debated in the research community.
         infoLink: https://link.springer.com/article/10.1007/s11222-017-9746-6
@@ -855,55 +1073,71 @@ components:
           type: number
         range:
           example:
-          - 0
-          - 1
+            - 0
+            - 1
           items:
             type: number
           maxItems: 2
           minItems: 2
           type: array
       required:
-      - formula
-      - name
-      - range
-      - value
+        - formula
+        - name
+        - range
+        - value
       type: object
-    Metrics:
+    ExperimentConfigItem:
+      example:
+        similarity:
+          func: 0
+          threshold: 6.027456183070403
+        experimentId: 1
+      properties:
+        experimentId:
+          example: 1
+          type: integer
+        similarity:
+          $ref: "#/components/schemas/ExperimentConfigItem_similarity"
+      required:
+        - experimentId
+      type: object
+    ExperimentIntersectionItem:
+      allOf:
+        - $ref: "#/components/schemas/ExperimentConfigItem"
+        - $ref: "#/components/schemas/ExperimentIntersectionItem_allOf"
+    ExperimentIntersection:
       items:
-        $ref: '#/components/schemas/Metric'
+        $ref: "#/components/schemas/ExperimentIntersectionItem"
       type: array
-    ExperimentIntersectionConfiguration:
-      items:
-        $ref: '#/components/schemas/ExperimentIntersectionRequestExperiments'
-      type: array
+    ExperimentIntersectionCount:
+      example:
+        experiments:
+          - null
+          - null
+        numberRows: 5
+        numberPairs: 10
+      properties:
+        numberRows:
+          example: 5
+          type: integer
+        numberPairs:
+          example: 10
+          type: integer
+        experiments:
+          items:
+            $ref: "#/components/schemas/ExperimentIntersectionItem"
+          type: array
+      required:
+        - experiments
+        - numberPairs
+        - numberRows
+      type: object
+    CSVFile:
+      format: binary
+      type: string
     FileResponse:
       example:
         data:
-        - - "1"
-          - test value 1
-          - test value 2
-        - - "2"
-          - test value 1
-          - test value 2
-        - []
-        - - "3"
-          - other
-          - group
-        header:
-        - id
-        - testColumn1
-        - testColumn2
-      properties:
-        header:
-          example:
-          - id
-          - testColumn1
-          - testColumn2
-          items:
-            type: string
-          type: array
-        data:
-          example:
           - - "1"
             - test value 1
             - test value 2
@@ -914,131 +1148,51 @@ components:
           - - "3"
             - other
             - group
+        header:
+          - id
+          - testColumn1
+          - testColumn2
+      properties:
+        header:
+          example:
+            - id
+            - testColumn1
+            - testColumn2
+          items:
+            type: string
+          type: array
+        data:
+          example:
+            - - "1"
+              - test value 1
+              - test value 2
+            - - "2"
+              - test value 1
+              - test value 2
+            - []
+            - - "3"
+              - other
+              - group
           items:
             example:
-            - "1"
-            - test value 1
-            - test value 2
+              - "1"
+              - test value 1
+              - test value 2
             items:
               type: string
             type: array
           type: array
       required:
-      - data
-      - header
+        - data
+        - header
       type: object
-    ExperimentIntersectionCount:
-      example:
-        numberRows: 37
-        numberPairs: 10
-      properties:
-        numberRows:
-          example: 37
-          type: integer
-        numberPairs:
-          example: 10
-          type: integer
-      required:
-      - numberPairs
-      - numberRows
-      type: object
-    ExperimentIntersectionPairCountsConfiguration:
-      items:
-        $ref: '#/components/schemas/ExperimentIntersectionPairCountsRequestExperiments'
-      type: array
-    ExperimentIntersectionPairCounts:
-      items:
-        $ref: '#/components/schemas/ExperimentIntersectionPairCountsItem'
-      type: array
-    ExperimentIntersectionPairCountsExperiments:
-      example:
-        predictedCondition: true
-        experimentId: 1
-      properties:
-        experimentId:
-          example: 1
-          type: integer
-        predictedCondition:
-          type: boolean
-      required:
-      - experimentId
-      - predictedCondition
-      type: object
-    ExperimentIntersectionPairCountsRequestExperiments:
-      example:
-        similarityAttribute: name_name_levenshtein
-        experimentId: 1
-        similarityScore: 0.9
-      properties:
-        experimentId:
-          example: 1
-          type: integer
-        similarityAttribute:
-          example: name_name_levenshtein
-          type: string
-        similarityScore:
-          example: 0.9
-          type: number
-      required:
-      - experimentId
-      type: object
-    ExperimentIntersectionRequestExperiments:
-      example:
-        predictedCondition: true
-        similarityAttribute: name_name_levenshtein
-        experimentId: 1
-        similarityScore: 0.9
-      properties:
-        experimentId:
-          example: 1
-          type: integer
-        predictedCondition:
-          type: boolean
-        similarityAttribute:
-          example: name_name_levenshtein
-          type: string
-        similarityScore:
-          example: 0.9
-          type: number
-      required:
-      - experimentId
-      - predictedCondition
-      type: object
-    ExperimentIntersectionPairCountsItem:
-      example:
-        experiments:
-        - predictedCondition: true
-          experimentId: 1
-        - predictedCondition: true
-          experimentId: 1
-        numberRows: 0
-        numberPairs: 0
-      properties:
-        experiments:
-          items:
-            $ref: '#/components/schemas/ExperimentIntersectionPairCountsExperiments'
-          type: array
-        numberPairs:
-          minimum: 0
-          type: integer
-        numberRows:
-          minimum: 0
-          type: integer
-      required:
-      - experiments
-      - numberPairs
-      - numberRows
-      type: object
-    CSVFile:
-      format: binary
-      type: string
     Algorithm_allOf:
       properties:
         id:
           example: 1
           type: integer
       required:
-      - id
+        - id
       type: object
     Dataset_allOf:
       properties:
@@ -1049,7 +1203,7 @@ components:
           example: 2005
           type: integer
       required:
-      - id
+        - id
       type: object
     Experiment_allOf:
       properties:
@@ -1060,5 +1214,32 @@ components:
           example: 2005
           type: integer
       required:
-      - id
+        - id
+      type: object
+    SimilarityThresholdFunction_allOf:
+      properties:
+        id:
+          type: integer
+      required:
+        - id
+      type: object
+    ExperimentConfigItem_similarity:
+      example:
+        func: 0
+        threshold: 6.027456183070403
+      properties:
+        func:
+          type: integer
+        threshold:
+          type: number
+      required:
+        - func
+        - threshold
+      type: object
+    ExperimentIntersectionItem_allOf:
+      properties:
+        predictedCondition:
+          type: boolean
+      required:
+        - predictedCondition
       type: object

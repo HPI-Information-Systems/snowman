@@ -27,7 +27,7 @@ import {
 } from '../models';
 
 export interface AddDatasetRequest {
-    datasetValues: DatasetValues;
+    dataset: DatasetValues;
 }
 
 export interface DeleteDatasetRequest {
@@ -51,7 +51,7 @@ export interface GetDatasetFileRequest {
 
 export interface SetDatasetRequest {
     datasetId: number;
-    datasetValues: DatasetValues;
+    dataset: DatasetValues;
 }
 
 export interface SetDatasetFileRequest {
@@ -60,7 +60,7 @@ export interface SetDatasetFileRequest {
     quote: string;
     escape: string;
     separator: string;
-    body: Blob;
+    file: Blob;
 }
 
 /**
@@ -72,8 +72,8 @@ export class DatasetsApi extends runtime.BaseAPI {
      * Creates a new dataset with metainformation
      */
     async addDatasetRaw(requestParameters: AddDatasetRequest): Promise<runtime.ApiResponse<number>> {
-        if (requestParameters.datasetValues === null || requestParameters.datasetValues === undefined) {
-            throw new runtime.RequiredError('datasetValues','Required parameter requestParameters.datasetValues was null or undefined when calling addDataset.');
+        if (requestParameters.dataset === null || requestParameters.dataset === undefined) {
+            throw new runtime.RequiredError('dataset','Required parameter requestParameters.dataset was null or undefined when calling addDataset.');
         }
 
         const queryParameters: any = {};
@@ -87,7 +87,7 @@ export class DatasetsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: DatasetValuesToJSON(requestParameters.datasetValues),
+            body: DatasetValuesToJSON(requestParameters.dataset),
         });
 
         return new runtime.TextApiResponse(response) as any;
@@ -267,8 +267,8 @@ export class DatasetsApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('datasetId','Required parameter requestParameters.datasetId was null or undefined when calling setDataset.');
         }
 
-        if (requestParameters.datasetValues === null || requestParameters.datasetValues === undefined) {
-            throw new runtime.RequiredError('datasetValues','Required parameter requestParameters.datasetValues was null or undefined when calling setDataset.');
+        if (requestParameters.dataset === null || requestParameters.dataset === undefined) {
+            throw new runtime.RequiredError('dataset','Required parameter requestParameters.dataset was null or undefined when calling setDataset.');
         }
 
         const queryParameters: any = {};
@@ -282,7 +282,7 @@ export class DatasetsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: DatasetValuesToJSON(requestParameters.datasetValues),
+            body: DatasetValuesToJSON(requestParameters.dataset),
         });
 
         return new runtime.VoidApiResponse(response);
@@ -319,8 +319,8 @@ export class DatasetsApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('separator','Required parameter requestParameters.separator was null or undefined when calling setDatasetFile.');
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setDatasetFile.');
+        if (requestParameters.file === null || requestParameters.file === undefined) {
+            throw new runtime.RequiredError('file','Required parameter requestParameters.file was null or undefined when calling setDatasetFile.');
         }
 
         const queryParameters: any = {};
@@ -350,7 +350,7 @@ export class DatasetsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: requestParameters.file as any,
         });
 
         return new runtime.VoidApiResponse(response);

@@ -1,0 +1,21 @@
+{
+  "name": "snowman-library",
+  "version": "1.0.0",
+  "description": "Common code for Snowman app and wrapper",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "npm run build",
+    "build": "rimraf ./lib/* && tsc"
+  },
+  "author": "Snowman Team",
+  "license": "MIT",
+  "files": [
+    "lib/**/*"
+  ],
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "typescript": "^4.1.3"
+  }
+}

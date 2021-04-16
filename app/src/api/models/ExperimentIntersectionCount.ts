@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    ExperimentIntersectionItem,
+    ExperimentIntersectionItemFromJSON,
+    ExperimentIntersectionItemFromJSONTyped,
+    ExperimentIntersectionItemToJSON,
+} from './';
+
 /**
  * 
  * @export
@@ -31,6 +38,12 @@ export interface ExperimentIntersectionCount {
      * @memberof ExperimentIntersectionCount
      */
     numberPairs: number;
+    /**
+     * 
+     * @type {Array<ExperimentIntersectionItem>}
+     * @memberof ExperimentIntersectionCount
+     */
+    experiments: Array<ExperimentIntersectionItem>;
 }
 
 export function ExperimentIntersectionCountFromJSON(json: any): ExperimentIntersectionCount {
@@ -45,6 +58,7 @@ export function ExperimentIntersectionCountFromJSONTyped(json: any, ignoreDiscri
         
         'numberRows': json['numberRows'],
         'numberPairs': json['numberPairs'],
+        'experiments': ((json['experiments'] as Array<any>).map(ExperimentIntersectionItemFromJSON)),
     };
 }
 
@@ -59,6 +73,7 @@ export function ExperimentIntersectionCountToJSON(value?: ExperimentIntersection
         
         'numberRows': value.numberRows,
         'numberPairs': value.numberPairs,
+        'experiments': ((value.experiments as Array<any>).map(ExperimentIntersectionItemToJSON)),
     };
 }
 

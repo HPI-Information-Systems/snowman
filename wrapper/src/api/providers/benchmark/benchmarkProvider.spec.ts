@@ -1,10 +1,14 @@
 import { setupDatabase } from '../../database';
-import { DatasetValues, ExperimentValues } from '../../server/types';
+import {
+  DatasetValues,
+  ExperimentValues,
+  SetExperimentFileFormatEnum,
+} from '../../server/types';
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
 import { DatasetProvider } from '../dataset/datasetProvider';
 import { ExperimentProvider } from '../experiment/experimentProvider';
-import { BenchmarkProvider } from './benchmarkProvider/benchmarkProvider';
+import { BenchmarkProvider } from './benchmarkProvider';
 
 interface metaDataset {
   name: string;
@@ -138,7 +142,7 @@ beforeAll(async () => {
     const id = experimentProvider.addExperiment(experiment.data.meta);
     await experimentProvider.setExperimentFile(
       id,
-      'pilot',
+      SetExperimentFileFormatEnum.Pilot,
       fileToReadable(experiment.data.file)
     );
     experimentIds[experiment.name] = id;

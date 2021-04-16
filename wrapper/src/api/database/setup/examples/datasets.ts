@@ -1,12 +1,12 @@
 import path from 'path';
 
 import { DATABASE_SETUP_DIR } from '../../../config';
-import { getProviders } from '../../../providers';
+import { providers } from '../../../providers';
 import { DatasetId, DatasetValues } from '../../../server/types';
 import { readFile } from '../../../tools/readFile';
 import { assertType } from '../../../tools/types';
 
-const EXAMPLE_DATASET_DIR = path.join(DATABASE_SETUP_DIR, 'datasets');
+export const EXAMPLE_DATASET_DIR = path.join(DATABASE_SETUP_DIR, 'datasets');
 
 export type ExampleDatasets = {
   [key: string]: {
@@ -26,7 +26,7 @@ export type ExampleDatasets = {
 export async function loadExampleDatasets(
   datasets: ExampleDatasets
 ): Promise<void> {
-  const datasetProvider = getProviders().dataset;
+  const datasetProvider = providers.dataset;
   for (const { id, meta, file } of Object.values(datasets)) {
     datasetProvider.setDataset(id, meta);
     if (file) {

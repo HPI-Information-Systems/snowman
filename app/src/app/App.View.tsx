@@ -22,6 +22,7 @@ import { IonApp, IonPage, IonSplitPane } from '@ionic/react';
 import { DefaultAppProps } from 'app/AppProps';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
 import SideMenu from 'components/SideMenu/SideMenu';
+import TopNavBar from 'components/TopNavBar/TopNavBar';
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
@@ -40,20 +41,23 @@ const DefaultAppView = ({
   );
   return (
     <IonApp>
-      {showSideMenu ? (
-        <IonSplitPane
-          when="lg"
-          contentId="mainViewContentId"
-          class="split-pane-fixed"
-        >
-          {/* Side Menu (mainViewContentId used here!) */}
-          <SideMenu contentId="mainViewContentId" />
-          {/* Page Content */}
-          {page}
-        </IonSplitPane>
-      ) : (
-        page
-      )}
+      <TopNavBar />
+      <div style={{ position: 'relative', flexGrow: 1 }}>
+        {showSideMenu ? (
+          <IonSplitPane
+            when="lg"
+            contentId="mainViewContentId"
+            class="split-pane-fixed"
+          >
+            {/* Side Menu (mainViewContentId used here!) */}
+            <SideMenu contentId="mainViewContentId" />
+            {/* Page Content */}
+            {page}
+          </IonSplitPane>
+        ) : (
+          page
+        )}
+      </div>
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <GlobalLoading />
       <ToastContainer
