@@ -136,7 +136,8 @@ describe('AlgorithmProvider', () => {
         },
         configurationEffort: {
           matchingSolution: {
-            expertise: 21,
+            expertise: 100,
+            hrAmount: 60,
           },
           domain: {
             hrAmount: 99,
@@ -150,6 +151,26 @@ describe('AlgorithmProvider', () => {
     expect(provider.getAlgorithm(addedAlgorithmids[0])).toEqual({
       ...setAlgorithmValues,
       id: addedAlgorithmids[0],
+      matchingSolutionEffort: [
+        {
+          value: 160,
+          formula: '\\sum_{i}|a_i - b_i|',
+          name: 'manhattan distance',
+          range: [0, 160],
+        },
+        {
+          value: 276.31021115928553,
+          formula: '$$log(expertise level) * HR-Amount$$',
+          name: 'logarithmic expertise level',
+          range: [0, 160],
+        },
+        {
+          value: 6000,
+          formula: '$$expertise level * HR-Amount$$',
+          name: 'multiply effort',
+          range: [0, 1],
+        },
+      ],
     });
   });
 

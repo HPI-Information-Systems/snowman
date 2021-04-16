@@ -5,7 +5,6 @@ export class MultiplyEffort extends BaseEffort {
   range: [number, number] = [0, 1]; //TODO: change
   formula = '$$expertise level * HR-Amount$$';
   get value(): number {
-    return 5;
-    //return this.expertise * this.hrAmount;
+    return this.expertise * this.hrAmount;
   }
 }
