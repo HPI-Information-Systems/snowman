@@ -11,6 +11,11 @@ import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { ViewIDs } from 'types/ViewIDs';
 
+export interface SnowmanGlobalStore {
+  RenderLogicStore: RenderLogicStore;
+  LoadingIndicatorStore: GlobalIndicatorStore;
+}
+
 export interface AlgorithmDialogStore {
   algorithmId: number | null;
   algorithmName: string;
@@ -67,7 +72,6 @@ export interface CoreStore {
 
 export interface RenderLogicStore {
   currentViewID: ViewIDs;
-  couldGoNext: boolean;
 }
 
 export interface BenchmarkConfigurationStore {

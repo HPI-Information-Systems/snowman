@@ -19,7 +19,6 @@ const getInitialViewId = (): ViewIDs => {
 
 const initialRenderLogicState: RenderLogicStore = {
   currentViewID: getInitialViewId(),
-  couldGoNext: true,
 };
 
 const handleNavigateToViewId = (
@@ -32,14 +31,6 @@ const handleNavigateToViewId = (
       ...immediateState,
       RenderLogicStore: {
         currentViewID: targetViewID,
-        couldGoNext: couldNavigateToView(
-          getNextViewId({
-            currentViewID: targetViewID,
-            // getNextViewId ignores access guard
-            couldGoNext: false,
-          }),
-          immediateState
-        ),
       },
     };
   }
@@ -75,20 +66,10 @@ export const RenderLogicReducer = (
       we catch possible errors thrown by uninitialized helpers and return a default value.
        */
     default: {
-      let couldGoNext: boolean;
-      try {
-        couldGoNext = couldNavigateToView(
-          getNextViewId(baseline),
-          immediateState
-        );
-      } catch {
-        couldGoNext = true;
-      }
       return {
         ...immediateState,
         RenderLogicStore: {
           ...baseline,
-          couldGoNext: couldGoNext,
         },
       };
     }
