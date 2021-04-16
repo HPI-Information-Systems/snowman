@@ -34,16 +34,16 @@ export interface AlgorithmAllOf {
     id: number;
     /**
      * 
-     * @type {Metric}
+     * @type {Array<Metric>}
      * @memberof AlgorithmAllOf
      */
-    matchingSolutionEffort?: Metric;
+    matchingSolutionEffort?: Array<Metric>;
     /**
      * 
-     * @type {Metric}
+     * @type {Array<Metric>}
      * @memberof AlgorithmAllOf
      */
-    domainEffort?: Metric;
+    domainEffort?: Array<Metric>;
 }
 
 export function AlgorithmAllOfFromJSON(json: any): AlgorithmAllOf {
@@ -57,8 +57,8 @@ export function AlgorithmAllOfFromJSONTyped(json: any, ignoreDiscriminator: bool
     return {
         
         'id': json['id'],
-        'matchingSolutionEffort': !exists(json, 'matchingSolutionEffort') ? undefined : MetricFromJSON(json['matchingSolutionEffort']),
-        'domainEffort': !exists(json, 'domainEffort') ? undefined : MetricFromJSON(json['domainEffort']),
+        'matchingSolutionEffort': !exists(json, 'matchingSolutionEffort') ? undefined : ((json['matchingSolutionEffort'] as Array<any>).map(MetricFromJSON)),
+        'domainEffort': !exists(json, 'domainEffort') ? undefined : ((json['domainEffort'] as Array<any>).map(MetricFromJSON)),
     };
 }
 
@@ -72,8 +72,8 @@ export function AlgorithmAllOfToJSON(value?: AlgorithmAllOf | null): any {
     return {
         
         'id': value.id,
-        'matchingSolutionEffort': MetricToJSON(value.matchingSolutionEffort),
-        'domainEffort': MetricToJSON(value.domainEffort),
+        'matchingSolutionEffort': value.matchingSolutionEffort === undefined ? undefined : ((value.matchingSolutionEffort as Array<any>).map(MetricToJSON)),
+        'domainEffort': value.domainEffort === undefined ? undefined : ((value.domainEffort as Array<any>).map(MetricToJSON)),
     };
 }
 

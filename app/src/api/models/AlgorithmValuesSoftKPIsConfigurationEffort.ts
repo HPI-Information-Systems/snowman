@@ -14,10 +14,10 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    Effort,
-    EffortFromJSON,
-    EffortFromJSONTyped,
-    EffortToJSON,
+    EffortParts,
+    EffortPartsFromJSON,
+    EffortPartsFromJSONTyped,
+    EffortPartsToJSON,
 } from './';
 
 /**
@@ -28,16 +28,16 @@ import {
 export interface AlgorithmValuesSoftKPIsConfigurationEffort {
     /**
      * 
-     * @type {Effort}
+     * @type {EffortParts}
      * @memberof AlgorithmValuesSoftKPIsConfigurationEffort
      */
-    matchingSolution?: Effort;
+    matchingSolution?: EffortParts;
     /**
      * 
-     * @type {Effort}
+     * @type {EffortParts}
      * @memberof AlgorithmValuesSoftKPIsConfigurationEffort
      */
-    domain?: Effort;
+    domain?: EffortParts;
     /**
      * 
      * @type {Array<string>}
@@ -49,7 +49,7 @@ export interface AlgorithmValuesSoftKPIsConfigurationEffort {
      * @type {Array<string>}
      * @memberof AlgorithmValuesSoftKPIsConfigurationEffort
      */
-    supportedOS?: Array<string>;
+    supportedOSs?: Array<string>;
 }
 
 export function AlgorithmValuesSoftKPIsConfigurationEffortFromJSON(json: any): AlgorithmValuesSoftKPIsConfigurationEffort {
@@ -62,10 +62,10 @@ export function AlgorithmValuesSoftKPIsConfigurationEffortFromJSONTyped(json: an
     }
     return {
         
-        'matchingSolution': !exists(json, 'matchingSolution') ? undefined : EffortFromJSON(json['matchingSolution']),
-        'domain': !exists(json, 'domain') ? undefined : EffortFromJSON(json['domain']),
+        'matchingSolution': !exists(json, 'matchingSolution') ? undefined : EffortPartsFromJSON(json['matchingSolution']),
+        'domain': !exists(json, 'domain') ? undefined : EffortPartsFromJSON(json['domain']),
         'interfaces': !exists(json, 'interfaces') ? undefined : json['interfaces'],
-        'supportedOS': !exists(json, 'supportedOS') ? undefined : json['supportedOS'],
+        'supportedOSs': !exists(json, 'supportedOSs') ? undefined : json['supportedOSs'],
     };
 }
 
@@ -78,10 +78,10 @@ export function AlgorithmValuesSoftKPIsConfigurationEffortToJSON(value?: Algorit
     }
     return {
         
-        'matchingSolution': EffortToJSON(value.matchingSolution),
-        'domain': EffortToJSON(value.domain),
+        'matchingSolution': EffortPartsToJSON(value.matchingSolution),
+        'domain': EffortPartsToJSON(value.domain),
         'interfaces': value.interfaces,
-        'supportedOS': value.supportedOS,
+        'supportedOSs': value.supportedOSs,
     };
 }
 
