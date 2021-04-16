@@ -1151,7 +1151,6 @@ components:
       required:
       - formula
       - name
-      - range
       - value
       type: object
     ExperimentConfigItem:
