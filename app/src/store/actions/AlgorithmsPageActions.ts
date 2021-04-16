@@ -11,19 +11,17 @@ import RequestHandler from 'utils/requestHandler';
 export const getAlgorithms = (): SnowmanThunkAction<Promise<void>> => async (
   dispatch: SnowmanDispatch
 ): Promise<void> =>
-  RequestHandler<void>(
-    () =>
-      new AlgorithmApi()
-        .getAlgorithms()
-        .then(
-          (algorithms: Algorithm[]): SnowmanAction =>
-            dispatch({
-              type: CoreStoreActionTypes.SET_ALL_ALGORITHMS,
-              payload: algorithms,
-            })
-        )
-        .then(),
-    dispatch
+  RequestHandler<void>(() =>
+    new AlgorithmApi()
+      .getAlgorithms()
+      .then(
+        (algorithms: Algorithm[]): SnowmanAction =>
+          dispatch({
+            type: CoreStoreActionTypes.SET_ALL_ALGORITHMS,
+            payload: algorithms,
+          })
+      )
+      .then()
   );
 
 export const deleteAlgorithm = (
@@ -36,6 +34,5 @@ export const deleteAlgorithm = (
       new AlgorithmApi()
         .deleteAlgorithm({ algorithmId: id })
         .then((): Promise<void> => dispatch(getAlgorithms())),
-    dispatch,
     SUCCESS_DELETE_ALGORITHM
   );
