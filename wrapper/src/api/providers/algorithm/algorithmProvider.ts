@@ -28,16 +28,16 @@ export class AlgorithmProvider {
         matchingSolutionExpertise:
           algorithm.softKPIs?.configurationEffort?.matchingSolution?.expertise,
         matchingSolutionHrAmount:
-          algorithm.softKPIs?.configurationEffort?.matchingSolution?.hrAmmount,
+          algorithm.softKPIs?.configurationEffort?.matchingSolution?.hrAmount,
         domainExpertise:
           algorithm.softKPIs?.configurationEffort?.domain?.expertise,
         domainHrAmount:
-          algorithm.softKPIs?.configurationEffort?.domain?.hrAmmount,
+          algorithm.softKPIs?.configurationEffort?.domain?.hrAmount,
         interfaces: JSON.stringify(
           algorithm.softKPIs?.configurationEffort?.interfaces
         ),
-        supportedOS: JSON.stringify(
-          algorithm.softKPIs?.configurationEffort?.supportedOS
+        supportedOSs: JSON.stringify(
+          algorithm.softKPIs?.configurationEffort?.supportedOSs
         ),
       },
     ])[0];

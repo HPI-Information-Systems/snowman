@@ -11,12 +11,12 @@ export class SchemaV5 extends SchemaVersion {
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.experiment.schema.name}
            ADD COLUMN
-               timeToConfigure INTEGER`
+              hrAmount INTEGER`
     );
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.experiment.schema.name}
            ADD COLUMN
-               expertiseLevel INTEGER`
+               expertise INTEGER`
     );
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
@@ -56,7 +56,7 @@ export class SchemaV5 extends SchemaVersion {
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
            ADD COLUMN
-              supportedOS TEXT`
+              supportedOSs TEXT`
     );
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}

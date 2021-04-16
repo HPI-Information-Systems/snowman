@@ -30,14 +30,14 @@ export interface AlgorithmAllOf {
     id: number;
     /**
      * 
-     * @type {Metric}
+     * @type {Array<Metric>}
      * @memberof AlgorithmAllOf
      */
-    matchingSolutionEffort?: Metric;
+    matchingSolutionEffort?: Array<Metric>;
     /**
      * 
-     * @type {Metric}
+     * @type {Array<Metric>}
      * @memberof AlgorithmAllOf
      */
-    domainEffort?: Metric;
+    domainEffort?: Array<Metric>;
 }

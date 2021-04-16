@@ -13,7 +13,7 @@
  */
 
 import {
-    Effort,
+    EffortParts,
 } from './';
 
 /**
@@ -24,16 +24,16 @@ import {
 export interface AlgorithmValuesSoftKPIsConfigurationEffort {
     /**
      * 
-     * @type {Effort}
+     * @type {EffortParts}
      * @memberof AlgorithmValuesSoftKPIsConfigurationEffort
      */
-    matchingSolution?: Effort;
+    matchingSolution?: EffortParts;
     /**
      * 
-     * @type {Effort}
+     * @type {EffortParts}
      * @memberof AlgorithmValuesSoftKPIsConfigurationEffort
      */
-    domain?: Effort;
+    domain?: EffortParts;
     /**
      * 
      * @type {Array<string>}
@@ -45,5 +45,5 @@ export interface AlgorithmValuesSoftKPIsConfigurationEffort {
      * @type {Array<string>}
      * @memberof AlgorithmValuesSoftKPIsConfigurationEffort
      */
-    supportedOS?: Array<string>;
+    supportedOSs?: Array<string>;
 }

@@ -14,7 +14,7 @@ export * from './DatasetRequests';
 export * from './DatasetValues';
 export * from './DiagramCoordinates';
 export * from './DiagramExperimentItem';
-export * from './Effort';
+export * from './EffortParts';
 export * from './Experiment';
 export * from './ExperimentAllOf';
 export * from './ExperimentConfigItem';

@@ -13,7 +13,8 @@
  */
 
 import {
-    ExperimentValuesSoftKPIs,
+    EffortParts,
+    Metric,
 } from './';
 
 /**
@@ -34,6 +35,12 @@ export interface Experiment {
      * @memberof Experiment
      */
     numberOfUploadedRecords?: number;
+    /**
+     * 
+     * @type {Array<Metric>}
+     * @memberof Experiment
+     */
+    effort?: Array<Metric>;
     /**
      * 
      * @type {string}
@@ -60,8 +67,8 @@ export interface Experiment {
     algorithmId: number;
     /**
      * 
-     * @type {ExperimentValuesSoftKPIs}
+     * @type {EffortParts}
      * @memberof Experiment
      */
-    softKPIs?: ExperimentValuesSoftKPIs;
+    softKPIs?: EffortParts;
 }

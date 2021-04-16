@@ -21,14 +21,14 @@ describe('AlgorithmProvider', () => {
         configurationEffort: {
           matchingSolution: {
             expertise: 20,
-            hrAmmount: 120,
+            hrAmount: 120,
           },
           domain: {
             expertise: 220,
-            hrAmmount: 20,
+            hrAmount: 20,
           },
           interfaces: ['GUI'],
-          supportedOS: ['Windows'],
+          supportedOSs: ['Windows'],
         },
       },
     },
@@ -46,14 +46,14 @@ describe('AlgorithmProvider', () => {
         configurationEffort: {
           matchingSolution: {
             expertise: 100,
-            hrAmmount: 20,
+            hrAmount: 20,
           },
           domain: {
             expertise: 10,
-            hrAmmount: 70,
+            hrAmount: 70,
           },
           interfaces: ['GUI', 'CLI'],
-          supportedOS: ['Windows', 'MacOS'],
+          supportedOSs: ['Windows', 'MacOS'],
         },
       },
     },
@@ -95,14 +95,14 @@ describe('AlgorithmProvider', () => {
         configurationEffort: {
           matchingSolution: {
             expertise: 202,
-            hrAmmount: 1202,
+            hrAmount: 1202,
           },
           domain: {
             expertise: 22,
-            hrAmmount: 22,
+            hrAmount: 22,
           },
           interfaces: ['GUI'],
-          supportedOS: ['Windows'],
+          supportedOSs: ['Windows'],
         },
       },
     };
@@ -140,14 +140,14 @@ describe('AlgorithmProvider', () => {
         configurationEffort: {
           matchingSolution: {
             expertise: 21,
-            hrAmmount: 121,
+            hrAmount: 121,
           },
           domain: {
             expertise: 221,
-            hrAmmount: 99,
+            hrAmount: 99,
           },
           interfaces: ['GUI'],
-          supportedOS: ['Windows', 'Linux'],
+          supportedOSs: ['Windows', 'Linux'],
         },
       },
     };

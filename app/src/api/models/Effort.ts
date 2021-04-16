@@ -30,7 +30,7 @@ export interface Effort {
      * @type {number}
      * @memberof Effort
      */
-    hrAmmount?: number;
+    hrAmount?: number;
 }
 
 export function EffortFromJSON(json: any): Effort {
@@ -44,7 +44,7 @@ export function EffortFromJSONTyped(json: any, ignoreDiscriminator: boolean): Ef
     return {
         
         'expertise': !exists(json, 'expertise') ? undefined : json['expertise'],
-        'hrAmmount': !exists(json, 'hrAmmount') ? undefined : json['hrAmmount'],
+        'hrAmount': !exists(json, 'hrAmount') ? undefined : json['hrAmount'],
     };
 }
 
@@ -58,7 +58,7 @@ export function EffortToJSON(value?: Effort | null): any {
     return {
         
         'expertise': value.expertise,
-        'hrAmmount': value.hrAmmount,
+        'hrAmount': value.hrAmount,
     };
 }
 

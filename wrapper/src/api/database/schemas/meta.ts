@@ -66,8 +66,8 @@ export const metaSchemas = assertType<
           name: 'interfaces' as const,
           dataType: 'TEXT',
         },
-        supportedOS: {
-          name: 'supportedOS' as const,
+        supportedOSs: {
+          name: 'supportedOSs' as const,
           dataType: 'TEXT',
         },
       },
@@ -154,12 +154,12 @@ export const metaSchemas = assertType<
           name: 'numberOfUploadedRecords' as const,
           dataType: 'INTEGER',
         },
-        timeToConfigure: {
-          name: 'timeToConfigure' as const,
+        hrAmount: {
+          name: 'hrAmount' as const,
           dataType: 'INTEGER',
         },
-        expertiseLevel: {
-          name: 'expertiseLevel' as const,
+        expertise: {
+          name: 'expertise' as const,
           dataType: 'INTEGER',
         },
       },

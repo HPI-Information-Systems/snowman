@@ -13,7 +13,7 @@
  */
 
 import {
-    ExperimentValuesSoftKPIs,
+    EffortParts,
 } from './';
 
 /**
@@ -48,8 +48,8 @@ export interface ExperimentValues {
     algorithmId: number;
     /**
      * 
-     * @type {ExperimentValuesSoftKPIs}
+     * @type {EffortParts}
      * @memberof ExperimentValues
      */
-    softKPIs?: ExperimentValuesSoftKPIs;
+    softKPIs?: EffortParts;
 }

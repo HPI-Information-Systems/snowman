@@ -31,16 +31,16 @@ export interface Algorithm {
     id: number;
     /**
      * 
-     * @type {Metric}
+     * @type {Array<Metric>}
      * @memberof Algorithm
      */
-    matchingSolutionEffort?: Metric;
+    matchingSolutionEffort?: Array<Metric>;
     /**
      * 
-     * @type {Metric}
+     * @type {Array<Metric>}
      * @memberof Algorithm
      */
-    domainEffort?: Metric;
+    domainEffort?: Array<Metric>;
     /**
      * 
      * @type {string}

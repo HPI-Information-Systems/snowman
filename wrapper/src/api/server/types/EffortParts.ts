@@ -15,19 +15,19 @@
 /**
  * 
  * @export
- * @interface Effort
+ * @interface EffortParts
  */
-export interface Effort {
+export interface EffortParts {
     /**
      * 
      * @type {number}
-     * @memberof Effort
+     * @memberof EffortParts
      */
     expertise?: number;
     /**
      * 
      * @type {number}
-     * @memberof Effort
+     * @memberof EffortParts
      */
-    hrAmmount?: number;
+    hrAmount?: number;
 }

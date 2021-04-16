@@ -22,15 +22,15 @@ export class AlgorithmConverter {
       matchingSolutionExpertise:
         api.softKPIs?.configurationEffort?.matchingSolution?.expertise ?? null,
       matchingSolutionHrAmount:
-        api.softKPIs?.configurationEffort?.matchingSolution?.hrAmmount ?? null,
+        api.softKPIs?.configurationEffort?.matchingSolution?.hrAmount ?? null,
       domainExpertise:
         api.softKPIs?.configurationEffort?.domain?.expertise ?? null,
       domainHrAmount:
-        api.softKPIs?.configurationEffort?.domain?.hrAmmount ?? null,
+        api.softKPIs?.configurationEffort?.domain?.hrAmount ?? null,
       interfaces:
         JSON.stringify(api.softKPIs?.configurationEffort?.interfaces) ?? null,
-      supportedOS:
-        JSON.stringify(api.softKPIs?.configurationEffort?.supportedOS) ?? null,
+      supportedOSs:
+        JSON.stringify(api.softKPIs?.configurationEffort?.supportedOSs) ?? null,
     };
   }
   storedToApi(stored: StoredAlgorithm): Algorithm {
@@ -69,17 +69,17 @@ export class AlgorithmConverter {
         configurationEffort: {
           matchingSolution: {
             expertise: stored.matchingSolutionExpertise ?? undefined,
-            hrAmmount: stored.matchingSolutionHrAmount ?? undefined,
+            hrAmount: stored.matchingSolutionHrAmount ?? undefined,
           },
           domain: {
             expertise: stored.domainExpertise ?? undefined,
-            hrAmmount: stored.domainHrAmount ?? undefined,
+            hrAmount: stored.domainHrAmount ?? undefined,
           },
           interfaces: stored.interfaces
             ? JSON.parse(stored.interfaces)
             : undefined,
-          supportedOS: stored.supportedOS
-            ? JSON.parse(stored.supportedOS)
+          supportedOSs: stored.supportedOSs
+            ? JSON.parse(stored.supportedOSs)
             : undefined,
         },
       },
