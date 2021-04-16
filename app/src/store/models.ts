@@ -1,5 +1,6 @@
 import {
   Algorithm,
+  AlgorithmValuesSoftKPIs,
   Dataset,
   Experiment,
   ExperimentIntersectionCount,
@@ -17,6 +18,7 @@ export interface AlgorithmDialogStore {
   algorithmDescription: string;
   isOpen: boolean;
   dialogType: DialogTypes;
+  algorithmSoftKPIs: AlgorithmValuesSoftKPIs;
 }
 
 export interface DatasetDialogStore {
@@ -42,7 +44,6 @@ export interface ExperimentDialogStore {
   experimentId: number | null;
   experimentName: string;
   experimentDescription: string;
-  timeToConfigure: number | undefined;
   experimentFileFormat: experimentFileFormatEnum;
   selectedTags: string[];
   selectedFiles: File[];

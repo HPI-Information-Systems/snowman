@@ -1,4 +1,5 @@
 import { Algorithm, AlgorithmApi, AlgorithmValues } from 'api';
+import { AlgorithmSoftKPIsTypesEnum } from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import { AlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
 import { getAlgorithms } from 'store/actions/AlgorithmsPageActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
@@ -62,6 +63,16 @@ export const changeAlgorithmDescription = (
     payload: aDescription,
   });
 
+export const changeAlgorithmSoftKPIs = (
+  aSoftKPIType: AlgorithmSoftKPIsTypesEnum,
+  aPayloadOrUndefined: string | undefined | null
+): easyPrimitiveActionReturn =>
+  easyPrimitiveAction({
+    type: DialogActions.CHANGE_ALGORITHM_SOFTKPIS,
+    payload: aSoftKPIType,
+    optionalPayload: aPayloadOrUndefined,
+  });
+
 export const resetDialog = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
     type: DialogActions.RESET_DIALOG,
@@ -72,6 +83,7 @@ export const resetDialog = (): easyPrimitiveActionReturn =>
 const getAlgorithmValues = (): AlgorithmValues => ({
   name: store.getState().AlgorithmDialogStore.algorithmName,
   description: store.getState().AlgorithmDialogStore.algorithmDescription,
+  softKPIs: store.getState().AlgorithmDialogStore.algorithmSoftKPIs,
 });
 
 const addAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (

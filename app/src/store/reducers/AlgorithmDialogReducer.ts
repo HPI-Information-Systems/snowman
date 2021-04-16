@@ -1,15 +1,22 @@
-import { Algorithm } from 'api';
+import { Algorithm, AlgorithmValuesSoftKPIs } from 'api';
+import { AlgorithmSoftKPIsTypesEnum } from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import { AlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
 import { SnowmanAction } from 'store/messages';
 import { AlgorithmDialogStore } from 'store/models';
 import { DialogTypes } from 'types/DialogTypes';
+import { parseInputToNumberOrUndef } from 'utils/formHelpers';
 
+const initialStateSoftKPIs: AlgorithmValuesSoftKPIs = {
+  integrationEffort: {},
+  configurationEffort: {},
+};
 const initialState: AlgorithmDialogStore = {
   isOpen: false,
   algorithmId: null,
   algorithmName: '',
   algorithmDescription: '',
   dialogType: DialogTypes.ADD_DIALOG,
+  algorithmSoftKPIs: initialStateSoftKPIs,
 };
 
 export const AlgorithmDialogReducer = (
@@ -30,6 +37,8 @@ export const AlgorithmDialogReducer = (
         algorithmId: (action.payload as Algorithm).id,
         algorithmName: (action.payload as Algorithm).name,
         algorithmDescription: (action.payload as Algorithm).description ?? '',
+        algorithmSoftKPIs:
+          (action.payload as Algorithm).softKPIs ?? initialStateSoftKPIs,
         dialogType: DialogTypes.CHANGE_DIALOG,
       };
     case DialogActions.CLOSE_DIALOG:
@@ -53,6 +62,44 @@ export const AlgorithmDialogReducer = (
       return {
         ...state,
         algorithmDescription: action.payload as string,
+      };
+    case DialogActions.CHANGE_ALGORITHM_SOFTKPIS:
+      return {
+        ...state,
+        algorithmSoftKPIs: AlgorithmDialogSoftKPIsReducer(
+          state.algorithmSoftKPIs,
+          action
+        ),
+      };
+    default:
+      return state;
+  }
+};
+
+const AlgorithmDialogSoftKPIsReducer = (
+  state: AlgorithmValuesSoftKPIs,
+  action: SnowmanAction
+): AlgorithmValuesSoftKPIs => {
+  switch (action.payload as AlgorithmSoftKPIsTypesEnum) {
+    case AlgorithmSoftKPIsTypesEnum.integIntegrationTime:
+      return {
+        ...state,
+        integrationEffort: {
+          ...state.integrationEffort,
+          integrationTime: parseInputToNumberOrUndef(
+            action.optionalPayload as string | undefined
+          ),
+        },
+      };
+    case AlgorithmSoftKPIsTypesEnum.integGeneralCosts:
+      return {
+        ...state,
+        integrationEffort: {
+          ...state.integrationEffort,
+          generalCosts: parseInputToNumberOrUndef(
+            action.optionalPayload as string | undefined
+          ),
+        },
       };
     default:
       return state;
