@@ -1,4 +1,4 @@
-import { getTmpArray } from '../../../../tools/tmpArray';
+import { getTmpArray } from '../../../../tools/array';
 import {
   ClusterID,
   Clustering,

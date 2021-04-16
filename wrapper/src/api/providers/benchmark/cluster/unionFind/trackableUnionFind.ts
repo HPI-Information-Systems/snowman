@@ -1,5 +1,5 @@
+import { getTmpArray } from '../../../../tools/array';
 import { flattenDeep } from '../../../../tools/flattenDeep';
-import { getTmpArray } from '../../../../tools/tmpArray';
 import { NestedArray } from '../../../../tools/types';
 import { ClusterID, MergesT, NodeLink } from '../types';
 import { Node } from './node';

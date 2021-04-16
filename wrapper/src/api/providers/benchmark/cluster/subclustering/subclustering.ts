@@ -1,6 +1,6 @@
+import { getTmpArray } from '../../../../tools/array';
 import { LazyProperty } from '../../../../tools/lazyProperty';
 import { numberOfPairs } from '../../../../tools/numberOfPairs';
-import { getTmpArray } from '../../../../tools/tmpArray';
 import {
   Cluster,
   ClusterID,
@@ -76,14 +76,11 @@ export class Subclustering implements SubclusteringSpec {
     let numberClusters = 0;
     let numberPairs = 0;
     let numberRows = 0;
-    const subclusterArray = new Array<Array<ArraySubcluster>>(
-      base.numberClusters
-    );
+    const subclusterArray: ArraySubcluster[][] = [];
     const partitionClusterIdToSubcluster = getTmpArray<ArraySubcluster>(
       partition.numberClusters
     );
     for (const baseCluster of base.clusters()) {
-      let numberSubclusters = 0;
       const partitionedClusterIds: ClusterID[] = [];
       for (const nodeId of baseCluster) {
         const partitionClusterId = partition.clusterFromNodeId(nodeId).id;
@@ -96,19 +93,18 @@ export class Subclustering implements SubclusteringSpec {
           );
           partitionedClusterIds.push(partitionClusterId);
           partitionClusterIdToSubcluster[partitionClusterId] = subcluster;
-          ++numberSubclusters;
         }
         subcluster.push(nodeId);
       }
 
-      const subclusters = new Array<ArraySubcluster>(numberSubclusters);
-      subclusterArray[baseCluster.id] = subclusters;
+      const subclusters: ArraySubcluster[] = [];
+      subclusterArray.push(subclusters);
 
       for (const partitionClusterId of partitionedClusterIds) {
         const subcluster = partitionClusterIdToSubcluster[partitionClusterId];
         if (subcluster) {
           partitionClusterIdToSubcluster[partitionClusterId] = undefined;
-          subclusters[--numberSubclusters] = subcluster;
+          subclusters.push(subcluster);
           numberPairs += numberOfPairs(subcluster.length);
           if (subcluster.length >= 2) {
             numberRows += subcluster.length + 1;
@@ -125,26 +121,30 @@ export class Subclustering implements SubclusteringSpec {
   }
 
   protected createClusterIdToSubcluster(): ArraySubcluster[] {
-    const clusterIdToSubcluster = new Array<ArraySubcluster>(
-      this.numberClusters
-    );
+    const clusterIdToSubcluster: (ArraySubcluster | undefined)[] = [];
     for (const subclusters of this.subclusterArray) {
       for (const subcluster of subclusters) {
+        while (clusterIdToSubcluster.length <= subcluster.id) {
+          clusterIdToSubcluster.push(undefined);
+        }
         clusterIdToSubcluster[subcluster.id] = subcluster;
       }
     }
-    return clusterIdToSubcluster;
+    return clusterIdToSubcluster as ArraySubcluster[];
   }
 
   protected createNodeToSubcluster(): ArraySubcluster[] {
-    const nodeToSubcluster = new Array(this.numberNodes);
+    const nodeToSubcluster: (ArraySubcluster | undefined)[] = [];
     for (const subclusters of this.subclusterArray) {
       for (const subcluster of subclusters) {
         for (const nodeId of subcluster) {
+          while (nodeToSubcluster.length <= nodeId) {
+            nodeToSubcluster.push(undefined);
+          }
           nodeToSubcluster[nodeId] = subcluster;
         }
       }
     }
-    return nodeToSubcluster;
+    return nodeToSubcluster as ArraySubcluster[];
   }
 }

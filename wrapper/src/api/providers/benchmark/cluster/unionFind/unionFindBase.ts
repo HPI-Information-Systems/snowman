@@ -23,10 +23,12 @@ export class UnionFindBase implements Clustering {
 
   constructor(public readonly numberNodes: number) {
     this._numberClusters = numberNodes;
-    this.nodes = new Array<Node>(numberNodes);
-    this.clusterIdToCluster = new Array<Node>(numberNodes);
+    this.nodes = [];
+    this.clusterIdToCluster = [];
     for (let id = 0; id < numberNodes; id++) {
-      this.clusterIdToCluster[id] = this.nodes[id] = new Node(id, id);
+      const node = new Node(id, id);
+      this.clusterIdToCluster.push(node);
+      this.nodes.push(node);
     }
   }
 

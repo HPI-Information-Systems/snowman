@@ -1,3 +1,4 @@
+import { newEmptyArray } from '../../../../tools/array';
 import { LazyProperty } from '../../../../tools/lazyProperty';
 import { Subclustering } from '../../cluster/subclustering';
 import { Cluster, ClusterID, Clustering } from '../../cluster/types';
@@ -22,9 +23,7 @@ export class CalculatePairsManyNegative extends CalculatePairs {
   }
 
   protected readonly rowCountCache = new LazyProperty(() =>
-    new Array<number | undefined>(this.subclustering.numberClusters).fill(
-      undefined
-    )
+    newEmptyArray<number>(this.subclustering.numberClusters)
   );
   protected negativeClusterings: Clustering[] = [];
 

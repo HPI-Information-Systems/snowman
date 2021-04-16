@@ -1,3 +1,4 @@
+import { range } from '../array';
 import { Primitive } from '../types';
 import { Cache } from './base';
 
@@ -17,10 +18,9 @@ export class PartiallySortedCache<
     key: KeyItemT[],
     toSort: ToSortT
   ): ToSortT {
-    const indices = new Array(key.length)
-      .fill(0)
-      .map((_, index) => index)
-      .sort((i1, i2) => (key[i1] < key[i2] ? -1 : key[i1] > key[i2] ? 1 : 0));
+    const indices = range(key.length).sort((i1, i2) =>
+      key[i1] < key[i2] ? -1 : key[i1] > key[i2] ? 1 : 0
+    );
     return toSort.map((arr) => indices.map((index) => arr[index])) as ToSortT;
   }
 
