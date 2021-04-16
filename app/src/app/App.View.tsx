@@ -23,6 +23,7 @@ import { DefaultAppProps } from 'app/AppProps';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
 import SideMenu from 'components/SideMenu/SideMenu';
 import TopNavBar from 'components/TopNavBar/TopNavBar';
+import ExperimentSelector from 'ExperimentSelector/ExperimentSelector';
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
@@ -49,8 +50,7 @@ const DefaultAppView = ({
             contentId="mainViewContentId"
             class="split-pane-fixed"
           >
-            {/* Side Menu (mainViewContentId used here!) */}
-            <SideMenu contentId="mainViewContentId" />
+            <ExperimentSelector contentId="mainViewContentId" />
             {/* Page Content */}
             {page}
           </IonSplitPane>
