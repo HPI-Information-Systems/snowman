@@ -13,6 +13,7 @@ import { ViewIDs } from 'types/ViewIDs';
 
 export interface SnowmanGlobalStore {
   RenderLogicStore: RenderLogicStore;
+  LoadingIndicatorStore: GlobalIndicatorStore;
 }
 
 export interface AlgorithmDialogStore {
