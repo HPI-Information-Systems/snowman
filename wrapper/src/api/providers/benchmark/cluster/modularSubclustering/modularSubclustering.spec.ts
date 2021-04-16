@@ -10,7 +10,7 @@ import { ModularSubclustering } from './modularSubclustering';
 
 const MIN_NUMBER_NODES = 10;
 const MAX_NUMBER_NODES = 40;
-const MIN_NUMBER_LINKS = 2;
+const MIN_NUMBER_LINKS = 3;
 const MAX_NUMBER_LINKS = 60;
 
 const NUMBER_RUNS = 50;
