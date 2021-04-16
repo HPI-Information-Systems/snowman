@@ -21,10 +21,8 @@ describe('AlgorithmProvider', () => {
         configurationEffort: {
           matchingSolution: {
             expertise: 20,
-            hrAmount: 120,
           },
           domain: {
-            expertise: 220,
             hrAmount: 20,
           },
           interfaces: ['GUI'],
@@ -95,10 +93,8 @@ describe('AlgorithmProvider', () => {
         configurationEffort: {
           matchingSolution: {
             expertise: 202,
-            hrAmount: 1202,
           },
           domain: {
-            expertise: 22,
             hrAmount: 22,
           },
           interfaces: ['GUI'],
@@ -140,10 +136,8 @@ describe('AlgorithmProvider', () => {
         configurationEffort: {
           matchingSolution: {
             expertise: 21,
-            hrAmount: 121,
           },
           domain: {
-            expertise: 221,
             hrAmount: 99,
           },
           interfaces: ['GUI'],

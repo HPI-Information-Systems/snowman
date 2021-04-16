@@ -36,8 +36,8 @@ export class ExperimentProvider {
         description: experiment.description,
         algorithm: experiment.algorithmId,
         dataset: experiment.datasetId,
-        timeToConfigure: experiment.softKPIs?.timeToConfigure,
-        expertiseLevel: experiment.softKPIs?.expertiseLevel,
+        hrAmount: experiment.softKPIs?.hrAmount,
+        expertise: experiment.softKPIs?.expertise,
       },
     ])[0];
   }
