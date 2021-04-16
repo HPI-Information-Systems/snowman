@@ -9,14 +9,12 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import NextFab from 'components/NextFab/NextFab';
 import { PageStructProps } from 'components/PageStruct/PageStructProps';
 import React from 'react';
 
 const PageStructView = ({
   title,
   children,
-  showNextFab = false,
   showIndicator,
 }: PageStructProps): React.FunctionComponentElement<PageStructProps> => {
   return (
@@ -32,10 +30,7 @@ const PageStructView = ({
           </div>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding">
-        {showNextFab ? <NextFab /> : null}
-        {children}
-      </IonContent>
+      <IonContent className="ion-padding">{children}</IonContent>
     </>
   );
 };

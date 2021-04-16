@@ -4,7 +4,7 @@ import PageStruct from 'components/PageStruct/PageStruct';
 import React from 'react';
 
 const RootPageView = (): JSX.Element => (
-  <PageStruct title="Home Page" showNextFab={true}>
+  <PageStruct title="Home Page">
     <div className="ion-text-center introduction">
       <img src="./logo192.png" alt="logo" />
       <h1>Welcome to Snowman Benchmark!</h1>

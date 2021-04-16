@@ -13,7 +13,7 @@ const AlgorithmsPageView = ({
 }: AlgorithmsPageProps): JSX.Element => {
   useEffect((): void => loadAlgorithms(), [loadAlgorithms]);
   return (
-    <PageStruct title="Matching Solutions" showNextFab={false}>
+    <PageStruct title="Matching Solutions">
       <IonGrid>
         <IonRow>
           {algorithms.map((anAlgorithm: Algorithm) => (

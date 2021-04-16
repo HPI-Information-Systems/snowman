@@ -24,7 +24,7 @@ const DatasetsPageView = ({
 }: DatasetsPageProps): JSX.Element => {
   useEffect((): void => loadDatasets(), [loadDatasets]);
   return (
-    <PageStruct title="Dataset Selector" showNextFab={true}>
+    <PageStruct title="Dataset Selector">
       <div>
         {tags.map(
           (aTag: string): JSX.Element => (
