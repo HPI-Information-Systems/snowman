@@ -3,7 +3,7 @@ import { SnowmanAction } from 'store/messages';
 import { ImmediateStore, RenderLogicStore, Store } from 'store/models';
 import { viewIdQueryParam } from 'types/ViewIdQueryParam';
 import { ViewIDs } from 'types/ViewIDs';
-import { couldNavigateToView, getNextViewId } from 'utils/viewMetaInfoHandlers';
+import { couldNavigateToView } from 'utils/viewMetaInfoHandlers';
 
 const getInitialViewId = (): ViewIDs => {
   const params = new URLSearchParams(window.location.search);
@@ -49,12 +49,6 @@ export const RenderLogicReducer = (
     case actionTypes.NAVIGATE_TO:
       return handleNavigateToViewId(
         action.payload as ViewIDs,
-        baseline,
-        immediateState
-      );
-    case actionTypes.NAVIGATE_NEXT:
-      return handleNavigateToViewId(
-        getNextViewId(baseline),
         baseline,
         immediateState
       );
