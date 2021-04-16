@@ -1,4 +1,5 @@
 import {
+  IonButton,
   IonCard,
   IonCardContent,
   IonCardHeader,
@@ -7,6 +8,7 @@ import {
   IonGrid,
   IonIcon,
   IonRow,
+  IonText,
 } from '@ionic/react';
 import PageStruct from 'components/PageStruct/PageStruct';
 import { barChart, calculator, colorFilter, pauseCircle } from 'ionicons/icons';
@@ -40,11 +42,16 @@ const BenchmarkPage = (): JSX.Element => {
                 </p>
               </IonCardContent>
               <IonCardContent>
-                <p>
-                  <b>Requires:</b> at least two experiments from the same
-                  dataset
-                </p>
+                <IonText color="dark">
+                  <p>
+                    <b>Requires:</b> at least two experiments from the same
+                    dataset
+                  </p>
+                </IonText>
               </IonCardContent>
+              <IonButton expand="full" fill="clear">
+                Start Benchmarking
+              </IonButton>
             </IonCard>
           </IonCol>
           <IonCol size="4" sizeXl="3">
@@ -70,11 +77,16 @@ const BenchmarkPage = (): JSX.Element => {
                 </p>
               </IonCardContent>
               <IonCardContent>
-                <p>
-                  <b>Requires:</b> at least two experiments from the same
-                  dataset
-                </p>
+                <IonText color="dark">
+                  <p>
+                    <b>Requires:</b> at least two experiments from the same
+                    dataset
+                  </p>
+                </IonText>
               </IonCardContent>
+              <IonButton expand="full" fill="clear">
+                Start Benchmarking
+              </IonButton>
             </IonCard>
           </IonCol>
           <IonCol size="4" sizeXl="3">
@@ -99,10 +111,16 @@ const BenchmarkPage = (): JSX.Element => {
                 </p>
               </IonCardContent>
               <IonCardContent>
-                <p>
-                  <b>Requires:</b> exactly two experiments from the same dataset
-                </p>
+                <IonText color="dark">
+                  <p>
+                    <b>Requires:</b> exactly two experiments from the same
+                    dataset
+                  </p>
+                </IonText>
               </IonCardContent>
+              <IonButton expand="full" fill="clear">
+                Start Benchmarking
+              </IonButton>
             </IonCard>
           </IonCol>
           <IonCol size="4" sizeXl="3">
@@ -128,10 +146,15 @@ const BenchmarkPage = (): JSX.Element => {
                 </p>
               </IonCardContent>
               <IonCardContent>
-                <p>
-                  <b>Requires:</b> multiple experiments from any dataset
-                </p>
+                <IonText color="dark">
+                  <p>
+                    <b>Requires:</b> multiple experiments from any dataset
+                  </p>
+                </IonText>
               </IonCardContent>
+              <IonButton expand="full" fill="clear">
+                Start Benchmarking
+              </IonButton>
             </IonCard>
           </IonCol>
         </IonRow>
