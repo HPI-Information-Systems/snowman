@@ -35,7 +35,7 @@ const ExperimentsPageView = ({
 }: ExperimentsPageProps): JSX.Element => {
   useEffect(loadExperiments, [loadExperiments]);
   return (
-    <PageStruct title="Experiments Selector" showNextFab={true}>
+    <PageStruct title="Experiments Selector">
       <IonGrid>
         <IonRow>
           <DragDropContext onDragEnd={dragExperiment}>
