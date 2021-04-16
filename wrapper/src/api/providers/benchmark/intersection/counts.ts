@@ -1,6 +1,5 @@
 import { tables } from '../../../database';
 import { LazyProperty } from '../../../tools/lazyProperty';
-import { numberOfPairs } from '../../../tools/numberOfPairs';
 import { IntersectionBase } from './base';
 import { IntersectionCache } from './cache';
 

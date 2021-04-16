@@ -27,7 +27,7 @@ export class Subclustering implements SubclusteringSpec {
   protected readonly clusterIdToSubcluster = new LazyProperty(() =>
     this.createClusterIdToSubcluster()
   );
-  protected readonly subclusterArray: Array<Array<ArraySubcluster>>;
+  protected readonly subclusterArray: ArraySubcluster[][];
 
   readonly numberNodes: number;
   readonly numberClusters: number;
@@ -44,11 +44,11 @@ export class Subclustering implements SubclusteringSpec {
     ] = this.createSubclusterArray(base, partition);
   }
 
-  subclusters(): Array<Array<ArraySubcluster>> {
+  subclusters(): ArraySubcluster[][] {
     return this.subclusterArray;
   }
 
-  subclustersFromBaseClusterId(clusterId: number): Array<ArraySubcluster> {
+  subclustersFromBaseClusterId(clusterId: number): ArraySubcluster[] {
     return this.subclusterArray[clusterId];
   }
 
@@ -71,7 +71,7 @@ export class Subclustering implements SubclusteringSpec {
     numberClusters: number,
     numberPairs: number,
     numberRows: number,
-    subclusterArray: Array<Array<ArraySubcluster>>
+    subclusterArray: ArraySubcluster[][]
   ] {
     let numberClusters = 0;
     let numberPairs = 0;
