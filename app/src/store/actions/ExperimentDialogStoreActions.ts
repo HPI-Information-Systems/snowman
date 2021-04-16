@@ -43,8 +43,7 @@ export const openChangeDialog = (
             payload: anExperiment,
             optionalPayload: store.getState().CoreStore.algorithms,
           });
-        }),
-    dispatch
+        })
   );
 };
 
@@ -102,9 +101,7 @@ export const changeSelectedFiles = (files: File[]): easyPrimitiveActionReturn =>
 
 const createNewExperiment = (
   showSuccess = true
-): SnowmanThunkAction<Promise<number>> => async (
-  dispatch: SnowmanDispatch
-): Promise<number> =>
+): SnowmanThunkAction<Promise<number>> => async (): Promise<number> =>
   RequestHandler<number>(
     () =>
       new ExperimentsApi().addExperiment({
@@ -121,16 +118,13 @@ const createNewExperiment = (
           ),
         },
       }),
-    dispatch,
     showSuccess ? SUCCESS_TO_ADD_NEW_EXPERIMENT : undefined
   );
 
 const uploadExperimentFile = (
   id?: number,
   showSuccess = true
-): SnowmanThunkAction<Promise<void>> => async (
-  dispatch: SnowmanDispatch
-): Promise<void> => {
+): SnowmanThunkAction<Promise<void>> => async (): Promise<void> => {
   const willUpload =
     store.getState().ExperimentDialogStore.selectedFiles.length > 0;
   if (willUpload) {
@@ -144,7 +138,6 @@ const uploadExperimentFile = (
           format: store.getState().ExperimentDialogStore.experimentFileFormat,
           file: store.getState().ExperimentDialogStore.selectedFiles[0] as Blob,
         }),
-      dispatch,
       showSuccess && willUpload ? SUCCESS_TO_UPLOAD_EXPERIMENT_FILE : undefined,
       true
     );
@@ -174,7 +167,6 @@ const editExistingExperiment = (): SnowmanThunkAction<Promise<void>> => async (
           ),
         },
       }),
-    dispatch,
     SUCCESS_TO_UPDATE_EXPERIMENT
   ).then((): Promise<void> => dispatch(getExperiments()));
 };
@@ -185,12 +177,10 @@ const addNewExperiment = (): SnowmanThunkAction<Promise<void>> => async (
   dispatch(createNewExperiment(false))
     .then((id) =>
       dispatch(uploadExperimentFile(id, false)).catch((error) =>
-        RequestHandler(
-          () =>
-            new ExperimentsApi().deleteExperiment({
-              experimentId: id,
-            }),
-          dispatch
+        RequestHandler(() =>
+          new ExperimentsApi().deleteExperiment({
+            experimentId: id,
+          })
         ).finally(() => Promise.reject(error))
       )
     )

@@ -1,5 +1,5 @@
 import { BenchmarkApi, Experiment, Metric } from 'api';
-import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
+import { SnowmanThunkAction } from 'store/messages';
 import { Store } from 'store/models';
 import { store } from 'store/store';
 import RequestHandler from 'utils/requestHandler';
@@ -16,16 +16,13 @@ export const getMetrics = (
   experimentId: number,
   successMessage?: string,
   shouldBlock?: boolean
-): SnowmanThunkAction<Promise<Metric[]>> => async (
-  dispatch: SnowmanDispatch
-): Promise<Metric[]> => {
+): SnowmanThunkAction<Promise<Metric[]>> => async (): Promise<Metric[]> => {
   return RequestHandler<Metric[]>(
     () =>
       new BenchmarkApi().getBinaryMetrics({
         groundTruthExperimentId: getGroundTruthId(),
         predictedExperimentId: experimentId,
       }),
-    dispatch,
     successMessage,
     shouldBlock
   );

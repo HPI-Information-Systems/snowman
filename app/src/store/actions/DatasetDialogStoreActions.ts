@@ -51,8 +51,7 @@ export const openChangeDialog = (
             payload: aDataset,
           });
         })
-        .then((): void => dispatch(loadAvailableTags())),
-    dispatch
+        .then((): void => dispatch(loadAvailableTags()))
   );
 };
 
@@ -154,9 +153,7 @@ export const clickOnDatasetTag = (aTag: string): easyPrimitiveActionReturn =>
 
 const createNewDataset = (
   showSuccess = true
-): SnowmanThunkAction<Promise<number>> => async (
-  dispatch: SnowmanDispatch
-): Promise<number> =>
+): SnowmanThunkAction<Promise<number>> => async (): Promise<number> =>
   RequestHandler<number>(
     (): Promise<number> =>
       new DatasetsApi().addDataset({
@@ -171,13 +168,12 @@ const createNewDataset = (
           tags: store.getState().DatasetDialogStore.selectedTags,
         },
       }),
-    dispatch,
     showSuccess ? SUCCESS_TO_CREATE_NEW_DATASET : undefined
   );
 
-const setExistingDataset = (): SnowmanThunkAction<Promise<void>> => async (
-  dispatch: SnowmanDispatch
-): Promise<void> =>
+const setExistingDataset = (): SnowmanThunkAction<
+  Promise<void>
+> => async (): Promise<void> =>
   RequestHandler<void>(
     (): Promise<void> =>
       new DatasetsApi().setDataset({
@@ -190,14 +186,13 @@ const setExistingDataset = (): SnowmanThunkAction<Promise<void>> => async (
           numberOfRecords: store.getState().DatasetDialogStore.datasetLength,
         },
       }),
-    dispatch,
     SUCCESS_TO_UPDATE_DATASET
   );
 
 const uploadDatasetFile = (
   id?: number,
   showSuccess = false
-): SnowmanThunkAction<Promise<void>> => async (dispatch: SnowmanDispatch) => {
+): SnowmanThunkAction<Promise<void>> => async () => {
   const willUpload =
     store.getState().DatasetDialogStore.selectedFiles.length > 0;
   return RequestHandler(
@@ -219,7 +214,6 @@ const uploadDatasetFile = (
         });
       return Promise.resolve();
     },
-    dispatch,
     showSuccess && willUpload ? SUCCESS_TO_UPLOAD_DATASET_FILE : undefined,
     true
   );
@@ -231,9 +225,8 @@ const addNewDataset = (): SnowmanThunkAction<Promise<void>> => async (
   return dispatch(createNewDataset(false))
     .then((id) =>
       dispatch(uploadDatasetFile(id)).catch((error) =>
-        RequestHandler(
-          () => new DatasetsApi().deleteDataset({ datasetId: id }),
-          dispatch
+        RequestHandler(() =>
+          new DatasetsApi().deleteDataset({ datasetId: id })
         ).finally(() => Promise.reject(error))
       )
     )

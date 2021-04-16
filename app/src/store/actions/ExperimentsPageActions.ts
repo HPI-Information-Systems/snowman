@@ -59,8 +59,7 @@ export const getExperiments = (): SnowmanThunkAction<Promise<void>> => async (
               payload: experiments,
             })
         )
-        .then(),
-    dispatch
+        .then()
   );
 
 export const deleteExperiment = (
@@ -71,7 +70,6 @@ export const deleteExperiment = (
   RequestHandler(
     (): Promise<void> =>
       new ExperimentsApi().deleteExperiment({ experimentId: anExperiment.id }),
-    dispatch,
     SUCCESS_TO_DELETE_EXPERIMENT
   ).then((): Promise<void> => dispatch(getExperiments()));
 

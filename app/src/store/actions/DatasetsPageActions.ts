@@ -44,8 +44,7 @@ export const getDatasets = (): SnowmanThunkAction<Promise<void>> => async (
               payload: allDatasets,
             })
         )
-        .then(),
-    dispatch
+        .then()
   );
 
 export const deleteDataset = (
@@ -56,7 +55,6 @@ export const deleteDataset = (
   RequestHandler(
     (): Promise<void> =>
       new DatasetsApi().deleteDataset({ datasetId: aDataset.id }),
-    dispatch,
     SUCCESS_TO_DELETE_DATASET
   ).then((): Promise<void> => dispatch(getDatasets()));
 
