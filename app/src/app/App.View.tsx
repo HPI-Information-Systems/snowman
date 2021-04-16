@@ -22,7 +22,6 @@ import { IonApp, IonPage, IonSplitPane } from '@ionic/react';
 import { DefaultAppProps } from 'app/AppProps';
 import BenchmarkSelector from 'components/BenchmarkSelector/BenchmarkSelector';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
-import SideMenu from 'components/SideMenu/SideMenu';
 import TopNavBar from 'components/TopNavBar/TopNavBar';
 import BenchmarkPage from 'pages/BenchmarkPage/BenchmarkPage';
 import React, { useEffect } from 'react';

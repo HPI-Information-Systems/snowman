@@ -1,4 +1,4 @@
-import { ImmediateStore, RenderLogicStore } from 'store/models';
+import { ImmediateStore } from 'store/models';
 import {
   PrimaryViewMetaInformation,
   ViewMetaInformationCollection,
@@ -11,13 +11,6 @@ const getMetaInfoOfViewId = (aViewId: ViewIDs): ViewMetaInformation =>
     (aViewMetaInfo: ViewMetaInformation): boolean =>
       aViewMetaInfo.key === aViewId
   ) ?? PrimaryViewMetaInformation;
-
-const getMetaInfoOfCurrentView = (
-  aRenderLogicStore: RenderLogicStore
-): ViewMetaInformation => getMetaInfoOfViewId(aRenderLogicStore.currentViewID);
-
-export const getNextViewId = (aRenderLogicStore: RenderLogicStore): ViewIDs =>
-  getMetaInfoOfCurrentView(aRenderLogicStore).nextView;
 
 export const couldNavigateToView = (
   aViewId: ViewIDs,
