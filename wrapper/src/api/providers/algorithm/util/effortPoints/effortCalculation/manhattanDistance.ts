@@ -1,7 +1,7 @@
 import { BaseEffort } from '../baseEffort';
-
+// Manhattan Effort Point Estimation
 export class ManhattanDistance extends BaseEffort {
-  name = 'manhattan distance';
+  name = 'manhattan distance-based effort';
   range: [number, number] = [0, this.expertise + this.hrAmount];
   formula = '\\sum_{i}|a_i - b_i|';
   get value(): number {
