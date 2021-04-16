@@ -13,12 +13,12 @@ import { UnionFindBase } from '../unionFind/unionFindBase';
 class ModularSubcluster implements Subcluster {
   constructor(
     readonly cluster: Node,
-    readonly baseID: ClusterID,
-    readonly partition: { id: ClusterID }
+    readonly partitionID: ClusterID,
+    readonly base: { id: ClusterID }
   ) {}
 
-  get partitionID() {
-    return this.partition.id;
+  get baseID() {
+    return this.base.id;
   }
 
   get id() {
@@ -44,21 +44,18 @@ export class ModularSubclustering
     modularPartitionedByFixed: Subclustering
   ) {
     super(fixedPartition.numberNodes);
-    this.modularClusterToThisClusters = new Array(
-      modularPartitionedByFixed.subclusters().length
-    );
+    this.modularClusterToThisClusters = [];
     for (
       let modularClusterID = 0;
-      modularClusterID < this.modularClusterToThisClusters.length;
+      modularClusterID < modularPartitionedByFixed.subclusters().length;
       ++modularClusterID
     ) {
-      const thisClusters: ModularSubcluster[] = (this.modularClusterToThisClusters[
-        modularClusterID
-      ] = []);
+      const thisClusters: ModularSubcluster[] = [];
+      this.modularClusterToThisClusters.push(thisClusters);
       const subclusters = modularPartitionedByFixed.subclustersFromBaseClusterId(
         modularClusterID
       );
-      const partitionRef = { id: modularClusterID };
+      const baseRef = { id: modularClusterID };
       for (const [fixedClusterID, subcluster] of subclusters.map(
         (cluster) =>
           [cluster.partitionID, [...cluster]] as [ClusterID, NodeID[]]
@@ -70,7 +67,7 @@ export class ModularSubclustering
           new ModularSubcluster(
             this.nodes[subcluster[0]].root,
             fixedClusterID,
-            partitionRef
+            baseRef
           )
         );
       }
@@ -99,7 +96,7 @@ export class ModularSubclustering
     );
     const occuringFixedClusterIDs: ClusterID[] = [];
     for (const clusters of group) {
-      for (const { cluster, baseID: fixed } of clusters) {
+      for (const { cluster, partitionID: fixed } of clusters) {
         let thisClusters = fixedClusterIDToThisClusters[fixed];
         if (!thisClusters) {
           thisClusters = [];
@@ -181,7 +178,7 @@ export class ModularSubclustering
     reduceClusterCount: number
   ): void {
     for (const [from, to] of swaps) {
-      this.modularClusterToThisClusters[from][0].partition.id = to;
+      this.modularClusterToThisClusters[from][0].base.id = to;
       this.modularClusterToThisClusters[to] = this.modularClusterToThisClusters[
         from
       ];

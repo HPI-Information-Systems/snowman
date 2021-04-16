@@ -1,3 +1,4 @@
+import { expectCorrectClusteringOrder } from '../test/clusteringOrder';
 import { clusteringTestCases } from '../test/testCases';
 import { expectClusteringsToEqual } from '../test/utility';
 import { MergesT } from '../types';
@@ -23,6 +24,7 @@ describe.each(clusteringTestCases)(
       const clustering = new UnionFind(numberNodes);
       clustering.link(linkedNodes);
       expectClusteringsToEqual(clustering, expectedClustering);
+      expectCorrectClusteringOrder(clustering);
     });
     test('tracks correct links', () => {
       const clustering = new TrackableUnionFind(numberNodes);
@@ -36,6 +38,7 @@ describe.each(clusteringTestCases)(
         const received = prepareMergesForMatching(receivedMerges);
         expect(received).toEqual(expected);
         from = to;
+        expectCorrectClusteringOrder(clustering);
       }
     });
   }

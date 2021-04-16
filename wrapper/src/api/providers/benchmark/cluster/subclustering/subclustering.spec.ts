@@ -1,3 +1,4 @@
+import { expectCorrectSubClusteringOrder } from '../test/clusteringOrder';
 import { relaxedClusteringToClustering } from '../test/relaxedClusterings';
 import { subclusteringTestCases } from '../test/testCases';
 import {
@@ -23,6 +24,10 @@ describe.each(subclusteringTestCases)(
 
     test('calculates correct subclusters', () => {
       expectSubClusteringsToEqual(subclustering, expectedSubclustering);
+    });
+
+    test('has correct order', () => {
+      expectCorrectSubClusteringOrder(subclustering);
     });
   }
 );

@@ -1,6 +1,7 @@
 import { randomInt } from 'crypto';
 
 import { Subclustering } from '../subclustering';
+import { expectCorrectSubClusteringOrder } from '../test/clusteringOrder';
 import { expectSubClusteringsToEqual } from '../test/utility';
 import { NodeLink } from '../types';
 import { UnionFind } from '../unionFind';
@@ -39,7 +40,7 @@ describe.each(testCases)(
     const fixedPartition = new UnionFind(numberNodes);
     fixedPartition.link(fixedLinks);
     const trackableBase = new TrackableUnionFind(numberNodes);
-    const modularSubcluster = new ModularSubclustering(
+    const modularSubclustering = new ModularSubclustering(
       fixedPartition,
       new Subclustering(trackableBase, fixedPartition)
     );
@@ -51,19 +52,13 @@ describe.each(testCases)(
     )('constructed correctly', (end) => {
       const links = modularLinks.slice(end - groupSize, end);
       const merges = trackableBase.trackedLink(links);
-      modularSubcluster.update(merges);
+      modularSubclustering.update(merges);
       const expectedSubcluster = new Subclustering(
         trackableBase,
         fixedPartition
       );
-      expectSubClusteringsToEqual(modularSubcluster, expectedSubcluster);
-      let partitionId = -1;
-      for (const subclusters of modularSubcluster.subclusters()) {
-        partitionId++;
-        for (const subcluster of subclusters) {
-          expect(partitionId).toEqual(subcluster.partitionID);
-        }
-      }
+      expectSubClusteringsToEqual(modularSubclustering, expectedSubcluster);
+      expectCorrectSubClusteringOrder(modularSubclustering);
     });
   }
 );
