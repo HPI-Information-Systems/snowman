@@ -77,11 +77,7 @@ export class IntersectionCounts extends IntersectionBase {
 
   protected calculatePairCount(): number {
     if (this.negative.length === 0) {
-      let numberPairs = 0;
-      for (const cluster of this.clustering.clusters()) {
-        numberPairs += numberOfPairs(cluster.length);
-      }
-      return numberPairs;
+      return this.clustering.numberPairs;
     } else {
       // |A without B without C without D ...| = |A| - |A intersected B|  - |A without B intersected C| - |A without B without C intersected D| - ...
       let numberPairs = this.positiveIntersection.numberPairs;
@@ -108,15 +104,7 @@ export class IntersectionCounts extends IntersectionBase {
 
   protected calculateRowCount(): number {
     if (this.negative.length === 0) {
-      let rowCount = 0;
-      let clusterCount = 0;
-      for (const cluster of this.clustering.clusters()) {
-        if (cluster.length > 1) {
-          rowCount += cluster.length;
-          ++clusterCount;
-        }
-      }
-      return rowCount + Math.max(0, clusterCount - 1);
+      return this.clustering.numberRows;
     } else {
       return this.numberPairs * 2 + Math.max(0, this.numberPairs - 1);
     }

@@ -1,7 +1,7 @@
-import { compareArrays } from '../../../../tools/comparators';
 import { clusteringTestCases } from '../test/testCases';
 import { expectClusteringsToEqual } from '../test/utility';
-import { MergesT, UnionFind } from './unionFind';
+import { MergesT } from '../types';
+import { UnionFind } from './unionFind';
 
 function prepareMergesForMatching(merges: MergesT) {
   return {

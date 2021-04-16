@@ -13,6 +13,7 @@ export interface Cluster extends Iterable<NodeID> {
 export interface Clustering {
   readonly numberNodes: number;
   readonly numberClusters: number;
+  readonly numberRows: number;
   readonly numberPairs: number;
   /**
    * guaranteed to return clusters in order (their cluster id is strict monotonically increasing)

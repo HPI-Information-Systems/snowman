@@ -1,5 +1,4 @@
-import { NodeID } from '../types';
-import { MergesT } from '../unionFind';
+import { MergesT, NodeID } from '../types';
 import { RelaxedClustering, RelaxedSubclustering } from './relaxedClusterings';
 
 export const clusteringTestCases: {

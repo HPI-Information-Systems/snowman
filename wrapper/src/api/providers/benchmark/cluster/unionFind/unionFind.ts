@@ -17,6 +17,7 @@ export class UnionFind implements Clustering {
   protected readonly clusterIdToCluster: Node[];
   protected _numberClusters: number;
   protected _numberPairs = 0;
+  protected _numberRows = 0;
 
   get numberClusters(): number {
     return this._numberClusters;
@@ -24,6 +25,10 @@ export class UnionFind implements Clustering {
 
   get numberPairs(): number {
     return this._numberPairs;
+  }
+
+  get numberRows(): number {
+    return Math.max(0, this._numberRows - 1);
   }
 
   constructor(public readonly numberNodes: number) {
@@ -57,6 +62,13 @@ export class UnionFind implements Clustering {
         numberOfPairs(newRoot.length) -
         numberOfPairs(length1) -
         numberOfPairs(length2);
+      if (length1 === 1 && length2 === 1) {
+        this._numberRows += 3;
+      } else if (length1 === 1 || length2 === 1) {
+        this._numberRows += 1;
+      } else {
+        this._numberRows -= 1;
+      }
       this.clusterIDSwap(newChild);
       return true;
     } else {

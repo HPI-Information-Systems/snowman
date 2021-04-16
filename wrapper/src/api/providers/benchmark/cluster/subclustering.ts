@@ -1,4 +1,6 @@
 import { LazyProperty } from '../../../tools/lazyProperty';
+import { numberOfPairs } from '../../../tools/numberOfPairs';
+import { getTmpArray } from '../../../tools/tmpArray';
 import {
   Cluster,
   ClusterID,
@@ -24,13 +26,17 @@ export class Subclustering implements SubclusteringSpec {
 
   readonly numberNodes: number;
   readonly numberClusters: number;
+  readonly numberPairs: number;
+  readonly numberRows: number;
 
   constructor(base: Clustering, partition: Clustering) {
     this.numberNodes = base.numberNodes;
-    [this.numberClusters, this.subclusterArray] = this.createSubclusterList(
-      base,
-      partition
-    );
+    [
+      this.numberClusters,
+      this.numberPairs,
+      this.numberRows,
+      this.subclusterArray,
+    ] = this.createSubclusterArray(base, partition);
   }
 
   subclusters(): Array<Array<Cluster>> {
@@ -53,13 +59,20 @@ export class Subclustering implements SubclusteringSpec {
     return this.clusterIdToSubcluster.value[clusterId];
   }
 
-  protected createSubclusterList(
+  protected createSubclusterArray(
     base: Clustering,
     partition: Clustering
-  ): [number, Array<Array<ClusterArray>>] {
+  ): [
+    numberClusters: number,
+    numberPairs: number,
+    numberRows: number,
+    subclusterArray: Array<Array<ClusterArray>>
+  ] {
     let numberClusters = 0;
+    let numberPairs = 0;
+    let numberRows = 0;
     const subclusterArray = new Array<Array<ClusterArray>>(base.numberClusters);
-    const partitionClusterIdToSubcluster = new Array<ClusterArray | undefined>(
+    const partitionClusterIdToSubcluster = getTmpArray<ClusterArray>(
       partition.numberClusters
     );
     for (const cluster of base.clusters()) {
@@ -67,16 +80,14 @@ export class Subclustering implements SubclusteringSpec {
       const partitionedClusterIds: ClusterID[] = [];
       for (const nodeId of cluster) {
         const partitionClusterId = partition.clusterFromNodeId(nodeId).id;
-
         let subcluster = partitionClusterIdToSubcluster[partitionClusterId];
         if (!subcluster) {
           subcluster = new ClusterArray(numberClusters++);
+          partitionedClusterIds.push(partitionClusterId);
           partitionClusterIdToSubcluster[partitionClusterId] = subcluster;
           ++numberSubclusters;
         }
-
         subcluster.push(nodeId);
-        partitionedClusterIds.push(partitionClusterId);
       }
 
       const subclusters = new Array<ClusterArray>(numberSubclusters);
@@ -87,10 +98,19 @@ export class Subclustering implements SubclusteringSpec {
         if (subcluster) {
           partitionClusterIdToSubcluster[partitionClusterId] = undefined;
           subclusters[--numberSubclusters] = subcluster;
+          numberPairs += numberOfPairs(subcluster.length);
+          if (subcluster.length >= 2) {
+            numberRows += subcluster.length + 1;
+          }
         }
       }
     }
-    return [numberClusters, subclusterArray];
+    return [
+      numberClusters,
+      numberPairs,
+      Math.max(0, numberRows - 1),
+      subclusterArray,
+    ];
   }
 
   protected createClusterIdToSubcluster(): ClusterArray[] {
