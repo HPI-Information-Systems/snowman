@@ -24,6 +24,7 @@ import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
 import SideMenu from 'components/SideMenu/SideMenu';
 import TopNavBar from 'components/TopNavBar/TopNavBar';
 import ExperimentSelector from 'ExperimentSelector/ExperimentSelector';
+import BenchmarkPage from 'pages/BenchmarkPage/BenchmarkPage';
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
@@ -52,7 +53,9 @@ const DefaultAppView = ({
           >
             <ExperimentSelector contentId="mainViewContentId" />
             {/* Page Content */}
-            {page}
+            <IonPage id="mainViewContentId">
+              <BenchmarkPage />
+            </IonPage>
           </IonSplitPane>
         ) : (
           page
