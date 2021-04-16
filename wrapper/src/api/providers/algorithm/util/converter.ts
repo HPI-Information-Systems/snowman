@@ -1,6 +1,7 @@
 import { tableSchemas } from '../../../database/schemas';
 import { ColumnValues } from '../../../database/tools/types';
-import { Algorithm } from '../../../server/types';
+import { Algorithm, Metric } from '../../../server/types';
+import { calculateEffort } from './effortPoints/baseEffort';
 type StoredAlgorithm = ColumnValues<
   typeof tableSchemas['meta']['algorithm']['columns']
 >;
@@ -33,10 +34,26 @@ export class AlgorithmConverter {
     };
   }
   storedToApi(stored: StoredAlgorithm): Algorithm {
+    let domainEffort: Metric[] | undefined;
+    let matchingSolutionEffort: Metric[] | undefined;
+    if (stored.domainExpertise && stored.domainHrAmount) {
+      domainEffort = calculateEffort(
+        stored.domainExpertise,
+        stored.domainHrAmount
+      );
+    }
+    if (stored.matchingSolutionExpertise && stored.matchingSolutionHrAmount) {
+      matchingSolutionEffort = calculateEffort(
+        stored.matchingSolutionExpertise,
+        stored.matchingSolutionHrAmount
+      );
+    }
     return {
       id: stored.id,
       name: stored.name,
       description: stored.description ?? undefined,
+      matchingSolutionEffort,
+      domainEffort,
       softKPIs: {
         integrationEffort: {
           integrationTime: stored.integrationTime ?? undefined,

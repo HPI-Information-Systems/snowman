@@ -1,4 +1,4 @@
-import { BaseEffort } from './baseEffort';
+import { BaseEffort } from '../baseEffort';
 
 export class LinearEffort extends BaseEffort {
   name = 'linear effort';

@@ -1,4 +1,4 @@
-import { BaseEffort } from './baseEffort';
+import { BaseEffort } from '../baseEffort';
 
 export class LogarithmicEffort extends BaseEffort {
   name = 'logarithmic expertise level';

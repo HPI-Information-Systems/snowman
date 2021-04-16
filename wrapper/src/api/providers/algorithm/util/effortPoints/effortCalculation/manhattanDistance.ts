@@ -1,4 +1,4 @@
-import { BaseEffort } from './baseEffort';
+import { BaseEffort } from '../baseEffort';
 
 export class ManhattanDistance extends BaseEffort {
   name = 'manhattan distance';
