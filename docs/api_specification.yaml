@@ -1005,7 +1005,6 @@ components:
         - name
         - formula
         - value
-        - range
 
     ExperimentConfigItem:
       type: object
