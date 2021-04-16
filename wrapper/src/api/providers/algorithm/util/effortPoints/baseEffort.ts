@@ -7,7 +7,6 @@ export abstract class BaseEffort implements Metric {
   ) {}
 
   abstract name: string;
-  abstract range: [number, number];
   abstract formula: string;
   abstract value: number;
 
