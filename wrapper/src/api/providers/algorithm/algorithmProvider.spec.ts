@@ -44,10 +44,8 @@ describe('AlgorithmProvider', () => {
         configurationEffort: {
           matchingSolution: {
             expertise: 100,
-            hrAmount: 20,
           },
           domain: {
-            expertise: 10,
             hrAmount: 70,
           },
           interfaces: ['GUI', 'CLI'],
@@ -71,7 +69,10 @@ describe('AlgorithmProvider', () => {
     expect(new Set(provider.listAlgorithms())).toMatchObject(
       new Set(
         addedAlgorithms.map((algorithm, index) => {
-          return { ...algorithm, id: addedAlgorithmids[index] };
+          return {
+            ...algorithm,
+            id: addedAlgorithmids[index],
+          };
         })
       )
     );
