@@ -21,7 +21,6 @@ import 'theme/overwrites.css';
 import { IonApp, IonPage, IonSplitPane } from '@ionic/react';
 import { DefaultAppProps } from 'app/AppProps';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
-import SideMenu from 'components/SideMenu/SideMenu';
 import TopNavBar from 'components/TopNavBar/TopNavBar';
 import ExperimentSelector from 'ExperimentSelector/ExperimentSelector';
 import BenchmarkPage from 'pages/BenchmarkPage/BenchmarkPage';
