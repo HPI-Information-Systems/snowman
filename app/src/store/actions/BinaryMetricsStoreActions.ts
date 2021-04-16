@@ -163,20 +163,18 @@ export const loadTrueNegatives = (
 export const loadBinaryMetricsTuplesCounts = (): SnowmanThunkAction<
   Promise<void>
 > => async (dispatch: SnowmanDispatch): Promise<void> => {
-  RequestHandler(
-    () =>
-      new BenchmarkApi()
-        .calculateExperimentIntersectionCounts({
-          experiments: getExperimentsComparisonTuple(),
+  RequestHandler(() =>
+    new BenchmarkApi()
+      .calculateExperimentIntersectionCounts({
+        experiments: getExperimentsComparisonTuple(),
+      })
+      .then((counts) =>
+        dispatch({
+          type: actionTypes.SET_ALL_COUNTS,
+          payload: counts,
         })
-        .then((counts) =>
-          dispatch({
-            type: actionTypes.SET_ALL_COUNTS,
-            payload: counts,
-          })
-        )
-        .then(),
-    dispatch
+      )
+      .then()
   );
 };
 
