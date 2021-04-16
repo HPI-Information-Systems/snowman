@@ -1,0 +1,17 @@
+.list, .listInset, .listInsetMax {
+    padding: 0 !important;
+}
+
+.listInset {
+    margin-left: 10px !important;
+}
+
+.listInsetMax {
+    margin-left: 20px !important;
+}
+
+.chevron {
+    margin-inline-end: 12px;
+    margin-right: 12px;
+    cursor: pointer;
+}
