@@ -13,7 +13,6 @@ import {
   changeExperimentName,
   changeFileFormat,
   changeSelectedFiles,
-  changeTimeToConfigure,
   clickOnMatchingSolutionTag,
   closeDialog,
 } from 'store/actions/ExperimentDialogStoreActions';
@@ -24,7 +23,6 @@ import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
-import { parseInputToNumberOrUndef } from 'utils/formHelpers';
 
 const isValidExperimentDialog = (state: Store): boolean => {
   if (
@@ -51,7 +49,7 @@ const mapStateToProps = (state: Store): ExperimentDialogStateProps => ({
   selectedFiles: state.ExperimentDialogStore.selectedFiles,
   experimentFileFormat: state.ExperimentDialogStore.experimentFileFormat,
   experimentId: state.ExperimentDialogStore.experimentId ?? MagicNotPossibleId,
-  timeToConfigure: state.ExperimentDialogStore.timeToConfigure,
+  timeToConfigure: undefined,
 });
 
 const mapDispatchToProps = (
@@ -75,9 +73,7 @@ const mapDispatchToProps = (
       changeSelectedFiles(convertFilesListToFilesArray(event.target.files))
     ),
   changeTimeToConfigure: (event: IonChangeEvent): void => {
-    dispatch(
-      changeTimeToConfigure(parseInputToNumberOrUndef(event.detail.value))
-    );
+    console.log();
   },
 });
 

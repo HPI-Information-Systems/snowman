@@ -2,12 +2,14 @@ import AlgorithmDialogView from 'components/AlgorithmDialog/AlgorithmDialog.View
 import {
   AlgorithmDialogDispatchProps,
   AlgorithmDialogStateProps,
+  AlgorithmSoftKPIsTypesEnum,
 } from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import { connect } from 'react-redux';
 import {
   addOrUpdateAlgorithm,
   changeAlgorithmDescription,
   changeAlgorithmName,
+  changeAlgorithmSoftKPIs,
   closeDialog,
 } from 'store/actions/AlgorithmDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
@@ -21,6 +23,7 @@ const mapStateToProps = (state: Store): AlgorithmDialogStateProps => ({
   algorithmDescription: state.AlgorithmDialogStore.algorithmDescription,
   algorithmName: state.AlgorithmDialogStore.algorithmName,
   algorithmId: state.AlgorithmDialogStore.algorithmId ?? MagicNotPossibleId,
+  algorithmSoftKPIs: state.AlgorithmDialogStore.algorithmSoftKPIs,
 });
 
 const mapDispatchToProps = (
@@ -40,6 +43,12 @@ const mapDispatchToProps = (
   },
   clickOnSubmit(): void {
     dispatch(addOrUpdateAlgorithm()).then();
+  },
+  changeAlgorithmSoftKPIs(
+    type: AlgorithmSoftKPIsTypesEnum,
+    event: IonChangeEvent
+  ) {
+    dispatch(changeAlgorithmSoftKPIs(type, event.detail.value));
   },
 });
 
