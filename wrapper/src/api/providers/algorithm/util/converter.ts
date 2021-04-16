@@ -1,7 +1,7 @@
 import { tableSchemas } from '../../../database/schemas';
 import { ColumnValues } from '../../../database/tools/types';
 import { Algorithm, Metric } from '../../../server/types';
-import { calculateEffort } from './effortPoints/baseEffort';
+import { calculateEffort } from './effortPoints/calculateEffort';
 type StoredAlgorithm = ColumnValues<
   typeof tableSchemas['meta']['algorithm']['columns']
 >;
