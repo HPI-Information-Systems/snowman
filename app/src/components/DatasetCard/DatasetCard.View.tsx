@@ -15,20 +15,12 @@ import {
   IonRow,
 } from '@ionic/react';
 import { DatasetCardProps } from 'components/DatasetCard/DatasetCardProps';
-import {
-  create,
-  radioButtonOffOutline,
-  radioButtonOnOutline,
-  telescope,
-  trash,
-} from 'ionicons/icons';
+import { create, telescope, trash } from 'ionicons/icons';
 import React from 'react';
 
 const DatasetCardView = ({
   dataset,
-  isSelected,
   couldPreview,
-  selectDataset,
   deleteDataset,
   editDataset,
   previewDataset,
@@ -38,26 +30,7 @@ const DatasetCardView = ({
       <IonCardSubtitle>
         {(dataset.tags ?? []).join(', ').toUpperCase()}
       </IonCardSubtitle>
-      <IonCardTitle>
-        {dataset.name}
-        <span onClick={selectDataset} style={{ cursor: 'pointer' }}>
-          {isSelected ? (
-            <IonIcon
-              className="ion-float-right"
-              icon={radioButtonOnOutline}
-              size="large"
-              color="primary"
-            />
-          ) : (
-            <IonIcon
-              className="ion-float-right"
-              icon={radioButtonOffOutline}
-              size="large"
-              color="medium"
-            />
-          )}
-        </span>
-      </IonCardTitle>
+      <IonCardTitle>{dataset.name}</IonCardTitle>
     </IonCardHeader>
     <IonCardContent>
       {dataset.description !== null ? <p>{dataset.description}</p> : null}

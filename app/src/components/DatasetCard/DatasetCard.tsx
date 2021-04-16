@@ -7,13 +7,9 @@ import {
 import { connect } from 'react-redux';
 import { openChangeDialog } from 'store/actions/DatasetDialogStoreActions';
 import { openPreviewer } from 'store/actions/DatasetPreviewerActions';
-import {
-  clickOnDataset,
-  deleteDataset,
-} from 'store/actions/DatasetsPageActions';
+import { deleteDataset } from 'store/actions/DatasetsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-import { MagicNotPossibleId } from 'structs/constants';
 import { couldPreviewDataset } from 'utils/datasetHelper';
 
 const mapStateToProps = (
@@ -21,18 +17,12 @@ const mapStateToProps = (
   ownProps: DatasetCardOwnProps
 ): DatasetCardStateProps => ({
   couldPreview: couldPreviewDataset(ownProps.dataset),
-  isSelected:
-    (state.BenchmarkConfigurationStore.selectedDataset?.id ??
-      MagicNotPossibleId) === ownProps.dataset.id,
 });
 
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch,
   ownProps: DatasetCardOwnProps
 ): DatasetCardDispatchProps => ({
-  selectDataset() {
-    dispatch(clickOnDataset(ownProps.dataset));
-  },
   deleteDataset() {
     dispatch(deleteDataset(ownProps.dataset)).then();
   },

@@ -1,7 +1,6 @@
 import { Dataset } from 'api';
 
 export interface DatasetCardStateProps {
-  isSelected: boolean;
   couldPreview: boolean;
 }
 
@@ -10,7 +9,6 @@ export interface DatasetCardOwnProps {
 }
 
 export interface DatasetCardDispatchProps {
-  selectDataset(): void;
   deleteDataset(): void;
   editDataset(): void;
   previewDataset(): void;
