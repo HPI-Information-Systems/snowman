@@ -13,6 +13,7 @@ export interface Cluster extends Iterable<NodeID> {
 export interface Clustering {
   readonly numberNodes: number;
   readonly numberClusters: number;
+  readonly numberPairs: number;
   /**
    * guaranteed to return clusters in order (their cluster id is strict monotonically increasing)
    */
@@ -28,3 +29,13 @@ export interface Subclustering extends Clustering {
   subclusters(): readonly (readonly Cluster[])[];
   subclustersFromClusterId(clusterId: ClusterID): readonly Cluster[];
 }
+
+export type MergesT = {
+  merges: {
+    // IDs before swaps and merges
+    group: ClusterID[];
+    // ID of combined cluster after swaps and merges
+    target: ClusterID;
+  }[];
+  clusterIDSwaps: [ClusterID, ClusterID][];
+};
