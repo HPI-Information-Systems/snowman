@@ -15,6 +15,7 @@ import { barChart, calculator, colorFilter, pauseCircle } from 'ionicons/icons';
 import { BenchmarkAppProps } from 'pages/BenchmarkPage/BenchmarkAppProps';
 import BenchmarkSelector from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelector';
 import { createBenchmarkAppStore } from 'pages/BenchmarkPage/store/BenchmarkAppStoreFactory';
+import { ViewIDs } from 'types/ViewIDs';
 import React, { useEffect } from 'react';
 
 const BenchmarkAppView = ({
@@ -23,6 +24,7 @@ const BenchmarkAppView = ({
   useEffect(loadInitialState, [loadInitialState]);
   return (
     <GenericSubApp
+      appId={ViewIDs.DASHBOARD}
       appTitle={'Benchmark Dashboard'}
       createSubAppStore={createBenchmarkAppStore}
       sideMenu={BenchmarkSelector}
