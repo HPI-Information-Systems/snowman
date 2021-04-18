@@ -1,347 +1,44 @@
+import { prepareBenchmarkConfig } from 'components/BenchmarkSelector/BenchmarkSelector.helper';
+import BenchmarkSelectorView from 'components/BenchmarkSelector/BenchmarkSelector.View';
 import {
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonList,
-  IonMenu,
-  IonSearchbar,
-  IonToolbar,
-} from '@ionic/react';
-import styles from 'components/BenchmarkSelector/BenchmarkSelectorStyles.module.css';
-import {
-  checkmarkCircleOutline,
-  chevronDownCircle,
-  radioButtonOffOutline,
-} from 'ionicons/icons';
-import React from 'react';
+  BenchmarkSelectorDispatchProps,
+  BenchmarkSelectorStateProps,
+} from 'components/BenchmarkSelector/BenchmarkSelectorProps';
+import { connect } from 'react-redux';
+import { SnowmanDispatch } from 'store/messages';
+import { Store } from 'store/models';
 
-const BenchmarkSelector = ({
-  contentId,
-}: {
-  contentId: string;
-}): JSX.Element => {
-  return (
-    <IonMenu contentId={contentId}>
-      <IonHeader>
-        <IonToolbar color="primary">
-          <IonSearchbar placeholder="Search experiments" />
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <IonList>
-          <IonItem>
-            <IonIcon
-              icon={chevronDownCircle}
-              color="primary"
-              slot="start"
-              class={styles.chevron}
-            />
-            MatchingSolution 1
-            <IonIcon icon={radioButtonOffOutline} color={'medium'} slot="end" />
-          </IonItem>
-          <IonList class={styles.listInset}>
-            <IonItem>
-              <IonIcon
-                icon={chevronDownCircle}
-                color="primary"
-                slot="start"
-                class={styles.chevron}
-              />
-              Dataset 1
-              <IonIcon
-                icon={radioButtonOffOutline}
-                color={'medium'}
-                slot="end"
-              />
-            </IonItem>
-            <IonList class={styles.listInsetMax}>
-              <IonItem>
-                Experiment_28457185
-                <IonIcon
-                  icon={checkmarkCircleOutline}
-                  color={'primary'}
-                  slot="end"
-                />
-              </IonItem>
-              <IonItem>
-                Experiment_28457185
-                <IonIcon
-                  icon={radioButtonOffOutline}
-                  color={'medium'}
-                  slot="end"
-                />
-              </IonItem>
-              <IonItem>
-                Experiment_28457185
-                <IonIcon
-                  icon={checkmarkCircleOutline}
-                  color={'primary'}
-                  slot="end"
-                />
-              </IonItem>
-              <IonItem>
-                Experiment_28457185
-                <IonIcon
-                  icon={radioButtonOffOutline}
-                  color={'medium'}
-                  slot="end"
-                />
-              </IonItem>
-            </IonList>
-            <IonItem>
-              <IonIcon
-                icon={chevronDownCircle}
-                color="primary"
-                slot="start"
-                class={styles.chevron}
-              />
-              Dataset 2
-              <IonIcon
-                icon={checkmarkCircleOutline}
-                color={'primary'}
-                slot="end"
-              />
-            </IonItem>
-            <IonList class={styles.listInsetMax}>
-              <IonItem>
-                Experiment_28457185
-                <IonIcon
-                  icon={checkmarkCircleOutline}
-                  color={'primary'}
-                  slot="end"
-                />
-              </IonItem>
-              <IonItem>
-                Experiment_28457185
-                <IonIcon
-                  icon={checkmarkCircleOutline}
-                  color={'primary'}
-                  slot="end"
-                />
-              </IonItem>
-              <IonItem>
-                Experiment_28457185
-                <IonIcon
-                  icon={checkmarkCircleOutline}
-                  color={'primary'}
-                  slot="end"
-                />
-              </IonItem>
-            </IonList>
-            <IonItem>
-              <IonIcon
-                icon={chevronDownCircle}
-                color="primary"
-                slot="start"
-                class={styles.chevron}
-              />
-              Dataset 3
-              <IonIcon
-                icon={radioButtonOffOutline}
-                color={'medium'}
-                slot="end"
-              />
-            </IonItem>
-            <IonList class={styles.listInsetMax}>
-              <IonItem>
-                Experiment_28457185
-                <IonIcon
-                  icon={radioButtonOffOutline}
-                  color={'medium'}
-                  slot="end"
-                />
-              </IonItem>
-              <IonItem>
-                Experiment_28457185
-                <IonIcon
-                  icon={radioButtonOffOutline}
-                  color={'medium'}
-                  slot="end"
-                />
-              </IonItem>
-              <IonItem>
-                Experiment_28457185
-                <IonIcon
-                  icon={radioButtonOffOutline}
-                  color={'medium'}
-                  slot="end"
-                />
-              </IonItem>
-              <IonItem>
-                Experiment_28457185
-                <IonIcon
-                  icon={radioButtonOffOutline}
-                  color={'medium'}
-                  slot="end"
-                />
-              </IonItem>
-            </IonList>
-            <IonItem>
-              <IonIcon
-                icon={chevronDownCircle}
-                color="primary"
-                slot="start"
-                class={styles.chevron}
-              />
-              MatchingSolution 2
-              <IonIcon
-                icon={radioButtonOffOutline}
-                color={'medium'}
-                slot="end"
-              />
-            </IonItem>
-            <IonList class={styles.listInset}>
-              <IonItem>
-                <IonIcon
-                  icon={chevronDownCircle}
-                  color="primary"
-                  slot="start"
-                  class={styles.chevron}
-                />
-                Dataset 1
-                <IonIcon
-                  icon={radioButtonOffOutline}
-                  color={'medium'}
-                  slot="end"
-                />
-              </IonItem>
-              <IonList class={styles.listInsetMax}>
-                <IonItem>
-                  Experiment_28457185
-                  <IonIcon
-                    icon={radioButtonOffOutline}
-                    color={'medium'}
-                    slot="end"
-                  />
-                </IonItem>
-                <IonItem>
-                  Experiment_28457185
-                  <IonIcon
-                    icon={radioButtonOffOutline}
-                    color={'medium'}
-                    slot="end"
-                  />
-                </IonItem>
-                <IonItem>
-                  Experiment_28457185
-                  <IonIcon
-                    icon={radioButtonOffOutline}
-                    color={'medium'}
-                    slot="end"
-                  />
-                </IonItem>
-                <IonItem>
-                  Experiment_28457185
-                  <IonIcon
-                    icon={radioButtonOffOutline}
-                    color={'medium'}
-                    slot="end"
-                  />
-                </IonItem>
-              </IonList>
-              <IonItem>
-                <IonIcon
-                  icon={chevronDownCircle}
-                  color="primary"
-                  slot="start"
-                  class={styles.chevron}
-                />
-                Dataset 2
-                <IonIcon
-                  icon={radioButtonOffOutline}
-                  color={'medium'}
-                  slot="end"
-                />
-              </IonItem>
-              <IonList class={styles.listInsetMax}>
-                <IonItem>
-                  Experiment_28457185
-                  <IonIcon
-                    icon={radioButtonOffOutline}
-                    color={'medium'}
-                    slot="end"
-                  />
-                </IonItem>
-                <IonItem>
-                  Experiment_28457185
-                  <IonIcon
-                    icon={radioButtonOffOutline}
-                    color={'medium'}
-                    slot="end"
-                  />
-                </IonItem>
-                <IonItem>
-                  Experiment_28457185
-                  <IonIcon
-                    icon={radioButtonOffOutline}
-                    color={'medium'}
-                    slot="end"
-                  />
-                </IonItem>
-                <IonItem>
-                  Experiment_28457185
-                  <IonIcon
-                    icon={radioButtonOffOutline}
-                    color={'medium'}
-                    slot="end"
-                  />
-                </IonItem>
-              </IonList>
-              <IonItem>
-                <IonIcon
-                  icon={chevronDownCircle}
-                  color="primary"
-                  slot="start"
-                  class={styles.chevron}
-                />
-                Dataset 3
-                <IonIcon
-                  icon={radioButtonOffOutline}
-                  color={'medium'}
-                  slot="end"
-                />
-              </IonItem>
-              <IonList class={styles.listInsetMax}>
-                <IonItem>
-                  Experiment_28457185
-                  <IonIcon
-                    icon={radioButtonOffOutline}
-                    color={'medium'}
-                    slot="end"
-                  />
-                </IonItem>
-                <IonItem>
-                  Experiment_28457185
-                  <IonIcon
-                    icon={radioButtonOffOutline}
-                    color={'medium'}
-                    slot="end"
-                  />
-                </IonItem>
-                <IonItem>
-                  Experiment_28457185
-                  <IonIcon
-                    icon={radioButtonOffOutline}
-                    color={'medium'}
-                    slot="end"
-                  />
-                </IonItem>
-                <IonItem>
-                  Experiment_28457185
-                  <IonIcon
-                    icon={radioButtonOffOutline}
-                    color={'medium'}
-                    slot="end"
-                  />
-                </IonItem>
-              </IonList>
-            </IonList>
-          </IonList>
-        </IonList>
-      </IonContent>
-    </IonMenu>
-  );
-};
+const mapStateToProps = (state: Store): BenchmarkSelectorStateProps => ({
+  config: prepareBenchmarkConfig(
+    state.CoreStore.algorithms,
+    state.CoreStore.datasets,
+    state.CoreStore.experiments
+  ),
+});
+
+const mapDispatchToProps = (
+  dispatch: SnowmanDispatch
+): BenchmarkSelectorDispatchProps => ({
+  expandAlgorithm(anAlgorithmId: number) {
+    console.log('expand algorithm', anAlgorithmId);
+  },
+  expandDataset(aDatasetId: number) {
+    console.log('expand dataset', aDatasetId);
+  },
+  selectAlgorithm(anAlgorithmId: number) {
+    console.log('select algorithm', anAlgorithmId);
+  },
+  selectDataset(aDatasetId: number) {
+    console.log('select dataset', aDatasetId);
+  },
+  selectExperiment(anExperimentId: number) {
+    console.log('select experiment', anExperimentId);
+  },
+});
+
+const BenchmarkSelector = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(BenchmarkSelectorView);
 
 export default BenchmarkSelector;
