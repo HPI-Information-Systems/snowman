@@ -14,7 +14,7 @@ const mapDispatchToProps = (
   loadInitialState: () => {
     dispatch(getAlgorithms()).then();
     dispatch(getDatasets()).then();
-    dispatch(getExperiments()).then();
+    //dispatch(getExperiments()).then();
   },
 });
 
