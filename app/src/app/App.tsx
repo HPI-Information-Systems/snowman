@@ -1,28 +1,16 @@
 import DefaultAppView from 'app/App.View';
-import { DefaultAppDispatchProps, DefaultAppStateProps } from 'app/AppProps';
+import { DefaultAppStateProps } from 'app/AppProps';
 import { connect } from 'react-redux';
-import { getAlgorithms } from 'store/actions/AlgorithmsPageActions';
-import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-import { ViewMetaInformationCollection } from 'structs/viewMetaInfoCollection';
 
-const mapStateToProps = ({
-  RenderLogicStore: { currentViewID },
-}: Store): DefaultAppStateProps => ({
-  currentViewID,
-  showSideMenu: !ViewMetaInformationCollection.find(
-    ({ key }) => key === currentViewID
-  )?.hideSideMenu,
-});
-
-const mapDispatchToProps = (
-  dispatch: SnowmanDispatch
-): DefaultAppDispatchProps => ({
-  loadInitialState() {
-    dispatch(getAlgorithms()).then();
+const mapStateToProps = (state: Store): DefaultAppStateProps => ({
+  publicState: {
+    activeApp: state.SnowmanGlobalStore.RenderLogicStore.currentViewID,
+    existsActiveRequest:
+      state.SnowmanGlobalStore.LoadingIndicatorStore.ongoingRequestsCount > 0,
   },
 });
 
-const DefaultApp = connect(mapStateToProps, mapDispatchToProps)(DefaultAppView);
+const DefaultApp = connect(mapStateToProps)(DefaultAppView);
 
 export default DefaultApp;

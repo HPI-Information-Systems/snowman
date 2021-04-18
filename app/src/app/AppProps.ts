@@ -1,12 +1,7 @@
-import { ViewIDs } from 'types/ViewIDs';
-
-export interface DefaultAppDispatchProps {
-  loadInitialState(): void;
-}
+import { SnowmanPublicState } from 'app/SnowmanPublicState';
 
 export interface DefaultAppStateProps {
-  currentViewID: ViewIDs;
-  showSideMenu: boolean;
+  publicState: SnowmanPublicState;
 }
 
-export type DefaultAppProps = DefaultAppStateProps & DefaultAppDispatchProps;
+export type DefaultAppProps = DefaultAppStateProps;
