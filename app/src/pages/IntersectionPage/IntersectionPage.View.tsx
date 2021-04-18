@@ -61,22 +61,22 @@ const IntersectionPageView = ({
     <PageStruct title={'Intersections'}>
       <IonGrid>
         <IonRow>
-          <IonCol class="col-no-padding" size="12" sizeXl="6">
+          <IonCol className="col-no-padding" size="12" sizeXl="6">
             <IonRow>
-              <IonCol class="col-no-padding">
+              <IonCol className="col-no-padding">
                 <IonCard>
                   <IntersectionVennDiagram strategy={strategy} />
                 </IonCard>
               </IonCol>
             </IonRow>
             <IonRow>
-              <IonCol class="col-no-padding">
+              <IonCol className="col-no-padding">
                 <IntersectionSelector />
               </IonCol>
             </IonRow>
           </IonCol>
-          <IonCol class="col-no-padding" size="12" sizeXl="6">
-            <IonCard class="dataviewer-card-full">
+          <IonCol className="col-no-padding" size="12" sizeXl="6">
+            <IonCard className="dataviewer-card-full">
               <IonCardHeader>
                 <b>{intersectionDescriptionString}</b>
               </IonCardHeader>

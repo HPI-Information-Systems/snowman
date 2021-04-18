@@ -19,15 +19,15 @@ const IntersectionSelectorView = ({
   dragExperiment,
 }: IntersectionSelectorProps): JSX.Element => {
   return (
-    <IonGrid class="grid-no-padding">
+    <IonGrid className="grid-no-padding">
       <IonRow>
         <DragDropContext onDragEnd={dragExperiment}>
-          <IonCol size="4" class="col-no-padding">
+          <IonCol size="4" className="col-no-padding">
             <IonCard>
               <IonCardHeader>
                 <IonCardTitle>available</IonCardTitle>
               </IonCardHeader>
-              <IonGrid class="grid-5px-padding">
+              <IonGrid className="grid-5px-padding">
                 <IntersectionDroppable
                   bucketId={IntersectionBuckets.IGNORED}
                   bucketContent={ignored}
@@ -35,12 +35,12 @@ const IntersectionSelectorView = ({
               </IonGrid>
             </IonCard>
           </IonCol>
-          <IonCol size="4" class="col-no-padding">
+          <IonCol size="4" className="col-no-padding">
             <IonCard>
               <IonCardHeader>
                 <IonCardTitle>intersect (∩)</IonCardTitle>
               </IonCardHeader>
-              <IonGrid class="grid-5px-padding">
+              <IonGrid className="grid-5px-padding">
                 <IntersectionDroppable
                   bucketId={IntersectionBuckets.INCLUDED}
                   bucketContent={included}
@@ -48,12 +48,12 @@ const IntersectionSelectorView = ({
               </IonGrid>
             </IonCard>
           </IonCol>
-          <IonCol size="4" class="col-no-padding">
+          <IonCol size="4" className="col-no-padding">
             <IonCard>
               <IonCardHeader>
                 <IonCardTitle>exclude (\)</IonCardTitle>
               </IonCardHeader>
-              <IonGrid class="grid-5px-padding">
+              <IonGrid className="grid-5px-padding">
                 <IntersectionDroppable
                   bucketId={IntersectionBuckets.EXCLUDED}
                   bucketContent={excluded}

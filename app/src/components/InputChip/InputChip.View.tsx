@@ -31,7 +31,7 @@ const InputChipView = ({
         <IonChip
           key="inputchip-inactive"
           color="dark"
-          class="ion-text-center"
+          className="ion-text-center"
           onClick={showInput}
         >
           <IonLabel>{label}</IonLabel>

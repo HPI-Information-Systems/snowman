@@ -25,7 +25,7 @@ const AlgorithmCardView = ({
     <IonCardContent>{algorithm.description}</IonCardContent>
     <IonGrid>
       <IonRow>
-        <IonCol size="6" class="ion-text-left">
+        <IonCol size="6" className="ion-text-left">
           <IonButton
             size="small"
             fill="clear"
@@ -35,7 +35,7 @@ const AlgorithmCardView = ({
             <IonIcon slot="icon-only" icon={create} />
           </IonButton>
         </IonCol>
-        <IonCol size="6" class="ion-text-right">
+        <IonCol size="6" className="ion-text-right">
           <IonButton
             size="small"
             fill="clear"

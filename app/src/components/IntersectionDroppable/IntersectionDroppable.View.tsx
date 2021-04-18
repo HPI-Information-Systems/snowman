@@ -32,7 +32,7 @@ const IntersectionDroppableView = ({
         {...provided.dragHandleProps}
         {...provided.draggableProps}
       >
-        <IonCol class="col-5px-padding">
+        <IonCol className="col-5px-padding">
           <IonChip
             color={
               bucketId === IntersectionBuckets.EXCLUDED
@@ -59,7 +59,7 @@ const IntersectionDroppableView = ({
         <IonGrid
           {...provided.droppableProps}
           ref={provided.innerRef}
-          class="iongrid-droppable-container"
+          className="iongrid-droppable-container"
         >
           {bucketContent.map(
             (anExperiment: Experiment, index: number): JSX.Element => (

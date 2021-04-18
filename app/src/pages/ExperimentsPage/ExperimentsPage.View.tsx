@@ -42,10 +42,10 @@ const ExperimentsPageView = ({
             <IonCol size="6" sizeXl="4">
               <IonCard>
                 <IonCardHeader>
-                  <IonCardTitle class="dropzone-title">
+                  <IonCardTitle className="dropzone-title">
                     <span>Available Experiments</span>
                     <IonIcon
-                      class="ion-icon"
+                      className="ion-icon"
                       size="large"
                       color={showExperimentFilters ? 'primary' : 'dark'}
                       icon={filterCircleOutline}
@@ -85,10 +85,10 @@ const ExperimentsPageView = ({
             </IonCol>
             <IonCol size="6" sizeXl="8">
               <IonRow>
-                <IonCol size="12" sizeXl="6" class="col-no-padding">
+                <IonCol size="12" sizeXl="6" className="col-no-padding">
                   <IonCard>
                     <IonCardHeader>
-                      <IonCardTitle class="dropzone-title">
+                      <IonCardTitle className="dropzone-title">
                         <span>Selected Ground Truth</span>
                       </IonCardTitle>
                     </IonCardHeader>
@@ -97,10 +97,10 @@ const ExperimentsPageView = ({
                     />
                   </IonCard>
                 </IonCol>
-                <IonCol size="12" sizeXl="6" class="col-no-padding">
+                <IonCol size="12" sizeXl="6" className="col-no-padding">
                   <IonCard>
                     <IonCardHeader>
-                      <IonCardTitle class="dropzone-title">
+                      <IonCardTitle className="dropzone-title">
                         <span>Selected Experiments</span>
                       </IonCardTitle>
                     </IonCardHeader>

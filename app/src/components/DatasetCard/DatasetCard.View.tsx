@@ -41,7 +41,7 @@ const DatasetCardView = ({
           <IonChip
             color="dark"
             outline={false}
-            class="custom-disabled-chip"
+            className="custom-disabled-chip"
             disabled
           >
             <IonLabel>Total: {dataset.numberOfRecords ?? 'unknown'}</IonLabel>
@@ -49,7 +49,7 @@ const DatasetCardView = ({
           <IonChip
             color="dark"
             outline={false}
-            class="custom-disabled-chip"
+            className="custom-disabled-chip"
             disabled
           >
             <IonLabel>
@@ -59,7 +59,7 @@ const DatasetCardView = ({
         </IonCol>
       </IonRow>
       <IonRow>
-        <IonCol size="4" class="ion-text-left">
+        <IonCol size="4" className="ion-text-left">
           <IonButton
             size="small"
             fill="clear"
@@ -69,7 +69,7 @@ const DatasetCardView = ({
             <IonIcon slot="icon-only" icon={create} />
           </IonButton>
         </IonCol>
-        <IonCol size="4" class="ion-text-center">
+        <IonCol size="4" className="ion-text-center">
           {couldPreview ? (
             <IonButton
               size="small"
@@ -81,7 +81,7 @@ const DatasetCardView = ({
             </IonButton>
           ) : null}
         </IonCol>
-        <IonCol size="4" class="ion-text-right">
+        <IonCol size="4" className="ion-text-right">
           <IonButton
             size="small"
             fill="clear"

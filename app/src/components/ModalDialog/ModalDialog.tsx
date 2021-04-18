@@ -38,7 +38,7 @@ const ModalDialog = ({
           </h1>
           <IonIcon
             icon={closeOutline}
-            class="modal-close-icon"
+            className="modal-close-icon"
             size="large"
             onClick={(): void => closeDialog()}
           />

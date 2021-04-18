@@ -61,17 +61,17 @@ export const BinaryMetricsPageView = ({
                 infoLink,
               }: Metric): JSX.Element => (
                 <div key={name}>
-                  <IonCard class="card-fixed">
-                    <IonCardHeader class="ion-text-center">
+                  <IonCard className="card-fixed">
+                    <IonCardHeader className="ion-text-center">
                       <IonCardTitle
-                        class="metric-number"
+                        className="metric-number"
                         color="primary"
                         data-tip={`${value.toString()} &isin; [${range.toString()}]`}
                       >
                         {value.toPrecision(3)}
                       </IonCardTitle>
                       <IonCardSubtitle
-                        class="metric-name"
+                        className="metric-name"
                         data-tip={renderToString(formula, {
                           throwOnError: false,
                           displayMode: true,
@@ -141,7 +141,12 @@ export const BinaryMetricsPageView = ({
           </IonChip>
         ) : null}
         {confusionMatrix.trueNegatives !== undefined ? (
-          <IonChip outline={true} color="success" disabled class="count-chip">
+          <IonChip
+            outline={true}
+            color="success"
+            disabled
+            className="count-chip"
+          >
             True Negatives: {formatLargeNumber(confusionMatrix.trueNegatives)}
           </IonChip>
         ) : null}
@@ -152,7 +157,7 @@ export const BinaryMetricsPageView = ({
           onSelect={selectPane}
           selectedPaneTitle={selectedMetricsTuplesCategory}
         />
-        <IonCardContent class="table-housing">
+        <IonCardContent className="table-housing">
           <DataViewer
             tuplesCount={rowCount}
             loadTuples={tuplesLoader}
