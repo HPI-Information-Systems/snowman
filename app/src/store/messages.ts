@@ -14,6 +14,7 @@ import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 
 type ActionPayload =
+  | unknown
   | Metric[]
   | Metric[][]
   | FileResponse
