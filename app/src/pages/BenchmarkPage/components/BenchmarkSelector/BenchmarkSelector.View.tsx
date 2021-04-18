@@ -9,9 +9,9 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import {
+  caretDown,
+  caretForward,
   checkmarkCircle,
-  chevronDownCircleOutline,
-  chevronForwardCircleOutline,
   radioButtonOffOutline,
 } from 'ionicons/icons';
 import {
@@ -46,11 +46,7 @@ const BenchmarkSelectorView = ({
               <>
                 <IonItem key={`bconf_${anAlgorithm.entity.id}`}>
                   <IonIcon
-                    icon={
-                      anAlgorithm.isExpanded
-                        ? chevronDownCircleOutline
-                        : chevronForwardCircleOutline
-                    }
+                    icon={anAlgorithm.isExpanded ? caretDown : caretForward}
                     onClick={(): void => expandAlgorithm(anAlgorithm.entity.id)}
                     color="medium"
                     slot="start"
@@ -77,9 +73,7 @@ const BenchmarkSelectorView = ({
                           <IonItem>
                             <IonIcon
                               icon={
-                                aDataset.isExpanded
-                                  ? chevronDownCircleOutline
-                                  : chevronForwardCircleOutline
+                                aDataset.isExpanded ? caretDown : caretForward
                               }
                               onClick={(): void =>
                                 expandDataset(aDataset.entity.id)
