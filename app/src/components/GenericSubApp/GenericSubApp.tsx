@@ -10,53 +10,58 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { GenericSubAppProps } from 'components/GenericSubApp/GenericSubAppProps';
-import React, { createElement, useRef } from 'react';
+import React, { Component, createElement } from 'react';
 import { Provider } from 'react-redux';
+import { Store } from 'redux';
+import { SnowmanAction } from 'store/messages';
 
-const GenericSubApp = ({
-  existsActiveRequest,
-  appTitle,
-  sideMenu,
-  children,
-  createSubAppStore,
-  activeApp,
-  appId,
-}: GenericSubAppProps): JSX.Element => {
-  const storeRef = useRef(createSubAppStore());
-  return (
-    <Provider store={storeRef.current}>
-      {activeApp === appId ? (
-        <div style={{ position: 'relative', flexGrow: 1 }}>
-          <IonSplitPane
-            when="lg"
-            contentId="mainViewContentId"
-            class="split-pane-fixed"
-          >
-            {sideMenu !== undefined
-              ? createElement(sideMenu, { contentId: 'mainViewContentId' })
-              : null}
-            {/* Page Content */}
-            <IonPage id="mainViewContentId">
-              <IonHeader>
-                <IonToolbar color="primary">
-                  <IonButtons slot="start">
-                    <IonMenuButton />
-                  </IonButtons>
-                  <IonTitle>{appTitle}</IonTitle>
-                  <div slot="end" className="spinner-container">
-                    {existsActiveRequest ? (
-                      <IonSpinner className="spinner-white" />
-                    ) : null}
-                  </div>
-                </IonToolbar>
-              </IonHeader>
-              <IonContent className="ion-padding">{children}</IonContent>
-            </IonPage>
-          </IonSplitPane>
-        </div>
-      ) : null}
-    </Provider>
-  );
-};
+class GenericSubApp extends Component<GenericSubAppProps> {
+  store: Store<unknown, SnowmanAction>;
+
+  constructor(props: GenericSubAppProps) {
+    super(props);
+    this.store = props.createSubAppStore();
+  }
+  render(): JSX.Element {
+    return (
+      <Provider store={this.store}>
+        {this.props.activeApp === this.props.appId ? (
+          <div style={{ position: 'relative', flexGrow: 1 }}>
+            <IonSplitPane
+              when="lg"
+              contentId="mainViewContentId"
+              class="split-pane-fixed"
+            >
+              {this.props.sideMenu !== undefined
+                ? createElement(this.props.sideMenu, {
+                    contentId: 'mainViewContentId',
+                  })
+                : null}
+              {/* Page Content */}
+              <IonPage id="mainViewContentId">
+                <IonHeader>
+                  <IonToolbar color="primary">
+                    <IonButtons slot="start">
+                      <IonMenuButton />
+                    </IonButtons>
+                    <IonTitle>{this.props.appTitle}</IonTitle>
+                    <div slot="end" className="spinner-container">
+                      {this.props.existsActiveRequest ? (
+                        <IonSpinner className="spinner-white" />
+                      ) : null}
+                    </div>
+                  </IonToolbar>
+                </IonHeader>
+                <IonContent className="ion-padding">
+                  {this.props.children}
+                </IonContent>
+              </IonPage>
+            </IonSplitPane>
+          </div>
+        ) : null}
+      </Provider>
+    );
+  }
+}
 
 export default GenericSubApp;
