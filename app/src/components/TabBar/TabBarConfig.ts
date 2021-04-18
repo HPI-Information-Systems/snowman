@@ -5,11 +5,7 @@ export interface TabBarConfigItem {
   title: string;
 }
 
-const TabBarConfig: TabBarConfigItem[] = [
-  {
-    viewID: ViewIDs.HOME,
-    title: 'Snowman App',
-  },
+export const TabBarConfigLeft: TabBarConfigItem[] = [
   {
     viewID: ViewIDs.DASHBOARD,
     title: 'Benchmark',
@@ -28,4 +24,9 @@ const TabBarConfig: TabBarConfigItem[] = [
   },
 ];
 
-export default TabBarConfig;
+export const TabBarConfigRight: TabBarConfigItem[] = [
+  {
+    viewID: ViewIDs.HOME,
+    title: 'Snowman App',
+  },
+];
