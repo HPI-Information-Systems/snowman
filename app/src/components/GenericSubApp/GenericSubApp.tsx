@@ -10,6 +10,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { GenericSubAppProps } from 'components/GenericSubApp/GenericSubAppProps';
+import styles from 'components/GenericSubApp/GenericSubAppStyles.module.css';
 import React, { Component, createElement } from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
@@ -45,9 +46,9 @@ class GenericSubApp extends Component<GenericSubAppProps> {
                       <IonMenuButton />
                     </IonButtons>
                     <IonTitle>{this.props.appTitle}</IonTitle>
-                    <div slot="end" className="spinner-container">
+                    <div slot="end" className={styles.spinnerContainer}>
                       {this.props.existsActiveRequest ? (
-                        <IonSpinner className="spinner-white" />
+                        <IonSpinner className={styles.spinnerWhite} />
                       ) : null}
                     </div>
                   </IonToolbar>
