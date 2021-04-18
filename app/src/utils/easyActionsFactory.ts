@@ -2,7 +2,6 @@ import {
   SnowmanAction,
   SnowmanGenericDispatch,
   SnowmanGenericThunkAction,
-  SnowmanThunkAction,
 } from 'store/messages';
 import { Store } from 'store/models';
 
