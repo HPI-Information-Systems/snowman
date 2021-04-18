@@ -11,6 +11,10 @@
   font-weight: 500;
 }
 
+.buttonElement:active {
+  color: white;
+}
+
 .buttonElement.active {
   background-color: var(--ion-color-primary);
   color: white;
