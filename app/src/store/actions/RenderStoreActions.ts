@@ -7,7 +7,7 @@ import {
   DataViewerAppToHostActionType,
   onActionFromClient,
 } from 'pages/StandaloneDataViewerPage/actionsToHost';
-import { RenderStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
+import { RenderLogicStoreActionTypes } from 'store/actions/actionTypes';
 import { showToast } from 'store/actions/GlobalIndicatorActions';
 import { SnowmanThunkAction } from 'store/messages';
 import { COULD_NOT_OPEN_CHILD_WINDOW_ERROR } from 'structs/statusMessages';
@@ -22,15 +22,8 @@ import { unwrapError } from 'utils/requestHandler';
 
 export const navigateTo = (aTarget: ViewIDs): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
-    type: actionTypes.NAVIGATE_TO,
+    type: RenderLogicStoreActionTypes.NAVIGATE_TO,
     payload: aTarget,
-  });
-
-export const navigateToNextPage = (): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
-    type: actionTypes.NAVIGATE_NEXT,
-    // reducer ignores payload
-    payload: false,
   });
 
 const windowNameBase = 'snowman-benchmark';

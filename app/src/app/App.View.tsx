@@ -21,7 +21,7 @@ import 'theme/overwrites.css';
 import { IonApp, IonPage } from '@ionic/react';
 import { DefaultAppProps } from 'app/AppProps';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
-import TopNavBar from 'components/TopNavBar/TopNavBar';
+import TapBar from 'components/TabBar/TapBar';
 import BenchmarkPage from 'pages/BenchmarkPage/BenchmarkPage';
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -40,7 +40,7 @@ const DefaultAppView = ({
   );
   return (
     <IonApp>
-      <TopNavBar />
+      <TapBar />
       <BenchmarkPage />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <GlobalLoading />
