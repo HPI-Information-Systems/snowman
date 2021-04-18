@@ -10,28 +10,21 @@ const TabBarView = ({ openSubApp, activeSubApp }: TabBarProps): JSX.Element => (
     <div className={styles.toolbarContainer}>
       <IonButtons slot="start" class={styles.buttonContainer}>
         {TabBarConfig.map(
-          (aTabConfigItem: TabBarConfigItem): JSX.Element =>
-            activeSubApp === aTabConfigItem.viewID ? (
-              <IonButton
-                key={aTabConfigItem.viewID}
-                fill="clear"
-                size="large"
-                class={style(styles.buttonElement, styles.active)}
-                onClick={(): void => openSubApp(aTabConfigItem.viewID)}
-              >
-                {aTabConfigItem.title}
-              </IonButton>
-            ) : (
-              <IonButton
-                key={aTabConfigItem.viewID}
-                fill="clear"
-                size="large"
-                class={style(styles.buttonElement)}
-                onClick={(): void => openSubApp(aTabConfigItem.viewID)}
-              >
-                {aTabConfigItem.title}
-              </IonButton>
-            )
+          (aTabConfigItem: TabBarConfigItem): JSX.Element => (
+            <IonButton
+              key={aTabConfigItem.viewID}
+              fill="clear"
+              size="large"
+              className={
+                activeSubApp === aTabConfigItem.viewID
+                  ? style(styles.buttonElement, styles.active)
+                  : style(styles.buttonElement)
+              }
+              onClick={(): void => openSubApp(aTabConfigItem.viewID)}
+            >
+              {aTabConfigItem.title}
+            </IonButton>
+          )
         )}
       </IonButtons>
     </div>
