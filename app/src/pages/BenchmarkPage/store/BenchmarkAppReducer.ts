@@ -35,18 +35,21 @@ const BenchmarkAppReducer = (
       return {
         ...state,
         expandedAlgorithmsInDatasets: [],
+        selectedExperiments: [],
         algorithms: action.payload as Algorithm[],
       };
     case BenchmarkAppActionsTypes.SET_DATASETS:
       return {
         ...state,
         expandedAlgorithmsInDatasets: [],
+        selectedExperiments: [],
         datasets: action.payload as Dataset[],
       };
     case BenchmarkAppActionsTypes.SET_EXPERIMENTS:
       return {
         ...state,
         expandedAlgorithmsInDatasets: [],
+        selectedExperiments: [],
         experiments: action.payload as Experiment[],
       };
     case BenchmarkAppActionsTypes.SELECT_DATASET_CHILDREN:
