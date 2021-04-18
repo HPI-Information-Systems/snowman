@@ -9,9 +9,22 @@ const initialState: BenchmarkAppModel = {
   algorithms: [],
   datasets: [],
   experiments: [],
-  expanded: [],
+  expandedAlgorithmsInDatasets: [],
   selectedExperiments: [],
 };
+
+const removeExpandedEntity = (entities: ExpandedEntity[], id: number) =>
+  entities.filter((value: ExpandedEntity): boolean => value.id !== id);
+const removeExpandedSubEntity = (
+  entities: ExpandedEntity[],
+  idOuter: number,
+  idInner: number
+) =>
+  entities
+    .find((value: ExpandedEntity): boolean => value.id === idOuter)
+    ?.children.filter(
+      (value: ExpandedEntity): boolean => value.id !== idInner
+    ) ?? [];
 
 const BenchmarkAppReducer = (
   state: BenchmarkAppModel = initialState,
@@ -21,16 +34,19 @@ const BenchmarkAppReducer = (
     case BenchmarkAppActionsTypes.SET_ALGORITHMS:
       return {
         ...state,
+        expandedAlgorithmsInDatasets: [],
         algorithms: action.payload as Algorithm[],
       };
     case BenchmarkAppActionsTypes.SET_DATASETS:
       return {
         ...state,
+        expandedAlgorithmsInDatasets: [],
         datasets: action.payload as Dataset[],
       };
     case BenchmarkAppActionsTypes.SET_EXPERIMENTS:
       return {
         ...state,
+        expandedAlgorithmsInDatasets: [],
         experiments: action.payload as Experiment[],
       };
     case BenchmarkAppActionsTypes.SELECT_DATASET_CHILDREN:
@@ -60,7 +76,7 @@ const BenchmarkAppReducer = (
             .map((anExperiment: Experiment): number => anExperiment.id)
         ),
       };
-    case BenchmarkAppActionsTypes.SELECT_EXPERIMENT:
+    case BenchmarkAppActionsTypes.TOGGLE_EXPERIMENT:
       return {
         ...state,
         selectedExperiments: state.selectedExperiments.includes(
@@ -69,44 +85,43 @@ const BenchmarkAppReducer = (
           ? state.selectedExperiments.filter(
               (value: number): boolean => value !== (action.payload as number)
             )
-          : [...state.selectedExperiments, action.payload as number],
+          : union(state.selectedExperiments, [action.payload as number]),
       };
     case BenchmarkAppActionsTypes.EXPAND_DATASET:
       return {
         ...state,
-        expanded: [
-          ...state.expanded,
+        expandedAlgorithmsInDatasets: [
+          ...removeExpandedEntity(
+            state.expandedAlgorithmsInDatasets,
+            action.payload as number
+          ),
           { id: action.payload as number, children: [] },
         ],
       };
     case BenchmarkAppActionsTypes.SHRINK_DATASET:
       return {
         ...state,
-        expanded: state.expanded.filter(
-          (value: ExpandedEntity): boolean =>
-            value.id !== (action.payload as number)
+        expandedAlgorithmsInDatasets: removeExpandedEntity(
+          state.expandedAlgorithmsInDatasets,
+          action.payload as number
         ),
       };
     case BenchmarkAppActionsTypes.EXPAND_ALGORITHM:
       return {
         ...state,
-        expanded: [
-          ...state.expanded.filter(
-            (value: ExpandedEntity): boolean =>
-              value.id !== (action.payload as number)
+        expandedAlgorithmsInDatasets: [
+          ...removeExpandedEntity(
+            state.expandedAlgorithmsInDatasets,
+            action.payload as number
           ),
           {
             id: action.payload as number,
             children: [
-              ...(state.expanded
-                .find(
-                  (value: ExpandedEntity): boolean =>
-                    value.id === (action.payload as number)
-                )
-                ?.children.filter(
-                  (value: ExpandedEntity): boolean =>
-                    value.id !== (action.optionalPayload as number)
-                ) ?? []),
+              ...removeExpandedSubEntity(
+                state.expandedAlgorithmsInDatasets,
+                action.payload as number,
+                action.optionalPayload as number
+              ),
               { id: action.optionalPayload as number, children: [] },
             ],
           },
@@ -115,23 +130,19 @@ const BenchmarkAppReducer = (
     case BenchmarkAppActionsTypes.SHRINK_ALGORITHM:
       return {
         ...state,
-        expanded: [
-          ...state.expanded.filter(
-            (value: ExpandedEntity): boolean =>
-              value.id !== (action.payload as number)
+        expandedAlgorithmsInDatasets: [
+          ...removeExpandedEntity(
+            state.expandedAlgorithmsInDatasets,
+            action.payload as number
           ),
           {
             id: action.payload as number,
             children: [
-              ...(state.expanded
-                .find(
-                  (value: ExpandedEntity): boolean =>
-                    value.id === (action.payload as number)
-                )
-                ?.children.filter(
-                  (value: ExpandedEntity): boolean =>
-                    value.id !== (action.optionalPayload as number)
-                ) ?? []),
+              ...removeExpandedSubEntity(
+                state.expandedAlgorithmsInDatasets,
+                action.payload as number,
+                action.optionalPayload as number
+              ),
             ],
           },
         ],

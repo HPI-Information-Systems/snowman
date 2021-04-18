@@ -26,7 +26,7 @@ const BenchmarkSelectorView = ({
   algorithms,
   datasets,
   experiments,
-  expanded,
+  expandedAlgorithmsInDatasets,
   expandDataset,
   shrinkDataset,
   expandAlgorithmInDataset,
@@ -47,7 +47,7 @@ const BenchmarkSelectorView = ({
         <IonList>
           {datasets.map(
             (aDataset: Dataset): JSX.Element => {
-              const expandedDatasetEntity = expanded.find(
+              const expandedDatasetEntity = expandedAlgorithmsInDatasets.find(
                 (entity: ExpandedEntity): boolean => entity.id === aDataset.id
               );
               return (

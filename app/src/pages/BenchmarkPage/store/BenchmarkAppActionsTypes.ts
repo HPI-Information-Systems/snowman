@@ -2,7 +2,7 @@ export enum BenchmarkAppActionsTypes {
   SET_EXPERIMENTS = 'BenchmarkAppActionsTypes-SET_EXPERIMENTS',
   SET_DATASETS = 'BenchmarkAppActionsTypes-SET_DATASETS',
   SET_ALGORITHMS = 'BenchmarkAppActionsTypes-SET_ALGORITHMS',
-  SELECT_EXPERIMENT = 'BenchmarkAppActionsTypes-SELECT_EXPERIMENT',
+  TOGGLE_EXPERIMENT = 'BenchmarkAppActionsTypes-TOGGLE_EXPERIMENT',
   EXPAND_DATASET = 'BenchmarkAppActionsTypes-EXPAND_DATASET',
   SHRINK_DATASET = 'BenchmarkAppActionsTypes-SHRINK_DATASET',
   EXPAND_ALGORITHM = 'BenchmarkAppActionsTypes-EXPAND_ALGORITHM',

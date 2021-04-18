@@ -27,7 +27,7 @@ export const selectExperimentBy = (
   anExperimentId: number
 ): easyPrimitiveActionReturn<BenchmarkAppModel> =>
   easyPrimitiveAction<BenchmarkAppModel>({
-    type: BenchmarkAppActionsTypes.SELECT_EXPERIMENT,
+    type: BenchmarkAppActionsTypes.TOGGLE_EXPERIMENT,
     payload: anExperimentId,
   });
 

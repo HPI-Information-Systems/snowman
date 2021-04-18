@@ -25,7 +25,7 @@ const mapStateToProps = (
   datasets: state.datasets,
   experiments: state.experiments,
   selectedExperiments: state.selectedExperiments,
-  expanded: state.expanded,
+  expandedAlgorithmsInDatasets: state.expandedAlgorithmsInDatasets,
 });
 
 const mapDispatchToProps = (
