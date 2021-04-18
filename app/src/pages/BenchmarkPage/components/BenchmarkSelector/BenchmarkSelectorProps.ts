@@ -1,41 +1,28 @@
 import { Algorithm, Dataset, Experiment } from 'api';
-
-export interface BenchmarkExperimentConfig {
-  entity: Experiment;
-  isSelected: boolean;
-}
-
-export interface BenchmarkDatasetConfig {
-  entity: Dataset;
-  isSelected: boolean;
-  isExpanded: boolean;
-  experiments: BenchmarkExperimentConfig[];
-}
-
-export interface BenchmarkAlgorithmConfig {
-  entity: Algorithm;
-  isSelected: boolean;
-  isExpanded: boolean;
-  datasets: BenchmarkDatasetConfig[];
-}
-
-export interface BenchmarkSelectorConfig {
-  algorithms: BenchmarkAlgorithmConfig[];
-}
+import { ExpandedEntity } from 'pages/BenchmarkPage/types/ExpandedEntity';
 
 export interface BenchmarkSelectorOwnProps {
   contentId: string;
 }
 
 export interface BenchmarkSelectorStateProps {
-  config: BenchmarkSelectorConfig;
+  algorithms: Algorithm[];
+  datasets: Dataset[];
+  experiments: Experiment[];
+  selectedExperiments: number[];
+  expanded: ExpandedEntity[];
 }
 
 export interface BenchmarkSelectorDispatchProps {
-  expandAlgorithm(anAlgorithmId: number): void;
+  expandAlgorithmInDataset(aDatasetId: number, anAlgorithmId: number): void;
+  shrinkAlgorithmInDataset(aDatasetId: number, anAlgorithmId: number): void;
   expandDataset(aDatasetId: number): void;
-  selectAlgorithm(anAlgorithmId: number): void;
-  selectDataset(aDatasetId: number): void;
+  shrinkDataset(aDatasetId: number): void;
+  selectAlgorithmInDatasetChildren(
+    aDatasetId: number,
+    anAlgorithmId: number
+  ): void;
+  selectDatasetChildren(aDatasetId: number): void;
   selectExperiment(anExperimentId: number): void;
 }
 

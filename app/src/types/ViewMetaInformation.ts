@@ -1,4 +1,4 @@
-import { FC, LazyExoticComponent } from 'react';
+import { FC } from 'react';
 import { ImmediateStore } from 'store/models';
 import { ViewIDs } from 'types/ViewIDs';
 

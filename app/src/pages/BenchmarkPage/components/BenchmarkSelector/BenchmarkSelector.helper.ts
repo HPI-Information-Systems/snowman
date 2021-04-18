@@ -1,10 +1,27 @@
 import { Algorithm, Dataset, Experiment } from 'api';
-import {
-  BenchmarkAlgorithmConfig,
-  BenchmarkDatasetConfig,
-  BenchmarkExperimentConfig,
-  BenchmarkSelectorConfig,
-} from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelectorProps';
+
+export interface BenchmarkExperimentConfig {
+  entity: Experiment;
+  isSelected: boolean;
+}
+
+export interface BenchmarkDatasetConfig {
+  entity: Dataset;
+  isSelected: boolean;
+  isExpanded: boolean;
+  experiments: BenchmarkExperimentConfig[];
+}
+
+export interface BenchmarkAlgorithmConfig {
+  entity: Algorithm;
+  isSelected: boolean;
+  isExpanded: boolean;
+  datasets: BenchmarkDatasetConfig[];
+}
+
+export interface BenchmarkSelectorConfig {
+  algorithms: BenchmarkAlgorithmConfig[];
+}
 
 export const prepareBenchmarkConfig = (
   algorithms: Algorithm[],
@@ -34,7 +51,8 @@ export const prepareBenchmarkConfig = (
               experiments: experiments
                 .filter(
                   (anExperiment: Experiment): boolean =>
-                    anExperiment.datasetId === aDataset.id
+                    anExperiment.datasetId === aDataset.id &&
+                    anExperiment.algorithmId === anAlgorithm.id
                 )
                 .map(
                   (anExperiment: Experiment): BenchmarkExperimentConfig => ({
