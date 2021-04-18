@@ -1,21 +1,23 @@
-.list, .listInset, .listInsetMax {
-    padding: 0 !important;
+.list,
+.listInset,
+.listInsetMax {
+  padding: 0 !important;
 }
 
 .listInset {
-    margin-left: 10px !important;
+  margin-left: 10px !important;
 }
 
 .listInsetMax {
-    margin-left: 20px !important;
+  margin-left: 20px !important;
 }
 
 .chevron {
-    margin-inline-end: 12px;
-    margin-right: 12px;
-    cursor: pointer;
+  margin-inline-end: 12px;
+  margin-right: 12px;
+  cursor: pointer;
 }
 
 .selector {
-    cursor: pointer;
+  cursor: pointer;
 }

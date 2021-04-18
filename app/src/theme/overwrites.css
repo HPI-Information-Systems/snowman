@@ -15,9 +15,9 @@
 
   /** primarydark **/
   --ion-color-primarydark: #28627c;
-  --ion-color-primarydark-rgb: 40,98,124;
-  --ion-color-primarydark-contrast: #ffffff;
-  --ion-color-primarydark-contrast-rgb: 255,255,255;
+  --ion-color-primarydark-rgb: 40, 98, 124;
+  --ion-color-primarydark-contrast: #fff;
+  --ion-color-primarydark-contrast-rgb: 255, 255, 255;
   --ion-color-primarydark-shade: #23566d;
   --ion-color-primarydark-tint: #3e7289;
 
@@ -66,9 +66,9 @@
 
     /** primarydark **/
     --ion-color-primarydark: #28627c;
-    --ion-color-primarydark-rgb: 40,98,124;
-    --ion-color-primarydark-contrast: #ffffff;
-    --ion-color-primarydark-contrast-rgb: 255,255,255;
+    --ion-color-primarydark-rgb: 40, 98, 124;
+    --ion-color-primarydark-contrast: #fff;
+    --ion-color-primarydark-contrast-rgb: 255, 255, 255;
     --ion-color-primarydark-shade: #23566d;
     --ion-color-primarydark-tint: #3e7289;
 

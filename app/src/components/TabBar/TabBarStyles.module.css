@@ -1,17 +1,17 @@
 .buttonElement {
+  height: 100% !important;
   margin: 0 !important;
   padding-right: 40px;
   padding-left: 40px;
+  border: none;
   color: rgba(255, 255, 255, 0.5);
   font-size: 16px !important;
   font-weight: 500;
-  height: 100% !important;
-  border: none;
 }
 
 .buttonElement.active {
-  color: white;
   background-color: var(--ion-color-primary);
+  color: white;
 }
 
 .buttonContainer {
@@ -19,25 +19,25 @@
 }
 
 .toolbar {
-  position: relative;
   display: block;
-  padding: 0;
-  margin: 0;
+  position: relative;
   width: 100%;
+  margin: 0;
+  padding: 0;
   background-color: var(--ion-color-primarydark);
 }
 
 .toolbarContainer {
-  align-items: stretch;
-  box-sizing: border-box;
-  contain: content;
   display: flex;
+  position: relative;
+  box-sizing: border-box;
   flex-direction: row;
+  align-items: stretch;
   justify-content: space-between;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
   overflow-y: hidden;
-  padding: 0;
-  margin: 0;
-  position: relative;
-  min-height: 44px;
+  contain: content;
 }
