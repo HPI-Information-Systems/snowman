@@ -8,7 +8,7 @@ export interface TabBarConfigItem {
 const TabBarConfig: TabBarConfigItem[] = [
   {
     viewID: ViewIDs.HOME,
-    title: 'Snowman',
+    title: 'Snowman App',
   },
   {
     viewID: ViewIDs.DASHBOARD,

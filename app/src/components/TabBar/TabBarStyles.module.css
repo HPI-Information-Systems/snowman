@@ -1,4 +1,6 @@
 .buttonElement {
+  --ripple-color: transparent;
+
   height: 100% !important;
   margin: 0 !important;
   padding-right: 40px;
@@ -7,6 +9,10 @@
   color: rgba(255, 255, 255, 0.5);
   font-size: 16px !important;
   font-weight: 500;
+}
+
+.buttonElement:active {
+  color: white;
 }
 
 .buttonElement.active {
