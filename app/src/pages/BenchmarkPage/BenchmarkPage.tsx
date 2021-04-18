@@ -35,7 +35,7 @@ const BenchmarkPage = (): JSX.Element => {
                       className="ion-float-right"
                       icon={colorFilter}
                       size="large"
-                      color="primary"
+                      color="primarydark"
                     />
                   </span>
                 </IonCardTitle>
@@ -70,7 +70,7 @@ const BenchmarkPage = (): JSX.Element => {
                       className="ion-float-right"
                       icon={calculator}
                       size="large"
-                      color="primary"
+                      color="primarydark"
                     />
                   </span>
                 </IonCardTitle>
@@ -105,7 +105,7 @@ const BenchmarkPage = (): JSX.Element => {
                       className="ion-float-right"
                       icon={pauseCircle}
                       size="large"
-                      color="primary"
+                      color="primarydark"
                     />
                   </span>
                 </IonCardTitle>
@@ -139,7 +139,7 @@ const BenchmarkPage = (): JSX.Element => {
                       className="ion-float-right"
                       icon={barChart}
                       size="large"
-                      color="primary"
+                      color="primarydark"
                     />
                   </span>
                 </IonCardTitle>
