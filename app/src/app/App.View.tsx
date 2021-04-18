@@ -62,8 +62,9 @@ const DefaultAppView = ({
       </div>
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <GlobalLoading />
+      {/* Todo: Change autoClose back to 5000 */}
       <ToastContainer
-        autoClose={5000}
+        autoClose={500}
         closeButton={false}
         pauseOnHover={true}
         pauseOnFocusLoss={true}
