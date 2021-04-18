@@ -10,13 +10,19 @@ import {
   IonRow,
   IonText,
 } from '@ionic/react';
-import PageStruct from 'components/PageStruct/PageStruct';
+import BenchmarkSelector from 'components/BenchmarkSelector/BenchmarkSelector';
+import GenericSubApp from 'components/GenericSubApp/GenericSubApp';
 import { barChart, calculator, colorFilter, pauseCircle } from 'ionicons/icons';
+import { createBenchmarkAppStore } from 'pages/BenchmarkPage/store/BenchmarkAppStoreFactory';
 import React from 'react';
 
 const BenchmarkPage = (): JSX.Element => {
   return (
-    <PageStruct title={'Benchmark Dashboard'}>
+    <GenericSubApp
+      appTitle={'Benchmark Dashboard'}
+      createSubAppStore={createBenchmarkAppStore}
+      sideMenu={BenchmarkSelector}
+    >
       <IonGrid>
         <IonRow>
           <IonCol size="4" sizeXl="3">
@@ -159,7 +165,7 @@ const BenchmarkPage = (): JSX.Element => {
           </IonCol>
         </IonRow>
       </IonGrid>
-    </PageStruct>
+    </GenericSubApp>
   );
 };
 

@@ -63,5 +63,15 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
       action
     ),
   };
-  return RenderLogicReducer(state?.RenderLogicStore, immediateState, action);
+  return {
+    ...immediateState,
+    RenderLogicStore: RenderLogicReducer(state?.RenderLogicStore, action),
+    SnowmanGlobalStore: {
+      RenderLogicStore: RenderLogicReducer(state?.RenderLogicStore, action),
+      LoadingIndicatorStore: GlobalIndicatorReducer(
+        state?.GlobalIndicatorStore,
+        action
+      ),
+    },
+  };
 };

@@ -2,7 +2,11 @@ import { FC, LazyExoticComponent } from 'react';
 import { ImmediateStore } from 'store/models';
 import { ViewIDs } from 'types/ViewIDs';
 
-export type ViewComponent = LazyExoticComponent<FC<unknown>> | FC;
+export interface SideMenuProps {
+  contentId: string;
+}
+
+export type ViewComponent = FC<unknown>;
 
 export interface ViewMetaInformation {
   key: ViewIDs;

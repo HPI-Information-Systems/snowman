@@ -129,4 +129,5 @@ export interface ImmediateStore {
 
 export interface Store extends ImmediateStore {
   RenderLogicStore: RenderLogicStore;
+  SnowmanGlobalStore: SnowmanGlobalStore;
 }

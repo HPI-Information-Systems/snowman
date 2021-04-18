@@ -32,7 +32,6 @@ import { getViewComponentToViewId } from 'utils/viewMetaInfoHandlers';
 const DefaultAppView = ({
   loadInitialState,
   currentViewID: currentViewId,
-  showSideMenu,
 }: DefaultAppProps): JSX.Element => {
   useEffect(loadInitialState, [loadInitialState]);
   const page = (
@@ -43,23 +42,7 @@ const DefaultAppView = ({
   return (
     <IonApp>
       <TopNavBar />
-      <div style={{ position: 'relative', flexGrow: 1 }}>
-        {showSideMenu ? (
-          <IonSplitPane
-            when="lg"
-            contentId="mainViewContentId"
-            class="split-pane-fixed"
-          >
-            <BenchmarkSelector contentId="mainViewContentId" />
-            {/* Page Content */}
-            <IonPage id="mainViewContentId">
-              <BenchmarkPage />
-            </IonPage>
-          </IonSplitPane>
-        ) : (
-          page
-        )}
-      </div>
+      <BenchmarkPage />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <GlobalLoading />
       {/* Todo: Change autoClose back to 5000 */}
