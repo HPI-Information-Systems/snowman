@@ -11,6 +11,7 @@ export interface BenchmarkAppModel {
   experiments: Experiment[];
   selectedExperiments: number[];
   expandedAlgorithmsInDatasets: ExpandedEntity[];
+  searchString: string;
 }
 
 export type BenchmarkAppThunkAction<R> = SnowmanGenericThunkAction<

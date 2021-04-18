@@ -1,5 +1,6 @@
 import { Algorithm, Dataset, Experiment } from 'api';
 import { ExpandedEntity } from 'pages/BenchmarkPage/types/ExpandedEntity';
+import { IonChangeEvent } from 'types/IonChangeEvent';
 
 export interface BenchmarkSelectorOwnProps {
   contentId: string;
@@ -11,6 +12,7 @@ export interface BenchmarkSelectorStateProps {
   experiments: Experiment[];
   selectedExperiments: number[];
   expandedAlgorithmsInDatasets: ExpandedEntity[];
+  searchString: string;
 }
 
 export interface BenchmarkSelectorDispatchProps {
@@ -24,6 +26,7 @@ export interface BenchmarkSelectorDispatchProps {
   ): void;
   selectDatasetChildren(aDatasetId: number): void;
   selectExperiment(anExperimentId: number): void;
+  setSearchString(event: IonChangeEvent): void;
 }
 
 export type BenchmarkSelectorProps = BenchmarkSelectorOwnProps &

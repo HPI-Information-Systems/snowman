@@ -11,6 +11,7 @@ const initialState: BenchmarkAppModel = {
   experiments: [],
   expandedAlgorithmsInDatasets: [],
   selectedExperiments: [],
+  searchString: '',
 };
 
 const removeExpandedEntity = (entities: ExpandedEntity[], id: number) =>
@@ -150,6 +151,50 @@ const BenchmarkAppReducer = (
           },
         ],
       };
+    case BenchmarkAppActionsTypes.SET_SEARCH_STRING: {
+      if ((action.payload as string) !== '') {
+        const selectedExperiments = state.experiments.filter(
+          (anExperiment: Experiment): boolean =>
+            anExperiment.name.includes(action.payload as string)
+        );
+        const relevantDatasets = state.datasets.filter(
+          (aDataset: Dataset): boolean =>
+            selectedExperiments.findIndex(
+              (anExperiment: Experiment): boolean =>
+                aDataset.id === anExperiment.datasetId
+            ) > -1
+        );
+        return {
+          ...state,
+          searchString: action.payload as string,
+          expandedAlgorithmsInDatasets: relevantDatasets.map(
+            (aDataset: Dataset): ExpandedEntity => ({
+              id: aDataset.id,
+              children: state.algorithms
+                .filter(
+                  (anAlgorithm: Algorithm): boolean =>
+                    selectedExperiments.findIndex(
+                      (anExperiment: Experiment): boolean =>
+                        aDataset.id === anExperiment.datasetId &&
+                        anAlgorithm.id === anExperiment.algorithmId
+                    ) > -1
+                )
+                .map(
+                  (anAlgorithm: Algorithm): ExpandedEntity => ({
+                    id: anAlgorithm.id,
+                    children: [],
+                  })
+                ),
+            })
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          searchString: '',
+        };
+      }
+    }
     default:
       return state;
   }

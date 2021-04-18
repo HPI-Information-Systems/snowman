@@ -9,6 +9,7 @@ import {
   selectAlgorithmInDatasetChildren,
   selectDatasetChildren,
   selectExperimentBy,
+  setSearchString,
   shrinkAlgorithmInDataset,
   shrinkDataset,
 } from 'pages/BenchmarkPage/store/BenchmarkAppActions';
@@ -17,6 +18,7 @@ import {
   BenchmarkAppModel,
 } from 'pages/BenchmarkPage/store/BenchmarkAppModel';
 import { connect } from 'react-redux';
+import { IonChangeEvent } from 'types/IonChangeEvent';
 
 const mapStateToProps = (
   state: BenchmarkAppModel
@@ -26,6 +28,7 @@ const mapStateToProps = (
   experiments: state.experiments,
   selectedExperiments: state.selectedExperiments,
   expandedAlgorithmsInDatasets: state.expandedAlgorithmsInDatasets,
+  searchString: state.searchString,
 });
 
 const mapDispatchToProps = (
@@ -58,6 +61,10 @@ const mapDispatchToProps = (
   selectExperiment(anExperimentId: number) {
     console.log('select experiment', anExperimentId);
     dispatch(selectExperimentBy(anExperimentId));
+  },
+  setSearchString(event: IonChangeEvent) {
+    console.log('set search string', event.detail.value);
+    dispatch(setSearchString(event.detail.value ?? ''));
   },
 });
 

@@ -35,12 +35,19 @@ const BenchmarkSelectorView = ({
   selectDatasetChildren,
   selectAlgorithmInDatasetChildren,
   selectedExperiments,
+  searchString,
+  setSearchString,
 }: BenchmarkSelectorProps): JSX.Element => {
   return (
     <IonMenu contentId={contentId}>
       <IonHeader>
         <IonToolbar color="primary">
-          <IonSearchbar placeholder="Search experiments" />
+          <IonSearchbar
+            placeholder="Search experiments"
+            value={searchString}
+            onIonChange={setSearchString}
+            debounce={1000}
+          />
         </IonToolbar>
       </IonHeader>
       <IonContent>

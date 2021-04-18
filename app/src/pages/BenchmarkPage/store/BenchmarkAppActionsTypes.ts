@@ -9,4 +9,5 @@ export enum BenchmarkAppActionsTypes {
   SHRINK_ALGORITHM = 'BenchmarkAppActionsTypes-SHRINK_ALGORITHM',
   SELECT_DATASET_CHILDREN = 'BenchmarkAppActionsTypes-SELECT_DATASET_CHILDREN',
   SELECT_ALGORITHM_CHILDREN = 'BenchmarkAppActionsTypes-SELECT_ALGORITHM_CHILDREN',
+  SET_SEARCH_STRING = 'BenchmarkAppActionsTypes-SET_SEARCH_STRING',
 }

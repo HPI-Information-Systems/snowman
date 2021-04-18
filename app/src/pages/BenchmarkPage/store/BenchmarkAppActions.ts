@@ -66,3 +66,11 @@ export const shrinkAlgorithmInDataset = (
     payload: aDatasetId,
     optionalPayload: anAlgorithmId,
   });
+
+export const setSearchString = (
+  aSearchString: string
+): easyPrimitiveActionReturn<BenchmarkAppModel> =>
+  easyPrimitiveAction<BenchmarkAppModel>({
+    type: BenchmarkAppActionsTypes.SET_SEARCH_STRING,
+    payload: aSearchString,
+  });
