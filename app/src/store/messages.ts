@@ -38,10 +38,12 @@ type ActionPayload =
       included: Experiment[];
     };
 
-export interface SnowmanAction extends Action<string> {
+export interface SnowmanGenericAction<T> extends Action<T> {
   payload: ActionPayload;
   optionalPayload?: ActionPayload;
 }
+
+export type SnowmanAction = SnowmanGenericAction<string>;
 
 export type SnowmanThunkAction<R> = ThunkAction<R, Store, null, SnowmanAction>;
 
