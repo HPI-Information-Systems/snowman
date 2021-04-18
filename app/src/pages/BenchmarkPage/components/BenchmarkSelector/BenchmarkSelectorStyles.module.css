@@ -13,9 +13,10 @@
 }
 
 .chevron {
-  margin-inline-end: 12px;
-  margin-right: 12px;
+  margin-right: 10px;
+  font-size: 20px;
   cursor: pointer;
+  margin-inline-end: 10px;
 }
 
 .selector {

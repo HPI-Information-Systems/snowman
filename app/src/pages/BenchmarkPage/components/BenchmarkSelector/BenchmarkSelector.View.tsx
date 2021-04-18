@@ -48,7 +48,7 @@ const BenchmarkSelectorView = ({
                   <IonIcon
                     icon={anAlgorithm.isExpanded ? caretDown : caretForward}
                     onClick={(): void => expandAlgorithm(anAlgorithm.entity.id)}
-                    color="medium"
+                    color="primarydark"
                     slot="start"
                     class={styles.chevron}
                   />
@@ -78,7 +78,7 @@ const BenchmarkSelectorView = ({
                               onClick={(): void =>
                                 expandDataset(aDataset.entity.id)
                               }
-                              color="medium"
+                              color="primarydark"
                               slot="start"
                               class={styles.chevron}
                             />
