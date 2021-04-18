@@ -4,16 +4,24 @@ import {
   BenchmarkSelectorDispatchProps,
   BenchmarkSelectorStateProps,
 } from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelectorProps';
+import {
+  BenchmarkAppDispatch,
+  BenchmarkAppModel,
+} from 'pages/BenchmarkPage/store/BenchmarkAppModel';
 import { connect } from 'react-redux';
-import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
 
-const mapStateToProps = (state: Store): BenchmarkSelectorStateProps => ({
-  config: prepareBenchmarkConfig([], [], []),
+const mapStateToProps = (
+  state: BenchmarkAppModel
+): BenchmarkSelectorStateProps => ({
+  config: prepareBenchmarkConfig(
+    state.algorithms,
+    state.datasets,
+    state.experiments
+  ),
 });
 
 const mapDispatchToProps = (
-  dispatch: SnowmanDispatch
+  dispatch: BenchmarkAppDispatch
 ): BenchmarkSelectorDispatchProps => ({
   expandAlgorithm(anAlgorithmId: number) {
     console.log('expand algorithm', anAlgorithmId);

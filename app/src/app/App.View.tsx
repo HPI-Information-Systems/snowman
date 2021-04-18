@@ -22,7 +22,7 @@ import { IonApp, IonPage } from '@ionic/react';
 import { DefaultAppProps } from 'app/AppProps';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
 import TapBar from 'components/TabBar/TapBar';
-import BenchmarkPage from 'pages/BenchmarkPage/BenchmarkPage';
+import BenchmarkApp from 'pages/BenchmarkPage/BenchmarkApp';
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
@@ -41,7 +41,7 @@ const DefaultAppView = ({
   return (
     <IonApp>
       <TapBar />
-      <BenchmarkPage />
+      <BenchmarkApp />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <GlobalLoading />
       {/* Todo: Change autoClose back to 5000 */}

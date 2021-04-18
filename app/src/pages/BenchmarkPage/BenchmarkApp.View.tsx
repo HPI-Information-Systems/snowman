@@ -12,11 +12,15 @@ import {
 } from '@ionic/react';
 import GenericSubApp from 'components/GenericSubApp/GenericSubApp';
 import { barChart, calculator, colorFilter, pauseCircle } from 'ionicons/icons';
+import { BenchmarkAppProps } from 'pages/BenchmarkPage/BenchmarkAppProps';
 import BenchmarkSelector from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelector';
 import { createBenchmarkAppStore } from 'pages/BenchmarkPage/store/BenchmarkAppStoreFactory';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-const BenchmarkPage = (): JSX.Element => {
+const BenchmarkAppView = ({
+  loadInitialState,
+}: BenchmarkAppProps): JSX.Element => {
+  useEffect(loadInitialState, [loadInitialState]);
   return (
     <GenericSubApp
       appTitle={'Benchmark Dashboard'}
@@ -169,4 +173,4 @@ const BenchmarkPage = (): JSX.Element => {
   );
 };
 
-export default BenchmarkPage;
+export default BenchmarkAppView;
