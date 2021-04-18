@@ -9,7 +9,7 @@ export interface BenchmarkAppModel {
   algorithms: Algorithm[];
   datasets: Dataset[];
   experiments: Experiment[];
-  selectedExperiments: number[];
+  selectedExperimentIds: number[];
   expandedAlgorithmsInDatasets: ExpandedEntity[];
   searchString: string;
 }

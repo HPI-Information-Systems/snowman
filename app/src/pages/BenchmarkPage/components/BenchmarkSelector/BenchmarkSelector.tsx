@@ -26,7 +26,7 @@ const mapStateToProps = (
   algorithms: state.algorithms,
   datasets: state.datasets,
   experiments: state.experiments,
-  selectedExperiments: state.selectedExperiments,
+  selectedExperimentIds: state.selectedExperimentIds,
   expandedAlgorithmsInDatasets: state.expandedAlgorithmsInDatasets,
   searchString: state.searchString,
 });

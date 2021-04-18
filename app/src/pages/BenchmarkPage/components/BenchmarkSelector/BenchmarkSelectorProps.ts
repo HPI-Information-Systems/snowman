@@ -10,7 +10,7 @@ export interface BenchmarkSelectorStateProps {
   algorithms: Algorithm[];
   datasets: Dataset[];
   experiments: Experiment[];
-  selectedExperiments: number[];
+  selectedExperimentIds: number[];
   expandedAlgorithmsInDatasets: ExpandedEntity[];
   searchString: string;
 }

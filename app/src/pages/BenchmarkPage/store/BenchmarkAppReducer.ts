@@ -10,7 +10,7 @@ const initialState: BenchmarkAppModel = {
   datasets: [],
   experiments: [],
   expandedAlgorithmsInDatasets: [],
-  selectedExperiments: [],
+  selectedExperimentIds: [],
   searchString: '',
 };
 
@@ -36,28 +36,28 @@ const BenchmarkAppReducer = (
       return {
         ...state,
         expandedAlgorithmsInDatasets: [],
-        selectedExperiments: [],
+        selectedExperimentIds: [],
         algorithms: action.payload as Algorithm[],
       };
     case BenchmarkAppActionsTypes.SET_DATASETS:
       return {
         ...state,
         expandedAlgorithmsInDatasets: [],
-        selectedExperiments: [],
+        selectedExperimentIds: [],
         datasets: action.payload as Dataset[],
       };
     case BenchmarkAppActionsTypes.SET_EXPERIMENTS:
       return {
         ...state,
         expandedAlgorithmsInDatasets: [],
-        selectedExperiments: [],
+        selectedExperimentIds: [],
         experiments: action.payload as Experiment[],
       };
     case BenchmarkAppActionsTypes.SELECT_DATASET_CHILDREN:
       return {
         ...state,
-        selectedExperiments: union(
-          state.selectedExperiments,
+        selectedExperimentIds: union(
+          state.selectedExperimentIds,
           state.experiments
             .filter(
               (anExperiment: Experiment): boolean =>
@@ -69,8 +69,8 @@ const BenchmarkAppReducer = (
     case BenchmarkAppActionsTypes.SELECT_ALGORITHM_CHILDREN:
       return {
         ...state,
-        selectedExperiments: union(
-          state.selectedExperiments,
+        selectedExperimentIds: union(
+          state.selectedExperimentIds,
           state.experiments
             .filter(
               (anExperiment: Experiment): boolean =>
@@ -83,13 +83,13 @@ const BenchmarkAppReducer = (
     case BenchmarkAppActionsTypes.TOGGLE_EXPERIMENT:
       return {
         ...state,
-        selectedExperiments: state.selectedExperiments.includes(
+        selectedExperimentIds: state.selectedExperimentIds.includes(
           action.payload as number
         )
-          ? state.selectedExperiments.filter(
+          ? state.selectedExperimentIds.filter(
               (value: number): boolean => value !== (action.payload as number)
             )
-          : union(state.selectedExperiments, [action.payload as number]),
+          : union(state.selectedExperimentIds, [action.payload as number]),
       };
     case BenchmarkAppActionsTypes.EXPAND_DATASET:
       return {

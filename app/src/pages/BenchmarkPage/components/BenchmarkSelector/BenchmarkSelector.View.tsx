@@ -34,7 +34,7 @@ const BenchmarkSelectorView = ({
   selectExperiment,
   selectDatasetChildren,
   selectAlgorithmInDatasetChildren,
-  selectedExperiments,
+  selectedExperimentIds,
   searchString,
   setSearchString,
 }: BenchmarkSelectorProps): JSX.Element => {
@@ -159,14 +159,14 @@ const BenchmarkSelectorView = ({
                                               {anExperiment.name}
                                               <IonIcon
                                                 icon={
-                                                  selectedExperiments.includes(
+                                                  selectedExperimentIds.includes(
                                                     anExperiment.id
                                                   )
                                                     ? checkmarkCircle
                                                     : radioButtonOffOutline
                                                 }
                                                 color={
-                                                  selectedExperiments.includes(
+                                                  selectedExperimentIds.includes(
                                                     anExperiment.id
                                                   )
                                                     ? 'primary'
