@@ -15,7 +15,7 @@ export const prepareBenchmarkConfig = (
     algorithms: algorithms.map(
       (anAlgorithm: Algorithm): BenchmarkAlgorithmConfig => ({
         entity: anAlgorithm,
-        isSelected: false,
+        isSelected: true,
         isExpanded: true,
         datasets: datasets
           .filter(

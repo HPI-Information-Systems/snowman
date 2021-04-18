@@ -16,9 +16,9 @@ import {
 } from 'components/BenchmarkSelector/BenchmarkSelectorProps';
 import styles from 'components/BenchmarkSelector/BenchmarkSelectorStyles.module.css';
 import {
-  checkmarkCircleOutline,
-  chevronDownCircle,
-  chevronForwardCircle,
+  checkmarkCircle,
+  chevronDownCircleOutline,
+  chevronForwardCircleOutline,
   radioButtonOffOutline,
 } from 'ionicons/icons';
 import React from 'react';
@@ -48,11 +48,11 @@ const BenchmarkSelectorView = ({
                   <IonIcon
                     icon={
                       anAlgorithm.isExpanded
-                        ? chevronDownCircle
-                        : chevronForwardCircle
+                        ? chevronDownCircleOutline
+                        : chevronForwardCircleOutline
                     }
                     onClick={(): void => expandAlgorithm(anAlgorithm.entity.id)}
-                    color="primary"
+                    color="medium"
                     slot="start"
                     class={styles.chevron}
                   />
@@ -60,11 +60,12 @@ const BenchmarkSelectorView = ({
                   <IonIcon
                     icon={
                       anAlgorithm.isSelected
-                        ? checkmarkCircleOutline
+                        ? checkmarkCircle
                         : radioButtonOffOutline
                     }
                     color={anAlgorithm.isSelected ? 'primary' : 'medium'}
                     onClick={(): void => selectAlgorithm(anAlgorithm.entity.id)}
+                    class={styles.selector}
                     slot="end"
                   />
                 </IonItem>
@@ -77,13 +78,13 @@ const BenchmarkSelectorView = ({
                             <IonIcon
                               icon={
                                 aDataset.isExpanded
-                                  ? chevronDownCircle
-                                  : chevronForwardCircle
+                                  ? chevronDownCircleOutline
+                                  : chevronForwardCircleOutline
                               }
                               onClick={(): void =>
                                 expandDataset(aDataset.entity.id)
                               }
-                              color="primary"
+                              color="medium"
                               slot="start"
                               class={styles.chevron}
                             />
@@ -91,13 +92,14 @@ const BenchmarkSelectorView = ({
                             <IonIcon
                               icon={
                                 aDataset.isSelected
-                                  ? checkmarkCircleOutline
+                                  ? checkmarkCircle
                                   : radioButtonOffOutline
                               }
                               onClick={(): void =>
                                 selectDataset(aDataset.entity.id)
                               }
                               color={aDataset.isSelected ? 'primary' : 'medium'}
+                              class={styles.selector}
                               slot="end"
                             />
                           </IonItem>
@@ -113,7 +115,7 @@ const BenchmarkSelectorView = ({
                                       <IonIcon
                                         icon={
                                           anExperiment.isSelected
-                                            ? checkmarkCircleOutline
+                                            ? checkmarkCircle
                                             : radioButtonOffOutline
                                         }
                                         color={
@@ -126,6 +128,7 @@ const BenchmarkSelectorView = ({
                                             anExperiment.entity.id
                                           )
                                         }
+                                        class={styles.selector}
                                         slot="end"
                                       />
                                     </IonItem>
