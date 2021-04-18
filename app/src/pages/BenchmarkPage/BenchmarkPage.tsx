@@ -15,10 +15,12 @@ import { barChart, calculator, colorFilter, pauseCircle } from 'ionicons/icons';
 import BenchmarkSelector from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelector';
 import { createBenchmarkAppStore } from 'pages/BenchmarkPage/store/BenchmarkAppStoreFactory';
 import React from 'react';
+import { ViewIDs } from 'types/ViewIDs';
 
 const BenchmarkPage = (): JSX.Element => {
   return (
     <GenericSubApp
+      appId={ViewIDs.DASHBOARD}
       appTitle={'Benchmark Dashboard'}
       createSubAppStore={createBenchmarkAppStore}
       sideMenu={BenchmarkSelector}
