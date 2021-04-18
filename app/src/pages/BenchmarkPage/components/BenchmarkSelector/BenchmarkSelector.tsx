@@ -1,19 +1,15 @@
-import { prepareBenchmarkConfig } from 'components/BenchmarkSelector/BenchmarkSelector.helper';
-import BenchmarkSelectorView from 'components/BenchmarkSelector/BenchmarkSelector.View';
+import { prepareBenchmarkConfig } from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelector.helper';
+import BenchmarkSelectorView from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelector.View';
 import {
   BenchmarkSelectorDispatchProps,
   BenchmarkSelectorStateProps,
-} from 'components/BenchmarkSelector/BenchmarkSelectorProps';
+} from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelectorProps';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
 
 const mapStateToProps = (state: Store): BenchmarkSelectorStateProps => ({
-  config: prepareBenchmarkConfig(
-    state.CoreStore.algorithms,
-    state.CoreStore.datasets,
-    state.CoreStore.experiments
-  ),
+  config: prepareBenchmarkConfig([], [], []),
 });
 
 const mapDispatchToProps = (

@@ -4,7 +4,7 @@ import {
   BenchmarkDatasetConfig,
   BenchmarkExperimentConfig,
   BenchmarkSelectorConfig,
-} from 'components/BenchmarkSelector/BenchmarkSelectorProps';
+} from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelectorProps';
 
 export const prepareBenchmarkConfig = (
   algorithms: Algorithm[],

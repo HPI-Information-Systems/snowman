@@ -9,18 +9,18 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import {
-  BenchmarkAlgorithmConfig,
-  BenchmarkDatasetConfig,
-  BenchmarkExperimentConfig,
-  BenchmarkSelectorProps,
-} from 'components/BenchmarkSelector/BenchmarkSelectorProps';
-import styles from 'components/BenchmarkSelector/BenchmarkSelectorStyles.module.css';
-import {
   checkmarkCircle,
   chevronDownCircleOutline,
   chevronForwardCircleOutline,
   radioButtonOffOutline,
 } from 'ionicons/icons';
+import {
+  BenchmarkAlgorithmConfig,
+  BenchmarkDatasetConfig,
+  BenchmarkExperimentConfig,
+  BenchmarkSelectorProps,
+} from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelectorProps';
+import styles from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelectorStyles.module.css';
 import React from 'react';
 
 const BenchmarkSelectorView = ({

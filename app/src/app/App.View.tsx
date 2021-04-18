@@ -18,9 +18,8 @@ import 'react-toastify/dist/ReactToastify.css';
 /* Overwrite variables */
 import 'theme/overwrites.css';
 
-import { IonApp, IonPage, IonSplitPane } from '@ionic/react';
+import { IonApp, IonPage } from '@ionic/react';
 import { DefaultAppProps } from 'app/AppProps';
-import BenchmarkSelector from 'components/BenchmarkSelector/BenchmarkSelector';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
 import TopNavBar from 'components/TopNavBar/TopNavBar';
 import BenchmarkPage from 'pages/BenchmarkPage/BenchmarkPage';

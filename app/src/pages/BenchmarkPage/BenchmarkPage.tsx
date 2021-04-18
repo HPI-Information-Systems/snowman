@@ -10,9 +10,9 @@ import {
   IonRow,
   IonText,
 } from '@ionic/react';
-import BenchmarkSelector from 'components/BenchmarkSelector/BenchmarkSelector';
 import GenericSubApp from 'components/GenericSubApp/GenericSubApp';
 import { barChart, calculator, colorFilter, pauseCircle } from 'ionicons/icons';
+import BenchmarkSelector from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelector';
 import { createBenchmarkAppStore } from 'pages/BenchmarkPage/store/BenchmarkAppStoreFactory';
 import React from 'react';
 
