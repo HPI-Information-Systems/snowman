@@ -1,7 +1,7 @@
-import 'apps/HomeApp/HomeAppStyles.css';
-
+import styles from 'apps/HomeApp/HomeAppStyles.module.css';
 import GenericSubApp from 'components/GenericSubInstance/GenericSubApp/GenericSubApp';
 import React from 'react';
+import style from 'theme/style';
 import { ViewIDs } from 'types/ViewIDs';
 import { dummyStoreFactory } from 'utils/storeFactory';
 
@@ -11,7 +11,7 @@ const HomeApp = (): JSX.Element => (
     appTitle="Home Page"
     createSubAppStore={dummyStoreFactory('HomepageApp')}
   >
-    <div className="ion-text-center introduction">
+    <div className={style('ion-text-center', styles.introduction)}>
       <img src="./logo192.png" alt="logo" />
       <h1>Welcome to Snowman Benchmark!</h1>
       <p>
