@@ -15,7 +15,7 @@ Moreover we want to dispatch opening a toast in context of redux actions
 export const showToast = (
   aMessage: string,
   aType: ToastType = ToastType.Normal
-): SnowmanThunkAction<unknown, void> => (): void => {
+): SnowmanThunkAction<void, unknown> => (): void => {
   switch (aType) {
     case ToastType.Normal:
       toast.dark(aMessage);

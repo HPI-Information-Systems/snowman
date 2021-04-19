@@ -4,8 +4,8 @@ import {
   showLoading,
   showToast,
   unregisterOngoingRequest,
-} from 'store/actions/GlobalIndicatorActions';
-import { SnowmanGlobalSimpleDispatch } from 'store/globalStoreInteractor';
+} from 'apps/SnowmanApp/store/ActionLogicActions';
+import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { UNKNOWN_ERROR } from 'structs/statusMessages';
 import { ToastType } from 'types/ToastTypes';
 
@@ -25,29 +25,27 @@ const RequestHandler = async <T = void>(
   successMessage?: string,
   shouldShowLoadingBlocker?: boolean
 ): Promise<T> => {
-  if (shouldShowLoadingBlocker) SnowmanGlobalSimpleDispatch(showLoading());
-  SnowmanGlobalSimpleDispatch(registerOngoingRequest());
+  if (shouldShowLoadingBlocker) SnowmanAppDispatch(showLoading());
+  SnowmanAppDispatch(registerOngoingRequest());
   return wrapped()
     .then(
       (wrappedReturn: T): T => {
         if (successMessage !== undefined)
-          SnowmanGlobalSimpleDispatch(
-            showToast(successMessage, ToastType.Success)
-          );
+          SnowmanAppDispatch(showToast(successMessage, ToastType.Success));
         return wrappedReturn;
       }
     )
     .catch(
       async (error: unknown): Promise<never> => {
-        SnowmanGlobalSimpleDispatch(
+        SnowmanAppDispatch(
           showToast(await unwrapError(error), ToastType.Error)
         );
         throw Error;
       }
     )
     .finally((): void => {
-      SnowmanGlobalSimpleDispatch(unregisterOngoingRequest());
-      if (shouldShowLoadingBlocker) SnowmanGlobalSimpleDispatch(hideLoading());
+      SnowmanAppDispatch(unregisterOngoingRequest());
+      if (shouldShowLoadingBlocker) SnowmanAppDispatch(hideLoading());
     });
 };
 
