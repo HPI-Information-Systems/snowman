@@ -9,8 +9,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { GenericSubAppProps } from 'components/GenericSubApp/GenericSubAppProps';
-import styles from 'components/GenericSubApp/GenericSubAppStyles.module.css';
+import { GenericSubAppProps } from 'components/GenericSubInstance/GenericSubAppProps';
+import styles from 'components/GenericSubInstance/GenericSubAppStyles.module.css';
 import React, { Component, createElement } from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
@@ -26,7 +26,7 @@ class GenericSubAppView extends Component<GenericSubAppProps> {
   render(): JSX.Element {
     return (
       <Provider store={this.store}>
-        {this.props.activeApp === this.props.appId ? (
+        {this.props.activeApp === this.props.instanceId ? (
           <div style={{ position: 'relative', flexGrow: 1 }}>
             <IonSplitPane
               when="lg"

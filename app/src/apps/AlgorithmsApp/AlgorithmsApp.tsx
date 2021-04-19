@@ -1,13 +1,13 @@
 import AlgorithmsAppContainer from 'apps/AlgorithmsApp/AlgorithmsApp.Container';
 import { AlgorithmsAppOwnProps } from 'apps/AlgorithmsApp/AlgorithmsAppProps';
-import GenericSubApp from 'components/GenericSubApp/GenericSubApp';
+import GenericSubApp from 'components/GenericSubInstance/GenericSubApp';
 import React from 'react';
 import { ViewIDs } from 'types/ViewIDs';
 import { dummyStoreFactory } from 'utils/storeFactory';
 
 const AlgorithmsApp = (props: AlgorithmsAppOwnProps): JSX.Element => (
   <GenericSubApp
-    appId={ViewIDs.ALGORITHMS}
+    instanceId={ViewIDs.ALGORITHMS}
     appTitle="Matching Solutions Editor"
     createSubAppStore={dummyStoreFactory('AlgorithmsApp')}
   >

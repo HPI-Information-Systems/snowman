@@ -1,7 +1,6 @@
-import { SideMenuProps } from 'components/GenericSubApp/SideMenuProps';
+import { GenericInstanceOwnProps } from 'components/GenericSubInstance/GenericInstanceProps';
+import { SideMenuProps } from 'components/GenericSubInstance/SideMenuProps';
 import { FC } from 'react';
-import { Store } from 'redux';
-import { SnowmanAction } from 'store/messages';
 import { ViewIDs } from 'types/ViewIDs';
 
 export interface GenericSubAppStateProps {
@@ -9,12 +8,9 @@ export interface GenericSubAppStateProps {
   activeApp: ViewIDs;
 }
 
-export interface GenericSubAppOwnProps {
+export interface GenericSubAppOwnProps extends GenericInstanceOwnProps {
   appTitle: string;
-  appId: ViewIDs;
   sideMenu?: FC<SideMenuProps>;
-  children?: JSX.Element | JSX.Element[];
-  createSubAppStore(): Store<unknown, SnowmanAction>;
 }
 
 export type GenericSubAppProps = GenericSubAppOwnProps &

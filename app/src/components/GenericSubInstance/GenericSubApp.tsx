@@ -1,6 +1,6 @@
 import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
-import GenericSubAppView from 'components/GenericSubApp/GenericSubApp.View';
-import { GenericSubAppStateProps } from 'components/GenericSubApp/GenericSubAppProps';
+import GenericSubAppView from 'components/GenericSubInstance/GenericSubApp.View';
+import { GenericSubAppStateProps } from 'components/GenericSubInstance/GenericSubAppProps';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state: SnowmanAppModel): GenericSubAppStateProps => ({

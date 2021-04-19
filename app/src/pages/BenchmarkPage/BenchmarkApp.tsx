@@ -1,4 +1,4 @@
-import GenericSubApp from 'components/GenericSubApp/GenericSubApp';
+import GenericSubApp from 'components/GenericSubInstance/GenericSubApp';
 import BenchmarkAppContainer from 'pages/BenchmarkPage/BenchmarkApp.Container';
 import BenchmarkSelector from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelector';
 import { createBenchmarkAppStore } from 'pages/BenchmarkPage/store/BenchmarkAppStoreFactory';
@@ -7,7 +7,7 @@ import { ViewIDs } from 'types/ViewIDs';
 
 const BenchmarkApp = (): JSX.Element => (
   <GenericSubApp
-    appId={ViewIDs.DASHBOARD}
+    instanceId={ViewIDs.DASHBOARD}
     appTitle={'Benchmark Dashboard'}
     createSubAppStore={createBenchmarkAppStore}
     sideMenu={BenchmarkSelector}

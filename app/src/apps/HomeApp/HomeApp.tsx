@@ -1,13 +1,13 @@
 import 'apps/HomeApp/HomeAppStyles.css';
 
-import GenericSubApp from 'components/GenericSubApp/GenericSubApp';
+import GenericSubApp from 'components/GenericSubInstance/GenericSubApp';
 import React from 'react';
 import { ViewIDs } from 'types/ViewIDs';
 import { dummyStoreFactory } from 'utils/storeFactory';
 
 const HomeApp = (): JSX.Element => (
   <GenericSubApp
-    appId={ViewIDs.HOME}
+    instanceId={ViewIDs.HOME}
     appTitle="Home Page"
     createSubAppStore={dummyStoreFactory('HomepageApp')}
   >
