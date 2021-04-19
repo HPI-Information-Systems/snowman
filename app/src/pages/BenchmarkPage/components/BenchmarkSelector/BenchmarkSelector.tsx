@@ -16,7 +16,7 @@ import {
 import {
   BenchmarkAppDispatch,
   BenchmarkAppModel,
-} from 'pages/BenchmarkPage/store/BenchmarkAppModel';
+} from 'pages/BenchmarkPage/types/BenchmarkAppModel';
 import { connect } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 

@@ -1,25 +1,34 @@
+import { Dataset } from 'api';
 import DatasetsAppView from 'apps/DatasetsApp/DatasetsApp.View';
 import {
   DatasetAppOwnProps,
   DatasetsAppDispatchProps,
   DatasetsAppStateProps,
 } from 'apps/DatasetsApp/DatasetsAppProps';
+import { toggleTag } from 'apps/DatasetsApp/store/DatasetsAppActions';
+import {
+  DatasetsAppDispatch,
+  DatasetsAppModel,
+} from 'apps/DatasetsApp/types/DatasetsAppModel';
+import { difference } from 'lodash';
 import { connect } from 'react-redux';
-import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
 
 const mapStateToProps = (
-  state: Store,
+  state: DatasetsAppModel,
   ownProps: DatasetAppOwnProps
 ): DatasetsAppStateProps => ({
-  selectedTags: [],
+  selectedTags: state.selectedTags,
+  currentDatasets: ownProps.datasets.filter(
+    (aDataset: Dataset): boolean =>
+      difference(state.selectedTags, aDataset.tags ?? []).length === 0
+  ),
 });
 
 const mapDispatchToProps = (
-  dispatch: SnowmanDispatch
+  dispatch: DatasetsAppDispatch
 ): DatasetsAppDispatchProps => ({
   clickOnTag(aTag: string): void {
-    console.log('click on a tag', aTag);
+    dispatch(toggleTag(aTag));
   },
 });
 
