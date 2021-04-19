@@ -1,7 +1,8 @@
-import { Algorithm } from 'api';
+import { Algorithm, Dataset } from 'api';
 
 export interface SnowmanAppStateProps {
   algorithms: Algorithm[];
+  datasets: Dataset[];
 }
 
 export interface SnowmanAppDispatchProps {

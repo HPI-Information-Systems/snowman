@@ -18,6 +18,7 @@ const mapDispatchToProps = (
 
 const mapStateToProps = (state: SnowmanAppModel): SnowmanAppStateProps => ({
   algorithms: state.CentralResourcesStore.algorithms,
+  datasets: state.CentralResourcesStore.datasets,
 });
 
 const SnowmanAppContainer = connect(
