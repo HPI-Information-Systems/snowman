@@ -1,8 +1,12 @@
 import { ActionLogicActionTypes } from 'apps/SnowmanApp/types/ActionLogicActionTypes';
+import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
 import { toast } from 'react-toastify';
-import { SnowmanAction } from 'types/SnowmanAction';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import { ToastType } from 'types/ToastTypes';
+import {
+  easyPrimitiveAction,
+  easyPrimitiveActionReturn,
+} from 'utils/easyActionsFactory';
 
 /*
 It is not a real redux action that influences the store.
@@ -28,26 +32,30 @@ export const showToast = (
   }
 };
 
-export const hideLoading = (): SnowmanAction => ({
-  type: ActionLogicActionTypes.HIDE_LOADING,
-  // reducer ignores payload
-  payload: false,
-});
+export const hideLoading = (): easyPrimitiveActionReturn<SnowmanAppModel> =>
+  easyPrimitiveAction<SnowmanAppModel>({
+    type: ActionLogicActionTypes.HIDE_LOADING,
+    // reducer ignores payload
+    payload: false,
+  });
 
-export const showLoading = (): SnowmanAction => ({
-  type: ActionLogicActionTypes.SHOW_LOADING,
-  // reducer ignores payload
-  payload: false,
-});
+export const showLoading = (): easyPrimitiveActionReturn<SnowmanAppModel> =>
+  easyPrimitiveAction<SnowmanAppModel>({
+    type: ActionLogicActionTypes.SHOW_LOADING,
+    // reducer ignores payload
+    payload: false,
+  });
 
-export const registerOngoingRequest = (): SnowmanAction => ({
-  type: ActionLogicActionTypes.REGISTER_ONGOING_REQUEST,
-  // reducer ignores payload
-  payload: false,
-});
+export const registerOngoingRequest = (): easyPrimitiveActionReturn<SnowmanAppModel> =>
+  easyPrimitiveAction<SnowmanAppModel>({
+    type: ActionLogicActionTypes.REGISTER_ONGOING_REQUEST,
+    // reducer ignores payload
+    payload: false,
+  });
 
-export const unregisterOngoingRequest = (): SnowmanAction => ({
-  type: ActionLogicActionTypes.UNREGISTER_ONGOING_REQUEST,
-  // reducer ignores payload
-  payload: false,
-});
+export const unregisterOngoingRequest = (): easyPrimitiveActionReturn<SnowmanAppModel> =>
+  easyPrimitiveAction<SnowmanAppModel>({
+    type: ActionLogicActionTypes.UNREGISTER_ONGOING_REQUEST,
+    // reducer ignores payload
+    payload: false,
+  });
