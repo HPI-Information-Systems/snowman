@@ -18,3 +18,22 @@ export const navigateTo = (
 export const doNavigateTo = (aTarget: ViewIDs): void => {
   SnowmanAppDispatch(navigateTo(aTarget));
 };
+
+export const openDialog = (
+  aDialog: ViewIDs
+): easyPrimitiveActionReturn<SnowmanAppModel> =>
+  easyPrimitiveAction<SnowmanAppModel>({
+    type: RenderLogicActionTypes.OPEN_DIALOG,
+    payload: aDialog,
+  });
+
+export const doOpenDialog = (aDialog: ViewIDs): void => {
+  SnowmanAppDispatch(openDialog(aDialog));
+};
+
+export const closeDialog = (): easyPrimitiveActionReturn<SnowmanAppModel> =>
+  easyPrimitiveAction({
+    type: RenderLogicActionTypes.CLOSE_DIALOG,
+    // reducer ignores payload
+    payload: null,
+  });
