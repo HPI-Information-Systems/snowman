@@ -27,11 +27,6 @@ import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 
 const DefaultAppView = (): JSX.Element => {
-  /*  const page = (
-    <IonPage id="mainViewContentId">
-      {React.createElement()}
-    </IonPage>
-  );*/
   return (
     <IonApp>
       <TapBar />
