@@ -7,24 +7,19 @@ import {
   IonText,
 } from '@ionic/react';
 import { Dataset } from 'api';
-import AddDatasetFab from 'components/AddFab/AddDatasetFab';
+import { DatasetsAppProps } from 'apps/DatasetsApp/DatasetsAppProps';
 import DatasetCard from 'components/DatasetCard/DatasetCard';
-import DatasetDialog from 'components/DatasetDialog/DatasetDialog';
-import DatasetPreviewer from 'components/FilePreviewer/DatasetPreviewer';
-import PageStruct from 'components/PageStructOLD/PageStruct';
-import { DatasetsPageProps } from 'pages/DatasetsPage/DatasetsPageProps';
-import React, { useEffect } from 'react';
+import React from 'react';
+import { getTagsFromDatasets } from 'utils/tagFactory';
 
-const DatasetsPageView = ({
-  tags,
+const DatasetsAppView = ({
   datasets,
   selectedTags,
   clickOnTag,
-  loadDatasets,
-}: DatasetsPageProps): JSX.Element => {
-  useEffect((): void => loadDatasets(), [loadDatasets]);
+}: DatasetsAppProps): JSX.Element => {
+  const tags = getTagsFromDatasets(datasets);
   return (
-    <PageStruct title="Dataset Selector">
+    <>
       <div>
         {tags.map(
           (aTag: string): JSX.Element => (
@@ -57,11 +52,8 @@ const DatasetsPageView = ({
       {datasets.length === 0 ? (
         <IonText color="medium">No matching elements found!</IonText>
       ) : undefined}
-      <AddDatasetFab />
-      <DatasetDialog />
-      <DatasetPreviewer />
-    </PageStruct>
+    </>
   );
 };
 
-export default DatasetsPageView;
+export default DatasetsAppView;

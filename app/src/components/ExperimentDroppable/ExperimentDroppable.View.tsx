@@ -35,10 +35,7 @@ const ExperimentDroppableView = ({
         {...provided.draggableProps}
       >
         <IonCol>
-          <ExperimentCard
-            key={`experimentCard-${anExperiment.id}`}
-            experiment={anExperiment}
-          />
+          <p>{anExperiment.name}</p>
         </IonCol>
       </IonRow>
     );

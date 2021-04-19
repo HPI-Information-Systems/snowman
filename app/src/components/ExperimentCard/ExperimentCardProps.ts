@@ -1,12 +1,13 @@
 import { Experiment } from 'api';
 
 export interface ExperimentCardStateProps {
-  algorithmName: string;
   couldPreview: boolean;
 }
 
 export interface ExperimentCardOwnProps {
   experiment: Experiment;
+  algorithmName: string;
+  datasetName: string;
 }
 
 export interface ExperimentCardDispatchProps {

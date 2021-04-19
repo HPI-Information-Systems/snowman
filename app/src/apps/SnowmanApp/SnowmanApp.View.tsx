@@ -20,13 +20,13 @@ import 'theme/overwrites.css';
 
 import { IonApp } from '@ionic/react';
 import AlgorithmsApp from 'apps/AlgorithmsApp/AlgorithmsApp';
+import DatasetsApp from 'apps/DatasetsApp/DatasetsApp';
+import ExperimentsApp from 'apps/ExperimentsPage/ExperimentsApp';
 import HomeApp from 'apps/HomeApp/HomeApp';
 import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/BlockingLoading';
 import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';
 import { SnowmanAppProps } from 'apps/SnowmanApp/SnowmanAppProps';
 import BenchmarkApp from 'pages/BenchmarkPage/BenchmarkApp';
-import DatasetsApp from 'pages/DatasetsPage/DatasetsApp';
-import ExperimentsApp from 'pages/ExperimentsPage/ExperimentsApp';
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
@@ -34,6 +34,8 @@ import ReactTooltip from 'react-tooltip';
 const SnowmanAppView = ({
   refreshCentralResources,
   algorithms,
+  datasets,
+  experiments,
 }: SnowmanAppProps): JSX.Element => {
   useEffect(refreshCentralResources, [refreshCentralResources]);
   return (
@@ -42,8 +44,12 @@ const SnowmanAppView = ({
       <HomeApp />
       <BenchmarkApp />
       <AlgorithmsApp algorithms={algorithms} />
-      <DatasetsApp />
-      <ExperimentsApp />
+      <DatasetsApp datasets={datasets} />
+      <ExperimentsApp
+        datasets={datasets}
+        algorithms={algorithms}
+        experiments={experiments}
+      />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <BlockingLoading />
       {/* Todo: Change autoClose back to 5000 */}
