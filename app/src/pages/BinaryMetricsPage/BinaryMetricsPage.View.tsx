@@ -13,7 +13,7 @@ import {
 } from '@ionic/react';
 import { Metric } from 'api';
 import DataViewer from 'components/DataViewer/DataViewer';
-import PageStruct from 'components/PageStruct/PageStruct';
+import PageStruct from 'components/PageStructOLD/PageStruct';
 import PaneButtonRow from 'components/PaneButtonRow/PaneButtonRow';
 import StyledCarousel from 'components/StyledCarousel/StyledCarousel';
 import { informationCircle } from 'ionicons/icons';

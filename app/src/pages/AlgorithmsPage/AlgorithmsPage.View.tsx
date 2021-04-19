@@ -3,7 +3,7 @@ import { Algorithm } from 'api';
 import AddAlgorithmFab from 'components/AddFab/AddAlgorithmFab';
 import AlgorithmCard from 'components/AlgorithmCard/AlgorithmCard';
 import AlgorithmDialog from 'components/AlgorithmDialog/AlgorithmDialog';
-import PageStruct from 'components/PageStruct/PageStruct';
+import PageStruct from 'components/PageStructOLD/PageStruct';
 import { AlgorithmsPageProps } from 'pages/AlgorithmsPage/AlgorithmsPageProps';
 import React, { useEffect } from 'react';
 

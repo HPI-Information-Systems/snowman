@@ -1,4 +1,4 @@
-import 'components/PageStruct/PageStructStyles.css';
+import 'components/PageStructOLD/PageStructStyles.css';
 
 import {
   IonButtons,
@@ -9,7 +9,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { PageStructProps } from 'components/PageStruct/PageStructProps';
+import { PageStructProps } from 'components/PageStructOLD/PageStructProps';
 import React from 'react';
 
 const PageStructView = ({

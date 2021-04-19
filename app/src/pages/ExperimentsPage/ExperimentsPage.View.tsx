@@ -16,7 +16,7 @@ import AddExperimentFab from 'components/AddFab/AddExperimentFab';
 import ExperimentDialog from 'components/ExperimentDialog/ExperimentDialog';
 import ExperimentDroppable from 'components/ExperimentDroppable/ExperimentDroppable';
 import ExperimentPreviewer from 'components/FilePreviewer/ExperimentPreviewer';
-import PageStruct from 'components/PageStruct/PageStruct';
+import PageStruct from 'components/PageStructOLD/PageStruct';
 import { filterCircleOutline } from 'ionicons/icons';
 import { ExperimentsPageProps } from 'pages/ExperimentsPage/ExperimentsPageProps';
 import React, { useEffect } from 'react';

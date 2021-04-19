@@ -11,7 +11,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import IntersectionVennDiagram from 'components/IntersectionVennDiagram/IntersectionVennDiagram';
-import PageStruct from 'components/PageStruct/PageStruct';
+import PageStruct from 'components/PageStructOLD/PageStruct';
 import {
   calculatorOutline,
   chevronForwardOutline,

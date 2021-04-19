@@ -2,7 +2,7 @@ import 'pages/NMetricsPage/NMetricsPageStyles.css';
 
 import { IonCard, IonIcon, IonText } from '@ionic/react';
 import { Experiment, Metric } from 'api';
-import PageStruct from 'components/PageStruct/PageStruct';
+import PageStruct from 'components/PageStructOLD/PageStruct';
 import { chevronForwardOutline } from 'ionicons/icons';
 import { NMetricsPageProps } from 'pages/NMetricsPage/NMetricsPageProps';
 import React, { useEffect } from 'react';

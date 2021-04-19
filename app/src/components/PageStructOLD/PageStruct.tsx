@@ -1,5 +1,5 @@
-import PageStructView from 'components/PageStruct/PageStruct.View';
-import { PageStructStateProps } from 'components/PageStruct/PageStructProps';
+import PageStructView from 'components/PageStructOLD/PageStruct.View';
+import { PageStructStateProps } from 'components/PageStructOLD/PageStructProps';
 import { connect } from 'react-redux';
 import { Store } from 'store/models';
 

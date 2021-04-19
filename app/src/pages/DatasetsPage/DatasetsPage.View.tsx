@@ -11,7 +11,7 @@ import AddDatasetFab from 'components/AddFab/AddDatasetFab';
 import DatasetCard from 'components/DatasetCard/DatasetCard';
 import DatasetDialog from 'components/DatasetDialog/DatasetDialog';
 import DatasetPreviewer from 'components/FilePreviewer/DatasetPreviewer';
-import PageStruct from 'components/PageStruct/PageStruct';
+import PageStruct from 'components/PageStructOLD/PageStruct';
 import { DatasetsPageProps } from 'pages/DatasetsPage/DatasetsPageProps';
 import React, { useEffect } from 'react';
 

@@ -13,7 +13,7 @@ import IntersectionSelector from 'components/IntersectionSelector/IntersectionSe
 import { IntersectionVennDiagramConfigStrategy } from 'components/IntersectionVennDiagram/config';
 import IntersectionVennDiagram from 'components/IntersectionVennDiagram/IntersectionVennDiagram';
 import { IntersectionVennDiagramIntersectionStrategy } from 'components/IntersectionVennDiagram/strategies/intersection';
-import PageStruct from 'components/PageStruct/PageStruct';
+import PageStruct from 'components/PageStructOLD/PageStruct';
 import { IntersectionPageProps } from 'pages/IntersectionPage/IntersectionPageProps';
 import React, { useEffect, useMemo, useState } from 'react';
 import { intersectionDescription } from 'utils/intersectionDescription';
