@@ -1,60 +1,18 @@
-/* Core CSS required for Ionic components to work properly */
-import '@ionic/react/css/core.css';
-/* Basic CSS for apps built with Ionic */
-import '@ionic/react/css/normalize.css';
-import '@ionic/react/css/structure.css';
-import '@ionic/react/css/typography.css';
-/* Optional CSS utils that can be commented out */
-import '@ionic/react/css/padding.css';
-import '@ionic/react/css/float-elements.css';
-import '@ionic/react/css/text-alignment.css';
-import '@ionic/react/css/text-transformation.css';
-import '@ionic/react/css/flex-utils.css';
-import '@ionic/react/css/display.css';
-/* Theme variables */
-import 'theme/variables.css';
-/* Include toast styling */
-import 'react-toastify/dist/ReactToastify.css';
-/* Overwrite variables */
-import 'theme/overwrites.css';
+import SnowmanAppView from 'apps/SnowmanApp/SnowmanApp.View';
+import { SnowmanAppDispatchProps } from 'apps/SnowmanApp/SnowmanAppProps';
+import { refreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesActions';
+import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
+import { connect } from 'react-redux';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
-import { IonApp } from '@ionic/react';
-import HomeApp from 'apps/HomeApp/HomeApp';
-import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/BlockingLoading';
-import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';
-import AlgorithmsApp from 'pages/AlgorithmsPage/AlgorithmsApp';
-import BenchmarkApp from 'pages/BenchmarkPage/BenchmarkApp';
-import DatasetsApp from 'pages/DatasetsPage/DatasetsApp';
-import ExperimentsApp from 'pages/ExperimentsPage/ExperimentsApp';
-import React from 'react';
-import { ToastContainer } from 'react-toastify';
-import ReactTooltip from 'react-tooltip';
+const mapDispatchToProps = (
+  dispatch: SnowmanDispatch<SnowmanAppModel>
+): SnowmanAppDispatchProps => ({
+  refreshCentralResources() {
+    dispatch(refreshCentralResources()).then();
+  },
+});
 
-const SnowmanAppContainer = (): JSX.Element => {
-  return (
-    <IonApp>
-      <TabBar />
-      <HomeApp />
-      <BenchmarkApp />
-      <AlgorithmsApp />
-      <DatasetsApp />
-      <ExperimentsApp />
-      <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
-      <BlockingLoading />
-      {/* Todo: Change autoClose back to 5000 */}
-      <ToastContainer
-        autoClose={500}
-        closeButton={false}
-        pauseOnHover={true}
-        pauseOnFocusLoss={true}
-        closeOnClick={true}
-        newestOnTop={true}
-        limit={5}
-        position={'top-right'}
-        bodyClassName="Toastify__body-wrap"
-      />
-    </IonApp>
-  );
-};
+const SnowmanAppContainer = connect(null, mapDispatchToProps)(SnowmanAppView);
 
 export default SnowmanAppContainer;
