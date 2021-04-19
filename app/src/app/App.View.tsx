@@ -22,6 +22,7 @@ import { IonApp } from '@ionic/react';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
 import TapBar from 'components/TabBar/TapBar';
 import BenchmarkApp from 'pages/BenchmarkPage/BenchmarkApp';
+import RootPage from 'pages/RootPage/RootPage';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
@@ -30,6 +31,7 @@ const DefaultAppView = (): JSX.Element => {
   return (
     <IonApp>
       <TapBar />
+      <RootPage />
       <BenchmarkApp />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <GlobalLoading />
