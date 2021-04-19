@@ -1,6 +1,6 @@
 import 'apps/HomeApp/HomeAppStyles.css';
 
-import GenericSubApp from 'components/GenericSubInstance/GenericSubApp';
+import GenericSubApp from 'components/GenericSubInstance/GenericSubApp/GenericSubApp';
 import React from 'react';
 import { ViewIDs } from 'types/ViewIDs';
 import { dummyStoreFactory } from 'utils/storeFactory';

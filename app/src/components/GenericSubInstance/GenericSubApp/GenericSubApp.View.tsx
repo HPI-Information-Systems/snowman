@@ -9,8 +9,8 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { GenericSubAppProps } from 'components/GenericSubInstance/GenericSubAppProps';
-import styles from 'components/GenericSubInstance/GenericSubAppStyles.module.css';
+import { GenericSubAppProps } from 'components/GenericSubInstance/GenericSubApp/GenericSubAppProps';
+import styles from 'components/GenericSubInstance/GenericSubApp/GenericSubAppStyles.module.css';
 import React, { Component, createElement } from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';

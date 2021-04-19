@@ -1,6 +1,6 @@
 import ExperimentsAppContainer from 'apps/ExperimentsPage/ExperimentsApp.Container';
 import { ExperimentsAppOwnProps } from 'apps/ExperimentsPage/ExperimentsAppProps';
-import GenericSubApp from 'components/GenericSubInstance/GenericSubApp';
+import GenericSubApp from 'components/GenericSubInstance/GenericSubApp/GenericSubApp';
 import React from 'react';
 import { ViewIDs } from 'types/ViewIDs';
 import { dummyStoreFactory } from 'utils/storeFactory';

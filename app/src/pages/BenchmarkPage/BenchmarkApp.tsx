@@ -1,4 +1,4 @@
-import GenericSubApp from 'components/GenericSubInstance/GenericSubApp';
+import GenericSubApp from 'components/GenericSubInstance/GenericSubApp/GenericSubApp';
 import BenchmarkAppContainer from 'pages/BenchmarkPage/BenchmarkApp.Container';
 import BenchmarkSelector from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelector';
 import { createBenchmarkAppStore } from 'pages/BenchmarkPage/store/BenchmarkAppStoreFactory';

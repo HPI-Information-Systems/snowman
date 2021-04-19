@@ -1,6 +1,6 @@
 import DatasetsAppContainer from 'apps/DatasetsApp/DatasetsApp.Container';
 import { DatasetAppOwnProps } from 'apps/DatasetsApp/DatasetsAppProps';
-import GenericSubApp from 'components/GenericSubInstance/GenericSubApp';
+import GenericSubApp from 'components/GenericSubInstance/GenericSubApp/GenericSubApp';
 import React from 'react';
 import { ViewIDs } from 'types/ViewIDs';
 import { dummyStoreFactory } from 'utils/storeFactory';
