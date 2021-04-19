@@ -1,7 +1,6 @@
-import 'components/ModalDialog/ModalDialogStyles.css';
-
 import { IonIcon, IonModal, IonText } from '@ionic/react';
 import { ModalDialogProps } from 'components/ModalDialog/ModalDialogProps';
+import styles from 'components/ModalDialog/ModalDialogStyles.module.css';
 import { closeOutline } from 'ionicons/icons';
 import React from 'react';
 
@@ -27,7 +26,7 @@ const ModalDialog = ({
       >
         <IonText color="dark">
           <h1
-            className="center"
+            className={styles.center}
             style={{
               marginTop: `${margin}px`,
               marginBottom: `${margin}px`,
@@ -38,7 +37,7 @@ const ModalDialog = ({
           </h1>
           <IonIcon
             icon={closeOutline}
-            className="modal-close-icon"
+            className={styles.modalCloseIcon}
             size="large"
             onClick={(): void => closeDialog()}
           />

@@ -1,5 +1,3 @@
-import 'components/DatasetCard/DatasetCardStyles.css';
-
 import {
   IonButton,
   IonCard,
@@ -15,6 +13,7 @@ import {
   IonRow,
 } from '@ionic/react';
 import { DatasetCardProps } from 'components/DatasetCard/DatasetCardProps';
+import styles from 'components/DatasetCard/DatasetCardStyles.module.css';
 import { create, telescope, trash } from 'ionicons/icons';
 import React from 'react';
 
@@ -41,7 +40,7 @@ const DatasetCardView = ({
           <IonChip
             color="dark"
             outline={false}
-            className="custom-disabled-chip"
+            className={styles.customDisabledChip}
             disabled
           >
             <IonLabel>Total: {dataset.numberOfRecords ?? 'unknown'}</IonLabel>
@@ -49,7 +48,7 @@ const DatasetCardView = ({
           <IonChip
             color="dark"
             outline={false}
-            className="custom-disabled-chip"
+            className={styles.customDisabledChip}
             disabled
           >
             <IonLabel>

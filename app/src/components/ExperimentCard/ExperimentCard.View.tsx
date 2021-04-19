@@ -13,6 +13,7 @@ import {
   IonRow,
 } from '@ionic/react';
 import { ExperimentCardProps } from 'components/ExperimentCard/ExperimentCardProps';
+import styles from 'components/ExperimentCard/ExperimentCardStyles.module.css';
 import { create, telescope, trash } from 'ionicons/icons';
 import React from 'react';
 
@@ -40,7 +41,7 @@ const ExperimentCardView = ({
           <IonChip
             color="dark"
             outline={false}
-            className="custom-disabled-chip"
+            className={styles.customDisabledChip}
             disabled
           >
             <IonLabel>
