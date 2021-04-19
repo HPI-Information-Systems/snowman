@@ -1,17 +1,15 @@
-import { Algorithm } from 'api';
-import { DropResult } from 'react-beautiful-dnd';
+import { Algorithm, Dataset, Experiment } from 'api';
 
 export interface ExperimentsPageStateProps {
   matchingSolutions: Algorithm[];
   selectedMatchingSolutions: Algorithm[];
-  showExperimentFilters: boolean;
+  datasets: Dataset[];
+  selectedDatasets: Dataset[];
+  currentExperiments: Experiment[];
 }
 
 export interface ExperimentsPageDispatchProps {
   loadExperiments(): void;
-  clickOnMatchingSolution(aMatchingSolution: Algorithm): void;
-  dragExperiment(dragResult: DropResult): void;
-  clickOnExperimentFilterTool(): void;
 }
 
 export type ExperimentsPageProps = ExperimentsPageDispatchProps &
