@@ -1,4 +1,3 @@
-import { SnowmanPublicState } from 'app/SnowmanPublicState';
 import GenericSubApp from 'components/GenericSubApp/GenericSubApp';
 import BenchmarkAppContainer from 'pages/BenchmarkPage/BenchmarkApp.Container';
 import BenchmarkSelector from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelector';
@@ -6,9 +5,8 @@ import { createBenchmarkAppStore } from 'pages/BenchmarkPage/store/BenchmarkAppS
 import React from 'react';
 import { ViewIDs } from 'types/ViewIDs';
 
-const BenchmarkApp = (props: SnowmanPublicState): JSX.Element => (
+const BenchmarkApp = (): JSX.Element => (
   <GenericSubApp
-    {...props}
     appId={ViewIDs.DASHBOARD}
     appTitle={'Benchmark Dashboard'}
     createSubAppStore={createBenchmarkAppStore}

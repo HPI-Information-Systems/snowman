@@ -19,7 +19,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'theme/overwrites.css';
 
 import { IonApp } from '@ionic/react';
-import { DefaultAppProps } from 'app/AppProps';
 import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
 import TapBar from 'components/TabBar/TapBar';
 import BenchmarkApp from 'pages/BenchmarkPage/BenchmarkApp';
@@ -27,7 +26,7 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 
-const DefaultAppView = ({ publicState }: DefaultAppProps): JSX.Element => {
+const DefaultAppView = (): JSX.Element => {
   /*  const page = (
     <IonPage id="mainViewContentId">
       {React.createElement()}
@@ -36,7 +35,7 @@ const DefaultAppView = ({ publicState }: DefaultAppProps): JSX.Element => {
   return (
     <IonApp>
       <TapBar />
-      <BenchmarkApp {...publicState} />
+      <BenchmarkApp />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <GlobalLoading />
       {/* Todo: Change autoClose back to 5000 */}
