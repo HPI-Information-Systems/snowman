@@ -1,19 +1,18 @@
-import {
-  SnowmanAction,
-  SnowmanGenericDispatch,
-  SnowmanGenericThunkAction,
-} from 'store/messages';
 import { Store } from 'store/models';
+import { SnowmanAction } from 'types/SnowmanAction';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
+import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 
 export const easyPrimitiveAction = <Model = Store>(
   anAction: SnowmanAction
-): SnowmanGenericThunkAction<void, Model> => (
-  dispatch: SnowmanGenericDispatch<Model>
+): SnowmanThunkAction<void, Model> => (
+  dispatch: SnowmanDispatch<Model>
 ): SnowmanAction => dispatch(anAction);
 
-export type easyPrimitiveActionReturn<
-  Model = Store
-> = SnowmanGenericThunkAction<void, Model>;
+export type easyPrimitiveActionReturn<Model = Store> = SnowmanThunkAction<
+  void,
+  Model
+>;
 
 export const easyPrimitiveDumpAction = (): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
