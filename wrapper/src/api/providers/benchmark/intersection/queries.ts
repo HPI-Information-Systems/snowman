@@ -28,7 +28,7 @@ export class IntersectionQueries {
     } else {
       const table = tables.experiment.experiment(experiment);
       return table.all(
-        { isDuplicate: 1 },
+        { isDuplicateAndLinksUnlinkedNodes: 1 },
         {
           returnedColumns: [
             table.schema.columns.id1.name,

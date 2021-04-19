@@ -8,6 +8,7 @@ import {
 } from '../../../database/schemas';
 import { escapeColumnName } from '../../../database/tools/escapeColumnNames';
 import { Column, NullableColumnValues } from '../../../database/tools/types';
+import { UnionFind } from '../../benchmark/cluster/unionFind';
 import { DatasetIDMapper } from '../../dataset/util/idMapper';
 
 type ExperimentSchema = ReturnType<
@@ -22,12 +23,15 @@ type ExperimentTable = Table<ExperimentSchema>;
 export abstract class ExperimentInserter {
   private table: ExperimentTable | undefined = undefined;
   private numberOfUploadedRecords = 0;
+  private unionFind: UnionFind;
 
   constructor(
     protected readonly experimentId: number,
     protected readonly idMapper: DatasetIDMapper,
-    protected readonly datasetNumberOfRecords?: number
-  ) {}
+    protected readonly datasetNumberOfRecords: number
+  ) {
+    this.unionFind = new UnionFind(datasetNumberOfRecords);
+  }
 
   protected abstract insert_internal(file: Readable): Promise<void>;
 
@@ -87,15 +91,25 @@ export abstract class ExperimentInserter {
   }
 
   private rowToInsertParameters(
-    id1: string,
-    id2: string,
+    id1String: string,
+    id2String: string,
     detectedAsDuplicate: boolean,
     similarityScores: { [name: string]: number }
   ): NullableColumnValues<ExperimentSchema['columns']> {
+    const id1 = this.idMapper.map(id1String, this.datasetNumberOfRecords);
+    const id2 = this.idMapper.map(id2String, this.datasetNumberOfRecords);
+    const isDuplicateAndLinksUnlinkedNodes =
+      detectedAsDuplicate && !this.unionFind.nodesAreLinked(id1, id2);
+    if (isDuplicateAndLinksUnlinkedNodes) {
+      this.unionFind.link([[id1, id2]]);
+    }
     return {
-      id1: this.idMapper.map(id1, this.datasetNumberOfRecords),
-      id2: this.idMapper.map(id2, this.datasetNumberOfRecords),
+      id1,
+      id2,
       isDuplicate: detectedAsDuplicate ? 1 : 0,
+      isDuplicateAndLinksUnlinkedNodes: isDuplicateAndLinksUnlinkedNodes
+        ? 1
+        : 0,
       ...Object.fromEntries(
         Object.entries(similarityScores).map(([score, value]) => [
           escapeColumnName(score, experimentCustomColumnPrefix),

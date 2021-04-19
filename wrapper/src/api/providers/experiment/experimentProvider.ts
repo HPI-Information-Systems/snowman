@@ -112,13 +112,15 @@ export class ExperimentProvider {
     return this.checks.sync.call(async () => {
       const { datasetId } = this.getExperiment(id);
       const dataset = providers.dataset.getDataset(datasetId);
+      this.checks.throwIfDatasetHasNoRecordCount(dataset);
 
       const datasetIDMapper = new DatasetIDMapper(datasetId);
       const ExperimentInserter = getExperimentInserter(format);
       const numberOfUploadedRecords = await new ExperimentInserter(
         id,
         datasetIDMapper,
-        dataset.numberOfRecords
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        dataset.numberOfRecords!
       )
         .insert(file)
         .catch((e) => {
