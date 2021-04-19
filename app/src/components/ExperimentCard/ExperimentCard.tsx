@@ -10,17 +10,12 @@ import { openPreviewer } from 'store/actions/ExperimentPreviewerActions';
 import { deleteExperiment } from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { Store } from 'store/models';
-import { getAlgorithmNameFromId } from 'utils/algorithmHelpers';
 import { couldPreviewExperiment } from 'utils/experimentsHelpers';
 
 const mapStateToProps = (
   state: Store,
   ownProps: ExperimentCardOwnProps
 ): ExperimentCardStateProps => ({
-  algorithmName: getAlgorithmNameFromId(
-    ownProps.experiment.algorithmId,
-    state.CoreStore.algorithms
-  ),
   couldPreview: couldPreviewExperiment(ownProps.experiment),
 });
 

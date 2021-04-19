@@ -10,3 +10,10 @@ export const doesDatasetMatchTags = (
 
 export const couldPreviewDataset = (aDataset: Dataset): boolean =>
   aDataset.numberOfUploadedRecords !== undefined;
+
+export const getDatasetNameFromId = (
+  anId: number,
+  datasets: Dataset[]
+): string =>
+  datasets.find((aDataset: Dataset): boolean => aDataset.id === anId)?.name ??
+  'Unknown';

@@ -19,6 +19,7 @@ import React from 'react';
 
 const ExperimentCardView = ({
   algorithmName,
+  datasetName,
   couldPreview,
   experiment,
   editExperiment,
@@ -27,7 +28,9 @@ const ExperimentCardView = ({
 }: ExperimentCardProps): JSX.Element => (
   <IonCard button={false}>
     <IonCardHeader>
-      <IonCardSubtitle>{algorithmName}</IonCardSubtitle>
+      <IonCardSubtitle>
+        <b>{datasetName}</b> ({algorithmName})
+      </IonCardSubtitle>
       <IonCardTitle>{experiment.name}</IonCardTitle>
     </IonCardHeader>
     <IonCardContent>
