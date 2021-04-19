@@ -7,7 +7,7 @@ import {
   DatasetValues,
   FileResponse,
 } from '../../server/types';
-import { invalidateCaches } from '../benchmark/intersection/cache';
+import { IntersectionCacheBase } from '../benchmark/intersection/cache';
 import { DatasetDeleter } from './deleter';
 import { DatasetFileGetter } from './file/getter';
 import { DatasetInserter } from './file/inserter';
@@ -61,7 +61,7 @@ export class DatasetProvider {
       newStoredDataset.numberOfRecords
     );
     tables.meta.dataset.upsert([newStoredDataset]);
-    invalidateCaches(id);
+    IntersectionCacheBase.invalidateDataset(id);
   }
 
   deleteDataset(id: DatasetId): void {
@@ -104,7 +104,7 @@ export class DatasetProvider {
       storedDataset.numberOfRecords = datasetIDMapper.numberMappedIds();
       storedDataset.numberOfUploadedRecords = insertedRowCount;
       tables.meta.dataset.upsert([storedDataset]);
-      invalidateCaches(id);
+      IntersectionCacheBase.invalidateDataset(id);
       if (
         storedDataset.numberOfRecords !== null &&
         insertedRowCount < storedDataset.numberOfRecords

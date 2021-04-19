@@ -11,15 +11,11 @@ export class CalculatePairsManyNegative extends CalculatePairs {
   protected rows: (ClusterID | undefined)[] = [];
 
   protected get subclustering(): Subclustering {
-    return SubclusterCache.get(
-      this.intersection.datasetId,
-      this.intersection.positive,
-      this.intersection.positiveSimilarityThresholds,
-      this.intersection.positiveSimilarityFunctions,
-      this.intersection.negative.slice(0, 1),
-      this.intersection.negativeSimilarityThresholds.slice(0, 1),
-      this.intersection.negativeSimilarityFunctions.slice(0, 1)
-    ).clustering;
+    return SubclusterCache.get({
+      datasetId: this.intersection.config.datasetId,
+      base: this.intersection.config.included,
+      partition: this.intersection.config.excluded.slice(0, 1),
+    }).clustering;
   }
 
   protected readonly rowCountCache = new LazyProperty(() =>
@@ -28,20 +24,14 @@ export class CalculatePairsManyNegative extends CalculatePairs {
   protected negativeClusterings: Clustering[] = [];
 
   protected calculatePairs(): ReturnType<CalculatePairs['calculatePairs']> {
-    this.negativeClusterings = this.intersection.negative
-      .slice(1)
-      .map(
-        (experimentId, index) =>
-          IntersectionCache.get(
-            this.intersection.datasetId,
-            [experimentId],
-            [this.intersection.negativeSimilarityThresholds[index + 1]],
-            [this.intersection.negativeSimilarityFunctions[index + 1]],
-            [],
-            [],
-            []
-          ).clustering
-      );
+    this.negativeClusterings = this.intersection.config.excluded.slice(1).map(
+      (experimentConfig) =>
+        IntersectionCache.get({
+          datasetId: this.intersection.config.datasetId,
+          included: [experimentConfig],
+          excluded: [],
+        }).clustering
+    );
     this.rows = [];
     this.skipRemains = this.skip;
     this.subclusters = this.subclustering.subclustersFromBaseClusterId(

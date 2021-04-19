@@ -365,51 +365,41 @@ describe('Similarity Threshold Provider', () => {
       },
     ]);
     expectClusteringsToEqual(
-      IntersectionCache.get(
-        [datasetId],
-        [experimentId],
-        [undefined],
-        [undefined],
-        [],
-        [],
-        []
-      ).clustering,
+      IntersectionCache.get({
+        datasetId,
+        excluded: [],
+        included: [{ experimentId }],
+      }).clustering,
       [[0, 1, 2, 3], [4]]
     );
     expectClusteringsToEqual(
-      IntersectionCache.get(
-        [datasetId],
-        [experimentId],
-        [3],
-        [functionId],
-        [],
-        [],
-        []
-      ).clustering,
+      IntersectionCache.get({
+        datasetId,
+        excluded: [],
+        included: [
+          { experimentId, similarity: { func: functionId, threshold: 3 } },
+        ],
+      }).clustering,
       [[0], [1], [2, 3], [4]]
     );
     expectClusteringsToEqual(
-      IntersectionCache.get(
-        [datasetId],
-        [experimentId],
-        [2],
-        [functionId],
-        [],
-        [],
-        []
-      ).clustering,
+      IntersectionCache.get({
+        datasetId,
+        excluded: [],
+        included: [
+          { experimentId, similarity: { func: functionId, threshold: 2 } },
+        ],
+      }).clustering,
       [[0], [1, 2, 3], [4]]
     );
     expectClusteringsToEqual(
-      IntersectionCache.get(
-        [datasetId],
-        [experimentId],
-        [1],
-        [functionId],
-        [],
-        [],
-        []
-      ).clustering,
+      IntersectionCache.get({
+        datasetId,
+        excluded: [],
+        included: [
+          { experimentId, similarity: { func: functionId, threshold: 1 } },
+        ],
+      }).clustering,
       [[0, 1, 2, 3], [4]]
     );
   });

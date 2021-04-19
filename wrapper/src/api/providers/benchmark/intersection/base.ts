@@ -1,117 +1,84 @@
-import {
-  DatasetId,
-  ExperimentId,
-  SimilarityThresholdFunctionId,
-} from '../../../server/types';
-import { getSimilarity } from '../../../tools/getSimilarity';
+import { tables } from '../../../database';
 import { LazyProperty } from '../../../tools/lazyProperty';
-import { providers } from '../..';
+import { StoredDataset } from '../../dataset/util/converter';
 import { Clustering } from '../cluster/types';
 import { UnionFind } from '../cluster/unionFind';
 import type { Intersection as IntersectionSubclass } from '.';
-import { IntersectionCache, SubclusterCache } from './cache';
+import {
+  IntersectionCache,
+  IntersectionCacheContent,
+  IntersectionConfig,
+  SubclusterCache,
+} from './cache';
 import { IntersectionQueries } from './queries';
 
-export const entangledIntersectionBaseParams = [
-  {
-    sortBy: 1,
-    toSort: [1, 2, 3],
-  },
-  {
-    sortBy: 4,
-    toSort: [4, 5, 6],
-  },
-];
-
-export class IntersectionBase {
+export class IntersectionBase
+  implements IntersectionCacheContent<IntersectionConfig> {
   get clustering(): Clustering {
     return this._clustering.value;
+  }
+
+  get size(): number {
+    return this.dataset.numberOfRecords;
   }
 
   protected readonly _clustering = new LazyProperty<Clustering>(() =>
     this.createClustering()
   );
 
+  readonly dataset: StoredDataset & { numberOfRecords: number };
   protected readonly queries = new IntersectionQueries();
 
-  constructor(
-    public readonly datasetId: [DatasetId],
-    public readonly positive: ExperimentId[],
-    public readonly positiveSimilarityThresholds: (number | undefined)[],
-    public readonly positiveSimilarityFunctions: (
-      | SimilarityThresholdFunctionId
-      | undefined
-    )[],
-    public readonly negative: ExperimentId[],
-    public readonly negativeSimilarityThresholds: (number | undefined)[],
-    public readonly negativeSimilarityFunctions: (
-      | SimilarityThresholdFunctionId
-      | undefined
-    )[]
-  ) {}
+  constructor(readonly config: IntersectionConfig, readonly key: string) {
+    const dataset = tables.meta.dataset.get({ id: config.datasetId });
+    if (!dataset || typeof dataset.numberOfRecords !== 'number') {
+      throw new Error('The dataset does not specify number of records.');
+    }
+    this.dataset = dataset as this['dataset'];
+  }
 
   get positiveIntersection(): IntersectionSubclass {
-    return IntersectionCache.get(
-      this.datasetId,
-      this.positive,
-      this.positiveSimilarityThresholds,
-      this.positiveSimilarityFunctions,
-      [],
-      [],
-      []
-    );
+    return IntersectionCache.get({
+      datasetId: this.config.datasetId,
+      included: this.config.included,
+      excluded: [],
+    });
   }
 
   get negativeIntersection(): IntersectionSubclass {
-    return IntersectionCache.get(
-      this.datasetId,
-      this.negative,
-      this.negativeSimilarityThresholds,
-      this.negativeSimilarityFunctions,
-      [],
-      [],
-      []
-    );
+    return IntersectionCache.get({
+      datasetId: this.config.datasetId,
+      included: this.config.excluded,
+      excluded: [],
+    });
   }
 
   protected createClustering(): Clustering {
-    if (this.negative.length > 0) {
+    if (this.config.excluded.length > 0) {
       throw new Error(
         'Creating a clustering which excludes experiments is not supported.'
       );
     }
-    const numberOfRecords = providers.dataset.getDataset(this.datasetId[0])
-      .numberOfRecords;
-    if (numberOfRecords === undefined) {
-      throw new Error('The dataset does not specify number of records.');
-    }
-    if (this.positive.length === 0) {
-      const clustering = new UnionFind(numberOfRecords);
-      for (let index = 1; index < numberOfRecords; index++) {
+    if (this.config.included.length === 0) {
+      const clustering = new UnionFind(this.size);
+      for (let index = 1; index < this.size; index++) {
         clustering.link([[index, index - 1]]);
       }
       return clustering;
-    } else if (this.positive.length === 1) {
-      return new UnionFind(numberOfRecords).link(
+    } else if (this.config.included.length === 1) {
+      return new UnionFind(this.size).link(
         this.queries.experimentLinks(
-          this.positive[0],
-          getSimilarity(
-            this.positiveSimilarityThresholds[0],
-            this.positiveSimilarityFunctions[0]
-          )
+          this.config.included[0].experimentId,
+          this.config.included[0].similarity
         )
       );
     } else {
-      const splitIndex = Math.floor(this.positive.length / 2);
-      return SubclusterCache.get(
-        this.datasetId,
-        this.positive.slice(0, splitIndex),
-        this.positiveSimilarityThresholds.slice(0, splitIndex),
-        this.positiveSimilarityFunctions.slice(0, splitIndex),
-        this.positive.slice(splitIndex),
-        this.positiveSimilarityThresholds.slice(splitIndex),
-        this.positiveSimilarityFunctions.slice(splitIndex)
-      ).clustering;
+      const splitIndex = Math.floor(this.config.included.length / 2);
+      return SubclusterCache.get({
+        datasetId: this.config.datasetId,
+        base: this.config.included.slice(0, splitIndex),
+        partition: this.config.included.slice(splitIndex),
+      }).clustering;
     }
   }
 }

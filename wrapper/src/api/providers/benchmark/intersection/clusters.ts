@@ -15,9 +15,9 @@ export class IntersectionClusters extends IntersectionCounts {
   protected readonly accumulatedRowCounts: number[] = [];
   protected readonly calculatePairs = new LazyProperty(
     (): CalculatePairs => {
-      if (this.negative.length === 0) {
+      if (this.config.excluded.length === 0) {
         return new CalculatePairsNoNegative(this);
-      } else if (this.negative.length === 1) {
+      } else if (this.config.excluded.length === 1) {
         return new CalculatePairs1Negative(this);
       } else {
         return new CalculatePairsManyNegative(this);

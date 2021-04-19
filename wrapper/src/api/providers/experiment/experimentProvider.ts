@@ -9,7 +9,7 @@ import {
 } from '../../server/types/ExperimentRequests';
 import { getSimilarity } from '../../tools/getSimilarity';
 import { providers } from '..';
-import { invalidateCaches } from '../benchmark/intersection/cache';
+import { IntersectionCacheBase } from '../benchmark/intersection/cache';
 import { DatasetIDMapper } from '../dataset/util/idMapper';
 import { getExperimentInserter } from './file';
 import { rawGetter } from './file/rawGetter';
@@ -133,7 +133,7 @@ export class ExperimentProvider {
         storedExperiment.numberOfUploadedRecords = numberOfUploadedRecords;
         tables.meta.experiment.upsert([storedExperiment]);
       }
-      invalidateCaches(id);
+      IntersectionCacheBase.invalidateExperiment(id);
     }, id);
   }
 
@@ -144,7 +144,7 @@ export class ExperimentProvider {
       storedExperiment.numberOfUploadedRecords = null;
       tables.meta.experiment.upsert([storedExperiment]);
     }
-    invalidateCaches(id);
+    IntersectionCacheBase.invalidateExperiment(id);
   }
 
   private deleteSimilarityThresholdFunctions(experimentId: ExperimentId): void {

@@ -10,15 +10,11 @@ export class CalculatePairs1Negative extends CalculatePairs {
   protected calculatePairs(): ReturnType<CalculatePairs['calculatePairs']> {
     this.rows = [];
     this.skipRemains = this.skip;
-    this.subclusters = SubclusterCache.get(
-      this.intersection.datasetId,
-      this.intersection.positive,
-      this.intersection.positiveSimilarityThresholds,
-      this.intersection.positiveSimilarityFunctions,
-      this.intersection.negative,
-      this.intersection.negativeSimilarityThresholds,
-      this.intersection.negativeSimilarityFunctions
-    ).clustering.subclustersFromBaseClusterId(this.clusterId);
+    this.subclusters = SubclusterCache.get({
+      datasetId: this.intersection.config.datasetId,
+      base: this.intersection.config.included,
+      partition: this.intersection.config.excluded,
+    }).clustering.subclustersFromBaseClusterId(this.clusterId);
     this.calculatePairsPrepared();
     return [this.skip - this.skipRemains, this.rows];
   }

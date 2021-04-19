@@ -14,7 +14,7 @@ import {
 import { providers } from '..';
 import { UnionFind } from '../benchmark/cluster/unionFind';
 import { datasetFromExperimentIds } from '../benchmark/datasetFromExperiments';
-import { invalidateCaches } from '../benchmark/intersection/cache';
+import { IntersectionCacheBase } from '../benchmark/intersection/cache';
 import { SimilarityThresholdFunctionConverter } from './util/converter';
 import { functionToExpression } from './util/functionToExpression';
 
@@ -117,7 +117,7 @@ export class SimilarityThresholdsProvider {
         },
       ]);
       this.writeSimilarities(experimentId, functionId, expression);
-      invalidateCaches(functionId);
+      IntersectionCacheBase.invalidateSimilarityFunction(functionId);
     })();
   }
 
@@ -133,7 +133,7 @@ export class SimilarityThresholdsProvider {
       tables.experiment
         .similarityThresholdFunction(experimentId, functionId)
         .dropTable();
-      invalidateCaches(functionId);
+      IntersectionCacheBase.invalidateSimilarityFunction(functionId);
     })();
   }
 
