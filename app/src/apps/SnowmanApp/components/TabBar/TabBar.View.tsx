@@ -3,9 +3,9 @@ import {
   TabBarConfigItem,
   TabBarConfigLeft,
   TabBarConfigRight,
-} from 'components/TabBar/TabBarConfig';
-import { TabBarProps } from 'components/TabBar/TabBarProps';
-import styles from 'components/TabBar/TabBarStyles.module.css';
+} from 'apps/SnowmanApp/components/TabBar/TabBarConfig';
+import { TabBarProps } from 'apps/SnowmanApp/components/TabBar/TabBarProps';
+import styles from 'apps/SnowmanApp/components/TabBar/TabBarStyles.module.css';
 import React from 'react';
 import style from 'theme/style';
 

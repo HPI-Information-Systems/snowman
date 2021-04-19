@@ -19,8 +19,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'theme/overwrites.css';
 
 import { IonApp } from '@ionic/react';
-import GlobalLoading from 'components/GlobalLoading/GlobalLoading';
-import TapBar from 'components/TabBar/TapBar';
+import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/BlockingLoading';
+import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';
 import BenchmarkApp from 'pages/BenchmarkPage/BenchmarkApp';
 import RootPage from 'pages/RootPage/RootPage';
 import React from 'react';
@@ -30,11 +30,11 @@ import ReactTooltip from 'react-tooltip';
 const SnowmanAppContainer = (): JSX.Element => {
   return (
     <IonApp>
-      <TapBar />
+      <TabBar />
       <RootPage />
       <BenchmarkApp />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
-      <GlobalLoading />
+      <BlockingLoading />
       {/* Todo: Change autoClose back to 5000 */}
       <ToastContainer
         autoClose={500}

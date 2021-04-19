@@ -1,10 +1,10 @@
 import SnowmanAppContainer from 'apps/SnowmanApp/SnowmanApp.Container';
+import SnowmanAppStore from 'apps/SnowmanApp/store/SnowmanAppStore';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { store } from 'store/store';
 
 const SnowmanApp = (): JSX.Element => (
-  <Provider store={store}>
+  <Provider store={SnowmanAppStore}>
     <SnowmanAppContainer />
   </Provider>
 );
