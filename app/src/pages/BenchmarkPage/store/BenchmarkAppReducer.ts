@@ -1,7 +1,7 @@
 import { Algorithm, Dataset, Experiment } from 'api';
 import { union } from 'lodash';
-import { BenchmarkAppActionsTypes } from 'pages/BenchmarkPage/store/BenchmarkAppActionsTypes';
-import { BenchmarkAppModel } from 'pages/BenchmarkPage/store/BenchmarkAppModel';
+import { BenchmarkAppActionsTypes } from 'pages/BenchmarkPage/types/BenchmarkAppActionsTypes';
+import { BenchmarkAppModel } from 'pages/BenchmarkPage/types/BenchmarkAppModel';
 import { ExpandedEntity } from 'pages/BenchmarkPage/types/ExpandedEntity';
 import { SnowmanAction } from 'store/messages';
 

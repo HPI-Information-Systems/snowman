@@ -1,5 +1,5 @@
-import { BenchmarkAppModel } from 'pages/BenchmarkPage/store/BenchmarkAppModel';
 import BenchmarkAppReducer from 'pages/BenchmarkPage/store/BenchmarkAppReducer';
+import { BenchmarkAppModel } from 'pages/BenchmarkPage/types/BenchmarkAppModel';
 import { applyMiddleware, createStore, Reducer, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';

@@ -11,6 +11,7 @@ const DatasetsAppReducer = (
   action: SnowmanAction
 ): DatasetsAppModel => {
   switch (action.type) {
+    // Todo: Update selectedTags if datasets are changed globally
     case DatasetsAppActionsTypes.TOGGLE_TAG:
       return {
         ...state,
