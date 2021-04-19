@@ -24,9 +24,9 @@ const mapDispatchToProps = (
   },
 });
 
-const ExperimentsPage = connect(
+const ExperimentsPageContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(ExperimentsPageView);
 
-export default ExperimentsPage;
+export default ExperimentsPageContainer;

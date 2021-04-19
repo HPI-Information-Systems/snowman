@@ -36,9 +36,9 @@ const mapDispatchToProps = (
   },
 });
 
-const DatasetsPage = connect(
+const DatasetsPageContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(DatasetsPageView);
 
-export default DatasetsPage;
+export default DatasetsPageContainer;
