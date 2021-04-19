@@ -19,11 +19,12 @@ import { getDatasetNameFromId } from 'utils/datasetHelper';
 
 const ExperimentsAppView = ({
   algorithms,
-  experiments,
   selectedAlgorithms,
   datasets,
   selectedDatasets,
   currentExperiments,
+  changeSelectedDatasets,
+  changeSelectedAlgorithms,
 }: ExperimentsAppProps): JSX.Element => {
   return (
     <>
@@ -35,13 +36,14 @@ const ExperimentsAppView = ({
               <IonSelect
                 value={selectedDatasets}
                 placeholder="Select multiple"
+                onIonChange={changeSelectedDatasets}
                 multiple={true}
               >
                 {datasets.map(
                   (aDataset: Dataset): JSX.Element => (
                     <IonSelectOption
                       key={`filter_datasets_${aDataset.id}`}
-                      value={aDataset.id}
+                      value={aDataset.id.toString()}
                     >
                       {aDataset.name}
                     </IonSelectOption>
@@ -56,13 +58,14 @@ const ExperimentsAppView = ({
               <IonSelect
                 value={selectedAlgorithms}
                 placeholder="Select multiple"
+                onIonChange={changeSelectedAlgorithms}
                 multiple={true}
               >
                 {algorithms.map(
                   (anAlgorithm: Algorithm): JSX.Element => (
                     <IonSelectOption
                       key={`filter_algorithms_${anAlgorithm.id}`}
-                      value={anAlgorithm.id}
+                      value={anAlgorithm.id.toString()}
                     >
                       {anAlgorithm.name}
                     </IonSelectOption>
@@ -78,7 +81,7 @@ const ExperimentsAppView = ({
       </IonText>
       <IonGrid>
         <IonRow>
-          {experiments.map((anExperiment: Experiment) => (
+          {currentExperiments.map((anExperiment: Experiment) => (
             <IonCol key={'col' + anExperiment.id} size="4" sizeXl="3">
               <ExperimentCard
                 key={`experimentCard-${anExperiment.id}`}
