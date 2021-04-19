@@ -14,6 +14,7 @@ import { getTagsFromDatasets } from 'utils/tagFactory';
 
 const DatasetsAppView = ({
   datasets,
+  currentDatasets,
   selectedTags,
   clickOnTag,
 }: DatasetsAppProps): JSX.Element => {
@@ -39,7 +40,7 @@ const DatasetsAppView = ({
       </IonText>
       <IonGrid>
         <IonRow>
-          {datasets.map((aDataset: Dataset) => (
+          {currentDatasets.map((aDataset: Dataset) => (
             <IonCol key={'col' + aDataset.id} size="4" sizeXl="3">
               <DatasetCard
                 key={`datasetCard-${aDataset.id}`}

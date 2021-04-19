@@ -2,6 +2,7 @@ import { Dataset } from 'api';
 
 export interface DatasetsAppStateProps {
   selectedTags: string[];
+  currentDatasets: Dataset[];
 }
 
 export interface DatasetAppOwnProps {
