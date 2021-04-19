@@ -27,7 +27,7 @@ import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
 
-const DefaultAppView = (): JSX.Element => {
+const SnowmanAppContainer = (): JSX.Element => {
   return (
     <IonApp>
       <TapBar />
@@ -51,4 +51,4 @@ const DefaultAppView = (): JSX.Element => {
   );
 };
 
-export default DefaultAppView;
+export default SnowmanAppContainer;
