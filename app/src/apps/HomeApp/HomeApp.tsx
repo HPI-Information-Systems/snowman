@@ -1,15 +1,15 @@
-import 'pages/RootPage/RootPageStyles.css';
+import 'apps/RootPageRootPageStyles.css';
 
 import GenericSubApp from 'components/GenericSubApp/GenericSubApp';
 import React from 'react';
-import { provideSnowmanStore } from 'store/globalStoreInteractor';
 import { ViewIDs } from 'types/ViewIDs';
+import { dummyStoreFactory } from 'utils/storeFactory';
 
-const RootPage = (): JSX.Element => (
+const HomeApp = (): JSX.Element => (
   <GenericSubApp
     appId={ViewIDs.HOME}
     appTitle="Home Page"
-    createSubAppStore={provideSnowmanStore}
+    createSubAppStore={dummyStoreFactory('HomepageApp')}
   >
     <div className="ion-text-center introduction">
       <img src="./logo192.png" alt="logo" />
@@ -30,4 +30,4 @@ const RootPage = (): JSX.Element => (
   </GenericSubApp>
 );
 
-export default RootPage;
+export default HomeApp;

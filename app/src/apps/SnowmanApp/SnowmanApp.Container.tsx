@@ -19,10 +19,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'theme/overwrites.css';
 
 import { IonApp } from '@ionic/react';
+import HomeApp from 'apps/HomeApp/HomeApp';
 import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/BlockingLoading';
 import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';
 import BenchmarkApp from 'pages/BenchmarkPage/BenchmarkApp';
-import RootPage from 'pages/RootPage/RootPage';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';
@@ -31,7 +31,7 @@ const SnowmanAppContainer = (): JSX.Element => {
   return (
     <IonApp>
       <TabBar />
-      <RootPage />
+      <HomeApp />
       <BenchmarkApp />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <BlockingLoading />

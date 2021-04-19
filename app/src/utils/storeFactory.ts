@@ -1,7 +1,7 @@
 import { applyMiddleware, createStore, Reducer, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
-import { SnowmanAction } from 'store/messages';
+import { SnowmanAction } from 'types/SnowmanAction';
 
 export const constructStore = <Model>(
   storeName: string,
@@ -12,3 +12,10 @@ export const constructStore = <Model>(
   });
   return createStore(reducer, composeEnhancer(applyMiddleware(thunk)));
 };
+
+const dummyReducer = (_: null | undefined, __: SnowmanAction): null => null;
+
+export const dummyStoreFactory = (
+  storeName: string
+): (() => Store<unknown, SnowmanAction>) => (): Store<unknown, SnowmanAction> =>
+  constructStore<null>(storeName, dummyReducer);
