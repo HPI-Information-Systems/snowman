@@ -1,5 +1,3 @@
-import 'components/AlgorithmDialog/AlgorithmDialog.css';
-
 import {
   IonButton,
   IonIcon,
@@ -9,6 +7,7 @@ import {
   IonList,
   IonTextarea,
 } from '@ionic/react';
+import styles from 'components/AlgorithmDialog/AlgorithmDialog.module.css';
 import { AlgorithmDialogProps } from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
 import {
@@ -17,6 +16,7 @@ import {
   closeCircleOutline,
 } from 'ionicons/icons';
 import React from 'react';
+import style from 'theme/style';
 
 const AlgorithmDialogView = ({
   algorithmDescription,
@@ -59,8 +59,11 @@ const AlgorithmDialogView = ({
         />
       </IonItem>
     </IonList>
-    <div className="center button-row">
-      <IonButton className="button-hugh button-padding" onClick={clickOnSubmit}>
+    <div className={style(styles.center, styles.buttonRow)}>
+      <IonButton
+        className={style(styles.buttonHugh, styles.buttonPadding)}
+        onClick={clickOnSubmit}
+      >
         <IonIcon
           slot="start"
           icon={isAddDialog ? addCircleOutline : checkmarkCircleOutline}
@@ -68,7 +71,7 @@ const AlgorithmDialogView = ({
         {isAddDialog ? 'Add' : 'Update'}
       </IonButton>
       <IonButton
-        className="button-hugh button-padding"
+        className={style(styles.buttonHugh, styles.buttonPadding)}
         onClick={clickOnCancel}
         color="light"
       >
