@@ -13,3 +13,5 @@ const ExperimentsApp = (): JSX.Element => (
     <ExperimentsPageContainer />
   </GenericSubApp>
 );
+
+export default ExperimentsApp;

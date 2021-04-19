@@ -13,3 +13,5 @@ const DatasetsApp = (): JSX.Element => (
     <DatasetsPageContainer />
   </GenericSubApp>
 );
+
+export default DatasetsApp;
