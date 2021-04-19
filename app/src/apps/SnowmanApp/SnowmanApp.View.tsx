@@ -19,11 +19,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'theme/overwrites.css';
 
 import { IonApp } from '@ionic/react';
+import AlgorithmsApp from 'apps/AlgorithmsApp/AlgorithmsApp';
 import HomeApp from 'apps/HomeApp/HomeApp';
 import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/BlockingLoading';
 import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';
 import { SnowmanAppProps } from 'apps/SnowmanApp/SnowmanAppProps';
-import AlgorithmsApp from 'pages/AlgorithmsPage/AlgorithmsApp';
 import BenchmarkApp from 'pages/BenchmarkPage/BenchmarkApp';
 import DatasetsApp from 'pages/DatasetsPage/DatasetsApp';
 import ExperimentsApp from 'pages/ExperimentsPage/ExperimentsApp';
@@ -33,6 +33,7 @@ import ReactTooltip from 'react-tooltip';
 
 const SnowmanAppView = ({
   refreshCentralResources,
+  algorithms,
 }: SnowmanAppProps): JSX.Element => {
   useEffect(refreshCentralResources, [refreshCentralResources]);
   return (
@@ -40,7 +41,7 @@ const SnowmanAppView = ({
       <TabBar />
       <HomeApp />
       <BenchmarkApp />
-      <AlgorithmsApp />
+      <AlgorithmsApp algorithms={algorithms} />
       <DatasetsApp />
       <ExperimentsApp />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />

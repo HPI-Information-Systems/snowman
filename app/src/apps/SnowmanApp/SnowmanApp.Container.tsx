@@ -1,5 +1,8 @@
 import SnowmanAppView from 'apps/SnowmanApp/SnowmanApp.View';
-import { SnowmanAppDispatchProps } from 'apps/SnowmanApp/SnowmanAppProps';
+import {
+  SnowmanAppDispatchProps,
+  SnowmanAppStateProps,
+} from 'apps/SnowmanApp/SnowmanAppProps';
 import { refreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesActions';
 import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
 import { connect } from 'react-redux';
@@ -13,6 +16,13 @@ const mapDispatchToProps = (
   },
 });
 
-const SnowmanAppContainer = connect(null, mapDispatchToProps)(SnowmanAppView);
+const mapStateToProps = (state: SnowmanAppModel): SnowmanAppStateProps => ({
+  algorithms: state.CentralResourcesStore.algorithms,
+});
+
+const SnowmanAppContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SnowmanAppView);
 
 export default SnowmanAppContainer;
