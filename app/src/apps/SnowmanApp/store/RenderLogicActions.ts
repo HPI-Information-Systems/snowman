@@ -20,15 +20,17 @@ export const doNavigateTo = (aTarget: ViewIDs): void => {
 };
 
 export const openDialog = (
-  aDialog: ViewIDs
+  aDialog: ViewIDs,
+  entityId?: number
 ): easyPrimitiveActionReturn<SnowmanAppModel> =>
   easyPrimitiveAction<SnowmanAppModel>({
     type: RenderLogicActionTypes.OPEN_DIALOG,
     payload: aDialog,
+    optionalPayload: entityId ?? null,
   });
 
-export const doOpenDialog = (aDialog: ViewIDs): void => {
-  SnowmanAppDispatch(openDialog(aDialog));
+export const doOpenDialog = (aDialog: ViewIDs, entityId?: number): void => {
+  SnowmanAppDispatch(openDialog(aDialog, entityId));
 };
 
 export const closeDialog = (): easyPrimitiveActionReturn<SnowmanAppModel> =>
@@ -37,3 +39,7 @@ export const closeDialog = (): easyPrimitiveActionReturn<SnowmanAppModel> =>
     // reducer ignores payload
     payload: null,
   });
+
+export const doCloseDialog = (): void => {
+  SnowmanAppDispatch(closeDialog());
+};

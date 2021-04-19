@@ -6,6 +6,7 @@ import { ViewIDs } from 'types/ViewIDs';
 const initialRenderLogicState: RenderLogicModel = {
   currentViewID: ViewIDs.HOME,
   openedDialog: null,
+  entityId: null,
 };
 
 const RenderLogicReducer = (
@@ -22,6 +23,7 @@ const RenderLogicReducer = (
       return {
         ...state,
         openedDialog: action.payload as ViewIDs,
+        entityId: action.optionalPayload as null | number,
       };
     case RenderLogicActionTypes.CLOSE_DIALOG:
       return {

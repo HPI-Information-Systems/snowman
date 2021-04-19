@@ -1,11 +1,14 @@
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
+export interface AlgorithmDialogOwnProps {
+  isOpen: boolean;
+  algorithmId: number | null;
+}
+
 export interface AlgorithmDialogStateProps {
   algorithmName: string;
-  isOpen: boolean;
   algorithmDescription: string;
   isAddDialog: boolean;
-  algorithmId: number;
 }
 
 export interface AlgorithmDialogDispatchProps {
@@ -16,5 +19,6 @@ export interface AlgorithmDialogDispatchProps {
   clickOnSubmit(): void;
 }
 
-export type AlgorithmDialogProps = AlgorithmDialogStateProps &
+export type AlgorithmDialogProps = AlgorithmDialogOwnProps &
+  AlgorithmDialogStateProps &
   AlgorithmDialogDispatchProps;
