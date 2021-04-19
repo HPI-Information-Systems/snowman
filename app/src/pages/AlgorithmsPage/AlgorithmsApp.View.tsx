@@ -3,17 +3,17 @@ import { Algorithm } from 'api';
 import AddAlgorithmFab from 'components/AddFab/AddAlgorithmFab';
 import AlgorithmCard from 'components/AlgorithmCard/AlgorithmCard';
 import AlgorithmDialog from 'components/AlgorithmDialog/AlgorithmDialog';
-import PageStruct from 'components/PageStructOLD/PageStruct';
-import { AlgorithmsPageProps } from 'pages/AlgorithmsPage/AlgorithmsPageProps';
+import { AlgorithmsAppProps } from 'pages/AlgorithmsPage/AlgorithmsAppProps';
 import React, { useEffect } from 'react';
 
-const AlgorithmsPageView = ({
+const AlgorithmsAppView = ({
   algorithms,
   loadAlgorithms,
-}: AlgorithmsPageProps): JSX.Element => {
+}: AlgorithmsAppProps): JSX.Element => {
   useEffect((): void => loadAlgorithms(), [loadAlgorithms]);
   return (
-    <PageStruct title="Matching Solutions">
+    <>
+      <h1>Hello.</h1>
       <IonGrid>
         <IonRow>
           {algorithms.map((anAlgorithm: Algorithm) => (
@@ -23,10 +23,8 @@ const AlgorithmsPageView = ({
           ))}
         </IonRow>
       </IonGrid>
-      <AddAlgorithmFab />
-      <AlgorithmDialog />
-    </PageStruct>
+    </>
   );
 };
 
-export default AlgorithmsPageView;
+export default AlgorithmsAppView;

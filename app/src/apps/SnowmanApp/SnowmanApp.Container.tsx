@@ -22,6 +22,7 @@ import { IonApp } from '@ionic/react';
 import HomeApp from 'apps/HomeApp/HomeApp';
 import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/BlockingLoading';
 import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';
+import AlgorithmsApp from 'pages/AlgorithmsPage/AlgorithmsApp';
 import BenchmarkApp from 'pages/BenchmarkPage/BenchmarkApp';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -33,6 +34,7 @@ const SnowmanAppContainer = (): JSX.Element => {
       <TabBar />
       <HomeApp />
       <BenchmarkApp />
+      <AlgorithmsApp />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <BlockingLoading />
       {/* Todo: Change autoClose back to 5000 */}
