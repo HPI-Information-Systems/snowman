@@ -1,5 +1,3 @@
-import 'apps/ExperimentsPage/ExperimentsAppStyles.css';
-
 import {
   IonCol,
   IonGrid,
