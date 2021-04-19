@@ -1,8 +1,9 @@
 import { numberOfPairs } from '../../../../tools/numberOfPairs';
+import { ClusteringBase } from '../clusteringBase';
 import { Cluster, Clustering, NodeID, NodeLink } from '../types';
 import { Node } from './node';
 
-export class UnionFindBase implements Clustering {
+export class UnionFindBase extends ClusteringBase implements Clustering {
   protected readonly nodes: Node[];
   protected readonly clusterIdToCluster: Node[];
   protected _numberClusters: number;
@@ -22,6 +23,7 @@ export class UnionFindBase implements Clustering {
   }
 
   constructor(public readonly numberNodes: number) {
+    super();
     this._numberClusters = numberNodes;
     this.nodes = [];
     this.clusterIdToCluster = [];

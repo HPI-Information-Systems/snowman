@@ -1,6 +1,7 @@
 import { getTmpArray } from '../../../../tools/array';
 import { LazyProperty } from '../../../../tools/lazyProperty';
 import { numberOfPairs } from '../../../../tools/numberOfPairs';
+import { ClusteringBase } from '../clusteringBase';
 import {
   Cluster,
   ClusterID,
@@ -20,7 +21,7 @@ class ArraySubcluster extends Array<NodeID> implements Subcluster {
   }
 }
 
-export class Subclustering implements SubclusteringSpec {
+export class Subclustering extends ClusteringBase implements SubclusteringSpec {
   protected readonly nodeToSubcluster = new LazyProperty(() =>
     this.createNodeToSubcluster()
   );
@@ -35,6 +36,7 @@ export class Subclustering implements SubclusteringSpec {
   readonly numberRows: number;
 
   constructor(base: Clustering, partition: Clustering) {
+    super();
     this.numberNodes = base.numberNodes;
     [
       this.numberClusters,
