@@ -1,4 +1,4 @@
-import 'apps/RootPageRootPageStyles.css';
+import 'apps/HomeApp/HomeAppStyles.css';
 
 import GenericSubApp from 'components/GenericSubApp/GenericSubApp';
 import React from 'react';
