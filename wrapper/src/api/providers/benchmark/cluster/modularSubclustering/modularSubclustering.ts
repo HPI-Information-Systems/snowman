@@ -1,4 +1,4 @@
-import { getTmpArray } from '../../../../tools/array';
+import { getTmpArray, reduceLength } from '../../../../tools/array';
 import {
   ClusterID,
   Clustering,
@@ -183,9 +183,7 @@ export class ModularSubclustering
         from
       ];
     }
-    for (let index = 0; index < reduceClusterCount; index++) {
-      this.modularClusterToThisClusters.pop();
-    }
+    reduceLength(this.modularClusterToThisClusters, reduceClusterCount);
   }
 
   protected applyTargets(

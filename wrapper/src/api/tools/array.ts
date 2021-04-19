@@ -27,3 +27,14 @@ export function range(size: number): number[] {
   }
   return array;
 }
+
+export function reduceLength<T>(array: T[], reduceBy: number): T[] {
+  if (reduceBy < 100) {
+    for (let index = 0; index < reduceBy; ++index) {
+      array.pop();
+    }
+  } else {
+    array.length -= reduceBy;
+  }
+  return array;
+}
