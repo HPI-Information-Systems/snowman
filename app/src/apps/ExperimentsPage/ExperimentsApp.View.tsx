@@ -9,8 +9,8 @@ import {
   IonText,
 } from '@ionic/react';
 import { Algorithm, Dataset, Experiment } from 'api';
+import ExperimentCard from 'apps/ExperimentsApp/omponents/ExperimentCard/ExperimentCard';
 import { ExperimentsAppProps } from 'apps/ExperimentsPage/ExperimentsAppProps';
-import ExperimentCard from 'components/ExperimentCard/ExperimentCard';
 import React from 'react';
 import { getAlgorithmNameFromId } from 'utils/algorithmHelpers';
 import { getDatasetNameFromId } from 'utils/datasetHelper';

@@ -12,8 +12,8 @@ import {
   IonLabel,
   IonRow,
 } from '@ionic/react';
-import { ExperimentCardProps } from 'components/ExperimentCard/ExperimentCardProps';
-import styles from 'components/ExperimentCard/ExperimentCardStyles.module.css';
+import { ExperimentCardProps } from 'apps/ExperimentsApp/omponents/ExperimentCard/ExperimentCardProps';
+import styles from 'apps/ExperimentsApp/omponents/ExperimentCard/ExperimentCardStyles.module.css';
 import { create, telescope, trash } from 'ionicons/icons';
 import React from 'react';
 

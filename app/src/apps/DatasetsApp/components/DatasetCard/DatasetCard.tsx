@@ -1,10 +1,10 @@
-import { doDeleteDataset } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
-import DatasetCardView from 'components/DatasetCard/DatasetCard.View';
+import DatasetCardView from 'apps/DatasetsApp/components/DatasetCard/DatasetCard.View';
 import {
   DatasetCardDispatchProps,
   DatasetCardOwnProps,
   DatasetCardStateProps,
-} from 'components/DatasetCard/DatasetCardProps';
+} from 'apps/DatasetsApp/components/DatasetCard/DatasetCardProps';
+import { doDeleteDataset } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { connect } from 'react-redux';
 import { openChangeDialog } from 'store/actions/DatasetDialogStoreActions';
 import { openPreviewer } from 'store/actions/DatasetPreviewerActions';

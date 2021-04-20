@@ -1,10 +1,10 @@
-import { doDeleteExperiment } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
-import ExperimentCardView from 'components/ExperimentCard/ExperimentCard.View';
+import ExperimentCardView from 'apps/ExperimentsApp/omponents/ExperimentCard/ExperimentCard.View';
 import {
   ExperimentCardDispatchProps,
   ExperimentCardOwnProps,
   ExperimentCardStateProps,
-} from 'components/ExperimentCard/ExperimentCardProps';
+} from 'apps/ExperimentsApp/omponents/ExperimentCard/ExperimentCardProps';
+import { doDeleteExperiment } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { connect } from 'react-redux';
 import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
 import { openPreviewer } from 'store/actions/ExperimentPreviewerActions';
