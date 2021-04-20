@@ -1,11 +1,25 @@
-import { DatasetValues, SetDatasetFileRequest } from 'api';
+import { DatasetsApi, DatasetValues, SetDatasetFileRequest } from 'api';
 import { DatasetDialogActionTypes } from 'apps/DatasetDialog/types/DatasetDialogActionTypes';
 import { DatasetDialogModel } from 'apps/DatasetDialog/types/DatasetDialogModel';
+import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
+import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
+import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
+import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
+import {
+  SUCCESS_TO_CREATE_NEW_DATASET,
+  SUCCESS_TO_UPDATE_DATASET,
+  SUCCESS_TO_UPLOAD_DATASET_FILE,
+} from 'structs/statusMessages';
 import { DatasetTypes } from 'types/DatasetTypes';
+import { EntityId } from 'types/EntityId';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
+import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
+import { ToastType } from 'types/ToastTypes';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
+import RequestHandler from 'utils/requestHandler';
 
 export const changeDatasetName = (
   aDatasetName: string
@@ -120,3 +134,103 @@ const getDatasetFileValues = (
   separator: state.csvSeparator,
   file: state.selectedFiles[0] as Blob,
 });
+
+const createDataset = (
+  showSuccess = true
+): SnowmanThunkAction<Promise<number>, DatasetDialogModel> => async (
+  _: unknown,
+  getState: () => DatasetDialogModel
+): Promise<number> =>
+  RequestHandler<number>(
+    (): Promise<number> =>
+      new DatasetsApi().addDataset({ dataset: getDatasetValues(getState()) }),
+    showSuccess ? SUCCESS_TO_CREATE_NEW_DATASET : undefined
+  );
+
+const setDataset = (
+  id: number,
+  showSuccess = false
+): SnowmanThunkAction<Promise<void>, DatasetDialogModel> => async (
+  _: unknown,
+  getState: () => DatasetDialogModel
+): Promise<void> =>
+  RequestHandler<void>(
+    (): Promise<void> =>
+      new DatasetsApi().setDataset({
+        datasetId: id,
+        dataset: getDatasetValues(getState()),
+      }),
+    showSuccess ? SUCCESS_TO_UPDATE_DATASET : undefined
+  );
+
+const uploadDatasetFile = (
+  id: number,
+  showSuccess = false
+): SnowmanThunkAction<Promise<void>, DatasetDialogModel> => async (
+  _: unknown,
+  getState: () => DatasetDialogModel
+): Promise<void> =>
+  RequestHandler<void>(
+    (): Promise<void> =>
+      new DatasetsApi().setDatasetFile(getDatasetFileValues(getState(), id)),
+    showSuccess ? SUCCESS_TO_UPLOAD_DATASET_FILE : undefined
+  );
+
+const addDataset = (): SnowmanThunkAction<
+  Promise<void>,
+  DatasetDialogModel
+> => async (
+  dispatch: SnowmanDispatch<DatasetDialogModel>,
+  getState: () => DatasetDialogModel
+): Promise<void> => {
+  return dispatch(createDataset(false))
+    .then((id) =>
+      getState().datasetType === DatasetTypes.full
+        ? dispatch(uploadDatasetFile(id, false)).catch((error) =>
+            RequestHandler(() =>
+              new DatasetsApi().deleteDataset({ datasetId: id })
+            ).finally(() => Promise.reject(error))
+          )
+        : Promise.resolve()
+    )
+    .then(() => dispatch(resetDialog()))
+    .then(() =>
+      SnowmanAppDispatch(
+        showToast(SUCCESS_TO_CREATE_NEW_DATASET, ToastType.Success)
+      )
+    )
+    .finally((): void => {
+      doCloseDialog();
+      doRefreshCentralResources();
+    });
+};
+
+const updateDataset = (
+  id: number
+): SnowmanThunkAction<Promise<void>, DatasetDialogModel> => async (
+  dispatch: SnowmanDispatch<DatasetDialogModel>
+): Promise<void> => {
+  return dispatch(setDataset(id, false))
+    .then((): Promise<void> => dispatch(uploadDatasetFile(id, false)))
+    .then((): void => dispatch(resetDialog()))
+    .then((): void =>
+      SnowmanAppDispatch(
+        showToast(SUCCESS_TO_UPDATE_DATASET, ToastType.Success)
+      )
+    )
+    .finally((): void => {
+      doCloseDialog();
+      doRefreshCentralResources();
+    });
+};
+
+export const addOrUpdateDataset = (
+  datasetId: EntityId
+): SnowmanThunkAction<Promise<void>, DatasetDialogModel> => async (
+  dispatch: SnowmanDispatch<DatasetDialogModel>
+): Promise<void> => {
+  if (datasetId === null) {
+    return dispatch(addDataset());
+  }
+  return dispatch(updateDataset(datasetId));
+};

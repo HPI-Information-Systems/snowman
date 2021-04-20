@@ -27,7 +27,6 @@ const DatasetDialogReducer = (
   state: DatasetDialogModel = initialState,
   action: SnowmanAction
 ): DatasetDialogModel => {
-  console.log('reduce lolol');
   switch (action.type) {
     case DatasetDialogActionTypes.RESET_DIALOG:
       return initialState;

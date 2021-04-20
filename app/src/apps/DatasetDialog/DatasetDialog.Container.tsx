@@ -1,10 +1,12 @@
 import DatasetDialogView from 'apps/DatasetDialog/DatasetDialog.View';
 import {
   DatasetDialogDispatchProps,
+  DatasetDialogOwnProps,
   DatasetDialogStateProps,
 } from 'apps/DatasetDialog/DatasetDialogProps';
 import {
   addNewTag,
+  addOrUpdateDataset,
   changeDatasetCSVEscape,
   changeDatasetCSVIdColumn,
   changeDatasetCSVQuote,
@@ -62,10 +64,10 @@ const mapStateToProps = (
 });
 
 const mapDispatchToProps = (
-  dispatch: SnowmanDispatch<DatasetDialogModel>
+  dispatch: SnowmanDispatch<DatasetDialogModel>,
+  ownProps: DatasetDialogOwnProps
 ): DatasetDialogDispatchProps => ({
   clickOnCancel(): void {
-    console.log('close me');
     doCloseDialog();
   },
   changeDatasetName(event: IonChangeEvent): void {
@@ -106,7 +108,7 @@ const mapDispatchToProps = (
     dispatch(addNewTag(newTagValue));
   },
   clickOnSubmit(): void {
-    console.log('submit me');
+    dispatch(addOrUpdateDataset(ownProps.entityId)).then();
   },
 });
 
