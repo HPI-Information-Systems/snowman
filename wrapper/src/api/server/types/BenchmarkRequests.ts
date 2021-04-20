@@ -1,11 +1,11 @@
+import { MetricsEnum, SoftKPIsExperimentEnum } from './';
 import { DiagramExperimentItem } from './DiagramExperimentItem';
 import { ExperimentConfigItem } from './ExperimentConfigItem';
 import { ExperimentIntersectionItem } from './ExperimentIntersectionItem';
-import { MetricsEnum } from './MetricsEnum';
 
 export interface CalculateDiagramDataRequest {
-  xAxis: MetricsEnum;
-  yAxis: MetricsEnum;
+  xAxis: MetricsEnum | SoftKPIsExperimentEnum;
+  yAxis: MetricsEnum | SoftKPIsExperimentEnum;
   diagramExperimentItem: Array<DiagramExperimentItem>;
 }
 

@@ -12,26 +12,16 @@
  * Do not edit the class manually.
  */
 
-import {
-    ExperimentConfigItem,
-} from './';
-
 /**
  * 
  * @export
- * @interface DiagramExperimentItem
+ * @enum {string}
  */
-export interface DiagramExperimentItem {
-    /**
-     * 
-     * @type {ExperimentConfigItem}
-     * @memberof DiagramExperimentItem
-     */
-    experiment?: ExperimentConfigItem;
-    /**
-     * 
-     * @type {ExperimentConfigItem}
-     * @memberof DiagramExperimentItem
-     */
-    groundTruth?: ExperimentConfigItem;
+export enum SoftKPIsExperimentEnum {
+    Expertise = 'expertise',
+    HrAmount = 'hrAmount',
+    ManhattanDistanceBasedEffort = 'manhattanDistanceBasedEffort',
+    HrAmountWeightedEffort = 'hrAmountWeightedEffort',
+    MultiplyEffort = 'multiplyEffort',
+    ExpertiseWeightedEffort = 'expertiseWeightedEffort'
 }
