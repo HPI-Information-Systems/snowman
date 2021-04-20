@@ -12,6 +12,7 @@ import {
 import { AlgorithmCardProps } from 'apps/AlgorithmsApp/components/AlgorithmCard/AlgorithmCardProps';
 import { create, trash } from 'ionicons/icons';
 import React from 'react';
+import { isPredefinedAlgorithm } from 'utils/algorithmHelpers';
 
 const AlgorithmCardView = ({
   algorithm,
@@ -31,6 +32,7 @@ const AlgorithmCardView = ({
             fill="clear"
             color="primary"
             onClick={editAlgorithm}
+            disabled={isPredefinedAlgorithm(algorithm)}
           >
             <IonIcon slot="icon-only" icon={create} />
           </IonButton>
@@ -41,7 +43,7 @@ const AlgorithmCardView = ({
             fill="clear"
             color="danger"
             onClick={deleteAlgorithm}
-            disabled={algorithm.id < 0}
+            disabled={isPredefinedAlgorithm(algorithm)}
           >
             <IonIcon slot="icon-only" icon={trash} />
           </IonButton>
