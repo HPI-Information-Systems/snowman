@@ -155,20 +155,22 @@ describe('AlgorithmProvider', () => {
         {
           value: 160,
           formula: '\\sum_{i}|a_i - b_i|',
-          name: 'manhattan distance',
-          range: [0, 160],
+          name: 'manhattan distance-based effort',
         },
         {
-          value: 276.31021115928553,
-          formula: '$$log(expertise level) * HR-Amount$$',
-          name: 'logarithmic expertise level',
-          range: [0, 160],
+          value: 163.0969097075427,
+          formula: '$$e^{\\frac_{expertise}{100}} * HR-Amount$$',
+          name: 'expertise weighted effort',
+        },
+        {
+          value: 1.1420073898156842e26,
+          formula: '$$e^{HR-Amount} * \\frac_{expertise}{100}$$',
+          name: 'HR-amount weighted effort',
         },
         {
           value: 6000,
           formula: '$$expertise level * HR-Amount$$',
-          name: 'multiply effort',
-          range: [0, 1],
+          name: 'simple multiplied effort',
         },
       ],
     });
