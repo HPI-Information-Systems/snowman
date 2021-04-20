@@ -3,11 +3,16 @@ import { constructAlgorithmDialogStore } from 'components/AlgorithmDialog/store/
 import { DialogProps } from 'components/GenericSubInstance/GenericDialog/DialogProps';
 import GenericDialog from 'components/GenericSubInstance/GenericDialog/GenericDialog';
 import React from 'react';
+import { EntityId } from 'types/EntityId';
 import { ViewIDs } from 'types/ViewIDs';
 
 const AlgorithmDialog = (): JSX.Element => (
   <GenericDialog
-    heading="BliBlaBlurb"
+    getHeading={(entityId: EntityId): string =>
+      entityId
+        ? `Update Existing Matching Solution (ID: ${entityId})`
+        : 'Add New Matching Solution'
+    }
     instanceId={ViewIDs.AlgorithmDialog}
     createSubAppStore={constructAlgorithmDialogStore}
   >

@@ -16,10 +16,8 @@ import { IonChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 const mapStateToProps = (
-  state: AlgorithmDialogModel,
-  ownProps: AlgorithmDialogOwnProps
+  state: AlgorithmDialogModel
 ): AlgorithmDialogStateProps => ({
-  isAddDialog: ownProps.entityId === null,
   algorithmDescription: state.algorithmDescription,
   algorithmName: state.algorithmName,
 });

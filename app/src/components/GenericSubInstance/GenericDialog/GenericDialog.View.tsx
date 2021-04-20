@@ -47,7 +47,7 @@ class GenericDialogView extends Component<GenericDialogProps> {
                   fontSize,
                 }}
               >
-                {this.props.heading}
+                {this.props.getHeading(this.props.entityId)}
               </h1>
               <IonIcon
                 icon={closeOutline}
@@ -64,7 +64,10 @@ class GenericDialogView extends Component<GenericDialogProps> {
                   : `calc(100% - ${fontSize} - ${3 * margin}px)`,
               }}
             >
-              {this.props.children({ entityId: this.props.entityId })}
+              {this.props.children({
+                entityId: this.props.entityId,
+                isAddDialog: this.props.isAddDialog,
+              })}
             </div>
           </div>
         </IonModal>

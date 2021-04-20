@@ -4,7 +4,6 @@ import { IonChangeEvent } from 'types/IonChangeEvent';
 export interface AlgorithmDialogStateProps {
   algorithmName: string;
   algorithmDescription: string;
-  isAddDialog: boolean;
 }
 
 export interface AlgorithmDialogDispatchProps {

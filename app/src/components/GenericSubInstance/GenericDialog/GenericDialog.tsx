@@ -15,6 +15,7 @@ const mapStateToProps = (
 ): GenericDialogStateProps => ({
   isDialogOpen: state.RenderLogicStore.openedDialog === ownProps.instanceId,
   entityId: state.RenderLogicStore.entityId,
+  isAddDialog: !state.RenderLogicStore.entityId,
 });
 
 const mapDispatchToProps = (
