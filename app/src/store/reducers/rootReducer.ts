@@ -5,7 +5,6 @@ import {
   ImmediateStore,
   Store,
 } from 'store/models';
-import { AlgorithmDialogReducer } from 'store/reducers/AlgorithmDialogReducer';
 import { BenchmarkConfiguratorReducer } from 'store/reducers/BenchmarkConfiguratorReducer';
 import { BinaryMetricsReducer } from 'store/reducers/BinaryMetricsReducer';
 import { CoreReducer } from 'store/reducers/CoreReducer';
@@ -30,10 +29,6 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
   const immediateState: ImmediateStore = {
     CoreStore: coreState,
     BenchmarkConfigurationStore: benchmarkState,
-    AlgorithmDialogStore: AlgorithmDialogReducer(
-      state?.AlgorithmDialogStore,
-      action
-    ),
     DatasetDialogStore: DatasetDialogReducer(state?.DatasetDialogStore, action),
     ExperimentDialogStore: ExperimentDialogReducer(
       state?.ExperimentDialogStore,

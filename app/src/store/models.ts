@@ -16,14 +16,6 @@ export interface SnowmanGlobalStore {
   LoadingIndicatorStore: GlobalIndicatorStore;
 }
 
-export interface AlgorithmDialogStore {
-  algorithmId: number | null;
-  algorithmName: string;
-  algorithmDescription: string;
-  isOpen: boolean;
-  dialogType: DialogTypes;
-}
-
 export interface DatasetDialogStore {
   datasetId: number | null;
   dialogType: DialogTypes;
@@ -114,7 +106,6 @@ export interface NMetricsStore {
 
 export interface ImmediateStore {
   CoreStore: CoreStore;
-  AlgorithmDialogStore: AlgorithmDialogStore;
   DatasetDialogStore: DatasetDialogStore;
   ExperimentDialogStore: ExperimentDialogStore;
   BenchmarkConfigurationStore: BenchmarkConfigurationStore;
