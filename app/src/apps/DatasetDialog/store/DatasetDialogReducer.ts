@@ -40,7 +40,10 @@ const DatasetDialogReducer = (
       };
     }
     case DatasetDialogActionTypes.RESET_DIALOG:
-      return initialState;
+      return {
+        ...initialState,
+        availableTags: state.availableTags,
+      };
     case DatasetDialogActionTypes.PREFILL_DIALOG: {
       const dataset = action.payload as Dataset;
       return {
@@ -49,6 +52,7 @@ const DatasetDialogReducer = (
         datasetDescription: dataset.description ?? '',
         datasetLength: dataset.numberOfRecords ?? 0,
         selectedTags: dataset.tags ?? [],
+        availableTags: state.availableTags,
       };
     }
     case DatasetDialogActionTypes.CHANGE_DATASET_NAME:
