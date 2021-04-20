@@ -9,4 +9,5 @@ export enum ViewIDs {
   DASHBOARD,
   STANDALONE_DATA_VIEWER,
   AlgorithmDialog,
+  ExperimentDialog,
 }

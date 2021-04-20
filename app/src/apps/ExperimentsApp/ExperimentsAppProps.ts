@@ -14,6 +14,7 @@ export interface ExperimentsAppOwnProps {
 }
 
 export interface ExperimentsAppDispatchProps {
+  addExperiment(): void;
   changeSelectedDatasets(event: IonSelectChangeEvent): void;
   changeSelectedAlgorithms(event: IonSelectChangeEvent): void;
 }

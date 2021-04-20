@@ -11,6 +11,7 @@ import {
 import { Algorithm, Dataset, Experiment } from 'api';
 import ExperimentCard from 'apps/ExperimentsApp/components/ExperimentCard/ExperimentCard';
 import { ExperimentsAppProps } from 'apps/ExperimentsApp/ExperimentsAppProps';
+import AddFab from 'components/AddFab/AddFab';
 import React from 'react';
 import { getAlgorithmNameFromId } from 'utils/algorithmHelpers';
 import { getDatasetNameFromId } from 'utils/datasetHelper';
@@ -23,6 +24,7 @@ const ExperimentsAppView = ({
   currentExperiments,
   changeSelectedDatasets,
   changeSelectedAlgorithms,
+  addExperiment,
 }: ExperimentsAppProps): JSX.Element => {
   return (
     <>
@@ -97,6 +99,7 @@ const ExperimentsAppView = ({
           ))}
         </IonRow>
       </IonGrid>
+      <AddFab clickOnFab={addExperiment} />
     </>
   );
 };

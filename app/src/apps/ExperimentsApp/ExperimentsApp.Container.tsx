@@ -13,8 +13,10 @@ import {
   ExperimentsAppDispatch,
   ExperimentsAppModel,
 } from 'apps/ExperimentsApp/types/ExperimentsAppModel';
+import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
 import { IonSelectChangeEvent } from 'types/IonChangeEvent';
+import { ViewIDs } from 'types/ViewIDs';
 
 const mapStateToProps = (
   state: ExperimentsAppModel,
@@ -39,6 +41,9 @@ const mapDispatchToProps = (
   },
   changeSelectedAlgorithms(event: IonSelectChangeEvent) {
     dispatch(changeSelectedAlgorithms(event.detail.value));
+  },
+  addExperiment() {
+    doOpenDialog(ViewIDs.ExperimentDialog);
   },
 });
 
