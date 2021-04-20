@@ -26,6 +26,10 @@ export class IntersectionBase
     this.createClustering()
   );
 
+  dangerousOverwriteClustering(clustering: Clustering): void {
+    this._clustering.value = clustering;
+  }
+
   readonly dataset: StoredDataset & { numberOfRecords: number };
   protected readonly queries = new IntersectionQueries();
 

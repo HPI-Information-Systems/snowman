@@ -120,7 +120,8 @@ export class ExperimentProvider {
         id,
         datasetIDMapper,
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        dataset.numberOfRecords!
+        dataset.numberOfRecords!,
+        dataset.id
       )
         .insert(file)
         .catch((e) => {

@@ -8,6 +8,8 @@ import {
 } from '../../../database/schemas';
 import { escapeColumnName } from '../../../database/tools/escapeColumnNames';
 import { Column, NullableColumnValues } from '../../../database/tools/types';
+import { DatasetId, ExperimentId } from '../../../server/types';
+import { IntersectionCache } from '../../benchmark/cache/flavors/intersectionCache';
 import { UnionFind } from '../../benchmark/cluster/unionFind';
 import { DatasetIDMapper } from '../../dataset/util/idMapper';
 
@@ -26,9 +28,10 @@ export abstract class ExperimentInserter {
   private unionFind: UnionFind;
 
   constructor(
-    protected readonly experimentId: number,
+    protected readonly experimentId: ExperimentId,
     protected readonly idMapper: DatasetIDMapper,
-    protected readonly datasetNumberOfRecords: number
+    protected readonly datasetNumberOfRecords: number,
+    protected readonly datasetId: DatasetId
   ) {
     this.unionFind = new UnionFind(datasetNumberOfRecords);
   }
@@ -42,6 +45,11 @@ export abstract class ExperimentInserter {
       this.getOrCreateTable({});
     }
     this.table && this.table.createIndices(true);
+    IntersectionCache.get({
+      datasetId: this.datasetId,
+      included: [{ experimentId: this.experimentId }],
+      excluded: [],
+    }).dangerousOverwriteClustering(this.unionFind);
     return this.numberOfUploadedRecords;
   }
 
