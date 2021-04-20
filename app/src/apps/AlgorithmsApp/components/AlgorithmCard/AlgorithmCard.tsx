@@ -3,9 +3,9 @@ import {
   AlgorithmCardDispatchProps,
   AlgorithmCardOwnProps,
 } from 'apps/AlgorithmsApp/components/AlgorithmCard/AlgorithmCardProps';
+import { doDeleteAlgorithm } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { connect } from 'react-redux';
 import { openChangeDialog } from 'store/actions/AlgorithmDialogStoreActions';
-import { deleteAlgorithm } from 'store/actions/AlgorithmsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 
 const mapDispatchToProps = (
@@ -13,7 +13,7 @@ const mapDispatchToProps = (
   ownProps: AlgorithmCardOwnProps
 ): AlgorithmCardDispatchProps => ({
   deleteAlgorithm() {
-    dispatch(deleteAlgorithm(ownProps.algorithm.id)).then();
+    doDeleteAlgorithm(ownProps.algorithm.id).then();
   },
   editAlgorithm() {
     dispatch(openChangeDialog(ownProps.algorithm.id)).then();

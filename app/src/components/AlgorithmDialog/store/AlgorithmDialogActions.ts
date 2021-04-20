@@ -1,5 +1,5 @@
 import { AlgorithmApi, AlgorithmValues } from 'api';
-import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesActions';
+import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicActions';
 import { AlgorithmDialogActionTypes } from 'components/AlgorithmDialog/types/AlgorithmDialogActionTypes';
 import { AlgorithmDialogModel } from 'components/AlgorithmDialog/types/AlgorithmDialogModel';
