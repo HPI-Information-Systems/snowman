@@ -1,18 +1,16 @@
-import {
-  InputChipAction,
-  InputChipActionTypes,
-  InputChipStore,
-} from 'components/InputChip/store/models';
+import { InputChipActionTypes } from 'components/InputChip/types/InputChipActionTypes';
+import { InputChipModel } from 'components/InputChip/types/InputChipModel';
+import { SnowmanAction } from 'types/SnowmanAction';
 
-const initialState: InputChipStore = {
+const initialState: InputChipModel = {
   shouldShowInput: false,
   inputValue: '',
 };
 
 const InputChipReducer = (
-  state: InputChipStore = initialState,
-  action: InputChipAction
-): InputChipStore => {
+  state: InputChipModel = initialState,
+  action: SnowmanAction
+): InputChipModel => {
   switch (action.type) {
     case InputChipActionTypes.HIDE_INPUT:
       return {

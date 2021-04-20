@@ -1,61 +1,27 @@
-import InputChipView from 'components/InputChip/InputChip.View';
-import {
-  InputChipDispatchProps,
-  InputChipOwnProps,
-  InputChipStateProps,
-} from 'components/InputChip/InputChipProps';
-import {
-  changeInputValue,
-  handleKeyboardInteraction,
-  hideInput,
-  showInput,
-  submitValue,
-} from 'components/InputChip/store/InputChipActions';
-import { store } from 'components/InputChip/store/InputChipStore';
-import {
-  InputChipDispatch,
-  InputChipStore,
-} from 'components/InputChip/store/models';
-import React from 'react';
-import { KeyboardEvent } from 'react';
-import { connect, Provider } from 'react-redux';
-import { IonChangeEvent } from 'types/IonChangeEvent';
+import InputChipContainer from 'components/InputChip/InputChip.Container';
+import { InputChipOwnProps } from 'components/InputChip/InputChipProps';
+import { createInputChipStore } from 'components/InputChip/store/InputChipStore';
+import { InputChipModel } from 'components/InputChip/types/InputChipModel';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { Store } from 'redux';
+import { SnowmanAction } from 'types/SnowmanAction';
 
-const mapStateToProps = (state: InputChipStore): InputChipStateProps => ({
-  value: state.inputValue,
-  shouldShowInput: state.shouldShowInput,
-});
+class InputChip extends Component<InputChipOwnProps> {
+  store: Store<InputChipModel, SnowmanAction>;
 
-const mapDispatchToProps = (
-  dispatch: InputChipDispatch,
-  ownProps: InputChipOwnProps
-): InputChipDispatchProps => ({
-  onChangeValue(event: IonChangeEvent): void {
-    dispatch(changeInputValue(event.detail.value as string));
-  },
-  showInput(): void {
-    dispatch(showInput());
-  },
-  hideInput(): void {
-    dispatch(hideInput());
-  },
-  submitInput(): void {
-    dispatch(submitValue(ownProps.submitValueCallback));
-  },
-  handleKeyboardInteraction(event: KeyboardEvent<HTMLIonInputElement>) {
-    dispatch(handleKeyboardInteraction(event, ownProps.submitValueCallback));
-  },
-});
+  constructor(props: InputChipOwnProps) {
+    super(props);
+    this.store = createInputChipStore(props.instanceDescriptor);
+  }
 
-const InputChipHOC = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(InputChipView);
-
-const InputChip = (ownProps: InputChipOwnProps): JSX.Element => (
-  <Provider store={store}>
-    <InputChipHOC {...ownProps} />
-  </Provider>
-);
+  render(): JSX.Element {
+    return (
+      <Provider store={this.store}>
+        <InputChipContainer {...this.props} />
+      </Provider>
+    );
+  }
+}
 
 export default InputChip;

@@ -9,6 +9,7 @@ export interface InputChipOwnProps {
   placeholder?: string;
   label?: string;
   submitValueCallback: SubmitCallback;
+  instanceDescriptor?: string;
 }
 
 export interface InputChipStateProps {
