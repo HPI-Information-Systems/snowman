@@ -1,19 +1,14 @@
 import ExperimentsAppReducer from 'apps/ExperimentsPage/store/ExperimentsAppReducer';
 import { ExperimentsAppModel } from 'apps/ExperimentsPage/types/ExperimentsAppModel';
-import { applyMiddleware, createStore, Reducer, Store } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-import thunk from 'redux-thunk';
+import { Store } from 'redux';
 import { SnowmanAction } from 'types/SnowmanAction';
-
-const composeEnhancer = composeWithDevTools({
-  name: 'ExperimentsAppStore',
-});
+import { constructStore } from 'utils/storeFactory';
 
 export const createExperimentsAppStore = (): Store<
   ExperimentsAppModel,
   SnowmanAction
 > =>
-  createStore(
-    ExperimentsAppReducer as Reducer<ExperimentsAppModel, SnowmanAction>,
-    composeEnhancer(applyMiddleware(thunk))
+  constructStore<ExperimentsAppModel>(
+    'ExperimentsAppStore',
+    ExperimentsAppReducer
   );

@@ -1,19 +1,11 @@
 import BenchmarkAppReducer from 'pages/BenchmarkPage/store/BenchmarkAppReducer';
 import { BenchmarkAppModel } from 'pages/BenchmarkPage/types/BenchmarkAppModel';
-import { applyMiddleware, createStore, Reducer, Store } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-import thunk from 'redux-thunk';
+import { Store } from 'redux';
 import { SnowmanAction } from 'store/messages';
-
-const composeEnhancer = composeWithDevTools({
-  name: 'BenchmarkAppStore',
-});
+import { constructStore } from 'utils/storeFactory';
 
 export const createBenchmarkAppStore = (): Store<
   BenchmarkAppModel,
   SnowmanAction
 > =>
-  createStore(
-    BenchmarkAppReducer as Reducer<BenchmarkAppModel, SnowmanAction>,
-    composeEnhancer(applyMiddleware(thunk))
-  );
+  constructStore<BenchmarkAppModel>('BenchmarkAppStore', BenchmarkAppReducer);
