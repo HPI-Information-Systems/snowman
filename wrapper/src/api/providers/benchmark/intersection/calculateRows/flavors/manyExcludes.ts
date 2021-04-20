@@ -1,4 +1,3 @@
-import { newEmptyArray } from '../../../../../tools/array';
 import { LazyProperty } from '../../../../../tools/lazyProperty';
 import { SubclusterCache } from '../../../cache';
 import { IntersectionCache } from '../../../cache/flavors/intersectionCache';
@@ -20,8 +19,8 @@ export class CalculateRowsManyExcludes extends CalculateRowsFlavor {
     }).clustering;
   }
 
-  protected readonly rowCountCache = new LazyProperty(() =>
-    newEmptyArray<number>(this.subclustering.numberClusters)
+  protected readonly rowCountCache = new LazyProperty(
+    () => new Array<number>(this.subclustering.numberClusters)
   );
   protected negativeClusterings: Clustering[] = [];
 
