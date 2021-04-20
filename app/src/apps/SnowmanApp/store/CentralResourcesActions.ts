@@ -8,7 +8,11 @@ import {
 } from 'api';
 import { CentralResourcesActionTypes } from 'apps/SnowmanApp/types/CentralResourcesActionTypes';
 import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
-import { SUCCESS_DELETE_ALGORITHM } from 'structs/statusMessages';
+import {
+  SUCCESS_TO_DELETE_ALGORITHM,
+  SUCCESS_TO_DELETE_DATASET,
+  SUCCESS_TO_DELETE_EXPERIMENT,
+} from 'structs/statusMessages';
 import { SnowmanAction } from 'types/SnowmanAction';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
@@ -85,5 +89,31 @@ export const deleteAlgorithm = (
       new AlgorithmApi()
         .deleteAlgorithm({ algorithmId: id })
         .then((): Promise<void> => dispatch(refreshCentralResources())),
-    SUCCESS_DELETE_ALGORITHM
+    SUCCESS_TO_DELETE_ALGORITHM
+  );
+
+export const deleteDataset = (
+  id: number
+): SnowmanThunkAction<Promise<void>, SnowmanAppModel> => async (
+  dispatch: SnowmanDispatch<SnowmanAppModel>
+): Promise<void> =>
+  RequestHandler<void>(
+    () =>
+      new DatasetsApi()
+        .deleteDataset({ datasetId: id })
+        .then((): Promise<void> => dispatch(refreshCentralResources())),
+    SUCCESS_TO_DELETE_DATASET
+  );
+
+export const deleteExperiment = (
+  id: number
+): SnowmanThunkAction<Promise<void>, SnowmanAppModel> => async (
+  dispatch: SnowmanDispatch<SnowmanAppModel>
+): Promise<void> =>
+  RequestHandler<void>(
+    () =>
+      new ExperimentsApi()
+        .deleteExperiment({ experimentId: id })
+        .then((): Promise<void> => dispatch(refreshCentralResources())),
+    SUCCESS_TO_DELETE_EXPERIMENT
   );

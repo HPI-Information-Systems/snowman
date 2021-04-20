@@ -1,3 +1,4 @@
+import { doDeleteDataset } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import DatasetCardView from 'components/DatasetCard/DatasetCard.View';
 import {
   DatasetCardDispatchProps,
@@ -7,7 +8,6 @@ import {
 import { connect } from 'react-redux';
 import { openChangeDialog } from 'store/actions/DatasetDialogStoreActions';
 import { openPreviewer } from 'store/actions/DatasetPreviewerActions';
-import { deleteDataset } from 'store/actions/DatasetsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { ImmediateStore } from 'store/models';
 import { couldPreviewDataset } from 'utils/datasetHelper';
@@ -24,7 +24,7 @@ const mapDispatchToProps = (
   ownProps: DatasetCardOwnProps
 ): DatasetCardDispatchProps => ({
   deleteDataset() {
-    dispatch(deleteDataset(ownProps.dataset)).then();
+    doDeleteDataset(ownProps.dataset.id).then();
   },
   editDataset() {
     dispatch(openChangeDialog(ownProps.dataset)).then();

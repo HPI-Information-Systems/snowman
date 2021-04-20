@@ -5,7 +5,7 @@ import {
   SnowmanDispatch,
   SnowmanThunkAction,
 } from 'store/messages';
-import { SUCCESS_DELETE_ALGORITHM } from 'structs/statusMessages';
+import { SUCCESS_TO_DELETE_ALGORITHM } from 'structs/statusMessages';
 import RequestHandler from 'utils/requestHandler';
 
 export const getAlgorithms = (): SnowmanThunkAction<Promise<void>> => async (
@@ -34,5 +34,5 @@ export const deleteAlgorithm = (
       new AlgorithmApi()
         .deleteAlgorithm({ algorithmId: id })
         .then((): Promise<void> => dispatch(getAlgorithms())),
-    SUCCESS_DELETE_ALGORITHM
+    SUCCESS_TO_DELETE_ALGORITHM
   );
