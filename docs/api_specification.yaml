@@ -735,13 +735,17 @@ paths:
       - name: xAxis
         in: query
         schema:
-          $ref: "#/components/schemas/MetricsEnum"
+          anyOf:
+            - $ref: "#/components/schemas/MetricsEnum"
+            - $ref: "#/components/schemas/softKPIsExperimentEnum"
         required: true
         description: metric to be visualised on the x-axis of the diagram
       - name: yAxis
         in: query
         schema:
-          $ref: "#/components/schemas/MetricsEnum"
+          anyOf:
+            - $ref: "#/components/schemas/MetricsEnum"
+            - $ref: "#/components/schemas/softKPIsExperimentEnum"
         description: metric to be visualised on the y-axis of the diagram
         required: true
       requestBody:
@@ -1062,9 +1066,9 @@ components:
       type: object
     DiagramExperimentItem:
       properties:
-        experimentId:
+        experiment:
           $ref: "#/components/schemas/ExperimentConfigItem"
-        groundTruthId:
+        groundTruth:
           $ref: "#/components/schemas/ExperimentConfigItem"
       type: object
     DiagramExperiments:
@@ -1081,10 +1085,18 @@ components:
           items:
             type: number
           type: array
+    softKPIsExperimentEnum:
+      type: string
+      enum:
+        - expertise
+        - hrAmount
+        - manhattanDistanceBasedEffort
+        - hrAmountWeightedEffort
+        - multiplyEffort
+        - expertiseWeightedEffort
     MetricsEnum:
       type: string
       enum:
-        - timeToConfigure
         - falseDiscoveryRate
         - falseNegativeRate
         - falseOmissionRate
