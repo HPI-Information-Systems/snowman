@@ -1,4 +1,4 @@
-import AddFabView from 'components/AddFab/AddFab.View';
+import AddFab from 'components/AddFab/AddFab';
 import { AddFabDispatchProps } from 'components/AddFab/AddFabProps';
 import { connect } from 'react-redux';
 import { openAddDialog } from 'store/actions/DatasetDialogStoreActions';
@@ -10,6 +10,6 @@ const mapDispatchToProps = (
   clickOnFab: (): void => dispatch(openAddDialog()),
 });
 
-const AddDatasetFab = connect(null, mapDispatchToProps)(AddFabView);
+const AddDatasetFab = connect(null, mapDispatchToProps)(AddFab);
 
 export default AddDatasetFab;

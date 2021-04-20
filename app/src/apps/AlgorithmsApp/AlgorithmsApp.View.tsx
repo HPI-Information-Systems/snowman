@@ -1,11 +1,14 @@
 import { IonCol, IonGrid, IonRow } from '@ionic/react';
 import { Algorithm } from 'api';
 import { AlgorithmsAppProps } from 'apps/AlgorithmsApp/AlgorithmsAppProps';
-import AddAlgorithmFab from 'components/AddFab/AddAlgorithmFab';
+import AddFab from 'components/AddFab/AddFab';
 import AlgorithmCard from 'components/AlgorithmCard/AlgorithmCard';
 import React from 'react';
 
-const AlgorithmsAppView = ({ algorithms }: AlgorithmsAppProps): JSX.Element => (
+const AlgorithmsAppView = ({
+  algorithms,
+  addAlgorithm,
+}: AlgorithmsAppProps): JSX.Element => (
   <>
     <IonGrid>
       <IonRow>
@@ -16,7 +19,7 @@ const AlgorithmsAppView = ({ algorithms }: AlgorithmsAppProps): JSX.Element => (
         ))}
       </IonRow>
     </IonGrid>
-    <AddAlgorithmFab />
+    <AddFab clickOnFab={addAlgorithm} />
   </>
 );
 

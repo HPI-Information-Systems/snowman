@@ -4,4 +4,9 @@ export interface AlgorithmsAppOwnProps {
   algorithms: Algorithm[];
 }
 
-export type AlgorithmsAppProps = AlgorithmsAppOwnProps;
+export interface AlgorithmsAppDispatchProps {
+  addAlgorithm(): void;
+}
+
+export type AlgorithmsAppProps = AlgorithmsAppOwnProps &
+  AlgorithmsAppDispatchProps;

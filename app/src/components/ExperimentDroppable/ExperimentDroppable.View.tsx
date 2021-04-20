@@ -2,7 +2,6 @@ import 'components/ExperimentDroppable/ExperimentDroppableStyles.css';
 
 import { IonCol, IonGrid, IonRow } from '@ionic/react';
 import { Experiment } from 'api';
-import ExperimentCard from 'components/ExperimentCard/ExperimentCard';
 import { ExperimentDroppableProps } from 'components/ExperimentDroppable/ExperimentDroppableProps';
 import React from 'react';
 import {
