@@ -8,7 +8,7 @@ import { Metric } from '../../server/types';
 import { IntersectionCache } from './cache/flavors/intersectionCache';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
 import { idClustersToRecordClusters } from './idsToRecords';
-import { Intersection } from './intersection';
+import { IntersectionBase } from './intersection/intersectionBase';
 import {
   Accuracy,
   BalancedAccuracy,
@@ -52,7 +52,7 @@ export class BenchmarkProvider {
     return {
       experiments,
       numberPairs: intersection.numberPairs,
-      numberRows: intersection.rowCount,
+      numberRows: intersection.numberRows,
     };
   }
 
@@ -126,7 +126,7 @@ export class BenchmarkProvider {
           datasetId,
           included: included,
           excluded: excluded,
-        }).rowCount,
+        }).numberRows,
       });
     } while (nextState());
     return counts;
@@ -143,7 +143,7 @@ export class BenchmarkProvider {
   }): FileResponse {
     const intersection = this.intersection(experiments);
     return idClustersToRecordClusters(
-      intersection.clusters(startAt, limit),
+      intersection.rows(startAt, limit),
       datasetFromExperimentIds(
         experiments.map(({ experimentId }) => experimentId)
       ).id
@@ -218,7 +218,7 @@ export class BenchmarkProvider {
 
   protected intersection(
     experiments: ExperimentIntersectionItem[]
-  ): Intersection {
+  ): IntersectionBase {
     const included = experiments.filter(
       ({ predictedCondition }) => predictedCondition
     );

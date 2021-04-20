@@ -1,5 +1,8 @@
 import { DatasetId, ExperimentConfigItem } from '../../../../server/types';
-import { Intersection } from '../../intersection';
+import { IntersectionBase } from '../../intersection/intersectionBase';
+import { IntersectionWithExcludes } from '../../intersection/intersectionWithExcludes';
+import { ModularIntersection } from '../../intersection/modularIntersectionOnlyIncludes';
+import { StaticIntersectionOnlyIncludes } from '../../intersection/staticIntersectionOnlyIncludes';
 import { BenchmarkCache } from '../cache';
 import { BenchmarkCacheBaseConfig } from '../types';
 
@@ -11,37 +14,51 @@ export type IntersectionConfig = {
 
 class IntersectionCacheClass extends BenchmarkCache<
   IntersectionConfig,
-  Intersection
+  IntersectionBase
 > {
-  protected mapCustomConfigToBaseConfig({
-    datasetId,
-    included,
-    excluded,
-  }: IntersectionConfig): BenchmarkCacheBaseConfig {
-    return {
-      datasetId,
-      group1: included,
-      group2: excluded,
-    };
-  }
-
-  protected mapBaseConfigToCustomConfig({
-    datasetId,
-    group1,
-    group2,
-  }: BenchmarkCacheBaseConfig): IntersectionConfig {
-    return {
-      datasetId,
-      included: group1,
-      excluded: group2,
-    };
-  }
-
-  protected create(config: IntersectionConfig, key: string): Intersection {
-    return new Intersection(config, key);
-  }
-
   readonly keyPrefix = 'intersection';
+
+  protected mapCustomConfigToBaseConfig(
+    config: IntersectionConfig
+  ): BenchmarkCacheBaseConfig<IntersectionConfig> {
+    return {
+      datasetId: config.datasetId,
+      group1: config.included,
+      group2: config.excluded,
+      config,
+    };
+  }
+
+  protected create(config: IntersectionConfig, key: string): IntersectionBase {
+    if (config.excluded.length > 0) {
+      return new IntersectionWithExcludes(config);
+    } else if (config.included.length === 1 && config.included[0].similarity) {
+      return new ModularIntersection(config);
+    } else {
+      return new StaticIntersectionOnlyIncludes(config);
+    }
+  }
+
+  protected stringifyExperimentConfigItem(
+    item: ExperimentConfigItem,
+    config: BenchmarkCacheBaseConfig<IntersectionConfig>
+  ): string {
+    const { excluded, included } = config.config;
+    if (
+      excluded.length === 0 &&
+      included.length === 1 &&
+      included[0].similarity
+    ) {
+      const { experimentId, similarity } = item;
+      return `${this.stringifyExperiment(experimentId)}${
+        similarity
+          ? `:${this.stringifySimilarityFunction(similarity.func)}`
+          : ''
+      }`;
+    } else {
+      return super.stringifyExperimentConfigItem(item, config);
+    }
+  }
 }
 
 export const IntersectionCache = new IntersectionCacheClass();

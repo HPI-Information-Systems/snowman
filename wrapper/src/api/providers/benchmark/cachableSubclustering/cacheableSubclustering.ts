@@ -5,22 +5,23 @@ import { BenchmarkCacheContent } from '../cache';
 import { SubclusteringConfig } from '../cache';
 import { IntersectionCache } from '../cache/flavors/intersectionCache';
 import { Subclustering } from '../cluster/subclustering';
+import { IntersectionOnlyIncludes } from '../intersection/intersectionOnlyIncludes';
 
 export class CacheableSubclusting
   implements BenchmarkCacheContent<SubclusteringConfig> {
   protected readonly _clustering = new LazyProperty(
     () =>
       new Subclustering(
-        IntersectionCache.get({
+        (IntersectionCache.get({
           datasetId: this.config.datasetId,
           included: this.config.base,
           excluded: [],
-        }).clustering,
-        IntersectionCache.get({
+        }) as IntersectionOnlyIncludes).clustering,
+        (IntersectionCache.get({
           datasetId: this.config.datasetId,
           included: this.config.partition,
           excluded: [],
-        }).clustering
+        }) as IntersectionOnlyIncludes).clustering
       )
   );
 
@@ -36,6 +37,10 @@ export class CacheableSubclusting
       throw new Error('Dataset must have number of records.');
     }
     this.dataset = dataset as this['dataset'];
+  }
+
+  access(config: SubclusteringConfig): void {
+    return;
   }
 
   get clustering(): Subclustering {

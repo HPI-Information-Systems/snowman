@@ -94,7 +94,7 @@ export abstract class InvalidatableBenchmarkCache<
   }
 
   protected createAndCache(
-    config: BenchmarkCacheBaseConfig,
+    config: BenchmarkCacheBaseConfig<Config>,
     key: string
   ): Content {
     this.prepareInvalidation(key, config);
@@ -103,11 +103,11 @@ export abstract class InvalidatableBenchmarkCache<
 
   protected prepareInvalidation(
     key: string,
-    { datasetId, group2: negative, group1: positive }: BenchmarkCacheBaseConfig
+    { datasetId, group2, group1 }: BenchmarkCacheBaseConfig<Config>
   ): void {
     this.getInvalidationKeys(this.datasetKeys, datasetId).add(key);
-    this.prepareExperimentAndSimilarityInvalidation(key, positive);
-    this.prepareExperimentAndSimilarityInvalidation(key, negative);
+    this.prepareExperimentAndSimilarityInvalidation(key, group1);
+    this.prepareExperimentAndSimilarityInvalidation(key, group2);
   }
 
   protected prepareExperimentAndSimilarityInvalidation(

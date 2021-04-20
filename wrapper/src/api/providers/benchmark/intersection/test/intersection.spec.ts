@@ -15,7 +15,7 @@ import {
 
 function getClustering(args: IntersectionConfig) {
   return IntersectionCache.get(args)
-    .clusters()
+    .rows()
     .reduce<ClusterID[][]>(
       (cluster, id) => {
         if (id === undefined) {
@@ -58,28 +58,28 @@ function testConfig(
       datasetId: datasetId[0],
       excluded,
       included,
-    }).clusters(0, 1),
+    }).rows(0, 1),
     ...IntersectionCache.get({
       datasetId: datasetId[0],
       excluded,
       included,
-    }).clusters(1, 2),
+    }).rows(1, 2),
     ...IntersectionCache.get({
       datasetId: datasetId[0],
       excluded,
       included,
-    }).clusters(3, 97),
+    }).rows(3, 97),
     ...IntersectionCache.get({
       datasetId: datasetId[0],
       excluded,
       included,
-    }).clusters(100),
+    }).rows(100),
   ];
   const expectedClusters = IntersectionCache.get({
     datasetId: datasetId[0],
     excluded,
     included,
-  }).clusters();
+  }).rows();
   expect(result).toEqual(expectedClusters);
 }
 beforeAll(async () => {

@@ -11,6 +11,7 @@ import { Column, NullableColumnValues } from '../../../database/tools/types';
 import { DatasetId, ExperimentId } from '../../../server/types';
 import { IntersectionCache } from '../../benchmark/cache/flavors/intersectionCache';
 import { UnionFind } from '../../benchmark/cluster/unionFind';
+import { StaticIntersectionOnlyIncludes } from '../../benchmark/intersection/staticIntersectionOnlyIncludes';
 import { DatasetIDMapper } from '../../dataset/util/idMapper';
 
 type ExperimentSchema = ReturnType<
@@ -45,11 +46,11 @@ export abstract class ExperimentInserter {
       this.getOrCreateTable({});
     }
     this.table && this.table.createIndices(true);
-    IntersectionCache.get({
+    (IntersectionCache.get({
       datasetId: this.datasetId,
       included: [{ experimentId: this.experimentId }],
       excluded: [],
-    }).dangerousOverwriteClustering(this.unionFind);
+    }) as StaticIntersectionOnlyIncludes).clustering = this.unionFind;
     return this.numberOfUploadedRecords;
   }
 

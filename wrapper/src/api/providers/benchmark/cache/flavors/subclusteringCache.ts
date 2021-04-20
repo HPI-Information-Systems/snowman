@@ -13,27 +13,16 @@ class SubclusterCacheClass extends BenchmarkCache<
   SubclusteringConfig,
   CacheableSubclusting
 > {
-  protected mapCustomConfigToBaseConfig({
-    datasetId,
-    base,
-    partition,
-  }: SubclusteringConfig): BenchmarkCacheBaseConfig {
-    return {
-      datasetId,
-      group1: base,
-      group2: partition,
-    };
-  }
+  protected readonly keyPrefix = 'subclustering';
 
-  protected mapBaseConfigToCustomConfig({
-    datasetId,
-    group1,
-    group2,
-  }: BenchmarkCacheBaseConfig): SubclusteringConfig {
+  protected mapCustomConfigToBaseConfig(
+    config: SubclusteringConfig
+  ): BenchmarkCacheBaseConfig<SubclusteringConfig> {
     return {
-      datasetId,
-      base: group1,
-      partition: group2,
+      datasetId: config.datasetId,
+      group1: config.base,
+      group2: config.partition,
+      config,
     };
   }
 
@@ -43,8 +32,6 @@ class SubclusterCacheClass extends BenchmarkCache<
   ): CacheableSubclusting {
     return new CacheableSubclusting(config, key);
   }
-
-  protected readonly keyPrefix = 'subclustering';
 }
 
 export const SubclusterCache = new SubclusterCacheClass();
