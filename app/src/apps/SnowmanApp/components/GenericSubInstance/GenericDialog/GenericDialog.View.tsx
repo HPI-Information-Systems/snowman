@@ -2,7 +2,7 @@ import { IonIcon, IonModal, IonTitle, IonToolbar } from '@ionic/react';
 import { GenericDialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialogProps';
 import styles from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialogStyles.module.css';
 import { closeOutline } from 'ionicons/icons';
-import React, { Component } from 'react';
+import React, { Component, Dispatch } from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { SnowmanAction } from 'store/messages';
@@ -19,6 +19,21 @@ class GenericDialogView extends Component<GenericDialogProps> {
     super(props);
     this.store = props.createSubAppStore();
   }
+
+  componentDidUpdate(prevProps: Readonly<GenericDialogProps>): void {
+    if (
+      !this.props.isAddDialog &&
+      this.props.entityId &&
+      this.props.isDialogOpen &&
+      this.props.loadInitialState
+    ) {
+      this.props.loadInitialState(
+        this.store.dispatch as Dispatch<unknown>,
+        this.props.entityId
+      );
+    }
+  }
+
   render(): JSX.Element {
     return (
       <Provider store={this.store}>

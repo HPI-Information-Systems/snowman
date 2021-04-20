@@ -1,6 +1,7 @@
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import { GenericInstanceOwnProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericInstanceProps';
 import { EntityId } from 'types/EntityId';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 export interface GenericDialogStateProps {
   isDialogOpen: boolean;
@@ -17,6 +18,10 @@ export interface GenericDialogOwnProps
   children: (props: DialogProps) => JSX.Element;
   provideScrollingMechanism?: boolean;
   getHeading: (entityId: EntityId) => string;
+  loadInitialState?: (
+    dispatch: SnowmanDispatch<unknown>,
+    entityId: EntityId
+  ) => void;
 }
 
 export type GenericDialogProps = GenericDialogDispatchProps &
