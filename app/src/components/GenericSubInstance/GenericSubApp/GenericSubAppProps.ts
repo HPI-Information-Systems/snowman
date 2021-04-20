@@ -1,16 +1,22 @@
+import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
 import { GenericInstanceOwnProps } from 'components/GenericSubInstance/GenericInstanceProps';
 import { SideMenuProps } from 'components/GenericSubInstance/SideMenuProps';
 import { FC } from 'react';
+import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import { ViewIDs } from 'types/ViewIDs';
 
 export interface GenericSubAppStateProps {
   existsActiveRequest: boolean;
   activeApp: ViewIDs;
+  centralResources: CentralResourcesModel;
 }
 
 export interface GenericSubAppOwnProps extends GenericInstanceOwnProps {
   appTitle: string;
   sideMenu?: FC<SideMenuProps>;
+  consistencyUpdater?: (
+    newCentralResources: CentralResourcesModel
+  ) => SnowmanThunkAction<any, any>;
 }
 
 export type GenericSubAppProps = GenericSubAppOwnProps &
