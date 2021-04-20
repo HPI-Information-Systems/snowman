@@ -58,8 +58,8 @@ const BenchmarkSelectorView = ({
                 (entity: ExpandedEntity): boolean => entity.id === aDataset.id
               );
               return (
-                <>
-                  <IonItem key={`bconf_${aDataset.id}`}>
+                <React.Fragment key={`bconf_${aDataset.id}`}>
+                  <IonItem>
                     <IonIcon
                       icon={
                         expandedDatasetEntity !== undefined
@@ -103,7 +103,9 @@ const BenchmarkSelectorView = ({
                                   entity.id === anAlgorithm.id
                               ) !== undefined;
                             return (
-                              <>
+                              <React.Fragment
+                                key={`bconf_${aDataset.id}_${anAlgorithm.id}`}
+                              >
                                 <IonItem>
                                   <IonIcon
                                     icon={
@@ -154,45 +156,45 @@ const BenchmarkSelectorView = ({
                                         (
                                           anExperiment: Experiment
                                         ): JSX.Element => (
-                                          <>
-                                            <IonItem>
-                                              {anExperiment.name}
-                                              <IonIcon
-                                                icon={
-                                                  selectedExperimentIds.includes(
-                                                    anExperiment.id
-                                                  )
-                                                    ? checkmarkCircle
-                                                    : radioButtonOffOutline
-                                                }
-                                                color={
-                                                  selectedExperimentIds.includes(
-                                                    anExperiment.id
-                                                  )
-                                                    ? 'primary'
-                                                    : 'medium'
-                                                }
-                                                onClick={(): void =>
-                                                  selectExperiment(
-                                                    anExperiment.id
-                                                  )
-                                                }
-                                                class={styles.selector}
-                                                slot="end"
-                                              />
-                                            </IonItem>
-                                          </>
+                                          <IonItem
+                                            key={`bconf_${anExperiment.id}`}
+                                          >
+                                            {anExperiment.name}
+                                            <IonIcon
+                                              icon={
+                                                selectedExperimentIds.includes(
+                                                  anExperiment.id
+                                                )
+                                                  ? checkmarkCircle
+                                                  : radioButtonOffOutline
+                                              }
+                                              color={
+                                                selectedExperimentIds.includes(
+                                                  anExperiment.id
+                                                )
+                                                  ? 'primary'
+                                                  : 'medium'
+                                              }
+                                              onClick={(): void =>
+                                                selectExperiment(
+                                                  anExperiment.id
+                                                )
+                                              }
+                                              class={styles.selector}
+                                              slot="end"
+                                            />
+                                          </IonItem>
                                         )
                                       )}
                                   </IonList>
                                 ) : null}
-                              </>
+                              </React.Fragment>
                             );
                           }
                         )}
                     </IonList>
                   ) : null}
-                </>
+                </React.Fragment>
               );
             }
           )}

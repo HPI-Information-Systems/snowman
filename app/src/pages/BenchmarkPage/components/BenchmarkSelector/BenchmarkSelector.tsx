@@ -35,35 +35,27 @@ const mapDispatchToProps = (
   dispatch: BenchmarkAppDispatch
 ): BenchmarkSelectorDispatchProps => ({
   expandAlgorithmInDataset(aDatasetId: number, anAlgorithmId: number) {
-    console.log('expand algorithm', anAlgorithmId, 'in', aDatasetId);
     dispatch(expandAlgorithmInDataset(aDatasetId, anAlgorithmId));
   },
   shrinkAlgorithmInDataset(aDatasetId: number, anAlgorithmId: number) {
-    console.log('shrink algorithm', anAlgorithmId, 'in', aDatasetId);
     dispatch(shrinkAlgorithmInDataset(aDatasetId, anAlgorithmId));
   },
   expandDataset(aDatasetId: number) {
-    console.log('expand dataset', aDatasetId);
     dispatch(expandDataset(aDatasetId));
   },
   shrinkDataset(aDatasetId: number) {
-    console.log('shrink dataset', aDatasetId);
     dispatch(shrinkDataset(aDatasetId));
   },
   selectAlgorithmInDatasetChildren(aDatasetId: number, anAlgorithmId: number) {
-    console.log('select algorithm', anAlgorithmId, 'in', aDatasetId);
     dispatch(selectAlgorithmInDatasetChildren(aDatasetId, anAlgorithmId));
   },
   selectDatasetChildren(aDatasetId: number) {
-    console.log('select dataset', aDatasetId);
     dispatch(selectDatasetChildren(aDatasetId));
   },
   selectExperiment(anExperimentId: number) {
-    console.log('select experiment', anExperimentId);
     dispatch(selectExperimentBy(anExperimentId));
   },
   setSearchString(event: IonChangeEvent) {
-    console.log('set search string', event.detail.value);
     dispatch(setSearchString(event.detail.value ?? ''));
   },
 });
