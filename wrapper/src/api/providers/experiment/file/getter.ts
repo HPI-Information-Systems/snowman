@@ -55,22 +55,22 @@ export class ExperimentFileGetter<Schema extends TableSchema> {
     }))();
   }
 
-  protected getSortedColumns(sortBy?: string): string[] {
+  protected getSortedColumns(sortBy?: string): [string, 'ASC' | 'DESC'][] {
     if (sortBy) {
       if (sortBy in this.strategy.table.schema.columns) {
-        return [sortBy];
+        return [[sortBy, 'ASC']];
       } else if (
         experimentCustomColumnPrefix + sortBy in
         this.strategy.table.schema.columns
       ) {
-        return [experimentCustomColumnPrefix + sortBy];
+        return [[experimentCustomColumnPrefix + sortBy, 'ASC']];
       } else {
         throw new Error(
           `Cannot sort by ${sortBy} as this column does not exist.`
         );
       }
     } else {
-      return this.strategy.idColumns.map(({ name }) => name);
+      return this.strategy.idColumns.map(({ name }) => [name, 'ASC']);
     }
   }
 }

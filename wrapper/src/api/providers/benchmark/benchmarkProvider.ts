@@ -29,7 +29,7 @@ import {
   Specificity,
   ThreatScore,
 } from './metrics';
-import { ConfusionMatrix } from './metrics/confusionMatrix';
+import { calculateConfusionMatrix } from './metrics/confusionMatrix';
 
 enum ExperimentState {
   IRRELEVANT,
@@ -180,28 +180,11 @@ export class BenchmarkProvider {
       PrevalenceThreshold,
       ThreatScore,
     ];
-    const matrix: ConfusionMatrix = {
-      truePositives: IntersectionCache.get({
-        datasetId,
-        excluded: [],
-        included: [groundTruthExperiment, predictedExperiment],
-      }).numberPairs,
-      falsePositives: IntersectionCache.get({
-        datasetId,
-        excluded: [groundTruthExperiment],
-        included: [predictedExperiment],
-      }).numberPairs,
-      falseNegatives: IntersectionCache.get({
-        datasetId,
-        excluded: [predictedExperiment],
-        included: [groundTruthExperiment],
-      }).numberPairs,
-      trueNegatives: IntersectionCache.get({
-        datasetId,
-        excluded: [groundTruthExperiment, predictedExperiment],
-        included: [],
-      }).numberPairs,
-    };
+    const matrix = calculateConfusionMatrix({
+      datasetId,
+      predicted: [predictedExperiment],
+      groundTruth: [groundTruthExperiment],
+    });
     return metrics
       .map((Metric) => new Metric(matrix))
       .map(({ value, formula, name, range, info, infoLink }) => {

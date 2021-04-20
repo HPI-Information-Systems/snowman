@@ -23,7 +23,7 @@ export type GetterOptionsT<
   raw?: RawT;
   limit?: number;
   startAt?: number;
-  sortBy?: (keyof ColumnsT)[];
+  sortBy?: [column: keyof ColumnsT, direction: 'ASC' | 'DESC'][];
   advancedFilters?: AdvancedFilterT<ColumnsT>;
 };
 
@@ -62,7 +62,7 @@ export class TableGetter<Schema extends TableSchema> {
       .get(
         this.createQuery(
           returnedColumns as string[],
-          sortBy as string[],
+          sortBy as [string, 'ASC' | 'DESC'][],
           ...(advancedFilters.map(([key, filterT]) => [key, filterT]) as [
             key: string,
             filterType: FilterT
@@ -99,7 +99,7 @@ export class TableGetter<Schema extends TableSchema> {
 
   protected createQuery(
     returnColumns: string[],
-    sortBy: string[],
+    sortBy: [string, 'ASC' | 'DESC'][],
     ...filters: [key: string, filterType: FilterT][]
   ): string {
     let selectQuery = 'SELECT ';
@@ -116,7 +116,7 @@ export class TableGetter<Schema extends TableSchema> {
     }
     if (sortBy.length > 0) {
       selectQuery += ` ORDER BY ${sortBy
-        .map((column) => `"${column}"`)
+        .map(([column, direction]) => `"${column}" ${direction}`)
         .join(',')}`;
     }
     selectQuery += ` LIMIT ? OFFSET ?`;

@@ -10,7 +10,7 @@ type DatasetSchema = ReturnType<typeof tableSchemas['dataset']['dataset']>;
 export class DatasetFileGetter {
   protected table: Table<DatasetSchema>;
   protected customColumns: string[];
-  protected sortedColumn: string;
+  protected sortedColumn: [string, 'ASC' | 'DESC'];
   constructor(
     readonly id: DatasetId,
     private readonly startAt?: number,
@@ -43,7 +43,7 @@ export class DatasetFileGetter {
     };
   }
 
-  private getSortedColumn(sortBy?: string): string {
+  private getSortedColumn(sortBy?: string): [string, 'ASC' | 'DESC'] {
     let sortedColumn: string;
     if (sortBy) {
       sortedColumn = datasetCustomColumnPrefix + sortBy;
@@ -55,6 +55,6 @@ export class DatasetFileGetter {
     } else {
       sortedColumn = this.table.schema.columns.id.name;
     }
-    return sortedColumn;
+    return [sortedColumn, 'ASC'];
   }
 }
