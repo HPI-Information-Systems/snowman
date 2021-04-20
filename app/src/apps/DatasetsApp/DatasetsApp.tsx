@@ -1,7 +1,7 @@
 import DatasetsAppContainer from 'apps/DatasetsApp/DatasetsApp.Container';
 import { DatasetAppOwnProps } from 'apps/DatasetsApp/DatasetsAppProps';
 import { createDatasetsAppStore } from 'apps/DatasetsApp/store/DatasetsAppStoreFactory';
-import GenericSubApp from 'components/GenericSubInstance/GenericSubApp/GenericSubApp';
+import GenericSubApp from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubApp';
 import React from 'react';
 import { ViewIDs } from 'types/ViewIDs';
 

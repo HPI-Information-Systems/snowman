@@ -9,9 +9,9 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import { GenericSubAppProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubAppProps';
+import styles from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubAppStyles.module.css';
 import { centralResourcesRefreshed } from 'apps/SnowmanApp/store/CentralResourcesGenericActions';
-import { GenericSubAppProps } from 'components/GenericSubInstance/GenericSubApp/GenericSubAppProps';
-import styles from 'components/GenericSubInstance/GenericSubApp/GenericSubAppStyles.module.css';
 import { isEqual } from 'lodash';
 import React, { Component, createElement } from 'react';
 import { Provider } from 'react-redux';

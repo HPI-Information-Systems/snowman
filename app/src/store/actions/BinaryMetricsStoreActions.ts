@@ -16,17 +16,21 @@ import {
   SnowmanDispatch,
   SnowmanThunkAction,
 } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 import { store } from 'store/store';
 import { SUCCESS_LOAD_BINARY_METRICS } from 'structs/statusMessages';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import RequestHandler from 'utils/requestHandler';
 
-export const getExperiment1 = (state: Store = store.getState()): Experiment => {
+export const getExperiment1 = (
+  state: ImmediateStore = store.getState()
+): Experiment => {
   return state.BenchmarkConfigurationStore.chosenExperiments[0];
 };
 
-export const getExperiment1Id = (state: Store = store.getState()): number => {
+export const getExperiment1Id = (
+  state: ImmediateStore = store.getState()
+): number => {
   return getExperiment1(state).id;
 };
 

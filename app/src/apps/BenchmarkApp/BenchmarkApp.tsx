@@ -1,7 +1,7 @@
 import BenchmarkAppContainer from 'apps/BenchmarkApp/BenchmarkApp.Container';
 import BenchmarkSelector from 'apps/BenchmarkApp/components/BenchmarkSelector/BenchmarkSelector';
 import { createBenchmarkAppStore } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
-import GenericSubApp from 'components/GenericSubInstance/GenericSubApp/GenericSubApp';
+import GenericSubApp from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubApp';
 import React from 'react';
 import { ViewIDs } from 'types/ViewIDs';
 

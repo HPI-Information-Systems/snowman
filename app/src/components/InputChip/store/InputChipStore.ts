@@ -1,17 +1,13 @@
 import InputChipReducer from 'components/InputChip/store/InputChipReducer';
-import {
-  InputChipAction,
-  InputChipStore,
-} from 'components/InputChip/store/models';
-import { applyMiddleware, createStore, Reducer, Store } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
-import thunk from 'redux-thunk';
+import { InputChipModel } from 'components/InputChip/types/InputChipModel';
+import { Store } from 'redux';
+import { SnowmanAction } from 'types/SnowmanAction';
+import { constructStore } from 'utils/storeFactory';
 
-const composeEnhancer = composeWithDevTools({
-  name: 'IonChipStore',
-});
-
-export const store: Store<InputChipStore, InputChipAction> = createStore(
-  InputChipReducer as Reducer<InputChipStore, InputChipAction>,
-  composeEnhancer(applyMiddleware(thunk))
-);
+export const createInputChipStore = (
+  instanceDescriptor?: string
+): Store<InputChipModel, SnowmanAction> =>
+  constructStore(
+    `InputChipStore - ${instanceDescriptor ? instanceDescriptor : 'UNDEF'}`,
+    InputChipReducer
+  );

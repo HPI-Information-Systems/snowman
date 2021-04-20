@@ -8,7 +8,7 @@ import {
 } from 'api';
 import { Action } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
@@ -57,6 +57,9 @@ export type SnowmanGenericDispatch<Model> = ThunkDispatch<
   SnowmanAction
 >;
 
-export type SnowmanThunkAction<R> = SnowmanGenericThunkAction<R, Store>;
+export type SnowmanThunkAction<R> = SnowmanGenericThunkAction<
+  R,
+  ImmediateStore
+>;
 
-export type SnowmanDispatch = SnowmanGenericDispatch<Store>;
+export type SnowmanDispatch = SnowmanGenericDispatch<ImmediateStore>;

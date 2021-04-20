@@ -1,6 +1,6 @@
+import { GenericInstanceOwnProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericInstanceProps';
+import { SideMenuProps } from 'apps/SnowmanApp/components/GenericSubInstance/SideMenuProps';
 import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
-import { GenericInstanceOwnProps } from 'components/GenericSubInstance/GenericInstanceProps';
-import { SideMenuProps } from 'components/GenericSubInstance/SideMenuProps';
 import { FC } from 'react';
 import { ViewIDs } from 'types/ViewIDs';
 

@@ -8,9 +8,9 @@ import { connect } from 'react-redux';
 import { closePreviewer } from 'store/actions/ExperimentPreviewerActions';
 import { experimentTuplesLoader } from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 
-const mapStateToProps = (state: Store): FilePreviewerStateProps => ({
+const mapStateToProps = (state: ImmediateStore): FilePreviewerStateProps => ({
   fileName: state.ExperimentPreviewerStore.experiment?.name ?? 'unknown',
   isOpen: state.ExperimentPreviewerStore.isOpen,
   rowCount:

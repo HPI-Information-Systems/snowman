@@ -21,13 +21,13 @@ import {
   getGroundTruthId,
 } from 'store/actions/CommonMetricsActions';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { TuplesLoader } from 'types/TuplesLoader';
 import { intersectionDescription } from 'utils/intersectionDescription';
 
 const getCountsByTuplesCategory = (
-  store: Store,
+  store: ImmediateStore,
   aMetricsTuplesCategory: MetricsTuplesCategories
 ): ExperimentIntersectionCount | undefined => {
   const counts = store.BinaryMetricsStore.counts
@@ -70,7 +70,7 @@ const getCountsByTuplesCategory = (
   }
 };
 const getPairCountByTuplesCategory = (
-  store: Store,
+  store: ImmediateStore,
   aMetricsTuplesCategory: MetricsTuplesCategories
 ): number => {
   return (
@@ -78,7 +78,7 @@ const getPairCountByTuplesCategory = (
   );
 };
 const getRowCountByTuplesCategory = (
-  store: Store,
+  store: ImmediateStore,
   aMetricsTuplesCategory: MetricsTuplesCategories
 ): number => {
   return (
@@ -101,7 +101,9 @@ const getTuplesLoaderByTuplesCategory = (
   }
 };
 
-const mapStateToProps = (state: Store): BinaryMetricsPageStateProps => ({
+const mapStateToProps = (
+  state: ImmediateStore
+): BinaryMetricsPageStateProps => ({
   metrics: state.BinaryMetricsStore.metrics,
   metricsTuplesCategories: [
     MetricsTuplesCategories.truePositives,

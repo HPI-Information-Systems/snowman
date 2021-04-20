@@ -17,14 +17,14 @@ import {
   closeDialog,
 } from 'store/actions/ExperimentDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 import { MagicNotPossibleId } from 'structs/constants';
 import { DialogTypes } from 'types/DialogTypes';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
 
-const isValidExperimentDialog = (state: Store): boolean => {
+const isValidExperimentDialog = (state: ImmediateStore): boolean => {
   if (
     state.ExperimentDialogStore.experimentName.length < 1 ||
     state.ExperimentDialogStore.selectedTags.length !== 1
@@ -36,7 +36,9 @@ const isValidExperimentDialog = (state: Store): boolean => {
   );
 };
 
-const mapStateToProps = (state: Store): ExperimentDialogStateProps => ({
+const mapStateToProps = (
+  state: ImmediateStore
+): ExperimentDialogStateProps => ({
   isOpen: state.ExperimentDialogStore.isOpen,
   isAddDialog: state.ExperimentDialogStore.experimentId === null,
   experimentName: state.ExperimentDialogStore.experimentName,

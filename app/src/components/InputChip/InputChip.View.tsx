@@ -5,7 +5,7 @@ import {
   checkmarkCircleOutline,
   closeCircleOutline,
 } from 'ionicons/icons';
-import React, { useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { couldSubmitValue } from 'utils/inputChipHelpers';
 
 const InputChipView = ({
@@ -26,7 +26,7 @@ const InputChipView = ({
     }
   }, [inputRef, shouldShowInput]);
   return (
-    <React.Fragment>
+    <Fragment>
       {!shouldShowInput ? (
         <IonChip
           key="inputchip-inactive"
@@ -65,7 +65,7 @@ const InputChipView = ({
           )}
         </IonChip>
       )}
-    </React.Fragment>
+    </Fragment>
   );
 };
 

@@ -21,13 +21,13 @@ import {
   setSelectedFiles,
 } from 'store/actions/DatasetDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 import { MagicNotPossibleId } from 'structs/constants';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
 
-const isValidDatasetDialog = (state: Store): boolean => {
+const isValidDatasetDialog = (state: ImmediateStore): boolean => {
   // Dataset name shall not be empty
   if (state.DatasetDialogStore.datasetName.length === 0) return false;
   // If dataset should be uploaded, select files
@@ -46,7 +46,7 @@ const isValidDatasetDialog = (state: Store): boolean => {
   );
 };
 
-const mapStateToProps = (state: Store): DatasetDialogStateProps => ({
+const mapStateToProps = (state: ImmediateStore): DatasetDialogStateProps => ({
   isAddDialog: state.DatasetDialogStore.datasetId === null,
   isOpen: state.DatasetDialogStore.isOpen,
   datasetName: state.DatasetDialogStore.datasetName,

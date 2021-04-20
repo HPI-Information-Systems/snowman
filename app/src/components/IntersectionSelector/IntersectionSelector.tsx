@@ -7,9 +7,11 @@ import { DropResult } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
 import { dragNDropAnExperiment } from 'store/actions/IntersectionStoreActions';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 
-const mapStateToProps = (state: Store): IntersectionSelectorStateProps => ({
+const mapStateToProps = (
+  state: ImmediateStore
+): IntersectionSelectorStateProps => ({
   ignored: state.IntersectionStore.ignored,
   excluded: state.IntersectionStore.excluded,
   included: state.IntersectionStore.included,

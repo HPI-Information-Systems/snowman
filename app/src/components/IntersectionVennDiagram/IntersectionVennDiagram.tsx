@@ -10,12 +10,12 @@ import {
   resetIncludedExperiments,
 } from 'store/actions/IntersectionStoreActions';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 
 const mapStateToProps = ({
   IntersectionStore: { included, counts },
   BenchmarkConfigurationStore: { chosenGoldStandards, chosenExperiments },
-}: Store): IntersectionVennDiagramStateProps => {
+}: ImmediateStore): IntersectionVennDiagramStateProps => {
   const availableExperiments = sortBy(
     [...chosenExperiments, ...chosenGoldStandards],
     ({ id }) => id

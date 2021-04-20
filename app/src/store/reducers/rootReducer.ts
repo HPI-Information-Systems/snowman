@@ -3,7 +3,6 @@ import {
   BenchmarkConfigurationStore,
   CoreStore,
   ImmediateStore,
-  Store,
 } from 'store/models';
 import { BenchmarkConfiguratorReducer } from 'store/reducers/BenchmarkConfiguratorReducer';
 import { BinaryMetricsReducer } from 'store/reducers/BinaryMetricsReducer';
@@ -15,10 +14,12 @@ import { ExperimentPreviewerReducer } from 'store/reducers/ExperimentPreviewerRe
 import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
 import { IntersectionReducer } from 'store/reducers/IntersectionReducer';
 import { NMetricsReducer } from 'store/reducers/NMetricsReducer';
-import { RenderLogicReducer } from 'store/reducers/RenderLogicReducer';
 import { SelectableInputReducer } from 'store/reducers/SelectableInputReducer';
 
-export const rootReducer = (state: Store, action: SnowmanAction): Store => {
+export const rootReducer = (
+  state: ImmediateStore,
+  action: SnowmanAction
+): ImmediateStore => {
   const coreState: CoreStore = CoreReducer(state?.CoreStore, action);
   const benchmarkState: BenchmarkConfigurationStore = BenchmarkConfiguratorReducer(
     state?.BenchmarkConfigurationStore,
@@ -26,7 +27,7 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
     action
   );
 
-  const immediateState: ImmediateStore = {
+  return {
     CoreStore: coreState,
     BenchmarkConfigurationStore: benchmarkState,
     DatasetDialogStore: DatasetDialogReducer(state?.DatasetDialogStore, action),
@@ -57,16 +58,5 @@ export const rootReducer = (state: Store, action: SnowmanAction): Store => {
       benchmarkState,
       action
     ),
-  };
-  return {
-    ...immediateState,
-    RenderLogicStore: RenderLogicReducer(state?.RenderLogicStore, action),
-    SnowmanGlobalStore: {
-      RenderLogicStore: RenderLogicReducer(state?.RenderLogicStore, action),
-      LoadingIndicatorStore: GlobalIndicatorReducer(
-        state?.GlobalIndicatorStore,
-        action
-      ),
-    },
   };
 };

@@ -1,14 +1,18 @@
 import { BenchmarkApi, Experiment, Metric } from 'api';
 import { SnowmanThunkAction } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 import { store } from 'store/store';
 import RequestHandler from 'utils/requestHandler';
 
-export const getGroundTruth = (state: Store = store.getState()): Experiment => {
+export const getGroundTruth = (
+  state: ImmediateStore = store.getState()
+): Experiment => {
   return state.BenchmarkConfigurationStore.chosenGoldStandards[0];
 };
 
-export const getGroundTruthId = (state: Store = store.getState()): number => {
+export const getGroundTruthId = (
+  state: ImmediateStore = store.getState()
+): number => {
   return getGroundTruth(state).id;
 };
 

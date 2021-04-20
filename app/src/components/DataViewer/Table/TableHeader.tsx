@@ -6,8 +6,6 @@ import {
 } from 'components/DataViewer/Table/TableProps';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
-import { ViewIDs } from 'types/ViewIDs';
 
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch,
@@ -18,9 +16,8 @@ const mapDispatchToProps = (
   },
 });
 
-const mapStateToProps = (state: Store): TableHeaderStateProps => ({
-  isStandalone:
-    state.RenderLogicStore.currentViewID === ViewIDs.STANDALONE_DATA_VIEWER,
+const mapStateToProps = (): TableHeaderStateProps => ({
+  isStandalone: true,
 });
 
 const TableHeader = connect(

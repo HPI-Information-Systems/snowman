@@ -11,11 +11,6 @@ import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { ViewIDs } from 'types/ViewIDs';
 
-export interface SnowmanGlobalStore {
-  RenderLogicStore: RenderLogicStore;
-  LoadingIndicatorStore: GlobalIndicatorStore;
-}
-
 export interface DatasetDialogStore {
   datasetId: number | null;
   dialogType: DialogTypes;
@@ -116,9 +111,4 @@ export interface ImmediateStore {
   DatasetPreviewerStore: DatasetPreviewerStore;
   ExperimentPreviewerStore: ExperimentPreviewerStore;
   IntersectionStore: IntersectionStore;
-}
-
-export interface Store extends ImmediateStore {
-  RenderLogicStore: RenderLogicStore;
-  SnowmanGlobalStore: SnowmanGlobalStore;
 }

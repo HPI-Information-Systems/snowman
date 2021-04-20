@@ -1,11 +1,11 @@
-import { closeDialog } from 'apps/SnowmanApp/store/RenderLogicActions';
-import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
-import GenericDialogView from 'components/GenericSubInstance/GenericDialog/GenericDialog.View';
+import GenericDialogView from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialog.View';
 import {
   GenericDialogDispatchProps,
   GenericDialogOwnProps,
   GenericDialogStateProps,
-} from 'components/GenericSubInstance/GenericDialog/GenericDialogProps';
+} from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialogProps';
+import { closeDialog } from 'apps/SnowmanApp/store/RenderLogicActions';
+import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
