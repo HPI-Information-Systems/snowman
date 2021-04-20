@@ -6,9 +6,9 @@ import {
   Experiment,
   ExperimentsApi,
 } from 'api';
-import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { CentralResourcesActionTypes } from 'apps/SnowmanApp/types/CentralResourcesActionTypes';
 import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
+import { SUCCESS_DELETE_ALGORITHM } from 'structs/statusMessages';
 import { SnowmanAction } from 'types/SnowmanAction';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
@@ -23,9 +23,6 @@ export const refreshCentralResources = (): SnowmanThunkAction<
     dispatch(getDatasets()).then(),
     dispatch(getExperiments()).then(),
   ]).then();
-
-export const doRefreshCentralResources = (): Promise<void> =>
-  SnowmanAppDispatch(refreshCentralResources());
 
 export const getAlgorithms = (): SnowmanThunkAction<
   Promise<void>,
@@ -76,4 +73,17 @@ export const getExperiments = (): SnowmanThunkAction<
           })
       )
       .then()
+  );
+
+export const deleteAlgorithm = (
+  id: number
+): SnowmanThunkAction<Promise<void>, SnowmanAppModel> => async (
+  dispatch: SnowmanDispatch<SnowmanAppModel>
+): Promise<void> =>
+  RequestHandler<void>(
+    () =>
+      new AlgorithmApi()
+        .deleteAlgorithm({ algorithmId: id })
+        .then((): Promise<void> => dispatch(refreshCentralResources())),
+    SUCCESS_DELETE_ALGORITHM
   );

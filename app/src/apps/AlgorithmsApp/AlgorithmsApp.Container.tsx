@@ -1,6 +1,6 @@
 import AlgorithmsAppView from 'apps/AlgorithmsApp/AlgorithmsApp.View';
 import { AlgorithmsAppDispatchProps } from 'apps/AlgorithmsApp/AlgorithmsAppProps';
-import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicActions';
+import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
 import { ViewIDs } from 'types/ViewIDs';
 
