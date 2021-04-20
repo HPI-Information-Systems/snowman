@@ -1,6 +1,6 @@
 import { IonIcon, IonModal, IonText } from '@ionic/react';
 import { GenericDialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialogProps';
-import styles from 'components/ModalDialog/ModalDialogStyles.module.css';
+import styles from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/ModalDialogStyles.module.css';
 import { closeOutline } from 'ionicons/icons';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
