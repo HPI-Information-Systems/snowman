@@ -7,8 +7,8 @@ import {
   IonText,
 } from '@ionic/react';
 import { Dataset } from 'api';
+import DatasetCard from 'apps/DatasetsApp/components/DatasetCard/DatasetCard';
 import { DatasetsAppProps } from 'apps/DatasetsApp/DatasetsAppProps';
-import DatasetCard from 'components/DatasetCard/DatasetCard';
 import React from 'react';
 import { getTagsFromDatasets } from 'utils/tagFactory';
 

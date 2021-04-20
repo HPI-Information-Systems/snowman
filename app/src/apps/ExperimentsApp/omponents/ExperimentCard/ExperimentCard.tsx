@@ -1,13 +1,13 @@
-import ExperimentCardView from 'components/ExperimentCard/ExperimentCard.View';
+import ExperimentCardView from 'apps/ExperimentsApp/omponents/ExperimentCard/ExperimentCard.View';
 import {
   ExperimentCardDispatchProps,
   ExperimentCardOwnProps,
   ExperimentCardStateProps,
-} from 'components/ExperimentCard/ExperimentCardProps';
+} from 'apps/ExperimentsApp/omponents/ExperimentCard/ExperimentCardProps';
+import { doDeleteExperiment } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { connect } from 'react-redux';
 import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
 import { openPreviewer } from 'store/actions/ExperimentPreviewerActions';
-import { deleteExperiment } from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { ImmediateStore } from 'store/models';
 import { couldPreviewExperiment } from 'utils/experimentsHelpers';
@@ -27,7 +27,7 @@ const mapDispatchToProps = (
     dispatch(openChangeDialog(ownProps.experiment)).then();
   },
   deleteExperiment() {
-    dispatch(deleteExperiment(ownProps.experiment)).then();
+    doDeleteExperiment(ownProps.experiment.id).then();
   },
   previewExperiment() {
     dispatch(openPreviewer(ownProps.experiment));

@@ -12,8 +12,8 @@ import {
   IonLabel,
   IonRow,
 } from '@ionic/react';
-import { DatasetCardProps } from 'components/DatasetCard/DatasetCardProps';
-import styles from 'components/DatasetCard/DatasetCardStyles.module.css';
+import { DatasetCardProps } from 'apps/DatasetsApp/components/DatasetCard/DatasetCardProps';
+import styles from 'apps/DatasetsApp/components/DatasetCard/DatasetCardStyles.module.css';
 import { create, telescope, trash } from 'ionicons/icons';
 import React from 'react';
 
