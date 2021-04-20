@@ -1,12 +1,15 @@
 import { IonIcon, IonModal, IonTitle, IonToolbar } from '@ionic/react';
 import { GenericDialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialogProps';
 import styles from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialogStyles.module.css';
+import { centralResourcesRefreshed } from 'apps/SnowmanApp/store/CentralResourcesGenericActions';
 import { closeOutline } from 'ionicons/icons';
+import { isEqual } from 'lodash';
 import React, { Component, Dispatch } from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { SnowmanAction } from 'store/messages';
 import style from 'theme/style';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 class GenericDialogView extends Component<GenericDialogProps> {
   store: Store<unknown, SnowmanAction>;
@@ -30,6 +33,13 @@ class GenericDialogView extends Component<GenericDialogProps> {
       this.props.loadInitialState(
         this.store.dispatch as Dispatch<unknown>,
         this.props.entityId
+      );
+    }
+
+    if (isEqual(prevProps.centralResources, this.props.centralResources)) {
+      centralResourcesRefreshed(
+        this.store.dispatch as SnowmanDispatch<unknown>,
+        this.props.centralResources
       );
     }
   }
