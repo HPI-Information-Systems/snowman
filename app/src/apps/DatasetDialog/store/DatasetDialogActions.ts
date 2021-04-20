@@ -1,10 +1,16 @@
-import { DatasetsApi, DatasetValues, SetDatasetFileRequest } from 'api';
+import {
+  Dataset,
+  DatasetsApi,
+  DatasetValues,
+  SetDatasetFileRequest,
+} from 'api';
 import { DatasetDialogActionTypes } from 'apps/DatasetDialog/types/DatasetDialogActionTypes';
 import { DatasetDialogModel } from 'apps/DatasetDialog/types/DatasetDialogModel';
 import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
+import { MagicNotPossibleId } from 'structs/constants';
 import {
   SUCCESS_TO_CREATE_NEW_DATASET,
   SUCCESS_TO_UPDATE_DATASET,
@@ -115,6 +121,33 @@ export const clickOnDatasetTag = (
     type: DatasetDialogActionTypes.CLICK_ON_DATASET_TAG,
     payload: aTag,
   });
+
+export const prefillDialog = (
+  aDataset: Dataset
+): easyPrimitiveActionReturn<DatasetDialogModel> =>
+  easyPrimitiveAction<DatasetDialogModel>({
+    type: DatasetDialogActionTypes.PREFILL_DIALOG,
+    payload: aDataset,
+  });
+
+export const prepareUpdateDialog = (
+  dispatch: SnowmanDispatch<unknown>,
+  entityId: EntityId
+): void => {
+  dispatch(
+    (dispatch: SnowmanDispatch<DatasetDialogModel>): Promise<void> =>
+      RequestHandler<void>(
+        (): Promise<void> =>
+          new DatasetsApi()
+            .getDataset({
+              datasetId: entityId ?? MagicNotPossibleId,
+            })
+            .then((theDataset: Dataset): void => {
+              dispatch(prefillDialog(theDataset));
+            })
+      )
+  ).then();
+};
 
 const getDatasetValues = (state: DatasetDialogModel): DatasetValues => ({
   name: state.datasetName,

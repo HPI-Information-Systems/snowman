@@ -21,7 +21,6 @@ import {
 import { DatasetDialogProps } from 'apps/DatasetDialog/DatasetDialogProps';
 import FileInput from 'components/FileInput/FileInput';
 import InputChip from 'components/InputChip/InputChip';
-import ModalDialog from 'components/ModalDialog/ModalDialog';
 import {
   addCircleOutline,
   checkmarkCircleOutline,

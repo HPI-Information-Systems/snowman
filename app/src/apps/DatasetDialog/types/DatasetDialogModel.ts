@@ -1,10 +1,6 @@
 import { DatasetTypes } from 'types/DatasetTypes';
-import { DialogTypes } from 'types/DialogTypes';
 
 export interface DatasetDialogModel {
-  datasetId: number | null;
-  dialogType: DialogTypes;
-  isOpen: boolean;
   datasetName: string;
   datasetDescription: string;
   datasetType: DatasetTypes;

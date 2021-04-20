@@ -5,11 +5,11 @@ import {
   DatasetCardStateProps,
 } from 'apps/DatasetsApp/components/DatasetCard/DatasetCardProps';
 import { doDeleteDataset } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
+import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
-import { openChangeDialog } from 'store/actions/DatasetDialogStoreActions';
-import { openPreviewer } from 'store/actions/DatasetPreviewerActions';
 import { SnowmanDispatch } from 'store/messages';
 import { ImmediateStore } from 'store/models';
+import { ViewIDs } from 'types/ViewIDs';
 import { couldPreviewDataset } from 'utils/datasetHelper';
 
 const mapStateToProps = (
@@ -27,10 +27,10 @@ const mapDispatchToProps = (
     doDeleteDataset(ownProps.dataset.id).then();
   },
   editDataset() {
-    dispatch(openChangeDialog(ownProps.dataset)).then();
+    doOpenDialog(ViewIDs.DatasetDialog, ownProps.dataset.id);
   },
   previewDataset() {
-    dispatch(openPreviewer(ownProps.dataset));
+    console.log('dispatch(openPreviewer(ownProps.dataset))');
   },
 });
 

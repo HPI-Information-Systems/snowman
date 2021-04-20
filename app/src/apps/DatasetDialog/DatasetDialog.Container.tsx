@@ -27,7 +27,10 @@ import { IonChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
 
-const isValidDatasetDialog = (state: DatasetDialogModel): boolean => {
+const isValidDatasetDialog = (
+  state: DatasetDialogModel,
+  isAddDialog = false
+): boolean => {
   // Dataset name shall not be empty
   if (state.datasetName.length === 0) return false;
   // If dataset should be uploaded, select files
@@ -35,7 +38,7 @@ const isValidDatasetDialog = (state: DatasetDialogModel): boolean => {
     state.datasetType === DatasetTypes.full &&
     state.selectedFiles.length === 0 &&
     // rule applies only if AddDialog
-    state.datasetId === null
+    isAddDialog
   ) {
     return false;
   }
@@ -46,9 +49,9 @@ const isValidDatasetDialog = (state: DatasetDialogModel): boolean => {
 };
 
 const mapStateToProps = (
-  state: DatasetDialogModel
+  state: DatasetDialogModel,
+  ownProps: DatasetDialogOwnProps
 ): DatasetDialogStateProps => ({
-  isAddDialog: state.datasetId === null,
   datasetName: state.datasetName,
   datasetDescription: state.datasetDescription,
   datasetType: state.datasetType,
@@ -60,7 +63,8 @@ const mapStateToProps = (
   csvSeparator: state.csvSeparator,
   csvQuote: state.csvQuote,
   csvEscape: state.csvEscape,
-  isValidAnsweredDialog: isValidDatasetDialog(state),
+  isValidAnsweredDialog: isValidDatasetDialog(state, ownProps.isAddDialog),
+  isAddDialog: ownProps.isAddDialog,
 });
 
 const mapDispatchToProps = (

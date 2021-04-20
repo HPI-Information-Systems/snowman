@@ -1,15 +1,16 @@
+import { Dataset } from 'api';
 import { DatasetDialogActionTypes } from 'apps/DatasetDialog/types/DatasetDialogActionTypes';
 import { DatasetDialogModel } from 'apps/DatasetDialog/types/DatasetDialogModel';
+import { CentralResourcesGenericActionsTypes } from 'apps/SnowmanApp/types/CentralResourcesGenericActionsTypes';
+import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
 import { uniq } from 'lodash';
+import { intersection } from 'lodash';
 import { DatasetTypes } from 'types/DatasetTypes';
-import { DialogTypes } from 'types/DialogTypes';
 import { SnowmanAction } from 'types/SnowmanAction';
+import { getTagsFromDatasets } from 'utils/tagFactory';
 import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: DatasetDialogModel = {
-  isOpen: false,
-  datasetId: null,
-  dialogType: DialogTypes.ADD_DIALOG,
   availableTags: [],
   datasetName: '',
   datasetDescription: '',
@@ -28,8 +29,28 @@ const DatasetDialogReducer = (
   action: SnowmanAction
 ): DatasetDialogModel => {
   switch (action.type) {
+    case CentralResourcesGenericActionsTypes.REFRESHED: {
+      const tags = getTagsFromDatasets(
+        (action.payload as CentralResourcesModel).datasets
+      );
+      return {
+        ...state,
+        availableTags: tags,
+        selectedTags: intersection(state.selectedTags, tags),
+      };
+    }
     case DatasetDialogActionTypes.RESET_DIALOG:
       return initialState;
+    case DatasetDialogActionTypes.PREFILL_DIALOG: {
+      const dataset = action.payload as Dataset;
+      return {
+        ...initialState,
+        datasetName: dataset.name,
+        datasetDescription: dataset.description ?? '',
+        datasetLength: dataset.numberOfRecords ?? 0,
+        selectedTags: dataset.tags ?? [],
+      };
+    }
     case DatasetDialogActionTypes.CHANGE_DATASET_NAME:
       return {
         ...state,
