@@ -4,9 +4,10 @@ import {
   AlgorithmCardOwnProps,
 } from 'apps/AlgorithmsApp/components/AlgorithmCard/AlgorithmCardProps';
 import { doDeleteAlgorithm } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
+import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
-import { openChangeDialog } from 'store/actions/AlgorithmDialogStoreActions';
 import { SnowmanDispatch } from 'store/messages';
+import { ViewIDs } from 'types/ViewIDs';
 
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch,
@@ -16,7 +17,7 @@ const mapDispatchToProps = (
     doDeleteAlgorithm(ownProps.algorithm.id).then();
   },
   editAlgorithm() {
-    dispatch(openChangeDialog(ownProps.algorithm.id)).then();
+    doOpenDialog(ViewIDs.AlgorithmDialog, ownProps.algorithm.id);
   },
 });
 
