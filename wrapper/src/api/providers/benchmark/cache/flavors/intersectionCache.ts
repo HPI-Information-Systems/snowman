@@ -1,7 +1,7 @@
 import { DatasetId, ExperimentConfigItem } from '../../../../server/types';
+import { Intersection } from '../../intersection';
 import { BenchmarkCache } from '../cache';
 import { BenchmarkCacheBaseConfig } from '../types';
-import { Intersection } from '../../intersection';
 
 export type IntersectionConfig = {
   included: ExperimentConfigItem[];
