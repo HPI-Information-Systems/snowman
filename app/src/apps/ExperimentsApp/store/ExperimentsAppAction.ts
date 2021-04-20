@@ -1,5 +1,5 @@
-import { ExperimentsAppActionTypes } from 'apps/ExperimentsPage/types/ExperimentsAppActionTypes';
-import { ExperimentsAppModel } from 'apps/ExperimentsPage/types/ExperimentsAppModel';
+import { ExperimentsAppActionTypes } from 'apps/ExperimentsApp/types/ExperimentsAppActionTypes';
+import { ExperimentsAppModel } from 'apps/ExperimentsApp/types/ExperimentsAppModel';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,

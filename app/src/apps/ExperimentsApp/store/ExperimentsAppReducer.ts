@@ -1,6 +1,6 @@
 import { Algorithm, Dataset } from 'api';
-import { ExperimentsAppActionTypes } from 'apps/ExperimentsPage/types/ExperimentsAppActionTypes';
-import { ExperimentsAppModel } from 'apps/ExperimentsPage/types/ExperimentsAppModel';
+import { ExperimentsAppActionTypes } from 'apps/ExperimentsApp/types/ExperimentsAppActionTypes';
+import { ExperimentsAppModel } from 'apps/ExperimentsApp/types/ExperimentsAppModel';
 import { CentralResourcesGenericActionsTypes } from 'apps/SnowmanApp/types/CentralResourcesGenericActionsTypes';
 import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
 import { intersection } from 'lodash';

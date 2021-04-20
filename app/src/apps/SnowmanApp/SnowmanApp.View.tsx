@@ -23,7 +23,7 @@ import AlgorithmDialog from 'apps/AlgorithmDialog/AlgorithmDialog';
 import AlgorithmsApp from 'apps/AlgorithmsApp/AlgorithmsApp';
 import BenchmarkApp from 'apps/BenchmarkApp/BenchmarkApp';
 import DatasetsApp from 'apps/DatasetsApp/DatasetsApp';
-import ExperimentsApp from 'apps/ExperimentsPage/ExperimentsApp';
+import ExperimentsApp from 'apps/ExperimentsApp/ExperimentsApp';
 import HomeApp from 'apps/HomeApp/HomeApp';
 import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/BlockingLoading';
 import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';

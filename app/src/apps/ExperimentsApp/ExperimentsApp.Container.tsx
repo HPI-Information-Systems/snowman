@@ -1,18 +1,18 @@
 import { Experiment } from 'api';
-import ExperimentsAppView from 'apps/ExperimentsPage/ExperimentsApp.View';
+import ExperimentsAppView from 'apps/ExperimentsApp/ExperimentsApp.View';
 import {
   ExperimentsAppDispatchProps,
   ExperimentsAppOwnProps,
   ExperimentsAppStateProps,
-} from 'apps/ExperimentsPage/ExperimentsAppProps';
+} from 'apps/ExperimentsApp/ExperimentsAppProps';
 import {
   changeSelectedAlgorithms,
   changeSelectedDatasets,
-} from 'apps/ExperimentsPage/store/ExperimentsAppAction';
+} from 'apps/ExperimentsApp/store/ExperimentsAppAction';
 import {
   ExperimentsAppDispatch,
   ExperimentsAppModel,
-} from 'apps/ExperimentsPage/types/ExperimentsAppModel';
+} from 'apps/ExperimentsApp/types/ExperimentsAppModel';
 import { connect } from 'react-redux';
 import { IonSelectChangeEvent } from 'types/IonChangeEvent';
 

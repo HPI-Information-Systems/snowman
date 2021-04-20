@@ -1,9 +1,9 @@
-import ExperimentCardView from 'apps/ExperimentsApp/omponents/ExperimentCard/ExperimentCard.View';
+import ExperimentCardView from 'apps/ExperimentsApp/components/ExperimentCard/ExperimentCard.View';
 import {
   ExperimentCardDispatchProps,
   ExperimentCardOwnProps,
   ExperimentCardStateProps,
-} from 'apps/ExperimentsApp/omponents/ExperimentCard/ExperimentCardProps';
+} from 'apps/ExperimentsApp/components/ExperimentCard/ExperimentCardProps';
 import { doDeleteExperiment } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { connect } from 'react-redux';
 import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
