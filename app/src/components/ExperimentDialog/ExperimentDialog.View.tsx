@@ -8,6 +8,8 @@ import {
   IonLabel,
   IonList,
   IonNote,
+  IonSelect,
+  IonSelectOption,
   IonTextarea,
 } from '@ionic/react';
 import { ExperimentDialogProps } from 'components/ExperimentDialog/ExperimentDialogProps';
@@ -70,6 +72,20 @@ const ExperimentDialogView = ({
           onIonChange={changeExperimentDescription}
           placeholder="e.g. Randomly assigned pairs for testing purposes."
         />
+      </IonItem>
+      <IonItem>
+        <IonLabel position="fixed">Dataset:</IonLabel>
+        <IonSelect placeholder="Select one" multiple={false}>
+          <IonSelectOption>SomeDataset1</IonSelectOption>
+          <IonSelectOption>SomeDataset2</IonSelectOption>
+        </IonSelect>
+      </IonItem>
+      <IonItem>
+        <IonLabel position="fixed">M.Solution:</IonLabel>
+        <IonSelect placeholder="Select one" multiple={false}>
+          <IonSelectOption>Some Matching Solution</IonSelectOption>
+          <IonSelectOption>Some other Matching Solution</IonSelectOption>
+        </IonSelect>
       </IonItem>
       <IonItemDivider>
         <IonLabel>UPLOAD CONTENT</IonLabel>
