@@ -7,8 +7,8 @@ import {
   IonList,
   IonTextarea,
 } from '@ionic/react';
-import styles from 'components/AlgorithmDialog/AlgorithmDialog.module.css';
-import { AlgorithmDialogProps } from 'components/AlgorithmDialog/AlgorithmDialogProps';
+import styles from 'apps/AlgorithmDialog/AlgorithmDialog.module.css';
+import { AlgorithmDialogProps } from 'apps/AlgorithmDialog/AlgorithmDialogProps';
 import {
   addCircleOutline,
   checkmarkCircleOutline,

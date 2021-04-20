@@ -1,5 +1,5 @@
-import AlgorithmDialogContainer from 'components/AlgorithmDialog/AlgorithmDialog.Container';
-import { constructAlgorithmDialogStore } from 'components/AlgorithmDialog/store/AlgorithmDialogStore';
+import AlgorithmDialogContainer from 'apps/AlgorithmDialog/AlgorithmDialog.Container';
+import { constructAlgorithmDialogStore } from 'apps/AlgorithmDialog/store/AlgorithmDialogStore';
 import { DialogProps } from 'components/GenericSubInstance/GenericDialog/DialogProps';
 import GenericDialog from 'components/GenericSubInstance/GenericDialog/GenericDialog';
 import React from 'react';

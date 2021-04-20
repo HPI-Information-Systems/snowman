@@ -1,16 +1,16 @@
-import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicActions';
-import AlgorithmDialogView from 'components/AlgorithmDialog/AlgorithmDialog.View';
+import AlgorithmDialogView from 'apps/AlgorithmDialog/AlgorithmDialog.View';
 import {
   AlgorithmDialogDispatchProps,
   AlgorithmDialogOwnProps,
   AlgorithmDialogStateProps,
-} from 'components/AlgorithmDialog/AlgorithmDialogProps';
+} from 'apps/AlgorithmDialog/AlgorithmDialogProps';
 import {
   addOrUpdateAlgorithm,
   changeAlgorithmDescription,
   changeAlgorithmName,
-} from 'components/AlgorithmDialog/store/AlgorithmDialogActions';
-import { AlgorithmDialogModel } from 'components/AlgorithmDialog/types/AlgorithmDialogModel';
+} from 'apps/AlgorithmDialog/store/AlgorithmDialogActions';
+import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
+import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicActions';
 import { connect } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';

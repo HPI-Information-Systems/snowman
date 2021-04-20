@@ -1,8 +1,8 @@
 import { AlgorithmApi, AlgorithmValues } from 'api';
+import { AlgorithmDialogActionTypes } from 'apps/AlgorithmDialog/types/AlgorithmDialogActionTypes';
+import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesActions';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicActions';
-import { AlgorithmDialogActionTypes } from 'components/AlgorithmDialog/types/AlgorithmDialogActionTypes';
-import { AlgorithmDialogModel } from 'components/AlgorithmDialog/types/AlgorithmDialogModel';
 import { MagicNotPossibleId } from 'structs/constants';
 import {
   SUCCESS_TO_ADD_NEW_ALGORITHM,
