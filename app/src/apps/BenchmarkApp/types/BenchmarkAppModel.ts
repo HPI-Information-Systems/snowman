@@ -1,5 +1,5 @@
 import { Algorithm, Dataset, Experiment } from 'api';
-import { ExpandedEntity } from 'pages/BenchmarkPage/types/ExpandedEntity';
+import { ExpandedEntity } from 'apps/BenchmarkApp/types/ExpandedEntity';
 import {
   SnowmanGenericDispatch,
   SnowmanGenericThunkAction,

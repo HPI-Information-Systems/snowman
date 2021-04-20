@@ -10,8 +10,8 @@ import {
   IonRow,
   IonText,
 } from '@ionic/react';
+import { BenchmarkAppProps } from 'apps/BenchmarkApp/BenchmarkAppProps';
 import { barChart, calculator, colorFilter, pauseCircle } from 'ionicons/icons';
-import { BenchmarkAppProps } from 'pages/BenchmarkPage/BenchmarkAppProps';
 import React, { useEffect } from 'react';
 
 const BenchmarkAppView = ({

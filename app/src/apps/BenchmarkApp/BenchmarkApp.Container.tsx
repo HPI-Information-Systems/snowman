@@ -1,11 +1,11 @@
-import BenchmarkAppView from 'pages/BenchmarkPage/BenchmarkApp.View';
-import { BenchmarkAppDispatchProps } from 'pages/BenchmarkPage/BenchmarkAppProps';
+import BenchmarkAppView from 'apps/BenchmarkApp/BenchmarkApp.View';
+import { BenchmarkAppDispatchProps } from 'apps/BenchmarkApp/BenchmarkAppProps';
 import {
   getAlgorithms,
   getDatasets,
   getExperiments,
-} from 'pages/BenchmarkPage/store/BenchmarkAppThunkActions';
-import { BenchmarkAppDispatch } from 'pages/BenchmarkPage/types/BenchmarkAppModel';
+} from 'apps/BenchmarkApp/store/BenchmarkAppThunkActions';
+import { BenchmarkAppDispatch } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { connect } from 'react-redux';
 
 const mapDispatchToProps = (

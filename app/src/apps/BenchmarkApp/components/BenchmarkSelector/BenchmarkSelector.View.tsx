@@ -9,6 +9,9 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { Algorithm, Dataset, Experiment } from 'api';
+import { BenchmarkSelectorProps } from 'apps/BenchmarkApp/components/BenchmarkSelector/BenchmarkSelectorProps';
+import styles from 'apps/BenchmarkApp/components/BenchmarkSelector/BenchmarkSelectorStyles.module.css';
+import { ExpandedEntity } from 'apps/BenchmarkApp/types/ExpandedEntity';
 import {
   addOutline,
   caretDown,
@@ -16,9 +19,6 @@ import {
   checkmarkCircle,
   radioButtonOffOutline,
 } from 'ionicons/icons';
-import { BenchmarkSelectorProps } from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelectorProps';
-import styles from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelectorStyles.module.css';
-import { ExpandedEntity } from 'pages/BenchmarkPage/types/ExpandedEntity';
 import React from 'react';
 
 const BenchmarkSelectorView = ({

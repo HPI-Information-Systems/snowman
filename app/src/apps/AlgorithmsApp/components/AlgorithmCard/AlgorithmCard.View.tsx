@@ -9,7 +9,7 @@ import {
   IonIcon,
   IonRow,
 } from '@ionic/react';
-import { AlgorithmCardProps } from 'components/AlgorithmCard/AlgorithmCardProps';
+import { AlgorithmCardProps } from 'apps/AlgorithmsApp/components/AlgorithmCard/AlgorithmCardProps';
 import { create, trash } from 'ionicons/icons';
 import React from 'react';
 

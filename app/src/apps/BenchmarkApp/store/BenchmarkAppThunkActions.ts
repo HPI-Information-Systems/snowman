@@ -6,11 +6,11 @@ import {
   Experiment,
   ExperimentsApi,
 } from 'api';
-import { BenchmarkAppActionsTypes } from 'pages/BenchmarkPage/types/BenchmarkAppActionsTypes';
+import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
 import {
   BenchmarkAppDispatch,
   BenchmarkAppThunkAction,
-} from 'pages/BenchmarkPage/types/BenchmarkAppModel';
+} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { SnowmanAction } from 'store/messages';
 import RequestHandler from 'utils/requestHandler';
 
