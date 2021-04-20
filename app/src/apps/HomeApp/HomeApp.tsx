@@ -9,7 +9,7 @@ const HomeApp = (): JSX.Element => (
   <GenericSubApp
     instanceId={ViewIDs.HOME}
     appTitle="Home Page"
-    createSubAppStore={dummyStoreFactory('HomepageApp')}
+    createSubAppStore={dummyStoreFactory('HomepageAppDummy')}
   >
     <div className={style('ion-text-center', styles.introduction)}>
       <img src="./logo192.png" alt="logo" />
