@@ -1,0 +1,28 @@
+.modalCloseIcon {
+  margin-right: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.toolbar {
+  height: 56px;
+}
+
+.outerContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.innerContainer {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 56px);
+}
+
+.innerContainerNoScroll {
+  overflow-y: hidden;
+}
+
+.innerContainerScrollable {
+  overflow-y: scroll;
+}

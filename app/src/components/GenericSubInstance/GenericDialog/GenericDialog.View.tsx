@@ -1,14 +1,12 @@
-import { IonIcon, IonModal, IonText } from '@ionic/react';
+import { IonIcon, IonModal, IonTitle, IonToolbar } from '@ionic/react';
 import { GenericDialogProps } from 'components/GenericSubInstance/GenericDialog/GenericDialogProps';
-import styles from 'components/ModalDialog/ModalDialogStyles.module.css';
+import styles from 'components/GenericSubInstance/GenericDialog/GenericDialogStyles.module.css';
 import { closeOutline } from 'ionicons/icons';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { SnowmanAction } from 'store/messages';
-
-const margin = 15;
-const fontSize = '2rem';
+import style from 'theme/style';
 
 class GenericDialogView extends Component<GenericDialogProps> {
   store: Store<unknown, SnowmanAction>;
@@ -28,41 +26,26 @@ class GenericDialogView extends Component<GenericDialogProps> {
           isOpen={this.props.isDialogOpen}
           onDidDismiss={this.props.closeDialog}
         >
-          <div
-            className="modal-content"
-            style={{
-              marginTop: `${margin}px`,
-              overflowY: this.props.provideScrollingMechanism
-                ? 'auto'
-                : 'hidden',
-              height: this.props.provideScrollingMechanism ? 'auto' : `100%`,
-            }}
-          >
-            <IonText color="dark">
-              <h1
-                className={styles.center}
-                style={{
-                  marginTop: `${margin}px`,
-                  marginBottom: `${margin}px`,
-                  fontSize,
-                }}
-              >
+          <div className={styles.outerContainer}>
+            <IonToolbar color="primarydark" className={styles.toolbar}>
+              <IonTitle slot="start">
                 {this.props.getHeading(this.props.entityId)}
-              </h1>
+              </IonTitle>
               <IonIcon
                 icon={closeOutline}
+                slot="end"
                 className={styles.modalCloseIcon}
                 size="large"
                 onClick={this.props.closeDialog}
               />
-            </IonText>
+            </IonToolbar>
             <div
-              style={{
-                position: 'relative',
-                height: this.props.provideScrollingMechanism
-                  ? 'auto'
-                  : `calc(100% - ${fontSize} - ${3 * margin}px)`,
-              }}
+              className={style(
+                styles.innerContainer,
+                this.props.provideScrollingMechanism
+                  ? styles.innerContainerScrollable
+                  : styles.innerContainerNoScroll
+              )}
             >
               {this.props.children({
                 entityId: this.props.entityId,
