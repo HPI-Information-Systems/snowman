@@ -1,4 +1,4 @@
-import { AlgorithmApi, AlgorithmValues } from 'api';
+import { Algorithm, AlgorithmApi, AlgorithmValues } from 'api';
 import { AlgorithmDialogActionTypes } from 'apps/AlgorithmDialog/types/AlgorithmDialogActionTypes';
 import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
@@ -32,6 +32,28 @@ export const changeAlgorithmDescription = (
     type: AlgorithmDialogActionTypes.CHANGE_ALGORITHM_DESCRIPTION,
     payload: aDescription,
   });
+
+export const prepareUpdateDialog = (
+  dispatch: SnowmanDispatch<unknown>,
+  entityId: EntityId
+): void => {
+  dispatch(
+    (dispatch: SnowmanDispatch<AlgorithmDialogModel>): Promise<void> =>
+      RequestHandler<void>(
+        (): Promise<void> =>
+          new AlgorithmApi()
+            .getAlgorithm({
+              algorithmId: entityId ?? MagicNotPossibleId,
+            })
+            .then((theAlgorithm: Algorithm): void => {
+              dispatch(changeAlgorithmName(theAlgorithm.name));
+              dispatch(
+                changeAlgorithmDescription(theAlgorithm.description ?? '')
+              );
+            })
+      )
+  ).then();
+};
 
 const resetDialog = (): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
   easyPrimitiveAction<AlgorithmDialogModel>({
