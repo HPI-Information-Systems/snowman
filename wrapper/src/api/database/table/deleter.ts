@@ -1,13 +1,12 @@
-import { SortedCache } from '../../tools/cache/sorted';
+import { BasicCache } from '../../tools/cache';
 import { databaseBackend } from '../setup/backend';
 import type { NullableColumnValues, TableSchema } from '../tools/types';
 import { FilterT } from './getter';
 import type { Table } from './table';
 
 export class TableDeleter<Schema extends TableSchema> {
-  protected readonly deleteRowStatementCache = new SortedCache(
-    (...args: Parameters<TableDeleter<Schema>['createDeleteRowQuery']>) =>
-      databaseBackend().prepare(this.createDeleteRowQuery(...args))
+  protected readonly deleteRowStatementCache = new BasicCache(
+    (statement: string) => databaseBackend().prepare(statement)
   );
 
   constructor(private readonly table: Table<Schema>) {}
@@ -18,7 +17,7 @@ export class TableDeleter<Schema extends TableSchema> {
   ): void {
     const filters = Object.keys(filter).sort();
     this.deleteRowStatementCache
-      .get(filters, [filterType])
+      .get(this.createDeleteRowQuery(filters, [filterType]))
       .run(...filters.map((key) => filter[key]));
   }
 

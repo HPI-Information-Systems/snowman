@@ -1,4 +1,4 @@
-import { Cache } from '../../tools/cache/base';
+import { BasicCache } from '../../tools/cache';
 import { databaseBackend } from '../setup/backend';
 import {
   ColumnDataType,
@@ -28,15 +28,8 @@ export type GetterOptionsT<
 };
 
 export class TableGetter<Schema extends TableSchema> {
-  protected readonly statementCache = new Cache(
-    (
-      returnColumns: string[],
-      sortBy: string[],
-      ...filters: [key: string, filterType: FilterT][]
-    ) =>
-      databaseBackend().prepare(
-        this.createQuery(returnColumns, sortBy, ...filters)
-      )
+  protected readonly statementCache = new BasicCache((statement: string) =>
+    databaseBackend().prepare(statement)
   );
 
   constructor(protected readonly table: Table<Schema>) {}
@@ -67,12 +60,14 @@ export class TableGetter<Schema extends TableSchema> {
     );
     return this.statementCache
       .get(
-        returnedColumns as string[],
-        sortBy as string[],
-        ...(advancedFilters.map(([key, filterT]) => [key, filterT]) as [
-          key: string,
-          filterType: FilterT
-        ][])
+        this.createQuery(
+          returnedColumns as string[],
+          sortBy as string[],
+          ...(advancedFilters.map(([key, filterT]) => [key, filterT]) as [
+            key: string,
+            filterType: FilterT
+          ][])
+        )
       )
       .raw(raw)
       [operation](

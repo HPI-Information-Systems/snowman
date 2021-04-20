@@ -1,6 +1,4 @@
-import { Statement } from 'better-sqlite3';
-
-import { SortedCache } from '../../tools/cache/sorted';
+import { BasicCache } from '../../tools/cache';
 import { databaseBackend } from '../setup/backend';
 import type {
   BasicDataType,
@@ -11,8 +9,8 @@ import type {
 import type { Table } from './table';
 
 export class TableUpserter<Schema extends TableSchema> {
-  protected readonly statementCache = new SortedCache((columns: string[]) =>
-    this.createInsertStatement(columns)
+  protected readonly statementCache = new BasicCache((statement: string) =>
+    databaseBackend().prepare<BasicDataType[]>(statement)
   );
   protected readonly cachedRows: (() => InsertColumnValues<
     Schema['columns']
@@ -29,7 +27,7 @@ export class TableUpserter<Schema extends TableSchema> {
           .sort() as (string & keyof typeof row)[];
         insertedRowIds.push(
           +this.statementCache
-            .get(columns)
+            .get(this.createInsertStatement(columns))
             .run(
               ...(columns.map(
                 (column) => row[column] ?? null
@@ -66,9 +64,7 @@ export class TableUpserter<Schema extends TableSchema> {
     })();
   }
 
-  private createInsertStatement(
-    columns: string[]
-  ): Statement<BasicDataType<DataTypes>[]> {
+  private createInsertStatement(columns: string[]): string {
     let insertStatement = `INSERT OR REPLACE INTO ${this.table}`;
     if (columns.length === 0) {
       insertStatement += ` DEFAULT VALUES`;
@@ -76,6 +72,6 @@ export class TableUpserter<Schema extends TableSchema> {
       insertStatement += `(${columns.map((column) => '"' + column + '"')})
                    VALUES (${columns.map(() => '?')})`;
     }
-    return databaseBackend().prepare<BasicDataType[]>(insertStatement);
+    return insertStatement;
   }
 }
