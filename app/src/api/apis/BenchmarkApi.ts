@@ -39,11 +39,14 @@ import {
     MetricsEnum,
     MetricsEnumFromJSON,
     MetricsEnumToJSON,
+    SoftKPIsExperimentEnum,
+    SoftKPIsExperimentEnumFromJSON,
+    SoftKPIsExperimentEnumToJSON,
 } from '../models';
 
 export interface CalculateDiagramDataRequest {
-    xAxis: MetricsEnum;
-    yAxis: MetricsEnum;
+    xAxis: MetricsEnum | SoftKPIsExperimentEnum;
+    yAxis: MetricsEnum | SoftKPIsExperimentEnum;
     diagramExperimentItem: Array<DiagramExperimentItem>;
 }
 

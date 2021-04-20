@@ -31,13 +31,13 @@ export interface DiagramExperimentItem {
      * @type {ExperimentConfigItem}
      * @memberof DiagramExperimentItem
      */
-    experimentId?: ExperimentConfigItem;
+    experiment?: ExperimentConfigItem;
     /**
      * 
      * @type {ExperimentConfigItem}
      * @memberof DiagramExperimentItem
      */
-    groundTruthId?: ExperimentConfigItem;
+    groundTruth?: ExperimentConfigItem;
 }
 
 export function DiagramExperimentItemFromJSON(json: any): DiagramExperimentItem {
@@ -50,8 +50,8 @@ export function DiagramExperimentItemFromJSONTyped(json: any, ignoreDiscriminato
     }
     return {
         
-        'experimentId': !exists(json, 'experimentId') ? undefined : ExperimentConfigItemFromJSON(json['experimentId']),
-        'groundTruthId': !exists(json, 'groundTruthId') ? undefined : ExperimentConfigItemFromJSON(json['groundTruthId']),
+        'experiment': !exists(json, 'experiment') ? undefined : ExperimentConfigItemFromJSON(json['experiment']),
+        'groundTruth': !exists(json, 'groundTruth') ? undefined : ExperimentConfigItemFromJSON(json['groundTruth']),
     };
 }
 
@@ -64,8 +64,8 @@ export function DiagramExperimentItemToJSON(value?: DiagramExperimentItem | null
     }
     return {
         
-        'experimentId': ExperimentConfigItemToJSON(value.experimentId),
-        'groundTruthId': ExperimentConfigItemToJSON(value.groundTruthId),
+        'experiment': ExperimentConfigItemToJSON(value.experiment),
+        'groundTruth': ExperimentConfigItemToJSON(value.groundTruth),
     };
 }
 

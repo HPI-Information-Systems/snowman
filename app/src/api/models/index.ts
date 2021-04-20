@@ -25,3 +25,4 @@ export * from './SimilarityThresholdFunction';
 export * from './SimilarityThresholdFunctionAllOf';
 export * from './SimilarityThresholdFunctionOperator';
 export * from './SimilarityThresholdFunctionValues';
+export * from './SoftKPIsExperimentEnum';
