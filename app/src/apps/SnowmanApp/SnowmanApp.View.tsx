@@ -22,6 +22,7 @@ import { IonApp } from '@ionic/react';
 import AlgorithmDialog from 'apps/AlgorithmDialog/AlgorithmDialog';
 import AlgorithmsApp from 'apps/AlgorithmsApp/AlgorithmsApp';
 import BenchmarkApp from 'apps/BenchmarkApp/BenchmarkApp';
+import DatasetDialog from 'apps/DatasetDialog/DatasetDialog';
 import DatasetsApp from 'apps/DatasetsApp/DatasetsApp';
 import ExperimentsApp from 'apps/ExperimentsApp/ExperimentsApp';
 import HomeApp from 'apps/HomeApp/HomeApp';
@@ -52,11 +53,12 @@ const SnowmanAppView = ({
         experiments={experiments}
       />
       <AlgorithmDialog />
+      <DatasetDialog />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <BlockingLoading />
       {/* Todo: Change autoClose back to 5000 */}
       <ToastContainer
-        autoClose={500}
+        autoClose={2000}
         closeButton={false}
         pauseOnHover={true}
         pauseOnFocusLoss={true}

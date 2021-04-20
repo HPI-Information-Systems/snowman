@@ -1,13 +1,10 @@
-import DatasetDialogView from 'components/DatasetDialog/DatasetDialog.View';
+import DatasetDialogView from 'apps/DatasetDialog/DatasetDialog.View';
 import {
   DatasetDialogDispatchProps,
   DatasetDialogStateProps,
-} from 'components/DatasetDialog/DatasetDialogProps';
-import { ChangeEvent } from 'react';
-import { connect } from 'react-redux';
+} from 'apps/DatasetDialog/DatasetDialogProps';
 import {
   addNewTag,
-  addOrUpdateDataset,
   changeDatasetCSVEscape,
   changeDatasetCSVIdColumn,
   changeDatasetCSVQuote,
@@ -17,61 +14,59 @@ import {
   changeDatasetName,
   changeDatasetType,
   clickOnDatasetTag,
-  closeDialog,
   setSelectedFiles,
-} from 'store/actions/DatasetDialogStoreActions';
-import { SnowmanDispatch } from 'store/messages';
-import { ImmediateStore } from 'store/models';
-import { MagicNotPossibleId } from 'structs/constants';
+} from 'apps/DatasetDialog/store/DatasetDialogActions';
+import { DatasetDialogModel } from 'apps/DatasetDialog/types/DatasetDialogModel';
+import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
+import { ChangeEvent } from 'react';
+import { connect } from 'react-redux';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { IonChangeEvent } from 'types/IonChangeEvent';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
 
-const isValidDatasetDialog = (state: ImmediateStore): boolean => {
+const isValidDatasetDialog = (state: DatasetDialogModel): boolean => {
   // Dataset name shall not be empty
-  if (state.DatasetDialogStore.datasetName.length === 0) return false;
+  if (state.datasetName.length === 0) return false;
   // If dataset should be uploaded, select files
   if (
-    state.DatasetDialogStore.datasetType === DatasetTypes.full &&
-    state.DatasetDialogStore.selectedFiles.length === 0 &&
+    state.datasetType === DatasetTypes.full &&
+    state.selectedFiles.length === 0 &&
     // rule applies only if AddDialog
-    state.DatasetDialogStore.datasetId === null
+    state.datasetId === null
   ) {
     return false;
   }
   // If dataset not to be uploaded, specify its size
   return !(
-    state.DatasetDialogStore.datasetType === DatasetTypes.skeleton &&
-    state.DatasetDialogStore.datasetLength === 0
+    state.datasetType === DatasetTypes.skeleton && state.datasetLength === 0
   );
 };
 
-const mapStateToProps = (state: ImmediateStore): DatasetDialogStateProps => ({
-  isAddDialog: state.DatasetDialogStore.datasetId === null,
-  isOpen: state.DatasetDialogStore.isOpen,
-  datasetName: state.DatasetDialogStore.datasetName,
-  datasetDescription: state.DatasetDialogStore.datasetDescription,
-  datasetType: state.DatasetDialogStore.datasetType,
-  datasetLength: state.DatasetDialogStore.datasetLength,
-  tags: state.DatasetDialogStore.availableTags,
-  selectedTags: state.DatasetDialogStore.selectedTags,
-  selectedFiles: state.DatasetDialogStore.selectedFiles,
-  csvIdColumn: state.DatasetDialogStore.csvIdColumn,
-  csvSeparator: state.DatasetDialogStore.csvSeparator,
-  csvQuote: state.DatasetDialogStore.csvQuote,
-  csvEscape: state.DatasetDialogStore.csvEscape,
+const mapStateToProps = (
+  state: DatasetDialogModel
+): DatasetDialogStateProps => ({
+  isAddDialog: state.datasetId === null,
+  datasetName: state.datasetName,
+  datasetDescription: state.datasetDescription,
+  datasetType: state.datasetType,
+  datasetLength: state.datasetLength,
+  tags: state.availableTags,
+  selectedTags: state.selectedTags,
+  selectedFiles: state.selectedFiles,
+  csvIdColumn: state.csvIdColumn,
+  csvSeparator: state.csvSeparator,
+  csvQuote: state.csvQuote,
+  csvEscape: state.csvEscape,
   isValidAnsweredDialog: isValidDatasetDialog(state),
-  datasetId: state.DatasetDialogStore.datasetId ?? MagicNotPossibleId,
 });
 
 const mapDispatchToProps = (
-  dispatch: SnowmanDispatch
+  dispatch: SnowmanDispatch<DatasetDialogModel>
 ): DatasetDialogDispatchProps => ({
-  closeDialog(): void {
-    dispatch(closeDialog());
-  },
   clickOnCancel(): void {
-    dispatch(closeDialog());
+    console.log('close me');
+    doCloseDialog();
   },
   changeDatasetName(event: IonChangeEvent): void {
     dispatch(changeDatasetName(event.detail.value as string));
@@ -111,13 +106,13 @@ const mapDispatchToProps = (
     dispatch(addNewTag(newTagValue));
   },
   clickOnSubmit(): void {
-    dispatch(addOrUpdateDataset()).then();
+    console.log('submit me');
   },
 });
 
-const DatasetDialog = connect(
+const DatasetDialogContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(DatasetDialogView);
 
-export default DatasetDialog;
+export default DatasetDialogContainer;

@@ -1,4 +1,4 @@
-describe('Test validation of DatasetDialog', (): void => {
+describe('Test validation of DatasetDialogContainer', (): void => {
   test('Should validate correctly answered dialog', (): void => {
     expect(true).toBeTruthy();
   });

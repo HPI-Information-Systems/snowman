@@ -9,6 +9,7 @@ import {
 import { Dataset } from 'api';
 import DatasetCard from 'apps/DatasetsApp/components/DatasetCard/DatasetCard';
 import { DatasetsAppProps } from 'apps/DatasetsApp/DatasetsAppProps';
+import AddFab from 'components/AddFab/AddFab';
 import React from 'react';
 import { getTagsFromDatasets } from 'utils/tagFactory';
 
@@ -17,6 +18,7 @@ const DatasetsAppView = ({
   currentDatasets,
   selectedTags,
   clickOnTag,
+  addDataset,
 }: DatasetsAppProps): JSX.Element => {
   const tags = getTagsFromDatasets(datasets);
   return (
@@ -53,6 +55,7 @@ const DatasetsAppView = ({
       {datasets.length === 0 ? (
         <IonText color="medium">No matching elements found!</IonText>
       ) : undefined}
+      <AddFab clickOnFab={addDataset} />
     </>
   );
 };

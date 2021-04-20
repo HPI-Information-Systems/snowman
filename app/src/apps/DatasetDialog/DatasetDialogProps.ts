@@ -1,9 +1,9 @@
+import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import { ChangeEvent } from 'react';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
 export interface DatasetDialogDispatchProps {
-  closeDialog(): void;
   clickOnCancel(): void;
   createTag(newTagValue: string): void;
   changeDatasetName(event: IonChangeEvent): void;
@@ -20,7 +20,6 @@ export interface DatasetDialogDispatchProps {
 }
 
 export interface DatasetDialogStateProps {
-  isOpen: boolean;
   isAddDialog: boolean;
   isValidAnsweredDialog: boolean;
   datasetName: string;
@@ -34,8 +33,10 @@ export interface DatasetDialogStateProps {
   tags: string[];
   selectedTags: string[];
   selectedFiles: File[];
-  datasetId: number;
 }
 
-export type DatasetDialogProps = DatasetDialogDispatchProps &
+export type DatasetDialogOwnProps = DialogProps;
+
+export type DatasetDialogProps = DatasetDialogOwnProps &
+  DatasetDialogDispatchProps &
   DatasetDialogStateProps;

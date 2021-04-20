@@ -10,8 +10,10 @@ import {
   DatasetsAppDispatch,
   DatasetsAppModel,
 } from 'apps/DatasetsApp/types/DatasetsAppModel';
+import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { difference } from 'lodash';
 import { connect } from 'react-redux';
+import { ViewIDs } from 'types/ViewIDs';
 
 const mapStateToProps = (
   state: DatasetsAppModel,
@@ -29,6 +31,9 @@ const mapDispatchToProps = (
 ): DatasetsAppDispatchProps => ({
   clickOnTag(aTag: string): void {
     dispatch(toggleTag(aTag));
+  },
+  addDataset() {
+    doOpenDialog(ViewIDs.DatasetDialog);
   },
 });
 

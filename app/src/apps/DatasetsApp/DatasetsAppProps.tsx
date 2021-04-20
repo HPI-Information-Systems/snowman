@@ -11,6 +11,7 @@ export interface DatasetAppOwnProps {
 
 export interface DatasetsAppDispatchProps {
   clickOnTag(aTag: string): void;
+  addDataset(): void;
 }
 
 export type DatasetsAppProps = DatasetAppOwnProps &
