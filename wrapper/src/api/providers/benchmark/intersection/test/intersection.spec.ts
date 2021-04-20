@@ -3,8 +3,7 @@ import { DatasetId, ExperimentId } from '../../../../server/types';
 import { numberOfPairs } from '../../../../tools/numberOfPairs';
 import { expectClusteringsToEqual } from '../../cluster/test/utility';
 import { ClusterID, NodeID } from '../../cluster/types';
-import { IntersectionCache } from '../cache';
-import { IntersectionConfig } from '../cache/intersectionCache';
+import { IntersectionCache, IntersectionConfig } from '../intersectionCache';
 import {
   confusionTuplesTestCases,
   loadTestCase,

@@ -2,7 +2,8 @@ import { newEmptyArray } from '../../../../tools/array';
 import { LazyProperty } from '../../../../tools/lazyProperty';
 import { Subclustering } from '../../cluster/subclustering';
 import { Cluster, ClusterID, Clustering } from '../../cluster/types';
-import { IntersectionCache, SubclusterCache } from '../cache';
+import { SubclusterCache } from '../../subclusteringCache/subclusteringCache';
+import { IntersectionCache } from '../intersectionCache';
 import { CalculatePairs } from './base';
 
 export class CalculatePairsManyNegative extends CalculatePairs {

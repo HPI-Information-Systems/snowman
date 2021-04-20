@@ -1,5 +1,5 @@
 import { Cluster, ClusterID } from '../../cluster/types';
-import { SubclusterCache } from '../cache';
+import { SubclusterCache } from '../../subclusteringCache/subclusteringCache';
 import { CalculatePairs } from './base';
 
 export class CalculatePairs1Negative extends CalculatePairs {

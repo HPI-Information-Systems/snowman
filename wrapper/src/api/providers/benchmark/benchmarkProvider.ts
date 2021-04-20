@@ -7,7 +7,8 @@ import {
 import { Metric } from '../../server/types';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
 import { idClustersToRecordClusters } from './idsToRecords';
-import { Intersection, IntersectionCache } from './intersection';
+import { Intersection } from './intersection';
+import { IntersectionCache } from './intersection/intersectionCache';
 import {
   Accuracy,
   BalancedAccuracy,

@@ -1,7 +1,7 @@
 import { tables } from '../../../database';
 import { LazyProperty } from '../../../tools/lazyProperty';
 import { IntersectionBase } from './base';
-import { IntersectionCache } from './cache';
+import { IntersectionCache } from './intersectionCache';
 
 export class IntersectionCounts extends IntersectionBase {
   get numberPairs(): number {

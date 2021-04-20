@@ -16,7 +16,7 @@ import {
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { providers } from '..';
 import { expectClusteringsToEqual } from '../benchmark/cluster/test/utility';
-import { IntersectionCache } from '../benchmark/intersection';
+import { IntersectionCache } from '../benchmark/intersection/intersectionCache';
 import { assertFilesMatch } from '../dataset/test/assertFilesMatch';
 
 const numberOfRecords = 5;
