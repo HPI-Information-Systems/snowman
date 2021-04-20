@@ -8,14 +8,14 @@ import { connect } from 'react-redux';
 import { loadCounts } from 'store/actions/IntersectionStoreActions';
 import { navigateTo } from 'store/actions/RenderStoreActions';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 import { ViewIDs } from 'types/ViewIDs';
 import {
   couldEnterBinaryMetricsPage,
   couldEnterNMetricsPage,
 } from 'utils/accessGuards';
 
-const mapStateToProps = (state: Store): DashboardPageStateProps => ({
+const mapStateToProps = (state: ImmediateStore): DashboardPageStateProps => ({
   isVennDiagramRendered:
     state.BenchmarkConfigurationStore.chosenExperiments.length +
       state.BenchmarkConfigurationStore.chosenGoldStandards.length <=

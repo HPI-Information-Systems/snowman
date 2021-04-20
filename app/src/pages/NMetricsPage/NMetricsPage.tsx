@@ -10,9 +10,9 @@ import {
   loadNMetrics,
 } from 'store/actions/NMetricsPageActions';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 
-const mapStateToProps = (state: Store): NMetricsPageStateProps => ({
+const mapStateToProps = (state: ImmediateStore): NMetricsPageStateProps => ({
   metrics: state.NMetricsStore.metrics,
   experiments: state.BenchmarkConfigurationStore.chosenExperiments,
 });

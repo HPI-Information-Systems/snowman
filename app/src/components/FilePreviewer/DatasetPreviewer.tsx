@@ -8,9 +8,9 @@ import { connect } from 'react-redux';
 import { closePreviewer } from 'store/actions/DatasetPreviewerActions';
 import { datasetTuplesLoader } from 'store/actions/DatasetsPageActions';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 
-const mapStateToProps = (state: Store): FilePreviewerStateProps => ({
+const mapStateToProps = (state: ImmediateStore): FilePreviewerStateProps => ({
   fileName: state.DatasetPreviewerStore.dataset?.name ?? 'unknown',
   isOpen: state.DatasetPreviewerStore.isOpen,
   rowCount: state.DatasetPreviewerStore.dataset?.numberOfUploadedRecords ?? 0,

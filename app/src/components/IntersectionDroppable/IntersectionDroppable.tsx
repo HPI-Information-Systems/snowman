@@ -1,9 +1,11 @@
 import IntersectionDroppableView from 'components/IntersectionDroppable/IntersectionDroppable.View';
 import { IntersectionDroppableStateProps } from 'components/IntersectionDroppable/IntersectionDroppableProps';
 import { connect } from 'react-redux';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 
-const mapStateToProps = (state: Store): IntersectionDroppableStateProps => ({
+const mapStateToProps = (
+  state: ImmediateStore
+): IntersectionDroppableStateProps => ({
   pairCounts: new Map(
     state.IntersectionStore.counts
       .filter(({ experiments }) => experiments.length === 1)

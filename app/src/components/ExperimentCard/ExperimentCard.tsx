@@ -9,11 +9,11 @@ import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
 import { openPreviewer } from 'store/actions/ExperimentPreviewerActions';
 import { deleteExperiment } from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 import { couldPreviewExperiment } from 'utils/experimentsHelpers';
 
 const mapStateToProps = (
-  state: Store,
+  state: ImmediateStore,
   ownProps: ExperimentCardOwnProps
 ): ExperimentCardStateProps => ({
   couldPreview: couldPreviewExperiment(ownProps.experiment),

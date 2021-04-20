@@ -11,10 +11,10 @@ import {
   showPopover,
 } from 'store/actions/SelectableInputStoreActions';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-const mapStateToProps = (state: Store): SelectableInputStateProps => ({
+const mapStateToProps = (state: ImmediateStore): SelectableInputStateProps => ({
   shouldShowPopover: state.SelectableInputStore.shouldShowPopover,
   eventPopover: state.SelectableInputStore.eventPopover,
   searchString: state.SelectableInputStore.searchString,

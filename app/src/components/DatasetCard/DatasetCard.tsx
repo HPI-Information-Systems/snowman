@@ -9,11 +9,11 @@ import { openChangeDialog } from 'store/actions/DatasetDialogStoreActions';
 import { openPreviewer } from 'store/actions/DatasetPreviewerActions';
 import { deleteDataset } from 'store/actions/DatasetsPageActions';
 import { SnowmanDispatch } from 'store/messages';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 import { couldPreviewDataset } from 'utils/datasetHelper';
 
 const mapStateToProps = (
-  state: Store,
+  state: ImmediateStore,
   ownProps: DatasetCardOwnProps
 ): DatasetCardStateProps => ({
   couldPreview: couldPreviewDataset(ownProps.dataset),

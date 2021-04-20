@@ -1,9 +1,9 @@
 import PageStructView from 'components/PageStructOLD/PageStruct.View';
 import { PageStructStateProps } from 'components/PageStructOLD/PageStructProps';
 import { connect } from 'react-redux';
-import { Store } from 'store/models';
+import { ImmediateStore } from 'store/models';
 
-const mapStateToProps = (state: Store): PageStructStateProps => ({
+const mapStateToProps = (state: ImmediateStore): PageStructStateProps => ({
   showIndicator: state.GlobalIndicatorStore.ongoingRequestsCount > 0,
 });
 
