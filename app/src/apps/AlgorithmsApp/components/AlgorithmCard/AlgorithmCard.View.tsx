@@ -41,6 +41,7 @@ const AlgorithmCardView = ({
             fill="clear"
             color="danger"
             onClick={deleteAlgorithm}
+            disabled={algorithm.id < 0}
           >
             <IonIcon slot="icon-only" icon={trash} />
           </IonButton>
