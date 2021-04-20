@@ -1,3 +1,6 @@
+import { EntityId } from 'types/EntityId';
+
 export interface DialogProps {
-  entityId: number | null;
+  entityId: EntityId;
+  isAddDialog: boolean;
 }

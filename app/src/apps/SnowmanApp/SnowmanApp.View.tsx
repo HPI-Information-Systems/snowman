@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'theme/overwrites.css';
 
 import { IonApp } from '@ionic/react';
+import AlgorithmDialog from 'apps/AlgorithmDialog/AlgorithmDialog';
 import AlgorithmsApp from 'apps/AlgorithmsApp/AlgorithmsApp';
 import BenchmarkApp from 'apps/BenchmarkApp/BenchmarkApp';
 import DatasetsApp from 'apps/DatasetsApp/DatasetsApp';
@@ -27,7 +28,6 @@ import HomeApp from 'apps/HomeApp/HomeApp';
 import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/BlockingLoading';
 import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';
 import { SnowmanAppProps } from 'apps/SnowmanApp/SnowmanAppProps';
-import AlgorithmDialog from 'components/AlgorithmDialog/AlgorithmDialog';
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';

@@ -1,13 +1,14 @@
 import { AlgorithmApi, AlgorithmValues } from 'api';
+import { AlgorithmDialogActionTypes } from 'apps/AlgorithmDialog/types/AlgorithmDialogActionTypes';
+import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicActions';
-import { AlgorithmDialogActionTypes } from 'components/AlgorithmDialog/types/AlgorithmDialogActionTypes';
-import { AlgorithmDialogModel } from 'components/AlgorithmDialog/types/AlgorithmDialogModel';
 import { MagicNotPossibleId } from 'structs/constants';
 import {
   SUCCESS_TO_ADD_NEW_ALGORITHM,
   SUCCESS_TO_UPDATE_ALGORITHM,
 } from 'structs/statusMessages';
+import { EntityId } from 'types/EntityId';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import {
@@ -68,7 +69,7 @@ const addAlgorithm = (): SnowmanThunkAction<
   );
 
 const updateAlgorithm = (
-  algorithmId: number | null
+  algorithmId: EntityId
 ): SnowmanThunkAction<Promise<void>, AlgorithmDialogModel> => async (
   dispatch: SnowmanDispatch<AlgorithmDialogModel>,
   getState: () => AlgorithmDialogModel
@@ -89,7 +90,7 @@ const updateAlgorithm = (
   );
 
 export const addOrUpdateAlgorithm = (
-  algorithmId: number | null
+  algorithmId: EntityId
 ): SnowmanThunkAction<Promise<void>, AlgorithmDialogModel> => async (
   dispatch: SnowmanDispatch<AlgorithmDialogModel>
 ): Promise<void> => {

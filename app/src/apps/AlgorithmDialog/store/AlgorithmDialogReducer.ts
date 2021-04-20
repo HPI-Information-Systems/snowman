@@ -1,5 +1,5 @@
-import { AlgorithmDialogActionTypes } from 'components/AlgorithmDialog/types/AlgorithmDialogActionTypes';
-import { AlgorithmDialogModel } from 'components/AlgorithmDialog/types/AlgorithmDialogModel';
+import { AlgorithmDialogActionTypes } from 'apps/AlgorithmDialog/types/AlgorithmDialogActionTypes';
+import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: AlgorithmDialogModel = {
