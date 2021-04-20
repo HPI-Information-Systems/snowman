@@ -20,6 +20,7 @@ import 'theme/overwrites.css';
 
 import { IonApp } from '@ionic/react';
 import AlgorithmsApp from 'apps/AlgorithmsApp/AlgorithmsApp';
+import BenchmarkApp from 'apps/BenchmarkApp/BenchmarkApp';
 import DatasetsApp from 'apps/DatasetsApp/DatasetsApp';
 import ExperimentsApp from 'apps/ExperimentsPage/ExperimentsApp';
 import HomeApp from 'apps/HomeApp/HomeApp';
@@ -27,7 +28,6 @@ import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/Blocking
 import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';
 import { SnowmanAppProps } from 'apps/SnowmanApp/SnowmanAppProps';
 import AlgorithmDialog from 'components/AlgorithmDialog/AlgorithmDialog';
-import BenchmarkApp from 'pages/BenchmarkPage/BenchmarkApp';
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import ReactTooltip from 'react-tooltip';

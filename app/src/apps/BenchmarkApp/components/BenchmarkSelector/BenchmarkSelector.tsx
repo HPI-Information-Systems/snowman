@@ -1,8 +1,8 @@
-import BenchmarkSelectorView from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelector.View';
+import BenchmarkSelectorView from 'apps/BenchmarkApp/components/BenchmarkSelector/BenchmarkSelector.View';
 import {
   BenchmarkSelectorDispatchProps,
   BenchmarkSelectorStateProps,
-} from 'pages/BenchmarkPage/components/BenchmarkSelector/BenchmarkSelectorProps';
+} from 'apps/BenchmarkApp/components/BenchmarkSelector/BenchmarkSelectorProps';
 import {
   expandAlgorithmInDataset,
   expandDataset,
@@ -12,11 +12,11 @@ import {
   setSearchString,
   shrinkAlgorithmInDataset,
   shrinkDataset,
-} from 'pages/BenchmarkPage/store/BenchmarkAppActions';
+} from 'apps/BenchmarkApp/store/BenchmarkAppActions';
 import {
   BenchmarkAppDispatch,
   BenchmarkAppModel,
-} from 'pages/BenchmarkPage/types/BenchmarkAppModel';
+} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { connect } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 

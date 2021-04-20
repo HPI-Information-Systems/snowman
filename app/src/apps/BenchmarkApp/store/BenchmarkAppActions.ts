@@ -1,5 +1,5 @@
-import { BenchmarkAppActionsTypes } from 'pages/BenchmarkPage/types/BenchmarkAppActionsTypes';
-import { BenchmarkAppModel } from 'pages/BenchmarkPage/types/BenchmarkAppModel';
+import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,

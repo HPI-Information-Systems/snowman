@@ -1,8 +1,8 @@
 import { Algorithm, Dataset, Experiment } from 'api';
+import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { ExpandedEntity } from 'apps/BenchmarkApp/types/ExpandedEntity';
 import { union } from 'lodash';
-import { BenchmarkAppActionsTypes } from 'pages/BenchmarkPage/types/BenchmarkAppActionsTypes';
-import { BenchmarkAppModel } from 'pages/BenchmarkPage/types/BenchmarkAppModel';
-import { ExpandedEntity } from 'pages/BenchmarkPage/types/ExpandedEntity';
 import { SnowmanAction } from 'store/messages';
 
 const initialState: BenchmarkAppModel = {
