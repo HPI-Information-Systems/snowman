@@ -1,13 +1,9 @@
 import LRUCache from 'lru-cache';
 
 import { ExperimentConfigItem } from '../../../server/types';
+import { cliArgs } from '../../../tools/cli';
 import { keyOfBaseConfig } from './keys';
 import { BenchmarkCacheBaseConfig, BenchmarkCacheContent } from './types';
-
-/**
- * the maximum storage correlates to this number
- */
-const MAX_STORAGE = 1_000_000_000;
 
 export abstract class BasicBenchmarkCache<
   Config,
@@ -56,7 +52,7 @@ export abstract class BasicBenchmarkCache<
     length: (intersection) => intersection.size,
     dispose: (key, content) => this.dispose(key, content),
     noDisposeOnSet: true,
-    max: MAX_STORAGE,
+    max: cliArgs.limitMemory,
   });
 
   protected sortExperimentConfigItems(
