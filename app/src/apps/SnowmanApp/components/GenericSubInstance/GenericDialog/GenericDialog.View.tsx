@@ -40,12 +40,12 @@ class GenericDialogView extends Component<GenericDialogProps> {
               />
             </IonToolbar>
             <div
-              className={style(
-                styles.innerContainer,
-                this.props.provideScrollingMechanism
-                  ? styles.innerContainerScrollable
-                  : styles.innerContainerNoScroll
-              )}
+              style={{
+                position: 'relative',
+                height: this.props.provideScrollingMechanism
+                  ? 'auto'
+                  : `calc(100% - ${fontSize} - ${3 * margin}px)`,
+              }}
             >
               {this.props.children({
                 entityId: this.props.entityId,
