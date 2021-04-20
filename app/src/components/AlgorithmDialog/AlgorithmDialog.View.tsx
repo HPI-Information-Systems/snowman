@@ -9,7 +9,6 @@ import {
 } from '@ionic/react';
 import styles from 'components/AlgorithmDialog/AlgorithmDialog.module.css';
 import { AlgorithmDialogProps } from 'components/AlgorithmDialog/AlgorithmDialogProps';
-import ModalDialog from 'components/ModalDialog/ModalDialog';
 import {
   addCircleOutline,
   checkmarkCircleOutline,
@@ -21,24 +20,13 @@ import style from 'theme/style';
 const AlgorithmDialogView = ({
   algorithmDescription,
   algorithmName,
-  isOpen,
   isAddDialog,
   clickOnCancel,
   clickOnSubmit,
   changeAlgorithmDescription,
   changeAlgorithmName,
-  closeDialog,
-  algorithmId,
 }: AlgorithmDialogProps): JSX.Element => (
-  <ModalDialog
-    heading={
-      isAddDialog
-        ? 'Add New Matching Solution'
-        : `Update Matching Solution (ID: ${algorithmId})`
-    }
-    isOpen={isOpen}
-    closeDialog={closeDialog}
-  >
+  <>
     <IonList>
       <IonItem>
         <IonLabel position="fixed">Name/ID:</IonLabel>
@@ -79,7 +67,7 @@ const AlgorithmDialogView = ({
         Cancel
       </IonButton>
     </div>
-  </ModalDialog>
+  </>
 );
 
 export default AlgorithmDialogView;

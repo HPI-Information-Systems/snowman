@@ -1,14 +1,15 @@
-import { Algorithm, AlgorithmApi, AlgorithmValues } from 'api';
+import { AlgorithmApi, AlgorithmValues } from 'api';
+import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesActions';
+import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicActions';
+import { AlgorithmDialogActionTypes } from 'components/AlgorithmDialog/types/AlgorithmDialogActionTypes';
 import { AlgorithmDialogModel } from 'components/AlgorithmDialog/types/AlgorithmDialogModel';
-import { AlgorithmDialogStoreActionTypes as DialogActions } from 'store/actions/actionTypes';
-import { getAlgorithms } from 'store/actions/AlgorithmsPageActions';
-import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
-import { store } from 'store/store';
 import { MagicNotPossibleId } from 'structs/constants';
 import {
   SUCCESS_TO_ADD_NEW_ALGORITHM,
   SUCCESS_TO_UPDATE_ALGORITHM,
 } from 'structs/statusMessages';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
+import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
@@ -19,67 +20,81 @@ export const changeAlgorithmName = (
   aName: string
 ): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
   easyPrimitiveAction<AlgorithmDialogModel>({
-    type: DialogActions.CHANGE_ALGORITHM_NAME,
+    type: AlgorithmDialogActionTypes.CHANGE_ALGORITHM_NAME,
     payload: aName,
   });
 
 export const changeAlgorithmDescription = (
   aDescription: string
 ): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
-  easyPrimitiveAction({
-    type: DialogActions.CHANGE_ALGORITHM_DESCRIPTION,
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type: AlgorithmDialogActionTypes.CHANGE_ALGORITHM_DESCRIPTION,
     payload: aDescription,
   });
 
-/*const getAlgorithmValues = (): AlgorithmValues => ({
-  name: store.getState().AlgorithmDialogStore.algorithmName,
-  description: store.getState().AlgorithmDialogStore.algorithmDescription,
+const resetDialog = (): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type: AlgorithmDialogActionTypes.RESET_DIALOG,
+    // reducer ignores payload
+    payload: false,
+  });
+
+const getAlgorithmValues = (state: AlgorithmDialogModel): AlgorithmValues => ({
+  name: state.algorithmName,
+  description: state.algorithmDescription,
 });
 
-const addAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
-  dispatch: SnowmanDispatch
+const addAlgorithm = (): SnowmanThunkAction<
+  Promise<void>,
+  AlgorithmDialogModel
+> => async (
+  dispatch: SnowmanDispatch<AlgorithmDialogModel>,
+  getState: () => AlgorithmDialogModel
 ): Promise<void> =>
   RequestHandler<void>(
     (): Promise<void> =>
       new AlgorithmApi()
         .addAlgorithm({
-          algorithm: getAlgorithmValues(),
+          algorithm: getAlgorithmValues(getState()),
         })
         .then((): void => {
           dispatch(resetDialog());
         })
         .finally((): void => {
-          dispatch(closeDialog());
-          dispatch(getAlgorithms());
+          doCloseDialog();
+          doRefreshCentralResources();
         }),
     SUCCESS_TO_ADD_NEW_ALGORITHM
   );
 
-const updateAlgorithm = (): SnowmanThunkAction<Promise<void>> => async (
-  dispatch: SnowmanDispatch
+const updateAlgorithm = (
+  algorithmId: number | null
+): SnowmanThunkAction<Promise<void>, AlgorithmDialogModel> => async (
+  dispatch: SnowmanDispatch<AlgorithmDialogModel>,
+  getState: () => AlgorithmDialogModel
 ): Promise<void> =>
   RequestHandler(
     (): Promise<void> =>
       new AlgorithmApi()
         .setAlgorithm({
-          algorithmId:
-            store.getState().AlgorithmDialogStore.algorithmId ??
-            MagicNotPossibleId,
-          algorithm: getAlgorithmValues(),
+          algorithmId: algorithmId ?? MagicNotPossibleId,
+          algorithm: getAlgorithmValues(getState()),
         })
         .then((): void => dispatch(resetDialog()))
         .finally((): void => {
-          dispatch(closeDialog());
-          dispatch(getAlgorithms());
+          doCloseDialog();
+          doRefreshCentralResources();
         }),
     SUCCESS_TO_UPDATE_ALGORITHM
   );
 
-export const addOrUpdateAlgorithm = (): SnowmanThunkAction<
-  Promise<void>
-> => async (dispatch: SnowmanDispatch): Promise<void> => {
-  if (store.getState().AlgorithmDialogStore.algorithmId === null) {
+export const addOrUpdateAlgorithm = (
+  algorithmId: number | null
+): SnowmanThunkAction<Promise<void>, AlgorithmDialogModel> => async (
+  dispatch: SnowmanDispatch<AlgorithmDialogModel>
+): Promise<void> => {
+  if (algorithmId === null) {
     return dispatch(addAlgorithm());
   }
-  return dispatch(updateAlgorithm());
-};*/
+  return dispatch(updateAlgorithm(algorithmId));
+};

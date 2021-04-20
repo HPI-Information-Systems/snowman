@@ -6,6 +6,7 @@ import {
   AlgorithmDialogStateProps,
 } from 'components/AlgorithmDialog/AlgorithmDialogProps';
 import {
+  addOrUpdateAlgorithm,
   changeAlgorithmDescription,
   changeAlgorithmName,
 } from 'components/AlgorithmDialog/store/AlgorithmDialogActions';
@@ -18,18 +19,16 @@ const mapStateToProps = (
   state: AlgorithmDialogModel,
   ownProps: AlgorithmDialogOwnProps
 ): AlgorithmDialogStateProps => ({
-  isAddDialog: ownProps.algorithmId === null,
+  isAddDialog: ownProps.entityId === null,
   algorithmDescription: state.algorithmDescription,
   algorithmName: state.algorithmName,
 });
 
 const mapDispatchToProps = (
-  dispatch: SnowmanDispatch<AlgorithmDialogModel>
+  dispatch: SnowmanDispatch<AlgorithmDialogModel>,
+  ownProps: AlgorithmDialogOwnProps
 ): AlgorithmDialogDispatchProps => ({
   clickOnCancel(): void {
-    doCloseDialog();
-  },
-  closeDialog(): void {
     doCloseDialog();
   },
   changeAlgorithmName(event: IonChangeEvent): void {
@@ -39,7 +38,7 @@ const mapDispatchToProps = (
     dispatch(changeAlgorithmDescription(event.detail.value as string));
   },
   clickOnSubmit(): void {
-    console.log();
+    dispatch(addOrUpdateAlgorithm(ownProps.entityId)).then();
   },
 });
 

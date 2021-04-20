@@ -1,13 +1,11 @@
+import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicActions';
 import AddFabView from 'components/AddFab/AddFab.View';
 import { AddFabDispatchProps } from 'components/AddFab/AddFabProps';
 import { connect } from 'react-redux';
-import { openAddDialog } from 'store/actions/AlgorithmDialogStoreActions';
-import { SnowmanDispatch } from 'store/messages';
+import { ViewIDs } from 'types/ViewIDs';
 
-const mapDispatchToProps = (
-  dispatch: SnowmanDispatch
-): AddFabDispatchProps => ({
-  clickOnFab: (): void => dispatch(openAddDialog()),
+const mapDispatchToProps = (): AddFabDispatchProps => ({
+  clickOnFab: (): void => doOpenDialog(ViewIDs.AlgorithmDialog),
 });
 
 const AddAlgorithmFab = connect(null, mapDispatchToProps)(AddFabView);

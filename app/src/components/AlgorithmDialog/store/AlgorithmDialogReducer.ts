@@ -22,6 +22,8 @@ const AlgorithmDialogReducer = (
         ...state,
         algorithmDescription: action.payload as string,
       };
+    case AlgorithmDialogActionTypes.RESET_DIALOG:
+      return initialState;
     default:
       return state;
   }

@@ -26,6 +26,7 @@ import HomeApp from 'apps/HomeApp/HomeApp';
 import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/BlockingLoading';
 import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';
 import { SnowmanAppProps } from 'apps/SnowmanApp/SnowmanAppProps';
+import AlgorithmDialog from 'components/AlgorithmDialog/AlgorithmDialog';
 import BenchmarkApp from 'pages/BenchmarkPage/BenchmarkApp';
 import React, { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -50,6 +51,7 @@ const SnowmanAppView = ({
         algorithms={algorithms}
         experiments={experiments}
       />
+      <AlgorithmDialog />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <BlockingLoading />
       {/* Todo: Change autoClose back to 5000 */}

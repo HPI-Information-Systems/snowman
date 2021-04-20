@@ -64,7 +64,7 @@ class GenericDialogView extends Component<GenericDialogProps> {
                   : `calc(100% - ${fontSize} - ${3 * margin}px)`,
               }}
             >
-              {this.props.children}
+              {this.props.children({ entityId: this.props.entityId })}
             </div>
           </div>
         </IonModal>
