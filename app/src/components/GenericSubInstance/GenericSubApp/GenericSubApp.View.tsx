@@ -11,10 +11,12 @@ import {
 } from '@ionic/react';
 import { GenericSubAppProps } from 'components/GenericSubInstance/GenericSubApp/GenericSubAppProps';
 import styles from 'components/GenericSubInstance/GenericSubApp/GenericSubAppStyles.module.css';
+import { isEqual } from 'lodash';
 import React, { Component, createElement } from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { SnowmanAction } from 'store/messages';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 class GenericSubAppView extends Component<GenericSubAppProps> {
   store: Store<unknown, SnowmanAction>;
@@ -23,6 +25,18 @@ class GenericSubAppView extends Component<GenericSubAppProps> {
     super(props);
     this.store = props.createSubAppStore();
   }
+
+  componentDidUpdate(prevProps: Readonly<GenericSubAppProps>): void {
+    if (
+      this.props.consistencyUpdater &&
+      isEqual(prevProps.centralResources, this.props.centralResources)
+    ) {
+      (this.store.dispatch as SnowmanDispatch<unknown>)(
+        this.props.consistencyUpdater(this.props.centralResources)
+      );
+    }
+  }
+
   render(): JSX.Element {
     return (
       <Provider store={this.store}>
