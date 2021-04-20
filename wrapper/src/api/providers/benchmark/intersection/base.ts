@@ -2,11 +2,14 @@ import { tables } from '../../../database';
 import { LazyProperty } from '../../../tools/lazyProperty';
 import { StoredDataset } from '../../dataset/util/converter';
 import { BenchmarkCacheContent } from '../cache';
+import { SubclusterCache } from '../cache';
+import {
+  IntersectionCache,
+  IntersectionConfig,
+} from '../cache/flavors/intersectionCache';
 import { Clustering } from '../cluster/types';
 import { UnionFind } from '../cluster/unionFind';
-import { SubclusterCache } from '../subclusteringCache/subclusteringCache';
 import type { Intersection as IntersectionSubclass } from '.';
-import { IntersectionCache, IntersectionConfig } from './intersectionCache';
 import { IntersectionQueries } from './queries';
 
 export class IntersectionBase

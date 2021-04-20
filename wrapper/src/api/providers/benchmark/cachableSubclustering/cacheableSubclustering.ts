@@ -2,11 +2,11 @@ import { tables } from '../../../database';
 import { LazyProperty } from '../../../tools/lazyProperty';
 import { StoredDataset } from '../../dataset/util/converter';
 import { BenchmarkCacheContent } from '../cache';
+import { SubclusteringConfig } from '../cache';
+import { IntersectionCache } from '../cache/flavors/intersectionCache';
 import { Subclustering } from '../cluster/subclustering';
-import { IntersectionCache } from '../intersection/intersectionCache';
-import { SubclusteringConfig } from './subclusteringCache';
 
-export class CachedSubclusting
+export class CacheableSubclusting
   implements BenchmarkCacheContent<SubclusteringConfig> {
   protected readonly _clustering = new LazyProperty(
     () =>

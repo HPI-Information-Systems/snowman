@@ -1,6 +1,7 @@
-import { DatasetId, ExperimentConfigItem } from '../../../server/types';
-import { BenchmarkCache, BenchmarkCacheBaseConfig } from '../cache';
-import { CachedSubclusting } from './cachedSubclustering';
+import { DatasetId, ExperimentConfigItem } from '../../../../server/types';
+import { CacheableSubclusting } from '../../cachableSubclustering/cacheableSubclustering';
+import { BenchmarkCache } from '../cache';
+import { BenchmarkCacheBaseConfig } from '../types';
 
 export type SubclusteringConfig = {
   base: ExperimentConfigItem[];
@@ -10,7 +11,7 @@ export type SubclusteringConfig = {
 
 class SubclusterCacheClass extends BenchmarkCache<
   SubclusteringConfig,
-  CachedSubclusting
+  CacheableSubclusting
 > {
   protected mapCustomConfigToBaseConfig({
     datasetId,
@@ -39,8 +40,8 @@ class SubclusterCacheClass extends BenchmarkCache<
   protected create(
     config: SubclusteringConfig,
     key: string
-  ): CachedSubclusting {
-    return new CachedSubclusting(config, key);
+  ): CacheableSubclusting {
+    return new CacheableSubclusting(config, key);
   }
 
   protected readonly keyPrefix = 'subclustering';

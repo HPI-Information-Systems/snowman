@@ -5,10 +5,10 @@ import {
   FileResponse,
 } from '../../server/types';
 import { Metric } from '../../server/types';
+import { IntersectionCache } from './cache/flavors/intersectionCache';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
 import { idClustersToRecordClusters } from './idsToRecords';
 import { Intersection } from './intersection';
-import { IntersectionCache } from './intersection/intersectionCache';
 import {
   Accuracy,
   BalancedAccuracy,

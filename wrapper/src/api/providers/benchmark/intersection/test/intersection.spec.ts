@@ -1,9 +1,12 @@
 import { setupDatabase } from '../../../../database';
 import { DatasetId, ExperimentId } from '../../../../server/types';
 import { numberOfPairs } from '../../../../tools/numberOfPairs';
+import {
+  IntersectionCache,
+  IntersectionConfig,
+} from '../../cache/flavors/intersectionCache';
 import { expectClusteringsToEqual } from '../../cluster/test/utility';
 import { ClusterID, NodeID } from '../../cluster/types';
-import { IntersectionCache, IntersectionConfig } from '../intersectionCache';
 import {
   confusionTuplesTestCases,
   loadTestCase,
