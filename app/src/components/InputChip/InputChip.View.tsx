@@ -5,7 +5,7 @@ import {
   checkmarkCircleOutline,
   closeCircleOutline,
 } from 'ionicons/icons';
-import React, { useEffect, useRef, Fragment } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { couldSubmitValue } from 'utils/inputChipHelpers';
 
 const InputChipView = ({
