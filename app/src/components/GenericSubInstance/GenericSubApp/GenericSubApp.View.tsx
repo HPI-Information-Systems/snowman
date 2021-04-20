@@ -9,6 +9,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
+import { centralResourcesRefreshed } from 'apps/SnowmanApp/store/CentralResourcesGenericActions';
 import { GenericSubAppProps } from 'components/GenericSubInstance/GenericSubApp/GenericSubAppProps';
 import styles from 'components/GenericSubInstance/GenericSubApp/GenericSubAppStyles.module.css';
 import { isEqual } from 'lodash';
@@ -27,12 +28,10 @@ class GenericSubAppView extends Component<GenericSubAppProps> {
   }
 
   componentDidUpdate(prevProps: Readonly<GenericSubAppProps>): void {
-    if (
-      this.props.consistencyUpdater &&
-      isEqual(prevProps.centralResources, this.props.centralResources)
-    ) {
-      (this.store.dispatch as SnowmanDispatch<unknown>)(
-        this.props.consistencyUpdater(this.props.centralResources)
+    if (isEqual(prevProps.centralResources, this.props.centralResources)) {
+      centralResourcesRefreshed(
+        this.store.dispatch as SnowmanDispatch<unknown>,
+        this.props.centralResources
       );
     }
   }
