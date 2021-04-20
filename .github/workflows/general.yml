@@ -84,9 +84,9 @@ jobs:
       - name: Test wrapper
         run: npm run test-ci
         working-directory: ./wrapper
-      - name: Test integration
-        run: npm run test-ci
-        working-directory: ./
+      #- name: Test integration
+      #  run: npm run test-ci
+      #  working-directory: ./
 
   build:
     runs-on: ubuntu-latest
