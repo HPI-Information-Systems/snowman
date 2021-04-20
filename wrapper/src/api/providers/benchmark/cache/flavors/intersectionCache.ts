@@ -1,7 +1,7 @@
 import { DatasetId, ExperimentConfigItem } from '../../../../server/types';
 import { IntersectionBase } from '../../intersection/intersectionBase';
 import { IntersectionWithExcludes } from '../../intersection/intersectionWithExcludes';
-import { ModularIntersection } from '../../intersection/modularIntersectionOnlyIncludes';
+import { ModularIntersectionOnlyIncludes } from '../../intersection/modularIntersectionOnlyIncludes';
 import { StaticIntersectionOnlyIncludes } from '../../intersection/staticIntersectionOnlyIncludes';
 import { BenchmarkCache } from '../cache';
 import { BenchmarkCacheBaseConfig } from '../types';
@@ -33,7 +33,7 @@ class IntersectionCacheClass extends BenchmarkCache<
     if (config.excluded.length > 0) {
       return new IntersectionWithExcludes(config);
     } else if (config.included.length === 1 && config.included[0].similarity) {
-      return new ModularIntersection(config);
+      return new ModularIntersectionOnlyIncludes(config);
     } else {
       return new StaticIntersectionOnlyIncludes(config);
     }

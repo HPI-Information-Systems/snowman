@@ -65,9 +65,9 @@ export abstract class BasicBenchmarkCache<
       .slice()
       .sort((a, b) =>
         a.similarity && !b.similarity
-          ? 1
-          : b.similarity && !a.similarity
           ? -1
+          : b.similarity && !a.similarity
+          ? 1
           : a.experimentId - b.experimentId
       );
   }

@@ -5,7 +5,7 @@ import { IntersectionOnlyIncludes } from '../../intersectionOnlyIncludes';
 import { CalculateRowsFlavor } from './base';
 
 export class CalculateRowsOneExclude extends CalculateRowsFlavor {
-  protected subclusters: Cluster[] = [];
+  protected subclusters: readonly Cluster[] = [];
   protected skipRemains = 0;
   protected rows: (ClusterID | undefined)[] = [];
 

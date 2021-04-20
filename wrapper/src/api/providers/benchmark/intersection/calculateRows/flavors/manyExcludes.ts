@@ -2,13 +2,13 @@ import { newEmptyArray } from '../../../../../tools/array';
 import { LazyProperty } from '../../../../../tools/lazyProperty';
 import { SubclusterCache } from '../../../cache';
 import { IntersectionCache } from '../../../cache/flavors/intersectionCache';
-import { Subclustering } from '../../../cluster/subclustering';
+import { Subclustering } from '../../../cluster/types';
 import { Cluster, ClusterID, Clustering } from '../../../cluster/types';
 import { IntersectionOnlyIncludes } from '../../intersectionOnlyIncludes';
 import { CalculateRowsFlavor } from './base';
 
 export class CalculateRowsManyExcludes extends CalculateRowsFlavor {
-  protected subclusters: Cluster[] = [];
+  protected subclusters: readonly Cluster[] = [];
   protected skipRemains = 0;
   protected rows: (ClusterID | undefined)[] = [];
 

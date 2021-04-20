@@ -7,11 +7,12 @@ import { MergesT, NodeLink } from '../cluster/types';
 import { TrackableUnionFind } from '../cluster/unionFind/trackableUnionFind';
 import { IntersectionOnlyIncludes } from './intersectionOnlyIncludes';
 
-export class ModularIntersection extends IntersectionOnlyIncludes {
+export class ModularIntersectionOnlyIncludes extends IntersectionOnlyIncludes {
   protected readonly _clustering = new LazyProperty(
     () => new TrackableUnionFind(this.size)
   );
   get clustering(): TrackableUnionFind {
+    this.update();
     return this._clustering.value;
   }
 
@@ -20,21 +21,27 @@ export class ModularIntersection extends IntersectionOnlyIncludes {
   readonly resetSubject = new Subject<void>();
   readonly changesSubject = new Subject<MergesT>();
 
-  constructor(config: IntersectionConfig) {
-    super(config);
-    this.access(config);
-  }
-
-  access(config: IntersectionConfig): void {
-    super.access(config);
+  update(): void {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const threshold = config.included[0].similarity!.threshold;
+    const threshold = this.config.included[0].similarity!.threshold;
     if (threshold > this.lastAccessedThreshold) {
       this.reset();
     }
     if (threshold < this.lastAccessedThreshold) {
       this.applyLinks(this.getLinks(this.lastAccessedThreshold, threshold));
     }
+  }
+
+  access(config: IntersectionConfig): void {
+    if (
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      config.included[0].similarity!.threshold !==
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      this.config.included[0].similarity!.threshold
+    ) {
+      this.calculateRows.clear();
+    }
+    super.access(config);
   }
 
   protected applyLinks(links: NodeLink[]): void {

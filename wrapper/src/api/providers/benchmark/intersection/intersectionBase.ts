@@ -16,7 +16,7 @@ export abstract class IntersectionBase
     return this.dataset.numberOfRecords;
   }
 
-  constructor(readonly config: IntersectionConfig) {
+  constructor(public config: IntersectionConfig) {
     this.dataset = tables.meta.dataset.get({
       id: config.datasetId,
     }) as this['dataset'];
@@ -27,7 +27,7 @@ export abstract class IntersectionBase
   }
 
   access(config: IntersectionConfig): void {
-    return;
+    this.config = config;
   }
 
   protected readonly calculateRows = new LazyProperty(
