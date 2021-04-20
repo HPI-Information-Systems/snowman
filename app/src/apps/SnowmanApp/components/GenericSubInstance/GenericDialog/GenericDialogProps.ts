@@ -1,5 +1,5 @@
-import { DialogProps } from 'components/GenericSubInstance/GenericDialog/DialogProps';
-import { GenericInstanceOwnProps } from 'components/GenericSubInstance/GenericInstanceProps';
+import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
+import { GenericInstanceOwnProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericInstanceProps';
 import { EntityId } from 'types/EntityId';
 
 export interface GenericDialogStateProps {

@@ -1,7 +1,7 @@
 import AlgorithmDialogContainer from 'apps/AlgorithmDialog/AlgorithmDialog.Container';
 import { constructAlgorithmDialogStore } from 'apps/AlgorithmDialog/store/AlgorithmDialogStore';
-import { DialogProps } from 'components/GenericSubInstance/GenericDialog/DialogProps';
-import GenericDialog from 'components/GenericSubInstance/GenericDialog/GenericDialog';
+import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
+import GenericDialog from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialog';
 import React from 'react';
 import { EntityId } from 'types/EntityId';
 import { ViewIDs } from 'types/ViewIDs';

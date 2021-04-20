@@ -1,4 +1,4 @@
-import { DialogProps } from 'components/GenericSubInstance/GenericDialog/DialogProps';
+import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
 export interface AlgorithmDialogStateProps {

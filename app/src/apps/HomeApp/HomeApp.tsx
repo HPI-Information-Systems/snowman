@@ -1,5 +1,5 @@
 import styles from 'apps/HomeApp/HomeAppStyles.module.css';
-import GenericSubApp from 'components/GenericSubInstance/GenericSubApp/GenericSubApp';
+import GenericSubApp from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubApp';
 import React from 'react';
 import style from 'theme/style';
 import { ViewIDs } from 'types/ViewIDs';
