@@ -10,7 +10,7 @@ import {
   changeAlgorithmName,
 } from 'apps/AlgorithmDialog/store/AlgorithmDialogActions';
 import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
-import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicActions';
+import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
