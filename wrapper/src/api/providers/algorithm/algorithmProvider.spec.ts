@@ -153,21 +153,25 @@ describe('AlgorithmProvider', () => {
       id: addedAlgorithmids[0],
       matchingSolutionEffort: [
         {
+          id: 'manhattanDistanceBasedEffort',
           value: 160,
           formula: '\\sum_{i}|a_i - b_i|',
           name: 'manhattan distance-based effort',
         },
         {
+          id: 'expertiseWeightedEffort',
           value: 163.0969097075427,
           formula: '$$e^{\\frac_{expertise}{100}} * HR-Amount$$',
           name: 'expertise weighted effort',
         },
         {
+          id: 'hrAmountWeightedEffort',
           value: 1.1420073898156842e26,
           formula: '$$e^{HR-Amount} * \\frac_{expertise}{100}$$',
           name: 'HR-amount weighted effort',
         },
         {
+          id: 'multiplyEffort',
           value: 6000,
           formula: '$$expertise level * HR-Amount$$',
           name: 'simple multiplied effort',
