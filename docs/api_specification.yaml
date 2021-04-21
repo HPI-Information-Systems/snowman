@@ -1070,6 +1070,9 @@ components:
           $ref: "#/components/schemas/ExperimentConfigItem"
         groundTruth:
           $ref: "#/components/schemas/ExperimentConfigItem"
+      required:
+        - experiment
+        - groundTruth
       type: object
     DiagramExperiments:
       items:
