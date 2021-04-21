@@ -1,7 +1,5 @@
 import { assertType } from '../../../tools/types';
 import { SetupOptions } from '../../setup';
-import { databaseBackend } from '../../setup/backend';
-import { installTables } from '../../setup/install';
 import { Table } from '../../table';
 import { ForeignKeys, TableSchema } from '../../tools/types';
 import { tableSchemas } from '..';
