@@ -1,6 +1,6 @@
 import {
   CalculateDiagramDataRequest,
-  DiagramCoordinates,
+  DiagramCoordinate,
   ExperimentConfigItem,
   ExperimentIntersectionCount,
   ExperimentIntersectionItem,
@@ -56,7 +56,7 @@ export class BenchmarkProvider {
     xAxis,
     yAxis,
     diagramExperimentItem,
-  }: CalculateDiagramDataRequest): DiagramCoordinates {
+  }: CalculateDiagramDataRequest): Array<DiagramCoordinate> {
     console.log(diagramExperimentItem);
     let xGetter: DiagramDataGetter;
     let yGetter: DiagramDataGetter;

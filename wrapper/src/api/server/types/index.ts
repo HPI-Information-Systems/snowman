@@ -12,7 +12,7 @@ export * from './DatasetAllOf';
 export * from './DatasetId';
 export * from './DatasetRequests';
 export * from './DatasetValues';
-export * from './DiagramCoordinates';
+export * from './DiagramCoordinate';
 export * from './DiagramExperimentItem';
 export * from './EffortParts';
 export * from './Experiment';

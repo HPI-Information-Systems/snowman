@@ -1122,15 +1122,13 @@ components:
         $ref: "#/components/schemas/DiagramExperimentItem"
       type: array
     DiagramCoordinates:
-      properties:
-        x:
-          items:
+      items:
+        properties:
+          x:
             type: number
-          type: array
-        y:
-          items:
+          y:
             type: number
-          type: array
+      type: array
     softKPIsExperimentEnum:
       type: string
       enum:

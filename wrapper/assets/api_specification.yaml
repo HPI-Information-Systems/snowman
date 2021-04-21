@@ -1086,15 +1086,15 @@ components:
           $ref: '#/components/schemas/SimilarityThresholdFunctionValues'
         operator:
           enum:
-            - ADD
-            - SUBTRACT
-            - MULTIPLY
-            - DIVIDE
-            - POWER
-            - POW
-            - ATAN2
-            - LOG
-            - MOD
+          - ADD
+          - SUBTRACT
+          - MULTIPLY
+          - DIVIDE
+          - POWER
+          - POW
+          - ATAN2
+          - LOG
+          - MOD
           type: string
       required:
       - left
@@ -1106,37 +1106,37 @@ components:
         operator: ACOS
       properties:
         func:
-          $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+          $ref: '#/components/schemas/SimilarityThresholdFunctionValues'
         operator:
           enum:
-            - ACOS
-            - ACOSH
-            - ASIN
-            - ASINH
-            - ATAN
-            - ATANH
-            - CEIL
-            - CEILING
-            - COS
-            - COSH
-            - DEGREES
-            - EXP
-            - FLOOR
-            - LN
-            - LOG
-            - LOG10
-            - LOG2
-            - RADIANS
-            - SIN
-            - SINH
-            - SQRT
-            - TAN
-            - TANH
-            - TRUNC
+          - ACOS
+          - ACOSH
+          - ASIN
+          - ASINH
+          - ATAN
+          - ATANH
+          - CEIL
+          - CEILING
+          - COS
+          - COSH
+          - DEGREES
+          - EXP
+          - FLOOR
+          - LN
+          - LOG
+          - LOG10
+          - LOG2
+          - RADIANS
+          - SIN
+          - SINH
+          - SQRT
+          - TAN
+          - TANH
+          - TRUNC
           type: string
       required:
-        - func
-        - operator
+      - func
+      - operator
       type: object
     SimilarityThresholdFunctionValues:
       example:
@@ -1150,19 +1150,19 @@ components:
       properties:
         type:
           enum:
-            - SimilarityThreshold
-            - Operator
-            - Constant
-            - UnaryOperator
+          - SimilarityThreshold
+          - Operator
+          - Constant
+          - UnaryOperator
           type: string
         similarityThreshold:
           type: string
         operator:
-          $ref: "#/components/schemas/SimilarityThresholdFunctionOperator"
+          $ref: '#/components/schemas/SimilarityThresholdFunctionOperator'
         constant:
           type: number
         unaryOperator:
-          $ref: "#/components/schemas/SimilarityThresholdFunctionUnaryOperator"
+          $ref: '#/components/schemas/SimilarityThresholdFunctionUnaryOperator'
       required:
       - type
       type: object
@@ -1177,13 +1177,10 @@ components:
         range:
         - 0
         - 1
-        id: id
         value: 0.75
         info: The meaningfulness of the f1 score is debated in the research community.
         infoLink: https://link.springer.com/article/10.1007/s11222-017-9746-6
       properties:
-        id:
-          type: string
         name:
           example: precision
           type: string
@@ -1295,22 +1292,13 @@ components:
         $ref: '#/components/schemas/DiagramExperimentItem'
       type: array
     DiagramCoordinates:
-      example:
-        x:
-        - 0.8008281904610115
-        - 0.8008281904610115
-        y:
-        - 6.027456183070403
-        - 6.027456183070403
-      properties:
-        x:
-          items:
+      items:
+        properties:
+          x:
             type: number
-          type: array
-        y:
-          items:
+          y:
             type: number
-          type: array
+      type: array
     softKPIsExperimentEnum:
       enum:
       - expertise
