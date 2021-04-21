@@ -1,7 +1,6 @@
 import { tables } from '../../../../database';
 import {
   DatasetId,
-  ExperimentConfigItem,
   ExperimentId,
   SimilarityThresholdFunctionId,
 } from '../../../../server/types';
@@ -12,7 +11,7 @@ export type PlotSimilarityConfusionMatrixConfig = {
   datasetId: DatasetId;
   experimentId: ExperimentId;
   func: SimilarityThresholdFunctionId;
-  groundTruth: ExperimentConfigItem[];
+  groundTruth: ExperimentId[];
   minThreshold?: number;
   maxThreshold?: number;
   steps: number;
@@ -63,7 +62,7 @@ export function plotSimilarityConfusionMatrix({
             },
           },
         ],
-        groundTruth,
+        groundTruth: groundTruth.map((experimentId) => ({ experimentId })),
       }),
     });
   }

@@ -1,6 +1,5 @@
 import {
   DatasetId,
-  ExperimentConfigItem,
   ExperimentId,
   SimilarityThresholdFunctionId,
 } from '../../../../server/types';
@@ -15,7 +14,7 @@ type PlotArgs = {
   datasetId: DatasetId;
   experimentId: ExperimentId;
   func: SimilarityThresholdFunctionId;
-  groundTruth: ExperimentConfigItem[];
+  groundTruth: ExperimentId[];
   X: InstantiableAbstractClass<typeof BaseMetric> | 'similarity';
   Y: InstantiableAbstractClass<typeof BaseMetric> | 'similarity';
   steps: number;
