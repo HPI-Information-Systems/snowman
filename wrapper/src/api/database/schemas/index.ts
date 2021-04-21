@@ -1,4 +1,3 @@
-import { cacheSchemas } from './cache';
 import { datasetSchemas } from './dataset';
 import { experimentSchemas } from './experiment';
 import { metaSchemas } from './meta';
@@ -11,6 +10,5 @@ export const tableSchemas = {
   ...metaSchemas,
   ...datasetSchemas,
   ...experimentSchemas,
-  ...cacheSchemas,
 };
-export const schemas = ['meta', 'dataset', 'experiment', 'cache'] as const;
+export const schemas = ['meta', 'dataset', 'experiment'] as const;

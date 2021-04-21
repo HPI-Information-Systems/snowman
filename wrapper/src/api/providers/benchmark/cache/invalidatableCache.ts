@@ -1,4 +1,3 @@
-import { tables } from '../../../database';
 import {
   DatasetId,
   ExperimentConfigItem,
@@ -51,15 +50,6 @@ export abstract class InvalidatableBenchmarkCache<
     )) {
       run(instance);
     }
-  }
-
-  protected static invalidatePersistentCaches(identifier: string): void {
-    tables.cache.intersectionCounts.delete(
-      {
-        key: `%${identifier}%`,
-      },
-      'LIKE'
-    );
   }
 
   protected datasetKeys = new Map<DatasetId, Set<string>>();
