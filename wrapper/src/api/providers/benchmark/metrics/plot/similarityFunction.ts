@@ -45,7 +45,11 @@ export function plotSimilarityFunction({
 }: PlotSimilarityFunctionConfig): PlotSimilarityFunctionResult {
   const matrices: PlotSimilarityFunctionResult = [];
   for (let step = 0; step < steps; ++step) {
-    const threshold = lerp(maxThreshold, minThreshold, step / (steps - 1));
+    const threshold = lerp(
+      maxThreshold,
+      minThreshold,
+      step / Math.max(steps - 1, 1)
+    );
     matrices.push({
       threshold,
       ...calculateConfusionMatrix({
