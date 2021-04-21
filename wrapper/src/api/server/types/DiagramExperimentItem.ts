@@ -27,11 +27,11 @@ export interface DiagramExperimentItem {
      * @type {ExperimentConfigItem}
      * @memberof DiagramExperimentItem
      */
-    experiment?: ExperimentConfigItem;
+    experiment: ExperimentConfigItem;
     /**
      * 
      * @type {ExperimentConfigItem}
      * @memberof DiagramExperimentItem
      */
-    groundTruth?: ExperimentConfigItem;
+    groundTruth: ExperimentConfigItem;
 }
