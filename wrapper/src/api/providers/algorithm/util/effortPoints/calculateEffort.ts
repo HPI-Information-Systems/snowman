@@ -15,11 +15,12 @@ export function calculateEffort(expertise: number, hrAmount: number): Metric[] {
   ];
   return efforts
     .map((Effort) => new Effort(expertise, hrAmount))
-    .map(({ value, formula, name, info, infoLink }) => {
+    .map(({ id, value, formula, name, info, infoLink }) => {
       return {
-        value,
+        id,
         formula,
         name,
+        value,
         info,
         infoLink,
       };

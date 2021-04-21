@@ -6,8 +6,9 @@ export abstract class BaseEffort implements Metric {
     protected readonly hrAmount: number
   ) {}
 
-  abstract name: string;
+  abstract id: string;
   abstract formula: string;
+  abstract name: string;
   abstract value: number;
 
   info?: string;

@@ -91,7 +91,6 @@
          return null;
      }
      return {
-         
          'id': value.id,
          'name': value.name,
          'formula': value.formula,
