@@ -11,8 +11,8 @@ export class DiagramMetricsGetter extends DiagramDataGetter {
     console.log(diagramExperimentItem.groundTruth.experimentId);
     console.log(diagramExperimentItem.experiment.experimentId);
     const metrics = benchmarkProvider.getBinaryMetrics(
-      diagramExperimentItem.groundTruth.experimentId,
-      diagramExperimentItem.experiment.experimentId
+      diagramExperimentItem.groundTruth,
+      diagramExperimentItem.experiment
     );
     return (
       metrics.find(
