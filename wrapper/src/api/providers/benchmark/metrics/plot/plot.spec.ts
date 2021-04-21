@@ -9,6 +9,7 @@ import {
 } from '../../../../server/types';
 import { fileToReadable } from '../../../../tools/test/filtToReadable';
 import { providers } from '../../..';
+import { ConfusionMatrixCache } from '../../cache/flavors/confusionMatrixCache';
 import { RelaxedClustering } from '../../cluster/test/relaxedClusterings';
 import { loadTestCase } from '../../intersection/test/testCases';
 import { Precision } from '../basic/precision';
@@ -268,6 +269,20 @@ describe.each<SimilarityFunctionPlotTestCase>(testCases)(
     });
 
     test('calculates correct result multiple times (->modular clustering reset works)', () => {
+      for (let index = 0; index < 2; ++index) {
+        ConfusionMatrixCache.clear();
+        const received = plotSimilarityConfusionMatrix({
+          datasetId,
+          experimentId,
+          func: funcId,
+          groundTruth: [groundTruthId],
+          ...params,
+        });
+        expect(received).toEqual(result);
+      }
+    });
+
+    test('calculates correct result multiple times (->confusion matrix cache works)', () => {
       for (let index = 0; index < 2; ++index) {
         const received = plotSimilarityConfusionMatrix({
           datasetId,

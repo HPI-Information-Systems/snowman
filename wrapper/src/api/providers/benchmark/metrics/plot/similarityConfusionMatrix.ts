@@ -5,7 +5,8 @@ import {
   SimilarityThresholdFunctionId,
 } from '../../../../server/types';
 import { lerp } from '../../../../tools/lerp';
-import { calculateConfusionMatrix, ConfusionMatrix } from '../confusionMatrix';
+import { ConfusionMatrixCache } from '../../cache/flavors/confusionMatrixCache';
+import { ConfusionMatrix } from '../confusionMatrix';
 
 export type PlotSimilarityConfusionMatrixConfig = {
   datasetId: DatasetId;
@@ -51,7 +52,7 @@ export function plotSimilarityConfusionMatrix({
     );
     matrices.push({
       threshold,
-      ...calculateConfusionMatrix({
+      ...ConfusionMatrixCache.get({
         datasetId,
         predicted: [
           {
@@ -63,7 +64,7 @@ export function plotSimilarityConfusionMatrix({
           },
         ],
         groundTruth: groundTruth.map((experimentId) => ({ experimentId })),
-      }),
+      }).confusionMatrix,
     });
   }
   return matrices;

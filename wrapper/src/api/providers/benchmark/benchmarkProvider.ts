@@ -5,6 +5,7 @@ import {
   FileResponse,
 } from '../../server/types';
 import { Metric } from '../../server/types';
+import { ConfusionMatrixCache } from './cache/flavors/confusionMatrixCache';
 import { IntersectionCache } from './cache/flavors/intersectionCache';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
 import { idClustersToRecordClusters } from './idsToRecords';
@@ -29,7 +30,6 @@ import {
   Specificity,
   ThreatScore,
 } from './metrics';
-import { calculateConfusionMatrix } from './metrics/confusionMatrix';
 
 enum ExperimentState {
   IRRELEVANT,
@@ -180,11 +180,11 @@ export class BenchmarkProvider {
       PrevalenceThreshold,
       ThreatScore,
     ];
-    const matrix = calculateConfusionMatrix({
+    const matrix = ConfusionMatrixCache.get({
       datasetId,
       predicted: [predictedExperiment],
       groundTruth: [groundTruthExperiment],
-    });
+    }).confusionMatrix;
     return metrics
       .map((Metric) => new Metric(matrix))
       .map(({ value, formula, name, range, info, infoLink }) => {

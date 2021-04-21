@@ -31,6 +31,10 @@ export abstract class InvalidatableBenchmarkCache<
     );
   }
 
+  static clear(): void {
+    this.invalidate((instance) => instance.clear());
+  }
+
   protected static instances: WeakRef<
     InvalidatableBenchmarkCache<unknown, BenchmarkCacheContent<unknown>>
   >[] = [];
@@ -135,5 +139,12 @@ export abstract class InvalidatableBenchmarkCache<
         this.similarityFunctionKeys.get(similarity.func)?.delete(key);
       }
     }
+  }
+
+  clear(): void {
+    this.cache.reset();
+    this.datasetKeys.clear();
+    this.experimentKeys.clear();
+    this.similarityFunctionKeys.clear();
   }
 }
