@@ -1,4 +1,5 @@
 import { providers } from '../../providers';
+import { getSimilarity } from '../../tools/getSimilarity';
 import {
   CalculateDiagramDataRequest,
   CalculateExperimentIntersectionCountRequest,
@@ -83,12 +84,28 @@ export async function calculateExperimentIntersectionCounts({
 export async function getBinaryMetrics({
   groundTruthExperimentId,
   predictedExperimentId,
+  groundTruthSimilarityThreshold,
+  groundTruthSimilarityThresholdFunction,
+  predictedSimilarityThreshold,
+  predictedSimilarityThresholdFunction,
 }: GetBinaryMetricsRequest): Promise<SuccessResponse<Array<Metric>>> {
   return Service.response(
     () =>
       provider().getBinaryMetrics(
-        groundTruthExperimentId,
-        predictedExperimentId
+        {
+          experimentId: groundTruthExperimentId,
+          similarity: getSimilarity(
+            groundTruthSimilarityThreshold,
+            groundTruthSimilarityThresholdFunction
+          ),
+        },
+        {
+          experimentId: predictedExperimentId,
+          similarity: getSimilarity(
+            predictedSimilarityThreshold,
+            predictedSimilarityThresholdFunction
+          ),
+        }
       ),
     200,
     400

@@ -1,6 +1,9 @@
-import { tables } from '../../';
+import { providers } from '../../../providers';
+import { UnionFind } from '../../../providers/benchmark/cluster/unionFind';
+import { DatasetIDMapper } from '../../../providers/dataset/util/idMapper';
 import { SetupOptions } from '../../setup';
 import { databaseBackend } from '../../setup/backend';
+import { tables } from '../../tables';
 import { SchemaVersion } from './schemaVersion';
 import { SchemaV4 } from './v4';
 
@@ -8,70 +11,37 @@ export class SchemaV5 extends SchemaVersion {
   readonly predecessor = new SchemaV4();
 
   protected async migrateFromLastVersion(options: SetupOptions): Promise<void> {
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.experiment.schema.name}
-           ADD COLUMN
-              hrAmount INTEGER`
-    );
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.experiment.schema.name}
-           ADD COLUMN
-               expertise INTEGER`
-    );
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-           ADD COLUMN
-               integrationTime INTEGER`
-    );
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-           ADD COLUMN
-              generalCosts INTEGER`
-    );
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-           ADD COLUMN
-              matchingSolutionExpertise INTEGER`
-    );
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-           ADD COLUMN
-              matchingSolutionHrAmount INTEGER`
-    );
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-           ADD COLUMN
-              domainExpertise INTEGER`
-    );
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-           ADD COLUMN
-              domainHrAmount INTEGER`
-    );
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-           ADD COLUMN
-              interfaces TEXT`
-    );
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-           ADD COLUMN
-              supportedOSs TEXT`
-    );
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-           ADD COLUMN
-              deploymentType TEXT`
-    );
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-           ADD COLUMN
-              solutionType TEXT`
-    );
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-           ADD COLUMN
-              useCase TEXT`
-    );
+    databaseBackend().transaction(() => {
+      for (const { id, datasetId } of providers.experiment.listExperiments()) {
+        const fileTable = tables.experiment.experiment(id);
+        if (fileTable.exists()) {
+          databaseBackend().exec(`
+            ALTER TABLE ${fileTable} 
+             ADD COLUMN isDuplicateAndLinksUnlinkedNodes INTEGER DEFAULT 0
+         `);
+          const count = new DatasetIDMapper(datasetId).numberMappedIds();
+          const unionFind = new UnionFind(count);
+          for (const { id1, id2, ...rest } of fileTable.all({
+            isDuplicate: 1,
+          })) {
+            if (!unionFind.nodesAreLinked(id1, id2)) {
+              unionFind.link([[id1, id2]]);
+              fileTable.upsert([
+                {
+                  ...rest,
+                  id1,
+                  id2,
+                  isDuplicateAndLinksUnlinkedNodes: 1,
+                },
+              ]);
+            }
+          }
+          databaseBackend().exec(
+            `CREATE INDEX "experiment"."index_${fileTable.schema.name}_isDuplicateAndLinksUnlinkedNodes" 
+                       ON "${fileTable.schema.name}" ("isDuplicateAndLinksUnlinkedNodes")`
+          );
+        }
+      }
+    })();
   }
 }

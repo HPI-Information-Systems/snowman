@@ -1,5 +1,10 @@
 import { tables } from '../../../database';
-import { AlgorithmId, DatasetId, ExperimentId } from '../../../server/types';
+import {
+  AlgorithmId,
+  Dataset,
+  DatasetId,
+  ExperimentId,
+} from '../../../server/types';
 import { ExecuteSynchronized } from '../../../tools/executeSynchronized';
 import { providers } from '../..';
 
@@ -8,6 +13,14 @@ export class ExperimentConsistencyChecks {
 
   throwIfAlgorithmNotExists(algorithmId: AlgorithmId): void {
     providers.algorithm.getAlgorithm(algorithmId);
+  }
+
+  throwIfDatasetHasNoRecordCount(dataset: Dataset): void {
+    if (typeof dataset.numberOfRecords !== 'number') {
+      throw new Error(
+        `The connected dataset ${dataset.name} (${dataset.id}) must specify the number of records (by uploading a dataset or setting it manually).`
+      );
+    }
   }
 
   throwIfDatasetNotExists(datasetId: DatasetId): void {

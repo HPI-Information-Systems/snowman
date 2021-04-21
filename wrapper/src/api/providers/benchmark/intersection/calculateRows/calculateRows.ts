@@ -1,31 +1,47 @@
 import binarySearch from 'binary-search';
 
-import { compareNumbers } from '../../../tools/comparators';
-import { LazyProperty } from '../../../tools/lazyProperty';
-import { ClusterID, NodeID } from '../cluster/types';
+import { compareNumbers } from '../../../../tools/comparators';
+import { LazyProperty } from '../../../../tools/lazyProperty';
 import {
-  CalculatePairs1Negative,
-  CalculatePairsManyNegative,
-  CalculatePairsNoNegative,
-} from './calculatePairs';
-import { CalculatePairs } from './calculatePairs/base';
-import { IntersectionCounts } from './counts';
+  IntersectionCache,
+  IntersectionConfig,
+} from '../../cache/flavors/intersectionCache';
+import { ClusterID, NodeID } from '../../cluster/types';
+import { IntersectionOnlyIncludes } from '../intersectionOnlyIncludes';
+import { CalculateRowsFlavor } from './flavors/base';
+import { CalculateRowsManyExcludes } from './flavors/manyExcludes';
+import { CalculateRowsOneExclude } from './flavors/oneExclude';
+import { CalculateRowsOnlyIncludes } from './flavors/onlyIncludes';
 
-export class IntersectionClusters extends IntersectionCounts {
+export class CalculateRows {
+  /**
+   * contains the number of rows from cluster 0 to cluster n
+   * !uses cluster ids of the intersection with only the includes
+   */
   protected readonly accumulatedRowCounts: number[] = [];
-  protected readonly calculatePairs = new LazyProperty(
-    (): CalculatePairs => {
-      if (this.predictedConditionNegative.length === 0) {
-        return new CalculatePairsNoNegative(this);
-      } else if (this.predictedConditionNegative.length === 1) {
-        return new CalculatePairs1Negative(this);
+  protected readonly calculateRows = new LazyProperty(
+    (): CalculateRowsFlavor => {
+      if (this.config.excluded.length === 0) {
+        return new CalculateRowsOnlyIncludes(this.config);
+      } else if (this.config.excluded.length === 1) {
+        return new CalculateRowsOneExclude(this.config);
       } else {
-        return new CalculatePairsManyNegative(this);
+        return new CalculateRowsManyExcludes(this.config);
       }
     }
   );
+  protected readonly numberClusters = new LazyProperty(
+    () =>
+      (IntersectionCache.get({
+        datasetId: this.config.datasetId,
+        included: this.config.included,
+        excluded: [],
+      }) as IntersectionOnlyIncludes).clustering.numberClusters
+  );
 
-  clusters(
+  constructor(protected readonly config: IntersectionConfig) {}
+
+  rows(
     startAt = 0,
     limit: number = Number.POSITIVE_INFINITY
   ): (NodeID | undefined)[] {
@@ -36,7 +52,7 @@ export class IntersectionClusters extends IntersectionCounts {
     }
     const resultRows = [];
     while (this.hasCluster(clusterId) && limit > 0) {
-      const [skipped, rows] = this.calculatePairs.value.at(
+      const [skipped, rows] = this.calculateRows.value.at(
         clusterId,
         startAt,
         limit
@@ -81,6 +97,6 @@ export class IntersectionClusters extends IntersectionCounts {
   }
 
   protected hasCluster(clusterId: number): boolean {
-    return this.positiveIntersection.clustering.numberClusters > clusterId;
+    return this.numberClusters.value > clusterId;
   }
 }

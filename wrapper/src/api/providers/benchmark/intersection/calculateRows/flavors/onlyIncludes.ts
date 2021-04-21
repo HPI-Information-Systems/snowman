@@ -1,21 +1,25 @@
-import { Cluster, NodeID } from '../../cluster/types';
-import { CalculatePairs } from './base';
+import { IntersectionCache } from '../../../cache/flavors/intersectionCache';
+import { Cluster, NodeID } from '../../../cluster/types';
+import { IntersectionOnlyIncludes } from '../../intersectionOnlyIncludes';
+import { CalculateRowsFlavor } from './base';
 
-export class CalculatePairsNoNegative extends CalculatePairs {
-  protected calculatePairs(): ReturnType<CalculatePairs['calculatePairs']> {
-    const cluster = this.intersection.clustering.clusterFromClusterId(
+export class CalculateRowsOnlyIncludes extends CalculateRowsFlavor {
+  protected calculateRows(): ReturnType<CalculateRowsFlavor['calculateRows']> {
+    const cluster = (IntersectionCache.get(
+      this.config
+    ) as IntersectionOnlyIncludes).clustering.clusterFromClusterId(
       this.clusterId
     );
     if (cluster.length > 1) {
-      return this.calculatePairsNotEmpty(cluster);
+      return this.calculateRowsNotEmpty(cluster);
     } else {
       return [0, []];
     }
   }
 
-  protected calculatePairsNotEmpty(
+  protected calculateRowsNotEmpty(
     cluster: Cluster
-  ): ReturnType<CalculatePairs['calculatePairs']> {
+  ): ReturnType<CalculateRowsFlavor['calculateRows']> {
     if (this.skip > cluster.length) {
       return [cluster.length + 1, []];
     } else if (this.skip === cluster.length) {
@@ -27,7 +31,7 @@ export class CalculatePairsNoNegative extends CalculatePairs {
 
   protected collectClusterIds(
     cluster: Cluster
-  ): ReturnType<CalculatePairs['calculatePairs']> {
+  ): ReturnType<CalculateRowsFlavor['calculateRows']> {
     const rows: (NodeID | undefined)[] = [];
     let skipped = 0;
     for (const nodeId of cluster) {

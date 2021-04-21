@@ -3,18 +3,24 @@ import {
   AlgorithmId,
   DatasetId,
   ExperimentId,
+  FileResponse,
   SetExperimentFileFormatEnum,
   SimilarityThresholdFunction,
   SimilarityThresholdFunctionId,
   SimilarityThresholdFunctionOperatorOperatorEnum,
   SimilarityThresholdFunctionTypeEnum,
+  SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
   SimilarityThresholdFunctionValues,
   SimilarityThresholdFunctionValuesTypeEnum,
 } from '../../server/types';
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { providers } from '..';
+import { IntersectionCache } from '../benchmark/cache/flavors/intersectionCache';
+import { expectClusteringsToEqual } from '../benchmark/cluster/test/utility';
+import { IntersectionOnlyIncludes } from '../benchmark/intersection/intersectionOnlyIncludes';
+import { assertFilesMatch } from '../dataset/test/assertFilesMatch';
 
-const numberOfRecords = 20;
+const numberOfRecords = 5;
 
 describe('Similarity Threshold Provider', () => {
   let algorithmId: AlgorithmId;
@@ -43,6 +49,19 @@ describe('Similarity Threshold Provider', () => {
       name: '',
       numberOfRecords,
     });
+    await providers.dataset.setDatasetFile(
+      datasetId,
+      fileToReadable([
+        ['id'],
+        ...new Array(numberOfRecords)
+          .fill(0)
+          .map((_, index) => [index.toString()]),
+      ]),
+      'id',
+      '"',
+      "'",
+      ','
+    );
     experimentId = providers.experiment.addExperiment({
       algorithmId,
       datasetId,
@@ -53,9 +72,10 @@ describe('Similarity Threshold Provider', () => {
       SetExperimentFileFormatEnum.Pilot,
       fileToReadable([
         ['p1', 'p2', 'sim1', 'sim2'],
-        ['0', '1', '1', '1'],
+        ['0', '1', '1', '3'],
         ['1', '2', '2', '2'],
-        ['2', '3', '3', '3'],
+        ['2', '3', '3', '1'],
+        ['0', '3', '0', '0'],
       ])
     );
     addedFunctions = [
@@ -80,9 +100,8 @@ describe('Similarity Threshold Provider', () => {
                 type: SimilarityThresholdFunctionValuesTypeEnum.Operator,
                 operator: {
                   left: {
-                    type:
-                      SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-                    similarityThreshold: 'sim2',
+                    type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
+                    constant: 0,
                   },
                   operator:
                     SimilarityThresholdFunctionOperatorOperatorEnum.Multiply,
@@ -95,9 +114,65 @@ describe('Similarity Threshold Provider', () => {
               },
               operator: SimilarityThresholdFunctionOperatorOperatorEnum.Divide,
               right: {
-                type:
-                  SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-                similarityThreshold: 'sim1',
+                type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
+                constant: -22.2412,
+              },
+            },
+          },
+        },
+      },
+      {
+        id: experimentId,
+        type: SimilarityThresholdFunctionTypeEnum.UnaryOperator,
+        unaryOperator: {
+          func: {
+            type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+            similarityThreshold: 'sim1',
+          },
+          operator: SimilarityThresholdFunctionUnaryOperatorOperatorEnum.Sqrt,
+        },
+      },
+      {
+        id: experimentId,
+        type: SimilarityThresholdFunctionTypeEnum.Operator,
+        operator: {
+          left: {
+            type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+            similarityThreshold: 'sim1',
+          },
+          operator: SimilarityThresholdFunctionOperatorOperatorEnum.Add,
+          right: {
+            type: SimilarityThresholdFunctionValuesTypeEnum.Operator,
+            operator: {
+              left: {
+                type: SimilarityThresholdFunctionValuesTypeEnum.Operator,
+                operator: {
+                  left: {
+                    type:
+                      SimilarityThresholdFunctionValuesTypeEnum.UnaryOperator,
+                    unaryOperator: {
+                      func: {
+                        type:
+                          SimilarityThresholdFunctionValuesTypeEnum.Constant,
+                        constant: 200,
+                      },
+                      operator:
+                        SimilarityThresholdFunctionUnaryOperatorOperatorEnum.Ln,
+                    },
+                  },
+                  operator:
+                    SimilarityThresholdFunctionOperatorOperatorEnum.Power,
+                  right: {
+                    type:
+                      SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+                    similarityThreshold: 'sim2',
+                  },
+                },
+              },
+              operator: SimilarityThresholdFunctionOperatorOperatorEnum.Mod,
+              right: {
+                type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
+                constant: -22.2412,
               },
             },
           },
@@ -203,5 +278,130 @@ describe('Similarity Threshold Provider', () => {
     expect(
       tables.meta.similarityfunction.all({ experiment: experimentId }).length
     ).toBe(0);
+  });
+
+  function fileResponseToFile(fileResponse: FileResponse): string[][] {
+    return [fileResponse.header, ...fileResponse.data].map((vals) =>
+      vals.map((val) => val.toString())
+    );
+  }
+
+  test('function impacts experiment', () => {
+    const [functionId] = addFunctions([
+      {
+        id: 0,
+        type: SimilarityThresholdFunctionTypeEnum.SimilarityThreshold,
+        similarityThreshold: 'sim1',
+      },
+    ]);
+    assertFilesMatch(
+      fileResponseToFile(
+        providers.experiment.getExperimentFile({ experimentId })
+      ),
+      [
+        [
+          'id1',
+          'id2',
+          'isDuplicate',
+          'isDuplicateAndLinksUnlinkedNodes',
+          'sim1',
+          'sim2',
+        ],
+        ['0', '1', '1', '1', '1', '3'],
+        ['1', '2', '1', '1', '2', '2'],
+        ['2', '3', '1', '1', '3', '1'],
+        ['0', '3', '1', '0', '0', '0'],
+      ]
+    );
+    assertFilesMatch(
+      fileResponseToFile(
+        providers.experiment.getExperimentFile({
+          experimentId,
+          similarityThreshold: 1,
+          similarityThresholdFunction: functionId,
+        })
+      ),
+      [
+        ['id1', 'id2', 'similarity'],
+        ['0', '1', '1'],
+        ['1', '2', '2'],
+        ['2', '3', '3'],
+      ]
+    );
+    assertFilesMatch(
+      fileResponseToFile(
+        providers.experiment.getExperimentFile({
+          experimentId,
+          similarityThreshold: 2,
+          similarityThresholdFunction: functionId,
+        })
+      ),
+      [
+        ['id1', 'id2', 'similarity'],
+        ['1', '2', '2'],
+        ['2', '3', '3'],
+      ]
+    );
+    assertFilesMatch(
+      fileResponseToFile(
+        providers.experiment.getExperimentFile({
+          experimentId,
+          similarityThreshold: 3,
+          similarityThresholdFunction: functionId,
+        })
+      ),
+      [
+        ['id1', 'id2', 'similarity'],
+        ['2', '3', '3'],
+      ]
+    );
+  });
+
+  test('function impacts intersection', () => {
+    const [functionId] = addFunctions([
+      {
+        id: 0,
+        type: SimilarityThresholdFunctionTypeEnum.SimilarityThreshold,
+        similarityThreshold: 'sim1',
+      },
+    ]);
+    expectClusteringsToEqual(
+      (IntersectionCache.get({
+        datasetId,
+        excluded: [],
+        included: [{ experimentId }],
+      }) as IntersectionOnlyIncludes).clustering,
+      [[0, 1, 2, 3], [4]]
+    );
+    expectClusteringsToEqual(
+      (IntersectionCache.get({
+        datasetId,
+        excluded: [],
+        included: [
+          { experimentId, similarity: { func: functionId, threshold: 3 } },
+        ],
+      }) as IntersectionOnlyIncludes).clustering,
+      [[0], [1], [2, 3], [4]]
+    );
+    expectClusteringsToEqual(
+      (IntersectionCache.get({
+        datasetId,
+        excluded: [],
+        included: [
+          { experimentId, similarity: { func: functionId, threshold: 2 } },
+        ],
+      }) as IntersectionOnlyIncludes).clustering,
+      [[0], [1, 2, 3], [4]]
+    );
+    expectClusteringsToEqual(
+      (IntersectionCache.get({
+        datasetId,
+        excluded: [],
+        included: [
+          { experimentId, similarity: { func: functionId, threshold: 1 } },
+        ],
+      }) as IntersectionOnlyIncludes).clustering,
+      [[0, 1, 2, 3], [4]]
+    );
   });
 });

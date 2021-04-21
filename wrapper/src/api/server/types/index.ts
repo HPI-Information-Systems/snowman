@@ -33,6 +33,7 @@ export * from './SimilarityThresholdFunction';
 export * from './SimilarityThresholdFunctionAllOf';
 export * from './SimilarityThresholdFunctionId';
 export * from './SimilarityThresholdFunctionOperator';
+export * from './SimilarityThresholdFunctionUnaryOperator';
 export * from './SimilarityThresholdFunctionValues';
 export * from './SimilarityThresholdRequests';
 export * from './SoftKPIsExperimentEnum';

@@ -2,7 +2,7 @@ import { tableSchemas } from '../../../database/schemas';
 import { ColumnValues } from '../../../database/tools/types';
 import { Dataset } from '../../../server/types';
 
-type StoredDataset = ColumnValues<
+export type StoredDataset = ColumnValues<
   typeof tableSchemas['meta']['dataset']['columns']
 >;
 

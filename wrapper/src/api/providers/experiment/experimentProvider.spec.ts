@@ -246,7 +246,7 @@ describe('ExperimentProvider', () => {
       )
     ).rejects.toThrowError();
     expect(() =>
-      provider.getExperimentFile(addedExperimentIds[1])
+      provider.getExperimentFile({ experimentId: addedExperimentIds[1] })
     ).toThrowError();
   });
 });

@@ -29,7 +29,7 @@ If you want to start the electron wrapper:
 
 - run `npm run release-app` in `./` to build and copy the app to `./wrapper`
 - run `npm run erebuild` in `./wrapper` to recompile the dependencies to the NodeJS version of electron
-- run `npm run start` in `./wrapper` to
+- run `npm run start` in `./wrapper` to start backend and frontend inside electron
 - run `npm run rebuild` in `./wrapper` to recompile the dependencies back to the global NodeJS version
 
 ### VSCode
@@ -65,7 +65,9 @@ The backend supports the following command line arguments:
   - default: `8123`
 - `--headless`: If present, does not show the UI but starts the API directly.
   - default: not present
-
+- `--limitMemory 100000000`: If present, limit the amount of memory (RAM). The allocated memory grows linear with this number. Incrementing the amount by one will increase the maximum amount of memory by a few bytes to a few hundred bytes.
+  - default: not present
+  
 Those arguments can be passed to
 
 - `npm run start` and `npm run start-api` in `./wrapper` (*do not forget to use `--` to separate the `npm` command and the arguments*)

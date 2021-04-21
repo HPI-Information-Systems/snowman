@@ -35,4 +35,9 @@ export enum SimilarityThresholdFunctionOperatorOperatorEnum {
   Subtract = 'SUBTRACT',
   Multiply = 'MULTIPLY',
   Divide = 'DIVIDE',
+  Power = 'POWER',
+  Pow = 'POW',
+  Atan2 = 'ATAN2',
+  Log = 'LOG',
+  Mod = 'MOD',
 }

@@ -1,10 +1,11 @@
-import { Subclustering } from './subclustering';
-import { relaxedClusteringToClustering } from './test/relaxedClusterings';
-import { subclusteringTestCases } from './test/testCases';
+import { expectCorrectSubClusteringOrder } from '../test/clusteringOrder';
+import { relaxedClusteringToClustering } from '../test/relaxedClusterings';
+import { subclusteringTestCases } from '../test/testCases';
 import {
   expectClusteringsToEqual,
   expectSubClusteringsToEqual,
-} from './test/utility';
+} from '../test/utility';
+import { Subclustering } from './subclustering';
 
 describe.each(subclusteringTestCases)(
   'Subclustering',
@@ -23,6 +24,10 @@ describe.each(subclusteringTestCases)(
 
     test('calculates correct subclusters', () => {
       expectSubClusteringsToEqual(subclustering, expectedSubclustering);
+    });
+
+    test('has correct order', () => {
+      expectCorrectSubClusteringOrder(subclustering);
     });
   }
 );

@@ -1,26 +1,32 @@
-import { Cluster, ClusterID } from '../../cluster/types';
-import { SubclusterCache } from '../cache';
-import { CalculatePairs } from './base';
+import { SubclusterCache } from '../../../cache';
+import { IntersectionCache } from '../../../cache/flavors/intersectionCache';
+import { Cluster, ClusterID } from '../../../cluster/types';
+import { IntersectionOnlyIncludes } from '../../intersectionOnlyIncludes';
+import { CalculateRowsFlavor } from './base';
 
-export class CalculatePairs1Negative extends CalculatePairs {
-  protected subclusters: Cluster[] = [];
+export class CalculateRowsOneExclude extends CalculateRowsFlavor {
+  protected subclusters: readonly Cluster[] = [];
   protected skipRemains = 0;
   protected rows: (ClusterID | undefined)[] = [];
 
-  protected calculatePairs(): ReturnType<CalculatePairs['calculatePairs']> {
+  protected calculateRows(): ReturnType<CalculateRowsFlavor['calculateRows']> {
     this.rows = [];
     this.skipRemains = this.skip;
-    this.subclusters = SubclusterCache.get(
-      this.intersection.predictedConditionPositive,
-      this.intersection.predictedConditionNegative,
-      this.intersection.datasetId
-    ).clustering.subclustersFromClusterId(this.clusterId);
-    this.calculatePairsPrepared();
+    this.subclusters = SubclusterCache.get({
+      datasetId: this.config.datasetId,
+      base: this.config.included,
+      partition: this.config.excluded,
+    }).clustering.subclustersFromBaseClusterId(this.clusterId);
+    this.calculateRowsPrepared();
     return [this.skip - this.skipRemains, this.rows];
   }
 
-  protected calculatePairsPrepared(): void {
-    let remainingClusterLength = this.intersection.positiveIntersection.clustering.clusterFromClusterId(
+  protected calculateRowsPrepared(): void {
+    let remainingClusterLength = (IntersectionCache.get({
+      datasetId: this.config.datasetId,
+      included: this.config.included,
+      excluded: [],
+    }) as IntersectionOnlyIncludes).clustering.clusterFromClusterId(
       this.clusterId
     ).length;
     for (let lower = 0; lower < this.subclusters.length; lower++) {
@@ -30,14 +36,14 @@ export class CalculatePairs1Negative extends CalculatePairs {
       if (this.skipRemains >= numberRows) {
         this.skipRemains -= numberRows;
       } else {
-        if (this.calculatePairsFromLower(lower, lowerSubcluster)) {
+        if (this.calculateRowsFromLower(lower, lowerSubcluster)) {
           return;
         }
       }
     }
   }
 
-  protected calculatePairsFromLower(
+  protected calculateRowsFromLower(
     lower: number,
     lowerSubcluster: Cluster
   ): boolean {
@@ -48,7 +54,7 @@ export class CalculatePairs1Negative extends CalculatePairs {
         this.skipRemains -= numberRows;
       } else {
         if (
-          this.calculatePairsFromLowerAndUpper(lowerSubcluster, upperSubcluster)
+          this.calculateRowsFromLowerAndUpper(lowerSubcluster, upperSubcluster)
         ) {
           return true;
         }
@@ -57,7 +63,7 @@ export class CalculatePairs1Negative extends CalculatePairs {
     return false;
   }
 
-  protected calculatePairsFromLowerAndUpper(
+  protected calculateRowsFromLowerAndUpper(
     lowerSubcluster: Cluster,
     upperSubcluster: Cluster
   ): boolean {
@@ -66,7 +72,7 @@ export class CalculatePairs1Negative extends CalculatePairs {
       if (this.skipRemains >= numberRows) {
         this.skipRemains -= numberRows;
       } else {
-        if (this.addPairsFromUpperId(lowerSubcluster, upperId)) {
+        if (this.addRowsFromUpperId(lowerSubcluster, upperId)) {
           return true;
         }
       }
@@ -74,7 +80,7 @@ export class CalculatePairs1Negative extends CalculatePairs {
     return false;
   }
 
-  protected addPairsFromUpperId(
+  protected addRowsFromUpperId(
     lowerSubcluster: Cluster,
     upperId: ClusterID
   ): boolean {

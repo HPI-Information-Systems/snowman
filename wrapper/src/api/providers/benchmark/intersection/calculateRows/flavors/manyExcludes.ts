@@ -1,54 +1,55 @@
-import { LazyProperty } from '../../../../tools/lazyProperty';
-import { Subclustering } from '../../cluster/subclustering';
-import { Cluster, ClusterID, Clustering } from '../../cluster/types';
-import { IntersectionCache, SubclusterCache } from '../cache';
-import { CalculatePairs } from './base';
+import { LazyProperty } from '../../../../../tools/lazyProperty';
+import { SubclusterCache } from '../../../cache';
+import { IntersectionCache } from '../../../cache/flavors/intersectionCache';
+import { Subclustering } from '../../../cluster/types';
+import { Cluster, ClusterID, Clustering } from '../../../cluster/types';
+import { IntersectionOnlyIncludes } from '../../intersectionOnlyIncludes';
+import { CalculateRowsFlavor } from './base';
 
-export class CalculatePairsManyNegative extends CalculatePairs {
-  protected subclusters: Cluster[] = [];
+export class CalculateRowsManyExcludes extends CalculateRowsFlavor {
+  protected subclusters: readonly Cluster[] = [];
   protected skipRemains = 0;
   protected rows: (ClusterID | undefined)[] = [];
 
   protected get subclustering(): Subclustering {
-    return SubclusterCache.get(
-      this.intersection.predictedConditionPositive,
-      this.intersection.predictedConditionNegative.slice(0, 1),
-      this.intersection.datasetId
-    ).clustering;
+    return SubclusterCache.get({
+      datasetId: this.config.datasetId,
+      base: this.config.included,
+      partition: this.config.excluded.slice(0, 1),
+    }).clustering;
   }
 
-  protected readonly rowCountCache = new LazyProperty(() =>
-    new Array<number | undefined>(this.subclustering.numberClusters).fill(
-      undefined
-    )
+  protected readonly rowCountCache = new LazyProperty(
+    () => new Array<number>(this.subclustering.numberClusters)
   );
   protected negativeClusterings: Clustering[] = [];
 
-  protected calculatePairs(): ReturnType<CalculatePairs['calculatePairs']> {
-    this.negativeClusterings = this.intersection.predictedConditionNegative
-      .slice(1)
-      .map(
-        (experimentId) =>
-          IntersectionCache.get([experimentId], [], this.intersection.datasetId)
-            .clustering
-      );
+  protected calculateRows(): ReturnType<CalculateRowsFlavor['calculateRows']> {
+    this.negativeClusterings = this.config.excluded.slice(1).map(
+      (experimentConfig) =>
+        (IntersectionCache.get({
+          datasetId: this.config.datasetId,
+          included: [experimentConfig],
+          excluded: [],
+        }) as IntersectionOnlyIncludes).clustering
+    );
     this.rows = [];
     this.skipRemains = this.skip;
-    this.subclusters = this.subclustering.subclustersFromClusterId(
+    this.subclusters = this.subclustering.subclustersFromBaseClusterId(
       this.clusterId
     );
-    this.calculatePairsPrepared();
+    this.calculateRowsPrepared();
     return [this.skip - this.skipRemains, this.rows];
   }
 
-  protected calculatePairsPrepared(): void {
+  protected calculateRowsPrepared(): void {
     for (let lower = 0; lower < this.subclusters.length; lower++) {
       const lowerSubcluster = this.subclusters[lower];
       const numberRows = this.rowCountCache.value[lowerSubcluster.id];
       if (numberRows !== undefined && this.skipRemains >= numberRows) {
         this.skipRemains -= numberRows;
       } else {
-        const numberRows = this.calculatePairsFromLower(lower, lowerSubcluster);
+        const numberRows = this.calculateRowsFromLower(lower, lowerSubcluster);
         if (numberRows === undefined) {
           return;
         } else {
@@ -58,14 +59,14 @@ export class CalculatePairsManyNegative extends CalculatePairs {
     }
   }
 
-  protected calculatePairsFromLower(
+  protected calculateRowsFromLower(
     lower: number,
     lowerSubcluster: Cluster
   ): number | undefined {
     let numberRows = 0;
     for (let upper = lower + 1; upper < this.subclusters.length; upper++) {
       const upperSubcluster = this.subclusters[upper];
-      const addedRowCount = this.calculatePairsFromLowerAndUpper(
+      const addedRowCount = this.calculateRowsFromLowerAndUpper(
         lowerSubcluster,
         upperSubcluster
       );
@@ -78,13 +79,13 @@ export class CalculatePairsManyNegative extends CalculatePairs {
     return numberRows;
   }
 
-  protected calculatePairsFromLowerAndUpper(
+  protected calculateRowsFromLowerAndUpper(
     lowerSubcluster: Cluster,
     upperSubcluster: Cluster
   ): number | undefined {
     let numberRows = 0;
     for (const upperId of upperSubcluster) {
-      const addedRowCount = this.addPairsFromUpperId(lowerSubcluster, upperId);
+      const addedRowCount = this.addRowsFromUpperId(lowerSubcluster, upperId);
       if (addedRowCount === undefined) {
         return undefined;
       } else {
@@ -94,7 +95,7 @@ export class CalculatePairsManyNegative extends CalculatePairs {
     return numberRows;
   }
 
-  protected addPairsFromUpperId(
+  protected addRowsFromUpperId(
     lowerSubcluster: Cluster,
     upperId: ClusterID
   ): number | undefined {
