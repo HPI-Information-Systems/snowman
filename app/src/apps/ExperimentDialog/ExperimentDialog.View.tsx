@@ -16,7 +16,6 @@ import {
 } from '@ionic/react';
 import { ExperimentDialogProps } from 'apps/ExperimentDialog/ExperimentDialogProps';
 import FileInput from 'components/FileInput/FileInput';
-import ModalDialog from 'components/ModalDialog/ModalDialog';
 import SelectableInput from 'components/SelectableInput/SelectableInput';
 import {
   addCircleOutline,
@@ -28,9 +27,7 @@ import { $enum } from 'ts-enum-util';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 
 const ExperimentDialogView = ({
-  isOpen,
   isAddDialog,
-  closeDialog,
   clickOnCancel,
   experimentName,
   experimentDescription,
@@ -45,17 +42,8 @@ const ExperimentDialogView = ({
   isValidForm,
   selectedFiles,
   changeSelectedFiles,
-  experimentId,
 }: ExperimentDialogProps): JSX.Element => (
-  <ModalDialog
-    heading={
-      isAddDialog
-        ? 'Add New Experiment'
-        : `Update Existing Experiment (ID: ${experimentId})`
-    }
-    isOpen={isOpen}
-    closeDialog={closeDialog}
-  >
+  <>
     <IonList>
       <IonItem>
         <IonLabel position="fixed">Name/ID:</IonLabel>
@@ -92,7 +80,7 @@ const ExperimentDialogView = ({
       <IonItemDivider>
         <IonLabel>UPLOAD CONTENT</IonLabel>
       </IonItemDivider>
-      <IonItem>
+      {/*<IonItem>
         <IonLabel position="fixed">File Format:</IonLabel>
         <SelectableInput
           allOptions={$enum(experimentFileFormatEnum).map(
@@ -101,7 +89,7 @@ const ExperimentDialogView = ({
           currentOption={experimentFileFormat}
           setOption={changeExperimentFileFormat}
         />
-      </IonItem>
+      </IonItem>*/}
       <IonItem>
         <IonLabel position="fixed">Source File:</IonLabel>
         <FileInput
@@ -154,7 +142,7 @@ const ExperimentDialogView = ({
         Cancel
       </IonButton>
     </div>
-  </ModalDialog>
+  </>
 );
 
 export default ExperimentDialogView;

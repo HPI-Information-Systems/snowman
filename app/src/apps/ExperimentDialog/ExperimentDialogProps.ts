@@ -1,9 +1,9 @@
+import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import { ChangeEvent } from 'react';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
 export interface ExperimentDialogDispatchProps {
-  closeDialog(): void;
   clickOnCancel(): void;
   changeExperimentName(event: IonChangeEvent): void;
   changeExperimentDescription(event: IonChangeEvent): void;
@@ -14,7 +14,6 @@ export interface ExperimentDialogDispatchProps {
 }
 
 export interface ExperimentDialogStateProps {
-  isOpen: boolean;
   isAddDialog: boolean;
   experimentName: string;
   experimentDescription: string;
@@ -23,8 +22,10 @@ export interface ExperimentDialogStateProps {
   selectedTags: string[];
   isValidForm: boolean;
   selectedFiles: File[];
-  experimentId: number;
 }
 
-export type ExperimentDialogProps = ExperimentDialogStateProps &
+export type ExperimentDialogOwnProps = DialogProps;
+
+export type ExperimentDialogProps = ExperimentDialogOwnProps &
+  ExperimentDialogStateProps &
   ExperimentDialogDispatchProps;
