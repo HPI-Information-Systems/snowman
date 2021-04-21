@@ -6,9 +6,14 @@ import {
   ExperimentIntersectionCount,
   ExperimentIntersectionItem,
   FileResponse,
+  MetricsEnum,
+  SoftKPIsExperimentEnum,
 } from '../../server/types';
 import { Metric } from '../../server/types';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
+import { DiagramDataGetter } from './diagram/diagramGetter';
+import { DiagramMetricsGetter } from './diagram/diagramMetricsGetter';
+import { DiagramSoftKPIsGetter } from './diagram/diagramSoftKPIsGetter';
 import { idClustersToRecordClusters } from './idsToRecords';
 import { Intersection, IntersectionCache } from './intersection';
 import {
@@ -32,6 +37,7 @@ import {
   ThreatScore,
 } from './metrics';
 import { ConfusionMatrix } from './metrics/confusionMatrix';
+import { isInEnum } from './utils/enumChecker';
 
 export class BenchmarkProvider {
   calculateDiagramData({
@@ -39,9 +45,46 @@ export class BenchmarkProvider {
     yAxis,
     diagramExperimentItem,
   }: CalculateDiagramDataRequest): DiagramCoordinates {
+    console.log(diagramExperimentItem);
+    let xGetter: DiagramDataGetter;
+    let yGetter: DiagramDataGetter;
+    if (isInEnum(MetricsEnum, xAxis) && isInEnum(MetricsEnum, yAxis)) {
+      console.log('HALLOE');
+      //do crazy stuff with prec-recall-diagrams SPECIAL case
+    }
+    if (
+      isInEnum(SoftKPIsExperimentEnum, xAxis) &&
+      isInEnum(MetricsEnum, yAxis)
+    ) {
+      xGetter = new DiagramSoftKPIsGetter();
+      yGetter = new DiagramMetricsGetter();
+    }
+    if (
+      isInEnum(MetricsEnum, xAxis) &&
+      isInEnum(SoftKPIsExperimentEnum, yAxis)
+    ) {
+      xGetter = new DiagramMetricsGetter();
+      yGetter = new DiagramSoftKPIsGetter();
+    }
+    if (
+      isInEnum(SoftKPIsExperimentEnum, xAxis) &&
+      isInEnum(SoftKPIsExperimentEnum, yAxis)
+    ) {
+      xGetter = new DiagramSoftKPIsGetter();
+      yGetter = new DiagramSoftKPIsGetter();
+    }
+
+    const x: Array<number> = [];
+    const y: Array<number> = [];
+
+    diagramExperimentItem.forEach((item) => {
+      x.push(xGetter.getData(xAxis, item));
+      y.push(yGetter.getData(yAxis, item));
+    });
+
     return {
-      x: [],
-      y: [],
+      x,
+      y,
     };
   }
   calculateExperimentIntersectionCount({

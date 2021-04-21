@@ -151,6 +151,37 @@ beforeAll(async () => {
 
 describe('test benchmark functions', () => {
   const benchmarkProvider = new BenchmarkProvider();
+  /*
+  test('test developer diagram calculation', () => {
+    expect(
+      benchmarkProvider.calculateDiagramData({
+        xAxis: MetricsEnum.TimeToConfigure,
+        yAxis: MetricsEnum.Precision,
+        diagramExperimentItem: [
+          {
+            experimentId: {
+              experimentId: experimentIds.experiment2,
+            },
+            groundTruthId: {
+              experimentId: experimentIds.goldstandard,
+            },
+          },
+          {
+            experimentId: {
+              experimentId: experimentIds.experiment1,
+            },
+            groundTruthId: {
+              experimentId: experimentIds.goldstandard,
+            },
+          },
+        ],
+      })
+    ).toEqual({
+      x: [1, 2, 3],
+      y: [1, 2, 3],
+    });
+  });
+  */
   describe('metrics', () => {
     test('test metrics calculation', () => {
       expect(

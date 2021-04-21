@@ -19,8 +19,9 @@ function provider() {
 export async function calculateDiagramData({
   xAxis,
   yAxis,
-  diagramExperimentItem,
-}: CalculateDiagramDataRequest): Promise<SuccessResponse<DiagramCoordinates>> {
+  body,
+}: any): Promise<SuccessResponse<DiagramCoordinates>> {
+  const diagramExperimentItem = body;
   return Service.response(
     () =>
       provider().calculateDiagramData({
