@@ -20,4 +20,18 @@ export class ModularIntersectionOnlyIncludes extends IntersectionOnlyIncludes {
       partition: this.config.included.slice(this.splitIndex.value),
     }).clustering;
   }
+
+  protected readonly _numberPairs = new LazyProperty(
+    () => this.clustering.numberPairs
+  );
+  get numberPairs(): number {
+    return this._numberPairs.value;
+  }
+
+  protected readonly _numberRows = new LazyProperty(
+    () => this.clustering.numberRows
+  );
+  get numberRows(): number {
+    return this._numberRows.value;
+  }
 }
