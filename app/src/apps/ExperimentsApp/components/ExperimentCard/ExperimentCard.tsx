@@ -5,11 +5,12 @@ import {
   ExperimentCardStateProps,
 } from 'apps/ExperimentsApp/components/ExperimentCard/ExperimentCardProps';
 import { doDeleteExperiment } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
+import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
-import { openChangeDialog } from 'store/actions/ExperimentDialogStoreActions';
 import { openPreviewer } from 'store/actions/ExperimentPreviewerActions';
 import { SnowmanDispatch } from 'store/messages';
 import { ImmediateStore } from 'store/models';
+import { ViewIDs } from 'types/ViewIDs';
 import { couldPreviewExperiment } from 'utils/experimentsHelpers';
 
 const mapStateToProps = (
@@ -24,7 +25,7 @@ const mapDispatchToProps = (
   ownProps: ExperimentCardOwnProps
 ): ExperimentCardDispatchProps => ({
   editExperiment() {
-    dispatch(openChangeDialog(ownProps.experiment)).then();
+    doOpenDialog(ViewIDs.ExperimentDialog, ownProps.experiment.id);
   },
   deleteExperiment() {
     doDeleteExperiment(ownProps.experiment.id).then();

@@ -1,3 +1,4 @@
+import { Experiment } from 'api';
 import { ExperimentDialogActionTypes } from 'apps/ExperimentDialog/types/ExperimentDialogActionTypes';
 import { ExperimentDialogModel } from 'apps/ExperimentDialog/types/ExperimentDialogModel';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
@@ -7,7 +8,6 @@ import { toggleSelectionArraySingleSelect } from 'utils/toggleSelectionArray';
 const initialState: ExperimentDialogModel = {
   experimentName: '',
   experimentDescription: '',
-  timeToConfigure: undefined,
   experimentFileFormat: experimentFileFormatEnum.Pilot,
   selectedTags: [],
   selectedFiles: [],
@@ -20,6 +20,15 @@ const ExperimentDialogReducer = (
   switch (action.type) {
     case ExperimentDialogActionTypes.RESET_DIALOG:
       return initialState;
+    case ExperimentDialogActionTypes.PREFILL_DIALOG: {
+      const experiment = action.payload as Experiment;
+      return {
+        ...initialState,
+        experimentName: experiment.name,
+        experimentDescription: experiment.description ?? '',
+        selectedTags: [],
+      };
+    }
     case ExperimentDialogActionTypes.CHANGE_EXPERIMENT_NAME:
       return {
         ...state,

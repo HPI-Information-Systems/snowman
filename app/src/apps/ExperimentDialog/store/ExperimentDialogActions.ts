@@ -1,10 +1,15 @@
+import { Experiment, ExperimentsApi } from 'api';
 import { ExperimentDialogActionTypes } from 'apps/ExperimentDialog/types/ExperimentDialogActionTypes';
 import { ExperimentDialogModel } from 'apps/ExperimentDialog/types/ExperimentDialogModel';
+import { MagicNotPossibleId } from 'structs/constants';
+import { EntityId } from 'types/EntityId';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
+import RequestHandler from 'utils/requestHandler';
 
 export const resetDialog = (): easyPrimitiveActionReturn<ExperimentDialogModel> =>
   easyPrimitiveAction<ExperimentDialogModel>({
@@ -52,3 +57,30 @@ export const changeSelectedFiles = (
     type: ExperimentDialogActionTypes.CHANGE_SELECTED_FILES,
     payload: files,
   });
+
+export const prefillDialog = (
+  anExperiment: Experiment
+): easyPrimitiveActionReturn<ExperimentDialogModel> =>
+  easyPrimitiveAction<ExperimentDialogModel>({
+    type: ExperimentDialogActionTypes.PREFILL_DIALOG,
+    payload: anExperiment,
+  });
+
+export const prepareUpdateDialog = (
+  dispatch: SnowmanDispatch<unknown>,
+  entityId: EntityId
+): void => {
+  dispatch(
+    (dispatch: SnowmanDispatch<ExperimentDialogModel>): Promise<void> =>
+      RequestHandler<void>(
+        (): Promise<void> =>
+          new ExperimentsApi()
+            .getExperiment({
+              experimentId: entityId ?? MagicNotPossibleId,
+            })
+            .then((theExperiment: Experiment): void => {
+              dispatch(prefillDialog(theExperiment));
+            })
+      )
+  ).then();
+};
