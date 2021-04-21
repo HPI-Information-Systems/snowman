@@ -1,10 +1,9 @@
 import { DatasetId, ExperimentConfigItem } from '../../../server/types';
 
-export type BenchmarkCacheBaseConfig<Config> = {
+export type BenchmarkCacheBaseConfig = {
   group1: ExperimentConfigItem[];
   group2: ExperimentConfigItem[];
   datasetId: DatasetId;
-  config: Config;
 };
 
 export interface BenchmarkCacheContent<Config> {

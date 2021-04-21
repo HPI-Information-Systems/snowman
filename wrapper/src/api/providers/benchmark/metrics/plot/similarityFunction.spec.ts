@@ -264,5 +264,18 @@ describe.each<SimilarityFunctionPlotTestCase>(testCases)(
       });
       expect(received).toEqual(result);
     });
+
+    test('calculates correct result multiple times (->modular clustering reset works)', () => {
+      for (let index = 0; index < 2; ++index) {
+        const received = plotSimilarityFunction({
+          datasetId,
+          experimentId,
+          func: funcId,
+          groundTruth: [{ experimentId: groundTruthId }],
+          ...params,
+        });
+        expect(received).toEqual(result);
+      }
+    });
   }
 );

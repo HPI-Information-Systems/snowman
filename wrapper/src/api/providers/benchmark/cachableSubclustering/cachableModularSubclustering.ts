@@ -4,7 +4,7 @@ import { ModularSubclustering } from '../cluster/modularSubclustering';
 import { Subclustering } from '../cluster/subclustering';
 import { MergesT } from '../cluster/types';
 import { IntersectionOnlyIncludes } from '../intersection/intersectionOnlyIncludes';
-import { ModularIntersectionOnlyIncludes } from '../intersection/modularIntersectionOnlyIncludes';
+import { ModularIntersectionOneInclude } from '../intersection/modularIntersectionOneInclude';
 import { CacheableSubclustingBase } from './cacheableSubclusteringBase';
 
 export class CacheableModularSubclusting extends CacheableSubclustingBase {
@@ -21,7 +21,7 @@ export class CacheableModularSubclusting extends CacheableSubclustingBase {
         datasetId: this.config.datasetId,
         included: this.config.base,
         excluded: [],
-      }) as ModularIntersectionOnlyIncludes
+      }) as ModularIntersectionOneInclude
   );
 
   protected changes: MergesT[] = [];

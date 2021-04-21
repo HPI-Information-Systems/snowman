@@ -1,6 +1,7 @@
 import { DatasetId, ExperimentConfigItem } from '../../../../server/types';
 import { IntersectionBase } from '../../intersection/intersectionBase';
 import { IntersectionWithExcludes } from '../../intersection/intersectionWithExcludes';
+import { ModularIntersectionOneInclude } from '../../intersection/modularIntersectionOneInclude';
 import { ModularIntersectionOnlyIncludes } from '../../intersection/modularIntersectionOnlyIncludes';
 import { StaticIntersectionOnlyIncludes } from '../../intersection/staticIntersectionOnlyIncludes';
 import { BenchmarkCache } from '../cache';
@@ -18,14 +19,26 @@ class IntersectionCacheClass extends BenchmarkCache<
 > {
   readonly keyPrefix = 'intersection';
 
-  protected mapCustomConfigToBaseConfig(
-    config: IntersectionConfig
-  ): BenchmarkCacheBaseConfig<IntersectionConfig> {
+  protected mapCustomConfigToBaseConfig({
+    datasetId,
+    excluded,
+    included,
+  }: IntersectionConfig): BenchmarkCacheBaseConfig {
     return {
-      datasetId: config.datasetId,
-      group1: config.included,
-      group2: config.excluded,
-      config,
+      datasetId,
+      group1: included,
+      group2: excluded,
+    };
+  }
+  protected mapBaseConfigToCustomConfig({
+    datasetId,
+    group1,
+    group2,
+  }: BenchmarkCacheBaseConfig): IntersectionConfig {
+    return {
+      datasetId,
+      included: group1,
+      excluded: group2,
     };
   }
 
@@ -33,6 +46,8 @@ class IntersectionCacheClass extends BenchmarkCache<
     if (config.excluded.length > 0) {
       return new IntersectionWithExcludes(config);
     } else if (config.included.length === 1 && config.included[0].similarity) {
+      return new ModularIntersectionOneInclude(config);
+    } else if (config.included.length >= 2 && config.included[0].similarity) {
       return new ModularIntersectionOnlyIncludes(config);
     } else {
       return new StaticIntersectionOnlyIncludes(config);
@@ -41,9 +56,9 @@ class IntersectionCacheClass extends BenchmarkCache<
 
   protected stringifyExperimentConfigItem(
     item: ExperimentConfigItem,
-    config: BenchmarkCacheBaseConfig<IntersectionConfig>
+    config: BenchmarkCacheBaseConfig
   ): string {
-    const { excluded, included } = config.config;
+    const { excluded, included } = this.mapBaseConfigToCustomConfig(config);
     if (
       excluded.length === 0 &&
       included.length === 1 &&

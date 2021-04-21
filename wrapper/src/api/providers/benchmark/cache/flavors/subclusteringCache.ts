@@ -17,14 +17,26 @@ class SubclusterCacheClass extends BenchmarkCache<
 > {
   protected readonly keyPrefix = 'subclustering';
 
-  protected mapCustomConfigToBaseConfig(
-    config: SubclusteringConfig
-  ): BenchmarkCacheBaseConfig<SubclusteringConfig> {
+  protected mapCustomConfigToBaseConfig({
+    datasetId,
+    base,
+    partition,
+  }: SubclusteringConfig): BenchmarkCacheBaseConfig {
     return {
-      datasetId: config.datasetId,
-      group1: config.base,
-      group2: config.partition,
-      config,
+      datasetId,
+      group1: base,
+      group2: partition,
+    };
+  }
+  protected mapBaseConfigToCustomConfig({
+    datasetId,
+    group2,
+    group1,
+  }: BenchmarkCacheBaseConfig): SubclusteringConfig {
+    return {
+      datasetId,
+      base: group1,
+      partition: group2,
     };
   }
 
@@ -41,9 +53,9 @@ class SubclusterCacheClass extends BenchmarkCache<
 
   protected stringifyExperimentConfigItem(
     item: ExperimentConfigItem,
-    config: BenchmarkCacheBaseConfig<SubclusteringConfig>
+    config: BenchmarkCacheBaseConfig
   ): string {
-    const { base } = config.config;
+    const { base } = this.mapBaseConfigToCustomConfig(config);
     if (base.length === 1 && base[0].similarity && item === base[0]) {
       const { experimentId, similarity } = item;
       return `${this.stringifyExperiment(experimentId)}${

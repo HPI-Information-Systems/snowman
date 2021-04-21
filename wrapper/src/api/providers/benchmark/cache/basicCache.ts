@@ -34,15 +34,18 @@ export abstract class BasicBenchmarkCache<
 
   protected abstract mapCustomConfigToBaseConfig(
     config: Config
-  ): BenchmarkCacheBaseConfig<Config>;
+  ): BenchmarkCacheBaseConfig;
+  protected abstract mapBaseConfigToCustomConfig(
+    config: BenchmarkCacheBaseConfig
+  ): Config;
   protected abstract create(config: Config, key: string): Content;
   protected abstract readonly keyPrefix: string;
 
   protected createAndCache(
-    config: BenchmarkCacheBaseConfig<Config>,
+    config: BenchmarkCacheBaseConfig,
     key: string
   ): Content {
-    const content = this.create(config.config, key);
+    const content = this.create(this.mapBaseConfigToCustomConfig(config), key);
     this.cache.set(key, content);
     return content;
   }
@@ -76,7 +79,7 @@ export abstract class BasicBenchmarkCache<
     group1,
     group2,
     ...rest
-  }: BenchmarkCacheBaseConfig<Config>): BenchmarkCacheBaseConfig<Config> {
+  }: BenchmarkCacheBaseConfig): BenchmarkCacheBaseConfig {
     return {
       group1: this.sortExperimentConfigItems(group1),
       group2: this.sortExperimentConfigItems(group2),
@@ -100,7 +103,7 @@ export abstract class BasicBenchmarkCache<
 
   protected stringifyExperimentConfigItem(
     { experimentId, similarity }: ExperimentConfigItem,
-    config: BenchmarkCacheBaseConfig<Config>
+    config: BenchmarkCacheBaseConfig
   ): string {
     return `${this.stringifyExperiment(experimentId)}${
       similarity
@@ -113,7 +116,7 @@ export abstract class BasicBenchmarkCache<
 
   protected stringifyExperimentConfigItems(
     items: ExperimentConfigItem[],
-    config: BenchmarkCacheBaseConfig<Config>
+    config: BenchmarkCacheBaseConfig
   ): string {
     return items
       .map((item) => this.stringifyExperimentConfigItem(item, config))
@@ -121,7 +124,7 @@ export abstract class BasicBenchmarkCache<
   }
 
   protected keyOfBaseConfig(
-    config: BenchmarkCacheBaseConfig<Config>,
+    config: BenchmarkCacheBaseConfig,
     keyPrefix: string
   ): string {
     return `${keyPrefix}-${this.stringifyDataset(
