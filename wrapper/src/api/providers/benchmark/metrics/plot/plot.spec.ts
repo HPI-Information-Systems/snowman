@@ -11,6 +11,8 @@ import { fileToReadable } from '../../../../tools/test/filtToReadable';
 import { providers } from '../../..';
 import { RelaxedClustering } from '../../cluster/test/relaxedClusterings';
 import { loadTestCase } from '../../intersection/test/testCases';
+import { Precision } from '../basic/precision';
+import { plot, PlotResult } from './plot';
 import {
   plotSimilarityConfusionMatrix,
   PlotSimilarityConfusionMatrixResult,
@@ -259,7 +261,7 @@ describe.each<SimilarityFunctionPlotTestCase>(testCases)(
         datasetId,
         experimentId,
         func: funcId,
-        groundTruth: [{ experimentId: groundTruthId }],
+        groundTruth: [groundTruthId],
         ...params,
       });
       expect(received).toEqual(result);
@@ -271,10 +273,39 @@ describe.each<SimilarityFunctionPlotTestCase>(testCases)(
           datasetId,
           experimentId,
           func: funcId,
-          groundTruth: [{ experimentId: groundTruthId }],
+          groundTruth: [groundTruthId],
           ...params,
         });
         expect(received).toEqual(result);
+      }
+    });
+
+    test('calculates correct metrics', () => {
+      if (
+        params.maxThreshold === undefined &&
+        params.minThreshold === undefined
+      ) {
+        const received = plot({
+          datasetId,
+          experimentId,
+          func: funcId,
+          groundTruth: [groundTruthId],
+          steps: params.steps,
+          X: 'similarity',
+          Y: Precision,
+        });
+        expect(received).toEqual(
+          result
+            .map(
+              ({ threshold, ...matrix }) =>
+                ({
+                  threshold,
+                  x: threshold,
+                  y: new Precision(matrix).value,
+                } as PlotResult[number])
+            )
+            .reverse()
+        );
       }
     });
   }

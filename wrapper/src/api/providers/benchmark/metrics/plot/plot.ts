@@ -10,7 +10,7 @@ import {
   PlotSimilarityConfusionMatrixResult,
 } from './similarityConfusionMatrix';
 
-type PlotArgs = {
+export type PlotArgs = {
   datasetId: DatasetId;
   experimentId: ExperimentId;
   func: SimilarityThresholdFunctionId;
@@ -19,7 +19,7 @@ type PlotArgs = {
   Y: InstantiableAbstractClass<typeof BaseMetric> | 'similarity';
   steps: number;
 };
-type PlotResult = {
+export type PlotResult = {
   threshold: number;
   x: number;
   y: number;
