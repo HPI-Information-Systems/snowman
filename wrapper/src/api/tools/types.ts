@@ -7,7 +7,7 @@ export function assertType<Base>(): <Extends extends Base>(
   return <Extends extends Base>(x: Extends): Extends => x;
 }
 
-export type Primitive = string | number | boolean | undefined;
+export type Primitive = string | number | boolean | undefined | symbol;
 export type NestedArray<T> = T | NestedArray<T>[];
 
 export type UndefinedKeys<T> = {
@@ -25,3 +25,14 @@ export type NonUndefinedKeys<T> = {
 }[keyof T];
 
 export type MakeOptional<T> = { [P in keyof T]?: T[P] };
+export type MakeRequired<T> = { [key in keyof T]-?: T[key] };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type InstantiableAbstractClass<T> = (new (...args: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [x: string]: any;
+}) &
+  T;
+export type AbstractConstructorParameters<T> = ConstructorParameters<
+  InstantiableAbstractClass<T>
+>;

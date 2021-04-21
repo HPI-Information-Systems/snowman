@@ -1,21 +1,15 @@
 import { databaseBackend, Table } from '../../../database';
 import { experimentCustomColumnPrefix } from '../../../database/schemas';
-import { GetterOptionsT } from '../../../database/table/getter';
-import {
-  Column,
-  NullableColumnValues,
-  TableSchema,
-} from '../../../database/tools/types';
+import { AdvancedFilterT } from '../../../database/table/getter';
+import { Column, TableSchema } from '../../../database/tools/types';
 import { ExperimentId, FileResponse } from '../../../server/types';
-import { Primitive } from '../../../tools/types';
 import { datasetFromExperimentIds } from '../../benchmark/datasetFromExperiments';
 import { DatasetIDMapper } from '../../dataset/util/idMapper';
 
 export interface GetterStrategy<Schema extends TableSchema> {
   table: Table<Schema>;
   idColumns: Column[];
-  filter: NullableColumnValues<Schema['columns']>;
-  filterType: GetterOptionsT<Schema['columns'], boolean>['filterType'];
+  filters: AdvancedFilterT<Schema['columns']>;
 }
 
 export class ExperimentFileGetter<Schema extends TableSchema> {
@@ -41,18 +35,14 @@ export class ExperimentFileGetter<Schema extends TableSchema> {
           : column
       ),
       data: this.strategy.table
-        .all(
-          this.strategy.filter as NullableColumnValues<Schema['columns']> &
-            Record<string, Primitive>,
-          {
-            returnedColumns: this.columns,
-            raw: true,
-            limit,
-            startAt,
-            sortBy: this.getSortedColumns(sortBy),
-            filterType: this.strategy.filterType,
-          }
-        )
+        .all(undefined, {
+          returnedColumns: this.columns,
+          raw: true,
+          limit,
+          startAt,
+          sortBy: this.getSortedColumns(sortBy),
+          advancedFilters: this.strategy.filters,
+        })
         .map((row) => {
           const resultRow = row.map((element) => `${element}`);
           for (const idIndex of this.idIndices) {
@@ -65,22 +55,22 @@ export class ExperimentFileGetter<Schema extends TableSchema> {
     }))();
   }
 
-  protected getSortedColumns(sortBy?: string): string[] {
+  protected getSortedColumns(sortBy?: string): [string, 'ASC' | 'DESC'][] {
     if (sortBy) {
       if (sortBy in this.strategy.table.schema.columns) {
-        return [sortBy];
+        return [[sortBy, 'ASC']];
       } else if (
         experimentCustomColumnPrefix + sortBy in
         this.strategy.table.schema.columns
       ) {
-        return [experimentCustomColumnPrefix + sortBy];
+        return [[experimentCustomColumnPrefix + sortBy, 'ASC']];
       } else {
         throw new Error(
           `Cannot sort by ${sortBy} as this column does not exist.`
         );
       }
     } else {
-      return this.strategy.idColumns.map(({ name }) => name);
+      return this.strategy.idColumns.map(({ name }) => [name, 'ASC']);
     }
   }
 }

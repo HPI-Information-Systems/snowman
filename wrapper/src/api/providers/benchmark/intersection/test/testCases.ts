@@ -267,7 +267,7 @@ async function loadExperiment(
  */
 export async function loadTestCase(
   experiments: RelaxedClustering[]
-): Promise<[ExperimentId[], DatasetId]> {
+): Promise<[experimentIds: ExperimentId[], datasetId: DatasetId]> {
   const experimentArrays = experiments.map(
     relaxedClusteringToArray
   ) as NodeID[][][];

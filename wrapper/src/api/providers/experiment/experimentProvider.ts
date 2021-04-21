@@ -9,7 +9,7 @@ import {
 } from '../../server/types/ExperimentRequests';
 import { getSimilarity } from '../../tools/getSimilarity';
 import { providers } from '..';
-import { invalidateCaches } from '../benchmark/intersection/cache';
+import { BenchmarkCache } from '../benchmark/cache';
 import { DatasetIDMapper } from '../dataset/util/idMapper';
 import { getExperimentInserter } from './file';
 import { rawGetter } from './file/rawGetter';
@@ -112,13 +112,16 @@ export class ExperimentProvider {
     return this.checks.sync.call(async () => {
       const { datasetId } = this.getExperiment(id);
       const dataset = providers.dataset.getDataset(datasetId);
+      this.checks.throwIfDatasetHasNoRecordCount(dataset);
 
       const datasetIDMapper = new DatasetIDMapper(datasetId);
       const ExperimentInserter = getExperimentInserter(format);
       const numberOfUploadedRecords = await new ExperimentInserter(
         id,
         datasetIDMapper,
-        dataset.numberOfRecords
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        dataset.numberOfRecords!,
+        dataset.id
       )
         .insert(file)
         .catch((e) => {
@@ -131,7 +134,7 @@ export class ExperimentProvider {
         storedExperiment.numberOfUploadedRecords = numberOfUploadedRecords;
         tables.meta.experiment.upsert([storedExperiment]);
       }
-      invalidateCaches(id);
+      BenchmarkCache.invalidateExperiment(id);
     }, id);
   }
 
@@ -142,7 +145,7 @@ export class ExperimentProvider {
       storedExperiment.numberOfUploadedRecords = null;
       tables.meta.experiment.upsert([storedExperiment]);
     }
-    invalidateCaches(id);
+    BenchmarkCache.invalidateExperiment(id);
   }
 
   private deleteSimilarityThresholdFunctions(experimentId: ExperimentId): void {

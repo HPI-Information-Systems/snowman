@@ -26,14 +26,14 @@ export class TableCreator<Schema extends TableSchema> {
 
   private createIndexQuery(index: Column[], raiseIfExists: boolean): string {
     return `
-          CREATE INDEX${raiseIfExists ? '' : ' IF NOT EXISTS'} "${
+    CREATE INDEX${raiseIfExists ? '' : ' IF NOT EXISTS'} "${
       this.table.schema.schema
     }"."index_${this.table.schema.name}_${index
       .map((column) => column.name)
       .join('-')}" ON "${this.table.schema.name}" ("${index
       .map((column) => column.name)
       .join('","')}")
-    `;
+`;
   }
 
   private createTableQuery(raiseIfExists: boolean) {

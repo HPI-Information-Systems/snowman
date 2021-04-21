@@ -36,7 +36,10 @@ export function expectSubClusteringsToEqual(
   clustering: RelaxedSubclustering,
   expected: RelaxedSubclustering
 ): void {
-  expect(prepareSubclusteringForMatching(clustering)).toEqual(
-    prepareSubclusteringForMatching(expected)
-  );
+  expected = prepareSubclusteringForMatching(expected);
+  clustering = prepareSubclusteringForMatching(clustering);
+  if (compareArrays(expected, clustering) !== 0) {
+    console.log('');
+  }
+  expect(clustering).toEqual(expected);
 }

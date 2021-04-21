@@ -30,6 +30,11 @@ export const experimentSchemas = assertType<
           dataType: 'INTEGER',
           notNull: true,
         },
+        isDuplicateAndLinksUnlinkedNodes: {
+          name: 'isDuplicateAndLinksUnlinkedNodes' as const,
+          dataType: 'INTEGER',
+          notNull: true,
+        },
       });
       const columns = {
         ...knownColumns,
@@ -45,6 +50,9 @@ export const experimentSchemas = assertType<
         ],
       };
     },
+    /**
+     * By contract contains only pairs which add a new link between two clusters
+     */
     similarityThresholdFunction: (
       experimentId: ExperimentId,
       similarityThresholdFunctionId: ExperimentId
@@ -72,7 +80,10 @@ export const experimentSchemas = assertType<
         name: `similarityThresholdFunction${experimentId}_${similarityThresholdFunctionId}`,
         schema: 'experiment',
         columns,
-        indices: [[columns.id1, columns.id2], [columns.similarity]],
+        indices: [
+          ...Object.values(columns).map((column) => [column]),
+          [columns.id1, columns.id2],
+        ],
       };
     },
   },

@@ -15,8 +15,9 @@ import {
 } from '../../server/types';
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { providers } from '..';
+import { IntersectionCache } from '../benchmark/cache/flavors/intersectionCache';
 import { expectClusteringsToEqual } from '../benchmark/cluster/test/utility';
-import { IntersectionCache } from '../benchmark/intersection';
+import { IntersectionOnlyIncludes } from '../benchmark/intersection/intersectionOnlyIncludes';
 import { assertFilesMatch } from '../dataset/test/assertFilesMatch';
 
 const numberOfRecords = 5;
@@ -74,6 +75,7 @@ describe('Similarity Threshold Provider', () => {
         ['0', '1', '1', '3'],
         ['1', '2', '2', '2'],
         ['2', '3', '3', '1'],
+        ['0', '3', '0', '0'],
       ])
     );
     addedFunctions = [
@@ -297,10 +299,18 @@ describe('Similarity Threshold Provider', () => {
         providers.experiment.getExperimentFile({ experimentId })
       ),
       [
-        ['id1', 'id2', 'isDuplicate', 'sim1', 'sim2'],
-        ['0', '1', '1', '1', '3'],
-        ['1', '2', '1', '2', '2'],
-        ['2', '3', '1', '3', '1'],
+        [
+          'id1',
+          'id2',
+          'isDuplicate',
+          'isDuplicateAndLinksUnlinkedNodes',
+          'sim1',
+          'sim2',
+        ],
+        ['0', '1', '1', '1', '1', '3'],
+        ['1', '2', '1', '1', '2', '2'],
+        ['2', '3', '1', '1', '3', '1'],
+        ['0', '3', '1', '0', '0', '0'],
       ]
     );
     assertFilesMatch(
@@ -356,51 +366,41 @@ describe('Similarity Threshold Provider', () => {
       },
     ]);
     expectClusteringsToEqual(
-      IntersectionCache.get(
-        [datasetId],
-        [experimentId],
-        [undefined],
-        [undefined],
-        [],
-        [],
-        []
-      ).clustering,
+      (IntersectionCache.get({
+        datasetId,
+        excluded: [],
+        included: [{ experimentId }],
+      }) as IntersectionOnlyIncludes).clustering,
       [[0, 1, 2, 3], [4]]
     );
     expectClusteringsToEqual(
-      IntersectionCache.get(
-        [datasetId],
-        [experimentId],
-        [3],
-        [functionId],
-        [],
-        [],
-        []
-      ).clustering,
+      (IntersectionCache.get({
+        datasetId,
+        excluded: [],
+        included: [
+          { experimentId, similarity: { func: functionId, threshold: 3 } },
+        ],
+      }) as IntersectionOnlyIncludes).clustering,
       [[0], [1], [2, 3], [4]]
     );
     expectClusteringsToEqual(
-      IntersectionCache.get(
-        [datasetId],
-        [experimentId],
-        [2],
-        [functionId],
-        [],
-        [],
-        []
-      ).clustering,
+      (IntersectionCache.get({
+        datasetId,
+        excluded: [],
+        included: [
+          { experimentId, similarity: { func: functionId, threshold: 2 } },
+        ],
+      }) as IntersectionOnlyIncludes).clustering,
       [[0], [1, 2, 3], [4]]
     );
     expectClusteringsToEqual(
-      IntersectionCache.get(
-        [datasetId],
-        [experimentId],
-        [1],
-        [functionId],
-        [],
-        [],
-        []
-      ).clustering,
+      (IntersectionCache.get({
+        datasetId,
+        excluded: [],
+        included: [
+          { experimentId, similarity: { func: functionId, threshold: 1 } },
+        ],
+      }) as IntersectionOnlyIncludes).clustering,
       [[0, 1, 2, 3], [4]]
     );
   });
