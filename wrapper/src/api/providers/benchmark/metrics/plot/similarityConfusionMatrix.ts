@@ -8,7 +8,7 @@ import {
 import { lerp } from '../../../../tools/lerp';
 import { calculateConfusionMatrix, ConfusionMatrix } from '../confusionMatrix';
 
-export type PlotSimilarityFunctionConfig = {
+export type PlotSimilarityConfusionMatrixConfig = {
   datasetId: DatasetId;
   experimentId: ExperimentId;
   func: SimilarityThresholdFunctionId;
@@ -18,11 +18,11 @@ export type PlotSimilarityFunctionConfig = {
   steps: number;
 };
 
-export type PlotSimilarityFunctionResult = ({
+export type PlotSimilarityConfusionMatrixResult = ({
   threshold: number;
 } & ConfusionMatrix)[];
 
-export function plotSimilarityFunction({
+export function plotSimilarityConfusionMatrix({
   datasetId,
   experimentId,
   func,
@@ -42,8 +42,8 @@ export function plotSimilarityFunction({
     .get({}, { sortBy: [['similarity', 'DESC']], startAt: 0, limit: 1 })
     ?.similarity ?? 0,
   steps,
-}: PlotSimilarityFunctionConfig): PlotSimilarityFunctionResult {
-  const matrices: PlotSimilarityFunctionResult = [];
+}: PlotSimilarityConfusionMatrixConfig): PlotSimilarityConfusionMatrixResult {
+  const matrices: PlotSimilarityConfusionMatrixResult = [];
   for (let step = 0; step < steps; ++step) {
     const threshold = lerp(
       maxThreshold,

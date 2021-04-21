@@ -38,12 +38,14 @@ export class ModularSubclustering
   extends UnionFindBase
   implements Subclustering {
   protected modularClusterToThisClusters: ModularSubcluster[][];
+  protected fixedPartitionNumberClusters: number;
 
   constructor(
-    protected readonly fixedPartition: Clustering,
+    fixedPartition: Clustering,
     modularPartitionedByFixed: Subclustering
   ) {
     super(fixedPartition.numberNodes);
+    this.fixedPartitionNumberClusters = fixedPartition.numberClusters;
     this.modularClusterToThisClusters = [];
     for (
       let modularClusterID = 0;
@@ -92,7 +94,7 @@ export class ModularSubclustering
     group: ModularSubcluster[][]
   ): [(Node[] | undefined)[], ClusterID[]] {
     const fixedClusterIDToThisClusters = getTmpArray<Node[]>(
-      this.fixedPartition.numberClusters
+      this.fixedPartitionNumberClusters
     );
     const occuringFixedClusterIDs: ClusterID[] = [];
     for (const clusters of group) {

@@ -26,3 +26,13 @@ export type NonUndefinedKeys<T> = {
 
 export type MakeOptional<T> = { [P in keyof T]?: T[P] };
 export type MakeRequired<T> = { [key in keyof T]-?: T[key] };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type InstantiableAbstractClass<T> = (new (...args: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [x: string]: any;
+}) &
+  T;
+export type AbstractConstructorParameters<T> = ConstructorParameters<
+  InstantiableAbstractClass<T>
+>;

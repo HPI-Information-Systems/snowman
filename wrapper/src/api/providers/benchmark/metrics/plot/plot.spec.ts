@@ -12,9 +12,9 @@ import { providers } from '../../..';
 import { RelaxedClustering } from '../../cluster/test/relaxedClusterings';
 import { loadTestCase } from '../../intersection/test/testCases';
 import {
-  plotSimilarityFunction,
-  PlotSimilarityFunctionResult,
-} from './similarityFunction';
+  plotSimilarityConfusionMatrix,
+  PlotSimilarityConfusionMatrixResult,
+} from './similarityConfusionMatrix';
 
 type SimilarityFunctionPlotTestCase = {
   datasetNumberOfRecords: number;
@@ -26,7 +26,7 @@ type SimilarityFunctionPlotTestCase = {
     maxThreshold?: number;
     steps: number;
   };
-  result: PlotSimilarityFunctionResult;
+  result: PlotSimilarityConfusionMatrixResult;
 };
 
 const testCases: SimilarityFunctionPlotTestCase[] = [
@@ -255,7 +255,7 @@ describe.each<SimilarityFunctionPlotTestCase>(testCases)(
     });
 
     test('calculates correct result', () => {
-      const received = plotSimilarityFunction({
+      const received = plotSimilarityConfusionMatrix({
         datasetId,
         experimentId,
         func: funcId,
@@ -267,7 +267,7 @@ describe.each<SimilarityFunctionPlotTestCase>(testCases)(
 
     test('calculates correct result multiple times (->modular clustering reset works)', () => {
       for (let index = 0; index < 2; ++index) {
-        const received = plotSimilarityFunction({
+        const received = plotSimilarityConfusionMatrix({
           datasetId,
           experimentId,
           func: funcId,
