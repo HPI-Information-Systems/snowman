@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -19,6 +19,12 @@
   * @interface Metric
   */
  export interface Metric {
+     /**
+      * 
+      * @type {string}
+      * @memberof Metric
+      */
+     id?: string;
      /**
       * 
       * @type {string}
@@ -67,6 +73,7 @@
      }
      return {
          
+         'id': !exists(json, 'id') ? undefined : json['id'],
          'name': json['name'],
          'formula': json['formula'],
          'info': !exists(json, 'info') ? undefined : json['info'],
@@ -85,6 +92,7 @@
      }
      return {
          
+         'id': value.id,
          'name': value.name,
          'formula': value.formula,
          'info': value.info,

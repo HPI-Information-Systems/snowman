@@ -1124,10 +1124,13 @@ components:
         range:
         - 0
         - 1
+        id: id
         value: 0.75
         info: The meaningfulness of the f1 score is debated in the research community.
         infoLink: https://link.springer.com/article/10.1007/s11222-017-9746-6
       properties:
+        id:
+          type: string
         name:
           example: precision
           type: string
