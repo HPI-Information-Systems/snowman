@@ -5,18 +5,19 @@ import {
   ExperimentDialogStateProps,
 } from 'apps/ExperimentDialog/ExperimentDialogProps';
 import {
+  changeAlgorithm,
+  changeDataset,
   changeExperimentDescription,
   changeExperimentName,
   changeFileFormat,
   changeSelectedFiles,
-  clickOnMatchingSolutionTag,
 } from 'apps/ExperimentDialog/store/ExperimentDialogActions';
 import { ExperimentDialogModel } from 'apps/ExperimentDialog/types/ExperimentDialogModel';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
-import { IonChangeEvent } from 'types/IonChangeEvent';
+import { IonChangeEvent, IonSelectChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
 
@@ -24,7 +25,11 @@ const isValidExperimentDialog = (
   state: ExperimentDialogModel,
   isAddDialog = false
 ): boolean => {
-  if (state.experimentName.length < 1 || state.selectedTags.length !== 1)
+  if (
+    state.experimentName.length < 1 ||
+    state.selectedDataset === undefined ||
+    state.selectedAlgorithm === undefined
+  )
     return false;
   return !(isAddDialog && state.selectedFiles.length === 0);
 };
@@ -36,11 +41,13 @@ const mapStateToProps = (
   isAddDialog: ownProps.isAddDialog,
   experimentName: state.experimentName,
   experimentDescription: state.experimentDescription,
-  tags: [],
-  selectedTags: state.selectedTags,
   isValidForm: isValidExperimentDialog(state, ownProps.isAddDialog),
   selectedFiles: state.selectedFiles,
   experimentFileFormat: state.experimentFileFormat,
+  datasets: state.datasets,
+  selectedDataset: state.selectedDataset,
+  algorithms: state.algorithms,
+  selectedAlgorithm: state.selectedAlgorithm,
 });
 
 const mapDispatchToProps = (
@@ -53,8 +60,12 @@ const mapDispatchToProps = (
     dispatch(changeExperimentDescription(event.detail.value as string)),
   changeExperimentFileFormat: (anOption: string): void =>
     dispatch(changeFileFormat(anOption as experimentFileFormatEnum)),
-  clickOnMatchingSolutionTag: (aTag: string): void =>
-    dispatch(clickOnMatchingSolutionTag(aTag)),
+  changeDataset(event: IonSelectChangeEvent) {
+    dispatch(changeDataset(event.detail.value as string));
+  },
+  changeAlgorithm(event: IonSelectChangeEvent) {
+    dispatch(changeAlgorithm(event.detail.value as string));
+  },
   clickOnSubmit: (): void => {
     console.log('create or update experiment');
   },

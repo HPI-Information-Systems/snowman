@@ -14,6 +14,7 @@ import {
   IonSelectOption,
   IonTextarea,
 } from '@ionic/react';
+import { Algorithm, Dataset } from 'api';
 import { ExperimentDialogProps } from 'apps/ExperimentDialog/ExperimentDialogProps';
 import FileInput from 'components/FileInput/FileInput';
 import SelectableInput from 'components/SelectableInput/SelectableInput';
@@ -32,16 +33,19 @@ const ExperimentDialogView = ({
   experimentName,
   experimentDescription,
   experimentFileFormat,
-  tags,
-  selectedTags,
   changeExperimentDescription,
   changeExperimentName,
   changeExperimentFileFormat,
-  clickOnMatchingSolutionTag,
   clickOnSubmit,
   isValidForm,
   selectedFiles,
   changeSelectedFiles,
+  datasets,
+  selectedDataset,
+  changeDataset,
+  algorithms,
+  selectedAlgorithm,
+  changeAlgorithm,
 }: ExperimentDialogProps): JSX.Element => (
   <>
     <IonList>
@@ -65,16 +69,42 @@ const ExperimentDialogView = ({
       </IonItem>
       <IonItem>
         <IonLabel position="fixed">Dataset:</IonLabel>
-        <IonSelect placeholder="Select one" multiple={false}>
-          <IonSelectOption>SomeDataset1</IonSelectOption>
-          <IonSelectOption>SomeDataset2</IonSelectOption>
+        <IonSelect
+          value={selectedDataset}
+          onIonChange={changeDataset}
+          placeholder="Select one"
+          multiple={false}
+        >
+          {datasets.map(
+            (aDataset: Dataset): JSX.Element => (
+              <IonSelectOption
+                key={`filter_datasets_${aDataset.id}`}
+                value={aDataset.id.toString()}
+              >
+                {aDataset.name}
+              </IonSelectOption>
+            )
+          )}
         </IonSelect>
       </IonItem>
       <IonItem>
         <IonLabel position="fixed">M.Solution:</IonLabel>
-        <IonSelect placeholder="Select one" multiple={false}>
-          <IonSelectOption>Some Matching Solution</IonSelectOption>
-          <IonSelectOption>Some other Matching Solution</IonSelectOption>
+        <IonSelect
+          value={selectedAlgorithm}
+          onIonChange={changeAlgorithm}
+          placeholder="Select one"
+          multiple={false}
+        >
+          {algorithms.map(
+            (anAlgorithm: Algorithm): JSX.Element => (
+              <IonSelectOption
+                key={`filter_algorithms_${anAlgorithm.id}`}
+                value={anAlgorithm.id.toString()}
+              >
+                {anAlgorithm.name}
+              </IonSelectOption>
+            )
+          )}
         </IonSelect>
       </IonItem>
       <IonItemDivider>
@@ -107,20 +137,6 @@ const ExperimentDialogView = ({
         </div>
       ) : null}
     </IonList>
-    <div className="center tag-view">
-      {tags.map(
-        (aTag: string): JSX.Element => (
-          <IonChip
-            color={selectedTags.includes(aTag) ? 'primary' : 'dark'}
-            outline={false}
-            key={aTag}
-            onClick={(): void => clickOnMatchingSolutionTag(aTag)}
-          >
-            <IonLabel>{aTag}</IonLabel>
-          </IonChip>
-        )
-      )}
-    </div>
     <div className="center button-row">
       <IonButton
         className="button-hugh button-padding"

@@ -42,12 +42,20 @@ export const changeFileFormat = (
     payload: aFormat,
   });
 
-export const clickOnMatchingSolutionTag = (
-  aTag: string
+export const changeDataset = (
+  aDatasetId: string
 ): easyPrimitiveActionReturn<ExperimentDialogModel> =>
   easyPrimitiveAction<ExperimentDialogModel>({
-    type: ExperimentDialogActionTypes.CLICK_ON_MATCHING_SOLUTION_TAG,
-    payload: aTag,
+    type: ExperimentDialogActionTypes.CHANGE_DATASET,
+    payload: aDatasetId,
+  });
+
+export const changeAlgorithm = (
+  aDatasetId: string
+): easyPrimitiveActionReturn<ExperimentDialogModel> =>
+  easyPrimitiveAction<ExperimentDialogModel>({
+    type: ExperimentDialogActionTypes.CHANGE_ALGORITHM,
+    payload: aDatasetId,
   });
 
 export const changeSelectedFiles = (

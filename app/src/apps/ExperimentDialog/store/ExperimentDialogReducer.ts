@@ -1,16 +1,20 @@
 import { Experiment } from 'api';
 import { ExperimentDialogActionTypes } from 'apps/ExperimentDialog/types/ExperimentDialogActionTypes';
 import { ExperimentDialogModel } from 'apps/ExperimentDialog/types/ExperimentDialogModel';
+import { CentralResourcesGenericActionsTypes } from 'apps/SnowmanApp/types/CentralResourcesGenericActionsTypes';
+import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { SnowmanAction } from 'types/SnowmanAction';
-import { toggleSelectionArraySingleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: ExperimentDialogModel = {
   experimentName: '',
   experimentDescription: '',
   experimentFileFormat: experimentFileFormatEnum.Pilot,
-  selectedTags: [],
   selectedFiles: [],
+  datasets: [],
+  algorithms: [],
+  selectedDataset: undefined,
+  selectedAlgorithm: undefined,
 };
 
 const ExperimentDialogReducer = (
@@ -18,15 +22,25 @@ const ExperimentDialogReducer = (
   action: SnowmanAction
 ): ExperimentDialogModel => {
   switch (action.type) {
+    case CentralResourcesGenericActionsTypes.REFRESHED: {
+      return {
+        ...state,
+        datasets: (action.payload as CentralResourcesModel).datasets,
+        algorithms: (action.payload as CentralResourcesModel).algorithms,
+      };
+    }
     case ExperimentDialogActionTypes.RESET_DIALOG:
       return initialState;
     case ExperimentDialogActionTypes.PREFILL_DIALOG: {
       const experiment = action.payload as Experiment;
       return {
         ...initialState,
+        datasets: state.datasets,
+        algorithms: state.algorithms,
+        selectedDataset: experiment.datasetId.toString(),
+        selectedAlgorithm: experiment.algorithmId.toString(),
         experimentName: experiment.name,
         experimentDescription: experiment.description ?? '',
-        selectedTags: [],
       };
     }
     case ExperimentDialogActionTypes.CHANGE_EXPERIMENT_NAME:
@@ -49,13 +63,15 @@ const ExperimentDialogReducer = (
         ...state,
         selectedFiles: action.payload as File[],
       };
-    case ExperimentDialogActionTypes.CLICK_ON_MATCHING_SOLUTION_TAG:
+    case ExperimentDialogActionTypes.CHANGE_DATASET:
       return {
         ...state,
-        selectedTags: toggleSelectionArraySingleSelect<string>(
-          state.selectedTags,
-          action.payload as string
-        ),
+        selectedDataset: action.payload as string,
+      };
+    case ExperimentDialogActionTypes.CHANGE_ALGORITHM:
+      return {
+        ...state,
+        selectedAlgorithm: action.payload as string,
       };
     default:
       return state;
