@@ -24,16 +24,20 @@ class GenericDialogView extends Component<GenericDialogProps> {
   }
 
   componentDidUpdate(prevProps: Readonly<GenericDialogProps>): void {
-    if (
-      !this.props.isAddDialog &&
-      this.props.entityId &&
-      this.props.isDialogOpen &&
-      this.props.loadInitialState
-    ) {
-      this.props.loadInitialState(
-        this.store.dispatch as Dispatch<unknown>,
-        this.props.entityId
-      );
+    if (this.props.isDialogOpen) {
+      if (this.props.resetDialog) {
+        this.props.resetDialog(this.store.dispatch as Dispatch<unknown>);
+      }
+      if (
+        !this.props.isAddDialog &&
+        this.props.entityId &&
+        this.props.loadInitialState
+      ) {
+        this.props.loadInitialState(
+          this.store.dispatch as Dispatch<unknown>,
+          this.props.entityId
+        );
+      }
     }
 
     if (isEqual(prevProps.centralResources, this.props.centralResources)) {

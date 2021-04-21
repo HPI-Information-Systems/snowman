@@ -130,6 +130,10 @@ export const prefillDialog = (
     payload: aDataset,
   });
 
+export const prepareResetDialog = (
+  dispatch: SnowmanDispatch<DatasetDialogModel>
+): void => dispatch(resetDialog());
+
 export const prepareUpdateDialog = (
   dispatch: SnowmanDispatch<unknown>,
   entityId: EntityId

@@ -30,7 +30,11 @@ const ExperimentDialogReducer = (
       };
     }
     case ExperimentDialogActionTypes.RESET_DIALOG:
-      return initialState;
+      return {
+        ...initialState,
+        datasets: state.datasets,
+        algorithms: state.algorithms,
+      };
     case ExperimentDialogActionTypes.PREFILL_DIALOG: {
       const experiment = action.payload as Experiment;
       return {

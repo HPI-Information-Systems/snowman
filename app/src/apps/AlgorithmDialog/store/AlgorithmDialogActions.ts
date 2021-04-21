@@ -33,6 +33,10 @@ export const changeAlgorithmDescription = (
     payload: aDescription,
   });
 
+export const prepareResetDialog = (
+  dispatch: SnowmanDispatch<AlgorithmDialogModel>
+): void => dispatch(resetDialog());
+
 export const prepareUpdateDialog = (
   dispatch: SnowmanDispatch<unknown>,
   entityId: EntityId

@@ -74,6 +74,10 @@ export const prefillDialog = (
     payload: anExperiment,
   });
 
+export const prepareResetDialog = (
+  dispatch: SnowmanDispatch<ExperimentDialogModel>
+): void => dispatch(resetDialog());
+
 export const prepareUpdateDialog = (
   dispatch: SnowmanDispatch<unknown>,
   entityId: EntityId

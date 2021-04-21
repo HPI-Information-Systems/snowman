@@ -1,5 +1,8 @@
 import AlgorithmDialogContainer from 'apps/AlgorithmDialog/AlgorithmDialog.Container';
-import { prepareUpdateDialog } from 'apps/AlgorithmDialog/store/AlgorithmDialogActions';
+import {
+  prepareResetDialog,
+  prepareUpdateDialog,
+} from 'apps/AlgorithmDialog/store/AlgorithmDialogActions';
 import { constructAlgorithmDialogStore } from 'apps/AlgorithmDialog/store/AlgorithmDialogStore';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import GenericDialog from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialog';
@@ -17,6 +20,7 @@ const AlgorithmDialog = (): JSX.Element => (
     instanceId={ViewIDs.AlgorithmDialog}
     createSubAppStore={constructAlgorithmDialogStore}
     loadInitialState={prepareUpdateDialog}
+    resetDialog={prepareResetDialog}
   >
     {(ownProps: DialogProps): JSX.Element => (
       <AlgorithmDialogContainer {...ownProps} />
