@@ -1,10 +1,10 @@
-import 'components/ExperimentDialog/ExperimentDialogStyles.css';
+import 'apps/ExperimentDialogimentDialogStyles.css';
 
-import ExperimentDialogView from 'components/ExperimentDialog/ExperimentDialog.View';
+import ExperimentDialogView from 'apps/ExperimentDialog/ExperimentDialog.View';
 import {
   ExperimentDialogDispatchProps,
   ExperimentDialogStateProps,
-} from 'components/ExperimentDialog/ExperimentDialogProps';
+} from 'apps/ExperimentDialog/ExperimentDialogProps';
 import { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import {

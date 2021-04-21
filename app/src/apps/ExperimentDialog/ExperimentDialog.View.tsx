@@ -1,3 +1,5 @@
+import 'apps/ExperimentDialog/ExperimentDialogStyles.css';
+
 import {
   IonButton,
   IonChip,
@@ -12,7 +14,7 @@ import {
   IonSelectOption,
   IonTextarea,
 } from '@ionic/react';
-import { ExperimentDialogProps } from 'components/ExperimentDialog/ExperimentDialogProps';
+import { ExperimentDialogProps } from 'apps/ExperimentDialog/ExperimentDialogProps';
 import FileInput from 'components/FileInput/FileInput';
 import ModalDialog from 'components/ModalDialog/ModalDialog';
 import SelectableInput from 'components/SelectableInput/SelectableInput';
