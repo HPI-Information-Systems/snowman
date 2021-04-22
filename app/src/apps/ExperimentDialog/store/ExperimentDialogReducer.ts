@@ -41,8 +41,8 @@ const ExperimentDialogReducer = (
         ...initialState,
         datasets: state.datasets,
         algorithms: state.algorithms,
-        selectedDataset: experiment.datasetId.toString(),
-        selectedAlgorithm: experiment.algorithmId.toString(),
+        selectedDataset: experiment.datasetId,
+        selectedAlgorithm: experiment.algorithmId,
         experimentName: experiment.name,
         experimentDescription: experiment.description ?? '',
       };
@@ -70,12 +70,12 @@ const ExperimentDialogReducer = (
     case ExperimentDialogActionTypes.CHANGE_DATASET:
       return {
         ...state,
-        selectedDataset: action.payload as string,
+        selectedDataset: action.payload as number | undefined,
       };
     case ExperimentDialogActionTypes.CHANGE_ALGORITHM:
       return {
         ...state,
-        selectedAlgorithm: action.payload as string,
+        selectedAlgorithm: action.payload as number | undefined,
       };
     default:
       return state;

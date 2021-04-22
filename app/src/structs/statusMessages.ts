@@ -2,6 +2,8 @@ export const SUCCESS_TO_ADD_NEW_EXPERIMENT =
   'Successfully added a new experiment!';
 export const SUCCESS_TO_UPLOAD_EXPERIMENT_FILE =
   'Successfully uploaded the experiment file!';
+export const SUCCESS_TO_CREATE_NEW_EXPERIMENT =
+  'Successfully created a new experiment!';
 export const SUCCESS_TO_ADD_NEW_ALGORITHM =
   'Successfully added the new matching solution!';
 export const UNKNOWN_ERROR =

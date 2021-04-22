@@ -5,6 +5,7 @@ import {
   ExperimentDialogStateProps,
 } from 'apps/ExperimentDialog/ExperimentDialogProps';
 import {
+  addOrUpdateExperiment,
   changeAlgorithm,
   changeDataset,
   changeExperimentDescription,
@@ -20,6 +21,7 @@ import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { IonChangeEvent, IonSelectChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
+import { parseInputToNumberOrUndef } from 'utils/questionHelpers';
 
 const isValidExperimentDialog = (
   state: ExperimentDialogModel,
@@ -45,13 +47,14 @@ const mapStateToProps = (
   selectedFiles: state.selectedFiles,
   experimentFileFormat: state.experimentFileFormat,
   datasets: state.datasets,
-  selectedDataset: state.selectedDataset,
+  selectedDataset: state.selectedDataset?.toString() ?? '',
   algorithms: state.algorithms,
-  selectedAlgorithm: state.selectedAlgorithm,
+  selectedAlgorithm: state.selectedAlgorithm?.toString() ?? '',
 });
 
 const mapDispatchToProps = (
-  dispatch: SnowmanDispatch<ExperimentDialogModel>
+  dispatch: SnowmanDispatch<ExperimentDialogModel>,
+  ownProps: ExperimentDialogOwnProps
 ): ExperimentDialogDispatchProps => ({
   clickOnCancel: (): void => doCloseDialog(),
   changeExperimentName: (event: IonChangeEvent): void =>
@@ -61,13 +64,17 @@ const mapDispatchToProps = (
   changeExperimentFileFormat: (anOption: string): void =>
     dispatch(changeFileFormat(anOption as experimentFileFormatEnum)),
   changeDataset(event: IonSelectChangeEvent) {
-    dispatch(changeDataset(event.detail.value as string));
+    dispatch(
+      changeDataset(parseInputToNumberOrUndef(event.detail.value as string))
+    );
   },
   changeAlgorithm(event: IonSelectChangeEvent) {
-    dispatch(changeAlgorithm(event.detail.value as string));
+    dispatch(
+      changeAlgorithm(parseInputToNumberOrUndef(event.detail.value as string))
+    );
   },
   clickOnSubmit: (): void => {
-    console.log('create or update experiment');
+    dispatch(addOrUpdateExperiment(ownProps.entityId)).then();
   },
   changeSelectedFiles: (event: ChangeEvent<HTMLInputElement>): void =>
     dispatch(
