@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'theme/overwrites.css';
 
 import { IonApp } from '@ionic/react';
+import AboutApp from 'apps/AboutApp/AboutApp';
 import AlgorithmDialog from 'apps/AlgorithmDialog/AlgorithmDialog';
 import AlgorithmsApp from 'apps/AlgorithmsApp/AlgorithmsApp';
 import BenchmarkApp from 'apps/BenchmarkApp/BenchmarkApp';
@@ -26,7 +27,6 @@ import DatasetDialog from 'apps/DatasetDialog/DatasetDialog';
 import DatasetsApp from 'apps/DatasetsApp/DatasetsApp';
 import ExperimentDialog from 'apps/ExperimentDialog/ExperimentDialog';
 import ExperimentsApp from 'apps/ExperimentsApp/ExperimentsApp';
-import HomeApp from 'apps/HomeApp/HomeApp';
 import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/BlockingLoading';
 import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';
 import { SnowmanAppProps } from 'apps/SnowmanApp/SnowmanAppProps';
@@ -44,7 +44,7 @@ const SnowmanAppView = ({
   return (
     <IonApp>
       <TabBar />
-      <HomeApp />
+      <AboutApp />
       <BenchmarkApp />
       <AlgorithmsApp algorithms={algorithms} />
       <DatasetsApp datasets={datasets} />

@@ -1,15 +1,15 @@
-import styles from 'apps/HomeApp/HomeAppStyles.module.css';
+import styles from 'apps/AboutApp/AboutAppStyles.module.css';
 import GenericSubApp from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubApp';
 import React from 'react';
 import style from 'theme/style';
 import { ViewIDs } from 'types/ViewIDs';
 import { dummyStoreFactory } from 'utils/storeFactory';
 
-const HomeApp = (): JSX.Element => (
+const AboutApp = (): JSX.Element => (
   <GenericSubApp
     instanceId={ViewIDs.HOME}
-    appTitle="Home Page"
-    createSubAppStore={dummyStoreFactory('HomepageAppDummy')}
+    appTitle="About Snowman App"
+    createSubAppStore={dummyStoreFactory('AboutAppDummy')}
   >
     <div className={style('ion-text-center', styles.introduction)}>
       <img src="./logo192.png" alt="logo" />
@@ -30,4 +30,4 @@ const HomeApp = (): JSX.Element => (
   </GenericSubApp>
 );
 
-export default HomeApp;
+export default AboutApp;

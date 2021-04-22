@@ -8,14 +8,20 @@ import { Store } from 'redux';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 class SelectableInput extends Component<SelectableInputOwnProps> {
-  store: Store<SelectableInputModel, SnowmanAction>;
+  store: Store<SelectableInputModel, SnowmanAction> | null = null;
 
-  constructor(props: SelectableInputOwnProps) {
-    super(props);
-    this.store = createSelectableInputStore(props.instanceDescriptor);
+  UNSAFE_componentWillMount(): void {
+    this.store = createSelectableInputStore(this.props.instanceDescriptor);
+  }
+
+  componentWillUnmount(): void {
+    this.store = null;
   }
 
   render(): JSX.Element {
+    if (this.store === null) {
+      return <div />;
+    }
     return (
       <Provider store={this.store}>
         <SelectableInputContainer {...this.props} />

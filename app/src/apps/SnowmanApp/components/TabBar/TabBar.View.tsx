@@ -1,4 +1,4 @@
-import { IonButton, IonButtons } from '@ionic/react';
+import { IonButton, IonButtons, IonIcon } from '@ionic/react';
 import {
   TabBarConfigItem,
   TabBarConfigLeft,
@@ -22,6 +22,9 @@ const TabBarView = ({ openSubApp, activeSubApp }: TabBarProps): JSX.Element => {
       }
       onClick={(): void => openSubApp(aTabConfigItem.viewID)}
     >
+      {aTabConfigItem.icon !== undefined ? (
+        <IonIcon slot="start" icon={aTabConfigItem.icon} />
+      ) : null}
       {aTabConfigItem.title}
     </IonButton>
   );
