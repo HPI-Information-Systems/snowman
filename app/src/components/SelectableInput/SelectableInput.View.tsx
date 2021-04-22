@@ -1,4 +1,4 @@
-import 'components/SelectableInput/SelectableInput.Styles.css';
+import 'components/SelectableInput/SelectableInputStyles.css';
 
 import {
   IonIcon,

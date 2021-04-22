@@ -6,10 +6,10 @@ export interface SubmitCallback {
 }
 
 export interface InputChipOwnProps {
+  instanceDescriptor?: string;
   placeholder?: string;
   label?: string;
   submitValueCallback: SubmitCallback;
-  instanceDescriptor?: string;
 }
 
 export interface InputChipStateProps {
