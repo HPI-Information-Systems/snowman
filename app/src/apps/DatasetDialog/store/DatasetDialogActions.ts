@@ -153,7 +153,9 @@ export const prepareUpdateDialog = (
         })
         .then((theDataset: Dataset): void => {
           dispatch(prefillDialog(theDataset));
-        })
+        }),
+    undefined,
+    true
   );
 
 export const onDialogOpen = (

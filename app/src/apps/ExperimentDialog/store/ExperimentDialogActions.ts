@@ -97,7 +97,9 @@ export const prepareUpdateDialog = (
         })
         .then((theExperiment: Experiment): void => {
           dispatch(prefillDialog(theExperiment));
-        })
+        }),
+    undefined,
+    true
   );
 
 export const onDialogOpen = (

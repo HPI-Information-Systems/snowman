@@ -64,7 +64,9 @@ export const prepareUpdateDialog = (
         .then((theAlgorithm: Algorithm): void => {
           dispatch(changeAlgorithmName(theAlgorithm.name));
           dispatch(changeAlgorithmDescription(theAlgorithm.description ?? ''));
-        })
+        }),
+    undefined,
+    true
   );
 
 export const onDialogOpen = (
