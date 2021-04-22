@@ -101,8 +101,6 @@ export interface NMetricsStore {
 
 export interface ImmediateStore {
   CoreStore: CoreStore;
-  DatasetDialogStore: DatasetDialogStore;
-  ExperimentDialogStore: ExperimentDialogStore;
   BenchmarkConfigurationStore: BenchmarkConfigurationStore;
   BinaryMetricsStore: BinaryMetricsStore;
   NMetricsStore: NMetricsStore;

@@ -30,11 +30,6 @@ export const rootReducer = (
   return {
     CoreStore: coreState,
     BenchmarkConfigurationStore: benchmarkState,
-    DatasetDialogStore: DatasetDialogReducer(state?.DatasetDialogStore, action),
-    ExperimentDialogStore: ExperimentDialogReducer(
-      state?.ExperimentDialogStore,
-      action
-    ),
     DatasetPreviewerStore: DatasetPreviewerReducer(
       state?.DatasetPreviewerStore,
       action
