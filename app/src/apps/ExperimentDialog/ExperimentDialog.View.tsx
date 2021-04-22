@@ -2,7 +2,6 @@ import 'apps/ExperimentDialog/ExperimentDialogStyles.css';
 
 import {
   IonButton,
-  IonChip,
   IonIcon,
   IonInput,
   IonItem,
@@ -110,7 +109,7 @@ const ExperimentDialogView = ({
       <IonItemDivider>
         <IonLabel>UPLOAD CONTENT</IonLabel>
       </IonItemDivider>
-      {/*<IonItem>
+      <IonItem>
         <IonLabel position="fixed">File Format:</IonLabel>
         <SelectableInput
           allOptions={$enum(experimentFileFormatEnum).map(
@@ -118,8 +117,9 @@ const ExperimentDialogView = ({
           )}
           currentOption={experimentFileFormat}
           setOption={changeExperimentFileFormat}
+          instanceDescriptor="experimentDialog1"
         />
-      </IonItem>*/}
+      </IonItem>
       <IonItem>
         <IonLabel position="fixed">Source File:</IonLabel>
         <FileInput

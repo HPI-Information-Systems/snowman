@@ -1,6 +1,7 @@
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
 export interface SelectableInputOwnProps {
+  instanceDescriptor?: string;
   currentOption: string;
   setOption(anOption: string): void;
   allOptions: string[];

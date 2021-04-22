@@ -1,45 +1,27 @@
-import { SelectableInputView } from 'components/SelectableInput/SelectableInput.View';
-import {
-  SelectableInputDispatchProps,
-  SelectableInputStateProps,
-} from 'components/SelectableInput/SelectableInputProps';
-import { connect } from 'react-redux';
-import {
-  closePopover,
-  resetElement,
-  setSearchString,
-  showPopover,
-} from 'store/actions/SelectableInputStoreActions';
-import { SnowmanDispatch } from 'store/messages';
-import { ImmediateStore } from 'store/models';
-import { IonChangeEvent } from 'types/IonChangeEvent';
+import SelectableInputContainer from 'components/SelectableInput/SelectableInput.Container';
+import { SelectableInputOwnProps } from 'components/SelectableInput/SelectableInputProps';
+import { createSelectableInputStore } from 'components/SelectableInput/store/SelectableInputStore';
+import { SelectableInputModel } from 'components/SelectableInput/types/SelectableInputModel';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { Store } from 'redux';
+import { SnowmanAction } from 'types/SnowmanAction';
 
-const mapStateToProps = (state: ImmediateStore): SelectableInputStateProps => ({
-  shouldShowPopover: state.SelectableInputStore.shouldShowPopover,
-  eventPopover: state.SelectableInputStore.eventPopover,
-  searchString: state.SelectableInputStore.searchString,
-});
+class SelectableInput extends Component<SelectableInputOwnProps> {
+  store: Store<SelectableInputModel, SnowmanAction>;
 
-const mapDispatchToProps = (
-  dispatch: SnowmanDispatch
-): SelectableInputDispatchProps => ({
-  showPopover: (anEvent: Event): void => {
-    dispatch(showPopover(anEvent));
-  },
-  closePopover: (): void => {
-    dispatch(closePopover());
-  },
-  changeSearchString: (anEvent: IonChangeEvent): void => {
-    dispatch(setSearchString(anEvent.detail.value ?? ''));
-  },
-  resetElement: (): void => {
-    dispatch(resetElement());
-  },
-});
+  constructor(props: SelectableInputOwnProps) {
+    super(props);
+    this.store = createSelectableInputStore(props.instanceDescriptor);
+  }
 
-const SelectableInput = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SelectableInputView);
+  render(): JSX.Element {
+    return (
+      <Provider store={this.store}>
+        <SelectableInputContainer {...this.props} />
+      </Provider>
+    );
+  }
+}
 
 export default SelectableInput;
