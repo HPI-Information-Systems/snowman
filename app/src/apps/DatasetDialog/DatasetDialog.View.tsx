@@ -1,5 +1,3 @@
-import 'apps/DatasetDialog/DatasetDialogStyles.css';
-
 import {
   IonButton,
   IonChip,
@@ -19,6 +17,7 @@ import {
   IonTextarea,
 } from '@ionic/react';
 import { DatasetDialogProps } from 'apps/DatasetDialog/DatasetDialogProps';
+import styles from 'apps/DatasetDialog/DatasetDialogStyles.module.css';
 import FileInput from 'components/FileInput/FileInput';
 import InputChip from 'components/InputChip/InputChip';
 import {
@@ -27,6 +26,7 @@ import {
   closeCircleOutline,
 } from 'ionicons/icons';
 import React from 'react';
+import style from 'theme/style';
 import { $enum } from 'ts-enum-util';
 import { DatasetTypes } from 'types/DatasetTypes';
 
@@ -168,7 +168,7 @@ const DatasetDialogView = ({
       ) : null}
     </IonList>
     {!isAddDialog ? (
-      <div className="center upload-notice">
+      <div className={style(styles.center, styles.uploadNotice)}>
         <IonNote color="medium">
           <b>Note: Uploading a file is optional here!</b>
           <br />
@@ -176,7 +176,7 @@ const DatasetDialogView = ({
         </IonNote>
       </div>
     ) : null}
-    <div className="center tag-view">
+    <div className={style(styles.center, styles.tagView)}>
       {tags.map(
         (aTag: string): JSX.Element => (
           <IonChip
@@ -196,9 +196,9 @@ const DatasetDialogView = ({
         submitValueCallback={createTag}
       />
     </div>
-    <div className="center button-row">
+    <div className={style(styles.center, styles.buttonRow)}>
       <IonButton
-        className="button-hugh button-padding"
+        className={style(styles.buttonHugh, styles.buttonPadding)}
         onClick={clickOnSubmit}
         disabled={!isValidAnsweredDialog}
       >
@@ -209,7 +209,7 @@ const DatasetDialogView = ({
         {isAddDialog ? 'Add' : 'Update'}
       </IonButton>
       <IonButton
-        className="button-hugh button-padding"
+        className={style(styles.buttonHugh, styles.buttonPadding)}
         onClick={clickOnCancel}
         color="light"
       >
