@@ -20,9 +20,7 @@ export const rootReducer = (
 ): ImmediateStore => {
   const coreState: CoreStore = CoreReducer(state?.CoreStore, action);
   const benchmarkState: BenchmarkConfigurationStore = BenchmarkConfiguratorReducer(
-    state?.BenchmarkConfigurationStore,
-    coreState,
-    action
+    state?.BenchmarkConfigurationStore
   );
 
   return {
