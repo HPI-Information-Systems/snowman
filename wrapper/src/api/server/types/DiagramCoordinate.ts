@@ -6,14 +6,14 @@
 export interface DiagramCoordinate {
   /**
    *
-   * @type {Array<number>}
+   * @type {number}
    * @memberof DiagramCoordinate
    */
-  x?: Array<number>;
+  x: number;
   /**
    *
-   * @type {Array<number>}
+   * @type {number}
    * @memberof DiagramCoordinate
    */
-  y?: Array<number>;
+  y: number;
 }

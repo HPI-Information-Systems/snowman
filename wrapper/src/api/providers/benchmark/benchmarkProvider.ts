@@ -6,39 +6,20 @@ import {
   ExperimentIntersectionItem,
   FileResponse,
   MetricsEnum,
-  SoftKPIsExperimentEnum,
 } from '../../server/types';
 import { Metric } from '../../server/types';
 import { ConfusionMatrixCache } from './cache/flavors/confusionMatrixCache';
 import { IntersectionCache } from './cache/flavors/intersectionCache';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
-import { DiagramDataGetter } from './diagram/diagramGetter';
-import { DiagramMetricsGetter } from './diagram/diagramMetricsGetter';
-import { DiagramSoftKPIsGetter } from './diagram/diagramSoftKPIsGetter';
+import {
+  DiagramDataProvider,
+  getDiagramDataProvider,
+} from './diagram/diagramDataProvider';
 import { idClustersToRecordClusters } from './idsToRecords';
 import { IntersectionBase } from './intersection/intersectionBase';
-import {
-  Accuracy,
-  BalancedAccuracy,
-  BookmakerInformedness,
-  F1Score,
-  FalseDiscoveryRate,
-  FalseNegativeRate,
-  FalseOmissionRate,
-  FalsePositiveRate,
-  FowlkesMallowsIndex,
-  FStarScore,
-  Markedness,
-  MatthewsCorrelationCoefficient,
-  NegativePredictiveValue,
-  Precision,
-  PrevalenceThreshold,
-  Recall,
-  Specificity,
-  ThreatScore,
-} from './metrics';
-import { ConfusionMatrix } from './metrics/confusionMatrix';
-import { isInEnum } from './utils/enumChecker';
+import { metrics, metricsMap } from './metrics/allMetrics';
+import { plot } from './metrics/plot/plot';
+import { isInEnum } from './util/enumChecker';
 
 enum ExperimentState {
   IRRELEVANT,
@@ -57,47 +38,40 @@ export class BenchmarkProvider {
     yAxis,
     diagramExperimentItem,
   }: CalculateDiagramDataRequest): Array<DiagramCoordinate> {
-    console.log(diagramExperimentItem);
-    let xGetter: DiagramDataGetter;
-    let yGetter: DiagramDataGetter;
+    if (diagramExperimentItem === undefined) {
+      throw new Error('BLA');
+    }
     if (isInEnum(MetricsEnum, xAxis) && isInEnum(MetricsEnum, yAxis)) {
-      console.log('HALLOE');
-      //do crazy stuff with prec-recall-diagrams SPECIAL case
-    }
-    if (
-      isInEnum(SoftKPIsExperimentEnum, xAxis) &&
-      isInEnum(MetricsEnum, yAxis)
-    ) {
-      xGetter = new DiagramSoftKPIsGetter();
-      yGetter = new DiagramMetricsGetter();
-    }
-    if (
-      isInEnum(MetricsEnum, xAxis) &&
-      isInEnum(SoftKPIsExperimentEnum, yAxis)
-    ) {
-      xGetter = new DiagramMetricsGetter();
-      yGetter = new DiagramSoftKPIsGetter();
-    }
-    if (
-      isInEnum(SoftKPIsExperimentEnum, xAxis) &&
-      isInEnum(SoftKPIsExperimentEnum, yAxis)
-    ) {
-      xGetter = new DiagramSoftKPIsGetter();
-      yGetter = new DiagramSoftKPIsGetter();
+      const datasetId = datasetFromExperimentIds([
+        diagramExperimentItem[0].experiment.experimentId,
+        diagramExperimentItem[0].groundTruth.experimentId,
+      ]).id;
+      const steps = 5; //TODO change this
+      const X = xAxis === 'similarity' ? 'similarity' : metricsMap.get(xAxis);
+      const Y = yAxis === 'similarity' ? 'similarity' : metricsMap.get(yAxis);
+      const experimentId = diagramExperimentItem[0].experiment.experimentId;
+      const groundTruth = [diagramExperimentItem[0].groundTruth.experimentId];
+      const func = diagramExperimentItem[0].experiment.similarity?.func;
+      if (!func)
+        throw new Error(
+          `A similarity function for experiment ${diagramExperimentItem[0].experiment.experimentId} does not exist!`
+        );
+      if (!X || !Y)
+        throw new Error(`At least one metric to be plotted does not exist!`);
+
+      return plot({ X, Y, datasetId, experimentId, groundTruth, steps, func });
     }
 
-    const x: Array<number> = [];
-    const y: Array<number> = [];
-
-    diagramExperimentItem.forEach((item) => {
-      x.push(xGetter.getData(xAxis, item));
-      y.push(yGetter.getData(yAxis, item));
-    });
-
-    return {
-      x,
-      y,
-    };
+    const xGetter: DiagramDataProvider = getDiagramDataProvider(xAxis);
+    const yGetter: DiagramDataProvider = getDiagramDataProvider(yAxis);
+    return diagramExperimentItem
+      .map((experiment) => {
+        return {
+          x: xGetter.getData(xAxis, experiment),
+          y: yGetter.getData(yAxis, experiment),
+        };
+      })
+      .sort(({ x: x1 }, { x: x2 }) => x1 - x2);
   }
   calculateExperimentIntersectionCount({
     intersection: experiments,
@@ -214,28 +188,7 @@ export class BenchmarkProvider {
       groundTruthExperiment.experimentId,
       predictedExperiment.experimentId,
     ]).id;
-    const metrics = [
-      Accuracy,
-      Precision,
-      Recall,
-      F1Score,
-      FStarScore,
 
-      FalsePositiveRate,
-      FalseNegativeRate,
-      FalseDiscoveryRate,
-      FalseOmissionRate,
-      NegativePredictiveValue,
-      Specificity,
-
-      BalancedAccuracy,
-      BookmakerInformedness,
-      FowlkesMallowsIndex,
-      Markedness,
-      MatthewsCorrelationCoefficient,
-      PrevalenceThreshold,
-      ThreatScore,
-    ];
     const matrix = ConfusionMatrixCache.get({
       datasetId,
       predicted: [predictedExperiment],
