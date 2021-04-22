@@ -7,9 +7,7 @@ import {
 import { BenchmarkConfiguratorReducer } from 'store/reducers/BenchmarkConfiguratorReducer';
 import { BinaryMetricsReducer } from 'store/reducers/BinaryMetricsReducer';
 import { CoreReducer } from 'store/reducers/CoreReducer';
-import { DatasetDialogReducer } from 'store/reducers/DatasetDialogReducer';
 import { DatasetPreviewerReducer } from 'store/reducers/DatasetPreviewerReducer';
-import { ExperimentDialogReducer } from 'store/reducers/ExperimentDialogReducer';
 import { ExperimentPreviewerReducer } from 'store/reducers/ExperimentPreviewerReducer';
 import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
 import { IntersectionReducer } from 'store/reducers/IntersectionReducer';
@@ -22,19 +20,12 @@ export const rootReducer = (
 ): ImmediateStore => {
   const coreState: CoreStore = CoreReducer(state?.CoreStore, action);
   const benchmarkState: BenchmarkConfigurationStore = BenchmarkConfiguratorReducer(
-    state?.BenchmarkConfigurationStore,
-    coreState,
-    action
+    state?.BenchmarkConfigurationStore
   );
 
   return {
     CoreStore: coreState,
     BenchmarkConfigurationStore: benchmarkState,
-    DatasetDialogStore: DatasetDialogReducer(state?.DatasetDialogStore, action),
-    ExperimentDialogStore: ExperimentDialogReducer(
-      state?.ExperimentDialogStore,
-      action
-    ),
     DatasetPreviewerStore: DatasetPreviewerReducer(
       state?.DatasetPreviewerStore,
       action

@@ -1,14 +1,14 @@
 import { TuplesLoader } from 'types/TuplesLoader';
 
-export type DataViewerOwnPropsNoTuplesLoader = {
+export interface DataViewerOwnPropsNoTuplesLoader {
   tuplesCount: number;
   title: string;
   BATCH_SIZE?: number;
-};
+}
 
-export type DataViewerOwnProps = DataViewerOwnPropsNoTuplesLoader & {
+export interface DataViewerOwnProps extends DataViewerOwnPropsNoTuplesLoader {
   loadTuples: TuplesLoader;
-};
+}
 
 export type DataViewerDispatchProps = {
   wrapLoadTuples(
