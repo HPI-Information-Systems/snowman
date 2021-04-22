@@ -25,6 +25,14 @@ export interface GenericDialogOwnProps
     entityId: EntityId
   ) => void;
   resetDialog?: (dispatch: SnowmanDispatch<unknown>) => void;
+  onDialogOpen?: (
+    dispatch: SnowmanDispatch<unknown>,
+    entityId: EntityId
+  ) => void;
+  onDialogClose?: (
+    dispatch: SnowmanDispatch<unknown>,
+    entityId: EntityId
+  ) => void;
 }
 
 export type GenericDialogProps = GenericDialogDispatchProps &

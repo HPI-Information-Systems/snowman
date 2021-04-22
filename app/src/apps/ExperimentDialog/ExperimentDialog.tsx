@@ -1,7 +1,7 @@
 import ExperimentDialogContainer from 'apps/ExperimentDialog/ExperimentDialog.Container';
 import {
-  prepareResetDialog,
-  prepareUpdateDialog,
+  onDialogClose,
+  onDialogOpen,
 } from 'apps/ExperimentDialog/store/ExperimentDialogActions';
 import { constructExperimentDialogStore } from 'apps/ExperimentDialog/store/ExperimentDialogStore';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
@@ -19,8 +19,8 @@ const ExperimentDialog = (): JSX.Element => (
     }
     instanceId={ViewIDs.ExperimentDialog}
     createSubAppStore={constructExperimentDialogStore}
-    loadInitialState={prepareUpdateDialog}
-    resetDialog={prepareResetDialog}
+    onDialogOpen={onDialogOpen}
+    onDialogClose={onDialogClose}
   >
     {(ownProps: DialogProps): JSX.Element => (
       <ExperimentDialogContainer {...ownProps} />

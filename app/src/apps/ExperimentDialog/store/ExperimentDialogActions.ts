@@ -1,6 +1,7 @@
 import { Experiment, ExperimentsApi } from 'api';
 import { ExperimentDialogActionTypes } from 'apps/ExperimentDialog/types/ExperimentDialogActionTypes';
 import { ExperimentDialogModel } from 'apps/ExperimentDialog/types/ExperimentDialogModel';
+import { SnowmanGenericThunkAction } from 'store/messages';
 import { MagicNotPossibleId } from 'structs/constants';
 import { EntityId } from 'types/EntityId';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
@@ -74,25 +75,36 @@ export const prefillDialog = (
     payload: anExperiment,
   });
 
-export const prepareResetDialog = (
-  dispatch: SnowmanDispatch<ExperimentDialogModel>
-): void => dispatch(resetDialog());
-
-export const prepareUpdateDialog = (
-  dispatch: SnowmanDispatch<unknown>,
+export const onDialogClose = (
+  dispatch: SnowmanDispatch<ExperimentDialogModel>,
   entityId: EntityId
 ): void => {
-  dispatch(
-    (dispatch: SnowmanDispatch<ExperimentDialogModel>): Promise<void> =>
-      RequestHandler<void>(
-        (): Promise<void> =>
-          new ExperimentsApi()
-            .getExperiment({
-              experimentId: entityId ?? MagicNotPossibleId,
-            })
-            .then((theExperiment: Experiment): void => {
-              dispatch(prefillDialog(theExperiment));
-            })
-      )
-  ).then();
+  if (entityId !== null) {
+    dispatch(resetDialog());
+  }
+};
+
+export const prepareUpdateDialog = (
+  entityId: EntityId
+): SnowmanGenericThunkAction<Promise<void>, ExperimentDialogModel> => (
+  dispatch: SnowmanDispatch<ExperimentDialogModel>
+): Promise<void> =>
+  RequestHandler<void>(
+    (): Promise<void> =>
+      new ExperimentsApi()
+        .getExperiment({
+          experimentId: entityId ?? MagicNotPossibleId,
+        })
+        .then((theExperiment: Experiment): void => {
+          dispatch(prefillDialog(theExperiment));
+        })
+  );
+
+export const onDialogOpen = (
+  dispatch: SnowmanDispatch<ExperimentDialogModel>,
+  entityId: EntityId
+): void => {
+  if (entityId !== null) {
+    dispatch(prepareUpdateDialog(entityId)).then();
+  }
 };
