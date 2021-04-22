@@ -36,5 +36,6 @@ export * from './SimilarityThresholdFunctionOperator';
 export * from './SimilarityThresholdFunctionUnaryOperator';
 export * from './SimilarityThresholdFunctionValues';
 export * from './SimilarityThresholdRequests';
+export * from './SoftKPIsAlgorithmEnum';
 export * from './SoftKPIsExperimentEnum';
 export * from './util';

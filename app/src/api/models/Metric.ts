@@ -12,94 +12,94 @@
  * Do not edit the class manually.
  */
 
- import { exists, mapValues } from '../runtime';
- /**
-  * 
-  * @export
-  * @interface Metric
-  */
- export interface Metric {
-     /**
-      * 
-      * @type {string}
-      * @memberof Metric
-      */
-     id?: string;
-     /**
-      * 
-      * @type {string}
-      * @memberof Metric
-      */
-     name: string;
-     /**
-      * 
-      * @type {string}
-      * @memberof Metric
-      */
-     formula: string;
-     /**
-      * 
-      * @type {string}
-      * @memberof Metric
-      */
-     info?: string;
-     /**
-      * 
-      * @type {string}
-      * @memberof Metric
-      */
-     infoLink?: string;
-     /**
-      * 
-      * @type {number}
-      * @memberof Metric
-      */
-     value: number;
-     /**
-      * 
-      * @type {Array<number>}
-      * @memberof Metric
-      */
-     range?: Array<number>;
- }
- 
- export function MetricFromJSON(json: any): Metric {
-     return MetricFromJSONTyped(json, false);
- }
- 
- export function MetricFromJSONTyped(json: any, ignoreDiscriminator: boolean): Metric {
-     if ((json === undefined) || (json === null)) {
-         return json;
-     }
-     return {
-         
-         'id': !exists(json, 'id') ? undefined : json['id'],
-         'name': json['name'],
-         'formula': json['formula'],
-         'info': !exists(json, 'info') ? undefined : json['info'],
-         'infoLink': !exists(json, 'infoLink') ? undefined : json['infoLink'],
-         'value': json['value'],
-         'range': !exists(json, 'range') ? undefined : json['range'],
-     };
- }
- 
- export function MetricToJSON(value?: Metric | null): any {
-     if (value === undefined) {
-         return undefined;
-     }
-     if (value === null) {
-         return null;
-     }
-     return {
-         'id': value.id,
-         'name': value.name,
-         'formula': value.formula,
-         'info': value.info,
-         'infoLink': value.infoLink,
-         'value': value.value,
-         'range': value.range,
-     };
- }
- 
- 
- 
+import { exists, mapValues } from '../runtime';
+/**
+ * 
+ * @export
+ * @interface Metric
+ */
+export interface Metric {
+    /**
+     * 
+     * @type {string}
+     * @memberof Metric
+     */
+    name: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Metric
+     */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Metric
+     */
+    formula: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Metric
+     */
+    info?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Metric
+     */
+    infoLink?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Metric
+     */
+    value: number;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof Metric
+     */
+    range?: Array<number>;
+}
+
+export function MetricFromJSON(json: any): Metric {
+    return MetricFromJSONTyped(json, false);
+}
+
+export function MetricFromJSONTyped(json: any, ignoreDiscriminator: boolean): Metric {
+    if ((json === undefined) || (json === null)) {
+        return json;
+    }
+    return {
+        
+        'name': json['name'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'formula': json['formula'],
+        'info': !exists(json, 'info') ? undefined : json['info'],
+        'infoLink': !exists(json, 'infoLink') ? undefined : json['infoLink'],
+        'value': json['value'],
+        'range': !exists(json, 'range') ? undefined : json['range'],
+    };
+}
+
+export function MetricToJSON(value?: Metric | null): any {
+    if (value === undefined) {
+        return undefined;
+    }
+    if (value === null) {
+        return null;
+    }
+    return {
+        
+        'name': value.name,
+        'id': value.id,
+        'formula': value.formula,
+        'info': value.info,
+        'infoLink': value.infoLink,
+        'value': value.value,
+        'range': value.range,
+    };
+}
+
+

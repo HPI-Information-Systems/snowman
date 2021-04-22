@@ -907,6 +907,7 @@ paths:
         required: true
         schema:
           anyOf:
+          - $ref: '#/components/schemas/softKPIsAlgorithmEnum'
           - $ref: '#/components/schemas/MetricsEnum'
           - $ref: '#/components/schemas/softKPIsExperimentEnum'
         style: form
@@ -917,8 +918,17 @@ paths:
         required: true
         schema:
           anyOf:
+          - $ref: '#/components/schemas/softKPIsAlgorithmEnum'
           - $ref: '#/components/schemas/MetricsEnum'
           - $ref: '#/components/schemas/softKPIsExperimentEnum'
+        style: form
+      - description: Amount of steps to be done while rendering metric-metric-diagrams
+        explode: true
+        in: query
+        name: steps
+        required: false
+        schema:
+          type: number
         style: form
       requestBody:
         content:
@@ -1177,12 +1187,15 @@ components:
         range:
         - 0
         - 1
+        id: id
         value: 0.75
         info: The meaningfulness of the f1 score is debated in the research community.
         infoLink: https://link.springer.com/article/10.1007/s11222-017-9746-6
       properties:
         name:
           example: precision
+          type: string
+        id:
           type: string
         formula:
           example: \frac{truePositives}{truePositives + falsePositives}
@@ -1299,6 +1312,23 @@ components:
           y:
             type: number
       type: array
+    softKPIsAlgorithmEnum:
+      enum:
+      - domainExpertise
+      - domainHrAmount
+      - domainManhattanDistanceBasedEffort
+      - domainHrAmountWeightedEffort
+      - domainMultiplyEffort
+      - domainExpertiseWeightedEffort
+      - matchingSolutionExpertise
+      - matchingSolutionHrAmount
+      - matchingSolutionManhattanDistanceBasedEffort
+      - matchingSolutionHrAmountWeightedEffort
+      - matchingSolutionMultiplyEffort
+      - matchingSolutionExpertiseWeightedEffort
+      - generalCosts
+      - integrationTime
+      type: string
     softKPIsExperimentEnum:
       enum:
       - expertise
@@ -1310,6 +1340,7 @@ components:
       type: string
     MetricsEnum:
       enum:
+      - similarity
       - falseDiscoveryRate
       - falseNegativeRate
       - falseOmissionRate

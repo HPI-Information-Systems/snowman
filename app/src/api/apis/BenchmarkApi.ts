@@ -15,9 +15,6 @@
 
 import * as runtime from '../runtime';
 import {
-    DiagramCoordinates,
-    DiagramCoordinatesFromJSON,
-    DiagramCoordinatesToJSON,
     DiagramExperimentItem,
     DiagramExperimentItemFromJSON,
     DiagramExperimentItemToJSON,
@@ -39,15 +36,19 @@ import {
     MetricsEnum,
     MetricsEnumFromJSON,
     MetricsEnumToJSON,
+    SoftKPIsAlgorithmEnum,
+    SoftKPIsAlgorithmEnumFromJSON,
+    SoftKPIsAlgorithmEnumToJSON,
     SoftKPIsExperimentEnum,
     SoftKPIsExperimentEnumFromJSON,
     SoftKPIsExperimentEnumToJSON,
 } from '../models';
 
 export interface CalculateDiagramDataRequest {
-    xAxis: MetricsEnum | SoftKPIsExperimentEnum;
-    yAxis: MetricsEnum | SoftKPIsExperimentEnum;
+    xAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
+    yAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
     diagramExperimentItem: Array<DiagramExperimentItem>;
+    steps?: number;
 }
 
 export interface CalculateExperimentIntersectionCountRequest {
@@ -81,7 +82,7 @@ export class BenchmarkApi extends runtime.BaseAPI {
     /**
      * returns diagram data based on two metrics and multiple experiments
      */
-    async calculateDiagramDataRaw(requestParameters: CalculateDiagramDataRequest): Promise<runtime.ApiResponse<DiagramCoordinates>> {
+    async calculateDiagramDataRaw(requestParameters: CalculateDiagramDataRequest): Promise<runtime.ApiResponse<Array<object>>> {
         if (requestParameters.xAxis === null || requestParameters.xAxis === undefined) {
             throw new runtime.RequiredError('xAxis','Required parameter requestParameters.xAxis was null or undefined when calling calculateDiagramData.');
         }
@@ -104,6 +105,10 @@ export class BenchmarkApi extends runtime.BaseAPI {
             queryParameters['yAxis'] = requestParameters.yAxis;
         }
 
+        if (requestParameters.steps !== undefined) {
+            queryParameters['steps'] = requestParameters.steps;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
@@ -116,13 +121,13 @@ export class BenchmarkApi extends runtime.BaseAPI {
             body: requestParameters.diagramExperimentItem.map(DiagramExperimentItemToJSON),
         });
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => DiagramCoordinatesFromJSON(jsonValue));
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
      * returns diagram data based on two metrics and multiple experiments
      */
-    async calculateDiagramData(requestParameters: CalculateDiagramDataRequest): Promise<DiagramCoordinates> {
+    async calculateDiagramData(requestParameters: CalculateDiagramDataRequest): Promise<Array<object>> {
         const response = await this.calculateDiagramDataRaw(requestParameters);
         return await response.value();
     }

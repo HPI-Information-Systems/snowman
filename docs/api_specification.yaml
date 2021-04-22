@@ -736,6 +736,7 @@ paths:
         in: query
         schema:
           anyOf:
+            - $ref: "#/components/schemas/softKPIsAlgorithmEnum"
             - $ref: "#/components/schemas/MetricsEnum"
             - $ref: "#/components/schemas/softKPIsExperimentEnum"
         required: true
@@ -744,10 +745,16 @@ paths:
         in: query
         schema:
           anyOf:
+            - $ref: "#/components/schemas/softKPIsAlgorithmEnum"
             - $ref: "#/components/schemas/MetricsEnum"
             - $ref: "#/components/schemas/softKPIsExperimentEnum"
         description: metric to be visualised on the y-axis of the diagram
         required: true
+      - name: steps
+        in: query
+        schema:
+          type: number
+        description: Amount of steps to be done while rendering metric-metric-diagrams
       requestBody:
         content:
           application/json:
@@ -1029,6 +1036,8 @@ components:
         name:
           type: string
           example: "precision"
+        id:
+          type: string
         formula:
           type: string
           example: "\\frac{truePositives}{truePositives + falsePositives}"
@@ -1129,36 +1138,54 @@ components:
           y:
             type: number
       type: array
+    softKPIsAlgorithmEnum:
+      type: string
+      enum:
+        - "domainExpertise"
+        - "domainHrAmount"
+        - "domainManhattanDistanceBasedEffort"
+        - "domainHrAmountWeightedEffort"
+        - "domainMultiplyEffort"
+        - "domainExpertiseWeightedEffort"
+        - "matchingSolutionExpertise"
+        - "matchingSolutionHrAmount"
+        - "matchingSolutionManhattanDistanceBasedEffort"
+        - "matchingSolutionHrAmountWeightedEffort"
+        - "matchingSolutionMultiplyEffort"
+        - "matchingSolutionExpertiseWeightedEffort"
+        - "generalCosts"
+        - "integrationTime"
     softKPIsExperimentEnum:
       type: string
       enum:
-        - expertise
-        - hrAmount
-        - manhattanDistanceBasedEffort
-        - hrAmountWeightedEffort
-        - multiplyEffort
-        - expertiseWeightedEffort
+        - "expertise"
+        - "hrAmount"
+        - "manhattanDistanceBasedEffort"
+        - "hrAmountWeightedEffort"
+        - "multiplyEffort"
+        - "expertiseWeightedEffort"
     MetricsEnum:
       type: string
       enum:
-        - falseDiscoveryRate
-        - falseNegativeRate
-        - falseOmissionRate
-        - falsePositiveRate
-        - negativePredictiveValue
-        - precision
-        - prevalenceThreshold
-        - recall
-        - specificity
-        - threatScore
-        - accuracy
-        - balancedAccuracy
-        - bookmakerInformedness
-        - fStarScore
-        - f1Score
-        - fowlkesMallowsIndex
-        - markedness
-        - matthewsCorrelationCoefficient
+        - "similarity"
+        - "falseDiscoveryRate"
+        - "falseNegativeRate"
+        - "falseOmissionRate"
+        - "falsePositiveRate"
+        - "negativePredictiveValue"
+        - "precision"
+        - "prevalenceThreshold"
+        - "recall"
+        - "specificity"
+        - "threatScore"
+        - "accuracy"
+        - "balancedAccuracy"
+        - "bookmakerInformedness"
+        - "fStarScore"
+        - "f1Score"
+        - "fowlkesMallowsIndex"
+        - "markedness"
+        - "matthewsCorrelationCoefficient"
 
     #### GENERAL ####
     CSVFile:

@@ -1,12 +1,8 @@
-import { MetricsEnum, SoftKPIsExperimentEnum } from './';
-import { DiagramExperimentItem } from './DiagramExperimentItem';
-import { ExperimentConfigItem } from './ExperimentConfigItem';
-import { ExperimentIntersectionItem } from './ExperimentIntersectionItem';
-
 export interface CalculateDiagramDataRequest {
-  xAxis: MetricsEnum | SoftKPIsExperimentEnum;
-  yAxis: MetricsEnum | SoftKPIsExperimentEnum;
+  xAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
+  yAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
   diagramExperimentItem: Array<DiagramExperimentItem>;
+  steps?: number;
 }
 
 export interface CalculateExperimentIntersectionCountRequest {

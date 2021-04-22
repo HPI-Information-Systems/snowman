@@ -18,6 +18,7 @@
  * @enum {string}
  */
 export enum MetricsEnum {
+    Similarity = 'similarity',
     FalseDiscoveryRate = 'falseDiscoveryRate',
     FalseNegativeRate = 'falseNegativeRate',
     FalseOmissionRate = 'falseOmissionRate',
