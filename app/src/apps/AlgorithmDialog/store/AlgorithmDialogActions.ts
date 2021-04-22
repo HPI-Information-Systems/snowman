@@ -103,7 +103,8 @@ const addAlgorithm = (): SnowmanThunkAction<
           doCloseDialog();
           doRefreshCentralResources();
         }),
-    SUCCESS_TO_ADD_NEW_ALGORITHM
+    SUCCESS_TO_ADD_NEW_ALGORITHM,
+    true
   );
 
 const updateAlgorithm = (
@@ -124,7 +125,8 @@ const updateAlgorithm = (
           doCloseDialog();
           doRefreshCentralResources();
         }),
-    SUCCESS_TO_UPDATE_ALGORITHM
+    SUCCESS_TO_UPDATE_ALGORITHM,
+    true
   );
 
 export const addOrUpdateAlgorithm = (
