@@ -1,8 +1,8 @@
 import {
-  accessibility,
   albums,
   fileTrayFull,
   rocket,
+  snow,
   speedometer,
 } from 'ionicons/icons';
 import { ViewIDs } from 'types/ViewIDs';
@@ -40,6 +40,6 @@ export const TabBarConfigRight: TabBarConfigItem[] = [
   {
     viewID: ViewIDs.AboutApp,
     title: 'About',
-    icon: accessibility,
+    icon: snow,
   },
 ];
