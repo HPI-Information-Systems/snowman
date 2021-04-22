@@ -1,8 +1,8 @@
-.selectable-popover {
+.selectablePopover {
   --max-height: 350px;
 }
 
-.selectable-popover-list {
+.selectablePopoverList {
   max-height: 220px;
   overflow-y: scroll;
 }

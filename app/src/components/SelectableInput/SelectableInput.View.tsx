@@ -1,5 +1,3 @@
-import 'components/SelectableInput/SelectableInputStyles.css';
-
 import {
   IonIcon,
   IonInput,
@@ -10,6 +8,7 @@ import {
   IonSearchbar,
 } from '@ionic/react';
 import { SelectableInputProps } from 'components/SelectableInput/SelectableInputProps';
+import styles from 'components/SelectableInput/SelectableInputStyles.module.css';
 import {
   ellipsisVerticalCircle,
   radioButtonOffOutline,
@@ -36,14 +35,14 @@ export const SelectableInputView = ({
   return (
     <>
       <IonPopover
-        cssClass="selectable-popover"
+        cssClass={styles.selectablePopover}
         event={eventPopover}
         isOpen={shouldShowPopover}
         onDidDismiss={closePopover}
       >
         <IonList inset={false} lines="none">
           <IonSearchbar value={searchString} onIonChange={changeSearchString} />
-          <div className="selectable-popover-list">
+          <div className={styles.selectablePopoverList}>
             {allOptions.map((anOption: string) =>
               fuzzyStringIncludes(anOption, searchString) ? (
                 <IonItem
