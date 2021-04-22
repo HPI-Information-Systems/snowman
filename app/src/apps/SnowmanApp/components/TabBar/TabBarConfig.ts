@@ -1,7 +1,7 @@
 import {
-  albums,
+  documentTextOutline,
   fileTrayFull,
-  rocket,
+  flask,
   snow,
   speedometer,
 } from 'ionicons/icons';
@@ -27,12 +27,12 @@ export const TabBarConfigLeft: TabBarConfigItem[] = [
   {
     viewID: ViewIDs.ExperimentsApp,
     title: 'Experiments',
-    icon: albums,
+    icon: documentTextOutline,
   },
   {
     viewID: ViewIDs.AlgorithmsApp,
     title: 'Matching Solutions',
-    icon: rocket,
+    icon: flask,
   },
 ];
 
