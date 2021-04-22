@@ -7,7 +7,6 @@ import {
 } from 'api';
 import { DropResult } from 'react-beautiful-dnd';
 import { IntersectionStoreActionTypes as actionTypes } from 'store/actions/actionTypes';
-import { datasetTuplesLoader } from 'store/actions/DatasetsPageActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';
@@ -18,6 +17,7 @@ import {
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
+import { datasetTuplesLoader } from 'utils/tuplesLoaders';
 
 export const dragNDropAnExperiment = (
   aDropResult: DropResult

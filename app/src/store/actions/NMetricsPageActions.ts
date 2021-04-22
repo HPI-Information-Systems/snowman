@@ -1,7 +1,7 @@
 import { Experiment, Metric } from 'api';
+import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
 import { NMetricsPageActionTypes } from 'store/actions/actionTypes';
 import { getMetrics } from 'store/actions/CommonMetricsActions';
-import { showToast } from 'store/actions/GlobalIndicatorActions';
 import { navigateTo } from 'store/actions/RenderStoreActions';
 import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { store } from 'store/store';

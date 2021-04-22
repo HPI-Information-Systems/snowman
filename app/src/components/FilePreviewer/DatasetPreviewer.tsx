@@ -6,9 +6,9 @@ import {
 } from 'components/FilePreviewer/FilePreviewerProps';
 import { connect } from 'react-redux';
 import { closePreviewer } from 'store/actions/DatasetPreviewerActions';
-import { datasetTuplesLoader } from 'store/actions/DatasetsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { ImmediateStore } from 'store/models';
+import { datasetTuplesLoader } from 'utils/tuplesLoaders';
 
 const mapStateToProps = (state: ImmediateStore): FilePreviewerStateProps => ({
   fileName: state.DatasetPreviewerStore.dataset?.name ?? 'unknown',

@@ -1,3 +1,4 @@
+import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
 import { DataViewerOwnProps } from 'components/DataViewer/DataViewerProps';
 import {
   DataViewerAppToClientActionType,
@@ -8,7 +9,6 @@ import {
   onActionFromClient,
 } from 'pages/StandaloneDataViewerPage/actionsToHost';
 import { RenderLogicStoreActionTypes } from 'store/actions/actionTypes';
-import { showToast } from 'store/actions/GlobalIndicatorActions';
 import { SnowmanThunkAction } from 'store/messages';
 import { COULD_NOT_OPEN_CHILD_WINDOW_ERROR } from 'structs/statusMessages';
 import { ToastType } from 'types/ToastTypes';

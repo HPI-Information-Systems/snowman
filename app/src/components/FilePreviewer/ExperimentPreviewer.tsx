@@ -6,9 +6,9 @@ import {
 } from 'components/FilePreviewer/FilePreviewerProps';
 import { connect } from 'react-redux';
 import { closePreviewer } from 'store/actions/ExperimentPreviewerActions';
-import { experimentTuplesLoader } from 'store/actions/ExperimentsPageActions';
 import { SnowmanDispatch } from 'store/messages';
 import { ImmediateStore } from 'store/models';
+import { experimentTuplesLoader } from 'utils/tuplesLoaders';
 
 const mapStateToProps = (state: ImmediateStore): FilePreviewerStateProps => ({
   fileName: state.ExperimentPreviewerStore.experiment?.name ?? 'unknown',

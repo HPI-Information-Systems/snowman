@@ -9,7 +9,6 @@ import { BinaryMetricsReducer } from 'store/reducers/BinaryMetricsReducer';
 import { CoreReducer } from 'store/reducers/CoreReducer';
 import { DatasetPreviewerReducer } from 'store/reducers/DatasetPreviewerReducer';
 import { ExperimentPreviewerReducer } from 'store/reducers/ExperimentPreviewerReducer';
-import { GlobalIndicatorReducer } from 'store/reducers/GlobalIndicatorReducer';
 import { IntersectionReducer } from 'store/reducers/IntersectionReducer';
 import { NMetricsReducer } from 'store/reducers/NMetricsReducer';
 import { SelectableInputReducer } from 'store/reducers/SelectableInputReducer';
@@ -36,10 +35,6 @@ export const rootReducer = (
     ),
     BinaryMetricsStore: BinaryMetricsReducer(state?.BinaryMetricsStore, action),
     NMetricsStore: NMetricsReducer(state?.NMetricsStore, action),
-    GlobalIndicatorStore: GlobalIndicatorReducer(
-      state?.GlobalIndicatorStore,
-      action
-    ),
     SelectableInputStore: SelectableInputReducer(
       state?.SelectableInputStore,
       action

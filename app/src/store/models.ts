@@ -5,45 +5,8 @@ import {
   ExperimentIntersectionCount,
   Metric,
 } from 'api';
-import { DatasetTypes } from 'types/DatasetTypes';
-import { DialogTypes } from 'types/DialogTypes';
-import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { ViewIDs } from 'types/ViewIDs';
-
-export interface DatasetDialogStore {
-  datasetId: number | null;
-  dialogType: DialogTypes;
-  isOpen: boolean;
-  datasetName: string;
-  datasetDescription: string;
-  datasetType: DatasetTypes;
-  datasetLength: number;
-  csvIdColumn: string;
-  csvSeparator: string;
-  csvQuote: string;
-  csvEscape: string;
-  availableTags: string[];
-  selectedTags: string[];
-  selectedFiles: File[];
-}
-
-export interface ExperimentDialogStore {
-  dialogType: DialogTypes;
-  isOpen: boolean;
-  experimentId: number | null;
-  experimentName: string;
-  experimentDescription: string;
-  timeToConfigure: number | undefined;
-  experimentFileFormat: experimentFileFormatEnum;
-  selectedTags: string[];
-  selectedFiles: File[];
-}
-
-export interface GlobalIndicatorStore {
-  showLoading: boolean;
-  ongoingRequestsCount: number;
-}
 
 export interface SelectableInputStore {
   shouldShowPopover: boolean;
@@ -104,7 +67,6 @@ export interface ImmediateStore {
   BenchmarkConfigurationStore: BenchmarkConfigurationStore;
   BinaryMetricsStore: BinaryMetricsStore;
   NMetricsStore: NMetricsStore;
-  GlobalIndicatorStore: GlobalIndicatorStore;
   SelectableInputStore: SelectableInputStore;
   DatasetPreviewerStore: DatasetPreviewerStore;
   ExperimentPreviewerStore: ExperimentPreviewerStore;
