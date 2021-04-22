@@ -7,7 +7,7 @@ import { ViewIDs } from 'types/ViewIDs';
 
 const BenchmarkApp = (): JSX.Element => (
   <GenericSubApp
-    instanceId={ViewIDs.DASHBOARD}
+    instanceId={ViewIDs.BenchmarkApp}
     appTitle={'Benchmark Dashboard'}
     createSubAppStore={createBenchmarkAppStore}
     sideMenu={BenchmarkSelector}

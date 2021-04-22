@@ -7,7 +7,7 @@ import { ViewIDs } from 'types/ViewIDs';
 
 const ExperimentsApp = (props: ExperimentsAppOwnProps): JSX.Element => (
   <GenericSubApp
-    instanceId={ViewIDs.EXPERIMENTS}
+    instanceId={ViewIDs.ExperimentsApp}
     appTitle="Experiments Editor"
     createSubAppStore={createExperimentsAppStore}
   >

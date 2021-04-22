@@ -15,22 +15,22 @@ export interface TabBarConfigItem {
 
 export const TabBarConfigLeft: TabBarConfigItem[] = [
   {
-    viewID: ViewIDs.DASHBOARD,
+    viewID: ViewIDs.BenchmarkApp,
     title: 'Benchmark',
     icon: speedometer,
   },
   {
-    viewID: ViewIDs.DATASETS,
+    viewID: ViewIDs.DatasetsApp,
     title: 'Datasets',
     icon: fileTrayFull,
   },
   {
-    viewID: ViewIDs.EXPERIMENTS,
+    viewID: ViewIDs.ExperimentsApp,
     title: 'Experiments',
     icon: albums,
   },
   {
-    viewID: ViewIDs.ALGORITHMS,
+    viewID: ViewIDs.AlgorithmsApp,
     title: 'Matching Solutions',
     icon: rocket,
   },
@@ -38,7 +38,7 @@ export const TabBarConfigLeft: TabBarConfigItem[] = [
 
 export const TabBarConfigRight: TabBarConfigItem[] = [
   {
-    viewID: ViewIDs.HOME,
+    viewID: ViewIDs.AboutApp,
     title: 'About',
     icon: accessibility,
   },

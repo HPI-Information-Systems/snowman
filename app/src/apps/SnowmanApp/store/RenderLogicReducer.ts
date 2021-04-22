@@ -4,7 +4,7 @@ import { SnowmanAction } from 'types/SnowmanAction';
 import { ViewIDs } from 'types/ViewIDs';
 
 const initialRenderLogicState: RenderLogicModel = {
-  currentViewID: ViewIDs.HOME,
+  currentViewID: ViewIDs.BenchmarkApp,
   openedDialog: null,
   entityId: null,
 };

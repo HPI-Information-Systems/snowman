@@ -7,7 +7,7 @@ import { ViewIDs } from 'types/ViewIDs';
 
 const DatasetsApp = (props: DatasetAppOwnProps): JSX.Element => (
   <GenericSubApp
-    instanceId={ViewIDs.DATASETS}
+    instanceId={ViewIDs.DatasetsApp}
     appTitle="Datasets Editor"
     createSubAppStore={createDatasetsAppStore}
   >
