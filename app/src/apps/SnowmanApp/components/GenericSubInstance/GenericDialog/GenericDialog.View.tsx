@@ -4,7 +4,7 @@ import styles from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/
 import { centralResourcesRefreshed } from 'apps/SnowmanApp/store/CentralResourcesGenericActions';
 import { closeOutline } from 'ionicons/icons';
 import { isEqual } from 'lodash';
-import React, { Component, Dispatch } from 'react';
+import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { SnowmanAction } from 'store/messages';
@@ -36,22 +36,6 @@ class GenericDialogView extends Component<GenericDialogProps> {
       this.props.onDialogClose
     ) {
       this.props.onDialogClose(this.store.dispatch, prevProps.entityId);
-    }
-
-    if (this.props.isDialogOpen) {
-      if (this.props.resetDialog) {
-        this.props.resetDialog(this.store.dispatch as Dispatch<unknown>);
-      }
-      if (
-        !this.props.isAddDialog &&
-        this.props.entityId &&
-        this.props.loadInitialState
-      ) {
-        this.props.loadInitialState(
-          this.store.dispatch as Dispatch<unknown>,
-          this.props.entityId
-        );
-      }
     }
 
     if (isEqual(prevProps.centralResources, this.props.centralResources)) {

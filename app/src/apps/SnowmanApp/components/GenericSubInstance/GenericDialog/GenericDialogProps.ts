@@ -20,11 +20,6 @@ export interface GenericDialogOwnProps
   children: (props: DialogProps) => JSX.Element;
   provideScrollingMechanism?: boolean;
   getHeading: (entityId: EntityId) => string;
-  loadInitialState?: (
-    dispatch: SnowmanDispatch<unknown>,
-    entityId: EntityId
-  ) => void;
-  resetDialog?: (dispatch: SnowmanDispatch<unknown>) => void;
   onDialogOpen?: (
     dispatch: SnowmanDispatch<unknown>,
     entityId: EntityId
