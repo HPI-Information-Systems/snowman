@@ -25,14 +25,14 @@ export const TabBarConfigLeft: TabBarConfigItem[] = [
     icon: fileTrayFull,
   },
   {
-    viewID: ViewIDs.ExperimentsApp,
-    title: 'Experiments',
-    icon: documentTextOutline,
-  },
-  {
     viewID: ViewIDs.AlgorithmsApp,
     title: 'Matching Solutions',
     icon: flask,
+  },
+  {
+    viewID: ViewIDs.ExperimentsApp,
+    title: 'Experiments',
+    icon: documentTextOutline,
   },
 ];
 
