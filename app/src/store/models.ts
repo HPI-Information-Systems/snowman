@@ -8,12 +8,6 @@ import {
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { ViewIDs } from 'types/ViewIDs';
 
-export interface SelectableInputStore {
-  shouldShowPopover: boolean;
-  eventPopover: Event | undefined;
-  searchString: string;
-}
-
 export interface CoreStore {
   algorithms: Algorithm[];
   datasets: Dataset[];
@@ -67,7 +61,6 @@ export interface ImmediateStore {
   BenchmarkConfigurationStore: BenchmarkConfigurationStore;
   BinaryMetricsStore: BinaryMetricsStore;
   NMetricsStore: NMetricsStore;
-  SelectableInputStore: SelectableInputStore;
   DatasetPreviewerStore: DatasetPreviewerStore;
   ExperimentPreviewerStore: ExperimentPreviewerStore;
   IntersectionStore: IntersectionStore;
