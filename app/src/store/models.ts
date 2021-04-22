@@ -6,7 +6,6 @@ import {
   Metric,
 } from 'api';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
-import { ViewIDs } from 'types/ViewIDs';
 
 export interface SelectableInputStore {
   shouldShowPopover: boolean;
@@ -18,10 +17,6 @@ export interface CoreStore {
   algorithms: Algorithm[];
   datasets: Dataset[];
   experiments: Experiment[];
-}
-
-export interface RenderLogicStore {
-  currentViewID: ViewIDs;
 }
 
 export interface BenchmarkConfigurationStore {
