@@ -1,7 +1,7 @@
 import DatasetDialogContainer from 'apps/DatasetDialog/DatasetDialog.Container';
 import {
-  prepareResetDialog,
-  prepareUpdateDialog,
+  onDialogClose,
+  onDialogOpen,
 } from 'apps/DatasetDialog/store/DatasetDialogActions';
 import { constructDatasetDialogStore } from 'apps/DatasetDialog/store/DatasetDialogStore';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
@@ -17,8 +17,8 @@ const DatasetDialog = (): JSX.Element => (
     }
     instanceId={ViewIDs.DatasetDialog}
     createSubAppStore={constructDatasetDialogStore}
-    loadInitialState={prepareUpdateDialog}
-    resetDialog={prepareResetDialog}
+    onDialogOpen={onDialogOpen}
+    onDialogClose={onDialogClose}
   >
     {(ownProps: DialogProps): JSX.Element => (
       <DatasetDialogContainer {...ownProps} />

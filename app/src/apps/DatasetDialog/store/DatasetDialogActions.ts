@@ -10,6 +10,7 @@ import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
+import { SnowmanGenericThunkAction } from 'store/messages';
 import { MagicNotPossibleId } from 'structs/constants';
 import {
   SUCCESS_TO_CREATE_NEW_DATASET,
@@ -130,27 +131,38 @@ export const prefillDialog = (
     payload: aDataset,
   });
 
-export const prepareResetDialog = (
-  dispatch: SnowmanDispatch<DatasetDialogModel>
-): void => dispatch(resetDialog());
-
-export const prepareUpdateDialog = (
-  dispatch: SnowmanDispatch<unknown>,
+export const onDialogClose = (
+  dispatch: SnowmanDispatch<DatasetDialogModel>,
   entityId: EntityId
 ): void => {
-  dispatch(
-    (dispatch: SnowmanDispatch<DatasetDialogModel>): Promise<void> =>
-      RequestHandler<void>(
-        (): Promise<void> =>
-          new DatasetsApi()
-            .getDataset({
-              datasetId: entityId ?? MagicNotPossibleId,
-            })
-            .then((theDataset: Dataset): void => {
-              dispatch(prefillDialog(theDataset));
-            })
-      )
-  ).then();
+  if (entityId !== null) {
+    dispatch(resetDialog());
+  }
+};
+
+export const prepareUpdateDialog = (
+  entityId: EntityId
+): SnowmanGenericThunkAction<Promise<void>, DatasetDialogModel> => (
+  dispatch: SnowmanDispatch<DatasetDialogModel>
+): Promise<void> =>
+  RequestHandler<void>(
+    (): Promise<void> =>
+      new DatasetsApi()
+        .getDataset({
+          datasetId: entityId ?? MagicNotPossibleId,
+        })
+        .then((theDataset: Dataset): void => {
+          dispatch(prefillDialog(theDataset));
+        })
+  );
+
+export const onDialogOpen = (
+  dispatch: SnowmanDispatch<DatasetDialogModel>,
+  entityId: EntityId
+): void => {
+  if (entityId !== null) {
+    dispatch(prepareUpdateDialog(entityId)).then();
+  }
 };
 
 const getDatasetValues = (state: DatasetDialogModel): DatasetValues => ({
