@@ -22,24 +22,13 @@ export class DiagramAlgorithmSoftKPIsDataProvider extends DiagramDataProvider {
   mapEnum(metric: SoftKPIsAlgorithmEnum, algorithm: Algorithm): number {
     const mappedMetric = softKPIAlgorithmMap.get(metric);
     if (mappedMetric) {
-      if (mappedMetric(algorithm)) mappedMetric(algorithm);
-      throw new Error(`The metric ${metric} does not exist!`);
+      const metricValue = mappedMetric(algorithm);
+      if (!metricValue) {
+        throw new Error(`The metric ${metric} does not exist!`);
+      }
+      return metricValue;
     }
-
-    let effort = algorithm.domainEffort?.find(
-      ({ id }) => (id as SoftKPIsAlgorithmEnum) === metric
-    )?.value;
-
-    if (!effort) {
-      effort = algorithm.matchingSolutionEffort?.find(
-        ({ id }) => (id as SoftKPIsAlgorithmEnum) === metric
-      )?.value;
-      if (!effort)
-        throw new Error(
-          `Either HR-Amount or Expertise is missing for experiment ${algorithm.id} so that effort cannot be calculated`
-        );
-    }
-    return effort;
+    throw new Error(`The metric ${metric} does not exist!`);
   }
 }
 
@@ -78,5 +67,68 @@ const softKPIAlgorithmMap: Map<
     (algorithm: Algorithm) =>
       algorithm.softKPIs?.configurationEffort?.matchingSolution?.hrAmount ??
       undefined,
+  ],
+  [
+    SoftKPIsAlgorithmEnum.DomainExpertiseWeightedEffort,
+    (algorithm: Algorithm) => {
+      return algorithm.domainEffort?.find(
+        ({ id }) => id === 'expertiseWeightedEffort'
+      )?.value;
+    },
+  ],
+  [
+    SoftKPIsAlgorithmEnum.DomainHrAmountWeightedEffort,
+    (algorithm: Algorithm) => {
+      return algorithm.domainEffort?.find(
+        ({ id }) => id === 'hrAmountWeightedEffort'
+      )?.value;
+    },
+  ],
+  [
+    SoftKPIsAlgorithmEnum.DomainManhattanDistanceBasedEffort,
+    (algorithm: Algorithm) => {
+      return algorithm.domainEffort?.find(
+        ({ id }) => id === 'manhattanDistanceBasedEffort'
+      )?.value;
+    },
+  ],
+  [
+    SoftKPIsAlgorithmEnum.DomainMultiplyEffort,
+    (algorithm: Algorithm) => {
+      return algorithm.domainEffort?.find(({ id }) => id === 'multiplyEffort')
+        ?.value;
+    },
+  ],
+  [
+    SoftKPIsAlgorithmEnum.MatchingSolutionExpertiseWeightedEffort,
+    (algorithm: Algorithm) => {
+      return algorithm.matchingSolutionEffort?.find(
+        ({ id }) => id === 'expertiseWeightedEffort'
+      )?.value;
+    },
+  ],
+  [
+    SoftKPIsAlgorithmEnum.MatchingSolutionHrAmountWeightedEffort,
+    (algorithm: Algorithm) => {
+      return algorithm.matchingSolutionEffort?.find(
+        ({ id }) => id === 'hrAmountWeightedEffort'
+      )?.value;
+    },
+  ],
+  [
+    SoftKPIsAlgorithmEnum.MatchingSolutionManhattanDistanceBasedEffort,
+    (algorithm: Algorithm) => {
+      return algorithm.matchingSolutionEffort?.find(
+        ({ id }) => id === 'manhattanDistanceBasedEffort'
+      )?.value;
+    },
+  ],
+  [
+    SoftKPIsAlgorithmEnum.MatchingSolutionMultiplyEffort,
+    (algorithm: Algorithm) => {
+      return algorithm.matchingSolutionEffort?.find(
+        ({ id }) => id === 'multiplyEffort'
+      )?.value;
+    },
   ],
 ]);

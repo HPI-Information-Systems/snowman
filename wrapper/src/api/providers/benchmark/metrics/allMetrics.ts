@@ -47,7 +47,7 @@ export const metrics = [
 export const metricsMap = new Map(
   metrics.map(
     (metric) =>
-      [metric.name, metric] as [
+      [metric.name.charAt(0).toLowerCase() + metric.name.slice(1), metric] as [
         string,
         InstantiableAbstractClass<typeof BaseMetric>
       ]

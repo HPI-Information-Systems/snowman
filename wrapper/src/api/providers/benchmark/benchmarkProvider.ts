@@ -34,24 +34,24 @@ export class BenchmarkProvider {
     xAxis,
     yAxis,
     steps,
-    diagramExperimentItem,
+    diagram,
   }: CalculateDiagramDataRequest): Array<DiagramCoordinate> {
-    if (diagramExperimentItem === undefined) {
+    if (diagram === undefined) {
       throw new Error('Missing experiments!');
     }
     if (isInEnum(MetricsEnum, xAxis) && isInEnum(MetricsEnum, yAxis)) {
       const datasetId = datasetFromExperimentIds([
-        diagramExperimentItem[0].experiment.experimentId,
-        diagramExperimentItem[0].groundTruth.experimentId,
+        diagram[0].experiment.experimentId,
+        diagram[0].groundTruth.experimentId,
       ]).id;
       const X = xAxis === 'similarity' ? 'similarity' : metricsMap.get(xAxis);
       const Y = yAxis === 'similarity' ? 'similarity' : metricsMap.get(yAxis);
-      const experimentId = diagramExperimentItem[0].experiment.experimentId;
-      const groundTruth = [diagramExperimentItem[0].groundTruth.experimentId];
-      const func = diagramExperimentItem[0].experiment.similarity?.func;
+      const experimentId = diagram[0].experiment.experimentId;
+      const groundTruth = [diagram[0].groundTruth.experimentId];
+      const func = diagram[0].experiment.similarity?.func;
       if (!func)
         throw new Error(
-          `A similarity function for experiment ${diagramExperimentItem[0].experiment.experimentId} does not exist!`
+          `A similarity function for experiment ${diagram[0].experiment.experimentId} does not exist!`
         );
       if (!X || !Y)
         throw new Error(`At least one metric to be plotted does not exist!`);
@@ -64,7 +64,7 @@ export class BenchmarkProvider {
 
     const xGetter: DiagramDataProvider = getDiagramDataProvider(xAxis);
     const yGetter: DiagramDataProvider = getDiagramDataProvider(yAxis);
-    return diagramExperimentItem
+    return diagram
       .map((experiment) => {
         return {
           x: xGetter.getData(xAxis, experiment),

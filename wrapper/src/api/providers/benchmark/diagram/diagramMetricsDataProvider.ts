@@ -20,7 +20,7 @@ export class DiagramMetricsDataProvider extends DiagramDataProvider {
       groundTruth: [diagramExperimentItem.groundTruth],
     }).confusionMatrix;
 
-    const mappedMetric = metricsMap.get(metric);
+    const mappedMetric = metricsMap.get(metric.toString());
     if (!mappedMetric) throw new Error(`The metric ${metric} does not exist!`);
     return new mappedMetric(matrix).value;
   }

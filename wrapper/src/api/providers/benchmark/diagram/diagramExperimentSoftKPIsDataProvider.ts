@@ -22,8 +22,11 @@ export class DiagramExperimentSoftKPIsDataProvider extends DiagramDataProvider {
   mapEnum(metric: SoftKPIsExperimentEnum, experiment: Experiment): number {
     const mappedMetric = softKPIExperimentMap.get(metric);
     if (mappedMetric) {
-      if (mappedMetric(experiment)) mappedMetric(experiment);
-      throw new Error(`The metric ${metric} does not exist!`);
+      const metricValue = mappedMetric(experiment);
+      if (!metricValue) {
+        throw new Error(`The metric ${metric} does not exist!`);
+      }
+      return metricValue;
     }
 
     const effort = experiment.effort?.find(

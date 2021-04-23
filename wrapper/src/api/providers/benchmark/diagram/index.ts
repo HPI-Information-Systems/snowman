@@ -12,12 +12,15 @@ import { DiagramMetricsDataProvider } from './diagramMetricsDataProvider';
 export function getDiagramDataProvider(
   axis: MetricsEnum | SoftKPIsExperimentEnum | SoftKPIsAlgorithmEnum
 ): DiagramDataProvider {
-  if (isInEnum(MetricsEnum, axis)) new DiagramMetricsDataProvider();
-  if (isInEnum(SoftKPIsExperimentEnum, axis))
-    new DiagramExperimentSoftKPIsDataProvider();
-  if (isInEnum(SoftKPIsAlgorithmEnum, axis))
-    new DiagramAlgorithmSoftKPIsDataProvider();
-  console.log(axis);
+  if (isInEnum(MetricsEnum, axis)) {
+    return new DiagramMetricsDataProvider();
+  }
+  if (isInEnum(SoftKPIsExperimentEnum, axis)) {
+    return new DiagramExperimentSoftKPIsDataProvider();
+  }
+  if (isInEnum(SoftKPIsAlgorithmEnum, axis)) {
+    return new DiagramAlgorithmSoftKPIsDataProvider();
+  }
   throw new Error(
     'The provided axis-parameter does not belong to any known metric'
   );
