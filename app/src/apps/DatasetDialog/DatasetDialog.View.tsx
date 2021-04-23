@@ -192,7 +192,7 @@ const DatasetDialogView = ({
       <InputChip
         label="Add domain"
         placeholder="New domain's name"
-        instanceDescriptor="datasetDialog1"
+        instanceDescriptor="dataset-dialog"
         submitValueCallback={createTag}
       />
     </div>

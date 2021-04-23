@@ -27,6 +27,8 @@ const InputChipReducer = (
         ...state,
         inputValue: action.payload as string,
       };
+    case InputChipActionTypes.RESET_INPUT:
+      return initialState;
     default:
       return state;
   }

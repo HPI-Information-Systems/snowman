@@ -31,6 +31,13 @@ export const hideInput = (): easyPrimitiveActionReturn<InputChipModel> =>
     payload: false,
   });
 
+export const resetInput = (): easyPrimitiveActionReturn<InputChipModel> =>
+  easyPrimitiveAction<InputChipModel>({
+    type: InputChipActionTypes.RESET_INPUT,
+    // reducer ignores payload
+    payload: false,
+  });
+
 export const submitValue = (
   submitCallback: SubmitCallback
 ): SnowmanThunkAction<void, InputChipModel> => (
@@ -38,7 +45,7 @@ export const submitValue = (
   getState: () => InputChipModel
 ): void => {
   submitCallback(getState().inputValue);
-  dispatch(hideInput());
+  dispatch(resetInput());
 };
 
 export const handleKeyboardInteraction = (

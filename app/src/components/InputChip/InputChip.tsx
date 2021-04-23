@@ -7,12 +7,21 @@ import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { SnowmanAction } from 'types/SnowmanAction';
 
+const inputChipStores = new Map<string, Store<InputChipModel, SnowmanAction>>();
+
+const undefID = 'undef';
+
 class InputChip extends Component<InputChipOwnProps> {
   store: Store<InputChipModel, SnowmanAction>;
 
   constructor(props: InputChipOwnProps) {
     super(props);
-    this.store = createInputChipStore(props.instanceDescriptor);
+    const existingStore = inputChipStores.get(
+      this.props.instanceDescriptor ?? undefID
+    );
+    this.store =
+      existingStore ?? createInputChipStore(this.props.instanceDescriptor);
+    inputChipStores.set(this.props.instanceDescriptor ?? undefID, this.store);
   }
 
   render(): JSX.Element {
