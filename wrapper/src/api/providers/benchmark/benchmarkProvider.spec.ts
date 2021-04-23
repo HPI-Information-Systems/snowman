@@ -1,5 +1,6 @@
 import { setupDatabase } from '../../database';
 import {
+  AlgorithmValues,
   DatasetValues,
   ExperimentValues,
   MetricsEnum,
@@ -68,9 +69,19 @@ beforeAll(async () => {
     datasetIds[metaDataset.name] = id;
   }
 
-  const meta_algorithm = { description: 'Mock 1', name: 'Mock 1' };
+  const meta_algorithm: AlgorithmValues = {
+    description: 'Mock 1',
+    name: 'Mock 1',
+    softKPIs: {
+      configurationEffort: {
+        domain: {
+          expertise: 12,
+          hrAmount: 10,
+        },
+      },
+    },
+  };
   const addedAlgorithmId = algorithmProvider.addAlgorithm(meta_algorithm);
-
   const experiments: metaExperiment[] = [
     {
       name: 'goldstandard',
@@ -179,6 +190,35 @@ describe('test benchmark functions', () => {
         ],
       })
     ).toMatchObject([{ x: 11, y: 0.5 }]);
+  });
+  test('test softKPI-softKPI diagram calculation', () => {
+    expect(
+      benchmarkProvider.calculateDiagramData({
+        xAxis: SoftKPIsExperimentEnum.HrAmount,
+        yAxis: SoftKPIsAlgorithmEnum.DomainExpertise,
+        diagram: [
+          {
+            experiment: {
+              experimentId: experimentIds.experiment1,
+            },
+            groundTruth: {
+              experimentId: experimentIds.goldstandard,
+            },
+          },
+          {
+            experiment: {
+              experimentId: experimentIds.experiment1,
+            },
+            groundTruth: {
+              experimentId: experimentIds.goldstandard,
+            },
+          },
+        ],
+      })
+    ).toMatchObject([
+      { x: 11, y: 12 },
+      { x: 11, y: 12 },
+    ]);
   });
 
   describe('metrics', () => {
