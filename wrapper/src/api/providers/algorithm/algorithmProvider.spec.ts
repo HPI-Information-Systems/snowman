@@ -137,7 +137,6 @@ describe('AlgorithmProvider', () => {
         configurationEffort: {
           matchingSolution: {
             expertise: 100,
-            hrAmount: 60,
           },
           domain: {
             hrAmount: 99,
@@ -151,35 +150,63 @@ describe('AlgorithmProvider', () => {
     expect(provider.getAlgorithm(addedAlgorithmids[0])).toEqual({
       ...setAlgorithmValues,
       id: addedAlgorithmids[0],
-      matchingSolutionEffort: [
-        {
-          id: 'manhattanDistanceBasedEffort',
-          value: 160,
-          formula: '\\sum_{i}|a_i - b_i|',
-          name: 'manhattan distance-based effort',
-        },
-        {
-          id: 'expertiseWeightedEffort',
-          value: 163.0969097075427,
-          formula: '$$e^{\\frac_{expertise}{100}} * HR-Amount$$',
-          name: 'expertise weighted effort',
-        },
-        {
-          id: 'hrAmountWeightedEffort',
-          value: 1.1420073898156842e26,
-          formula: '$$e^{HR-Amount} * \\frac_{expertise}{100}$$',
-          name: 'HR-amount weighted effort',
-        },
-        {
-          id: 'multiplyEffort',
-          value: 6000,
-          formula: '$$expertise level * HR-Amount$$',
-          name: 'simple multiplied effort',
-        },
-      ],
     });
   });
-
+  test('test effort calculation', () => {
+    const setAlgorithmValues: AlgorithmValues = {
+      name: 'Not Mock 1',
+      description: 'Not Mock 1',
+      softKPIs: {
+        integrationEffort: {
+          integrationTime: 240,
+          deploymentType: ['onPremise'],
+          solutionType: ['rulebased', 'activeLearning'],
+          useCase: ['search'],
+          generalCosts: 14,
+        },
+        configurationEffort: {
+          matchingSolution: {
+            expertise: 100,
+            hrAmount: 60,
+          },
+          domain: {
+            hrAmount: 99,
+          },
+          interfaces: ['GUI'],
+          supportedOSs: ['Windows', 'Linux'],
+        },
+      },
+    };
+    provider.setAlgorithm(addedAlgorithmids[0], setAlgorithmValues);
+    expect(
+      provider
+        .getAlgorithm(addedAlgorithmids[0])
+        .matchingSolutionEffort?.map(({ name, value }) => {
+          return { name, value: value.toFixed(4) };
+        })
+    ).toEqual(
+      expect.arrayContaining(
+        [
+          {
+            value: '160.0000',
+            name: 'manhattan distance-based effort',
+          },
+          {
+            value: '163.0969',
+            name: 'expertise weighted effort',
+          },
+          {
+            value: '1.1420073898156842e+26',
+            name: 'HR-amount weighted effort',
+          },
+          {
+            value: '6000.0000',
+            name: 'simple multiplied effort',
+          },
+        ].map((effort) => expect.objectContaining(effort))
+      )
+    );
+  });
   test('delete deletes an algorithm', () => {
     const priorCount = provider.listAlgorithms().length;
     provider.deleteAlgorithm(addedAlgorithmids[0]);
