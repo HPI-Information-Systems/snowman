@@ -20,6 +20,7 @@ function provider() {
 export async function calculateDiagramData({
   xAxis,
   yAxis,
+  steps,
   body,
 }: any): Promise<SuccessResponse<Array<DiagramCoordinate>>> {
   const diagramExperimentItem = body;
@@ -29,6 +30,7 @@ export async function calculateDiagramData({
         xAxis,
         yAxis,
         diagramExperimentItem,
+        steps,
       }),
     200,
     404

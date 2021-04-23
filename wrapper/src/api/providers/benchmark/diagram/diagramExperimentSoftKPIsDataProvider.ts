@@ -1,13 +1,12 @@
 import {
   DiagramExperimentItem,
-  EffortParts,
   Experiment,
   SoftKPIsExperimentEnum,
 } from '../../../server/types';
 import { ExperimentProvider } from '../../experiment/experimentProvider';
 import { DiagramDataProvider } from './diagramDataProvider';
 
-export class DiagramSoftKPIsDataProvider extends DiagramDataProvider {
+export class DiagramExperimentSoftKPIsDataProvider extends DiagramDataProvider {
   getData(
     metric: SoftKPIsExperimentEnum,
     diagramExperimentItem: DiagramExperimentItem
@@ -23,33 +22,32 @@ export class DiagramSoftKPIsDataProvider extends DiagramDataProvider {
   mapEnum(metric: SoftKPIsExperimentEnum, experiment: Experiment): number {
     const mappedMetric = softKPIExperimentMap.get(metric);
     if (mappedMetric) {
-      if (!experiment.softKPIs)
-        throw new Error(
-          `Metric ${metric} is not defined for experiment ${experiment.id}`
-        );
-      if (!experiment.softKPIs[mappedMetric])
-        throw new Error(
-          `Metric ${metric} is not defined for experiment ${experiment.id}`
-        );
-      return experiment.softKPIs[mappedMetric] ?? -1; //TODO ?????
+      if (mappedMetric(experiment)) mappedMetric(experiment);
+      throw new Error(`The metric ${metric} does not exist!`);
     }
 
-    const value = experiment.effort?.find(
+    const effort = experiment.effort?.find(
       ({ id }) => (id as SoftKPIsExperimentEnum) === metric
     )?.value;
 
-    if (!value)
+    if (!effort)
       throw new Error(
         `Either HR-Amount or Expertise is missing for experiment ${experiment.id} so that effort cannot be calculated`
       );
-    return value;
+    return effort;
   }
 }
 
 const softKPIExperimentMap: Map<
   SoftKPIsExperimentEnum,
-  keyof EffortParts
+  (experiment: Experiment) => number | undefined
 > = new Map([
-  [SoftKPIsExperimentEnum.Expertise, 'expertise'],
-  [SoftKPIsExperimentEnum.HrAmount, 'hrAmount'],
+  [
+    SoftKPIsExperimentEnum.Expertise,
+    (experiment: Experiment) => experiment.softKPIs?.expertise ?? undefined,
+  ],
+  [
+    SoftKPIsExperimentEnum.HrAmount,
+    (experiment: Experiment) => experiment.softKPIs?.hrAmount ?? undefined,
+  ],
 ]);

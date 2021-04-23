@@ -36,17 +36,17 @@ export class BenchmarkProvider {
   calculateDiagramData({
     xAxis,
     yAxis,
+    steps,
     diagramExperimentItem,
   }: CalculateDiagramDataRequest): Array<DiagramCoordinate> {
     if (diagramExperimentItem === undefined) {
-      throw new Error('BLA');
+      throw new Error('Missing experiments!');
     }
     if (isInEnum(MetricsEnum, xAxis) && isInEnum(MetricsEnum, yAxis)) {
       const datasetId = datasetFromExperimentIds([
         diagramExperimentItem[0].experiment.experimentId,
         diagramExperimentItem[0].groundTruth.experimentId,
       ]).id;
-      const steps = 5; //TODO change this
       const X = xAxis === 'similarity' ? 'similarity' : metricsMap.get(xAxis);
       const Y = yAxis === 'similarity' ? 'similarity' : metricsMap.get(yAxis);
       const experimentId = diagramExperimentItem[0].experiment.experimentId;
@@ -58,6 +58,9 @@ export class BenchmarkProvider {
         );
       if (!X || !Y)
         throw new Error(`At least one metric to be plotted does not exist!`);
+      if (!steps) {
+        throw new Error(`Steps not specified!`);
+      }
 
       return plot({ X, Y, datasetId, experimentId, groundTruth, steps, func });
     }

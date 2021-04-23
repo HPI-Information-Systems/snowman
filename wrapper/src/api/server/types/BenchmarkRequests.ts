@@ -1,3 +1,12 @@
+import {
+  DiagramExperimentItem,
+  ExperimentConfigItem,
+  ExperimentIntersectionItem,
+  MetricsEnum,
+  SoftKPIsAlgorithmEnum,
+  SoftKPIsExperimentEnum,
+} from '.';
+
 export interface CalculateDiagramDataRequest {
   xAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
   yAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
