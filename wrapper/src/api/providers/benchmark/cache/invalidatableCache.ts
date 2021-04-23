@@ -11,6 +11,22 @@ export abstract class InvalidatableBenchmarkCache<
   Config,
   Content extends BenchmarkCacheContent<Config>
 > extends BasicBenchmarkCache<Config, Content> {
+  clear(): void {
+    this.cache.reset();
+    this.datasetKeys.clear();
+    this.experimentKeys.clear();
+    this.similarityFunctionKeys.clear();
+  }
+
+  /**
+   * when a cache object is no longer needed, the cleanup method should be called
+   */
+  cleanup(): void {
+    InvalidatableBenchmarkCache.instances = InvalidatableBenchmarkCache.instances.filter(
+      (instance) => instance !== this
+    );
+  }
+
   static invalidateExperiment(experiment: ExperimentId): void {
     this.invalidate((instance) =>
       instance.invalidateKeys(instance.experimentKeys, experiment)
@@ -35,8 +51,9 @@ export abstract class InvalidatableBenchmarkCache<
     this.invalidate((instance) => instance.clear());
   }
 
-  protected static instances: WeakRef<
-    InvalidatableBenchmarkCache<unknown, BenchmarkCacheContent<unknown>>
+  protected static instances: InvalidatableBenchmarkCache<
+    unknown,
+    BenchmarkCacheContent<unknown>
   >[] = [];
 
   protected static invalidate(
@@ -47,11 +64,7 @@ export abstract class InvalidatableBenchmarkCache<
       >
     ) => void
   ): void {
-    this.instances = this.instances.filter((instance) => instance.deref());
-    for (const instance of this.instances.map(
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      (instance) => instance.deref()!
-    )) {
+    for (const instance of this.instances) {
       run(instance);
     }
   }
@@ -65,7 +78,7 @@ export abstract class InvalidatableBenchmarkCache<
 
   constructor() {
     super();
-    InvalidatableBenchmarkCache.instances.push(new WeakRef(this));
+    InvalidatableBenchmarkCache.instances.push(this);
   }
 
   protected invalidateKeys(keys: Map<number, Set<string>>, id: number): void {
@@ -139,12 +152,5 @@ export abstract class InvalidatableBenchmarkCache<
         this.similarityFunctionKeys.get(similarity.func)?.delete(key);
       }
     }
-  }
-
-  clear(): void {
-    this.cache.reset();
-    this.datasetKeys.clear();
-    this.experimentKeys.clear();
-    this.similarityFunctionKeys.clear();
   }
 }
