@@ -1,5 +1,6 @@
 import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
@@ -73,4 +74,12 @@ export const setSearchString = (
   easyPrimitiveAction<BenchmarkAppModel>({
     type: BenchmarkAppActionsTypes.SET_SEARCH_STRING,
     payload: aSearchString,
+  });
+
+export const openStrategy = (
+  aStrategyId: StrategyIDs
+): easyPrimitiveActionReturn<BenchmarkAppModel> =>
+  easyPrimitiveAction<BenchmarkAppModel>({
+    type: BenchmarkAppActionsTypes.OPEN_STRATEGY,
+    payload: aStrategyId,
   });

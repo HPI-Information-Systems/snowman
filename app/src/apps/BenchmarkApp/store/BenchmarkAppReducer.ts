@@ -2,6 +2,7 @@ import { Algorithm, Dataset, Experiment } from 'api';
 import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ExpandedEntity } from 'apps/BenchmarkApp/types/ExpandedEntity';
+import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { union } from 'lodash';
 import { SnowmanAction } from 'store/messages';
 
@@ -12,6 +13,7 @@ const initialState: BenchmarkAppModel = {
   expandedAlgorithmsInDatasets: [],
   selectedExperimentIds: [],
   searchString: '',
+  usedStrategy: StrategyIDs.BinaryMetrics,
 };
 
 const removeExpandedEntity = (entities: ExpandedEntity[], id: number) =>
@@ -195,6 +197,11 @@ const BenchmarkAppReducer = (
         };
       }
     }
+    case BenchmarkAppActionsTypes.OPEN_STRATEGY:
+      return {
+        ...state,
+        usedStrategy: action.payload as StrategyIDs,
+      };
     default:
       return state;
   }

@@ -1,12 +1,22 @@
 import BenchmarkAppView from 'apps/BenchmarkApp/BenchmarkApp.View';
-import { BenchmarkAppDispatchProps } from 'apps/BenchmarkApp/BenchmarkAppProps';
+import {
+  BenchmarkAppDispatchProps,
+  BenchmarkAppStateProps,
+} from 'apps/BenchmarkApp/BenchmarkAppProps';
 import {
   getAlgorithms,
   getDatasets,
   getExperiments,
 } from 'apps/BenchmarkApp/store/BenchmarkAppThunkActions';
-import { BenchmarkAppDispatch } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import {
+  BenchmarkAppDispatch,
+  BenchmarkAppModel,
+} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { connect } from 'react-redux';
+
+const mapStateToProps = (state: BenchmarkAppModel): BenchmarkAppStateProps => ({
+  currentStrategy: state.usedStrategy,
+});
 
 const mapDispatchToProps = (
   dispatch: BenchmarkAppDispatch
@@ -19,7 +29,7 @@ const mapDispatchToProps = (
 });
 
 const BenchmarkAppContainer = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(BenchmarkAppView);
 

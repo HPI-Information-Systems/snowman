@@ -1,5 +1,6 @@
 import { Algorithm, Dataset, Experiment } from 'api';
 import { ExpandedEntity } from 'apps/BenchmarkApp/types/ExpandedEntity';
+import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import {
   SnowmanGenericDispatch,
   SnowmanGenericThunkAction,
@@ -12,6 +13,7 @@ export interface BenchmarkAppModel {
   selectedExperimentIds: number[];
   expandedAlgorithmsInDatasets: ExpandedEntity[];
   searchString: string;
+  usedStrategy: StrategyIDs;
 }
 
 export type BenchmarkAppThunkAction<R> = SnowmanGenericThunkAction<

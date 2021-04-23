@@ -10,4 +10,5 @@ export enum BenchmarkAppActionsTypes {
   SELECT_DATASET_CHILDREN = 'BenchmarkAppActionsTypes-SELECT_DATASET_CHILDREN',
   SELECT_ALGORITHM_CHILDREN = 'BenchmarkAppActionsTypes-SELECT_ALGORITHM_CHILDREN',
   SET_SEARCH_STRING = 'BenchmarkAppActionsTypes-SET_SEARCH_STRING',
+  OPEN_STRATEGY = 'BenchmarkAppActionsTypes-OPEN_STRATEGY',
 }

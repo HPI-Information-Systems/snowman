@@ -1,5 +1,12 @@
+import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
+
 export interface BenchmarkAppDispatchProps {
   loadInitialState: () => void;
 }
 
-export type BenchmarkAppProps = BenchmarkAppDispatchProps;
+export interface BenchmarkAppStateProps {
+  currentStrategy: StrategyIDs;
+}
+
+export type BenchmarkAppProps = BenchmarkAppStateProps &
+  BenchmarkAppDispatchProps;
