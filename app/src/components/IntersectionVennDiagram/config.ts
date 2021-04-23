@@ -3,8 +3,8 @@ import {
   VennDiagramEntity,
   VennDiagramIntersection,
   VennDiagramSet,
-} from 'components/VennDiagram/venn/types/types';
-import { VennDiagramConfig } from 'components/VennDiagram/VennDiagramProps';
+} from 'components/simple/VennDiagram/venn/types/types';
+import { VennDiagramConfig } from 'components/simple/VennDiagram/VennDiagramProps';
 import { intersectionDescription } from 'utils/intersectionDescription';
 
 type PartialVennDiagramConfig = {

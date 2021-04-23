@@ -14,8 +14,8 @@ import {
 import { Metric } from 'api';
 import DataViewer from 'components/DataViewer/DataViewer';
 import PageStruct from 'components/PageStructOLD/PageStruct';
-import PaneButtonRow from 'components/PaneButtonRow/PaneButtonRow';
-import StyledCarousel from 'components/StyledCarousel/StyledCarousel';
+import PaneButtonRow from 'components/simple/PaneButtonRow/PaneButtonRow';
+import StyledCarousel from 'components/simple/StyledCarousel/StyledCarousel';
 import { informationCircle } from 'ionicons/icons';
 import { renderToString } from 'katex';
 import { BinaryMetricsPageProps } from 'pages/BinaryMetricsPage/BinaryMetricsPageProps';

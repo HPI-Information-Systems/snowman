@@ -18,8 +18,8 @@ import {
 } from '@ionic/react';
 import { DatasetDialogProps } from 'apps/DatasetDialog/DatasetDialogProps';
 import styles from 'apps/DatasetDialog/DatasetDialogStyles.module.css';
-import FileInput from 'components/FileInput/FileInput';
-import InputChip from 'components/InputChip/InputChip';
+import FileInput from 'components/simple/FileInput/FileInput';
+import InputChip from 'components/stateful/InputChip/InputChip';
 import {
   addCircleOutline,
   checkmarkCircleOutline,

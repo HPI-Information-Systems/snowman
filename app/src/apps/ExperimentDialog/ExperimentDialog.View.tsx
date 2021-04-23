@@ -14,8 +14,8 @@ import {
 import { Algorithm, Dataset } from 'api';
 import { ExperimentDialogProps } from 'apps/ExperimentDialog/ExperimentDialogProps';
 import styles from 'apps/ExperimentDialog/ExperimentDialogStyles.module.css';
-import FileInput from 'components/FileInput/FileInput';
-import SelectableInput from 'components/SelectableInput/SelectableInput';
+import FileInput from 'components/simple/FileInput/FileInput';
+import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
 import {
   addCircleOutline,
   checkmarkCircleOutline,

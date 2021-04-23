@@ -1,4 +1,4 @@
-import { MAX_VENN_DIAGRAM_DIMENSION } from 'components/VennDiagram/limits';
+import { MAX_VENN_DIAGRAM_DIMENSION } from 'components/simple/VennDiagram/limits';
 import DashboardPageView from 'pages/DashboardPage/DashboardPage.View';
 import {
   DashboardPageDispatchProps,

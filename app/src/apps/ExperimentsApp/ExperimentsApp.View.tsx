@@ -11,7 +11,7 @@ import {
 import { Algorithm, Dataset, Experiment } from 'api';
 import ExperimentCard from 'apps/ExperimentsApp/components/ExperimentCard/ExperimentCard';
 import { ExperimentsAppProps } from 'apps/ExperimentsApp/ExperimentsAppProps';
-import AddFab from 'components/AddFab/AddFab';
+import AddFab from 'components/simple/AddFab/AddFab';
 import React from 'react';
 import { getAlgorithmNameFromId } from 'utils/algorithmHelpers';
 import { getDatasetNameFromId } from 'utils/datasetHelper';
