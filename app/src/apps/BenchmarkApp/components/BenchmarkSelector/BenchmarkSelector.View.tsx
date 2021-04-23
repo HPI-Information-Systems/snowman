@@ -171,6 +171,9 @@ const BenchmarkSelectorView = ({
                                         ): JSX.Element => (
                                           <IonItem
                                             key={`bconf_${anExperiment.id}`}
+                                            onClick={(): void =>
+                                              selectExperiment(anExperiment.id)
+                                            }
                                           >
                                             <IonIcon
                                               icon={documentTextOutline}
@@ -192,11 +195,6 @@ const BenchmarkSelectorView = ({
                                                 )
                                                   ? 'primary'
                                                   : 'medium'
-                                              }
-                                              onClick={(): void =>
-                                                selectExperiment(
-                                                  anExperiment.id
-                                                )
                                               }
                                               class={styles.selector}
                                               slot="end"
