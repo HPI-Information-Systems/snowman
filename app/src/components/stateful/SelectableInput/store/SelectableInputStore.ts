@@ -2,12 +2,14 @@ import { SelectableInputReducer } from 'components/stateful/SelectableInput/stor
 import { SelectableInputModel } from 'components/stateful/SelectableInput/types/SelectableInputModel';
 import { Store } from 'redux';
 import { SnowmanAction } from 'types/SnowmanAction';
-import { constructStore } from 'utils/storeFactory';
+import { PooledStoreFactory } from 'utils/storeFactory';
+
+const pooledSelectableInputStoreFactory: PooledStoreFactory<SelectableInputModel> = new PooledStoreFactory<SelectableInputModel>(
+  'Selectable Input',
+  SelectableInputReducer
+);
 
 export const createSelectableInputStore = (
   instanceDescriptor?: string
 ): Store<SelectableInputModel, SnowmanAction> =>
-  constructStore(
-    `SelectableInput - ${instanceDescriptor ? instanceDescriptor : 'UNDEF'}`,
-    SelectableInputReducer
-  );
+  pooledSelectableInputStoreFactory.getStore(instanceDescriptor);
