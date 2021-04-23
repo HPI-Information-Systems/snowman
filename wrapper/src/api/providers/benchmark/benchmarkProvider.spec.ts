@@ -2,7 +2,10 @@ import { setupDatabase } from '../../database';
 import {
   DatasetValues,
   ExperimentValues,
+  MetricsEnum,
   SetExperimentFileFormatEnum,
+  SoftKPIsAlgorithmEnum,
+  SoftKPIsExperimentEnum,
 } from '../../server/types';
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
@@ -77,6 +80,10 @@ beforeAll(async () => {
           datasetId: datasetIds.default,
           description: 'Dataset file',
           name: 'Dataset file',
+          softKPIs: {
+            hrAmount: 12,
+            expertise: 67,
+          },
         },
         file: [
           ['p1', 'p2'],
@@ -96,6 +103,10 @@ beforeAll(async () => {
           datasetId: datasetIds.default,
           description: 'No dataset file',
           name: 'No dataset file',
+          softKPIs: {
+            expertise: 11,
+            hrAmount: 11,
+          },
         },
         file: [
           ['p1', 'p2'],
@@ -151,37 +162,25 @@ beforeAll(async () => {
 
 describe('test benchmark functions', () => {
   const benchmarkProvider = new BenchmarkProvider();
-  /*
   test('test developer diagram calculation', () => {
     expect(
       benchmarkProvider.calculateDiagramData({
-        xAxis: MetricsEnum.TimeToConfigure,
+        xAxis: SoftKPIsExperimentEnum.HrAmount,
         yAxis: MetricsEnum.Precision,
-        diagramExperimentItem: [
+        diagram: [
           {
-            experimentId: {
-              experimentId: experimentIds.experiment2,
-            },
-            groundTruthId: {
-              experimentId: experimentIds.goldstandard,
-            },
-          },
-          {
-            experimentId: {
+            experiment: {
               experimentId: experimentIds.experiment1,
             },
-            groundTruthId: {
+            groundTruth: {
               experimentId: experimentIds.goldstandard,
             },
           },
         ],
       })
-    ).toEqual({
-      x: [1, 2, 3],
-      y: [1, 2, 3],
-    });
+    ).toMatchObject([{ x: 11, y: 0.5 }]);
   });
-  */
+
   describe('metrics', () => {
     test('test metrics calculation', () => {
       expect(
