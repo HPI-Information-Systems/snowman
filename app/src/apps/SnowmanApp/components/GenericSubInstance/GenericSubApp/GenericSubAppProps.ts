@@ -5,7 +5,6 @@ import { FC } from 'react';
 import { ViewIDs } from 'types/ViewIDs';
 
 export interface GenericSubAppStateProps {
-  existsActiveRequest: boolean;
   activeApp: ViewIDs;
   centralResources: CentralResourcesModel;
 }
@@ -13,6 +12,7 @@ export interface GenericSubAppStateProps {
 export interface GenericSubAppOwnProps extends GenericInstanceOwnProps {
   appTitle: string;
   sideMenu?: FC<SideMenuProps>;
+  bringOwnPageStruct?: boolean;
 }
 
 export type GenericSubAppProps = GenericSubAppOwnProps &

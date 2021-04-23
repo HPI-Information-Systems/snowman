@@ -4,7 +4,6 @@ import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state: SnowmanAppModel): GenericSubAppStateProps => ({
-  existsActiveRequest: state.ActionLogicStore.ongoingRequestsCount > 0,
   activeApp: state.RenderLogicStore.currentViewID,
   centralResources: state.CentralResourcesStore,
 });

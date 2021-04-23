@@ -1,16 +1,6 @@
-import {
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonMenuButton,
-  IonPage,
-  IonSpinner,
-  IonSplitPane,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/react';
+import { IonPage, IonSplitPane } from '@ionic/react';
 import { GenericSubAppProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubAppProps';
-import styles from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubAppStyles.module.css';
+import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import { centralResourcesRefreshed } from 'apps/SnowmanApp/store/CentralResourcesGenericActions';
 import { isEqual } from 'lodash';
 import React, { Component, createElement } from 'react';
@@ -20,6 +10,7 @@ import { SnowmanAction } from 'store/messages';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 class GenericSubAppView extends Component<GenericSubAppProps> {
+  static defaultProps = { bringOwnPageStruct: false };
   store: Store<unknown, SnowmanAction>;
 
   constructor(props: GenericSubAppProps) {
@@ -53,22 +44,13 @@ class GenericSubAppView extends Component<GenericSubAppProps> {
                 : null}
               {/* Page Content */}
               <IonPage id="mainViewContentId">
-                <IonHeader>
-                  <IonToolbar color="primary">
-                    <IonButtons slot="start">
-                      <IonMenuButton />
-                    </IonButtons>
-                    <IonTitle>{this.props.appTitle}</IonTitle>
-                    <div slot="end" className={styles.spinnerContainer}>
-                      {this.props.existsActiveRequest ? (
-                        <IonSpinner className={styles.spinnerWhite} />
-                      ) : null}
-                    </div>
-                  </IonToolbar>
-                </IonHeader>
-                <IonContent className="ion-padding">
-                  {this.props.children}
-                </IonContent>
+                {this.props.bringOwnPageStruct ? (
+                  this.props.children
+                ) : (
+                  <PageStruct pageTitle={this.props.appTitle}>
+                    {this.props.children}
+                  </PageStruct>
+                )}
               </IonPage>
             </IonSplitPane>
           </div>
