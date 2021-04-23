@@ -17,6 +17,9 @@ import {
   caretDown,
   caretForward,
   checkmarkCircle,
+  documentTextOutline,
+  fileTrayFull,
+  flask,
   radioButtonOffOutline,
 } from 'ionicons/icons';
 import React from 'react';
@@ -75,6 +78,11 @@ const BenchmarkSelectorView = ({
                       slot="start"
                       class={styles.chevron}
                     />
+                    <IonIcon
+                      icon={fileTrayFull}
+                      className={styles.descriptiveIcon}
+                      color="primarydark"
+                    />
                     {aDataset.name}
                     <IonIcon
                       icon={addOutline}
@@ -128,6 +136,11 @@ const BenchmarkSelectorView = ({
                                     slot="start"
                                     class={styles.chevron}
                                   />
+                                  <IonIcon
+                                    icon={flask}
+                                    className={styles.descriptiveIcon}
+                                    color="primarydark"
+                                  />
                                   {anAlgorithm.name}
                                   <IonIcon
                                     icon={addOutline}
@@ -159,6 +172,11 @@ const BenchmarkSelectorView = ({
                                           <IonItem
                                             key={`bconf_${anExperiment.id}`}
                                           >
+                                            <IonIcon
+                                              icon={documentTextOutline}
+                                              className={styles.descriptiveIcon}
+                                              color="primarydark"
+                                            />
                                             {anExperiment.name}
                                             <IonIcon
                                               icon={

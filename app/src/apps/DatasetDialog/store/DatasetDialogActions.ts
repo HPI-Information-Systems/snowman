@@ -153,7 +153,9 @@ export const prepareUpdateDialog = (
         })
         .then((theDataset: Dataset): void => {
           dispatch(prefillDialog(theDataset));
-        })
+        }),
+    undefined,
+    true
   );
 
 export const onDialogOpen = (
@@ -193,7 +195,8 @@ const createDataset = (
   RequestHandler<number>(
     (): Promise<number> =>
       new DatasetsApi().addDataset({ dataset: getDatasetValues(getState()) }),
-    showSuccess ? SUCCESS_TO_CREATE_NEW_DATASET : undefined
+    showSuccess ? SUCCESS_TO_CREATE_NEW_DATASET : undefined,
+    true
   );
 
 const setDataset = (
@@ -209,7 +212,8 @@ const setDataset = (
         datasetId: id,
         dataset: getDatasetValues(getState()),
       }),
-    showSuccess ? SUCCESS_TO_UPDATE_DATASET : undefined
+    showSuccess ? SUCCESS_TO_UPDATE_DATASET : undefined,
+    true
   );
 
 const uploadDatasetFile = (
@@ -233,15 +237,16 @@ const addDataset = (): SnowmanThunkAction<
   getState: () => DatasetDialogModel
 ): Promise<void> => {
   return dispatch(createDataset(false))
-    .then((id) =>
-      getState().datasetType === DatasetTypes.full
+    .then((id) => {
+      doCloseDialog();
+      return getState().datasetType === DatasetTypes.full
         ? dispatch(uploadDatasetFile(id, false)).catch((error) =>
             RequestHandler(() =>
               new DatasetsApi().deleteDataset({ datasetId: id })
             ).finally(() => Promise.reject(error))
           )
-        : Promise.resolve()
-    )
+        : Promise.resolve();
+    })
     .then(() => dispatch(resetDialog()))
     .then(() =>
       SnowmanAppDispatch(
@@ -249,7 +254,6 @@ const addDataset = (): SnowmanThunkAction<
       )
     )
     .finally((): void => {
-      doCloseDialog();
       doRefreshCentralResources();
     });
 };
@@ -257,10 +261,18 @@ const addDataset = (): SnowmanThunkAction<
 const updateDataset = (
   id: number
 ): SnowmanThunkAction<Promise<void>, DatasetDialogModel> => async (
-  dispatch: SnowmanDispatch<DatasetDialogModel>
+  dispatch: SnowmanDispatch<DatasetDialogModel>,
+  getState: () => DatasetDialogModel
 ): Promise<void> => {
   return dispatch(setDataset(id, false))
-    .then((): Promise<void> => dispatch(uploadDatasetFile(id, false)))
+    .then(
+      (): Promise<void> => {
+        doCloseDialog();
+        return getState().selectedFiles.length > 0
+          ? dispatch(uploadDatasetFile(id, false))
+          : Promise.resolve();
+      }
+    )
     .then((): void => dispatch(resetDialog()))
     .then((): void =>
       SnowmanAppDispatch(
@@ -268,7 +280,6 @@ const updateDataset = (
       )
     )
     .finally((): void => {
-      doCloseDialog();
       doRefreshCentralResources();
     });
 };

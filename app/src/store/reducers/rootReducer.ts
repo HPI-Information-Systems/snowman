@@ -11,7 +11,6 @@ import { DatasetPreviewerReducer } from 'store/reducers/DatasetPreviewerReducer'
 import { ExperimentPreviewerReducer } from 'store/reducers/ExperimentPreviewerReducer';
 import { IntersectionReducer } from 'store/reducers/IntersectionReducer';
 import { NMetricsReducer } from 'store/reducers/NMetricsReducer';
-import { SelectableInputReducer } from 'store/reducers/SelectableInputReducer';
 
 export const rootReducer = (
   state: ImmediateStore,
@@ -35,10 +34,6 @@ export const rootReducer = (
     ),
     BinaryMetricsStore: BinaryMetricsReducer(state?.BinaryMetricsStore, action),
     NMetricsStore: NMetricsReducer(state?.NMetricsStore, action),
-    SelectableInputStore: SelectableInputReducer(
-      state?.SelectableInputStore,
-      action
-    ),
     IntersectionStore: IntersectionReducer(
       state?.IntersectionStore,
       benchmarkState,

@@ -8,6 +8,6 @@ export interface ExperimentDialogModel {
   selectedFiles: File[];
   datasets: Dataset[];
   algorithms: Algorithm[];
-  selectedDataset: string | undefined;
-  selectedAlgorithm: string | undefined;
+  selectedDataset: number | undefined;
+  selectedAlgorithm: number | undefined;
 }

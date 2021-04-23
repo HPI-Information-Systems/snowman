@@ -1,32 +1,45 @@
+import {
+  documentTextOutline,
+  fileTrayFull,
+  flask,
+  snow,
+  speedometer,
+} from 'ionicons/icons';
 import { ViewIDs } from 'types/ViewIDs';
 
 export interface TabBarConfigItem {
   viewID: ViewIDs;
   title: string;
+  icon?: string;
 }
 
 export const TabBarConfigLeft: TabBarConfigItem[] = [
   {
-    viewID: ViewIDs.DASHBOARD,
+    viewID: ViewIDs.BenchmarkApp,
     title: 'Benchmark',
+    icon: speedometer,
   },
   {
-    viewID: ViewIDs.DATASETS,
+    viewID: ViewIDs.DatasetsApp,
     title: 'Datasets',
+    icon: fileTrayFull,
   },
   {
-    viewID: ViewIDs.EXPERIMENTS,
-    title: 'Experiments',
-  },
-  {
-    viewID: ViewIDs.ALGORITHMS,
+    viewID: ViewIDs.AlgorithmsApp,
     title: 'Matching Solutions',
+    icon: flask,
+  },
+  {
+    viewID: ViewIDs.ExperimentsApp,
+    title: 'Experiments',
+    icon: documentTextOutline,
   },
 ];
 
 export const TabBarConfigRight: TabBarConfigItem[] = [
   {
-    viewID: ViewIDs.HOME,
-    title: 'Snowman App',
+    viewID: ViewIDs.AboutApp,
+    title: 'About',
+    icon: snow,
   },
 ];

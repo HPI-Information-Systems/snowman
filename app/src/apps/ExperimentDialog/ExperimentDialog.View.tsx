@@ -1,5 +1,3 @@
-import 'apps/ExperimentDialog/ExperimentDialogStyles.css';
-
 import {
   IonButton,
   IonIcon,
@@ -15,6 +13,7 @@ import {
 } from '@ionic/react';
 import { Algorithm, Dataset } from 'api';
 import { ExperimentDialogProps } from 'apps/ExperimentDialog/ExperimentDialogProps';
+import styles from 'apps/ExperimentDialog/ExperimentDialogStyles.module.css';
 import FileInput from 'components/FileInput/FileInput';
 import SelectableInput from 'components/SelectableInput/SelectableInput';
 import {
@@ -23,6 +22,7 @@ import {
   closeCircleOutline,
 } from 'ionicons/icons';
 import React from 'react';
+import style from 'theme/style';
 import { $enum } from 'ts-enum-util';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 
@@ -130,16 +130,16 @@ const ExperimentDialogView = ({
         />
       </IonItem>
       {!isAddDialog ? (
-        <div className="center">
+        <div className={styles.center}>
           <IonNote color="medium">
             Note: This option is disabled for experiment updates.
           </IonNote>
         </div>
       ) : null}
     </IonList>
-    <div className="center button-row">
+    <div className={style(styles.center, styles.buttonRow)}>
       <IonButton
-        className="button-hugh button-padding"
+        className={style(styles.buttonHugh, styles.buttonPadding)}
         onClick={clickOnSubmit}
         disabled={!isValidForm}
       >
@@ -150,7 +150,7 @@ const ExperimentDialogView = ({
         {isAddDialog ? 'Add' : 'Update'}
       </IonButton>
       <IonButton
-        className="button-hugh button-padding"
+        className={style(styles.buttonHugh, styles.buttonPadding)}
         onClick={clickOnCancel}
         color="light"
       >

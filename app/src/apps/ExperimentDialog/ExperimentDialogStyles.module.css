@@ -2,25 +2,20 @@
   text-align: center;
 }
 
-.button-hugh {
+.buttonHugh {
   width: 160px;
 }
 
-.tag-view {
-  padding-top: 0;
-  padding-bottom: 15px;
-}
-
-.button-padding {
+.buttonPadding {
   padding-right: 5px;
   padding-left: 5px;
 }
 
-.button-row {
+.buttonRow {
   padding-top: 15px;
   padding-bottom: 15px;
 }
 
-.input-align-right {
+.inputAlignRight {
   text-align: right;
 }

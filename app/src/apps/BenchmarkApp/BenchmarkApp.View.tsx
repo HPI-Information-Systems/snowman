@@ -128,7 +128,7 @@ const BenchmarkAppView = ({
           <IonCard>
             <IonCardHeader>
               <IonCardTitle>
-                Diagram Investigator
+                KPI Investigator
                 <span>
                   <IonIcon
                     className="ion-float-right"

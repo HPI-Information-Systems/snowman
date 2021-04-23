@@ -7,7 +7,7 @@ import { dummyStoreFactory } from 'utils/storeFactory';
 
 const AlgorithmsApp = (props: AlgorithmsAppOwnProps): JSX.Element => (
   <GenericSubApp
-    instanceId={ViewIDs.ALGORITHMS}
+    instanceId={ViewIDs.AlgorithmsApp}
     appTitle="Matching Solutions Editor"
     createSubAppStore={dummyStoreFactory('AlgorithmsApp')}
   >

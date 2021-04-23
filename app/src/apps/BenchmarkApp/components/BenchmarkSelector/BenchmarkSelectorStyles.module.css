@@ -9,11 +9,11 @@
 }
 
 .listInsetMax {
-  margin-left: 20px !important;
+  margin-left: 10px !important;
 }
 
 .chevron {
-  margin-right: 10px;
+  margin-right: 12px;
   font-size: 20px;
   cursor: pointer;
   margin-inline-end: 10px;
@@ -21,4 +21,9 @@
 
 .selector {
   cursor: pointer;
+}
+
+.descriptiveIcon {
+  margin-right: 8px;
+  font-size: 20px;
 }

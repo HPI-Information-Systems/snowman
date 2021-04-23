@@ -1,4 +1,8 @@
 import {
+  hideLoading,
+  showLoading,
+} from 'apps/SnowmanApp/store/ActionLogicActions';
+import {
   closeDialog,
   navigateTo,
   openDialog,
@@ -14,4 +18,10 @@ export const doOpenDialog = (aDialog: ViewIDs, entityId?: number): void => {
 };
 export const doCloseDialog = (): void => {
   SnowmanAppDispatch(closeDialog());
+};
+export const doShowBlockingLoading = (): void => {
+  SnowmanAppDispatch(showLoading());
+};
+export const doHideBlockingLoading = (): void => {
+  SnowmanAppDispatch(hideLoading());
 };

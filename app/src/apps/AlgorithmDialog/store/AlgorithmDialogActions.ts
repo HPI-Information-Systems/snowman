@@ -64,7 +64,9 @@ export const prepareUpdateDialog = (
         .then((theAlgorithm: Algorithm): void => {
           dispatch(changeAlgorithmName(theAlgorithm.name));
           dispatch(changeAlgorithmDescription(theAlgorithm.description ?? ''));
-        })
+        }),
+    undefined,
+    true
   );
 
 export const onDialogOpen = (
@@ -101,7 +103,8 @@ const addAlgorithm = (): SnowmanThunkAction<
           doCloseDialog();
           doRefreshCentralResources();
         }),
-    SUCCESS_TO_ADD_NEW_ALGORITHM
+    SUCCESS_TO_ADD_NEW_ALGORITHM,
+    true
   );
 
 const updateAlgorithm = (
@@ -122,7 +125,8 @@ const updateAlgorithm = (
           doCloseDialog();
           doRefreshCentralResources();
         }),
-    SUCCESS_TO_UPDATE_ALGORITHM
+    SUCCESS_TO_UPDATE_ALGORITHM,
+    true
   );
 
 export const addOrUpdateAlgorithm = (
