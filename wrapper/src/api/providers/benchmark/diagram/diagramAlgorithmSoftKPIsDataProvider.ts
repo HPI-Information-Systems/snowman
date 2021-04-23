@@ -4,6 +4,7 @@ import {
   SoftKPIsAlgorithmEnum,
 } from '../../../server/types';
 import { AlgorithmProvider } from '../../algorithm/algorithmProvider';
+import { ExperimentProvider } from '../../experiment/experimentProvider';
 import { DiagramDataProvider } from './diagramDataProvider';
 
 export class DiagramAlgorithmSoftKPIsDataProvider extends DiagramDataProvider {
@@ -12,8 +13,11 @@ export class DiagramAlgorithmSoftKPIsDataProvider extends DiagramDataProvider {
     diagramExperimentItem: DiagramExperimentItem
   ): number {
     const algorithmProvider = new AlgorithmProvider();
+    const experimentProvider = new ExperimentProvider();
     const algorithm = algorithmProvider.getAlgorithm(
-      diagramExperimentItem.experiment.experimentId
+      experimentProvider.getExperiment(
+        diagramExperimentItem.experiment.experimentId
+      ).algorithmId
     );
 
     return this.mapEnum(metric, algorithm);
