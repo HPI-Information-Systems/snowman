@@ -11,10 +11,7 @@ import { Metric } from '../../server/types';
 import { ConfusionMatrixCache } from './cache/flavors/confusionMatrixCache';
 import { IntersectionCache } from './cache/flavors/intersectionCache';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
-import {
-  DiagramDataProvider,
-  getDiagramDataProvider,
-} from './diagram/diagramDataProvider';
+import { DiagramDataProvider, getDiagramDataProvider } from './diagram';
 import { idClustersToRecordClusters } from './idsToRecords';
 import { IntersectionBase } from './intersection/intersectionBase';
 import { metrics, metricsMap } from './metrics/allMetrics';
