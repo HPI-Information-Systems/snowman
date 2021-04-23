@@ -10,7 +10,7 @@ import {
 export interface CalculateDiagramDataRequest {
   xAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
   yAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
-  diagramExperimentItem: Array<DiagramExperimentItem>;
+  diagram: Array<DiagramExperimentItem>;
   steps?: number;
 }
 

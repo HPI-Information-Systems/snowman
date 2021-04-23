@@ -21,15 +21,14 @@ export async function calculateDiagramData({
   xAxis,
   yAxis,
   steps,
-  body,
+  diagram,
 }: any): Promise<SuccessResponse<Array<DiagramCoordinate>>> {
-  const diagramExperimentItem = body;
   return Service.response(
     () =>
       provider().calculateDiagramData({
         xAxis,
         yAxis,
-        diagramExperimentItem,
+        diagram,
         steps,
       }),
     200,
