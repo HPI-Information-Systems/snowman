@@ -4,7 +4,7 @@ info:
     email: snowman@groups.sap.com
     url: https://github.com/HPI-Information-Systems/snowman
   description: |
-    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms.
+    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
   license:
     name: LICENSE (MIT)
     url: https://github.com/HPI-Information-Systems/snowman/blob/main/LICENSE
@@ -949,6 +949,7 @@ paths:
           description: Experiments or metrics not found
       tags:
       - Benchmark
+      x-codegen-request-body-name: diagram
       x-eov-operation-handler: controllers/BenchmarkController
 components:
   requestBodies:

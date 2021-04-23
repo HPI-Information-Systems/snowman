@@ -755,6 +755,7 @@ paths:
         schema:
           type: number
         description: Amount of steps to be done while rendering metric-metric-diagrams
+      x-codegen-request-body-name: diagram
       requestBody:
         content:
           application/json:
@@ -1141,51 +1142,51 @@ components:
     softKPIsAlgorithmEnum:
       type: string
       enum:
-        - "domainExpertise"
-        - "domainHrAmount"
-        - "domainManhattanDistanceBasedEffort"
-        - "domainHrAmountWeightedEffort"
-        - "domainMultiplyEffort"
-        - "domainExpertiseWeightedEffort"
-        - "matchingSolutionExpertise"
-        - "matchingSolutionHrAmount"
-        - "matchingSolutionManhattanDistanceBasedEffort"
-        - "matchingSolutionHrAmountWeightedEffort"
-        - "matchingSolutionMultiplyEffort"
-        - "matchingSolutionExpertiseWeightedEffort"
-        - "generalCosts"
-        - "integrationTime"
+        - domainExpertise
+        - domainHrAmount
+        - domainManhattanDistanceBasedEffort
+        - domainHrAmountWeightedEffort
+        - domainMultiplyEffort
+        - domainExpertiseWeightedEffort
+        - matchingSolutionExpertise
+        - matchingSolutionHrAmount
+        - matchingSolutionManhattanDistanceBasedEffort
+        - matchingSolutionHrAmountWeightedEffort
+        - matchingSolutionMultiplyEffort
+        - matchingSolutionExpertiseWeightedEffort
+        - generalCosts
+        - integrationTime
     softKPIsExperimentEnum:
       type: string
       enum:
-        - "expertise"
-        - "hrAmount"
-        - "manhattanDistanceBasedEffort"
-        - "hrAmountWeightedEffort"
-        - "multiplyEffort"
-        - "expertiseWeightedEffort"
+        - expertise
+        - hrAmount
+        - manhattanDistanceBasedEffort
+        - hrAmountWeightedEffort
+        - multiplyEffort
+        - expertiseWeightedEffort
     MetricsEnum:
       type: string
       enum:
-        - "similarity"
-        - "falseDiscoveryRate"
-        - "falseNegativeRate"
-        - "falseOmissionRate"
-        - "falsePositiveRate"
-        - "negativePredictiveValue"
-        - "precision"
-        - "prevalenceThreshold"
-        - "recall"
-        - "specificity"
-        - "threatScore"
-        - "accuracy"
-        - "balancedAccuracy"
-        - "bookmakerInformedness"
-        - "fStarScore"
-        - "f1Score"
-        - "fowlkesMallowsIndex"
-        - "markedness"
-        - "matthewsCorrelationCoefficient"
+        - similarity
+        - falseDiscoveryRate
+        - falseNegativeRate
+        - falseOmissionRate
+        - falsePositiveRate
+        - negativePredictiveValue
+        - precision
+        - prevalenceThreshold
+        - recall
+        - specificity
+        - threatScore
+        - accuracy
+        - balancedAccuracy
+        - bookmakerInformedness
+        - fStarScore
+        - f1Score
+        - fowlkesMallowsIndex
+        - markedness
+        - matthewsCorrelationCoefficient
 
     #### GENERAL ####
     CSVFile:

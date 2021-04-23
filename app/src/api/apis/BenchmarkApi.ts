@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -47,7 +47,7 @@ import {
 export interface CalculateDiagramDataRequest {
     xAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
     yAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
-    diagramExperimentItem: Array<DiagramExperimentItem>;
+    diagram: Array<DiagramExperimentItem>;
     steps?: number;
 }
 
@@ -91,8 +91,8 @@ export class BenchmarkApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('yAxis','Required parameter requestParameters.yAxis was null or undefined when calling calculateDiagramData.');
         }
 
-        if (requestParameters.diagramExperimentItem === null || requestParameters.diagramExperimentItem === undefined) {
-            throw new runtime.RequiredError('diagramExperimentItem','Required parameter requestParameters.diagramExperimentItem was null or undefined when calling calculateDiagramData.');
+        if (requestParameters.diagram === null || requestParameters.diagram === undefined) {
+            throw new runtime.RequiredError('diagram','Required parameter requestParameters.diagram was null or undefined when calling calculateDiagramData.');
         }
 
         const queryParameters: any = {};
@@ -118,7 +118,7 @@ export class BenchmarkApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.diagramExperimentItem.map(DiagramExperimentItemToJSON),
+            body: requestParameters.diagram.map(DiagramExperimentItemToJSON),
         });
 
         return new runtime.JSONApiResponse<any>(response);
