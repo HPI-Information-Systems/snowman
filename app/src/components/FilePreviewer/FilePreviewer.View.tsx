@@ -1,6 +1,6 @@
 import DataViewer from 'components/DataViewer/DataViewer';
 import { FilePreviewerProps } from 'components/FilePreviewer/FilePreviewerProps';
-import ModalDialog from 'components/ModalDialog/ModalDialog';
+import ModalDialog from 'components/simple/ModalDialog/ModalDialog';
 import React from 'react';
 
 const FilePreviewerView = ({
