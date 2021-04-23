@@ -13,7 +13,7 @@ const initialState: BenchmarkAppModel = {
   expandedAlgorithmsInDatasets: [],
   selectedExperimentIds: [],
   searchString: '',
-  usedStrategy: StrategyIDs.BinaryMetrics,
+  activeStrategy: StrategyIDs.BinaryMetrics,
 };
 
 const removeExpandedEntity = (entities: ExpandedEntity[], id: number) =>
@@ -200,7 +200,7 @@ const BenchmarkAppReducer = (
     case BenchmarkAppActionsTypes.OPEN_STRATEGY:
       return {
         ...state,
-        usedStrategy: action.payload as StrategyIDs,
+        activeStrategy: action.payload as StrategyIDs,
       };
     default:
       return state;

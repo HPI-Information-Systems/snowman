@@ -13,7 +13,7 @@ export interface BenchmarkAppModel {
   selectedExperimentIds: number[];
   expandedAlgorithmsInDatasets: ExpandedEntity[];
   searchString: string;
-  usedStrategy: StrategyIDs;
+  activeStrategy: StrategyIDs;
 }
 
 export type BenchmarkAppThunkAction<R> = SnowmanGenericThunkAction<

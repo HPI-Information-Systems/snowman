@@ -5,11 +5,11 @@ import React, { useEffect } from 'react';
 
 const BenchmarkAppView = ({
   loadInitialState,
-  currentStrategy,
+  activeStrategy,
 }: BenchmarkAppProps): JSX.Element => {
   useEffect(loadInitialState, [loadInitialState]);
   return (
-    <PageStruct pageTitle={currentStrategy}>
+    <PageStruct pageTitle={activeStrategy}>
       <DashboardStrategy />
     </PageStruct>
   );

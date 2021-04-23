@@ -5,7 +5,7 @@ export interface BenchmarkAppDispatchProps {
 }
 
 export interface BenchmarkAppStateProps {
-  currentStrategy: StrategyIDs;
+  activeStrategy: StrategyIDs;
 }
 
 export type BenchmarkAppProps = BenchmarkAppStateProps &

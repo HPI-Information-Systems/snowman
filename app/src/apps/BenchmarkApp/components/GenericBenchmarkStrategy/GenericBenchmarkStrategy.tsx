@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 const mapStateToProps = (
   state: BenchmarkAppModel
 ): GenericBenchmarkStrategyStateProps => ({
-  activeStrategy: state.usedStrategy,
+  activeStrategy: state.activeStrategy,
 });
 
 const GenericBenchmarkStrategy = connect(mapStateToProps)(
