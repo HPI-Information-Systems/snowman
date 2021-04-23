@@ -4,7 +4,7 @@ import { Store } from 'redux';
 import { SnowmanAction } from 'types/SnowmanAction';
 import { PooledStoreFactory } from 'utils/storeFactory';
 
-const pooledInputChipStoreFactory = new PooledStoreFactory(
+const pooledInputChipStoreFactory: PooledStoreFactory<InputChipModel> = new PooledStoreFactory<InputChipModel>(
   'InputChipStore',
   InputChipReducer
 );
