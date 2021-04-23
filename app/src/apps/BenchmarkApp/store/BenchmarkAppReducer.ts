@@ -13,7 +13,7 @@ const initialState: BenchmarkAppModel = {
   expandedAlgorithmsInDatasets: [],
   selectedExperimentIds: [],
   searchString: '',
-  activeStrategy: StrategyIDs.BinaryMetrics,
+  activeStrategy: StrategyIDs.NaryMetrics,
 };
 
 const removeExpandedEntity = (entities: ExpandedEntity[], id: number) =>
