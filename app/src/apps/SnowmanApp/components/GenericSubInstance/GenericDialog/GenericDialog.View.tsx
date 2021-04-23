@@ -38,7 +38,7 @@ class GenericDialogView extends Component<GenericDialogProps> {
       this.props.onDialogClose(this.store.dispatch, prevProps.entityId);
     }
 
-    if (isEqual(prevProps.centralResources, this.props.centralResources)) {
+    if (!isEqual(prevProps.centralResources, this.props.centralResources)) {
       centralResourcesRefreshed(
         this.store.dispatch as SnowmanDispatch<unknown>,
         this.props.centralResources
