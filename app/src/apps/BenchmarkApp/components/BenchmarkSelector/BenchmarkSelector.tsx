@@ -10,6 +10,7 @@ import {
   selectAlgorithmInDatasetChildren,
   selectDatasetChildren,
   selectExperimentBy,
+  selectNone,
   setSearchString,
   shrinkAlgorithmInDataset,
   shrinkDataset,
@@ -61,6 +62,9 @@ const mapDispatchToProps = (
   },
   setSearchString(event: IonChangeEvent) {
     dispatch(setSearchString(event.detail.value ?? ''));
+  },
+  selectNone() {
+    dispatch(selectNone());
   },
 });
 

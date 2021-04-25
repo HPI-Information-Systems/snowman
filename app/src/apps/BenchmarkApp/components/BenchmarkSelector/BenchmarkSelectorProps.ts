@@ -28,6 +28,7 @@ export interface BenchmarkSelectorDispatchProps {
   selectDatasetChildren(aDatasetId: number): void;
   selectExperiment(anExperimentId: number): void;
   setSearchString(event: IonChangeEvent): void;
+  selectNone(): void;
 }
 
 export type BenchmarkSelectorProps = BenchmarkSelectorOwnProps &

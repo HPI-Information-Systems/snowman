@@ -91,3 +91,10 @@ export const openStrategy = (
     type: BenchmarkAppActionsTypes.OPEN_STRATEGY,
     payload: aStrategyId,
   });
+
+export const selectNone = (): easyPrimitiveActionReturn<BenchmarkAppModel> =>
+  easyPrimitiveAction<BenchmarkAppModel>({
+    type: BenchmarkAppActionsTypes.SELECT_NONE,
+    // payload is not used
+    payload: false,
+  });

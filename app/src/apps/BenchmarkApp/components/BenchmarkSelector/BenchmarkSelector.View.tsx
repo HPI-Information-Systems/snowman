@@ -4,6 +4,7 @@ import {
   IonIcon,
   IonItem,
   IonList,
+  IonListHeader,
   IonMenu,
   IonSearchbar,
   IonToolbar,
@@ -41,6 +42,7 @@ const BenchmarkSelectorView = ({
   selectedExperimentIds,
   searchString,
   setSearchString,
+  selectNone,
 }: BenchmarkSelectorProps): JSX.Element => {
   return (
     <IonMenu contentId={contentId}>
@@ -56,6 +58,11 @@ const BenchmarkSelectorView = ({
       </IonHeader>
       <IonContent>
         <IonList>
+          <IonListHeader>
+            <span style={{ cursor: 'pointer' }} onClick={selectNone}>
+              Clear selection
+            </span>
+          </IonListHeader>
           {datasets.map(
             (aDataset: Dataset): JSX.Element => {
               const expandedDatasetEntity = expandedAlgorithmsInDatasets.find(

@@ -258,6 +258,14 @@ const BenchmarkAppReducer = (
         ...state,
         activeStrategy: action.payload as StrategyIDs,
       };
+    case BenchmarkAppActionsTypes.SELECT_NONE:
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          selectedExperimentIds: [],
+        },
+      };
     default:
       return state;
   }
