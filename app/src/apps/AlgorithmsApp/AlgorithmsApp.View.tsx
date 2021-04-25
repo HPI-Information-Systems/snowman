@@ -2,7 +2,7 @@ import { IonCol, IonGrid, IonRow } from '@ionic/react';
 import { Algorithm } from 'api';
 import { AlgorithmsAppProps } from 'apps/AlgorithmsApp/AlgorithmsAppProps';
 import AlgorithmCard from 'apps/AlgorithmsApp/components/AlgorithmCard/AlgorithmCard';
-import AddFab from 'components/simple/AddFab/AddFab';
+import AddFab from 'components/simple/GenericFab/AddFab';
 import React from 'react';
 
 const AlgorithmsAppView = ({

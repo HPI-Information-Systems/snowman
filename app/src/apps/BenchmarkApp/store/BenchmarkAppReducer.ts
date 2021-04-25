@@ -20,7 +20,7 @@ const initialState: BenchmarkAppModel = {
   config: initialConfigState,
   expandedAlgorithmsInDatasets: [],
   searchString: '',
-  activeStrategy: StrategyIDs.NaryMetrics,
+  activeStrategy: StrategyIDs.Dashboard,
 };
 
 const removeExpandedEntity = (entities: ExpandedEntity[], id: number) =>

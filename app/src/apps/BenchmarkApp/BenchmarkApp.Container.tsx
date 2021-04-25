@@ -3,6 +3,7 @@ import {
   BenchmarkAppDispatchProps,
   BenchmarkAppStateProps,
 } from 'apps/BenchmarkApp/BenchmarkAppProps';
+import { openStrategy } from 'apps/BenchmarkApp/store/BenchmarkAppActions';
 import {
   getAlgorithms,
   getDatasets,
@@ -12,6 +13,7 @@ import {
   BenchmarkAppDispatch,
   BenchmarkAppModel,
 } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { connect } from 'react-redux';
 
 const mapStateToProps = (state: BenchmarkAppModel): BenchmarkAppStateProps => ({
@@ -25,6 +27,9 @@ const mapDispatchToProps = (
     dispatch(getAlgorithms()).then();
     dispatch(getDatasets()).then();
     dispatch(getExperiments()).then();
+  },
+  openStrategy(id: StrategyIDs) {
+    dispatch(openStrategy(id));
   },
 });
 

@@ -9,7 +9,7 @@ import {
 import { Dataset } from 'api';
 import DatasetCard from 'apps/DatasetsApp/components/DatasetCard/DatasetCard';
 import { DatasetsAppProps } from 'apps/DatasetsApp/DatasetsAppProps';
-import AddFab from 'components/simple/AddFab/AddFab';
+import AddFab from 'components/simple/GenericFab/AddFab';
 import React from 'react';
 import { getTagsFromDatasets } from 'utils/tagFactory';
 

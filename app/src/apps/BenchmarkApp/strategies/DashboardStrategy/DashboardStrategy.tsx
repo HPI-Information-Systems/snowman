@@ -11,12 +11,15 @@ import {
   IonText,
 } from '@ionic/react';
 import GenericBenchmarkStrategy from 'apps/BenchmarkApp/components/GenericBenchmarkStrategy/GenericBenchmarkStrategy';
+import { DashboardStrategyProps } from 'apps/BenchmarkApp/strategies/DashboardStrategy/DashboardStrategyProps';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { barChart, calculator, colorFilter, pauseCircle } from 'ionicons/icons';
 import React from 'react';
 import { dummyStoreFactory } from 'utils/storeFactory';
 
-const DashboardStrategy = (): JSX.Element => (
+const DashboardStrategy = ({
+  openStrategy,
+}: DashboardStrategyProps): JSX.Element => (
   <GenericBenchmarkStrategy
     strategyId={StrategyIDs.Dashboard}
     createStrategyStore={dummyStoreFactory('BenchmarkDashboard')}
@@ -53,7 +56,11 @@ const DashboardStrategy = (): JSX.Element => (
                 </p>
               </IonText>
             </IonCardContent>
-            <IonButton expand="full" fill="clear">
+            <IonButton
+              expand="full"
+              fill="clear"
+              onClick={(): void => openStrategy(StrategyIDs.NaryMetrics)}
+            >
               Start Benchmark
             </IonButton>
           </IonCard>
