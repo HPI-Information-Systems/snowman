@@ -23,10 +23,10 @@ import { IonChangeEvent } from 'types/IonChangeEvent';
 const mapStateToProps = (
   state: BenchmarkAppModel
 ): BenchmarkSelectorStateProps => ({
-  algorithms: state.algorithms,
-  datasets: state.datasets,
-  experiments: state.experiments,
-  selectedExperimentIds: state.selectedExperimentIds,
+  algorithms: state.config.algorithms,
+  datasets: state.config.datasets,
+  experiments: state.config.experiments,
+  selectedExperimentIds: state.config.selectedExperimentIds,
   expandedAlgorithmsInDatasets: state.expandedAlgorithmsInDatasets,
   searchString: state.searchString,
 });

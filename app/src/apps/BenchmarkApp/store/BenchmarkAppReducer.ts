@@ -1,17 +1,24 @@
 import { Algorithm, Dataset, Experiment } from 'api';
 import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
-import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import {
+  BenchmarkAppConfigStore,
+  BenchmarkAppModel,
+} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ExpandedEntity } from 'apps/BenchmarkApp/types/ExpandedEntity';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { union } from 'lodash';
 import { SnowmanAction } from 'store/messages';
 
-const initialState: BenchmarkAppModel = {
+const initialConfigState: BenchmarkAppConfigStore = {
   algorithms: [],
   datasets: [],
   experiments: [],
-  expandedAlgorithmsInDatasets: [],
   selectedExperimentIds: [],
+};
+
+const initialState: BenchmarkAppModel = {
+  config: initialConfigState,
+  expandedAlgorithmsInDatasets: [],
   searchString: '',
   activeStrategy: StrategyIDs.NaryMetrics,
 };
@@ -38,60 +45,81 @@ const BenchmarkAppReducer = (
       return {
         ...state,
         expandedAlgorithmsInDatasets: [],
-        selectedExperimentIds: [],
-        algorithms: action.payload as Algorithm[],
+        config: {
+          ...state.config,
+          selectedExperimentIds: [],
+          algorithms: action.payload as Algorithm[],
+        },
       };
     case BenchmarkAppActionsTypes.SET_DATASETS:
       return {
         ...state,
         expandedAlgorithmsInDatasets: [],
-        selectedExperimentIds: [],
-        datasets: action.payload as Dataset[],
+        config: {
+          ...state.config,
+          selectedExperimentIds: [],
+          datasets: action.payload as Dataset[],
+        },
       };
     case BenchmarkAppActionsTypes.SET_EXPERIMENTS:
       return {
         ...state,
         expandedAlgorithmsInDatasets: [],
-        selectedExperimentIds: [],
-        experiments: action.payload as Experiment[],
+        config: {
+          ...state.config,
+          selectedExperimentIds: [],
+          experiments: action.payload as Experiment[],
+        },
       };
     case BenchmarkAppActionsTypes.SELECT_DATASET_CHILDREN:
       return {
         ...state,
-        selectedExperimentIds: union(
-          state.selectedExperimentIds,
-          state.experiments
-            .filter(
-              (anExperiment: Experiment): boolean =>
-                anExperiment.datasetId === (action.payload as number)
-            )
-            .map((anExperiment: Experiment): number => anExperiment.id)
-        ),
+        config: {
+          ...state.config,
+          selectedExperimentIds: union(
+            state.config.selectedExperimentIds,
+            state.config.experiments
+              .filter(
+                (anExperiment: Experiment): boolean =>
+                  anExperiment.datasetId === (action.payload as number)
+              )
+              .map((anExperiment: Experiment): number => anExperiment.id)
+          ),
+        },
       };
     case BenchmarkAppActionsTypes.SELECT_ALGORITHM_CHILDREN:
       return {
         ...state,
-        selectedExperimentIds: union(
-          state.selectedExperimentIds,
-          state.experiments
-            .filter(
-              (anExperiment: Experiment): boolean =>
-                anExperiment.datasetId === (action.payload as number) &&
-                anExperiment.algorithmId === (action.optionalPayload as number)
-            )
-            .map((anExperiment: Experiment): number => anExperiment.id)
-        ),
+        config: {
+          ...state.config,
+          selectedExperimentIds: union(
+            state.config.selectedExperimentIds,
+            state.config.experiments
+              .filter(
+                (anExperiment: Experiment): boolean =>
+                  anExperiment.datasetId === (action.payload as number) &&
+                  anExperiment.algorithmId ===
+                    (action.optionalPayload as number)
+              )
+              .map((anExperiment: Experiment): number => anExperiment.id)
+          ),
+        },
       };
     case BenchmarkAppActionsTypes.TOGGLE_EXPERIMENT:
       return {
         ...state,
-        selectedExperimentIds: state.selectedExperimentIds.includes(
-          action.payload as number
-        )
-          ? state.selectedExperimentIds.filter(
-              (value: number): boolean => value !== (action.payload as number)
-            )
-          : union(state.selectedExperimentIds, [action.payload as number]),
+        config: {
+          ...state.config,
+          selectedExperimentIds: state.config.selectedExperimentIds.includes(
+            action.payload as number
+          )
+            ? state.config.selectedExperimentIds.filter(
+                (value: number): boolean => value !== (action.payload as number)
+              )
+            : union(state.config.selectedExperimentIds, [
+                action.payload as number,
+              ]),
+        },
       };
     case BenchmarkAppActionsTypes.EXPAND_DATASET:
       return {
@@ -155,11 +183,11 @@ const BenchmarkAppReducer = (
       };
     case BenchmarkAppActionsTypes.SET_SEARCH_STRING: {
       if ((action.payload as string) !== '') {
-        const selectedExperiments = state.experiments.filter(
+        const selectedExperiments = state.config.experiments.filter(
           (anExperiment: Experiment): boolean =>
             anExperiment.name.includes(action.payload as string)
         );
-        const relevantDatasets = state.datasets.filter(
+        const relevantDatasets = state.config.datasets.filter(
           (aDataset: Dataset): boolean =>
             selectedExperiments.findIndex(
               (anExperiment: Experiment): boolean =>
@@ -172,7 +200,7 @@ const BenchmarkAppReducer = (
           expandedAlgorithmsInDatasets: relevantDatasets.map(
             (aDataset: Dataset): ExpandedEntity => ({
               id: aDataset.id,
-              children: state.algorithms
+              children: state.config.algorithms
                 .filter(
                   (anAlgorithm: Algorithm): boolean =>
                     selectedExperiments.findIndex(

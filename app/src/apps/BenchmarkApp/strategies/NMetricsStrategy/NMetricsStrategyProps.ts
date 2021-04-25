@@ -3,15 +3,11 @@ import { Experiment, Metric } from 'api';
 export interface NMetricsStrategyStateProps {
   metrics: Metric[][];
   experiments: Experiment[];
-}
-
-export interface NMetricsStrategyOwnProps {
-  targetExperimentIds: number[];
-  availableExperiments: Experiment[];
+  goldStandard: Experiment | undefined;
+  isValidSelection: boolean;
 }
 
 export interface NMetricsStrategyDispatchProps {
-  loadMetrics(): void;
   inspectExperiment(anExperiment: Experiment): void;
 }
 

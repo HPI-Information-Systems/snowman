@@ -49,3 +49,7 @@ table.material-table tbody td {
 table.material-table thead th .clickable-content {
   cursor: pointer;
 }
+
+.heavyBackdrop {
+  opacity: 0.3;
+}

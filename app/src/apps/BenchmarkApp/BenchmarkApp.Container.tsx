@@ -16,7 +16,6 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (state: BenchmarkAppModel): BenchmarkAppStateProps => ({
   activeStrategy: state.activeStrategy,
-  benchmarkState: state,
 });
 
 const mapDispatchToProps = (

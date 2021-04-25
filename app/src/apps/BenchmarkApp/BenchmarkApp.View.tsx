@@ -7,16 +7,12 @@ import React, { useEffect } from 'react';
 const BenchmarkAppView = ({
   loadInitialState,
   activeStrategy,
-  benchmarkState,
 }: BenchmarkAppProps): JSX.Element => {
   useEffect(loadInitialState, [loadInitialState]);
   return (
     <PageStruct pageTitle={activeStrategy}>
       <DashboardStrategy />
-      <NMetricsStrategy
-        targetExperimentIds={benchmarkState.selectedExperimentIds}
-        availableExperiments={benchmarkState.experiments}
-      />
+      <NMetricsStrategy />
     </PageStruct>
   );
 };
