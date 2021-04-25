@@ -129,6 +129,34 @@ const BenchmarkAppReducer = (
             state.expandedAlgorithmsInDatasets,
             action.payload as number
           ),
+          {
+            id: action.payload as number,
+            children: state.config.algorithms
+              .filter(
+                (anAlgorithm: Algorithm): boolean =>
+                  state.config.experiments.findIndex(
+                    (anExperiment: Experiment): boolean =>
+                      anExperiment.datasetId === (action.payload as number) &&
+                      anExperiment.algorithmId === anAlgorithm.id
+                  ) > -1
+              )
+              .map(
+                (anAlgorithm: Algorithm): ExpandedEntity => ({
+                  id: anAlgorithm.id,
+                  children: [],
+                })
+              ),
+          },
+        ],
+      };
+    case BenchmarkAppActionsTypes.EXPAND_DATASET_FULL:
+      return {
+        ...state,
+        expandedAlgorithmsInDatasets: [
+          ...removeExpandedEntity(
+            state.expandedAlgorithmsInDatasets,
+            action.payload as number
+          ),
           { id: action.payload as number, children: [] },
         ],
       };

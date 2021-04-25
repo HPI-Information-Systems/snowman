@@ -40,6 +40,14 @@ export const expandDataset = (
     payload: aDatasetId,
   });
 
+export const expandDatasetFull = (
+  aDatasetId: number
+): easyPrimitiveActionReturn<BenchmarkAppModel> =>
+  easyPrimitiveAction<BenchmarkAppModel>({
+    type: BenchmarkAppActionsTypes.EXPAND_DATASET_FULL,
+    payload: aDatasetId,
+  });
+
 export const shrinkDataset = (
   aDatasetId: number
 ): easyPrimitiveActionReturn<BenchmarkAppModel> =>

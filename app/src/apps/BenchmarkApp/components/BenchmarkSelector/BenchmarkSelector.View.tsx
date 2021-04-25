@@ -87,7 +87,10 @@ const BenchmarkSelectorView = ({
                     <IonIcon
                       icon={addOutline}
                       color={'medium'}
-                      onClick={(): void => selectDatasetChildren(aDataset.id)}
+                      onClick={(): void => {
+                        expandDataset(aDataset.id);
+                        selectDatasetChildren(aDataset.id);
+                      }}
                       class={styles.selector}
                       slot="end"
                     />
@@ -144,12 +147,16 @@ const BenchmarkSelectorView = ({
                                   {anAlgorithm.name}
                                   <IonIcon
                                     icon={addOutline}
-                                    onClick={(): void =>
+                                    onClick={(): void => {
+                                      expandAlgorithmInDataset(
+                                        aDataset.id,
+                                        anAlgorithm.id
+                                      );
                                       selectAlgorithmInDatasetChildren(
                                         aDataset.id,
                                         anAlgorithm.id
-                                      )
-                                    }
+                                      );
+                                    }}
                                     color={'medium'}
                                     class={styles.selector}
                                     slot="end"
