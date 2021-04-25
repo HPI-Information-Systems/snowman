@@ -59,7 +59,7 @@ const DashboardStrategy = ({
             <IonButton
               expand="full"
               fill="clear"
-              onClick={(): void => openStrategy(StrategyIDs.NaryMetrics)}
+              onClick={(): void => openStrategy(StrategyIDs.NaryIntersection)}
             >
               Start Benchmark
             </IonButton>
@@ -95,7 +95,11 @@ const DashboardStrategy = ({
                 </p>
               </IonText>
             </IonCardContent>
-            <IonButton expand="full" fill="clear">
+            <IonButton
+              expand="full"
+              fill="clear"
+              onClick={(): void => openStrategy(StrategyIDs.NaryMetrics)}
+            >
               Start Benchmark
             </IonButton>
           </IonCard>
@@ -128,7 +132,11 @@ const DashboardStrategy = ({
                 </p>
               </IonText>
             </IonCardContent>
-            <IonButton expand="full" fill="clear">
+            <IonButton
+              expand="full"
+              fill="clear"
+              onClick={(): void => openStrategy(StrategyIDs.BinaryMetrics)}
+            >
               Start Benchmark
             </IonButton>
           </IonCard>
@@ -162,7 +170,11 @@ const DashboardStrategy = ({
                 </p>
               </IonText>
             </IonCardContent>
-            <IonButton expand="full" fill="clear">
+            <IonButton
+              expand="full"
+              fill="clear"
+              onClick={(): void => openStrategy(StrategyIDs.KpiInvestigator)}
+            >
               Start Benchmark
             </IonButton>
           </IonCard>
