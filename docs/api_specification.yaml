@@ -3,8 +3,8 @@ info:
   description: >
     _This document describes the REST API of the snowman data matching benchmark
     tool._
-    Comparing data matching algorithms is still an unsolved topic in both industry and research. 
-    With snowman, developers and researchers will be able to compare the performance of different data matching 
+    Comparing data matching algorithms is still an unsolved topic in both industry and research.
+    With snowman, developers and researchers will be able to compare the performance of different data matching
     solutions or improve new algorithms.
   version: 1.0.0
   title: Snowman API
@@ -750,17 +750,17 @@ paths:
             - $ref: "#/components/schemas/softKPIsExperimentEnum"
         description: metric to be visualised on the y-axis of the diagram
         required: true
-      - name: steps
-        in: query
-        schema:
-          type: number
-        description: Amount of steps to be done while rendering metric-metric-diagrams
       x-codegen-request-body-name: diagram
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/DiagramExperiments"
+              properties:
+                multipleExperiments:
+                  $ref: "#/components/schemas/DiagramExperiments"
+                similarityThresholds:
+                  $ref: "#/components/schemas/ExperimentSimilarityConfig"
+              type: object
         required: true
       responses:
         200:
@@ -1117,6 +1117,21 @@ components:
         hrAmount:
           type: integer
       type: object
+    ExperimentSimilarityConfig:
+      properties:
+        experimentId:
+          $ref: "#/components/schemas/ExperimentId"
+        groundTruthId:
+          $ref: "#/components/schemas/ExperimentId"
+        steps:
+          type: integer
+        func:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+      required:
+        - func
+        - experimentId
+        - groundTruthId
+        - steps
     DiagramExperimentItem:
       properties:
         experiment:
@@ -1125,7 +1140,6 @@ components:
           $ref: "#/components/schemas/ExperimentConfigItem"
       required:
         - experiment
-        - groundTruth
       type: object
     DiagramExperiments:
       items:
@@ -1137,6 +1151,10 @@ components:
           x:
             type: number
           y:
+            type: number
+          experimentId:
+            $ref: "#/components/schemas/ExperimentId"
+          threshold:
             type: number
       type: array
     softKPIsAlgorithmEnum:

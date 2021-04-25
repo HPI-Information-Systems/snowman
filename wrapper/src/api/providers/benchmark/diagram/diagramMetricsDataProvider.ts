@@ -9,11 +9,12 @@ export class DiagramMetricsDataProvider extends DiagramDataProvider {
     metric: MetricsEnum,
     diagramExperimentItem: DiagramExperimentItem
   ): number {
+    if (!diagramExperimentItem.groundTruth)
+      throw new Error('A groundtruth is needed to receive hard metrics data');
     const datasetId = datasetFromExperimentIds([
       diagramExperimentItem.groundTruth.experimentId,
       diagramExperimentItem.experiment.experimentId,
     ]).id;
-
     const matrix = ConfusionMatrixCache.get({
       datasetId,
       predicted: [diagramExperimentItem.experiment],

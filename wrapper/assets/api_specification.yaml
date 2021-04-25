@@ -4,7 +4,7 @@ info:
     email: snowman@groups.sap.com
     url: https://github.com/HPI-Information-Systems/snowman
   description: |
-    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
+    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms.
   license:
     name: LICENSE (MIT)
     url: https://github.com/HPI-Information-Systems/snowman/blob/main/LICENSE
@@ -922,19 +922,19 @@ paths:
           - $ref: '#/components/schemas/MetricsEnum'
           - $ref: '#/components/schemas/softKPIsExperimentEnum'
         style: form
-      - description: Amount of steps to be done while rendering metric-metric-diagrams
-        explode: true
-        in: query
-        name: steps
-        required: false
-        schema:
-          type: number
-        style: form
       requestBody:
+        $ref: '#/components/requestBodies/inline_object'
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DiagramExperiments'
+              properties:
+                multipleExperiments:
+                  items:
+                    $ref: '#/components/schemas/DiagramExperimentItem'
+                  type: array
+                similarityThresholds:
+                  $ref: '#/components/schemas/ExperimentSimilarityConfig'
+              type: object
         required: true
       responses:
         "200":
@@ -958,6 +958,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ExperimentIntersection'
+      required: true
+    inline_object:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object'
       required: true
   schemas:
     AlgorithmId:
@@ -1280,18 +1286,24 @@ components:
         hrAmount:
           type: integer
       type: object
+    ExperimentSimilarityConfig:
+      properties:
+        experimentId:
+          example: 1
+          type: integer
+        groundTruthId:
+          example: 1
+          type: integer
+        steps:
+          type: integer
+        func:
+          type: integer
+      required:
+      - experimentId
+      - func
+      - groundTruthId
+      - steps
     DiagramExperimentItem:
-      example:
-        groundTruth:
-          similarity:
-            func: 0
-            threshold: 6.027456183070403
-          experimentId: 1
-        experiment:
-          similarity:
-            func: 0
-            threshold: 6.027456183070403
-          experimentId: 1
       properties:
         experiment:
           $ref: '#/components/schemas/ExperimentConfigItem'
@@ -1299,7 +1311,6 @@ components:
           $ref: '#/components/schemas/ExperimentConfigItem'
       required:
       - experiment
-      - groundTruth
       type: object
     DiagramExperiments:
       items:
@@ -1311,6 +1322,10 @@ components:
           x:
             type: number
           y:
+            type: number
+          experimentId:
+            $ref: '#/components/schemas/ExperimentId'
+          threshold:
             type: number
       type: array
     softKPIsAlgorithmEnum:
@@ -1414,6 +1429,15 @@ components:
       required:
       - data
       - header
+      type: object
+    inline_object:
+      properties:
+        multipleExperiments:
+          items:
+            $ref: '#/components/schemas/DiagramExperimentItem'
+          type: array
+        similarityThresholds:
+          $ref: '#/components/schemas/ExperimentSimilarityConfig'
       type: object
     AlgorithmValues_softKPIs_integrationEffort:
       example:

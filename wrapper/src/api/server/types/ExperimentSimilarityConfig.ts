@@ -11,27 +11,34 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
-import {
-    ExperimentConfigItem,
-} from './';
-
-/**
- * 
- * @export
- * @interface DiagramExperimentItem
- */
-export interface DiagramExperimentItem {
-    /**
-     * 
-     * @type {ExperimentConfigItem}
-     * @memberof DiagramExperimentItem
-     */
-    experiment: ExperimentConfigItem;
-    /**
-     * 
-     * @type {ExperimentConfigItem}
-     * @memberof DiagramExperimentItem
-     */
-    groundTruth?: ExperimentConfigItem;
-}
+ /**
+  * 
+  * @export
+  * @interface ExperimentSimilarityConfig
+  */
+ export interface ExperimentSimilarityConfig {
+     /**
+      * 
+      * @type {number}
+      * @memberof ExperimentSimilarityConfig
+      */
+     experimentId: number;
+     /**
+      * 
+      * @type {number}
+      * @memberof ExperimentSimilarityConfig
+      */
+     groundTruthId: number;
+     /**
+      * 
+      * @type {number}
+      * @memberof ExperimentSimilarityConfig
+      */
+     steps: number;
+     /**
+      * 
+      * @type {number}
+      * @memberof ExperimentSimilarityConfig
+      */
+     func: number;
+ }

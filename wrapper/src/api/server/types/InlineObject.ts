@@ -13,25 +13,26 @@
  */
 
 import {
-    ExperimentConfigItem,
+    DiagramExperimentItem,
+    ExperimentSimilarityConfig,
 } from './';
 
 /**
  * 
  * @export
- * @interface DiagramExperimentItem
+ * @interface InlineObject
  */
-export interface DiagramExperimentItem {
+export interface InlineObject {
     /**
      * 
-     * @type {ExperimentConfigItem}
-     * @memberof DiagramExperimentItem
+     * @type {Array<DiagramExperimentItem>}
+     * @memberof InlineObject
      */
-    experiment: ExperimentConfigItem;
+    multipleExperiments?: Array<DiagramExperimentItem>;
     /**
      * 
-     * @type {ExperimentConfigItem}
-     * @memberof DiagramExperimentItem
+     * @type {ExperimentSimilarityConfig}
+     * @memberof InlineObject
      */
-    groundTruth?: ExperimentConfigItem;
+    similarityThresholds?: ExperimentSimilarityConfig;
 }

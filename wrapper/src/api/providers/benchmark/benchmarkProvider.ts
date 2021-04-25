@@ -33,38 +33,34 @@ export class BenchmarkProvider {
   calculateDiagramData({
     xAxis,
     yAxis,
-    steps,
     diagram,
   }: CalculateDiagramDataRequest): Array<DiagramCoordinate> {
     if (diagram === undefined) {
       throw new Error('Missing experiments!');
     }
-    if (isInEnum(MetricsEnum, xAxis) && isInEnum(MetricsEnum, yAxis)) {
+    if (
+      isInEnum(MetricsEnum, xAxis) &&
+      isInEnum(MetricsEnum, yAxis) &&
+      diagram.similarityThresholds
+    ) {
       const datasetId = datasetFromExperimentIds([
-        diagram[0].experiment.experimentId,
-        diagram[0].groundTruth.experimentId,
+        diagram.similarityThresholds.experimentId,
       ]).id;
       const X = xAxis === 'similarity' ? 'similarity' : metricsMap.get(xAxis);
       const Y = yAxis === 'similarity' ? 'similarity' : metricsMap.get(yAxis);
-      const experimentId = diagram[0].experiment.experimentId;
-      const groundTruth = [diagram[0].groundTruth.experimentId];
-      const func = diagram[0].experiment.similarity?.func;
-      if (!func)
-        throw new Error(
-          `A similarity function for experiment ${diagram[0].experiment.experimentId} does not exist!`
-        );
+      const experimentId = diagram.similarityThresholds.experimentId;
+      const groundTruth = [diagram.similarityThresholds.groundTruthId];
+      const steps = diagram.similarityThresholds.steps;
+      const func = diagram.similarityThresholds.func;
       if (!X || !Y)
         throw new Error(`At least one metric to be plotted does not exist!`);
-      if (!steps) {
-        throw new Error(`Steps not specified!`);
-      }
-
       return plot({ X, Y, datasetId, experimentId, groundTruth, steps, func });
     }
+    if (!diagram.multipleExperiments) throw new Error('S');
 
     const xGetter: DiagramDataProvider = getDiagramDataProvider(xAxis);
     const yGetter: DiagramDataProvider = getDiagramDataProvider(yAxis);
-    return diagram
+    return diagram.multipleExperiments
       .map((experiment) => {
         return {
           x: xGetter.getData(xAxis, experiment),

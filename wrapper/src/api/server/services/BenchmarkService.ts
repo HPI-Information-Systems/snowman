@@ -29,7 +29,6 @@ export async function calculateDiagramData({
         xAxis,
         yAxis,
         diagram,
-        steps,
       }),
     200,
     404

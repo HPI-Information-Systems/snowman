@@ -24,7 +24,7 @@ import {
 } from '../models';
 
 export interface AddAlgorithmRequest {
-    algorithm: AlgorithmValues;
+    algorithmValues: AlgorithmValues;
 }
 
 export interface DeleteAlgorithmRequest {
@@ -37,7 +37,7 @@ export interface GetAlgorithmRequest {
 
 export interface SetAlgorithmRequest {
     algorithmId: number;
-    algorithm: AlgorithmValues;
+    algorithmValues: AlgorithmValues;
 }
 
 /**
@@ -49,8 +49,8 @@ export class AlgorithmApi extends runtime.BaseAPI {
      * Creates a new algorithm
      */
     async addAlgorithmRaw(requestParameters: AddAlgorithmRequest): Promise<runtime.ApiResponse<number>> {
-        if (requestParameters.algorithm === null || requestParameters.algorithm === undefined) {
-            throw new runtime.RequiredError('algorithm','Required parameter requestParameters.algorithm was null or undefined when calling addAlgorithm.');
+        if (requestParameters.algorithmValues === null || requestParameters.algorithmValues === undefined) {
+            throw new runtime.RequiredError('algorithmValues','Required parameter requestParameters.algorithmValues was null or undefined when calling addAlgorithm.');
         }
 
         const queryParameters: any = {};
@@ -64,7 +64,7 @@ export class AlgorithmApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: AlgorithmValuesToJSON(requestParameters.algorithm),
+            body: AlgorithmValuesToJSON(requestParameters.algorithmValues),
         });
 
         return new runtime.TextApiResponse(response) as any;
@@ -171,8 +171,8 @@ export class AlgorithmApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('algorithmId','Required parameter requestParameters.algorithmId was null or undefined when calling setAlgorithm.');
         }
 
-        if (requestParameters.algorithm === null || requestParameters.algorithm === undefined) {
-            throw new runtime.RequiredError('algorithm','Required parameter requestParameters.algorithm was null or undefined when calling setAlgorithm.');
+        if (requestParameters.algorithmValues === null || requestParameters.algorithmValues === undefined) {
+            throw new runtime.RequiredError('algorithmValues','Required parameter requestParameters.algorithmValues was null or undefined when calling setAlgorithm.');
         }
 
         const queryParameters: any = {};
@@ -186,7 +186,7 @@ export class AlgorithmApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: AlgorithmValuesToJSON(requestParameters.algorithm),
+            body: AlgorithmValuesToJSON(requestParameters.algorithmValues),
         });
 
         return new runtime.VoidApiResponse(response);

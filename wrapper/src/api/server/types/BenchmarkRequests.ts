@@ -1,7 +1,7 @@
 import {
-  DiagramExperimentItem,
   ExperimentConfigItem,
   ExperimentIntersectionItem,
+  InlineObject,
   MetricsEnum,
   SoftKPIsAlgorithmEnum,
   SoftKPIsExperimentEnum,
@@ -10,8 +10,7 @@ import {
 export interface CalculateDiagramDataRequest {
   xAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
   yAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
-  diagram: Array<DiagramExperimentItem>;
-  steps?: number;
+  diagram: InlineObject;
 }
 
 export interface CalculateExperimentIntersectionCountRequest {

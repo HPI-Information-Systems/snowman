@@ -37,7 +37,7 @@ export interface DiagramExperimentItem {
      * @type {ExperimentConfigItem}
      * @memberof DiagramExperimentItem
      */
-    groundTruth: ExperimentConfigItem;
+    groundTruth?: ExperimentConfigItem;
 }
 
 export function DiagramExperimentItemFromJSON(json: any): DiagramExperimentItem {
@@ -51,7 +51,7 @@ export function DiagramExperimentItemFromJSONTyped(json: any, ignoreDiscriminato
     return {
         
         'experiment': ExperimentConfigItemFromJSON(json['experiment']),
-        'groundTruth': ExperimentConfigItemFromJSON(json['groundTruth']),
+        'groundTruth': !exists(json, 'groundTruth') ? undefined : ExperimentConfigItemFromJSON(json['groundTruth']),
     };
 }
 
