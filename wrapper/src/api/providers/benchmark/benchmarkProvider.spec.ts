@@ -172,90 +172,77 @@ beforeAll(async () => {
 });
 describe('test benchmark functions', () => {
   const benchmarkProvider = new BenchmarkProvider();
-  /*
   test('test developer diagram calculation', () => {
     expect(
       benchmarkProvider.calculateDiagramData({
         xAxis: SoftKPIsExperimentEnum.HrAmount,
         yAxis: MetricsEnum.Precision,
-        diagram: [
-          {
-            experiment: {
-              experimentId: experimentIds.experiment1,
+        diagram: {
+          multipleExperiments: [
+            {
+              experiment: {
+                experimentId: experimentIds.experiment1,
+              },
+              groundTruth: {
+                experimentId: experimentIds.goldstandard,
+              },
             },
-            groundTruth: {
-              experimentId: experimentIds.goldstandard,
-            },
-          },
-        ],
+          ],
+        },
       })
     ).toMatchObject([{ x: 11, y: 0.5 }]);
   });
-  */
-  /*
   test('test softKPI-softKPI diagram calculation', () => {
     expect(
       benchmarkProvider.calculateDiagramData({
         xAxis: SoftKPIsExperimentEnum.HrAmount,
         yAxis: SoftKPIsAlgorithmEnum.DomainExpertise,
-        diagram: [
-          {
-            experiment: {
-              experimentId: experimentIds.experiment1,
+        diagram: {
+          multipleExperiments: [
+            {
+              experiment: {
+                experimentId: experimentIds.experiment1,
+              },
+              groundTruth: {
+                experimentId: experimentIds.goldstandard,
+              },
             },
-            groundTruth: {
-              experimentId: experimentIds.goldstandard,
+            {
+              experiment: {
+                experimentId: experimentIds.experiment1,
+              },
+              groundTruth: {
+                experimentId: experimentIds.goldstandard,
+              },
             },
-          },
-          {
-            experiment: {
-              experimentId: experimentIds.experiment1,
-            },
-            groundTruth: {
-              experimentId: experimentIds.goldstandard,
-            },
-          },
-        ],
+          ],
+        },
       })
     ).toMatchObject([
       { x: 11, y: 12 },
       { x: 11, y: 12 },
     ]);
   });
-  */
-  /*
   test('test metric-metric diagram calculation', () => {
     expect(
       benchmarkProvider.calculateDiagramData({
         xAxis: MetricsEnum.Precision,
-        yAxis: MetricsEnum.Similarity,
-        steps: 5,
-        diagram: [
-          {
-            experiment: {
-              experimentId: experimentIds.experiment1,
-              similarity: ,
+        yAxis: MetricsEnum.Recall,
+        diagram: {
+          multipleExperiments: [
+            {
+              experiment: {
+                experimentId: experimentIds.experiment1,
+              },
+              groundTruth: {
+                experimentId: experimentIds.goldstandard,
+              },
             },
-            groundTruth: {
-              experimentId: experimentIds.goldstandard,
-            },
-          },
-          {
-            experiment: {
-              experimentId: experimentIds.experiment1,
-            },
-            groundTruth: {
-              experimentId: experimentIds.goldstandard,
-            },
-          },
-        ],
+          ],
+        },
       })
-    ).toMatchObject([
-      { x: 11, y: 12 },
-      { x: 11, y: 12 },
-    ]);
+    ).toMatchObject([{ x: 0.5, y: 0.125 }]);
   });
-*/
   describe('metrics', () => {
     test('test metrics calculation', () => {
       expect(
