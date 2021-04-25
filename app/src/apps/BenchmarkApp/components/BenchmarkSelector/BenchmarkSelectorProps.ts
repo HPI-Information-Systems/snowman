@@ -19,6 +19,7 @@ export interface BenchmarkSelectorDispatchProps {
   expandAlgorithmInDataset(aDatasetId: number, anAlgorithmId: number): void;
   shrinkAlgorithmInDataset(aDatasetId: number, anAlgorithmId: number): void;
   expandDataset(aDatasetId: number): void;
+  expandDatasetFull(aDatasetId: number): void;
   shrinkDataset(aDatasetId: number): void;
   selectAlgorithmInDatasetChildren(
     aDatasetId: number,

@@ -121,7 +121,7 @@ const BenchmarkAppReducer = (
               ]),
         },
       };
-    case BenchmarkAppActionsTypes.EXPAND_DATASET:
+    case BenchmarkAppActionsTypes.EXPAND_DATASET_FULL:
       return {
         ...state,
         expandedAlgorithmsInDatasets: [
@@ -149,7 +149,7 @@ const BenchmarkAppReducer = (
           },
         ],
       };
-    case BenchmarkAppActionsTypes.EXPAND_DATASET_FULL:
+    case BenchmarkAppActionsTypes.EXPAND_DATASET:
       return {
         ...state,
         expandedAlgorithmsInDatasets: [

@@ -6,6 +6,7 @@ import {
 import {
   expandAlgorithmInDataset,
   expandDataset,
+  expandDatasetFull,
   selectAlgorithmInDatasetChildren,
   selectDatasetChildren,
   selectExperimentBy,
@@ -42,6 +43,9 @@ const mapDispatchToProps = (
   },
   expandDataset(aDatasetId: number) {
     dispatch(expandDataset(aDatasetId));
+  },
+  expandDatasetFull(aDatasetId: number) {
+    dispatch(expandDatasetFull(aDatasetId));
   },
   shrinkDataset(aDatasetId: number) {
     dispatch(shrinkDataset(aDatasetId));

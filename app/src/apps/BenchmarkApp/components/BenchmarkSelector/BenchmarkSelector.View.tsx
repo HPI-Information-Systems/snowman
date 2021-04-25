@@ -31,6 +31,7 @@ const BenchmarkSelectorView = ({
   experiments,
   expandedAlgorithmsInDatasets,
   expandDataset,
+  expandDatasetFull,
   shrinkDataset,
   expandAlgorithmInDataset,
   shrinkAlgorithmInDataset,
@@ -88,7 +89,7 @@ const BenchmarkSelectorView = ({
                       icon={addOutline}
                       color={'medium'}
                       onClick={(): void => {
-                        expandDataset(aDataset.id);
+                        expandDatasetFull(aDataset.id);
                         selectDatasetChildren(aDataset.id);
                       }}
                       class={styles.selector}
