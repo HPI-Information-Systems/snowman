@@ -22,7 +22,7 @@ const DashboardStrategy = ({
 }: DashboardStrategyProps): JSX.Element => (
   <GenericBenchmarkStrategy
     strategyId={StrategyIDs.Dashboard}
-    createStrategyStore={dummyStoreFactory('BenchmarkDashboard')}
+    createStrategyStore={dummyStoreFactory()}
   >
     <IonGrid>
       <IonRow>
