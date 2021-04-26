@@ -3,7 +3,7 @@ import {
   onDialogClose,
   onDialogOpen,
 } from 'apps/DatasetDialog/store/DatasetDialogActions';
-import { constructDatasetDialogStore } from 'apps/DatasetDialog/store/DatasetDialogStore';
+import { DatasetDialogStoreMagistrate } from 'apps/DatasetDialog/store/DatasetDialogStore';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import GenericDialog from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialog';
 import React from 'react';
@@ -16,7 +16,9 @@ const DatasetDialog = (): JSX.Element => (
       entityId ? `Update Existing Dataset (ID: ${entityId})` : 'Add New Dataset'
     }
     instanceId={ViewIDs.DatasetDialog}
-    createSubAppStore={constructDatasetDialogStore}
+    createSubAppStore={DatasetDialogStoreMagistrate.getStore.bind(
+      DatasetDialogStoreMagistrate
+    )}
     onDialogOpen={onDialogOpen}
     onDialogClose={onDialogClose}
   >
