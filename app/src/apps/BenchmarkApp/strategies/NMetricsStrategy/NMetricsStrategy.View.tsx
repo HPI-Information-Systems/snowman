@@ -1,9 +1,9 @@
-import 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyStyles.css';
 import 'katex/dist/katex.min.css';
 
 import { IonBackdrop, IonCard, IonIcon, IonText } from '@ionic/react';
 import { Experiment, Metric } from 'api';
 import { NMetricsStrategyProps } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyProps';
+import styles from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyStyles.module.css';
 import { chevronForwardOutline } from 'ionicons/icons';
 import { renderToString } from 'katex';
 import React, { useEffect } from 'react';
@@ -26,7 +26,7 @@ const NMetricsStrategyView = ({
         <IonBackdrop tappable={false} className={'heavyBackdrop'} />
       ) : null}
       <IonCard>
-        <table className="material-table">
+        <table className={styles.materialTable}>
           <thead>
             <tr>
               <th>Metric Name</th>
@@ -35,14 +35,14 @@ const NMetricsStrategyView = ({
                   <th key={anExperiment.id}>
                     <IonText
                       color="primary"
-                      className="clickable-content"
+                      className={styles.clickableContent}
                       onClick={(): void => inspectExperiment(anExperiment)}
                       data-tip="Open BinaryMetrics Viewer for experiment."
                     >
                       {anExperiment.name}
                       <IonIcon
                         icon={chevronForwardOutline}
-                        className="icon-middle-padded"
+                        className={styles.iconMiddlePadded}
                       />
                     </IonText>
                   </th>
