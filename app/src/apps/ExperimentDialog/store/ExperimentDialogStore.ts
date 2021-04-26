@@ -6,4 +6,3 @@ export const ExperimentDialogMagistrate = new StoreMagistrate<ExperimentDialogMo
   'ExperimentDialogStore',
   ExperimentDialogReducer
 );
-
