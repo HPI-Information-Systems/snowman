@@ -12,7 +12,7 @@ const AboutApp = (): JSX.Element => (
     createSubAppStore={dummyStoreFactory('AboutAppDummy')}
   >
     <div className={style('ion-text-center', styles.introduction)}>
-      <img src="./logo192.png" alt="logo" />
+      <img src="./logo192.png" alt="Snowman Logo" />
       <h1>Welcome to Snowman Benchmark!</h1>
       <p>
         Start by selecting a dataset to work with on the left of this page.
