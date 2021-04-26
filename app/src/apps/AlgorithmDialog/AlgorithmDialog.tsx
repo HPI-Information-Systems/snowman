@@ -3,7 +3,7 @@ import {
   onDialogClose,
   onDialogOpen,
 } from 'apps/AlgorithmDialog/store/AlgorithmDialogActions';
-import { constructAlgorithmDialogStore } from 'apps/AlgorithmDialog/store/AlgorithmDialogStore';
+import { AlgorithmDialogStoreMagistrate } from 'apps/AlgorithmDialog/store/AlgorithmDialogStore';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import GenericDialog from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialog';
 import React from 'react';
@@ -18,7 +18,9 @@ const AlgorithmDialog = (): JSX.Element => (
         : 'Add New Matching Solution'
     }
     instanceId={ViewIDs.AlgorithmDialog}
-    createSubAppStore={constructAlgorithmDialogStore}
+    createSubAppStore={AlgorithmDialogStoreMagistrate.getStore.bind(
+      AlgorithmDialogStoreMagistrate
+    )}
     onDialogClose={onDialogClose}
     onDialogOpen={onDialogOpen}
   >
