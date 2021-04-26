@@ -23,7 +23,7 @@ const NMetricsStrategyView = ({
   return (
     <>
       {!isValidSelection ? (
-        <IonBackdrop tappable={false} className={'heavyBackdrop'} />
+        <IonBackdrop tappable={false} className={styles.heavyBackdrop} />
       ) : null}
       <IonCard>
         <table className={styles.materialTable}>
