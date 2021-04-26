@@ -4,7 +4,7 @@ export class MatthewsCorrelationCoefficient extends BaseMetric {
   name = 'matthews correlation coeff.';
   range: [number, number] = [0, 1];
   formula =
-    '\\frac{TPos * TNeg - FPos * FNeg}{\\sqrt{(TP + FP) * (TP + FN) * (TN + FP) * (TN + FN)}}';
+    '\\frac{TP * TN - FP * FN}{\\sqrt{(TP + FP) * (TP + FN) * (TN + FP) * (TN + FN)}}';
 
   get value(): number {
     return (
