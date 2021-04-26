@@ -16,9 +16,7 @@ const DatasetDialog = (): JSX.Element => (
       entityId ? `Update Existing Dataset (ID: ${entityId})` : 'Add New Dataset'
     }
     instanceId={ViewIDs.DatasetDialog}
-    createSubAppStore={DatasetDialogStoreMagistrate.getStore.bind(
-      DatasetDialogStoreMagistrate
-    )}
+    createSubAppStore={DatasetDialogStoreMagistrate.getStore}
     onDialogOpen={onDialogOpen}
     onDialogClose={onDialogClose}
   >
