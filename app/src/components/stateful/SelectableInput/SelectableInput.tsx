@@ -1,6 +1,6 @@
 import SelectableInputContainer from 'components/stateful/SelectableInput/SelectableInput.Container';
 import { SelectableInputOwnProps } from 'components/stateful/SelectableInput/SelectableInputProps';
-import { createSelectableInputStore } from 'components/stateful/SelectableInput/store/SelectableInputStore';
+import { SelectableInputStoreMagistrate } from 'components/stateful/SelectableInput/store/SelectableInputStore';
 import { SelectableInputModel } from 'components/stateful/SelectableInput/types/SelectableInputModel';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
@@ -11,7 +11,9 @@ class SelectableInput extends Component<SelectableInputOwnProps> {
   store: Store<SelectableInputModel, SnowmanAction> | null = null;
 
   UNSAFE_componentWillMount(): void {
-    this.store = createSelectableInputStore(this.props.instanceDescriptor);
+    this.store = SelectableInputStoreMagistrate.getStore(
+      this.props.instanceDescriptor
+    );
   }
 
   componentWillUnmount(): void {
