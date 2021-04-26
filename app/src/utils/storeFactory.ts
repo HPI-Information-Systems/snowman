@@ -51,7 +51,7 @@ export class StoreMagistrate<StoreModel> {
   }
 }
 
-export const constructStore = <Model>(
+const constructStore = <Model>(
   storeName: string,
   reducer: Reducer<Model, SnowmanAction>
 ): Store<Model, SnowmanAction> => {
