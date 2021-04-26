@@ -1,3 +1,4 @@
+import autoBind from 'auto-bind';
 import { applyMiddleware, createStore, Reducer, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import thunk from 'redux-thunk';
@@ -16,6 +17,8 @@ export class StoreMagistrate<StoreModel> {
     this.pool = new Map<string, Store<StoreModel, SnowmanAction>>();
     this.poolName = poolName;
     this.reducer = reducer;
+
+    autoBind(this);
   }
 
   deleteStore(instanceDescriptor?: StoreInstanceDescriptor): boolean {
