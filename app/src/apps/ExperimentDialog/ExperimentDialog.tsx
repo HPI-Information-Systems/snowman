@@ -3,7 +3,7 @@ import {
   onDialogClose,
   onDialogOpen,
 } from 'apps/ExperimentDialog/store/ExperimentDialogActions';
-import { constructExperimentDialogStore } from 'apps/ExperimentDialog/store/ExperimentDialogStore';
+import { ExperimentDialogMagistrate } from 'apps/ExperimentDialog/store/ExperimentDialogStore';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import GenericDialog from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialog';
 import React from 'react';
@@ -18,7 +18,9 @@ const ExperimentDialog = (): JSX.Element => (
         : 'Add New Experiment'
     }
     instanceId={ViewIDs.ExperimentDialog}
-    createSubAppStore={constructExperimentDialogStore}
+    createSubAppStore={ExperimentDialogMagistrate.getStore.bind(
+      ExperimentDialogMagistrate
+    )}
     onDialogOpen={onDialogOpen}
     onDialogClose={onDialogClose}
   >
