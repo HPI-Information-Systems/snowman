@@ -18,9 +18,9 @@ import {
   caretDown,
   caretForward,
   checkmarkCircle,
-  documentTextOutline,
   fileTrayFull,
   flask,
+  hardwareChip,
   radioButtonOffOutline,
 } from 'ionicons/icons';
 import React from 'react';
@@ -148,7 +148,7 @@ const BenchmarkSelectorView = ({
                                     class={styles.chevron}
                                   />
                                   <IonIcon
-                                    icon={flask}
+                                    icon={hardwareChip}
                                     className={styles.descriptiveIcon}
                                     color="primarydark"
                                   />
@@ -191,7 +191,7 @@ const BenchmarkSelectorView = ({
                                             }
                                           >
                                             <IonIcon
-                                              icon={documentTextOutline}
+                                              icon={flask}
                                               className={styles.descriptiveIcon}
                                               color="primarydark"
                                             />
