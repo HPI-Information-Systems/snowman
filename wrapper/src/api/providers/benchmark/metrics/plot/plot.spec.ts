@@ -25,8 +25,6 @@ type SimilarityFunctionPlotTestCase = {
   func: SimilarityThresholdFunctionValues;
   params: {
     groundTruth: RelaxedClustering;
-    minThreshold?: number;
-    maxThreshold?: number;
     steps: number;
   };
   result: PlotSimilarityConfusionMatrixResult;
@@ -62,36 +60,6 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
     ],
   },
   {
-    datasetNumberOfRecords: 2,
-    links: [[0, 1, 1]],
-    func: {
-      type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-      similarityThreshold: 'similarity',
-    },
-    params: {
-      groundTruth: [[0, 1]],
-      steps: 2,
-      maxThreshold: 100,
-      minThreshold: -100,
-    },
-    result: [
-      {
-        threshold: 100,
-        truePositives: 0,
-        falsePositives: 0,
-        falseNegatives: 1,
-        trueNegatives: 0,
-      },
-      {
-        threshold: -100,
-        truePositives: 1,
-        falsePositives: 0,
-        falseNegatives: 0,
-        trueNegatives: 0,
-      },
-    ],
-  },
-  {
     datasetNumberOfRecords: 4,
     links: [
       [0, 1, 2],
@@ -118,10 +86,10 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
         trueNegatives: 4,
       },
       {
-        threshold: 1.5,
-        truePositives: 1,
+        threshold: 1,
+        truePositives: 2,
         falsePositives: 0,
-        falseNegatives: 1,
+        falseNegatives: 0,
         trueNegatives: 4,
       },
       {
@@ -132,11 +100,11 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
         trueNegatives: 4,
       },
       {
-        threshold: 0.5,
+        threshold: 0,
         truePositives: 2,
-        falsePositives: 0,
+        falsePositives: 4,
         falseNegatives: 0,
-        trueNegatives: 4,
+        trueNegatives: 0,
       },
       {
         threshold: 0,
@@ -296,32 +264,27 @@ describe.each<SimilarityFunctionPlotTestCase>(testCases)(
     });
 
     test('calculates correct metrics', () => {
-      if (
-        params.maxThreshold === undefined &&
-        params.minThreshold === undefined
-      ) {
-        const received = plot({
-          datasetId,
-          experimentId,
-          func: funcId,
-          groundTruth: [groundTruthId],
-          steps: params.steps,
-          X: 'similarity',
-          Y: Precision,
-        });
-        expect(received).toEqual(
-          result
-            .map(
-              ({ threshold, ...matrix }) =>
-                ({
-                  threshold,
-                  x: threshold,
-                  y: new Precision(matrix).value,
-                } as PlotResult[number])
-            )
-            .reverse()
-        );
-      }
+      const received = plot({
+        datasetId,
+        experimentId,
+        func: funcId,
+        groundTruth: [groundTruthId],
+        steps: params.steps,
+        X: 'similarity',
+        Y: Precision,
+      });
+      expect(received).toEqual(
+        result
+          .map(
+            ({ threshold, ...matrix }) =>
+              ({
+                threshold,
+                x: threshold,
+                y: new Precision(matrix).value,
+              } as PlotResult[number])
+          )
+          .reverse()
+      );
     });
   }
 );
