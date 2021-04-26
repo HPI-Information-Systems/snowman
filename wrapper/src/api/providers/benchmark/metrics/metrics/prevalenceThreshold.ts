@@ -6,7 +6,7 @@ export class PrevalenceThreshold extends BaseMetric {
   name = 'prevalence threshold';
   range: [number, number] = [0, 1];
   formula =
-    '\\frac{\\sqrt{TPosRate \cdot (1 - TNegRate)} + TNegRate - 1}{TPosRate + TNegRate - 1}';
+    '\\frac{\\sqrt{true\\:positive\\:rate \\cdot (1 - true\\:negative\\:rate)} + true\\:negative\\:rate - 1}{true\\:positive\\:rate + true\\:negative\\:rate - 1}';
   get value(): number {
     const truePositiveRate = new Recall(this.matrix).value;
     const trueNegativeRate = new Specificity(this.matrix).value;

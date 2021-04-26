@@ -3,7 +3,7 @@ import { BaseMetric } from '../base';
 export class Recall extends BaseMetric {
   name = 'recall';
   range: [number, number] = [0, 1];
-  formula = '\\frac{truePositives}{truePositives + falseNegatives}';
+  formula = '\\frac{tp}{tp+fn}';
   get value(): number {
     return (
       this.matrix.truePositives /
