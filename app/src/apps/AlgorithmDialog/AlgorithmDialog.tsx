@@ -18,9 +18,7 @@ const AlgorithmDialog = (): JSX.Element => (
         : 'Add New Matching Solution'
     }
     instanceId={ViewIDs.AlgorithmDialog}
-    createSubAppStore={AlgorithmDialogStoreMagistrate.getStore.bind(
-      AlgorithmDialogStoreMagistrate
-    )}
+    createSubAppStore={AlgorithmDialogStoreMagistrate.getStore}
     onDialogClose={onDialogClose}
     onDialogOpen={onDialogOpen}
   >

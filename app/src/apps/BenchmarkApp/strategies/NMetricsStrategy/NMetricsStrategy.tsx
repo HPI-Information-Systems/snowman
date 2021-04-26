@@ -8,9 +8,7 @@ import React from 'react';
 const NMetricsStrategy = (): JSX.Element => (
   <GenericBenchmarkStrategy
     strategyId={StrategyIDs.NaryMetrics}
-    createStrategyStore={NMetricsStrategyStoreMagistrate.getStore.bind(
-      NMetricsStrategyStoreMagistrate
-    )}
+    createStrategyStore={NMetricsStrategyStoreMagistrate.getStore}
     loadStrategyData={loadStrategyData}
   >
     <NMetricsStrategyContainer />

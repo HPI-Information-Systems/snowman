@@ -18,9 +18,7 @@ const ExperimentDialog = (): JSX.Element => (
         : 'Add New Experiment'
     }
     instanceId={ViewIDs.ExperimentDialog}
-    createSubAppStore={ExperimentDialogMagistrate.getStore.bind(
-      ExperimentDialogMagistrate
-    )}
+    createSubAppStore={ExperimentDialogMagistrate.getStore}
     onDialogOpen={onDialogOpen}
     onDialogClose={onDialogClose}
   >

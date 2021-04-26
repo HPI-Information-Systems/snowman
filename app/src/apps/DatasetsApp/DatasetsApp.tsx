@@ -9,9 +9,7 @@ const DatasetsApp = (props: DatasetAppOwnProps): JSX.Element => (
   <GenericSubApp
     instanceId={ViewIDs.DatasetsApp}
     appTitle="Datasets Editor"
-    createSubAppStore={DatasetsAppStoreMagistrate.getStore.bind(
-      DatasetsAppStoreMagistrate
-    )}
+    createSubAppStore={DatasetsAppStoreMagistrate.getStore}
   >
     <DatasetsAppContainer {...props} />
   </GenericSubApp>

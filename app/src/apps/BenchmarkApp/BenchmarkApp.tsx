@@ -9,9 +9,7 @@ const BenchmarkApp = (): JSX.Element => (
   <GenericSubApp
     instanceId={ViewIDs.BenchmarkApp}
     appTitle={'Benchmark Dashboard'}
-    createSubAppStore={BenchmarkAppStoreMagistrate.getStore.bind(
-      BenchmarkAppStoreMagistrate
-    )}
+    createSubAppStore={BenchmarkAppStoreMagistrate.getStore}
     sideMenu={BenchmarkSelector}
     bringOwnPageStruct={true}
   >
