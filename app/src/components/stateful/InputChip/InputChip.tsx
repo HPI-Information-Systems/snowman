@@ -1,6 +1,6 @@
 import InputChipContainer from 'components/stateful/InputChip/InputChip.Container';
 import { InputChipOwnProps } from 'components/stateful/InputChip/InputChipProps';
-import { getInputChipStore } from 'components/stateful/InputChip/store/InputChipStore';
+import { InputChipStoreMagistrate } from 'components/stateful/InputChip/store/InputChipStore';
 import { InputChipModel } from 'components/stateful/InputChip/types/InputChipModel';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
@@ -12,7 +12,9 @@ class InputChip extends Component<InputChipOwnProps> {
 
   constructor(props: InputChipOwnProps) {
     super(props);
-    this.store = getInputChipStore(this.props.instanceDescriptor);
+    this.store = InputChipStoreMagistrate.getStore(
+      this.props.instanceDescriptor
+    );
   }
 
   render(): JSX.Element {
