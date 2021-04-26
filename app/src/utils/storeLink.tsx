@@ -7,6 +7,7 @@ const storeLink = function (
   store: Store<unknown, SnowmanAction>,
   AComponent: FC
 ): (props: Record<string, unknown>) => JSX.Element {
+  // This variable is _not_ to be inlined!
   const StoreProviderComponent = (
     props: Record<string, unknown>
   ): JSX.Element => (
