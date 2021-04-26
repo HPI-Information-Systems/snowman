@@ -1,5 +1,3 @@
-import 'pages/IntersectionPage/IntersectionPageStyles.css';
-
 import {
   IonCard,
   IonCardContent,
@@ -76,7 +74,7 @@ const IntersectionPageView = ({
             </IonRow>
           </IonCol>
           <IonCol className="col-no-padding" size="12" sizeXl="6">
-            <IonCard className="dataviewer-card-full">
+            <IonCard style={{ height: '80vh' }}>
               <IonCardHeader>
                 <b>{intersectionDescriptionString}</b>
               </IonCardHeader>
