@@ -1,9 +1,10 @@
 import 'katex/dist/katex.min.css';
 
-import { IonBackdrop, IonCard, IonIcon, IonText } from '@ionic/react';
+import { IonCard, IonIcon, IonText } from '@ionic/react';
 import { Experiment, Metric } from 'api';
 import { NMetricsStrategyProps } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyStyles.module.css';
+import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import { chevronForwardOutline } from 'ionicons/icons';
 import { renderToString } from 'katex';
 import React, { useEffect } from 'react';
@@ -23,7 +24,12 @@ const NMetricsStrategyView = ({
   return (
     <>
       {!isValidSelection ? (
-        <IonBackdrop tappable={false} className={styles.heavyBackdrop} />
+        <ErroneousBackdrop
+          message={
+            'Please select one gold standard and at least one other experiment ' +
+            'from a single dataset!'
+          }
+        />
       ) : null}
       <IonCard>
         <table className={styles.materialTable}>

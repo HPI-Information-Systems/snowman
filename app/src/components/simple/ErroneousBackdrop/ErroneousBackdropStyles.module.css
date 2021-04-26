@@ -1,0 +1,20 @@
+.heavyBackdrop {
+  opacity: 0.3;
+}
+
+.errorOverlay {
+  position: absolute;
+  z-index: 22;
+  top: 0;
+  left: 0;
+  width: calc(100% - 150px);
+  margin: 75px;
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--ion-color-danger);
+  -webkit-box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.1);
+  color: var(--ion-color-danger-contrast);
+  text-align: center;
+}
