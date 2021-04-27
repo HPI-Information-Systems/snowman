@@ -26,8 +26,12 @@ export const metaSchemas = assertType<
           name: 'description' as const,
           dataType: 'TEXT',
         },
-        integrationTime: {
-          name: 'integrationTime' as const,
+        installationExpertise: {
+          name: 'installationExpertise' as const,
+          dataType: 'INTEGER',
+        },
+        installationHrAmount: {
+          name: 'installationHrAmount' as const,
           dataType: 'INTEGER',
         },
         deploymentType: {
