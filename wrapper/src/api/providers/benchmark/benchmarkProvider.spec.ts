@@ -5,6 +5,7 @@ import {
   ExperimentValues,
   MetricsEnum,
   SetExperimentFileFormatEnum,
+  SimilarityThresholdFunctionValuesTypeEnum,
   SoftKPIsAlgorithmEnum,
   SoftKPIsExperimentEnum,
 } from '../../server/types';
@@ -12,6 +13,7 @@ import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
 import { DatasetProvider } from '../dataset/datasetProvider';
 import { ExperimentProvider } from '../experiment/experimentProvider';
+import { SimilarityThresholdsProvider } from '../similarityThresholds/similarityThresholdsProvider';
 import { BenchmarkProvider } from './benchmarkProvider';
 
 interface metaDataset {
@@ -120,9 +122,9 @@ beforeAll(async () => {
           },
         },
         file: [
-          ['p1', 'p2'],
-          ['1', '2'],
-          ['9', '10'],
+          ['p1', 'p2', 'similarity'],
+          ['1', '2', '0.5'],
+          ['9', '10', '0.7'],
         ],
       },
     },
@@ -242,6 +244,34 @@ describe('test benchmark functions', () => {
         },
       })
     ).toMatchObject([{ x: 0.5, y: 0.125 }]);
+  });
+  test('test metric-metric threshold diagram calculation', () => {
+    const similarityThresholdProvider = new SimilarityThresholdsProvider();
+    const func = {
+      type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+      similarityThreshold: 'similarity',
+    };
+    const funcId = similarityThresholdProvider.addSimilarityThresholdFunction({
+      experimentId: experimentIds.experiment1,
+      similarityThresholdFunction: func,
+    });
+    expect(
+      benchmarkProvider.calculateDiagramData({
+        xAxis: MetricsEnum.Precision,
+        yAxis: MetricsEnum.Recall,
+        diagram: {
+          similarityThresholds: {
+            steps: 2,
+            groundTruthId: experimentIds.goldstandard,
+            experimentId: experimentIds.experiment1,
+            func: funcId,
+          },
+        },
+      })
+    ).toMatchObject([
+      { x: 0, y: 0, threshold: 0.7 },
+      { threshold: 0.5, x: 0.5, y: 0.125 },
+    ]);
   });
   describe('metrics', () => {
     test('test metrics calculation', () => {
