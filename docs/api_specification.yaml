@@ -1177,6 +1177,12 @@ components:
         - matchingSolutionExpertiseWeightedEffort
         - generalCosts
         - integrationTime
+        - installationExpertise
+        - installationHrAmount
+        - installationManhattanDistanceBasedEffort
+        - installationHrAmountWeightedEffort
+        - installationMultiplyEffort
+        - installationExpertiseWeightedEffort
     softKPIsExperimentEnum:
       type: string
       enum:
@@ -1239,3 +1245,4 @@ components:
       required:
         - header
         - data
+

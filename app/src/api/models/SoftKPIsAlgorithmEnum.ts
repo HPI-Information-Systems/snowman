@@ -17,7 +17,7 @@
  * @export
  * @enum {string}
  */
-export enum SoftKPIsAlgorithmEnum {
+ export enum SoftKPIsAlgorithmEnum {
     DomainExpertise = 'domainExpertise',
     DomainHrAmount = 'domainHrAmount',
     DomainManhattanDistanceBasedEffort = 'domainManhattanDistanceBasedEffort',
@@ -31,7 +31,13 @@ export enum SoftKPIsAlgorithmEnum {
     MatchingSolutionMultiplyEffort = 'matchingSolutionMultiplyEffort',
     MatchingSolutionExpertiseWeightedEffort = 'matchingSolutionExpertiseWeightedEffort',
     GeneralCosts = 'generalCosts',
-    IntegrationTime = 'integrationTime'
+    IntegrationTime = 'integrationTime',
+    InstallationExpertise = 'installationExpertise',
+    InstallationHrAmount = 'installationHrAmount',
+    InstallationManhattanDistanceBasedEffort = 'installationManhattanDistanceBasedEffort',
+    InstallationHrAmountWeightedEffort = 'installationHrAmountWeightedEffort',
+    InstallationMultiplyEffort = 'installationMultiplyEffort',
+    InstallationExpertiseWeightedEffort = 'installationExpertiseWeightedEffort'
 }
 
 export function SoftKPIsAlgorithmEnumFromJSON(json: any): SoftKPIsAlgorithmEnum {

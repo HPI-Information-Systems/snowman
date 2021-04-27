@@ -1346,6 +1346,12 @@ components:
       - matchingSolutionExpertiseWeightedEffort
       - generalCosts
       - integrationTime
+      - installationExpertise
+      - installationHrAmount
+      - installationManhattanDistanceBasedEffort
+      - installationHrAmountWeightedEffort
+      - installationMultiplyEffort
+      - installationExpertiseWeightedEffort
       type: string
     softKPIsExperimentEnum:
       enum:

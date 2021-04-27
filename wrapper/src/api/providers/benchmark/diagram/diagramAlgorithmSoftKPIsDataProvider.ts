@@ -51,14 +51,21 @@ const softKPIAlgorithmMap: Map<
       algorithm.softKPIs?.configurationEffort?.domain?.hrAmount ?? undefined,
   ],
   [
+    SoftKPIsAlgorithmEnum.InstallationExpertise,
+    (algorithm: Algorithm) =>
+      algorithm.softKPIs?.integrationEffort?.installationEffort?.expertise ??
+      undefined,
+  ],
+  [
+    SoftKPIsAlgorithmEnum.InstallationHrAmount,
+    (algorithm: Algorithm) =>
+      algorithm.softKPIs?.integrationEffort?.installationEffort?.hrAmount ??
+      undefined,
+  ],
+  [
     SoftKPIsAlgorithmEnum.GeneralCosts,
     (algorithm: Algorithm) =>
       algorithm.softKPIs?.integrationEffort?.generalCosts ?? undefined,
-  ],
-  [
-    SoftKPIsAlgorithmEnum.IntegrationTime,
-    (algorithm: Algorithm) =>
-      algorithm.softKPIs?.integrationEffort?.integrationTime ?? undefined,
   ],
   [
     SoftKPIsAlgorithmEnum.MatchingSolutionExpertise,
@@ -131,6 +138,38 @@ const softKPIAlgorithmMap: Map<
     SoftKPIsAlgorithmEnum.MatchingSolutionMultiplyEffort,
     (algorithm: Algorithm) => {
       return algorithm.matchingSolutionEffort?.find(
+        ({ id }) => id === 'multiplyEffort'
+      )?.value;
+    },
+  ],
+  [
+    SoftKPIsAlgorithmEnum.InstallationExpertiseWeightedEffort,
+    (algorithm: Algorithm) => {
+      return algorithm.installationEffort?.find(
+        ({ id }) => id === 'expertiseWeightedEffort'
+      )?.value;
+    },
+  ],
+  [
+    SoftKPIsAlgorithmEnum.InstallationHrAmountWeightedEffort,
+    (algorithm: Algorithm) => {
+      return algorithm.installationEffort?.find(
+        ({ id }) => id === 'hrAmountWeightedEffort'
+      )?.value;
+    },
+  ],
+  [
+    SoftKPIsAlgorithmEnum.InstallationManhattanDistanceBasedEffort,
+    (algorithm: Algorithm) => {
+      return algorithm.installationEffort?.find(
+        ({ id }) => id === 'manhattanDistanceBasedEffort'
+      )?.value;
+    },
+  ],
+  [
+    SoftKPIsAlgorithmEnum.InstallationMultiplyEffort,
+    (algorithm: Algorithm) => {
+      return algorithm.installationEffort?.find(
         ({ id }) => id === 'multiplyEffort'
       )?.value;
     },
