@@ -16,7 +16,10 @@ export class AlgorithmProvider {
       {
         name: algorithm.name,
         description: algorithm.description,
-        integrationTime: algorithm.softKPIs?.integrationEffort?.integrationTime,
+        installationExpertise:
+          algorithm.softKPIs?.integrationEffort?.installationEffort?.expertise,
+        installationHrAmount:
+          algorithm.softKPIs?.integrationEffort?.installationEffort?.hrAmount,
         deploymentType: JSON.stringify(
           algorithm.softKPIs?.integrationEffort?.deploymentType
         ),

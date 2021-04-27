@@ -12,7 +12,10 @@ export class AlgorithmConverter {
       id: api.id,
       name: api.name,
       description: api.description ?? null,
-      integrationTime: api.softKPIs?.integrationEffort?.integrationTime ?? null,
+      installationExpertise:
+        api.softKPIs?.integrationEffort?.installationEffort?.expertise ?? null,
+      installationHrAmount:
+        api.softKPIs?.integrationEffort?.installationEffort?.hrAmount ?? null,
       deploymentType:
         JSON.stringify(api.softKPIs?.integrationEffort?.deploymentType) ?? null,
       solutionType:
@@ -36,6 +39,7 @@ export class AlgorithmConverter {
   storedToApi(stored: StoredAlgorithm): Algorithm {
     let domainEffort: Metric[] | undefined;
     let matchingSolutionEffort: Metric[] | undefined;
+    let installationEffort: Metric[] | undefined;
     if (stored.domainExpertise && stored.domainHrAmount) {
       domainEffort = calculateEffort(
         stored.domainExpertise,
@@ -48,15 +52,25 @@ export class AlgorithmConverter {
         stored.matchingSolutionHrAmount
       );
     }
+    if (stored.installationExpertise && stored.installationHrAmount) {
+      matchingSolutionEffort = calculateEffort(
+        stored.installationExpertise,
+        stored.installationHrAmount
+      );
+    }
     return {
       id: stored.id,
       name: stored.name,
       description: stored.description ?? undefined,
       matchingSolutionEffort,
       domainEffort,
+      installationEffort,
       softKPIs: {
         integrationEffort: {
-          integrationTime: stored.integrationTime ?? undefined,
+          installationEffort: {
+            expertise: stored.installationExpertise ?? undefined,
+            hrAmount: stored.installationHrAmount ?? undefined,
+          },
           deploymentType: stored.deploymentType
             ? JSON.parse(stored.deploymentType)
             : undefined,

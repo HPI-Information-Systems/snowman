@@ -12,7 +12,9 @@ describe('AlgorithmProvider', () => {
       name: 'Mock 1',
       softKPIs: {
         integrationEffort: {
-          integrationTime: 340,
+          installationEffort: {
+            expertise: 20,
+          },
           deploymentType: ['cloud'],
           solutionType: ['rulebased'],
           useCase: ['merging'],
@@ -35,7 +37,9 @@ describe('AlgorithmProvider', () => {
       name: 'Mock 2',
       softKPIs: {
         integrationEffort: {
-          integrationTime: 20,
+          installationEffort: {
+            expertise: 20,
+          },
           deploymentType: ['on-premise', 'cloud'],
           solutionType: ['activeLearning'],
           useCase: ['merging', 'search'],
@@ -85,7 +89,9 @@ describe('AlgorithmProvider', () => {
       name: 'Added Algorithm',
       softKPIs: {
         integrationEffort: {
-          integrationTime: 330,
+          installationEffort: {
+            expertise: 20,
+          },
           deploymentType: ['cloud'],
           solutionType: ['rulebased'],
           useCase: ['merging'],
@@ -128,7 +134,9 @@ describe('AlgorithmProvider', () => {
       description: 'Not Mock 1',
       softKPIs: {
         integrationEffort: {
-          integrationTime: 240,
+          installationEffort: {
+            expertise: 20,
+          },
           deploymentType: ['onPremise'],
           solutionType: ['rulebased', 'activeLearning'],
           useCase: ['search'],
@@ -158,7 +166,9 @@ describe('AlgorithmProvider', () => {
       description: 'Not Mock 1',
       softKPIs: {
         integrationEffort: {
-          integrationTime: 240,
+          installationEffort: {
+            hrAmount: 30,
+          },
           deploymentType: ['onPremise'],
           solutionType: ['rulebased', 'activeLearning'],
           useCase: ['search'],
