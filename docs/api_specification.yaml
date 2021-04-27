@@ -806,8 +806,8 @@ components:
           properties:
             integrationEffort:
               properties:
-                integrationTime:
-                  type: integer
+                installationEffort:
+                   $ref: "#/components/schemas/EffortParts"
                 deploymentType:
                   items:
                     type: string
@@ -857,6 +857,9 @@ components:
                 $ref: "#/components/schemas/Metric"
               type: array
             domainEffort:
+              items:
+                $ref: "#/components/schemas/Metric"
+            installationEffort:
               items:
                 $ref: "#/components/schemas/Metric"
               type: array

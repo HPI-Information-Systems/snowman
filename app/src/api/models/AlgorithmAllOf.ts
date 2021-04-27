@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -44,6 +44,12 @@ export interface AlgorithmAllOf {
      * @memberof AlgorithmAllOf
      */
     domainEffort?: Array<Metric>;
+    /**
+     * 
+     * @type {Array<Metric>}
+     * @memberof AlgorithmAllOf
+     */
+    installationEffort?: Array<Metric>;
 }
 
 export function AlgorithmAllOfFromJSON(json: any): AlgorithmAllOf {
@@ -59,6 +65,7 @@ export function AlgorithmAllOfFromJSONTyped(json: any, ignoreDiscriminator: bool
         'id': json['id'],
         'matchingSolutionEffort': !exists(json, 'matchingSolutionEffort') ? undefined : ((json['matchingSolutionEffort'] as Array<any>).map(MetricFromJSON)),
         'domainEffort': !exists(json, 'domainEffort') ? undefined : ((json['domainEffort'] as Array<any>).map(MetricFromJSON)),
+        'installationEffort': !exists(json, 'installationEffort') ? undefined : ((json['installationEffort'] as Array<any>).map(MetricFromJSON)),
     };
 }
 
@@ -74,6 +81,7 @@ export function AlgorithmAllOfToJSON(value?: AlgorithmAllOf | null): any {
         'id': value.id,
         'matchingSolutionEffort': value.matchingSolutionEffort === undefined ? undefined : ((value.matchingSolutionEffort as Array<any>).map(MetricToJSON)),
         'domainEffort': value.domainEffort === undefined ? undefined : ((value.domainEffort as Array<any>).map(MetricToJSON)),
+        'installationEffort': value.installationEffort === undefined ? undefined : ((value.installationEffort as Array<any>).map(MetricToJSON)),
     };
 }
 

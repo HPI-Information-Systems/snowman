@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -58,6 +58,12 @@ export interface Algorithm {
     domainEffort?: Array<Metric>;
     /**
      * 
+     * @type {Array<Metric>}
+     * @memberof Algorithm
+     */
+    installationEffort?: Array<Metric>;
+    /**
+     * 
      * @type {string}
      * @memberof Algorithm
      */
@@ -89,6 +95,7 @@ export function AlgorithmFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'id': json['id'],
         'matchingSolutionEffort': !exists(json, 'matchingSolutionEffort') ? undefined : ((json['matchingSolutionEffort'] as Array<any>).map(MetricFromJSON)),
         'domainEffort': !exists(json, 'domainEffort') ? undefined : ((json['domainEffort'] as Array<any>).map(MetricFromJSON)),
+        'installationEffort': !exists(json, 'installationEffort') ? undefined : ((json['installationEffort'] as Array<any>).map(MetricFromJSON)),
         'name': json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'softKPIs': !exists(json, 'softKPIs') ? undefined : AlgorithmValuesSoftKPIsFromJSON(json['softKPIs']),
@@ -107,6 +114,7 @@ export function AlgorithmToJSON(value?: Algorithm | null): any {
         'id': value.id,
         'matchingSolutionEffort': value.matchingSolutionEffort === undefined ? undefined : ((value.matchingSolutionEffort as Array<any>).map(MetricToJSON)),
         'domainEffort': value.domainEffort === undefined ? undefined : ((value.domainEffort as Array<any>).map(MetricToJSON)),
+        'installationEffort': value.installationEffort === undefined ? undefined : ((value.installationEffort as Array<any>).map(MetricToJSON)),
         'name': value.name,
         'description': value.description,
         'softKPIs': AlgorithmValuesSoftKPIsToJSON(value.softKPIs),

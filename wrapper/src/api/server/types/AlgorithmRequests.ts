@@ -1,4 +1,4 @@
-import { AlgorithmValues } from './AlgorithmValues';
+import { AlgorithmValues } from '.';
 
 export interface AddAlgorithmRequest {
   algorithm: AlgorithmValues;

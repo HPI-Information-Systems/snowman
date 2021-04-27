@@ -973,14 +973,16 @@ components:
       example:
         softKPIs:
           integrationEffort:
+            installationEffort:
+              expertise: 0
+              hrAmount: 6
             deploymentType:
             - cloud
             - cloud
             useCase:
             - merging
             - merging
-            generalCosts: 6
-            integrationTime: 0
+            generalCosts: 1
             solutionType:
             - rulebased
             - rulebased
@@ -989,11 +991,11 @@ components:
             - GUI
             - GUI
             matchingSolution:
-              expertise: 1
-              hrAmount: 5
+              expertise: 0
+              hrAmount: 6
             domain:
-              expertise: 1
-              hrAmount: 5
+              expertise: 0
+              hrAmount: 6
             supportedOSs:
             - Windows
             - Windows
@@ -1056,8 +1058,8 @@ components:
     ExperimentValues:
       example:
         softKPIs:
-          expertise: 1
-          hrAmount: 5
+          expertise: 0
+          hrAmount: 6
         name: Experiment1
         description: This is an experiment using a fancy algorithm
         datasetId: 1
@@ -1278,8 +1280,8 @@ components:
       type: object
     EffortParts:
       example:
-        expertise: 1
-        hrAmount: 5
+        expertise: 0
+        hrAmount: 6
       properties:
         expertise:
           type: integer
@@ -1441,20 +1443,22 @@ components:
       type: object
     AlgorithmValues_softKPIs_integrationEffort:
       example:
+        installationEffort:
+          expertise: 0
+          hrAmount: 6
         deploymentType:
         - cloud
         - cloud
         useCase:
         - merging
         - merging
-        generalCosts: 6
-        integrationTime: 0
+        generalCosts: 1
         solutionType:
         - rulebased
         - rulebased
       properties:
-        integrationTime:
-          type: integer
+        installationEffort:
+          $ref: '#/components/schemas/EffortParts'
         deploymentType:
           items:
             example: cloud
@@ -1479,11 +1483,11 @@ components:
         - GUI
         - GUI
         matchingSolution:
-          expertise: 1
-          hrAmount: 5
+          expertise: 0
+          hrAmount: 6
         domain:
-          expertise: 1
-          hrAmount: 5
+          expertise: 0
+          hrAmount: 6
         supportedOSs:
         - Windows
         - Windows
@@ -1506,14 +1510,16 @@ components:
     AlgorithmValues_softKPIs:
       example:
         integrationEffort:
+          installationEffort:
+            expertise: 0
+            hrAmount: 6
           deploymentType:
           - cloud
           - cloud
           useCase:
           - merging
           - merging
-          generalCosts: 6
-          integrationTime: 0
+          generalCosts: 1
           solutionType:
           - rulebased
           - rulebased
@@ -1522,11 +1528,11 @@ components:
           - GUI
           - GUI
           matchingSolution:
-            expertise: 1
-            hrAmount: 5
+            expertise: 0
+            hrAmount: 6
           domain:
-            expertise: 1
-            hrAmount: 5
+            expertise: 0
+            hrAmount: 6
           supportedOSs:
           - Windows
           - Windows
@@ -1546,6 +1552,10 @@ components:
             $ref: '#/components/schemas/Metric'
           type: array
         domainEffort:
+          items:
+            $ref: '#/components/schemas/Metric'
+          type: array
+        installationEffort:
           items:
             $ref: '#/components/schemas/Metric'
           type: array

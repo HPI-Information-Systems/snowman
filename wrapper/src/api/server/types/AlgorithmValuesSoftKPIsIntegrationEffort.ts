@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -12,40 +12,44 @@
  * Do not edit the class manually.
  */
 
-/**
- * 
- * @export
- * @interface AlgorithmValuesSoftKPIsIntegrationEffort
- */
-export interface AlgorithmValuesSoftKPIsIntegrationEffort {
-    /**
-     * 
-     * @type {number}
-     * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
-     */
-    integrationTime?: number;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
-     */
-    deploymentType?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
-     */
-    solutionType?: Array<string>;
-    /**
-     * 
-     * @type {Array<string>}
-     * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
-     */
-    useCase?: Array<string>;
-    /**
-     * 
-     * @type {number}
-     * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
-     */
-    generalCosts?: number;
-}
+ import {
+     EffortParts,
+ } from './';
+ 
+ /**
+  * 
+  * @export
+  * @interface AlgorithmValuesSoftKPIsIntegrationEffort
+  */
+ export interface AlgorithmValuesSoftKPIsIntegrationEffort {
+     /**
+      * 
+      * @type {EffortParts}
+      * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
+      */
+     installationEffort?: EffortParts;
+     /**
+      * 
+      * @type {Array<string>}
+      * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
+      */
+     deploymentType?: Array<string>;
+     /**
+      * 
+      * @type {Array<string>}
+      * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
+      */
+     solutionType?: Array<string>;
+     /**
+      * 
+      * @type {Array<string>}
+      * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
+      */
+     useCase?: Array<string>;
+     /**
+      * 
+      * @type {number}
+      * @memberof AlgorithmValuesSoftKPIsIntegrationEffort
+      */
+     generalCosts?: number;
+ }
