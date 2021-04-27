@@ -21,8 +21,15 @@ export class SchemaV6 extends SchemaVersion {
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
            ADD COLUMN
-               integrationTime INTEGER`
+              installationExpertise INTEGER`
     );
+
+    databaseBackend().exec(
+      `ALTER TABLE ${tables.meta.algorithm.schema.name}
+           ADD COLUMN
+              installationHrAmount INTEGER`
+    );
+
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
            ADD COLUMN
