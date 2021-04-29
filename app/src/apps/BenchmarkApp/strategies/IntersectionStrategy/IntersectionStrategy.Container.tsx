@@ -34,13 +34,11 @@ const mapStateToProps = ({
   ].sort(intersectionSorter);
   const configCounts = getCountsForIntersection(counts, sortedConfig);
 
-  //Todo: Validate dataset
-
   return {
     isValidConfig: isValidConfig,
     loadTuples:
-      available[0]?.id !== undefined
-        ? intersectionTuplesLoader(sortedConfig, available[0].id)
+      available[0] !== undefined
+        ? intersectionTuplesLoader(sortedConfig, available[0].datasetId)
         : dummyTuplesLoader,
     tuplesCount: configCounts?.numberRows ?? 0,
     pairCount: configCounts?.numberPairs ?? 0,
