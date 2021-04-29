@@ -1,7 +1,7 @@
 import GenericBenchmarkStrategy from 'apps/BenchmarkApp/components/GenericBenchmarkStrategy/GenericBenchmarkStrategy';
 import NMetricsStrategyContainer from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategy.Container';
+import { loadStrategyData } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/store/NMetricsStrategyActions';
 import { NMetricsStrategyStoreMagistrate } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/store/NMetricsStrategyStoreFactory';
-import { loadStrategyData } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/store/NMetricsStrategyThunkActions';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import React from 'react';
 
