@@ -1,9 +1,11 @@
-import { Dataset, DatasetsApi, Experiment } from 'api';
+import { Dataset, DatasetsApi, Experiment, ExperimentsApi } from 'api';
 import { PreviewDialogActionTypes } from 'apps/PreviewDialog/types/PreviewDialogActionTypes';
 import { PreviewDialogModel } from 'apps/PreviewDialog/types/PreviewDialogModel';
+import { PreviewDialogTypes } from 'apps/PreviewDialog/types/PreviewDialogTypes';
 import { SnowmanGenericThunkAction } from 'store/messages';
 import { MagicNotPossibleId } from 'structs/constants';
 import { EntityId } from 'types/EntityId';
+import { EntityType } from 'types/EntityType';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import {
   easyPrimitiveAction,
@@ -52,13 +54,37 @@ export const loadAndStoreDataset = (
     true
   );
 
+export const loadAndStoreExperiment = (
+  entityId: EntityId
+): SnowmanGenericThunkAction<Promise<void>, PreviewDialogModel> => (
+  dispatch: SnowmanDispatch<PreviewDialogModel>
+): Promise<void> =>
+  RequestHandler<void>(
+    (): Promise<void> =>
+      new ExperimentsApi()
+        .getExperiment({
+          experimentId: entityId ?? MagicNotPossibleId,
+        })
+        .then((theExperiment: Experiment): void => {
+          dispatch(setExperiment(theExperiment));
+        }),
+    undefined,
+    true
+  );
+
 export const onDialogOpen = (
   dispatch: SnowmanDispatch<PreviewDialogModel>,
-  entityId: EntityId
+  entityId: EntityId,
+  entityType?: EntityType
 ): void => {
-  if (entityId !== null) {
-    console.log('Preview Dialog opened', entityId);
+  console.log(entityId, entityType);
+  if (entityType === PreviewDialogTypes.DATASET && entityId !== null) {
     dispatch(loadAndStoreDataset(entityId)).then();
+  } else if (
+    entityType === PreviewDialogTypes.EXPERIMENT &&
+    entityId !== null
+  ) {
+    dispatch(loadAndStoreExperiment(entityId)).then();
   } else {
     dispatch(setNone());
   }

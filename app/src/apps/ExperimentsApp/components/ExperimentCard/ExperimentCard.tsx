@@ -4,6 +4,7 @@ import {
   ExperimentCardOwnProps,
   ExperimentCardStateProps,
 } from 'apps/ExperimentsApp/components/ExperimentCard/ExperimentCardProps';
+import { PreviewDialogTypes } from 'apps/PreviewDialog/types/PreviewDialogTypes';
 import { doDeleteExperiment } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
@@ -30,7 +31,11 @@ const mapDispatchToProps = (
     doDeleteExperiment(ownProps.experiment.id).then();
   },
   previewExperiment() {
-    doOpenDialog(ViewIDs.PreviewDialog, ownProps.experiment.id);
+    doOpenDialog(
+      ViewIDs.PreviewDialog,
+      ownProps.experiment.id,
+      PreviewDialogTypes.EXPERIMENT
+    );
   },
 });
 

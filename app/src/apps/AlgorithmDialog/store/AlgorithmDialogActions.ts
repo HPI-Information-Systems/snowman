@@ -43,7 +43,8 @@ const resetDialog = (): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
 
 export const onDialogClose = (
   dispatch: SnowmanDispatch<AlgorithmDialogModel>,
-  entityId: EntityId
+  entityId: EntityId,
+  _: unknown
 ): void => {
   if (entityId !== null) {
     dispatch(resetDialog());
@@ -71,7 +72,8 @@ export const prepareUpdateDialog = (
 
 export const onDialogOpen = (
   dispatch: SnowmanDispatch<AlgorithmDialogModel>,
-  entityId: EntityId
+  entityId: EntityId,
+  _: unknown
 ): void => {
   if (entityId !== null) {
     dispatch(prepareUpdateDialog(entityId)).then();

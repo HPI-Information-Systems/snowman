@@ -93,7 +93,8 @@ export const prefillDialog = (
 
 export const onDialogClose = (
   dispatch: SnowmanDispatch<ExperimentDialogModel>,
-  entityId: EntityId
+  entityId: EntityId,
+  _: unknown
 ): void => {
   if (entityId !== null) {
     dispatch(resetDialog());
@@ -120,7 +121,8 @@ export const prepareUpdateDialog = (
 
 export const onDialogOpen = (
   dispatch: SnowmanDispatch<ExperimentDialogModel>,
-  entityId: EntityId
+  entityId: EntityId,
+  _: unknown
 ): void => {
   if (entityId !== null) {
     dispatch(prepareUpdateDialog(entityId)).then();

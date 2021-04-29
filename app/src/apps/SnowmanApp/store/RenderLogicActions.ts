@@ -16,12 +16,14 @@ export const navigateTo = (
 
 export const openDialog = (
   aDialog: ViewIDs,
-  entityId?: number
+  entityId?: number,
+  entityType?: string
 ): easyPrimitiveActionReturn<SnowmanAppModel> =>
   easyPrimitiveAction<SnowmanAppModel>({
     type: RenderLogicActionTypes.OPEN_DIALOG,
     payload: aDialog,
     optionalPayload: entityId ?? null,
+    optionalPayload2: entityType ?? null,
   });
 
 export const closeDialog = (): easyPrimitiveActionReturn<SnowmanAppModel> =>

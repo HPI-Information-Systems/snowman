@@ -4,4 +4,5 @@ export interface RenderLogicModel {
   currentViewID: ViewIDs;
   openedDialog: ViewIDs | null;
   entityId: number | null;
+  entityType: string | null;
 }

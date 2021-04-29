@@ -7,6 +7,7 @@ const initialRenderLogicState: RenderLogicModel = {
   currentViewID: ViewIDs.BenchmarkApp,
   openedDialog: null,
   entityId: null,
+  entityType: null,
 };
 
 const RenderLogicReducer = (
@@ -24,6 +25,7 @@ const RenderLogicReducer = (
         ...state,
         openedDialog: action.payload as ViewIDs,
         entityId: action.optionalPayload as null | number,
+        entityType: action.optionalPayload2 as null | string,
       };
     case RenderLogicActionTypes.CLOSE_DIALOG:
       return {

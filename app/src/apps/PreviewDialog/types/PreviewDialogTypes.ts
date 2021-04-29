@@ -1,4 +1,4 @@
 export enum PreviewDialogTypes {
-  DATASET,
-  EXPERIMENT,
+  DATASET = 'PreviewDialogTypes-DATASET',
+  EXPERIMENT = 'PreviewDialogTypes-EXPERIMENT',
 }

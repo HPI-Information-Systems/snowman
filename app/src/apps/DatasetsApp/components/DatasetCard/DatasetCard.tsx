@@ -4,6 +4,7 @@ import {
   DatasetCardOwnProps,
   DatasetCardStateProps,
 } from 'apps/DatasetsApp/components/DatasetCard/DatasetCardProps';
+import { PreviewDialogTypes } from 'apps/PreviewDialog/types/PreviewDialogTypes';
 import { doDeleteDataset } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
@@ -31,7 +32,11 @@ const mapDispatchToProps = (
   },
   previewDataset() {
     console.log('dispatch(openPreviewer(ownProps.dataset))');
-    doOpenDialog(ViewIDs.PreviewDialog, ownProps.dataset.id);
+    doOpenDialog(
+      ViewIDs.PreviewDialog,
+      ownProps.dataset.id,
+      PreviewDialogTypes.DATASET
+    );
   },
 });
 

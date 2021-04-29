@@ -29,13 +29,21 @@ class GenericDialogView extends Component<GenericDialogProps> {
       this.props.isDialogOpen &&
       this.props.onDialogOpen
     ) {
-      this.props.onDialogOpen(this.store.dispatch, this.props.entityId);
+      this.props.onDialogOpen(
+        this.store.dispatch,
+        this.props.entityId,
+        this.props.entityType
+      );
     } else if (
       prevProps.isDialogOpen &&
       !this.props.isDialogOpen &&
       this.props.onDialogClose
     ) {
-      this.props.onDialogClose(this.store.dispatch, prevProps.entityId);
+      this.props.onDialogClose(
+        this.store.dispatch,
+        prevProps.entityId,
+        prevProps.entityType
+      );
     }
 
     if (!isEqual(prevProps.centralResources, this.props.centralResources)) {
