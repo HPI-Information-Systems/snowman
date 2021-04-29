@@ -1,4 +1,4 @@
-import { DatasetsApi, ExperimentsApi } from 'api';
+import { DatasetsApi, ExperimentsApi, FileResponse } from 'api';
 import { TuplesLoader } from 'types/TuplesLoader';
 
 // Cache loaders to not trigger a rerender// Cache loaders to not trigger a rerender
@@ -32,3 +32,6 @@ export const experimentTuplesLoader = (experimentId: number): TuplesLoader => {
   }
   return tuplesLoader;
 };
+
+export const dummyTuplesLoader = (): Promise<FileResponse> =>
+  Promise.resolve({ data: [], header: [] });

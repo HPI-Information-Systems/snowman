@@ -6,6 +6,7 @@ import { PreviewDialogTypes } from 'apps/PreviewDialog/types/PreviewDialogTypes'
 import { connect } from 'react-redux';
 import {
   datasetTuplesLoader,
+  dummyTuplesLoader,
   experimentTuplesLoader,
 } from 'utils/tuplesLoaders';
 
@@ -35,8 +36,7 @@ const mapStateToProps = (
   } else {
     return {
       fileName: 'none',
-      loadTuples: (): Promise<FileResponse> =>
-        Promise.resolve({ data: [], header: [] }),
+      loadTuples: dummyTuplesLoader,
       rowCount: 0,
     };
   }

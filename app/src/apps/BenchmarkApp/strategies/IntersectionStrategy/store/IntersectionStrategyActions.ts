@@ -116,7 +116,10 @@ export const loadCounts = (): SnowmanThunkAction<
   dispatch: SnowmanDispatch<IntersectionStrategyModel>,
   getState: () => IntersectionStrategyModel
 ): Promise<void> => {
-  if (!countsMatchCurrentConfiguration(getState())) {
+  if (
+    !countsMatchCurrentConfiguration(getState()) &&
+    getState().isValidConfig
+  ) {
     const counts = await RequestHandler(() =>
       new BenchmarkApi().calculateExperimentIntersectionCounts(
         loadCountsRequestBody(getState())
@@ -172,5 +175,5 @@ export const loadStrategyData = (
   benchmarkConfig: BenchmarkAppConfigStore
 ): void => {
   dispatch(updateConfig(benchmarkConfig));
-  //dispatch(loadData());
+  dispatch(loadCounts()).then();
 };

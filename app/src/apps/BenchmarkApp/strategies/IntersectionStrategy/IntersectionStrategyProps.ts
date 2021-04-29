@@ -13,7 +13,7 @@ export interface IntersectionStrategyStateProps {
 }
 
 export interface IntersectionStrategyDispatchProps {
-  loadCounts(): Promise<void>;
+  loadCounts(): void;
 }
 
 export type IntersectionStrategyProps = IntersectionStrategyStateProps &

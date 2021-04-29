@@ -14,6 +14,7 @@ import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/Intersec
 import { connect } from 'react-redux';
 import { MagicNotPossibleId } from 'structs/constants';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
+import { datasetTuplesLoader, dummyTuplesLoader } from 'utils/tuplesLoaders';
 
 const mapStateToProps = ({
   isValidConfig,
@@ -39,10 +40,10 @@ const mapStateToProps = ({
 
   return {
     isValidConfig: isValidConfig,
-    loadTuples: intersectionTuplesLoader(
-      sortedConfig,
-      available[0]?.id ?? MagicNotPossibleId
-    ),
+    loadTuples:
+      available[0]?.id !== undefined
+        ? intersectionTuplesLoader(sortedConfig, available[0].id)
+        : dummyTuplesLoader,
     tuplesCount: configCounts?.numberRows ?? 0,
     pairCount: configCounts?.numberPairs ?? 0,
     included,
@@ -57,7 +58,7 @@ const mapDispatchToProps = (
 ): IntersectionStrategyDispatchProps => {
   return {
     loadCounts() {
-      return dispatch(loadCounts());
+      console.log('do we need this?');
     },
   };
 };
