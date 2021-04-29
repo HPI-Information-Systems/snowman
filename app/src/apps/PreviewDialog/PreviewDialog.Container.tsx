@@ -1,4 +1,4 @@
-import { Dataset, Experiment, FileResponse } from 'api';
+import { Dataset, Experiment } from 'api';
 import PreviewDialogView from 'apps/PreviewDialog/PreviewDialog.View';
 import { PreviewDialogStateProps } from 'apps/PreviewDialog/PreviewDialogProps';
 import { PreviewDialogModel } from 'apps/PreviewDialog/types/PreviewDialogModel';

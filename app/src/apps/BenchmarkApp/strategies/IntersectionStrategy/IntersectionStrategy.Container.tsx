@@ -8,13 +8,11 @@ import {
   getCountsForIntersection,
   intersectionSorter,
   intersectionTuplesLoader,
-  loadCounts,
 } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/store/IntersectionStrategyActions';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
 import { connect } from 'react-redux';
-import { MagicNotPossibleId } from 'structs/constants';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
-import { datasetTuplesLoader, dummyTuplesLoader } from 'utils/tuplesLoaders';
+import { dummyTuplesLoader } from 'utils/tuplesLoaders';
 
 const mapStateToProps = ({
   isValidConfig,
