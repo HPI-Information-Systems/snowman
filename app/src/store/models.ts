@@ -33,30 +33,16 @@ export interface ExperimentPreviewerStore {
   experiment: Experiment | undefined;
 }
 
-export interface IntersectionStore {
-  included: Experiment[];
-  excluded: Experiment[];
-  ignored: Experiment[];
-  // experiments are guaranteed to be sorted by intersectionCountSorter (see IntersectionStoreActions.ts)
-  counts: ExperimentIntersectionCount[];
-}
-
 export interface BinaryMetricsStore {
   counts: ExperimentIntersectionCount[];
   metrics: Metric[];
   selectedDataView: MetricsTuplesCategories;
 }
 
-export interface NMetricsStore {
-  metrics: Metric[][];
-}
-
 export interface ImmediateStore {
   CoreStore: CoreStore;
   BenchmarkConfigurationStore: BenchmarkConfigurationStore;
   BinaryMetricsStore: BinaryMetricsStore;
-  NMetricsStore: NMetricsStore;
   DatasetPreviewerStore: DatasetPreviewerStore;
   ExperimentPreviewerStore: ExperimentPreviewerStore;
-  IntersectionStore: IntersectionStore;
 }

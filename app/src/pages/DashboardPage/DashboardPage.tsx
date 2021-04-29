@@ -5,7 +5,6 @@ import {
   DashboardPageStateProps,
 } from 'pages/DashboardPage/DashboardPageProps';
 import { connect } from 'react-redux';
-import { loadCounts } from 'store/actions/IntersectionStoreActions';
 import { navigateTo } from 'store/actions/RenderStoreActions';
 import { SnowmanDispatch } from 'store/messages';
 import { ImmediateStore } from 'store/models';
@@ -29,7 +28,7 @@ const mapDispatchToProps = (
 ): DashboardPageDispatchProps => {
   return {
     loadCounts() {
-      dispatch(loadCounts()).then();
+      console.log('obsolete dispatch');
     },
     openIntersectionPage() {
       dispatch(navigateTo(ViewIDs.INTERSECTION));

@@ -9,8 +9,6 @@ import { BinaryMetricsReducer } from 'store/reducers/BinaryMetricsReducer';
 import { CoreReducer } from 'store/reducers/CoreReducer';
 import { DatasetPreviewerReducer } from 'store/reducers/DatasetPreviewerReducer';
 import { ExperimentPreviewerReducer } from 'store/reducers/ExperimentPreviewerReducer';
-import { IntersectionReducer } from 'store/reducers/IntersectionReducer';
-import { NMetricsReducer } from 'store/reducers/NMetricsReducer';
 
 export const rootReducer = (
   state: ImmediateStore,
@@ -33,11 +31,5 @@ export const rootReducer = (
       action
     ),
     BinaryMetricsStore: BinaryMetricsReducer(state?.BinaryMetricsStore, action),
-    NMetricsStore: NMetricsReducer(state?.NMetricsStore, action),
-    IntersectionStore: IntersectionReducer(
-      state?.IntersectionStore,
-      benchmarkState,
-      action
-    ),
   };
 };
