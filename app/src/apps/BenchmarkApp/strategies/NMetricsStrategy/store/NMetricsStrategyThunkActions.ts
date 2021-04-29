@@ -17,6 +17,9 @@ export const loadNMetrics = (): SnowmanThunkAction<
   dispatch: SnowmanDispatch<NMetricsStrategyModel>,
   getState: () => NMetricsStrategyModel
 ): void => {
+  if (!getState().isValidConfig) {
+    return;
+  }
   const goldStandard = getState().goldStandard;
   dispatch(resetMetrics());
   Promise.all(
@@ -35,7 +38,6 @@ export const loadStrategyData = (
   dispatch: SnowmanDispatch<NMetricsStrategyModel>,
   benchmarkConfig: BenchmarkAppConfigStore
 ): void => {
-  console.log('updated strategy data');
   dispatch(updateConfig(benchmarkConfig));
   dispatch(loadNMetrics());
 };

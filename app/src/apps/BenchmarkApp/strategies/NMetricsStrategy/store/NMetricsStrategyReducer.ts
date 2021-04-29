@@ -23,10 +23,17 @@ const NMetricsStrategyReducer = (
         (anExperiment: Experiment): boolean =>
           config.selectedExperimentIds.includes(anExperiment.id)
       );
-      const goldStandard = selectedExperiments.filter(
+      const goldStandards = selectedExperiments.filter(
         (anExperiment: Experiment): boolean =>
           anExperiment.algorithmId === GoldStandardId
-      )[0];
+      );
+      if (goldStandards.length !== 1) {
+        return {
+          ...state,
+          isValidConfig: false,
+        };
+      }
+      const goldStandard = goldStandards[0];
       const currentExperiments =
         goldStandard !== undefined
           ? selectedExperiments.filter(
@@ -35,6 +42,12 @@ const NMetricsStrategyReducer = (
                 goldStandard.datasetId === anExperiment.datasetId
             )
           : [];
+      if (selectedExperiments.length - 1 !== currentExperiments.length) {
+        return {
+          ...state,
+          isValidConfig: false,
+        };
+      }
       return {
         ...state,
         experiments: currentExperiments,
