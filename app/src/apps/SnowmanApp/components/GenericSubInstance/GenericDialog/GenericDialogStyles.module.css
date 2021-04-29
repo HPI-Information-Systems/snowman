@@ -20,9 +20,11 @@
 }
 
 .innerContainerNoScroll {
+  overflow-x: hidden;
   overflow-y: hidden;
 }
 
 .innerContainerScrollable {
+  overflow-x: scroll;
   overflow-y: scroll;
 }

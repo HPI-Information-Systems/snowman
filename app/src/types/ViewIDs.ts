@@ -11,4 +11,5 @@ export enum ViewIDs {
   AlgorithmDialog,
   DatasetDialog,
   ExperimentDialog,
+  PreviewDialog,
 }

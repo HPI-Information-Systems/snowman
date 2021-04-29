@@ -31,6 +31,7 @@ const mapDispatchToProps = (
   },
   previewDataset() {
     console.log('dispatch(openPreviewer(ownProps.dataset))');
+    doOpenDialog(ViewIDs.PreviewDialog, ownProps.dataset.id);
   },
 });
 

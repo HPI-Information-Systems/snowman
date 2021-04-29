@@ -7,7 +7,6 @@ import {
 import { doDeleteExperiment } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
-import { openPreviewer } from 'store/actions/ExperimentPreviewerActions';
 import { SnowmanDispatch } from 'store/messages';
 import { ImmediateStore } from 'store/models';
 import { ViewIDs } from 'types/ViewIDs';
@@ -31,7 +30,7 @@ const mapDispatchToProps = (
     doDeleteExperiment(ownProps.experiment.id).then();
   },
   previewExperiment() {
-    dispatch(openPreviewer(ownProps.experiment));
+    doOpenDialog(ViewIDs.PreviewDialog, ownProps.experiment.id);
   },
 });
 

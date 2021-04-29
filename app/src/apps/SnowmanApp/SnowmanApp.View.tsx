@@ -27,6 +27,7 @@ import DatasetDialog from 'apps/DatasetDialog/DatasetDialog';
 import DatasetsApp from 'apps/DatasetsApp/DatasetsApp';
 import ExperimentDialog from 'apps/ExperimentDialog/ExperimentDialog';
 import ExperimentsApp from 'apps/ExperimentsApp/ExperimentsApp';
+import PreviewDialog from 'apps/PreviewDialog/PreviewDialog';
 import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/BlockingLoading';
 import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';
 import { SnowmanAppProps } from 'apps/SnowmanApp/SnowmanAppProps';
@@ -56,6 +57,7 @@ const SnowmanAppView = ({
       <AlgorithmDialog />
       <DatasetDialog />
       <ExperimentDialog />
+      <PreviewDialog />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <BlockingLoading />
       {/* Todo: Change autoClose back to 5000 */}
