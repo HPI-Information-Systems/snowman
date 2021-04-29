@@ -42,7 +42,10 @@ const NMetricsStrategyReducer = (
                 goldStandard.datasetId === anExperiment.datasetId
             )
           : [];
-      if (selectedExperiments.length - 1 !== currentExperiments.length) {
+      if (
+        selectedExperiments.length - 1 !== currentExperiments.length ||
+        currentExperiments.length === 0
+      ) {
         return {
           ...state,
           isValidConfig: false,
