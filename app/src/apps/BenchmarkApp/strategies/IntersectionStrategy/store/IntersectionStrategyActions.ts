@@ -40,12 +40,6 @@ export const dragNDropAnExperiment = (
     ),
   });
 
-export const resetIntersection = (): easyPrimitiveActionReturn<IntersectionStrategyModel> =>
-  easyPrimitiveAction<IntersectionStrategyModel>({
-    type: IntersectionStrategyActionTypes.RESET_INTERSECTION,
-    payload: false,
-  });
-
 export const resetIncludedExperiments = (
   experiments: Experiment[]
 ): easyPrimitiveActionReturn<IntersectionStrategyModel> =>

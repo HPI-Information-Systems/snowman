@@ -141,14 +141,6 @@ const IntersectionStrategyReducer = (
         included: action.payload as Experiment[],
         excluded: [],
       };
-    case IntersectionStrategyActionTypes.RESET_INTERSECTION:
-      return {
-        ...state,
-        ignored: [...state.available],
-        excluded: [],
-        included: [],
-        counts: [],
-      };
     default:
       return state;
   }
