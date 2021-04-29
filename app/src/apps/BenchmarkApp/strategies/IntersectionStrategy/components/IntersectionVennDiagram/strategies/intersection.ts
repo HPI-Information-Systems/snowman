@@ -1,5 +1,5 @@
 import { Experiment } from 'api';
-import { IntersectionVennDiagramConfigStrategy } from 'components/IntersectionVennDiagram/config';
+import { IntersectionVennDiagramConfigStrategy } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/config';
 
 // Ionic Colors: themes/variables.css
 export const IRRELEVANT_COLOR = '#92949c';

@@ -1,6 +1,6 @@
 import { IonChip, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react';
 import { Experiment } from 'api';
-import { IntersectionDroppableProps } from 'components/IntersectionDroppable/IntersectionDroppableProps';
+import { IntersectionDroppableProps } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionDroppable/IntersectionDroppableProps';
 import React from 'react';
 import {
   Draggable,

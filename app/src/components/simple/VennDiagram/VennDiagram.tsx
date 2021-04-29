@@ -27,7 +27,7 @@ export const VennDiagram = ({ config }: VennDiagramProps): JSX.Element => {
         drawTwoSetVennDiagram(svg, tooltip, config);
       } else if ('x111' in config) {
         drawThreeSetVennDiagram(svg, tooltip, config);
-      } else {
+      } else if ('x1111' in config) {
         drawFourSetVennDiagram(svg, tooltip, config);
       }
     }

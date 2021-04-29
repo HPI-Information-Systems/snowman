@@ -1,7 +1,7 @@
 import { Experiment } from 'api';
 import { TuplesLoader } from 'types/TuplesLoader';
 
-export interface IntersectionPageStateProps {
+export interface IntersectionStrategyStateProps {
   loadTuples: TuplesLoader;
   tuplesCount: number;
   pairCount: number;
@@ -11,9 +11,9 @@ export interface IntersectionPageStateProps {
   ignored: Experiment[];
 }
 
-export interface IntersectionPageDispatchProps {
+export interface IntersectionStrategyDispatchProps {
   loadCounts(): Promise<void>;
 }
 
-export type IntersectionPageProps = IntersectionPageStateProps &
-  IntersectionPageDispatchProps;
+export type IntersectionStrategyProps = IntersectionStrategyStateProps &
+  IntersectionStrategyDispatchProps;

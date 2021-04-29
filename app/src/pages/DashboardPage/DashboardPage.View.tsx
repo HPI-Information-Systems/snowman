@@ -10,7 +10,6 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import IntersectionVennDiagram from 'components/IntersectionVennDiagram/IntersectionVennDiagram';
 import PageStruct from 'components/PageStructOLD/PageStruct';
 import {
   calculatorOutline,
@@ -37,7 +36,6 @@ export default function DashboardPageView({
         <IonRow>
           <IonCol size="12" sizeXl="8">
             <IonCard className="dashboard-content">
-              <IntersectionVennDiagram onIntersect={openIntersectionPage} />
               {isVennDiagramRendered ? (
                 <div
                   style={{

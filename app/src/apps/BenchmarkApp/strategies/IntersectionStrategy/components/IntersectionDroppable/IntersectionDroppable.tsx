@@ -1,13 +1,13 @@
-import IntersectionDroppableView from 'components/IntersectionDroppable/IntersectionDroppable.View';
-import { IntersectionDroppableStateProps } from 'components/IntersectionDroppable/IntersectionDroppableProps';
+import IntersectionDroppableView from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionDroppable/IntersectionDroppable.View';
+import { IntersectionDroppableStateProps } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionDroppable/IntersectionDroppableProps';
+import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
 import { connect } from 'react-redux';
-import { ImmediateStore } from 'store/models';
 
 const mapStateToProps = (
-  state: ImmediateStore
+  state: IntersectionStrategyModel
 ): IntersectionDroppableStateProps => ({
   pairCounts: new Map(
-    state.IntersectionStore.counts
+    state.counts
       .filter(({ experiments }) => experiments.length === 1)
       .filter(({ experiments: [{ predictedCondition }] }) => predictedCondition)
       .map(({ experiments: [{ experimentId }], numberPairs }) => [

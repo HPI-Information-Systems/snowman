@@ -6,8 +6,8 @@ import {
   IonGrid,
   IonRow,
 } from '@ionic/react';
-import IntersectionDroppable from 'components/IntersectionDroppable/IntersectionDroppable';
-import { IntersectionSelectorProps } from 'components/IntersectionSelector/IntersectionSelectorProps';
+import IntersectionDroppable from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionDroppable/IntersectionDroppable';
+import { IntersectionSelectorProps } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionSelector/IntersectionSelectorProps';
 import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';

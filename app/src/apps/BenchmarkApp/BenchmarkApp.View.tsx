@@ -1,5 +1,6 @@
 import { BenchmarkAppProps } from 'apps/BenchmarkApp/BenchmarkAppProps';
 import DashboardStrategy from 'apps/BenchmarkApp/strategies/DashboardStrategy/DashboardStrategy';
+import IntersectionStrategy from 'apps/BenchmarkApp/strategies/IntersectionStrategy/IntersectionStrategy';
 import NMetricsStrategy from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategy';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
@@ -16,6 +17,7 @@ const BenchmarkAppView = ({
     <PageStruct pageTitle={activeStrategy}>
       <DashboardStrategy openStrategy={openStrategy} />
       <NMetricsStrategy />
+      <IntersectionStrategy />
       {activeStrategy !== StrategyIDs.Dashboard ? (
         <BackFab clickOnFab={(): void => openStrategy(StrategyIDs.Dashboard)} />
       ) : (
