@@ -7,6 +7,7 @@ import {
 } from 'api';
 import { IntersectionStrategyActionTypes } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyActionTypes';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
+import { BenchmarkAppConfigStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { DropResult } from 'react-beautiful-dnd';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -19,6 +20,14 @@ import {
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
 import { datasetTuplesLoader } from 'utils/tuplesLoaders';
+
+export const updateConfig = (
+  benchmarkConfig: BenchmarkAppConfigStore
+): easyPrimitiveActionReturn<IntersectionStrategyModel> =>
+  easyPrimitiveAction<IntersectionStrategyModel>({
+    type: IntersectionStrategyActionTypes.UPDATE_CONFIG,
+    payload: benchmarkConfig,
+  });
 
 export const dragNDropAnExperiment = (
   aDropResult: DropResult
@@ -162,4 +171,12 @@ export const intersectionTuplesLoader = (
   } else {
     return datasetTuplesLoader(dataset);
   }
+};
+
+export const loadStrategyData = (
+  dispatch: SnowmanDispatch<IntersectionStrategyModel>,
+  benchmarkConfig: BenchmarkAppConfigStore
+): void => {
+  dispatch(updateConfig(benchmarkConfig));
+  //dispatch(loadData());
 };

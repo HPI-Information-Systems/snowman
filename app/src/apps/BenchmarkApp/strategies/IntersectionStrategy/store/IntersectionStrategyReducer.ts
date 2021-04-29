@@ -1,6 +1,7 @@
 import { Experiment, ExperimentIntersectionCount } from 'api';
 import { IntersectionStrategyActionTypes } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyActionTypes';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
+import { BenchmarkAppConfigStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { difference, nth } from 'lodash';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';
@@ -35,6 +36,44 @@ const IntersectionStrategyReducer = (
   action: SnowmanAction
 ): IntersectionStrategyModel => {
   switch (action.type) {
+    case IntersectionStrategyActionTypes.UPDATE_CONFIG: {
+      const config = action.payload as BenchmarkAppConfigStore;
+
+      if (config.selectedExperimentIds.length < 2) {
+        return {
+          ...state,
+          isValidConfig: false,
+        };
+      }
+
+      const selectedExperiments = config.experiments.filter(
+        (anExperiment: Experiment): boolean =>
+          config.selectedExperimentIds.includes(anExperiment.id)
+      );
+
+      if (
+        selectedExperiments.length !==
+        selectedExperiments.filter(
+          (anExperiment: Experiment): boolean =>
+            anExperiment.datasetId === selectedExperiments[0].datasetId
+        ).length
+      ) {
+        return {
+          ...state,
+          isValidConfig: false,
+        };
+      }
+
+      return {
+        ...state,
+        available: selectedExperiments,
+        ignored: [...selectedExperiments],
+        excluded: [],
+        included: [],
+        counts: [],
+        isValidConfig: true,
+      };
+    }
     case IntersectionStrategyActionTypes.SET_COUNTS:
       return {
         ...state,
