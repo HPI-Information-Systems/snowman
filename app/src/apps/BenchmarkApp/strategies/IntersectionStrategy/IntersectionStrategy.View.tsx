@@ -12,6 +12,7 @@ import IntersectionVennDiagram from 'apps/BenchmarkApp/strategies/IntersectionSt
 import { IntersectionVennDiagramIntersectionStrategy } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/strategies/intersection';
 import { IntersectionStrategyProps } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/IntersectionStrategyProps';
 import DataViewer from 'components/DataViewer/DataViewer';
+import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import React, { useEffect, useMemo, useState } from 'react';
 import { intersectionDescription } from 'utils/intersectionDescription';
 
@@ -23,6 +24,7 @@ const IntersectionStrategyView = ({
   excluded,
   ignored,
   loadCounts,
+  isValidConfig,
 }: IntersectionStrategyProps): JSX.Element => {
   useEffect(() => {
     loadCounts();
@@ -55,42 +57,51 @@ const IntersectionStrategyView = ({
   );
 
   return (
-    <IonGrid>
-      <IonRow>
-        <IonCol className="col-no-padding" size="12" sizeXl="6">
-          <IonRow>
-            <IonCol className="col-no-padding">
-              <IonCard>
-                <IntersectionVennDiagram strategy={strategy} />
-              </IonCard>
-            </IonCol>
-          </IonRow>
-          <IonRow>
-            <IonCol className="col-no-padding">
-              <IntersectionSelector />
-            </IonCol>
-          </IonRow>
-        </IonCol>
-        <IonCol className="col-no-padding" size="12" sizeXl="6">
-          <IonCard style={{ height: '80vh' }}>
-            <IonCardHeader>
-              <b>{intersectionDescriptionString}</b>
-            </IonCardHeader>
-            <IonCardContent
-              style={{
-                height: '72vh',
-              }}
-            >
-              <DataViewer
-                loadTuples={loadTuples}
-                tuplesCount={tuplesCount}
-                title={intersectionDescriptionString}
-              />
-            </IonCardContent>
-          </IonCard>
-        </IonCol>
-      </IonRow>
-    </IonGrid>
+    <>
+      {!isValidConfig ? (
+        <ErroneousBackdrop
+          message={
+            'Please select at least two experiments from a single dataset!'
+          }
+        />
+      ) : null}
+      <IonGrid>
+        <IonRow>
+          <IonCol className="col-no-padding" size="12" sizeXl="6">
+            <IonRow>
+              <IonCol className="col-no-padding">
+                <IonCard>
+                  <IntersectionVennDiagram strategy={strategy} />
+                </IonCard>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol className="col-no-padding">
+                <IntersectionSelector />
+              </IonCol>
+            </IonRow>
+          </IonCol>
+          <IonCol className="col-no-padding" size="12" sizeXl="6">
+            <IonCard style={{ height: '80vh' }}>
+              <IonCardHeader>
+                <b>{intersectionDescriptionString}</b>
+              </IonCardHeader>
+              <IonCardContent
+                style={{
+                  height: '72vh',
+                }}
+              >
+                <DataViewer
+                  loadTuples={loadTuples}
+                  tuplesCount={tuplesCount}
+                  title={intersectionDescriptionString}
+                />
+              </IonCardContent>
+            </IonCard>
+          </IonCol>
+        </IonRow>
+      </IonGrid>
+    </>
   );
 };
 

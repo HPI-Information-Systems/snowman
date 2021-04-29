@@ -16,6 +16,7 @@ import { MagicNotPossibleId } from 'structs/constants';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 const mapStateToProps = ({
+  isValidConfig,
   available,
   included,
   excluded,
@@ -37,6 +38,7 @@ const mapStateToProps = ({
   //Todo: Validate dataset
 
   return {
+    isValidConfig: isValidConfig,
     loadTuples: intersectionTuplesLoader(
       sortedConfig,
       available[0]?.id ?? MagicNotPossibleId

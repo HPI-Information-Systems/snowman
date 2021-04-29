@@ -2,6 +2,7 @@ import { Experiment } from 'api';
 import { TuplesLoader } from 'types/TuplesLoader';
 
 export interface IntersectionStrategyStateProps {
+  isValidConfig: boolean;
   loadTuples: TuplesLoader;
   tuplesCount: number;
   pairCount: number;

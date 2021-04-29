@@ -8,6 +8,7 @@ import { SnowmanAction } from 'types/SnowmanAction';
 import { filterOutAnElement, insertElementAt } from 'utils/dragNDropHelpers';
 
 const initialState: IntersectionStrategyModel = {
+  isValidConfig: false,
   available: [],
   excluded: [],
   included: [],

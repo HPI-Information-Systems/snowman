@@ -7,4 +7,5 @@ export interface IntersectionStrategyModel {
   ignored: Experiment[];
   // experiments are guaranteed to be sorted by intersectionCountSorter (see IntersectionStoreActions.ts)
   counts: ExperimentIntersectionCount[];
+  isValidConfig: boolean;
 }
