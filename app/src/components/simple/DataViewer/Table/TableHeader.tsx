@@ -4,10 +4,10 @@ import {
   TableHeaderOwnProps,
 } from 'components/simple/DataViewer/Table/TableProps';
 import { connect } from 'react-redux';
-import { SnowmanDispatch } from 'store/messages';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 const mapDispatchToProps = (
-  dispatch: SnowmanDispatch,
+  dispatch: SnowmanDispatch<never>,
   { openDataViewerWindow }: TableHeaderOwnProps
 ): TableHeaderDispatchProps => ({
   performOpenDataViewerWindow() {

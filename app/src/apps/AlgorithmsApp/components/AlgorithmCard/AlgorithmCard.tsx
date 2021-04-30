@@ -6,11 +6,11 @@ import {
 import { doDeleteAlgorithm } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
-import { SnowmanDispatch } from 'store/messages';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { ViewIDs } from 'types/ViewIDs';
 
 const mapDispatchToProps = (
-  dispatch: SnowmanDispatch,
+  dispatch: SnowmanDispatch<never>,
   ownProps: AlgorithmCardOwnProps
 ): AlgorithmCardDispatchProps => ({
   deleteAlgorithm() {
