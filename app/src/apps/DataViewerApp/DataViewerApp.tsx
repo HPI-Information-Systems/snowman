@@ -91,6 +91,7 @@ const DataViewerApp = (): JSX.Element => {
     <GenericSubApp
       instanceId={ViewIDs.DataViewerApp}
       appTitle="Data Viewer"
+      usePageStruct={false}
       createSubAppStore={dummyStoreFactory()}
     >
       <div className={styles.container}>
