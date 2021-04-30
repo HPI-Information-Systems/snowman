@@ -8,23 +8,12 @@ import {
 } from 'apps/DataViewerApp/actionsToHost';
 import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
 import { DataViewerOwnProps } from 'components/simple/DataViewer/DataViewerProps';
-import { RenderLogicStoreActionTypes } from 'store/actions/actionTypes';
-import { SnowmanThunkAction } from 'store/messages';
 import { COULD_NOT_OPEN_CHILD_WINDOW_ERROR } from 'structs/statusMessages';
+import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import { ToastType } from 'types/ToastTypes';
 import { viewIdQueryParam } from 'types/ViewIdQueryParam';
 import { ViewIDs } from 'types/ViewIDs';
-import {
-  easyPrimitiveAction,
-  easyPrimitiveActionReturn,
-} from 'utils/easyActionsFactory';
 import { unwrapError } from 'utils/requestHandler';
-
-export const navigateTo = (aTarget: ViewIDs): easyPrimitiveActionReturn =>
-  easyPrimitiveAction({
-    type: RenderLogicStoreActionTypes.NAVIGATE_TO,
-    payload: aTarget,
-  });
 
 const windowNameBase = 'snowman-benchmark';
 let nextWindowId = 0;
@@ -34,7 +23,7 @@ const nextWindowName = (): string => {
 
 const openViewInNewWindow = (
   viewId: ViewIDs
-): SnowmanThunkAction<Window | null> => (dispatch) => {
+): SnowmanThunkAction<Window | null, unknown> => (dispatch) => {
   const targetWindow = window.open(
     `${window.location.origin}${window.location.pathname}?${viewIdQueryParam}=${viewId}`,
     nextWindowName()
@@ -48,7 +37,7 @@ const openViewInNewWindow = (
 export const openStandaloneDataViewerWindow = ({
   loadTuples,
   ...props
-}: DataViewerOwnProps): SnowmanThunkAction<void> => (dispatch) => {
+}: DataViewerOwnProps): SnowmanThunkAction<void, unknown> => (dispatch) => {
   const targetWindow = dispatch(openViewInNewWindow(ViewIDs.DataViewerApp));
   if (targetWindow) {
     window.addEventListener('beforeunload', () =>
