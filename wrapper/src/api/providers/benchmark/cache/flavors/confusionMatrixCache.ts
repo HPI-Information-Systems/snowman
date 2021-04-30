@@ -7,6 +7,7 @@ export type ConfusionMatrixConfig = {
   predicted: ExperimentConfigItem[];
   groundTruth: ExperimentConfigItem[];
   datasetId: DatasetId;
+  forceStatic?: boolean;
 };
 
 class ConfusionMatrixCacheClass extends BenchmarkCache<
@@ -17,24 +18,28 @@ class ConfusionMatrixCacheClass extends BenchmarkCache<
 
   protected mapCustomConfigToBaseConfig({
     datasetId,
-    groundTruth: excluded,
-    predicted: included,
+    groundTruth,
+    predicted,
+    forceStatic,
   }: ConfusionMatrixConfig): BenchmarkCacheBaseConfig {
     return {
       datasetId,
-      group1: included,
-      group2: excluded,
+      group1: predicted,
+      group2: groundTruth,
+      forceStatic,
     };
   }
   protected mapBaseConfigToCustomConfig({
     datasetId,
     group1,
     group2,
+    forceStatic,
   }: BenchmarkCacheBaseConfig): ConfusionMatrixConfig {
     return {
       datasetId,
       predicted: group1,
       groundTruth: group2,
+      forceStatic,
     };
   }
 

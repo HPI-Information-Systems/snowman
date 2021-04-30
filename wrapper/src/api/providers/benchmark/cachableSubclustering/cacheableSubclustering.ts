@@ -12,11 +12,13 @@ export class CacheableSubclusting extends CacheableSubclustingBase {
           datasetId: this.config.datasetId,
           included: this.config.base,
           excluded: [],
+          forceStatic: this.config.forceStatic,
         }) as IntersectionOnlyIncludes).clustering,
         (IntersectionCache.get({
           datasetId: this.config.datasetId,
           included: this.config.partition,
           excluded: [],
+          forceStatic: this.config.forceStatic,
         }) as IntersectionOnlyIncludes).clustering
       )
   );

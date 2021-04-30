@@ -27,21 +27,25 @@ export class CacheableConfusionMatrix
         datasetId: this.config.datasetId,
         excluded: [],
         included: [...this.config.groundTruth, ...this.config.predicted],
+        forceStatic: this.config.forceStatic,
       }).numberPairs,
       falsePositives: IntersectionCache.get({
         datasetId: this.config.datasetId,
         excluded: [...this.config.groundTruth],
         included: [...this.config.predicted],
+        forceStatic: this.config.forceStatic,
       }).numberPairs,
       falseNegatives: IntersectionCache.get({
         datasetId: this.config.datasetId,
         excluded: [...this.config.predicted],
         included: [...this.config.groundTruth],
+        forceStatic: this.config.forceStatic,
       }).numberPairs,
       trueNegatives: IntersectionCache.get({
         datasetId: this.config.datasetId,
         excluded: [...this.config.groundTruth, ...this.config.predicted],
         included: [],
+        forceStatic: this.config.forceStatic,
       }).numberPairs,
     };
   }

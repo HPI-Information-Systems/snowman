@@ -19,12 +19,14 @@ export class IntersectionWithExcludes extends IntersectionBase {
       datasetId: this.config.datasetId,
       included: this.config.included,
       excluded: [],
+      forceStatic: this.config.forceStatic,
     }).numberPairs;
     for (let index = 0; index < this.config.excluded.length; ++index) {
       numberPairs -= IntersectionCache.get({
         datasetId: this.config.datasetId,
         included: [...this.config.included, this.config.excluded[index]],
         excluded: this.config.excluded.slice(0, index),
+        forceStatic: this.config.forceStatic,
       }).numberPairs;
     }
     return numberPairs;

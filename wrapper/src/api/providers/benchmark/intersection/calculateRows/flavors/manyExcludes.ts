@@ -16,6 +16,7 @@ export class CalculateRowsManyExcludes extends CalculateRowsFlavor {
       datasetId: this.config.datasetId,
       base: this.config.included,
       partition: this.config.excluded.slice(0, 1),
+      forceStatic: this.config.forceStatic,
     }).clustering;
   }
 
@@ -31,6 +32,7 @@ export class CalculateRowsManyExcludes extends CalculateRowsFlavor {
           datasetId: this.config.datasetId,
           included: [experimentConfig],
           excluded: [],
+          forceStatic: this.config.forceStatic,
         }) as IntersectionOnlyIncludes).clustering
     );
     this.rows = [];
