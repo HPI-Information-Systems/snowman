@@ -58,14 +58,11 @@ export async function setExperiment({
   );
 }
 
-export async function getExperimentFile({
-  experimentId,
-  startAt,
-  limit,
-  sortBy,
-}: GetExperimentFileRequest): Promise<SuccessResponse<FileResponse>> {
+export async function getExperimentFile(
+  request: GetExperimentFileRequest
+): Promise<SuccessResponse<FileResponse>> {
   return Service.response(
-    () => provider().getExperimentFile(experimentId, startAt, limit, sortBy),
+    () => provider().getExperimentFile(request),
     200,
     404
   );

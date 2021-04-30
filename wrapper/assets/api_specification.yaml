@@ -1002,6 +1002,8 @@ components:
       type: integer
     SimilarityThreshold:
       type: string
+    SimilarityThresholdFunctionConstant:
+      type: number
     SimilarityThresholdFunctionOperator:
       example:
         operator: ADD
@@ -1016,14 +1018,59 @@ components:
             - SUBTRACT
             - MULTIPLY
             - DIVIDE
+            - POWER
+            - POW
+            - ATAN2
+            - LOG
+            - MOD
           type: string
       required:
         - left
         - operator
         - right
       type: object
+    SimilarityThresholdFunctionUnaryOperator:
+      example:
+        operator: ACOS
+      properties:
+        func:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+        operator:
+          enum:
+            - ACOS
+            - ACOSH
+            - ASIN
+            - ASINH
+            - ATAN
+            - ATANH
+            - CEIL
+            - CEILING
+            - COS
+            - COSH
+            - DEGREES
+            - EXP
+            - FLOOR
+            - LN
+            - LOG
+            - LOG10
+            - LOG2
+            - RADIANS
+            - SIN
+            - SINH
+            - SQRT
+            - TAN
+            - TANH
+            - TRUNC
+          type: string
+      required:
+        - func
+        - operator
+      type: object
     SimilarityThresholdFunctionValues:
       example:
+        constant: 0.8008281904610115
+        unaryOperator:
+          operator: ACOS
         similarityThreshold: similarityThreshold
         type: SimilarityThreshold
         operator:
@@ -1033,11 +1080,17 @@ components:
           enum:
             - SimilarityThreshold
             - Operator
+            - Constant
+            - UnaryOperator
           type: string
         similarityThreshold:
           type: string
         operator:
           $ref: "#/components/schemas/SimilarityThresholdFunctionOperator"
+        constant:
+          type: number
+        unaryOperator:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionUnaryOperator"
       required:
         - type
       type: object

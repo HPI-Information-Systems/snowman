@@ -1,19 +1,21 @@
 import { setupDatabase } from '../../../../database';
 import { DatasetId, ExperimentId } from '../../../../server/types';
 import { numberOfPairs } from '../../../../tools/numberOfPairs';
+import {
+  IntersectionCache,
+  IntersectionConfig,
+} from '../../cache/flavors/intersectionCache';
 import { expectClusteringsToEqual } from '../../cluster/test/utility';
 import { ClusterID, NodeID } from '../../cluster/types';
-import { Intersection } from '..';
-import { IntersectionCache } from '../cache';
 import {
   confusionTuplesTestCases,
   loadTestCase,
   multiIntersectionTestCases,
 } from './testCases';
 
-function getClustering(...args: ConstructorParameters<typeof Intersection>) {
-  return IntersectionCache.get(...args)
-    .clusters()
+function getClustering(args: IntersectionConfig) {
+  return IntersectionCache.get(args)
+    .rows()
     .reduce<ClusterID[][]>(
       (cluster, id) => {
         if (id === undefined) {
@@ -29,26 +31,55 @@ function getClustering(...args: ConstructorParameters<typeof Intersection>) {
 }
 
 function testConfig(
-  pos: ExperimentId[],
-  neg: ExperimentId[],
+  includedIds: ExperimentId[],
+  excludedIds: ExperimentId[],
   expected: NodeID[][],
   datasetId: [DatasetId]
 ) {
-  expectClusteringsToEqual(getClustering(pos, neg, datasetId), expected);
-  expect(IntersectionCache.get(pos, neg, datasetId).numberPairs).toBe(
-    expected.reduce((prev, cur) => prev + numberOfPairs(cur.length), 0)
+  const included = includedIds.map((experimentId) => ({ experimentId }));
+  const excluded = excludedIds.map((experimentId) => ({ experimentId }));
+  expectClusteringsToEqual(
+    getClustering({
+      datasetId: datasetId[0],
+      excluded,
+      included,
+    }),
+    expected
   );
+  expect(
+    IntersectionCache.get({
+      datasetId: datasetId[0],
+      excluded,
+      included,
+    }).numberPairs
+  ).toBe(expected.reduce((prev, cur) => prev + numberOfPairs(cur.length), 0));
   const result = [
-    ...IntersectionCache.get(pos, neg, datasetId).clusters(0, 1),
-    ...IntersectionCache.get(pos, neg, datasetId).clusters(1, 2),
-    ...IntersectionCache.get(pos, neg, datasetId).clusters(3, 97),
-    ...IntersectionCache.get(pos, neg, datasetId).clusters(100),
+    ...IntersectionCache.get({
+      datasetId: datasetId[0],
+      excluded,
+      included,
+    }).rows(0, 1),
+    ...IntersectionCache.get({
+      datasetId: datasetId[0],
+      excluded,
+      included,
+    }).rows(1, 2),
+    ...IntersectionCache.get({
+      datasetId: datasetId[0],
+      excluded,
+      included,
+    }).rows(3, 97),
+    ...IntersectionCache.get({
+      datasetId: datasetId[0],
+      excluded,
+      included,
+    }).rows(100),
   ];
-  const expectedClusters = IntersectionCache.get(
-    pos,
-    neg,
-    datasetId
-  ).clusters();
+  const expectedClusters = IntersectionCache.get({
+    datasetId: datasetId[0],
+    excluded,
+    included,
+  }).rows();
   expect(result).toEqual(expectedClusters);
 }
 beforeAll(async () => {

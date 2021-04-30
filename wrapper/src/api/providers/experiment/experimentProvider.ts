@@ -1,17 +1,19 @@
 import { Readable } from 'stream';
 
 import { databaseBackend, tables } from '../../database';
-import {
-  ExperimentValues,
-  FileResponse,
-  SetExperimentFileFormatEnum,
-} from '../../server/types';
+import { ExperimentValues, FileResponse } from '../../server/types';
 import { Experiment, ExperimentId } from '../../server/types';
+import {
+  GetExperimentFileRequest,
+  SetExperimentFileFormatEnum,
+} from '../../server/types/ExperimentRequests';
+import { getSimilarity } from '../../tools/getSimilarity';
 import { providers } from '..';
-import { invalidateCaches } from '../benchmark/intersection/cache';
+import { BenchmarkCache } from '../benchmark/cache';
 import { DatasetIDMapper } from '../dataset/util/idMapper';
-import { ExperimentFileGetter } from '../experiment/file/getter';
 import { getExperimentInserter } from './file';
+import { rawGetter } from './file/rawGetter';
+import { similarityGetter } from './file/similarityGetter';
 import { ExperimentConsistencyChecks } from './util/checks';
 import { ExperimentConverter } from './util/converter';
 
@@ -77,16 +79,27 @@ export class ExperimentProvider {
     })();
   }
 
-  getExperimentFile(
-    id: ExperimentId,
-    startAt?: number,
-    limit?: number,
-    sortBy?: string
-  ): FileResponse {
-    return new ExperimentFileGetter(
-      id,
-      providers.experiment.getExperiment(id).datasetId
-    ).get(startAt, limit, sortBy);
+  getExperimentFile({
+    experimentId,
+    startAt,
+    limit,
+    sortBy,
+    similarityThreshold,
+    similarityThresholdFunction,
+  }: GetExperimentFileRequest): FileResponse {
+    const similarity = getSimilarity(
+      similarityThreshold,
+      similarityThresholdFunction
+    );
+    if (similarity) {
+      return similarityGetter(experimentId, similarity).get(
+        startAt,
+        limit,
+        sortBy
+      );
+    } else {
+      return rawGetter(experimentId).get(startAt, limit, sortBy);
+    }
   }
 
   async setExperimentFile(
@@ -99,13 +112,16 @@ export class ExperimentProvider {
     return this.checks.sync.call(async () => {
       const { datasetId } = this.getExperiment(id);
       const dataset = providers.dataset.getDataset(datasetId);
+      this.checks.throwIfDatasetHasNoRecordCount(dataset);
 
       const datasetIDMapper = new DatasetIDMapper(datasetId);
       const ExperimentInserter = getExperimentInserter(format);
       const numberOfUploadedRecords = await new ExperimentInserter(
         id,
         datasetIDMapper,
-        dataset.numberOfRecords
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        dataset.numberOfRecords!,
+        dataset.id
       )
         .insert(file)
         .catch((e) => {
@@ -118,7 +134,7 @@ export class ExperimentProvider {
         storedExperiment.numberOfUploadedRecords = numberOfUploadedRecords;
         tables.meta.experiment.upsert([storedExperiment]);
       }
-      invalidateCaches(id);
+      BenchmarkCache.invalidateExperiment(id);
     }, id);
   }
 
@@ -129,7 +145,7 @@ export class ExperimentProvider {
       storedExperiment.numberOfUploadedRecords = null;
       tables.meta.experiment.upsert([storedExperiment]);
     }
-    invalidateCaches(id);
+    BenchmarkCache.invalidateExperiment(id);
   }
 
   private deleteSimilarityThresholdFunctions(experimentId: ExperimentId): void {

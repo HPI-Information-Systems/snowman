@@ -262,19 +262,11 @@ async function loadExperiment(
 }
 
 /**
- * @param experiments All clusterings must have the same number of ids x. Further they need to contain the ids 0 to x-1.
- * This ensures that the mapped id equals the given id.
+ * Guarantees mapped ids to equal unmapped ids. Dataset only has column "id"
  */
-export async function loadTestCase(
-  experiments: RelaxedClustering[]
-): Promise<[ExperimentId[], DatasetId]> {
-  const experimentArrays = experiments.map(
-    relaxedClusteringToArray
-  ) as NodeID[][][];
-  const numberOfRecords = experimentArrays[0].reduce(
-    (prev, cur) => prev + cur.length,
-    0
-  );
+export async function loadTestDataset(
+  numberOfRecords: number
+): Promise<DatasetId> {
   const datasetId = providers.dataset.addDataset({
     name: '',
   });
@@ -291,6 +283,24 @@ export async function loadTestCase(
     "'",
     ','
   );
+  return datasetId;
+}
+
+/**
+ * @param experiments All clusterings must have the same number of ids x. Further they need to contain the ids 0 to x-1.
+ * This ensures that the mapped id equals the given id.
+ */
+export async function loadTestCase(
+  experiments: RelaxedClustering[]
+): Promise<[experimentIds: ExperimentId[], datasetId: DatasetId]> {
+  const experimentArrays = experiments.map(
+    relaxedClusteringToArray
+  ) as NodeID[][][];
+  const numberOfRecords = experimentArrays[0].reduce(
+    (prev, cur) => prev + cur.length,
+    0
+  );
+  const datasetId = await loadTestDataset(numberOfRecords);
   const algorithmId = providers.algorithm.addAlgorithm({
     name: '',
   });

@@ -14,10 +14,7 @@ export class Node implements Cluster {
     return this.root._clusterId;
   }
 
-  constructor(
-    public _clusterId: ClusterID,
-    protected readonly nodeId: NodeID
-  ) {}
+  constructor(public _clusterId: ClusterID, readonly nodeId: NodeID) {}
 
   *[Symbol.iterator](): IterableIterator<NodeID> {
     yield this.nodeId;

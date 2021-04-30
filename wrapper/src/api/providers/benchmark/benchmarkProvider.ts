@@ -1,14 +1,15 @@
 import {
   ExperimentConfigItem,
-  ExperimentId,
   ExperimentIntersectionCount,
   ExperimentIntersectionItem,
   FileResponse,
 } from '../../server/types';
 import { Metric } from '../../server/types';
+import { ConfusionMatrixCache } from './cache/flavors/confusionMatrixCache';
+import { IntersectionCache } from './cache/flavors/intersectionCache';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
 import { idClustersToRecordClusters } from './idsToRecords';
-import { Intersection, IntersectionCache } from './intersection';
+import { IntersectionBase } from './intersection/intersectionBase';
 import {
   Accuracy,
   BalancedAccuracy,
@@ -29,7 +30,17 @@ import {
   Specificity,
   ThreatScore,
 } from './metrics';
-import { ConfusionMatrix } from './metrics/confusionMatrix';
+
+enum ExperimentState {
+  IRRELEVANT,
+  INCLUDED,
+  EXCLUDED,
+}
+const states = [
+  ExperimentState.IRRELEVANT,
+  ExperimentState.INCLUDED,
+  ExperimentState.EXCLUDED,
+];
 
 export class BenchmarkProvider {
   calculateExperimentIntersectionCount({
@@ -41,8 +52,20 @@ export class BenchmarkProvider {
     return {
       experiments,
       numberPairs: intersection.numberPairs,
-      numberRows: intersection.rowCount,
+      numberRows: intersection.numberRows,
     };
+  }
+
+  protected idsAndSimilarity(
+    targetState: ExperimentState,
+    experiments: ExperimentConfigItem[],
+    state: ExperimentState[]
+  ): ExperimentConfigItem[] {
+    return state
+      .map((state, index) =>
+        state === targetState ? experiments[index] : undefined
+      )
+      .filter((index) => index !== undefined) as ExperimentConfigItem[];
   }
 
   calculateExperimentIntersectionCounts(
@@ -51,16 +74,7 @@ export class BenchmarkProvider {
     const datasetId = datasetFromExperimentIds(
       experiments.map(({ experimentId }) => experimentId)
     ).id;
-    enum ExperimentState {
-      IRRELEVANT,
-      INCLUDED,
-      EXCLUDED,
-    }
-    const states = [
-      ExperimentState.IRRELEVANT,
-      ExperimentState.INCLUDED,
-      ExperimentState.EXCLUDED,
-    ];
+
     const state = experiments.map(() => ExperimentState.IRRELEVANT);
     const counts: ExperimentIntersectionCount[] = [];
     function nextState() {
@@ -77,39 +91,39 @@ export class BenchmarkProvider {
     }
     // eslint-disable-next-line no-constant-condition
     do {
-      const included = state
-        .map((state, index) =>
-          state === ExperimentState.INCLUDED
-            ? experiments[index].experimentId
-            : undefined
-        )
-        .filter((index) => index !== undefined) as ExperimentId[];
-      const excluded = state
-        .map((state, index) =>
-          state === ExperimentState.EXCLUDED
-            ? experiments[index].experimentId
-            : undefined
-        )
-        .filter((index) => index !== undefined) as ExperimentId[];
+      const included = this.idsAndSimilarity(
+        ExperimentState.INCLUDED,
+        experiments,
+        state
+      );
+      const excluded = this.idsAndSimilarity(
+        ExperimentState.EXCLUDED,
+        experiments,
+        state
+      );
+
+      const intersection = IntersectionCache.get({
+        datasetId,
+        included: included,
+        excluded: excluded,
+      });
       counts.push({
         experiments: [
-          ...included.map((experimentId) => {
+          ...included.map((experiment) => {
             return {
-              experimentId,
+              ...experiment,
               predictedCondition: true,
             };
           }),
-          ...excluded.map((experimentId) => {
+          ...excluded.map((experiment) => {
             return {
-              experimentId,
+              ...experiment,
               predictedCondition: false,
             };
           }),
         ],
-        numberPairs: IntersectionCache.get(included, excluded, [datasetId])
-          .numberPairs,
-        numberRows: IntersectionCache.get(included, excluded, [datasetId])
-          .rowCount,
+        numberPairs: intersection.numberPairs,
+        numberRows: intersection.numberRows,
       });
     } while (nextState());
     return counts;
@@ -126,7 +140,7 @@ export class BenchmarkProvider {
   }): FileResponse {
     const intersection = this.intersection(experiments);
     return idClustersToRecordClusters(
-      intersection.clusters(startAt, limit),
+      intersection.rows(startAt, limit),
       datasetFromExperimentIds(
         experiments.map(({ experimentId }) => experimentId)
       ).id
@@ -134,12 +148,12 @@ export class BenchmarkProvider {
   }
 
   getBinaryMetrics(
-    groundTruthExperimentId: ExperimentId,
-    predictedExperimentId: ExperimentId
+    groundTruthExperiment: ExperimentConfigItem,
+    predictedExperiment: ExperimentConfigItem
   ): Metric[] {
     const datasetId = datasetFromExperimentIds([
-      groundTruthExperimentId,
-      predictedExperimentId,
+      groundTruthExperiment.experimentId,
+      predictedExperiment.experimentId,
     ]).id;
     const metrics = [
       Accuracy,
@@ -163,28 +177,11 @@ export class BenchmarkProvider {
       PrevalenceThreshold,
       ThreatScore,
     ];
-    const matrix: ConfusionMatrix = {
-      truePositives: IntersectionCache.get(
-        [groundTruthExperimentId, predictedExperimentId],
-        [],
-        [datasetId]
-      ).numberPairs,
-      falsePositives: IntersectionCache.get(
-        [predictedExperimentId],
-        [groundTruthExperimentId],
-        [datasetId]
-      ).numberPairs,
-      falseNegatives: IntersectionCache.get(
-        [groundTruthExperimentId],
-        [predictedExperimentId],
-        [datasetId]
-      ).numberPairs,
-      trueNegatives: IntersectionCache.get(
-        [],
-        [groundTruthExperimentId, predictedExperimentId],
-        [datasetId]
-      ).numberPairs,
-    };
+    const matrix = ConfusionMatrixCache.get({
+      datasetId,
+      predicted: [predictedExperiment],
+      groundTruth: [groundTruthExperiment],
+    }).confusionMatrix;
     return metrics
       .map((Metric) => new Metric(matrix))
       .map(({ value, formula, name, range, info, infoLink }) => {
@@ -201,19 +198,17 @@ export class BenchmarkProvider {
 
   protected intersection(
     experiments: ExperimentIntersectionItem[]
-  ): Intersection {
-    return IntersectionCache.get(
-      experiments
-        .filter(({ predictedCondition }) => predictedCondition)
-        .map(({ experimentId }) => experimentId),
-      experiments
-        .filter(({ predictedCondition }) => !predictedCondition)
-        .map(({ experimentId }) => experimentId),
-      [
-        datasetFromExperimentIds(
-          experiments.map(({ experimentId }) => experimentId)
-        ).id,
-      ]
-    );
+  ): IntersectionBase {
+    return IntersectionCache.get({
+      datasetId: datasetFromExperimentIds(
+        experiments.map(({ experimentId }) => experimentId)
+      ).id,
+      excluded: experiments.filter(
+        ({ predictedCondition }) => !predictedCondition
+      ),
+      included: experiments.filter(
+        ({ predictedCondition }) => predictedCondition
+      ),
+    });
   }
 }
