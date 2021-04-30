@@ -9,12 +9,11 @@ import { doDeleteDataset } from 'apps/SnowmanApp/store/CentralResourcesDoActions
 import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'store/messages';
-import { ImmediateStore } from 'store/models';
 import { ViewIDs } from 'types/ViewIDs';
 import { couldPreviewDataset } from 'utils/datasetHelper';
 
 const mapStateToProps = (
-  state: ImmediateStore,
+  _: never,
   ownProps: DatasetCardOwnProps
 ): DatasetCardStateProps => ({
   couldPreview: couldPreviewDataset(ownProps.dataset),

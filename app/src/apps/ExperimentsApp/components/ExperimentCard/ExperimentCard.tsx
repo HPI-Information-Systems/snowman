@@ -9,12 +9,11 @@ import { doDeleteExperiment } from 'apps/SnowmanApp/store/CentralResourcesDoActi
 import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'store/messages';
-import { ImmediateStore } from 'store/models';
 import { ViewIDs } from 'types/ViewIDs';
 import { couldPreviewExperiment } from 'utils/experimentsHelpers';
 
 const mapStateToProps = (
-  state: ImmediateStore,
+  _: never,
   ownProps: ExperimentCardOwnProps
 ): ExperimentCardStateProps => ({
   couldPreview: couldPreviewExperiment(ownProps.experiment),
