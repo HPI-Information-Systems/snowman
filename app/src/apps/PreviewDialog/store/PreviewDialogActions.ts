@@ -89,3 +89,8 @@ export const onDialogOpen = (
     dispatch(setNone());
   }
 };
+export const onDialogClose = (
+  dispatch: SnowmanDispatch<PreviewDialogModel>,
+  _: unknown,
+  __: unknown
+): void => dispatch(setNone());

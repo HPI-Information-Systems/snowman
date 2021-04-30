@@ -29,6 +29,8 @@ const PreviewDialogReducer = (
         type: PreviewDialogTypes.EXPERIMENT,
         experiment: action.payload as Experiment,
       };
+    case PreviewDialogActionTypes.SET_NONE:
+      return initialState;
     default:
       return state;
   }
