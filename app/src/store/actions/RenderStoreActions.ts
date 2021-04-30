@@ -36,7 +36,7 @@ const openViewInNewWindow = (
   viewId: ViewIDs
 ): SnowmanThunkAction<Window | null> => (dispatch) => {
   const targetWindow = window.open(
-    `${window.location.href}?${viewIdQueryParam}=${viewId}`,
+    `${window.location.origin}${window.location.pathname}?${viewIdQueryParam}=${viewId}`,
     nextWindowName()
   );
   if (!targetWindow) {
