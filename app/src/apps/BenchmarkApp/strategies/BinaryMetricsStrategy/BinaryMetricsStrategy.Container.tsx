@@ -117,8 +117,8 @@ const mapStateToProps = (
       ? getTuplesLoaderByTuplesCategory(state, state.selectedDataView)
       : dummyTuplesLoader,
   confusionMatrix: {
-    // retrieve dataset
-    totalCount: Math.pow(43, 2),
+    // Todo: retrieve dataset
+    totalCount: Math.pow(43, 0),
     falseNegatives: getPairCountByTuplesCategory(
       state,
       MetricsTuplesCategories.falseNegatives
