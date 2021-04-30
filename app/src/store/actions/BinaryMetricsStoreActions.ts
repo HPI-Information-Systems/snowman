@@ -11,15 +11,12 @@ import {
   getGroundTruthId,
   getMetrics,
 } from 'store/actions/CommonMetricsActions';
-import {
-  SnowmanAction,
-  SnowmanDispatch,
-  SnowmanThunkAction,
-} from 'store/messages';
+import { SnowmanDispatch, SnowmanThunkAction } from 'store/messages';
 import { ImmediateStore } from 'store/models';
 import { store } from 'store/store';
 import { SUCCESS_LOAD_BINARY_METRICS } from 'structs/statusMessages';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
+import { SnowmanAction } from 'types/SnowmanAction';
 import RequestHandler from 'utils/requestHandler';
 
 export const getExperiment1 = (

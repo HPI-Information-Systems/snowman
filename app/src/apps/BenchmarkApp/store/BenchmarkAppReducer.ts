@@ -7,7 +7,7 @@ import {
 import { ExpandedEntity } from 'apps/BenchmarkApp/types/ExpandedEntity';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { union } from 'lodash';
-import { SnowmanAction } from 'store/messages';
+import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialConfigState: BenchmarkAppConfigStore = {
   algorithms: [],

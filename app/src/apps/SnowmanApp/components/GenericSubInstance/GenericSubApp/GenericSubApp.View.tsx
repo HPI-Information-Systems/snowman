@@ -6,8 +6,8 @@ import { isEqual } from 'lodash';
 import React, { Component, createElement } from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import { SnowmanAction } from 'store/messages';
 import { NoTabBarViewIDs } from 'structs/constants';
+import { SnowmanAction } from 'types/SnowmanAction';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 class GenericSubAppView extends Component<GenericSubAppProps> {

@@ -11,7 +11,7 @@ import {
   BenchmarkAppDispatch,
   BenchmarkAppThunkAction,
 } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { SnowmanAction } from 'store/messages';
+import { SnowmanAction } from 'types/SnowmanAction';
 import RequestHandler from 'utils/requestHandler';
 
 export const getAlgorithms = (): BenchmarkAppThunkAction<

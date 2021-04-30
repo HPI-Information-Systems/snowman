@@ -7,8 +7,8 @@ import { isEqual } from 'lodash';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import { SnowmanAction } from 'store/messages';
 import style from 'theme/style';
+import { SnowmanAction } from 'types/SnowmanAction';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 class GenericDialogView extends Component<GenericDialogProps> {

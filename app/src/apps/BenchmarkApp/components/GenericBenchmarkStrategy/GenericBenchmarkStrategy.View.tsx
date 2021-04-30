@@ -4,7 +4,7 @@ import { Component } from 'react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
-import { SnowmanAction } from 'store/messages';
+import { SnowmanAction } from 'types/SnowmanAction';
 
 class GenericBenchmarkStrategyView extends Component<GenericBenchmarkStrategyProps> {
   store: Store<unknown, SnowmanAction>;

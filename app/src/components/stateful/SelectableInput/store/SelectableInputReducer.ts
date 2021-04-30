@@ -1,6 +1,6 @@
 import { SelectableInputActionTypes } from 'components/stateful/SelectableInput/types/SelectableInputActionTypes';
 import { SelectableInputModel } from 'components/stateful/SelectableInput/types/SelectableInputModel';
-import { SnowmanAction } from 'store/messages';
+import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: SelectableInputModel = {
   searchString: '',
