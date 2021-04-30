@@ -61,7 +61,7 @@ const IntersectionStrategyView = ({
       {!isValidConfig ? (
         <ErroneousBackdrop
           message={
-            'Please select at least two experiments from a single dataset!'
+            'Please select at least one experiment - but all from a single dataset!'
           }
         />
       ) : null}

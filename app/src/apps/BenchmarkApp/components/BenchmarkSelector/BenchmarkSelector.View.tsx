@@ -91,7 +91,15 @@ const BenchmarkSelectorView = ({
                       className={styles.descriptiveIcon}
                       color="primarydark"
                     />
-                    {aDataset.name}
+                    <span
+                      onClick={(): void =>
+                        expandedDatasetEntity !== undefined
+                          ? shrinkDataset(aDataset.id)
+                          : expandDataset(aDataset.id)
+                      }
+                    >
+                      {aDataset.name}
+                    </span>
                     <IonIcon
                       icon={addOutline}
                       color={'medium'}
@@ -152,7 +160,21 @@ const BenchmarkSelectorView = ({
                                     className={styles.descriptiveIcon}
                                     color="primarydark"
                                   />
-                                  {anAlgorithm.name}
+                                  <span
+                                    onClick={(): void =>
+                                      isAlgorithmExpanded
+                                        ? shrinkAlgorithmInDataset(
+                                            aDataset.id,
+                                            anAlgorithm.id
+                                          )
+                                        : expandAlgorithmInDataset(
+                                            aDataset.id,
+                                            anAlgorithm.id
+                                          )
+                                    }
+                                  >
+                                    {anAlgorithm.name}
+                                  </span>
                                   <IonIcon
                                     icon={addOutline}
                                     onClick={(): void => {
