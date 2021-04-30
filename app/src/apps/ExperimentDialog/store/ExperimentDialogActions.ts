@@ -10,7 +10,6 @@ import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
-import { SnowmanGenericThunkAction } from 'store/messages';
 import { MagicNotPossibleId } from 'structs/constants';
 import {
   SUCCESS_TO_CREATE_NEW_EXPERIMENT,
@@ -103,7 +102,7 @@ export const onDialogClose = (
 
 export const prepareUpdateDialog = (
   entityId: EntityId
-): SnowmanGenericThunkAction<Promise<void>, ExperimentDialogModel> => (
+): SnowmanThunkAction<Promise<void>, ExperimentDialogModel> => (
   dispatch: SnowmanDispatch<ExperimentDialogModel>
 ): Promise<void> =>
   RequestHandler<void>(

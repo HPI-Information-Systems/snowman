@@ -3,7 +3,6 @@ import { AlgorithmDialogActionTypes } from 'apps/AlgorithmDialog/types/Algorithm
 import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
-import { SnowmanGenericThunkAction } from 'store/messages';
 import { MagicNotPossibleId } from 'structs/constants';
 import {
   SUCCESS_TO_ADD_NEW_ALGORITHM,
@@ -53,7 +52,7 @@ export const onDialogClose = (
 
 export const prepareUpdateDialog = (
   entityId: EntityId
-): SnowmanGenericThunkAction<Promise<void>, AlgorithmDialogModel> => (
+): SnowmanThunkAction<Promise<void>, AlgorithmDialogModel> => (
   dispatch: SnowmanDispatch<AlgorithmDialogModel>
 ): Promise<void> =>
   RequestHandler<void>(

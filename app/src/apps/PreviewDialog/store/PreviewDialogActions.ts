@@ -2,11 +2,11 @@ import { Dataset, DatasetsApi, Experiment, ExperimentsApi } from 'api';
 import { PreviewDialogActionTypes } from 'apps/PreviewDialog/types/PreviewDialogActionTypes';
 import { PreviewDialogModel } from 'apps/PreviewDialog/types/PreviewDialogModel';
 import { PreviewDialogTypes } from 'apps/PreviewDialog/types/PreviewDialogTypes';
-import { SnowmanGenericThunkAction } from 'store/messages';
 import { MagicNotPossibleId } from 'structs/constants';
 import { EntityId } from 'types/EntityId';
 import { EntityType } from 'types/EntityType';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
+import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
@@ -38,7 +38,7 @@ export const setExperiment = (
 
 export const loadAndStoreDataset = (
   entityId: EntityId
-): SnowmanGenericThunkAction<Promise<void>, PreviewDialogModel> => (
+): SnowmanThunkAction<Promise<void>, PreviewDialogModel> => (
   dispatch: SnowmanDispatch<PreviewDialogModel>
 ): Promise<void> =>
   RequestHandler<void>(
@@ -56,7 +56,7 @@ export const loadAndStoreDataset = (
 
 export const loadAndStoreExperiment = (
   entityId: EntityId
-): SnowmanGenericThunkAction<Promise<void>, PreviewDialogModel> => (
+): SnowmanThunkAction<Promise<void>, PreviewDialogModel> => (
   dispatch: SnowmanDispatch<PreviewDialogModel>
 ): Promise<void> =>
   RequestHandler<void>(

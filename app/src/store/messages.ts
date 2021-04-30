@@ -44,22 +44,17 @@ export interface SnowmanAction extends Action<string> {
   optionalPayload?: ActionPayload;
 }
 
-export type SnowmanGenericThunkAction<Return, Model> = ThunkAction<
-  Return,
-  Model,
-  null,
-  SnowmanAction
->;
-
 export type SnowmanGenericDispatch<Model> = ThunkDispatch<
   Model,
   null,
   SnowmanAction
 >;
 
-export type SnowmanThunkAction<R> = SnowmanGenericThunkAction<
+export type SnowmanThunkAction<R> = ThunkAction<
   R,
-  ImmediateStore
+  ImmediateStore,
+  null,
+  SnowmanAction
 >;
 
 export type SnowmanDispatch = SnowmanGenericDispatch<ImmediateStore>;
