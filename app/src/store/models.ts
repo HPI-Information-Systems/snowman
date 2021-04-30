@@ -7,12 +7,6 @@ import {
 } from 'api';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 
-export interface CoreStore {
-  algorithms: Algorithm[];
-  datasets: Dataset[];
-  experiments: Experiment[];
-}
-
 export interface BenchmarkConfigurationStore {
   selectedDatasetCategories: string[];
   selectedDataset: Dataset | null;
@@ -30,7 +24,6 @@ export interface BinaryMetricsStore {
 }
 
 export interface ImmediateStore {
-  CoreStore: CoreStore;
   BenchmarkConfigurationStore: BenchmarkConfigurationStore;
   BinaryMetricsStore: BinaryMetricsStore;
 }
