@@ -11,7 +11,7 @@ import { IntersectionVennDiagramConfigStrategy } from 'apps/BenchmarkApp/strateg
 import IntersectionVennDiagram from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/IntersectionVennDiagram';
 import { IntersectionVennDiagramIntersectionStrategy } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/strategies/intersection';
 import { IntersectionStrategyProps } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/IntersectionStrategyProps';
-import DataViewer from 'components/DataViewer/DataViewer';
+import DataViewer from 'components/simple/DataViewer/DataViewer';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import React, { useEffect, useMemo, useState } from 'react';
 import { intersectionDescription } from 'utils/intersectionDescription';

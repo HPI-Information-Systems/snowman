@@ -1,8 +1,8 @@
 import 'pages/StandaloneDataViewerPage/StandaloneDataViewerStyles.css';
 
 import { IonSpinner } from '@ionic/react';
-import DataViewer from 'components/DataViewer/DataViewer';
-import { DataViewerOwnPropsNoTuplesLoader } from 'components/DataViewer/DataViewerProps';
+import DataViewer from 'components/simple/DataViewer/DataViewer';
+import { DataViewerOwnPropsNoTuplesLoader } from 'components/simple/DataViewer/DataViewerProps';
 import {
   DataViewerAppToClientActionType,
   onActionFromHost,

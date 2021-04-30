@@ -1,7 +1,7 @@
-import { TableContext } from 'components/DataViewer/Table/TableContext';
-import { tableHeaderHeight } from 'components/DataViewer/Table/TableHeader.View';
-import { TableBodyProps } from 'components/DataViewer/Table/TableProps';
-import TableRow from 'components/DataViewer/Table/TableRow';
+import { TableContext } from 'components/simple/DataViewer/Table/TableContext';
+import { tableHeaderHeight } from 'components/simple/DataViewer/Table/TableHeader.View';
+import { TableBodyProps } from 'components/simple/DataViewer/Table/TableProps';
+import TableRow from 'components/simple/DataViewer/Table/TableRow';
 import React, { useContext } from 'react';
 import { AutoSizer } from 'react-virtualized';
 import { FixedSizeList } from 'react-window';

@@ -1,7 +1,6 @@
+import { DataViewerOwnPropsNoTuplesLoader } from 'components/simple/DataViewer/DataViewerProps';
 import { TuplesLoader } from 'types/TuplesLoader';
 import { Await } from 'types/util';
-
-import { DataViewerOwnPropsNoTuplesLoader } from '../../components/DataViewer/DataViewerProps';
 
 export enum DataViewerAppToClientActionType {
   TUPLES_LOADER_RESPONSE = 'TUPLES_LOADER_RESPONSE',

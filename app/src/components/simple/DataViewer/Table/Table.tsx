@@ -1,5 +1,5 @@
-import TableContent from 'components/DataViewer/Table/TableContent';
-import { TableProps } from 'components/DataViewer/Table/TableProps';
+import TableContent from 'components/simple/DataViewer/Table/TableContent';
+import { TableProps } from 'components/simple/DataViewer/Table/TableProps';
 import React, { useMemo, useRef } from 'react';
 import { AutoSizer } from 'react-virtualized';
 

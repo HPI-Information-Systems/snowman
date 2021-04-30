@@ -1,8 +1,8 @@
-import 'components/DataViewer/Table/TableHeaderStyles.css';
+import 'components/simple/DataVieweraViewer/Table/TableHeaderStyles.css';
 
 import { IonButton, IonIcon } from '@ionic/react';
-import ScrollSync from 'components/DataViewer/Table/ScrollSync/ScrollSync';
-import { TableHeaderProps } from 'components/DataViewer/Table/TableProps';
+import ScrollSync from 'components/simple/DataViewer/Table/ScrollSync/ScrollSync';
+import { TableHeaderProps } from 'components/simple/DataViewer/Table/TableProps';
 import { open } from 'ionicons/icons';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { scrollbarWidth } from 'utils/scrollbarWidth';

@@ -1,5 +1,5 @@
-import { DataViewerProps } from 'components/DataViewer/DataViewerProps';
-import Table from 'components/DataViewer/Table/Table';
+import { DataViewerProps } from 'components/simple/DataViewer/DataViewerProps';
+import Table from 'components/simple/DataViewer/Table/Table';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { InfiniteLoader } from 'react-virtualized';
 import { openStandaloneDataViewerWindow } from 'store/actions/RenderStoreActions';

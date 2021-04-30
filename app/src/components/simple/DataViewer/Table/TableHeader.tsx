@@ -1,9 +1,9 @@
-import TableHeaderView from 'components/DataViewer/Table/TableHeader.View';
+import TableHeaderView from 'components/simple/DataViewer/Table/TableHeader.View';
 import {
   TableHeaderDispatchProps,
   TableHeaderOwnProps,
   TableHeaderStateProps,
-} from 'components/DataViewer/Table/TableProps';
+} from 'components/simple/DataViewer/Table/TableProps';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'store/messages';
 

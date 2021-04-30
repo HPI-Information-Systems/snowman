@@ -1,5 +1,5 @@
-import { ScrollSyncContainerProps } from 'components/DataViewer/Table/ScrollSync/ScrollSyncContainerProps';
-import { ScrollSyncContext } from 'components/DataViewer/Table/ScrollSync/ScrollSyncContext';
+import { ScrollSyncContainerProps } from 'components/simple/DataViewer/Table/ScrollSync/ScrollSyncContainerProps';
+import { ScrollSyncContext } from 'components/simple/DataViewer/Table/ScrollSync/ScrollSyncContext';
 import React, { PropsWithChildren, useState } from 'react';
 import { scrollbarWidth } from 'utils/scrollbarWidth';
 
@@ -36,7 +36,7 @@ export default function ScrollSyncContainer({
             width: `${scrollWidth}px`,
             height: '100%',
           }}
-        ></div>
+        />
       </div>
     </ScrollSyncContext.Provider>
   );

@@ -12,8 +12,8 @@ import {
   IonText,
 } from '@ionic/react';
 import { Metric } from 'api';
-import DataViewer from 'components/DataViewer/DataViewer';
 import PageStruct from 'components/PageStructOLD/PageStruct';
+import DataViewer from 'components/simple/DataViewer/DataViewer';
 import PaneButtonRow from 'components/simple/PaneButtonRow/PaneButtonRow';
 import StyledCarousel from 'components/simple/StyledCarousel/StyledCarousel';
 import { informationCircle } from 'ionicons/icons';

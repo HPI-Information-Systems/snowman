@@ -1,7 +1,7 @@
-import 'components/DataViewer/Table/TableRowStyles.css';
+import 'components/simple/DataVieweraViewer/Table/TableRowStyles.css';
 
-import ScrollSync from 'components/DataViewer/Table/ScrollSync/ScrollSync';
-import { TableContext } from 'components/DataViewer/Table/TableContext';
+import ScrollSync from 'components/simple/DataViewer/Table/ScrollSync/ScrollSync';
+import { TableContext } from 'components/simple/DataViewer/Table/TableContext';
 import React, { useContext } from 'react';
 import { ListChildComponentProps } from 'react-window';
 
@@ -12,7 +12,7 @@ export default function TableRow({
   const { rows, prepareRow } = useContext(TableContext);
   const row = rows[index];
   prepareRow(row);
-  const result = (
+  return (
     <div
       {...row.getRowProps({
         style,
@@ -31,5 +31,4 @@ export default function TableRow({
       </ScrollSync>
     </div>
   );
-  return result;
 }

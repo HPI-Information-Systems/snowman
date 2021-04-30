@@ -1,5 +1,5 @@
 import { PreviewDialogProps } from 'apps/PreviewDialog/PreviewDialogProps';
-import DataViewer from 'components/DataViewer/DataViewer';
+import DataViewer from 'components/simple/DataViewer/DataViewer';
 import React from 'react';
 
 const PreviewDialogView = ({

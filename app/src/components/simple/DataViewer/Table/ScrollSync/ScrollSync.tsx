@@ -1,4 +1,4 @@
-import { ScrollSyncContext } from 'components/DataViewer/Table/ScrollSync/ScrollSyncContext';
+import { ScrollSyncContext } from 'components/simple/DataViewer/Table/ScrollSync/ScrollSyncContext';
 import React, { PropsWithChildren, useContext } from 'react';
 
 export default function ScrollSync({

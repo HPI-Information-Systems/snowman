@@ -1,5 +1,5 @@
 import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
-import { DataViewerOwnProps } from 'components/DataViewer/DataViewerProps';
+import { DataViewerOwnProps } from 'components/simple/DataViewer/DataViewerProps';
 import {
   DataViewerAppToClientActionType,
   postActionToClient,

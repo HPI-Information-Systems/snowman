@@ -1,10 +1,10 @@
-import 'components/DataViewer/Table/TableContentStyles.css';
+import 'components/simple/DataVieweraViewer/Table/TableContentStyles.css';
 
-import ScrollSyncContainer from 'components/DataViewer/Table/ScrollSync/ScrollSyncContainer';
-import TableBody from 'components/DataViewer/Table/TableBody';
-import { TableContext } from 'components/DataViewer/Table/TableContext';
-import TableHeader from 'components/DataViewer/Table/TableHeader';
-import { TableContentProps } from 'components/DataViewer/Table/TableProps';
+import ScrollSyncContainer from 'components/simple/DataViewer/Table/ScrollSync/ScrollSyncContainer';
+import TableBody from 'components/simple/DataViewer/Table/TableBody';
+import { TableContext } from 'components/simple/DataViewer/Table/TableContext';
+import TableHeader from 'components/simple/DataViewer/Table/TableHeader';
+import { TableContentProps } from 'components/simple/DataViewer/Table/TableProps';
 import React, { useMemo } from 'react';
 import {
   Column,
