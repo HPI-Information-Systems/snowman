@@ -6,9 +6,9 @@ import {
   ExperimentsPageActionTypes,
   NMetricsPageActionTypes,
 } from 'store/actions/actionTypes';
-import { SnowmanAction } from 'store/messages';
 import { BinaryMetricsStore } from 'store/models';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
+import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: BinaryMetricsStore = {
   metrics: [],
