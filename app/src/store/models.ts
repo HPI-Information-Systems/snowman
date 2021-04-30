@@ -23,16 +23,6 @@ export interface BenchmarkConfigurationStore {
   showExperimentFilters: boolean;
 }
 
-export interface DatasetPreviewerStore {
-  isOpen: boolean;
-  dataset: Dataset | undefined;
-}
-
-export interface ExperimentPreviewerStore {
-  isOpen: boolean;
-  experiment: Experiment | undefined;
-}
-
 export interface BinaryMetricsStore {
   counts: ExperimentIntersectionCount[];
   metrics: Metric[];
@@ -43,6 +33,4 @@ export interface ImmediateStore {
   CoreStore: CoreStore;
   BenchmarkConfigurationStore: BenchmarkConfigurationStore;
   BinaryMetricsStore: BinaryMetricsStore;
-  DatasetPreviewerStore: DatasetPreviewerStore;
-  ExperimentPreviewerStore: ExperimentPreviewerStore;
 }

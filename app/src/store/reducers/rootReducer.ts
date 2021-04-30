@@ -7,8 +7,6 @@ import {
 import { BenchmarkConfiguratorReducer } from 'store/reducers/BenchmarkConfiguratorReducer';
 import { BinaryMetricsReducer } from 'store/reducers/BinaryMetricsReducer';
 import { CoreReducer } from 'store/reducers/CoreReducer';
-import { DatasetPreviewerReducer } from 'store/reducers/DatasetPreviewerReducer';
-import { ExperimentPreviewerReducer } from 'store/reducers/ExperimentPreviewerReducer';
 
 export const rootReducer = (
   state: ImmediateStore,
@@ -22,14 +20,6 @@ export const rootReducer = (
   return {
     CoreStore: coreState,
     BenchmarkConfigurationStore: benchmarkState,
-    DatasetPreviewerStore: DatasetPreviewerReducer(
-      state?.DatasetPreviewerStore,
-      action
-    ),
-    ExperimentPreviewerStore: ExperimentPreviewerReducer(
-      state?.ExperimentPreviewerStore,
-      action
-    ),
     BinaryMetricsStore: BinaryMetricsReducer(state?.BinaryMetricsStore, action),
   };
 };
