@@ -1,11 +1,4 @@
-import {
-  Algorithm,
-  Dataset,
-  Experiment,
-  ExperimentIntersectionCount,
-  Metric,
-} from 'api';
-import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
+import { Algorithm, Dataset, Experiment } from 'api';
 
 export interface BenchmarkConfigurationStore {
   selectedDatasetCategories: string[];
@@ -17,13 +10,6 @@ export interface BenchmarkConfigurationStore {
   showExperimentFilters: boolean;
 }
 
-export interface BinaryMetricsStore {
-  counts: ExperimentIntersectionCount[];
-  metrics: Metric[];
-  selectedDataView: MetricsTuplesCategories;
-}
-
 export interface ImmediateStore {
   BenchmarkConfigurationStore: BenchmarkConfigurationStore;
-  BinaryMetricsStore: BinaryMetricsStore;
 }

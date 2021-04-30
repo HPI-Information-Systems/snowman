@@ -3,13 +3,11 @@ import { ConfusionMatrix } from 'types/ConfusionMatrix';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { TuplesLoader } from 'types/TuplesLoader';
 
-export interface BinaryMetricsPageDispatchProps {
-  loadMetrics(): void;
-  preloadTuplesCounts(): void;
+export interface BinaryMetricsStrategyDispatchProps {
   selectPane(aMetricsTuplesCategory: MetricsTuplesCategories): void;
 }
 
-export interface BinaryMetricsPageStateProps {
+export interface BinaryMetricsStrategyStateProps {
   rowCount: number;
   metrics: Metric[];
   selectedMetricsTuplesCategory: MetricsTuplesCategories;
@@ -17,7 +15,8 @@ export interface BinaryMetricsPageStateProps {
   tuplesLoader: TuplesLoader;
   confusionMatrix: ConfusionMatrix;
   dataViewerTitle: string;
+  isValidConfig: boolean;
 }
 
-export type BinaryMetricsPageProps = BinaryMetricsPageStateProps &
-  BinaryMetricsPageDispatchProps;
+export type BinaryMetricsStrategyProps = BinaryMetricsStrategyStateProps &
+  BinaryMetricsStrategyDispatchProps;

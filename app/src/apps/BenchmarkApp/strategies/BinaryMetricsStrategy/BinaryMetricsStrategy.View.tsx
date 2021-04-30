@@ -1,4 +1,4 @@
-import 'pages/BinaryMetricsPage/BinaryMetricsPageStyles.css';
+import 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/BinaryMetricsStrategyStyles.css';
 import 'katex/dist/katex.min.css';
 
 import {
@@ -12,20 +12,18 @@ import {
   IonText,
 } from '@ionic/react';
 import { Metric } from 'api';
-import PageStruct from 'components/PageStructOLD/PageStruct';
+import { BinaryMetricsStrategyProps } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/BinaryMetricsStrategyProps';
 import DataViewer from 'components/simple/DataViewer/DataViewer';
+import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import PaneButtonRow from 'components/simple/PaneButtonRow/PaneButtonRow';
 import StyledCarousel from 'components/simple/StyledCarousel/StyledCarousel';
 import { informationCircle } from 'ionicons/icons';
 import { renderToString } from 'katex';
-import { BinaryMetricsPageProps } from 'pages/BinaryMetricsPage/BinaryMetricsPageProps';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { formatLargeNumber } from 'utils/formatLargeNumber';
 
-export const BinaryMetricsPageView = ({
-  loadMetrics,
-  preloadTuplesCounts,
+const BinaryMetricsStrategyView = ({
   metrics,
   selectedMetricsTuplesCategory,
   selectPane,
@@ -34,16 +32,25 @@ export const BinaryMetricsPageView = ({
   tuplesLoader,
   confusionMatrix,
   dataViewerTitle,
-}: BinaryMetricsPageProps): JSX.Element => {
-  useEffect(loadMetrics, [loadMetrics]);
-  useEffect(preloadTuplesCounts, [preloadTuplesCounts]);
+  isValidConfig,
+}: BinaryMetricsStrategyProps): JSX.Element => {
+  //useEffect(loadMetrics, [loadMetrics]);
+  //useEffect(preloadTuplesCounts, [preloadTuplesCounts]);
   useEffect(() => {
     // Triggered on every component update!
     ReactTooltip.rebuild();
   });
 
   return (
-    <PageStruct title="Binary Comparison">
+    <>
+      {!isValidConfig ? (
+        <ErroneousBackdrop
+          message={
+            'Please select one gold standard and at least one other experiment ' +
+            'from a single dataset!'
+          }
+        />
+      ) : null}
       <IonText color="primary">
         <h3 data-tip="Binary metrics are calculated based upon the count of false positives, false negatives, true negatives and true positives.">
           Binary Metrics
@@ -165,6 +172,8 @@ export const BinaryMetricsPageView = ({
           />
         </IonCardContent>
       </IonCard>
-    </PageStruct>
+    </>
   );
 };
+
+export default BinaryMetricsStrategyView;

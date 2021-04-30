@@ -1,4 +1,4 @@
-import 'components/simple/StyledCarouselarousel/StyledCarouselStyles.css';
+import 'components/simple/StyledCarousel/StyledCarouselStyles.css';
 
 import { StyledCarouselProps } from 'components/simple/StyledCarousel/StyledCarouselProps';
 import React from 'react';

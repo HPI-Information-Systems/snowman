@@ -1,4 +1,4 @@
-import 'components/simple/PaneButtonRowttonRow/PaneButtonRowStyles.css';
+import 'components/simple/PaneButtonRow/PaneButtonRowStyles.css';
 
 import { IonButton, IonCol, IonGrid, IonRow } from '@ionic/react';
 import { PaneButtonRowProps } from 'components/simple/PaneButtonRow/PaneButtonRowProps';
