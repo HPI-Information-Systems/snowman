@@ -1,7 +1,7 @@
-import { SnowmanGenericDispatch } from 'store/messages';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 export interface DatasetsAppModel {
   selectedTags: string[];
 }
 
-export type DatasetsAppDispatch = SnowmanGenericDispatch<DatasetsAppModel>;
+export type DatasetsAppDispatch = SnowmanDispatch<DatasetsAppModel>;
