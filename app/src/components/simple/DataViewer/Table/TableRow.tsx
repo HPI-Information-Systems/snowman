@@ -1,4 +1,4 @@
-import 'components/simple/DataVieweraViewer/Table/TableRowStyles.css';
+import 'components/simple/DataViewer/Table/TableRowStyles.css';
 
 import ScrollSync from 'components/simple/DataViewer/Table/ScrollSync/ScrollSync';
 import { TableContext } from 'components/simple/DataViewer/Table/TableContext';

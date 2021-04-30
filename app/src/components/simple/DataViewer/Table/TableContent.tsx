@@ -1,4 +1,4 @@
-import 'components/simple/DataVieweraViewer/Table/TableContentStyles.css';
+import 'components/simple/DataViewer/Table/TableContentStyles.css';
 
 import ScrollSyncContainer from 'components/simple/DataViewer/Table/ScrollSync/ScrollSyncContainer';
 import TableBody from 'components/simple/DataViewer/Table/TableBody';

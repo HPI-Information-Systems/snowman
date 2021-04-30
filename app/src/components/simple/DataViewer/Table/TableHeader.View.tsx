@@ -1,4 +1,4 @@
-import 'components/simple/DataVieweraViewer/Table/TableHeaderStyles.css';
+import 'components/simple/DataViewer/Table/TableHeaderStyles.css';
 
 import { IonButton, IonIcon } from '@ionic/react';
 import ScrollSync from 'components/simple/DataViewer/Table/ScrollSync/ScrollSync';
