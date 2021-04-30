@@ -25,6 +25,7 @@ import AlgorithmsApp from 'apps/AlgorithmsApp/AlgorithmsApp';
 import BenchmarkApp from 'apps/BenchmarkApp/BenchmarkApp';
 import DatasetDialog from 'apps/DatasetDialog/DatasetDialog';
 import DatasetsApp from 'apps/DatasetsApp/DatasetsApp';
+import DataViewerApp from 'apps/DataViewerApp/DataViewerApp';
 import ExperimentDialog from 'apps/ExperimentDialog/ExperimentDialog';
 import ExperimentsApp from 'apps/ExperimentsApp/ExperimentsApp';
 import PreviewDialog from 'apps/PreviewDialog/PreviewDialog';
@@ -46,6 +47,7 @@ const SnowmanAppView = ({
     <IonApp>
       <TabBar />
       <AboutApp />
+      <DataViewerApp />
       <BenchmarkApp />
       <AlgorithmsApp algorithms={algorithms} />
       <DatasetsApp datasets={datasets} />

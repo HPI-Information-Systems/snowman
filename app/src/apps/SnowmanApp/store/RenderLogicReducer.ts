@@ -1,10 +1,23 @@
 import { RenderLogicActionTypes } from 'apps/SnowmanApp/types/RenderLogicActionTypes';
 import { RenderLogicModel } from 'apps/SnowmanApp/types/RenderLogicModel';
 import { SnowmanAction } from 'types/SnowmanAction';
+import { viewIdQueryParam } from 'types/ViewIdQueryParam';
 import { ViewIDs } from 'types/ViewIDs';
 
+const getInitialViewId = (): ViewIDs => {
+  const params = new URLSearchParams(window.location.search);
+  const viewId = params.get(viewIdQueryParam);
+  if (viewId) {
+    const parsedViewId = parseInt(viewId);
+    if (parsedViewId in ViewIDs) {
+      return parsedViewId;
+    }
+  }
+  return ViewIDs.BenchmarkApp;
+};
+
 const initialRenderLogicState: RenderLogicModel = {
-  currentViewID: ViewIDs.BenchmarkApp,
+  currentViewID: getInitialViewId(),
   openedDialog: null,
   entityId: null,
   entityType: null,

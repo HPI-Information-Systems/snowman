@@ -1,21 +1,23 @@
-import 'pages/StandaloneDataViewerPage/StandaloneDataViewerStyles.css';
-
 import { IonSpinner } from '@ionic/react';
-import DataViewer from 'components/simple/DataViewer/DataViewer';
-import { DataViewerOwnPropsNoTuplesLoader } from 'components/simple/DataViewer/DataViewerProps';
 import {
   DataViewerAppToClientActionType,
   onActionFromHost,
-} from 'pages/StandaloneDataViewerPage/actionsToClient';
+} from 'apps/DataViewerApp/actionsToClient';
 import {
   DataViewerAppToHostActionType,
   postActionToHost,
-} from 'pages/StandaloneDataViewerPage/actionsToHost';
+} from 'apps/DataViewerApp/actionsToHost';
+import styles from 'apps/DataViewerApp/DataViewerApp.module.css';
+import GenericSubApp from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubApp';
+import DataViewer from 'components/simple/DataViewer/DataViewer';
+import { DataViewerOwnPropsNoTuplesLoader } from 'components/simple/DataViewer/DataViewerProps';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { TuplesLoader } from 'types/TuplesLoader';
 import { Await } from 'types/util';
+import { ViewIDs } from 'types/ViewIDs';
+import { dummyStoreFactory } from 'utils/storeFactory';
 
-export default function StandaloneDataViewerPage(): JSX.Element {
+const DataViewerApp = (): JSX.Element => {
   const [params, setParams] = useState<DataViewerOwnPropsNoTuplesLoader>();
   const pendingLoadTuples = useRef<
     Map<
@@ -86,17 +88,25 @@ export default function StandaloneDataViewerPage(): JSX.Element {
   }, []);
 
   return (
-    <div className="data-viewer-app">
-      {params ? (
-        <DataViewer {...params} loadTuples={loadTuples} />
-      ) : (
-        <h1 className="data-viewer-app-loading">
-          <div className="data-viewer-app-loading-spinner">
-            <IonSpinner color="dark" />
-          </div>
-          Connecting to Snowman host
-        </h1>
-      )}
-    </div>
+    <GenericSubApp
+      instanceId={ViewIDs.DataViewerApp}
+      appTitle="Data Viewer"
+      createSubAppStore={dummyStoreFactory()}
+    >
+      <div className={styles.container}>
+        {params ? (
+          <DataViewer {...params} loadTuples={loadTuples} />
+        ) : (
+          <h1 className={styles.loading}>
+            <div className={styles.spinner}>
+              <IonSpinner color="dark" />
+            </div>
+            Connecting to Snowman host
+          </h1>
+        )}
+      </div>
+    </GenericSubApp>
   );
-}
+};
+
+export default DataViewerApp;

@@ -6,11 +6,13 @@ import {
 import { navigateTo } from 'apps/SnowmanApp/store/RenderLogicActions';
 import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
 import { connect } from 'react-redux';
+import { NoTabBarViewIDs } from 'structs/constants';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { ViewIDs } from 'types/ViewIDs';
 
 const mapStateToProps = (state: SnowmanAppModel): TabBarStateProps => ({
   activeSubApp: state.RenderLogicStore.currentViewID,
+  hideTabBar: NoTabBarViewIDs.has(state.RenderLogicStore.currentViewID),
 });
 
 const mapDispatchToProps = (

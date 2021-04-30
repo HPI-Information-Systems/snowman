@@ -1,19 +1,19 @@
-.data-viewer-app {
+.container {
   position: fixed;
   top: 0;
-  right: 0;
-  bottom: 0;
   left: 0;
+  width: 100vw;
+  height: 100vh;
 }
 
-.data-viewer-app-loading {
+.loading {
   position: absolute;
   top: 50%;
   left: 10%;
   color: var(--ion-color-dark);
 }
 
-.data-viewer-app-loading-spinner {
+.spinner {
   display: inline-block;
   margin-right: 0.4rem;
   transform: translateY(0.2rem);

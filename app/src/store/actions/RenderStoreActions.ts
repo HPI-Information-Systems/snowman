@@ -1,13 +1,13 @@
-import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
-import { DataViewerOwnProps } from 'components/simple/DataViewer/DataViewerProps';
 import {
   DataViewerAppToClientActionType,
   postActionToClient,
-} from 'pages/StandaloneDataViewerPage/actionsToClient';
+} from 'apps/DataViewerApp/actionsToClient';
 import {
   DataViewerAppToHostActionType,
   onActionFromClient,
-} from 'pages/StandaloneDataViewerPage/actionsToHost';
+} from 'apps/DataViewerApp/actionsToHost';
+import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
+import { DataViewerOwnProps } from 'components/simple/DataViewer/DataViewerProps';
 import { RenderLogicStoreActionTypes } from 'store/actions/actionTypes';
 import { SnowmanThunkAction } from 'store/messages';
 import { COULD_NOT_OPEN_CHILD_WINDOW_ERROR } from 'structs/statusMessages';
@@ -49,9 +49,7 @@ export const openStandaloneDataViewerWindow = ({
   loadTuples,
   ...props
 }: DataViewerOwnProps): SnowmanThunkAction<void> => (dispatch) => {
-  const targetWindow = dispatch(
-    openViewInNewWindow(ViewIDs.STANDALONE_DATA_VIEWER)
-  );
+  const targetWindow = dispatch(openViewInNewWindow(ViewIDs.DataViewerApp));
   if (targetWindow) {
     window.addEventListener('beforeunload', () =>
       postActionToClient(targetWindow, {

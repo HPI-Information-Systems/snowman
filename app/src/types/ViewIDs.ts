@@ -7,7 +7,7 @@ export enum ViewIDs {
   N_METRICS,
   INTERSECTION,
   BenchmarkApp,
-  STANDALONE_DATA_VIEWER,
+  DataViewerApp,
   AlgorithmDialog,
   DatasetDialog,
   ExperimentDialog,

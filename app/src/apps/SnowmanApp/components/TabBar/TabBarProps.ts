@@ -6,6 +6,7 @@ export interface TabBarDispatchProps {
 
 export interface TabBarStateProps {
   activeSubApp: ViewIDs;
+  hideTabBar: boolean;
 }
 
 export type TabBarProps = TabBarDispatchProps & TabBarStateProps;

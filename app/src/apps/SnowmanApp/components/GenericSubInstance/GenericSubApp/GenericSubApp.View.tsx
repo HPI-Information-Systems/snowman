@@ -7,6 +7,7 @@ import React, { Component, createElement } from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { SnowmanAction } from 'store/messages';
+import { NoTabBarViewIDs } from 'structs/constants';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 class GenericSubAppView extends Component<GenericSubAppProps> {
@@ -31,29 +32,33 @@ class GenericSubAppView extends Component<GenericSubAppProps> {
     return (
       <Provider store={this.store}>
         {this.props.activeApp === this.props.instanceId ? (
-          <div style={{ position: 'relative', flexGrow: 1 }}>
-            <IonSplitPane
-              when="lg"
-              contentId="mainViewContentId"
-              class="split-pane-fixed"
-            >
-              {this.props.sideMenu !== undefined
-                ? createElement(this.props.sideMenu, {
-                    contentId: 'mainViewContentId',
-                  })
-                : null}
-              {/* Page Content */}
-              <IonPage id="mainViewContentId">
-                {this.props.bringOwnPageStruct ? (
-                  this.props.children
-                ) : (
-                  <PageStruct pageTitle={this.props.appTitle}>
-                    {this.props.children}
-                  </PageStruct>
-                )}
-              </IonPage>
-            </IonSplitPane>
-          </div>
+          NoTabBarViewIDs.has(this.props.instanceId) ? (
+            this.props.children
+          ) : (
+            <div style={{ position: 'relative', flexGrow: 1 }}>
+              <IonSplitPane
+                when="lg"
+                contentId="mainViewContentId"
+                class="split-pane-fixed"
+              >
+                {this.props.sideMenu !== undefined
+                  ? createElement(this.props.sideMenu, {
+                      contentId: 'mainViewContentId',
+                    })
+                  : null}
+                {/* Page Content */}
+                <IonPage id="mainViewContentId">
+                  {this.props.bringOwnPageStruct ? (
+                    this.props.children
+                  ) : (
+                    <PageStruct pageTitle={this.props.appTitle}>
+                      {this.props.children}
+                    </PageStruct>
+                  )}
+                </IonPage>
+              </IonSplitPane>
+            </div>
+          )
         ) : null}
       </Provider>
     );

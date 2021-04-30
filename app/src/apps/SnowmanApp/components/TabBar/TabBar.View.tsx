@@ -9,7 +9,11 @@ import styles from 'apps/SnowmanApp/components/TabBar/TabBarStyles.module.css';
 import React from 'react';
 import style from 'theme/style';
 
-const TabBarView = ({ openSubApp, activeSubApp }: TabBarProps): JSX.Element => {
+const TabBarView = ({
+  openSubApp,
+  activeSubApp,
+  hideTabBar,
+}: TabBarProps): JSX.Element => {
   const renderButtonFor = (aTabConfigItem: TabBarConfigItem): JSX.Element => (
     <IonButton
       key={aTabConfigItem.viewID}
@@ -29,7 +33,7 @@ const TabBarView = ({ openSubApp, activeSubApp }: TabBarProps): JSX.Element => {
     </IonButton>
   );
 
-  return (
+  return !hideTabBar ? (
     <div className={styles.toolbar}>
       <div className={styles.toolbarContainer}>
         <IonButtons slot="start" class={styles.buttonContainer}>
@@ -40,6 +44,8 @@ const TabBarView = ({ openSubApp, activeSubApp }: TabBarProps): JSX.Element => {
         </IonButtons>
       </div>
     </div>
+  ) : (
+    <></>
   );
 };
 
