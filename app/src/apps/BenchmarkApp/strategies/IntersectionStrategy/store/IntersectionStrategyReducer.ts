@@ -39,7 +39,7 @@ const IntersectionStrategyReducer = (
     case IntersectionStrategyActionTypes.UPDATE_CONFIG: {
       const config = action.payload as BenchmarkAppConfigStore;
 
-      if (config.selectedExperimentIds.length < 2) {
+      if (config.selectedExperimentIds.length < 1) {
         return {
           ...state,
           isValidConfig: false,
