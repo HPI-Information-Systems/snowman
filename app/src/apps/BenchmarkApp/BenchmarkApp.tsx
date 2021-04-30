@@ -11,7 +11,7 @@ const BenchmarkApp = (): JSX.Element => (
     appTitle={'Benchmark Dashboard'}
     createSubAppStore={BenchmarkAppStoreMagistrate.getStore}
     sideMenu={BenchmarkSelector}
-    bringOwnPageStruct={true}
+    usePageStruct={false}
   >
     <BenchmarkAppContainer />
   </GenericSubApp>

@@ -12,7 +12,7 @@ import style from 'theme/style';
 const TabBarView = ({
   openSubApp,
   activeSubApp,
-  hideTabBar,
+  showTabBar,
 }: TabBarProps): JSX.Element => {
   const renderButtonFor = (aTabConfigItem: TabBarConfigItem): JSX.Element => (
     <IonButton
@@ -33,7 +33,7 @@ const TabBarView = ({
     </IonButton>
   );
 
-  return !hideTabBar ? (
+  return showTabBar ? (
     <div className={styles.toolbar}>
       <div className={styles.toolbarContainer}>
         <IonButtons slot="start" class={styles.buttonContainer}>

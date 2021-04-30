@@ -12,7 +12,7 @@ export interface GenericSubAppStateProps {
 export interface GenericSubAppOwnProps extends GenericInstanceOwnProps {
   appTitle: string;
   sideMenu?: FC<SideMenuProps>;
-  bringOwnPageStruct?: boolean;
+  usePageStruct?: boolean;
 }
 
 export type GenericSubAppProps = GenericSubAppOwnProps &
