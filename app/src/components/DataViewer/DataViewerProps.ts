@@ -10,12 +10,4 @@ export interface DataViewerOwnProps extends DataViewerOwnPropsNoTuplesLoader {
   loadTuples: TuplesLoader;
 }
 
-export type DataViewerDispatchProps = {
-  wrapLoadTuples(
-    loadTuples: TuplesLoader,
-    start: number,
-    stop: number
-  ): ReturnType<TuplesLoader>;
-};
-
-export type DataViewerProps = DataViewerOwnProps & DataViewerDispatchProps;
+export type DataViewerProps = DataViewerOwnProps;
