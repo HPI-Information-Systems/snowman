@@ -7,9 +7,9 @@ import {
   onActionFromClient,
 } from 'apps/DataViewerApp/actionsToHost';
 import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
+import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { DataViewerOwnProps } from 'components/simple/DataViewer/DataViewerProps';
 import { COULD_NOT_OPEN_CHILD_WINDOW_ERROR } from 'structs/statusMessages';
-import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import { ToastType } from 'types/ToastTypes';
 import { viewIdQueryParam } from 'types/ViewIdQueryParam';
 import { ViewIDs } from 'types/ViewIDs';
@@ -21,15 +21,15 @@ const nextWindowName = (): string => {
   return `${windowNameBase}-${++nextWindowId}-${window.name}`;
 };
 
-const openViewInNewWindow = (
-  viewId: ViewIDs
-): SnowmanThunkAction<Window | null, unknown> => (dispatch) => {
+const openViewInNewWindow = (viewId: ViewIDs): Window | null => {
   const targetWindow = window.open(
     `${window.location.origin}${window.location.pathname}?${viewIdQueryParam}=${viewId}`,
     nextWindowName()
   );
   if (!targetWindow) {
-    dispatch(showToast(COULD_NOT_OPEN_CHILD_WINDOW_ERROR, ToastType.Error));
+    SnowmanAppDispatch(
+      showToast(COULD_NOT_OPEN_CHILD_WINDOW_ERROR, ToastType.Error)
+    );
   }
   return targetWindow;
 };
@@ -37,8 +37,8 @@ const openViewInNewWindow = (
 export const openStandaloneDataViewerWindow = ({
   loadTuples,
   ...props
-}: DataViewerOwnProps): SnowmanThunkAction<void, unknown> => (dispatch) => {
-  const targetWindow = dispatch(openViewInNewWindow(ViewIDs.DataViewerApp));
+}: DataViewerOwnProps): void => {
+  const targetWindow = openViewInNewWindow(ViewIDs.DataViewerApp);
   if (targetWindow) {
     window.addEventListener('beforeunload', () =>
       postActionToClient(targetWindow, {
@@ -71,6 +71,8 @@ export const openStandaloneDataViewerWindow = ({
       })
     );
   } else {
-    dispatch(showToast(COULD_NOT_OPEN_CHILD_WINDOW_ERROR, ToastType.Error));
+    SnowmanAppDispatch(
+      showToast(COULD_NOT_OPEN_CHILD_WINDOW_ERROR, ToastType.Error)
+    );
   }
 };

@@ -11,7 +11,7 @@ const mapDispatchToProps = (
   { openDataViewerWindow }: TableHeaderOwnProps
 ): TableHeaderDispatchProps => ({
   performOpenDataViewerWindow() {
-    dispatch(openDataViewerWindow());
+    openDataViewerWindow();
   },
 });
 

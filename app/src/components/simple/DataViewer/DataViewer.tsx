@@ -1,8 +1,8 @@
+import { openStandaloneDataViewerWindow } from 'components/simple/DataViewer/DataViewer.helpers';
 import { DataViewerProps } from 'components/simple/DataViewer/DataViewerProps';
 import Table from 'components/simple/DataViewer/Table/Table';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { InfiniteLoader } from 'react-virtualized';
-import { openStandaloneDataViewerWindow } from 'store/actions/RenderStoreActions';
 import { TuplesLoader } from 'types/TuplesLoader';
 import RequestHandler from 'utils/requestHandler';
 
