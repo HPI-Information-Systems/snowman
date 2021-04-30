@@ -1,7 +1,7 @@
 import { MutableRefObject } from 'react';
 import { Column, ColumnInstance, HeaderGroup } from 'react-table';
 import { IndexRange } from 'react-virtualized';
-import { SnowmanThunkAction } from 'store/messages';
+import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 
 export type TableProps = {
   columns: string[];
@@ -9,7 +9,7 @@ export type TableProps = {
   onRowsRendered: (params: IndexRange) => void;
   rowsChanged: unknown;
   columnsChanged: unknown;
-  openDataViewerWindow: () => SnowmanThunkAction<void>;
+  openDataViewerWindow: () => SnowmanThunkAction<void, unknown>;
 };
 
 export type TableContentProps = {
@@ -18,7 +18,7 @@ export type TableContentProps = {
   onRowsRendered: (params: IndexRange) => void;
   width: number;
   resetTable: MutableRefObject<boolean>;
-  openDataViewerWindow: () => SnowmanThunkAction<void>;
+  openDataViewerWindow: () => SnowmanThunkAction<void, unknown>;
 };
 
 export type TableBodyProps = {
@@ -31,7 +31,7 @@ export type TableHeaderOwnProps = {
   setColumnOrder: (
     updater: string[] | ((columnOrder: string[]) => string[])
   ) => void;
-  openDataViewerWindow: () => SnowmanThunkAction<void>;
+  openDataViewerWindow: () => SnowmanThunkAction<void, unknown>;
 };
 
 export type TableHeaderDispatchProps = {
