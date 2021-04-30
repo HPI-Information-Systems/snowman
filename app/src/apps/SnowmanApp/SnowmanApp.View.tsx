@@ -62,9 +62,8 @@ const SnowmanAppView = ({
       <PreviewDialog />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <BlockingLoading />
-      {/* Todo: Change autoClose back to 5000 */}
       <ToastContainer
-        autoClose={2000}
+        autoClose={5000}
         closeButton={false}
         pauseOnHover={true}
         pauseOnFocusLoss={true}
