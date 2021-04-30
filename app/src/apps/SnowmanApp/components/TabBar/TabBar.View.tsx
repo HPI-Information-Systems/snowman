@@ -29,7 +29,7 @@ const TabBarView = ({
       {aTabConfigItem.icon !== undefined ? (
         <IonIcon slot="start" icon={aTabConfigItem.icon} />
       ) : null}
-      {aTabConfigItem.title}
+      <span className="ion-hide-xl-down">{aTabConfigItem.title}</span>
     </IonButton>
   );
 
