@@ -31,7 +31,6 @@
     MatchingSolutionMultiplyEffort = 'matchingSolutionMultiplyEffort',
     MatchingSolutionExpertiseWeightedEffort = 'matchingSolutionExpertiseWeightedEffort',
     GeneralCosts = 'generalCosts',
-    IntegrationTime = 'integrationTime',
     InstallationExpertise = 'installationExpertise',
     InstallationHrAmount = 'installationHrAmount',
     InstallationManhattanDistanceBasedEffort = 'installationManhattanDistanceBasedEffort',

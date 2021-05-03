@@ -75,11 +75,27 @@ beforeAll(async () => {
     description: 'Mock 1',
     name: 'Mock 1',
     softKPIs: {
+      integrationEffort: {
+        installationEffort: {
+          expertise: 30,
+          hrAmount: 10,
+        },
+        deploymentType: ['cloud'],
+        solutionType: ['rulebased'],
+        useCase: ['merging'],
+        generalCosts: 10,
+      },
       configurationEffort: {
         domain: {
           expertise: 12,
           hrAmount: 10,
         },
+        matchingSolution: {
+          expertise: 12,
+          hrAmount: 10,
+        },
+        interfaces: ['GUI'],
+        supportedOSs: ['Windows'],
       },
     },
   };
@@ -272,6 +288,74 @@ describe('test benchmark functions', () => {
       { x: 0, y: 0, threshold: 0.7 },
       { threshold: 0.5, x: 0.5, y: 0.125 },
     ]);
+  });
+  test('TEST', () => {
+    const array = [
+      SoftKPIsAlgorithmEnum.DomainExpertise,
+      SoftKPIsAlgorithmEnum.DomainHrAmount,
+      SoftKPIsAlgorithmEnum.DomainManhattanDistanceBasedEffort,
+      SoftKPIsAlgorithmEnum.DomainHrAmountWeightedEffort,
+      SoftKPIsAlgorithmEnum.DomainMultiplyEffort,
+      SoftKPIsAlgorithmEnum.DomainExpertiseWeightedEffort,
+      SoftKPIsAlgorithmEnum.MatchingSolutionExpertise,
+      SoftKPIsAlgorithmEnum.MatchingSolutionHrAmount,
+      SoftKPIsAlgorithmEnum.MatchingSolutionManhattanDistanceBasedEffort,
+      SoftKPIsAlgorithmEnum.MatchingSolutionHrAmountWeightedEffort,
+      SoftKPIsAlgorithmEnum.MatchingSolutionMultiplyEffort,
+      SoftKPIsAlgorithmEnum.MatchingSolutionExpertiseWeightedEffort,
+      SoftKPIsAlgorithmEnum.GeneralCosts,
+      SoftKPIsAlgorithmEnum.InstallationExpertise,
+      SoftKPIsAlgorithmEnum.InstallationHrAmount,
+      SoftKPIsAlgorithmEnum.InstallationManhattanDistanceBasedEffort,
+      SoftKPIsAlgorithmEnum.InstallationHrAmountWeightedEffort,
+      SoftKPIsAlgorithmEnum.InstallationMultiplyEffort,
+      SoftKPIsAlgorithmEnum.InstallationExpertiseWeightedEffort,
+      SoftKPIsExperimentEnum.Expertise,
+      SoftKPIsExperimentEnum.HrAmount,
+      SoftKPIsExperimentEnum.ManhattanDistanceBasedEffort,
+      SoftKPIsExperimentEnum.HrAmountWeightedEffort,
+      SoftKPIsExperimentEnum.MultiplyEffort,
+      SoftKPIsExperimentEnum.ExpertiseWeightedEffort,
+      MetricsEnum.Similarity,
+      MetricsEnum.FalseDiscoveryRate,
+      MetricsEnum.FalseNegativeRate,
+      MetricsEnum.FalseOmissionRate,
+      MetricsEnum.FalsePositiveRate,
+      MetricsEnum.NegativePredictiveValue,
+      MetricsEnum.Precision,
+      MetricsEnum.PrevalenceThreshold,
+      MetricsEnum.Recall,
+      MetricsEnum.Specificity,
+      MetricsEnum.ThreatScore,
+      MetricsEnum.Accuracy,
+      MetricsEnum.BalancedAccuracy,
+      MetricsEnum.BookmakerInformedness,
+      MetricsEnum.FStarScore,
+      MetricsEnum.F1Score,
+      MetricsEnum.FowlkesMallowsIndex,
+      MetricsEnum.Markedness,
+      MetricsEnum.MatthewsCorrelationCoefficient,
+    ];
+    for (let i = 0; i < array.length; i += 2) {
+      const x = benchmarkProvider.calculateDiagramData({
+        xAxis: array[i],
+        yAxis: array[i + 1],
+        diagram: {
+          multipleExperiments: [
+            {
+              experiment: {
+                experimentId: experimentIds.experiment1,
+              },
+              groundTruth: {
+                experimentId: experimentIds.goldstandard,
+              },
+            },
+          ],
+        },
+      });
+      console.log(x);
+    }
+    expect(true).toBe(true);
   });
   describe('metrics', () => {
     test('test metrics calculation', () => {

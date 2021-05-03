@@ -1176,7 +1176,6 @@ components:
         - matchingSolutionMultiplyEffort
         - matchingSolutionExpertiseWeightedEffort
         - generalCosts
-        - integrationTime
         - installationExpertise
         - installationHrAmount
         - installationManhattanDistanceBasedEffort
