@@ -1,27 +1,33 @@
 .insetOnce {
-    margin-left: 8px !important;
+  margin-left: 8px !important;
 }
 
 .insetTwice {
-    margin-left: 16px !important;
+  margin-left: 16px !important;
 }
 
-.smallItemList {
-    padding: 0;
+.listNoPadding {
+  padding: 0;
 }
 
-.smallItem {
-    --border-style: none;
+.noBackground,
+.noBackground *::part(native),
+.noBackground * {
+  background: transparent;
+}
+
+.itemNoBorder {
+  --border-style: none;
 }
 
 .smallItem::part(native) {
-    height: 2em;
-    line-height: 1em;
-    min-height: unset;
-    font-size: small;
+  height: 2em;
+  min-height: unset;
+  font-size: small;
+  line-height: 1em;
 }
 
 .smallItemIcon {
-    font-size: small;
-    margin-right: 5px !important;
+  margin-right: 5px !important;
+  font-size: small;
 }
