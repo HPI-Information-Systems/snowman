@@ -1,5 +1,5 @@
 export interface SelectorItemOwnProps {
-  onClick: (event: unknown) => void;
+  onClick: (event: CustomEvent) => void;
   FirstItem: string;
   FirstItemIcon: string;
   SecondItem: string;
