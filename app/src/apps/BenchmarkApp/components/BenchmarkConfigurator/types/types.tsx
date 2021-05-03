@@ -1,7 +1,4 @@
 import { ConfigurationStoreKey } from 'apps/BenchmarkApp/types/ConfigurationStoreKey';
-import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
-import React from 'react';
-
 interface ConfigurationPayload {
   key: ConfigurationStoreKey;
   payload: number;
@@ -55,7 +52,7 @@ interface MultiSelectorConfigurationActionTypes {
 }
 
 /// STORE ///
-
+/*
 const configStore: ConfigurationStoreModel = {
   dataset: {
     dataset: {
@@ -72,8 +69,8 @@ const configStore: ConfigurationStoreModel = {
       forceDatasetFilter: 'dataset',
     },
   },
-};
-
+};*/
+/*
 const MultiSelect = ({
   cacheKey,
   item,
@@ -118,4 +115,4 @@ const ExperimentConfigConfigurator = ({
       />
     </>
   );
-};
+};*/
