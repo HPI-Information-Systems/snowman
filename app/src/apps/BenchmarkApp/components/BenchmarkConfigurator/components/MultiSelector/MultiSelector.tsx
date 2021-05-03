@@ -24,12 +24,14 @@ const MultiSelector = ({
           ThirdItem="54.392"
           ThirdItemIcon={gitCommit}
         />
-        <IonItem>
-          <sub>
-            Add New Experiment
-            <IonIcon icon={add} />
-          </sub>
-        </IonItem>
+        {allowMultiple ? (
+          <IonItem>
+            <sub>
+              Add New Experiment
+              <IonIcon icon={add} />
+            </sub>
+          </IonItem>
+        ) : null}
       </IonList>
     </IonLabel>
   </IonItem>

@@ -21,9 +21,21 @@ const BenchmarkConfigurator = ({
     </IonHeader>
     <IonContent>
       <IonList>
-        <MultiSelector title={'1. Select experiment'} />
-        <MultiSelector title={'2. Select experiment'} />
-        <MultiSelector title={'3. Select experiment'} />
+        <MultiSelector
+          title={'1. Select Dataset'}
+          cacheKey={'dataset'}
+          allowMultiple={false}
+        />
+        <MultiSelector
+          title={'2. Select Ground Truth'}
+          cacheKey={'groundtruth'}
+          allowMultiple={false}
+        />
+        <MultiSelector
+          title={'3. Select Experiments'}
+          cacheKey={'experiments'}
+          allowMultiple={true}
+        />
       </IonList>
     </IonContent>
   </IonMenu>
