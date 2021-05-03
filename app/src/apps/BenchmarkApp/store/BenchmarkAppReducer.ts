@@ -17,10 +17,17 @@ const initialConfigState: BenchmarkAppConfigStore = {
 };
 
 const initialState: BenchmarkAppModel = {
-  config: initialConfigState,
+  resources: initialConfigState,
   expandedAlgorithmsInDatasets: [],
   searchString: '',
   activeStrategy: StrategyIDs.Dashboard,
+  config: {
+    datasets: {},
+    algorithms: {},
+    experiments: {},
+    simFunctions: {},
+    simThresholds: {},
+  },
 };
 
 const removeExpandedEntity = (entities: ExpandedEntity[], id: number) =>
@@ -45,8 +52,8 @@ const BenchmarkAppReducer = (
       return {
         ...state,
         expandedAlgorithmsInDatasets: [],
-        config: {
-          ...state.config,
+        resources: {
+          ...state.resources,
           selectedExperimentIds: [],
           algorithms: action.payload as Algorithm[],
         },
@@ -55,8 +62,8 @@ const BenchmarkAppReducer = (
       return {
         ...state,
         expandedAlgorithmsInDatasets: [],
-        config: {
-          ...state.config,
+        resources: {
+          ...state.resources,
           selectedExperimentIds: [],
           datasets: action.payload as Dataset[],
         },
@@ -65,8 +72,8 @@ const BenchmarkAppReducer = (
       return {
         ...state,
         expandedAlgorithmsInDatasets: [],
-        config: {
-          ...state.config,
+        resources: {
+          ...state.resources,
           selectedExperimentIds: [],
           experiments: action.payload as Experiment[],
         },
@@ -74,11 +81,11 @@ const BenchmarkAppReducer = (
     case BenchmarkAppActionsTypes.SELECT_DATASET_CHILDREN:
       return {
         ...state,
-        config: {
-          ...state.config,
+        resources: {
+          ...state.resources,
           selectedExperimentIds: union(
-            state.config.selectedExperimentIds,
-            state.config.experiments
+            state.resources.selectedExperimentIds,
+            state.resources.experiments
               .filter(
                 (anExperiment: Experiment): boolean =>
                   anExperiment.datasetId === (action.payload as number)
@@ -90,11 +97,11 @@ const BenchmarkAppReducer = (
     case BenchmarkAppActionsTypes.SELECT_ALGORITHM_CHILDREN:
       return {
         ...state,
-        config: {
-          ...state.config,
+        resources: {
+          ...state.resources,
           selectedExperimentIds: union(
-            state.config.selectedExperimentIds,
-            state.config.experiments
+            state.resources.selectedExperimentIds,
+            state.resources.experiments
               .filter(
                 (anExperiment: Experiment): boolean =>
                   anExperiment.datasetId === (action.payload as number) &&
@@ -108,15 +115,15 @@ const BenchmarkAppReducer = (
     case BenchmarkAppActionsTypes.TOGGLE_EXPERIMENT:
       return {
         ...state,
-        config: {
-          ...state.config,
-          selectedExperimentIds: state.config.selectedExperimentIds.includes(
+        resources: {
+          ...state.resources,
+          selectedExperimentIds: state.resources.selectedExperimentIds.includes(
             action.payload as number
           )
-            ? state.config.selectedExperimentIds.filter(
+            ? state.resources.selectedExperimentIds.filter(
                 (value: number): boolean => value !== (action.payload as number)
               )
-            : union(state.config.selectedExperimentIds, [
+            : union(state.resources.selectedExperimentIds, [
                 action.payload as number,
               ]),
         },
@@ -131,10 +138,10 @@ const BenchmarkAppReducer = (
           ),
           {
             id: action.payload as number,
-            children: state.config.algorithms
+            children: state.resources.algorithms
               .filter(
                 (anAlgorithm: Algorithm): boolean =>
-                  state.config.experiments.findIndex(
+                  state.resources.experiments.findIndex(
                     (anExperiment: Experiment): boolean =>
                       anExperiment.datasetId === (action.payload as number) &&
                       anExperiment.algorithmId === anAlgorithm.id
@@ -211,11 +218,11 @@ const BenchmarkAppReducer = (
       };
     case BenchmarkAppActionsTypes.SET_SEARCH_STRING: {
       if ((action.payload as string) !== '') {
-        const selectedExperiments = state.config.experiments.filter(
+        const selectedExperiments = state.resources.experiments.filter(
           (anExperiment: Experiment): boolean =>
             anExperiment.name.includes(action.payload as string)
         );
-        const relevantDatasets = state.config.datasets.filter(
+        const relevantDatasets = state.resources.datasets.filter(
           (aDataset: Dataset): boolean =>
             selectedExperiments.findIndex(
               (anExperiment: Experiment): boolean =>
@@ -228,7 +235,7 @@ const BenchmarkAppReducer = (
           expandedAlgorithmsInDatasets: relevantDatasets.map(
             (aDataset: Dataset): ExpandedEntity => ({
               id: aDataset.id,
-              children: state.config.algorithms
+              children: state.resources.algorithms
                 .filter(
                   (anAlgorithm: Algorithm): boolean =>
                     selectedExperiments.findIndex(
@@ -261,8 +268,8 @@ const BenchmarkAppReducer = (
     case BenchmarkAppActionsTypes.SELECT_NONE:
       return {
         ...state,
-        config: {
-          ...state.config,
+        resources: {
+          ...state.resources,
           selectedExperimentIds: [],
         },
       };

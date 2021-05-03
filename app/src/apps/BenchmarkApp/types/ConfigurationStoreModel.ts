@@ -1,18 +1,18 @@
-import { ConfigurationStoreKey } from 'apps/BenchmarkApp/types/ConfigurationStoreKey';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 
 export type ConfigurationStoreModel = {
-  dataset: { [key in ConfigurationStoreKey]: DatasetConfigurationModel };
-  matchingSolution: {
-    [key in ConfigurationStoreKey]: AlgorithmConfigurationModel;
+  datasets: { [key in StoreCacheKey]?: DatasetConfigurationModel };
+  algorithms: {
+    [key in StoreCacheKey]?: AlgorithmConfigurationModel;
   };
-  experiment: {
-    [key in ConfigurationStoreKey]: ExperimentConfigurationModel;
+  experiments: {
+    [key in StoreCacheKey]?: ExperimentConfigurationModel;
   };
-  similarityFunction: {
-    [key in ConfigurationStoreKey]: SimFunctionConfigurationModel;
+  simFunctions: {
+    [key in StoreCacheKey]?: SimFunctionConfigurationModel;
   };
-  similarityThreshold: {
-    [key in ConfigurationStoreKey]: SimThresholdConfigurationModel;
+  simThresholds: {
+    [key in StoreCacheKey]?: SimThresholdConfigurationModel;
   };
 };
 
@@ -21,12 +21,12 @@ export interface SimThresholdConfigurationModel {
 }
 export interface SimFunctionConfigurationModel {
   functionId: number;
-  forceExperimentFilter?: ConfigurationStoreKey;
+  forceExperimentFilter?: StoreCacheKey;
 }
 export interface ExperimentConfigurationModel {
   experimentId: number;
-  forceDatasetFilter?: ConfigurationStoreKey;
-  forceAlgorithmFilter?: ConfigurationStoreKey;
+  forceDatasetFilter?: StoreCacheKey;
+  forceAlgorithmFilter?: StoreCacheKey;
 }
 export interface DatasetConfigurationModel {
   datasetId: number;

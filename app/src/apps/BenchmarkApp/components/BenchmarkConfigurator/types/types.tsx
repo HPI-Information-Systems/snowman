@@ -1,6 +1,6 @@
-import { ConfigurationStoreKey } from 'apps/BenchmarkApp/types/ConfigurationStoreKey';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 interface ConfigurationPayload {
-  key: ConfigurationStoreKey;
+  key: StoreCacheKey;
   payload: number;
 }
 
