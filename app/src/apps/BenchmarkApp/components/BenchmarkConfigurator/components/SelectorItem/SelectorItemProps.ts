@@ -1,5 +1,7 @@
+import React from 'react';
+
 export interface SelectorItemOwnProps {
-  onClick: (event: CustomEvent) => void;
+  onClick: (event: React.MouseEvent) => void;
   FirstItem: string;
   FirstItemIcon: string;
   SecondItem: string;
