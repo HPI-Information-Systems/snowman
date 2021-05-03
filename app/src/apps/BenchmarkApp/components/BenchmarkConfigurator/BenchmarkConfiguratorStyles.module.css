@@ -1,0 +1,27 @@
+.insetOnce {
+    margin-left: 8px !important;
+}
+
+.insetTwice {
+    margin-left: 16px !important;
+}
+
+.smallItemList {
+    padding: 0;
+}
+
+.smallItem {
+    --border-style: none;
+}
+
+.smallItem::part(native) {
+    height: 2em;
+    line-height: 1em;
+    min-height: unset;
+    font-size: small;
+}
+
+.smallItemIcon {
+    font-size: small;
+    margin-right: 5px !important;
+}
