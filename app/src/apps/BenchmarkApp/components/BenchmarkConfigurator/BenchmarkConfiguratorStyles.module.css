@@ -1,33 +1,11 @@
-.insetOnce {
-  margin-left: 8px !important;
-}
-
-.insetTwice {
-  margin-left: 16px !important;
+.marginedHeading {
+  margin-bottom: 6px !important;
 }
 
 .listNoPadding {
   padding: 0;
 }
 
-.noBackground,
-.noBackground *::part(native),
-.noBackground * {
-  background: transparent;
-}
-
 .itemNoBorder {
   --border-style: none;
-}
-
-.smallItem::part(native) {
-  height: 2em;
-  min-height: unset;
-  font-size: small;
-  line-height: 1em;
-}
-
-.smallItemIcon {
-  margin-right: 5px !important;
-  font-size: small;
 }

@@ -11,14 +11,9 @@ import {
 } from '@ionic/react';
 import { BenchmarkConfiguratorProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/BenchmarkConfiguratorProps';
 import styles from 'apps/BenchmarkApp/components/BenchmarkConfigurator/BenchmarkConfiguratorStyles.module.css';
-import {
-  analytics,
-  ellipsisVerticalCircle,
-  flask,
-  gitCommit,
-} from 'ionicons/icons';
+import SelectorItem from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorItem/SelectorItem';
+import { add, analytics, flask, gitCommit } from 'ionicons/icons';
 import React from 'react';
-import style from 'theme/style';
 
 const BenchmarkConfigurator = ({
   contentId,
@@ -26,314 +21,66 @@ const BenchmarkConfigurator = ({
   <IonMenu contentId={contentId}>
     <IonHeader>
       <IonToolbar color="primary">
-        <IonTitle>Sidebar</IonTitle>
+        <IonTitle>Configurator</IonTitle>
       </IonToolbar>
     </IonHeader>
     <IonContent>
       <IonList>
         <IonItem className={styles.itemNoBorder}>
           <IonLabel>
-            <h3>1. Select Ground Truth</h3>
+            <h3 className={styles.marginedHeading}>
+              <b>1. Select Ground Truth</b>
+            </h3>
             <IonList className={styles.listNoPadding}>
-              <IonItem
-                button
-                onClick={() => {
-                  console.log('click');
-                }}
-              >
-                <IonList
-                  className={style(styles.listNoPadding, styles.noBackground)}
-                >
-                  <IonItem
-                    className={style(styles.smallItem, styles.itemNoBorder)}
-                  >
-                    <IonIcon
-                      icon={flask}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    goldstandard
-                  </IonItem>
-                  <IonItem
-                    className={style(
-                      styles.smallItem,
-                      styles.itemNoBorder,
-                      styles.insetOnce
-                    )}
-                  >
-                    <IonIcon
-                      icon={analytics}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    squaredist2
-                  </IonItem>
-                  <IonItem
-                    className={style(
-                      styles.smallItem,
-                      styles.itemNoBorder,
-                      styles.insetTwice
-                    )}
-                  >
-                    <IonIcon
-                      icon={gitCommit}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    54.435
-                  </IonItem>
-                </IonList>
-                <IonIcon
-                  icon={ellipsisVerticalCircle}
-                  color="medium"
-                  slot="end"
-                />
+              <SelectorItem
+                onClick={(): void => console.log('click')}
+                FirstItem="goldstandard"
+                FirstItemIcon={flask}
+                SecondItem="distance23"
+                SecondItemIcon={analytics}
+                ThirdItem="54.392"
+                ThirdItemIcon={gitCommit}
+              />
+              <IonItem>
+                <IonIcon slot="start" icon={add} />
+                Add New Experiment
               </IonItem>
             </IonList>
           </IonLabel>
         </IonItem>
         <IonItem className={styles.itemNoBorder}>
           <IonLabel>
-            <h3>2. Select Experiment</h3>
+            <h3 className={styles.marginedHeading}>
+              <b>2. Select Experiments</b>
+            </h3>
             <IonList className={styles.listNoPadding}>
-              <IonItem
-                button
-                onClick={() => {
-                  console.log('click');
-                }}
-              >
-                <IonList
-                  className={style(styles.listNoPadding, styles.noBackground)}
-                >
-                  <IonItem
-                    className={style(styles.smallItem, styles.itemNoBorder)}
-                  >
-                    <IonIcon
-                      icon={flask}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    goldstandard
-                  </IonItem>
-                  <IonItem
-                    className={style(
-                      styles.smallItem,
-                      styles.itemNoBorder,
-                      styles.insetOnce
-                    )}
-                  >
-                    <IonIcon
-                      icon={analytics}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    squaredist2
-                  </IonItem>
-                  <IonItem
-                    className={style(
-                      styles.smallItem,
-                      styles.itemNoBorder,
-                      styles.insetTwice
-                    )}
-                  >
-                    <IonIcon
-                      icon={gitCommit}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    54.435
-                  </IonItem>
-                </IonList>
-                <IonIcon
-                  icon={ellipsisVerticalCircle}
-                  color="medium"
-                  slot="end"
-                />
-              </IonItem>
-              <IonItem
-                button
-                onClick={() => {
-                  console.log('click');
-                }}
-              >
-                <IonList
-                  className={style(styles.listNoPadding, styles.noBackground)}
-                >
-                  <IonItem
-                    className={style(styles.smallItem, styles.itemNoBorder)}
-                  >
-                    <IonIcon
-                      icon={flask}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    goldstandard
-                  </IonItem>
-                  <IonItem
-                    className={style(
-                      styles.smallItem,
-                      styles.itemNoBorder,
-                      styles.insetOnce
-                    )}
-                  >
-                    <IonIcon
-                      icon={analytics}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    squaredist2
-                  </IonItem>
-                  <IonItem
-                    className={style(
-                      styles.smallItem,
-                      styles.itemNoBorder,
-                      styles.insetTwice
-                    )}
-                  >
-                    <IonIcon
-                      icon={gitCommit}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    54.435
-                  </IonItem>
-                </IonList>
-                <IonIcon
-                  icon={ellipsisVerticalCircle}
-                  color="medium"
-                  slot="end"
-                />
-              </IonItem>
+              <SelectorItem
+                onClick={(): void => console.log('click')}
+                FirstItem="goldstandard"
+                FirstItemIcon={flask}
+                SecondItem="distance23"
+                SecondItemIcon={analytics}
+                ThirdItem="54.392"
+                ThirdItemIcon={gitCommit}
+              />
             </IonList>
           </IonLabel>
         </IonItem>
         <IonItem className={styles.itemNoBorder}>
           <IonLabel>
-            <h3>2. Select Experiment</h3>
+            <h3 className={styles.marginedHeading}>
+              <b>3. Select More Experiments</b>
+            </h3>
             <IonList className={styles.listNoPadding}>
-              <IonItem
-                button
-                onClick={() => {
-                  console.log('click');
-                }}
-              >
-                <IonList
-                  className={style(styles.listNoPadding, styles.noBackground)}
-                >
-                  <IonItem
-                    className={style(styles.smallItem, styles.itemNoBorder)}
-                  >
-                    <IonIcon
-                      icon={flask}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    goldstandard
-                  </IonItem>
-                  <IonItem
-                    className={style(
-                      styles.smallItem,
-                      styles.itemNoBorder,
-                      styles.insetOnce
-                    )}
-                  >
-                    <IonIcon
-                      icon={analytics}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    squaredist2
-                  </IonItem>
-                  <IonItem
-                    className={style(
-                      styles.smallItem,
-                      styles.itemNoBorder,
-                      styles.insetTwice
-                    )}
-                  >
-                    <IonIcon
-                      icon={gitCommit}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    54.435
-                  </IonItem>
-                </IonList>
-                <IonIcon
-                  icon={ellipsisVerticalCircle}
-                  color="medium"
-                  slot="end"
-                />
-              </IonItem>
-              <IonItem
-                button
-                onClick={() => {
-                  console.log('click');
-                }}
-              >
-                <IonList
-                  className={style(styles.listNoPadding, styles.noBackground)}
-                >
-                  <IonItem
-                    className={style(styles.smallItem, styles.itemNoBorder)}
-                  >
-                    <IonIcon
-                      icon={flask}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    goldstandard
-                  </IonItem>
-                  <IonItem
-                    className={style(
-                      styles.smallItem,
-                      styles.itemNoBorder,
-                      styles.insetOnce
-                    )}
-                  >
-                    <IonIcon
-                      icon={analytics}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    squaredist2
-                  </IonItem>
-                  <IonItem
-                    className={style(
-                      styles.smallItem,
-                      styles.itemNoBorder,
-                      styles.insetTwice
-                    )}
-                  >
-                    <IonIcon
-                      icon={gitCommit}
-                      color="primarydark"
-                      className={styles.smallItemIcon}
-                      slot="start"
-                    />
-                    54.435
-                  </IonItem>
-                </IonList>
-                <IonIcon
-                  icon={ellipsisVerticalCircle}
-                  color="medium"
-                  slot="end"
-                />
-              </IonItem>
+              <SelectorItem
+                onClick={(): void => console.log('click')}
+                FirstItem="goldstandard"
+                FirstItemIcon={flask}
+                SecondItem="distance23"
+                SecondItemIcon={analytics}
+                ThirdItem="54.392"
+                ThirdItemIcon={gitCommit}
+              />
             </IonList>
           </IonLabel>
         </IonItem>
