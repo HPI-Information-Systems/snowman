@@ -26,6 +26,8 @@ const SearchableListView = ({
   updateSelection,
   selectedEntities,
   allowMultiple = false,
+  searchString,
+  changeSearchString,
 }: SearchableListProps): JSX.Element => {
   const toggleEntity = (id: number) => {
     if (!allowMultiple) {
@@ -40,12 +42,7 @@ const SearchableListView = ({
   };
   return (
     <IonList inset={false} lines="none">
-      <IonSearchbar
-        value={''}
-        onIonChange={() => {
-          return;
-        }}
-      />
+      <IonSearchbar value={searchString} onIonChange={changeSearchString} />
       <div className={styles.selectablePopoverList}>
         {entities.map((anEntity: SearchableEntity) =>
           fuzzyStringIncludes(anEntity.name, '') ? (

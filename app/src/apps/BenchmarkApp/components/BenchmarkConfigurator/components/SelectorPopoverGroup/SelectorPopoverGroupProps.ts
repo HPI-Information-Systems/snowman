@@ -1,6 +1,8 @@
-export interface SelectorPopoverGroupOwnProps {
+import { GenericStoreComponentProps } from 'components/generics/GenericStoreComponent/GenericStoreComponentProps';
+
+export interface SelectorPopoverGroupOwnProps
+  extends GenericStoreComponentProps {
   children?: JSX.Element | JSX.Element[];
-  instanceDescriptor: string;
   items: { icon: string; title: string; indent?: number }[];
 }
 
