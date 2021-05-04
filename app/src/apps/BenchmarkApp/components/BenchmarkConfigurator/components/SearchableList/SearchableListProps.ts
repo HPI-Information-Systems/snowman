@@ -1,6 +1,6 @@
 import { SearchableEntity } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/types/SearchableEntity';
-import { GenericStoreComponentProps } from 'components/generics/GenericStoreComponent/GenericStoreComponentProps';
 import { IonChangeEvent } from 'types/IonChangeEvent';
+import { GenericStoreComponentProps } from 'utils/GenericStoreComponentFactory';
 
 export interface SearchableListOwnProps extends GenericStoreComponentProps {
   entities: SearchableEntity[];

@@ -1,15 +1,20 @@
-import { GenericStoreComponentProps } from 'components/generics/GenericStoreComponent/GenericStoreComponentProps';
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { SnowmanAction } from 'types/SnowmanAction';
 import { StoreMagistrate } from 'utils/storeFactory';
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export interface GenericStoreComponentProps {
+  instanceDescriptor: string;
+}
+
 const GenericStoreComponentFactory = function <
   Model,
   OwnProps extends GenericStoreComponentProps
->(magistrate: StoreMagistrate<Model>, component: React.FC<OwnProps>) {
+>(
+  magistrate: StoreMagistrate<Model>,
+  component: React.FC<OwnProps>
+): typeof Component {
   return class GenericStoreComponent extends Component<OwnProps> {
     store: Store<Model, SnowmanAction> | null = null;
 

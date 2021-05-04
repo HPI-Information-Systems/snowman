@@ -7,10 +7,10 @@ import {
 import { setSearchString } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/store/SearchableListActions';
 import { SearchableListStoreMagistrate } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/store/SearchableListStore';
 import { SearchableListModel } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/types/SearchableListModel';
-import GenericStoreComponentFactory from 'components/generics/GenericStoreComponent/GenericStoreComponent';
 import { connect } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
+import GenericStoreComponentFactory from 'utils/GenericStoreComponentFactory';
 
 const mapStateToProps = (
   state: SearchableListModel

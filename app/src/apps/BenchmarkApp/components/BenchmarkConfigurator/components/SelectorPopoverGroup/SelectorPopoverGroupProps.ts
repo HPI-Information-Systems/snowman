@@ -1,4 +1,4 @@
-import { GenericStoreComponentProps } from 'components/generics/GenericStoreComponent/GenericStoreComponentProps';
+import { GenericStoreComponentProps } from 'utils/GenericStoreComponentFactory';
 
 export interface SelectorPopoverGroupOwnProps
   extends GenericStoreComponentProps {

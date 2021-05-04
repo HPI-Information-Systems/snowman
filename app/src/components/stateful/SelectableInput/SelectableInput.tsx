@@ -1,4 +1,3 @@
-import GenericStoreComponentFactory from 'components/generics/GenericStoreComponent/GenericStoreComponent';
 import { SelectableInputView } from 'components/stateful/SelectableInput/SelectableInput.View';
 import {
   SelectableInputDispatchProps,
@@ -16,6 +15,7 @@ import { SelectableInputModel } from 'components/stateful/SelectableInput/types/
 import { connect } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
+import GenericStoreComponentFactory from 'utils/GenericStoreComponentFactory';
 
 const mapStateToProps = (
   state: SelectableInputModel

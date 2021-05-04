@@ -10,9 +10,9 @@ import {
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/store/SelectorPopoverGroupActions';
 import { SelectorPopoverGroupStoreMagistrate } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/store/SelectorPopoverGroupStore';
 import { SelectorPopoverGroupModel } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/types/SelectorPopoverGroupModel';
-import GenericStoreComponentFactory from 'components/generics/GenericStoreComponent/GenericStoreComponent';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
+import GenericStoreComponentFactory from 'utils/GenericStoreComponentFactory';
 
 const mapStateToProps = ({
   isOpen,
