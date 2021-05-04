@@ -1,21 +1,18 @@
-import { IonButton, IonIcon, IonItem, IonLabel } from '@ionic/react';
-import { SimilarityFuncItemProps } from 'apps/SimilarityFuncsDialog/components/SimilarityFuncItem/SimilarityFuncItemProps';
-import { analytics, construct, trash } from 'ionicons/icons';
-import React from 'react';
+import { SimilarityFuncItemDispatchProps } from 'apps/SimilarityFuncsDialog/components/SimilarityFuncItem/SimilarityFuncItemProps';
+import SimilarityFunctionItemView from 'apps/SimilarityFuncsDialog/components/SimilarityFuncItem/SimilarityFunctionItem.View';
+import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
+import { connect } from 'react-redux';
+import { ViewIDs } from 'types/ViewIDs';
 
-const SimilarityFuncItem = ({
-  functionName,
-}: SimilarityFuncItemProps): JSX.Element => (
-  <IonItem>
-    <IonIcon icon={analytics} />
-    <IonLabel>{functionName}</IonLabel>
-    <IonButton>
-      <IonIcon icon={construct} />
-    </IonButton>
-    <IonButton>
-      <IonIcon icon={trash} />
-    </IonButton>
-  </IonItem>
-);
+const mapDispatchToProps = (): SimilarityFuncItemDispatchProps => ({
+  openEditFunctionBuilder() {
+    doOpenDialog(ViewIDs.FunctionBuilderDialog, 2);
+  },
+});
+
+const SimilarityFuncItem = connect(
+  null,
+  mapDispatchToProps
+)(SimilarityFunctionItemView);
 
 export default SimilarityFuncItem;
