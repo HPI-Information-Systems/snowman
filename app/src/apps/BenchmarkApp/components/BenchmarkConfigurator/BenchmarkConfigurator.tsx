@@ -6,7 +6,7 @@ import {
   IonToolbar,
 } from '@ionic/react';
 import { BenchmarkConfiguratorProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/BenchmarkConfiguratorProps';
-import DatasetSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroup';
+import BinaryMetricsConfiguratorView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/BinaryMetricsConfigurator/BinaryMetricsConfigurator.View';
 import React from 'react';
 
 const BenchmarkConfigurator = ({
@@ -19,7 +19,7 @@ const BenchmarkConfigurator = ({
       </IonToolbar>
     </IonHeader>
     <IonContent>
-      <DatasetSelectorGroup cacheKey="dataset" />
+      <BinaryMetricsConfiguratorView />
     </IonContent>
   </IonMenu>
 );
