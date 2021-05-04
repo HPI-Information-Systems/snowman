@@ -24,9 +24,9 @@ const mapDispatchToProps = (
   open: (event: MouseEvent) => dispatch(showPopover(event)),
 });
 
-const SelectorPopoverGroup = connect(
+const SelectorPopoverGroupContainer = connect(
   mapStateToProps,
   mapDispatchToProps
 )(SelectorPopoverGroupView);
 
-export default SelectorPopoverGroup;
+export default SelectorPopoverGroupContainer;
