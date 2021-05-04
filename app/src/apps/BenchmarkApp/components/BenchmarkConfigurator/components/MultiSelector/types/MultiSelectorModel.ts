@@ -1,3 +1,3 @@
 export interface MultiSelectorModel {
-  numberEntries: number;
+  numberEntries?: number;
 }

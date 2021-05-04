@@ -1,7 +1,7 @@
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
+import { GetCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 
 export interface DatasetSelectorOwnProps {
-  cacheKey: StoreCacheKey;
+  getCacheKey: GetCacheKey;
 }
 
 export type DatasetSelectorProps = DatasetSelectorOwnProps;

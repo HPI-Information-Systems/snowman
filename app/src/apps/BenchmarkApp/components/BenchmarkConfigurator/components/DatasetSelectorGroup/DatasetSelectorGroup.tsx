@@ -5,28 +5,36 @@ import {
   DatasetSelectorItemDispatchProps,
   DatasetSelectorItemStateProps,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroupProps';
-import { setDatasetId } from 'apps/BenchmarkApp/store/ConfigurationStoreActions';
+import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStoreActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { getMultiSelectorItems } from 'apps/BenchmarkApp/utils/getMultiSelectorItems';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 const mapStateToProps = (
   state: BenchmarkAppModel,
   ownProps: DatasetSelectorOwnProps
-): DatasetSelectorItemStateProps => ({
-  selectedDataset: state.resources.datasets.find(
-    (aDataset: Dataset): boolean =>
-      aDataset.id === state.config.datasets[ownProps.cacheKey]?.datasetId
-  ),
-  datasets: state.resources.datasets,
-});
-
+): DatasetSelectorItemStateProps => {
+  const selectedIds = new Set(
+    getMultiSelectorItems(
+      ownProps.getCacheKey,
+      state.config.multiSelects,
+      state.config.datasets
+    ).map((dataset) => dataset?.datasetId)
+  );
+  return {
+    selectedDatasets: state.resources.datasets.filter(
+      (aDataset: Dataset): boolean => selectedIds.has(aDataset.id)
+    ),
+    datasets: state.resources.datasets,
+  };
+};
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch<BenchmarkAppModel>,
   ownProps: DatasetSelectorOwnProps
 ): DatasetSelectorItemDispatchProps => ({
-  setDatasetId: (datasetId) =>
-    dispatch(setDatasetId(ownProps.cacheKey, datasetId)),
+  updateSelection: (datasetIds) =>
+    dispatch(updateSelection(ownProps.getCacheKey, datasetIds)),
 });
 
 const DatasetSelectorGroup = connect(

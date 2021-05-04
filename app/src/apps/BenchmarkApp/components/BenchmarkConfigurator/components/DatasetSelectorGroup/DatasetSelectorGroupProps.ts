@@ -1,17 +1,18 @@
 import { Dataset } from 'api';
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
+import { GetCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
+
+export interface DatasetSelectorItemOwnProps {
+  getCacheKey: GetCacheKey;
+  allowMultiple?: boolean;
+}
 
 export interface DatasetSelectorItemStateProps {
-  selectedDataset: Dataset | undefined;
+  selectedDatasets: Dataset[];
   datasets: Dataset[];
 }
 
 export interface DatasetSelectorItemDispatchProps {
-  setDatasetId(datasetId: number): void;
-}
-
-export interface DatasetSelectorItemOwnProps {
-  cacheKey: StoreCacheKey;
+  updateSelection(datasetIds: number[]): void;
 }
 
 export type DatasetSelectorItemProps = DatasetSelectorItemOwnProps &

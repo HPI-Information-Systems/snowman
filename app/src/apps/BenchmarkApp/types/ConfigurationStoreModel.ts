@@ -1,19 +1,14 @@
 import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 
+export type ConfigurationCache<Target> = { [key in StoreCacheKey]?: Target };
+
 export type ConfigurationStoreModel = {
-  datasets: { [key in StoreCacheKey]?: DatasetConfigurationModel };
-  algorithms: {
-    [key in StoreCacheKey]?: AlgorithmConfigurationModel;
-  };
-  experiments: {
-    [key in StoreCacheKey]?: ExperimentConfigurationModel;
-  };
-  simFunctions: {
-    [key in StoreCacheKey]?: SimFunctionConfigurationModel;
-  };
-  simThresholds: {
-    [key in StoreCacheKey]?: SimThresholdConfigurationModel;
-  };
+  datasets: ConfigurationCache<DatasetConfigurationModel>;
+  algorithms: ConfigurationCache<AlgorithmConfigurationModel>;
+  experiments: ConfigurationCache<ExperimentConfigurationModel>;
+  simFunctions: ConfigurationCache<SimFunctionConfigurationModel>;
+  simThresholds: ConfigurationCache<SimThresholdConfigurationModel>;
+  multiSelects: ConfigurationCache<MultiSelectConfigurationModel>;
 };
 
 export interface SimThresholdConfigurationModel {
@@ -33,4 +28,7 @@ export interface DatasetConfigurationModel {
 }
 export interface AlgorithmConfigurationModel {
   algorithmId?: number;
+}
+export interface MultiSelectConfigurationModel {
+  numberEntries?: number;
 }

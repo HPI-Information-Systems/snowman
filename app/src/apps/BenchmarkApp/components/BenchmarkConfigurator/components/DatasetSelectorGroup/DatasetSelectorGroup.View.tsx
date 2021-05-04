@@ -1,20 +1,31 @@
 import { DatasetSelectorItemProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroupProps';
+import SearchableList from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/SearchableList';
 import SelectorPopoverGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/SelectorPopoverGroup';
-import { fileTrayFull } from 'ionicons/icons';
+import { fileTrayFull, fileTrayOutline } from 'ionicons/icons';
 import React from 'react';
 
-const DatasetSelectorItemView = ({
-  selectedDataset,
+const DatasetSelectorGroupView = ({
   datasets,
-  cacheKey,
-  setDatasetId,
+  getCacheKey,
+  selectedDatasets,
+  updateSelection,
+  allowMultiple,
 }: DatasetSelectorItemProps): JSX.Element => (
   <SelectorPopoverGroup
-    instanceDescriptor={cacheKey}
-    items={[{ icon: fileTrayFull, title: selectedDataset?.name ?? '' }]}
+    instanceDescriptor={getCacheKey()}
+    items={selectedDatasets.map((dataset) => ({
+      icon: fileTrayFull,
+      title: dataset.name ?? '',
+    }))}
   >
-    <div>Hi</div>
+    <SearchableList
+      entities={datasets}
+      icon={fileTrayOutline}
+      selectedEntities={selectedDatasets.map(({ id }) => id)}
+      updateSelection={updateSelection}
+      allowMultiple={allowMultiple}
+    />
   </SelectorPopoverGroup>
 );
 
-export default DatasetSelectorItemView;
+export default DatasetSelectorGroupView;

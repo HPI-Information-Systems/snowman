@@ -3,3 +3,7 @@ export enum CacheBaseKeyEnum {
   experiment = 'CacheKeyEnum-experiment',
   dataset = 'CacheKeyEnum-dataset',
 }
+
+export type GetCacheKey = (index?: number) => string;
+
+export const GetMultiSelectCacheKey = -1;

@@ -1,5 +1,6 @@
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
+import { MultiSelectConfigurationModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 import { SnowmanAction } from 'types/SnowmanAction';
 
@@ -35,6 +36,20 @@ const ConfigurationStoreReducer = (
       };
     default:
       return state;
+    case ConfigurationStoreActionTypes.SET_NUMBER_ENTRIES: {
+      const multiSelects = { ...state.config.multiSelects };
+      const multiSelect: MultiSelectConfigurationModel =
+        multiSelects[action.payload as StoreCacheKey] ?? {};
+      multiSelect.numberEntries = action.optionalPayload as number | undefined;
+      multiSelects[action.payload as StoreCacheKey] = multiSelect;
+      return {
+        ...state,
+        config: {
+          ...state.config,
+          multiSelects,
+        },
+      };
+    }
   }
 };
 
