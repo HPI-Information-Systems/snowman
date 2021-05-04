@@ -82,11 +82,13 @@ describe('Similarity Threshold Provider', () => {
       {
         id: experimentId,
         type: SimilarityThresholdFunctionTypeEnum.SimilarityThreshold,
+        name: 'function1',
         similarityThreshold: 'sim1',
       },
       {
         id: experimentId,
         type: SimilarityThresholdFunctionTypeEnum.Operator,
+        name: 'function2',
         operator: {
           left: {
             type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
@@ -124,6 +126,7 @@ describe('Similarity Threshold Provider', () => {
       {
         id: experimentId,
         type: SimilarityThresholdFunctionTypeEnum.UnaryOperator,
+        name: 'function3',
         unaryOperator: {
           func: {
             type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
@@ -135,6 +138,7 @@ describe('Similarity Threshold Provider', () => {
       {
         id: experimentId,
         type: SimilarityThresholdFunctionTypeEnum.Operator,
+        name: 'function4',
         operator: {
           left: {
             type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
@@ -256,6 +260,7 @@ describe('Similarity Threshold Provider', () => {
     ).toEqual<SimilarityThresholdFunction>({
       id: id1,
       type: SimilarityThresholdFunctionTypeEnum.SimilarityThreshold,
+      name: 'function1',
       similarityThreshold: 'sim2',
     });
   });
@@ -290,6 +295,7 @@ describe('Similarity Threshold Provider', () => {
     const [functionId] = addFunctions([
       {
         id: 0,
+        name: 'function2',
         type: SimilarityThresholdFunctionTypeEnum.SimilarityThreshold,
         similarityThreshold: 'sim1',
       },
@@ -361,6 +367,7 @@ describe('Similarity Threshold Provider', () => {
     const [functionId] = addFunctions([
       {
         id: 0,
+        name: 'function3',
         type: SimilarityThresholdFunctionTypeEnum.SimilarityThreshold,
         similarityThreshold: 'sim1',
       },

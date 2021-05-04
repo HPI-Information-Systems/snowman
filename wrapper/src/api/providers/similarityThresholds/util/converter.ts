@@ -21,6 +21,7 @@ export class SimilarityThresholdFunctionConverter {
     return {
       experiment: experimentId,
       id: apiFunction.id,
+      name: apiFunction.name,
       expression: functionToExpression(
         (apiFunction as unknown) as SimilarityThresholdFunctionValues,
         tables.experiment.experiment(experimentId).schema.columns
@@ -33,7 +34,10 @@ export class SimilarityThresholdFunctionConverter {
   ): SimilarityThresholdFunction {
     return ({
       id: storedFunction.id,
-      ...expressionToFunction(storedFunction.expression),
+      ...expressionToFunction({
+        expression: storedFunction.expression,
+        name: storedFunction.name,
+      }),
     } as unknown) as SimilarityThresholdFunction;
   }
 }

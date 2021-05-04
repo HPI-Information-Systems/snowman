@@ -91,6 +91,7 @@ export class SimilarityThresholdsProvider {
         {
           experiment: experimentId,
           expression,
+          name: similarityThresholdFunction.name,
         },
       ]);
       this.writeSimilarities(experimentId, functionId, expression);
@@ -113,6 +114,7 @@ export class SimilarityThresholdsProvider {
         {
           experiment: experimentId,
           expression,
+          name: similarityThresholdFunction.name,
           id: functionId,
         },
       ]);
