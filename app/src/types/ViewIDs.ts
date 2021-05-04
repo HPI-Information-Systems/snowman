@@ -13,4 +13,5 @@ export enum ViewIDs {
   ExperimentDialog,
   PreviewDialog,
   SimilarityFuncsDialog,
+  FunctionBuilderDialog,
 }
