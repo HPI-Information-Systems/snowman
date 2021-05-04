@@ -1,4 +1,5 @@
 export interface SelectorPopoverGroupOwnProps {
+  instanceDescriptor?: string;
   items: { icon: string; title: string; indent?: number }[];
 }
 
