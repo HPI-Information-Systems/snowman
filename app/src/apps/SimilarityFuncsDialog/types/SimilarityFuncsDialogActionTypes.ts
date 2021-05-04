@@ -1,0 +1,3 @@
+export enum SimilarityFuncsDialogActionTypes {
+  CHANGE_SEARCH_STRING = 'SIMILARITY_FUNCS_DIALOG-CHANGE_SEARCH_STRING',
+}
