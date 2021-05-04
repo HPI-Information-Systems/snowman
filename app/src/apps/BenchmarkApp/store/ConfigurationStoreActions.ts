@@ -11,7 +11,7 @@ import {
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 
-const setDatasetId = (
+export const setDatasetId = (
   aCacheKey: StoreCacheKey,
   aDatasetId: number
 ): easyPrimitiveActionReturn<BenchmarkAppModel> =>
@@ -31,17 +31,21 @@ const setMultiSelectNumberEntries = (
     optionalPayload: numberEntries,
   });
 
-export const updateSelection = (
+export const updateSelection = <T>(
   getCacheKey: GetCacheKey,
-  datasetIds: number[]
+  setter: (
+    cacheKey: StoreCacheKey,
+    value: T
+  ) => easyPrimitiveActionReturn<BenchmarkAppModel>,
+  selection: T[]
 ): SnowmanThunkAction<void, BenchmarkAppModel> => (dispatch) => {
-  for (let index = 0; index < datasetIds.length; ++index) {
-    dispatch(setDatasetId(getCacheKey(index), datasetIds[index]));
+  for (let index = 0; index < selection.length; ++index) {
+    dispatch(setter(getCacheKey(index), selection[index]));
   }
   dispatch(
     setMultiSelectNumberEntries(
       getCacheKey(GetMultiSelectCacheKey),
-      datasetIds.length
+      selection.length
     )
   );
 };
