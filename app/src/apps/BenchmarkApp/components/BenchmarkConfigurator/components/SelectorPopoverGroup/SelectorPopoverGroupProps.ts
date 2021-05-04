@@ -1,6 +1,6 @@
 export interface SelectorPopoverGroupOwnProps {
   children?: JSX.Element | JSX.Element[];
-  instanceDescriptor?: string;
+  instanceDescriptor: string;
   items: { icon: string; title: string; indent?: number }[];
 }
 

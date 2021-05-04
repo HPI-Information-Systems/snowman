@@ -28,9 +28,9 @@ const mapDispatchToProps = (
     dispatch(setDatasetId(ownProps.cacheKey, datasetId)),
 });
 
-const DatasetSelectorItem = connect(
+const DatasetSelectorGroup = connect(
   mapStateToProps,
   mapDispatchToProps
 )(DatasetSelectorGroupView);
 
-export default DatasetSelectorItem;
+export default DatasetSelectorGroup;
