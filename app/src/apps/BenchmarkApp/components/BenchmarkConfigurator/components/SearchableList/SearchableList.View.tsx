@@ -45,7 +45,7 @@ const SearchableListView = ({
       <IonSearchbar value={searchString} onIonChange={changeSearchString} />
       <div className={styles.selectablePopoverList}>
         {entities.map((anEntity: SearchableEntity) =>
-          fuzzyStringIncludes(anEntity.name, '') ? (
+          fuzzyStringIncludes(anEntity.name, searchString) ? (
             <IonItem
               button
               key={`selectable-option-${anEntity.id}`}
