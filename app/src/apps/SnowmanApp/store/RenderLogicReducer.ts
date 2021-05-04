@@ -40,11 +40,11 @@ const RenderLogicReducer = (
         entityId: action.optionalPayload as null | number,
         entityType: action.optionalPayload2 as null | string,
       };
-    case RenderLogicActionTypes.CLOSE_DIALOG:
-      return {
-        ...state,
-        openedDialog: null,
-      };
+    case RenderLogicActionTypes.CLOSE_DIALOG: {
+      if (action.payload === state.openedDialog)
+        return { ...state, openedDialog: null };
+      return state;
+    }
     default:
       return state;
   }

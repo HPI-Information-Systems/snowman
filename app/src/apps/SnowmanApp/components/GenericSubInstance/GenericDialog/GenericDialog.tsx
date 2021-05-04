@@ -21,10 +21,11 @@ const mapStateToProps = (
 });
 
 const mapDispatchToProps = (
-  dispatch: SnowmanDispatch<SnowmanAppModel>
+  dispatch: SnowmanDispatch<SnowmanAppModel>,
+  ownProps: GenericDialogOwnProps
 ): GenericDialogDispatchProps => ({
   closeDialog() {
-    dispatch(closeDialog());
+    dispatch(closeDialog(ownProps.instanceId));
   },
 });
 

@@ -26,9 +26,10 @@ export const openDialog = (
     optionalPayload2: entityType ?? null,
   });
 
-export const closeDialog = (): easyPrimitiveActionReturn<SnowmanAppModel> =>
+export const closeDialog = (
+  instanceId?: ViewIDs
+): easyPrimitiveActionReturn<SnowmanAppModel> =>
   easyPrimitiveAction({
     type: RenderLogicActionTypes.CLOSE_DIALOG,
-    // reducer ignores payload
-    payload: null,
+    payload: instanceId,
   });
