@@ -2,12 +2,7 @@ import React from 'react';
 
 export interface SelectorItemOwnProps {
   onClick: (event: React.MouseEvent) => void;
-  FirstItem: string;
-  FirstItemIcon: string;
-  SecondItem: string;
-  SecondItemIcon: string;
-  ThirdItem: string;
-  ThirdItemIcon: string;
+  items: { icon: string; title: string; indent: number }[];
 }
 
 export type SelectorItemProps = SelectorItemOwnProps;

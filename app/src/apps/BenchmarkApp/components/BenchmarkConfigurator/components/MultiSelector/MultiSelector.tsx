@@ -1,7 +1,7 @@
 import { IonIcon, IonItem, IonLabel, IonList } from '@ionic/react';
 import { MultiSelectorProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/MultiSelector/MultiSelectorProps';
 import styles from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/MultiSelector/MultiSelectorStyles.module.css';
-import SelectorItem from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorItem/SelectorItem';
+import SelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroup';
 import { add, analytics, flask, gitCommit } from 'ionicons/icons';
 import React from 'react';
 
@@ -15,7 +15,7 @@ const MultiSelector = ({
         <b>{title}</b>
       </h3>
       <IonList className={styles.listNoPadding}>
-        <SelectorItem
+        <SelectorGroup
           onClick={(): void => console.log('click')}
           FirstItem="goldstandard"
           FirstItemIcon={flask}
