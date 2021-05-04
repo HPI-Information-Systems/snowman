@@ -1,7 +1,7 @@
+import { GenericStoreComponentProps } from 'components/generics/GenericStoreComponent/GenericStoreComponentProps';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-export interface SelectableInputOwnProps {
-  instanceDescriptor?: string;
+export interface SelectableInputOwnProps extends GenericStoreComponentProps {
   currentOption: string;
   setOption(anOption: string): void;
   allOptions: string[];
