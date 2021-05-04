@@ -1,7 +1,16 @@
 import { SelectorGroupOwnProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupProps';
 
-type SelectorPopoverGroupOwnProps = SelectorGroupOwnProps;
+export type SelectorPopoverGroupOwnProps = SelectorGroupOwnProps;
 
-interface SelectorPopoverGroup
+export interface SelectorPopoverGroupStateProps {
+  isOpen: boolean;
+}
 
-export type SelectorPopoverGroupProps = SelectorPopoverGroupOwnProps;
+export interface SelectorPopoverGroupDispatchProps {
+  open(event: MouseEvent): void;
+  close(): void;
+}
+
+export type SelectorPopoverGroupProps = SelectorPopoverGroupOwnProps &
+  SelectorPopoverGroupStateProps &
+  SelectorPopoverGroupDispatchProps;
