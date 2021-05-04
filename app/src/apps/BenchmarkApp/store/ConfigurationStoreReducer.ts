@@ -1,8 +1,5 @@
-import { Algorithm, Dataset, Experiment } from 'api';
-import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
-import { DatasetConfigurationModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 import { SnowmanAction } from 'types/SnowmanAction';
 
