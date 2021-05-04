@@ -1,4 +1,4 @@
-import { Experiment, ExperimentIntersectionCount, Metric } from 'api';
+import { Dataset, Experiment, ExperimentIntersectionCount, Metric } from 'api';
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
 import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyModel';
 import { BenchmarkAppConfigStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
@@ -10,6 +10,7 @@ const initialState: BinaryMetricsStrategyModel = {
   isValidConfig: false,
   experiment: undefined,
   goldStandard: undefined,
+  dataset: undefined,
   metrics: [],
   counts: [],
   selectedDataView: MetricsTuplesCategories.truePositives,
@@ -53,6 +54,9 @@ const BinaryMetricsStrategyReducer = (
         isValidConfig: true,
         metrics: [],
         counts: [],
+        dataset: config.datasets.find(
+          (aDataset: Dataset): boolean => aDataset.id === goldStandard.datasetId
+        ),
         goldStandard: goldStandard,
         experiment: currentExperiments[0],
       };
