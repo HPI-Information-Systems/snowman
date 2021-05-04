@@ -8,6 +8,7 @@ const SimilarityFuncsDialogView = ({
   searchString,
   similarityThresholdFuncs,
   onChangeSearchString,
+  openAddFunctionBuilder,
 }: SimilarityFuncsDialogProps): JSX.Element => (
   <>
     <IonSearchbar value={searchString} onIonChange={onChangeSearchString} />
@@ -19,7 +20,7 @@ const SimilarityFuncsDialogView = ({
       <SimilarityFuncItem functionName="Sample5" />
       <SimilarityFuncItem functionName="Sample6" />
     </IonList>
-    <IonButton>
+    <IonButton onClick={openAddFunctionBuilder}>
       <IonIcon icon={addCircle} />
       Add Similarity Threshold Function
     </IonButton>

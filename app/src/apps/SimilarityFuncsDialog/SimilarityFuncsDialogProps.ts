@@ -11,6 +11,7 @@ export interface SimilarityFuncsDialogStateProps {
 
 export interface SimilarityFuncsDialogDispatchProps {
   deleteFunction?(): void;
+  openAddFunctionBuilder(): void;
   onChangeSearchString(event: IonChangeEvent): void;
 }
 
