@@ -53,7 +53,7 @@ export class AlgorithmConverter {
       );
     }
     if (stored.installationExpertise && stored.installationHrAmount) {
-      matchingSolutionEffort = calculateEffort(
+      installationEffort = calculateEffort(
         stored.installationExpertise,
         stored.installationHrAmount
       );

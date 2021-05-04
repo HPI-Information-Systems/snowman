@@ -316,7 +316,7 @@ describe('test benchmark functions', () => {
       SoftKPIsExperimentEnum.HrAmountWeightedEffort,
       SoftKPIsExperimentEnum.MultiplyEffort,
       SoftKPIsExperimentEnum.ExpertiseWeightedEffort,
-      MetricsEnum.Similarity,
+      //!MetricsEnum.Similarity,
       MetricsEnum.FalseDiscoveryRate,
       MetricsEnum.FalseNegativeRate,
       MetricsEnum.FalseOmissionRate,
@@ -337,9 +337,10 @@ describe('test benchmark functions', () => {
       MetricsEnum.MatthewsCorrelationCoefficient,
     ];
     for (let i = 0; i < array.length; i += 2) {
+      console.log(array[i], array[i + 1]);
       const x = benchmarkProvider.calculateDiagramData({
         xAxis: array[i],
-        yAxis: array[i + 1],
+        yAxis: array[i + 1] ?? array[array.length - 1],
         diagram: {
           multipleExperiments: [
             {
