@@ -6,3 +6,11 @@
   max-height: 220px;
   overflow-y: scroll;
 }
+
+.selectionIcon {
+  margin-right: 10px;
+}
+
+.itemIcon {
+  margin-right: 5px;
+}

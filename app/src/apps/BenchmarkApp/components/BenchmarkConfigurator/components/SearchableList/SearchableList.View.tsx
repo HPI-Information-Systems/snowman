@@ -52,6 +52,7 @@ const SearchableListView = ({
               onClick={(): void => toggleEntity(anEntity.id)}
             >
               <IonIcon
+                className={styles.selectionIcon}
                 icon={
                   selectedEntities.includes(anEntity.id)
                     ? allowMultiple
@@ -64,7 +65,15 @@ const SearchableListView = ({
                 }
                 slot="start"
               />
-              <IonLabel>{anEntity.name}</IonLabel>
+              <IonLabel>
+                <IonIcon
+                  icon={icon}
+                  color={'primarydark'}
+                  slot="start"
+                  className={styles.itemIcon}
+                />
+                {anEntity.name}
+              </IonLabel>
             </IonItem>
           ) : null
         )}

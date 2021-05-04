@@ -1,7 +1,7 @@
 import { DatasetSelectorItemProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroupProps';
 import SearchableList from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/SearchableList';
 import SelectorPopoverGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/SelectorPopoverGroup';
-import { fileTrayFull, fileTrayOutline } from 'ionicons/icons';
+import { fileTrayFull } from 'ionicons/icons';
 import React from 'react';
 
 const DatasetSelectorGroupView = ({
@@ -20,7 +20,7 @@ const DatasetSelectorGroupView = ({
   >
     <SearchableList
       entities={datasets}
-      icon={fileTrayOutline}
+      icon={fileTrayFull}
       selectedEntities={selectedDatasets.map(({ id }) => id)}
       updateSelection={updateSelection}
       allowMultiple={allowMultiple}
