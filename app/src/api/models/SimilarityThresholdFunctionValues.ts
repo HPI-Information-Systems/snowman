@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -14,6 +14,10 @@
 
 import { exists, mapValues } from '../runtime';
 import {
+    SimilarityThresholdFunctionDefinition,
+    SimilarityThresholdFunctionDefinitionFromJSON,
+    SimilarityThresholdFunctionDefinitionFromJSONTyped,
+    SimilarityThresholdFunctionDefinitionToJSON,
     SimilarityThresholdFunctionOperator,
     SimilarityThresholdFunctionOperatorFromJSON,
     SimilarityThresholdFunctionOperatorFromJSONTyped,
@@ -22,6 +26,10 @@ import {
     SimilarityThresholdFunctionUnaryOperatorFromJSON,
     SimilarityThresholdFunctionUnaryOperatorFromJSONTyped,
     SimilarityThresholdFunctionUnaryOperatorToJSON,
+    SimilarityThresholdFunctionValuesAllOf,
+    SimilarityThresholdFunctionValuesAllOfFromJSON,
+    SimilarityThresholdFunctionValuesAllOfFromJSONTyped,
+    SimilarityThresholdFunctionValuesAllOfToJSON,
 } from './';
 
 /**
@@ -30,6 +38,12 @@ import {
  * @interface SimilarityThresholdFunctionValues
  */
 export interface SimilarityThresholdFunctionValues {
+    /**
+     * 
+     * @type {string}
+     * @memberof SimilarityThresholdFunctionValues
+     */
+    name: string;
     /**
      * 
      * @type {string}
@@ -83,6 +97,7 @@ export function SimilarityThresholdFunctionValuesFromJSONTyped(json: any, ignore
     }
     return {
         
+        'name': json['name'],
         'type': json['type'],
         'similarityThreshold': !exists(json, 'similarityThreshold') ? undefined : json['similarityThreshold'],
         'operator': !exists(json, 'operator') ? undefined : SimilarityThresholdFunctionOperatorFromJSON(json['operator']),
@@ -100,6 +115,7 @@ export function SimilarityThresholdFunctionValuesToJSON(value?: SimilarityThresh
     }
     return {
         
+        'name': value.name,
         'type': value.type,
         'similarityThreshold': value.similarityThreshold,
         'operator': SimilarityThresholdFunctionOperatorToJSON(value.operator),

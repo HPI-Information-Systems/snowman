@@ -124,6 +124,11 @@ export const metaSchemas = assertType<
           notNull: true,
           primaryKey: true,
         },
+        name: {
+          name: 'name',
+          dataType: 'TEXT',
+          notNull: true,
+        },
         experiment: {
           name: 'experiment',
           dataType: 'INTEGER',

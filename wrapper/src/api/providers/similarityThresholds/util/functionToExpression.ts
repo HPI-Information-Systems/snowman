@@ -2,8 +2,9 @@ import { experimentCustomColumnPrefix } from '../../../database/schemas';
 import { escapeColumnName } from '../../../database/tools/escapeColumnNames';
 import { Columns } from '../../../database/tools/types';
 import {
+  SimilarityThresholdFunctionDefinition,
+  SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionValues,
-  SimilarityThresholdFunctionValuesTypeEnum,
 } from '../../../server/types';
 import { enumToOperator } from './operators';
 
@@ -87,31 +88,31 @@ function wrapExpression(
 }
 
 export function functionToExpression(
-  similarityThresholdFunction: SimilarityThresholdFunctionValues,
+  similarityThresholdFunction: SimilarityThresholdFunctionDefinition,
   columns: Columns,
   expression: { index: number } = { index: 0 }
 ): string {
   let expressionStr: string;
   switch (similarityThresholdFunction.type) {
-    case SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold:
+    case SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold:
       expressionStr = thresholdToExpression(
         similarityThresholdFunction.similarityThreshold,
         columns
       );
       break;
-    case SimilarityThresholdFunctionValuesTypeEnum.Operator:
+    case SimilarityThresholdFunctionDefinitionTypeEnum.Operator:
       expressionStr = operatorToExpression(
         similarityThresholdFunction.operator,
         columns,
         expression
       );
       break;
-    case SimilarityThresholdFunctionValuesTypeEnum.Constant:
+    case SimilarityThresholdFunctionDefinitionTypeEnum.Constant:
       expressionStr = constantToExpression(
         similarityThresholdFunction.constant
       );
       break;
-    case SimilarityThresholdFunctionValuesTypeEnum.UnaryOperator:
+    case SimilarityThresholdFunctionDefinitionTypeEnum.UnaryOperator:
       expressionStr = unaryOperatorToExpression(
         similarityThresholdFunction.unaryOperator,
         columns,

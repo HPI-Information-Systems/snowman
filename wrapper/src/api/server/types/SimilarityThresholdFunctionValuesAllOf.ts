@@ -15,13 +15,13 @@
 /**
  * 
  * @export
- * @interface SimilarityThresholdFunctionAllOf
+ * @interface SimilarityThresholdFunctionValuesAllOf
  */
-export interface SimilarityThresholdFunctionAllOf {
+export interface SimilarityThresholdFunctionValuesAllOf {
     /**
      * 
-     * @type {number}
-     * @memberof SimilarityThresholdFunctionAllOf
+     * @type {string}
+     * @memberof SimilarityThresholdFunctionValuesAllOf
      */
-    id: number;
+    name: string;
 }

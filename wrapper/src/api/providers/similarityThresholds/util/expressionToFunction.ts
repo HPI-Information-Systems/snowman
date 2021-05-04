@@ -1,9 +1,9 @@
 import { experimentCustomColumnPrefix } from '../../../database/schemas';
 import {
+  SimilarityThresholdFunctionDefinition,
+  SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionOperatorOperatorEnum,
   SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
-  SimilarityThresholdFunctionValues,
-  SimilarityThresholdFunctionValuesTypeEnum,
 } from '../../../server/types';
 import { findClosingBracket } from '../../../tools/findClosingBracket';
 import { operatorToEnum } from './operators';
@@ -36,7 +36,7 @@ function extractBuiltIn(expression: string): [string, string] {
 
 function expressionToBasicOperator(
   expression: string
-): SimilarityThresholdFunctionValues {
+): SimilarityThresholdFunctionDefinition {
   const [left, rest] = nextExpression(
     expression.substring(1, expression.length - 1)
   );
@@ -45,7 +45,7 @@ function expressionToBasicOperator(
     throw new Error(`Unknown operator ${rest[0]} in expression ${expression}.`);
   }
   return {
-    type: SimilarityThresholdFunctionValuesTypeEnum.Operator,
+    type: SimilarityThresholdFunctionDefinitionTypeEnum.Operator,
     operator: {
       left: expressionToFunction(left, false),
       operator,
@@ -56,11 +56,11 @@ function expressionToBasicOperator(
 
 function expressionToAdvancedOperator(
   expression: string
-): SimilarityThresholdFunctionValues {
+): SimilarityThresholdFunctionDefinition {
   const [func, params] = extractBuiltIn(expression);
   const [left, rest] = nextExpression(params);
   return {
-    type: SimilarityThresholdFunctionValuesTypeEnum.Operator,
+    type: SimilarityThresholdFunctionDefinitionTypeEnum.Operator,
     operator: {
       left: expressionToFunction(left, false),
       operator: func as SimilarityThresholdFunctionOperatorOperatorEnum,
@@ -71,9 +71,9 @@ function expressionToAdvancedOperator(
 
 function expressionToThreshold(
   expression: string
-): SimilarityThresholdFunctionValues {
+): SimilarityThresholdFunctionDefinition {
   return {
-    type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+    type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
     similarityThreshold: expression.substring(
       1 + experimentCustomColumnPrefix.length,
       expression.length - 1
@@ -83,19 +83,19 @@ function expressionToThreshold(
 
 function expressionToConstant(
   expression: string
-): SimilarityThresholdFunctionValues {
+): SimilarityThresholdFunctionDefinition {
   return {
-    type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
+    type: SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
     constant: parseFloat(expression),
   };
 }
 
 function expressionToUnaryOperator(
   expression: string
-): SimilarityThresholdFunctionValues {
+): SimilarityThresholdFunctionDefinition {
   const [func, param] = extractBuiltIn(expression);
   return {
-    type: SimilarityThresholdFunctionValuesTypeEnum.UnaryOperator,
+    type: SimilarityThresholdFunctionDefinitionTypeEnum.UnaryOperator,
     unaryOperator: {
       operator: func as SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
       func: expressionToFunction(param),
@@ -106,7 +106,7 @@ function expressionToUnaryOperator(
 export function expressionToFunction(
   expression: string,
   unwrapExpression = true
-): SimilarityThresholdFunctionValues {
+): SimilarityThresholdFunctionDefinition {
   if (unwrapExpression) {
     [expression] = nextExpression(expression);
   }

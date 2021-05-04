@@ -20,43 +20,37 @@ import {
 /**
  * 
  * @export
- * @interface SimilarityThresholdFunctionValues
+ * @interface SimilarityThresholdFunctionDefinition
  */
-export interface SimilarityThresholdFunctionValues {
+export interface SimilarityThresholdFunctionDefinition {
     /**
      * 
      * @type {string}
-     * @memberof SimilarityThresholdFunctionValues
+     * @memberof SimilarityThresholdFunctionDefinition
      */
-    name: string;
+    type: SimilarityThresholdFunctionDefinitionTypeEnum;
     /**
      * 
      * @type {string}
-     * @memberof SimilarityThresholdFunctionValues
-     */
-    type: SimilarityThresholdFunctionValuesTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof SimilarityThresholdFunctionValues
+     * @memberof SimilarityThresholdFunctionDefinition
      */
     similarityThreshold?: string;
     /**
      * 
      * @type {SimilarityThresholdFunctionOperator}
-     * @memberof SimilarityThresholdFunctionValues
+     * @memberof SimilarityThresholdFunctionDefinition
      */
     operator?: SimilarityThresholdFunctionOperator;
     /**
      * 
      * @type {number}
-     * @memberof SimilarityThresholdFunctionValues
+     * @memberof SimilarityThresholdFunctionDefinition
      */
     constant?: number;
     /**
      * 
      * @type {SimilarityThresholdFunctionUnaryOperator}
-     * @memberof SimilarityThresholdFunctionValues
+     * @memberof SimilarityThresholdFunctionDefinition
      */
     unaryOperator?: SimilarityThresholdFunctionUnaryOperator;
 }
@@ -65,7 +59,7 @@ export interface SimilarityThresholdFunctionValues {
 * @export
 * @enum {string}
 */
-export enum SimilarityThresholdFunctionValuesTypeEnum {
+export enum SimilarityThresholdFunctionDefinitionTypeEnum {
     SimilarityThreshold = 'SimilarityThreshold',
     Operator = 'Operator',
     Constant = 'Constant',

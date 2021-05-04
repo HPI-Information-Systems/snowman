@@ -36,6 +36,7 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
     links: [[0, 1, 1]],
     func: {
       type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+      name: 'function1',
       similarityThreshold: 'similarity',
     },
     params: {
@@ -68,6 +69,7 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
     ],
     func: {
       type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+      name: 'function2',
       similarityThreshold: 'similarity',
     },
     params: {
@@ -123,6 +125,7 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
     ],
     func: {
       type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+      name: 'function3',
       similarityThreshold: 'similarity',
     },
     params: {
@@ -147,6 +150,7 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
     ],
     func: {
       type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+      name: 'function4',
       similarityThreshold: 'similarity',
     },
     params: {
@@ -175,6 +179,7 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
     links: [],
     func: {
       type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
+      name: 'function4',
       constant: 0,
     },
     params: {
