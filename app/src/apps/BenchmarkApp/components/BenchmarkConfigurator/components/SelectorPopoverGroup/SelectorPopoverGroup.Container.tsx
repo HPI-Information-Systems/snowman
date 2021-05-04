@@ -13,8 +13,10 @@ import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 const mapStateToProps = ({
   isOpen,
+  eventPopover,
 }: SelectorPopoverGroupModel): SelectorPopoverGroupStateProps => ({
   isOpen,
+  event: eventPopover,
 });
 
 const mapDispatchToProps = (

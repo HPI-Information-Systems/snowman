@@ -4,10 +4,11 @@ export interface SelectorPopoverGroupOwnProps {
 
 export interface SelectorPopoverGroupStateProps {
   isOpen: boolean;
+  event: Event | undefined;
 }
 
 export interface SelectorPopoverGroupDispatchProps {
-  open(event: MouseEvent): void;
+  open(event: Event): void;
   close(): void;
 }
 
