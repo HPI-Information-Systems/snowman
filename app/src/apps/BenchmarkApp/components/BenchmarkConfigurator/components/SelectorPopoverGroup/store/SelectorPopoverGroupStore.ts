@@ -3,6 +3,6 @@ import { SelectorPopoverGroupModel } from 'apps/BenchmarkApp/components/Benchmar
 import { StoreMagistrate } from 'utils/storeFactory';
 
 export const SelectorPopoverGroupStoreMagistrate = new StoreMagistrate<SelectorPopoverGroupModel>(
-  'SelectorPopover Group',
+  'SelectorPopoverGroup',
   SelectorPopoverGroupReducer
 );
