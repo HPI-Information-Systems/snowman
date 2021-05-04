@@ -17,7 +17,7 @@ const SelectorPopoverGroupView = ({
     <SelectorGroup items={items} onClick={(event) => open(event.nativeEvent)} />
     <IonPopover isOpen={isOpen} event={event} onDidDismiss={() => close()}>
       <Provider store={BenchmarkAppStoreMagistrate.getStore()}>
-        {children}
+        {children ? children(close) : null}
       </Provider>
     </IonPopover>
   </>

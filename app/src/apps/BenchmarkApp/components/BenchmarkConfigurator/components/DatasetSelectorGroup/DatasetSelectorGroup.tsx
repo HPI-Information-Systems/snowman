@@ -14,10 +14,11 @@ const mapStateToProps = (
   state: BenchmarkAppModel,
   ownProps: DatasetSelectorOwnProps
 ): DatasetSelectorItemStateProps => ({
-  dataset: state.resources.datasets.find(
+  selectedDataset: state.resources.datasets.find(
     (aDataset: Dataset): boolean =>
       aDataset.id === state.config.datasets[ownProps.cacheKey]?.datasetId
   ),
+  datasets: state.resources.datasets,
 });
 
 const mapDispatchToProps = (

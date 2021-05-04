@@ -10,7 +10,7 @@ const MultiSelector = ({
   allowMultiple = true,
 }: MultiSelectorProps): JSX.Element => (
   <IonItem className={styles.itemNoBorder}>
-    <IonLabel>
+    {/* <IonLabel>
       <h3 className={styles.marginedHeading}>
         <b>{title}</b>
       </h3>
@@ -33,7 +33,7 @@ const MultiSelector = ({
           </IonItem>
         ) : null}
       </IonList>
-    </IonLabel>
+    </IonLabel> */}
   </IonItem>
 );
 

@@ -2,7 +2,8 @@ import { Dataset } from 'api';
 import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 
 export interface DatasetSelectorItemStateProps {
-  dataset: Dataset | undefined;
+  selectedDataset: Dataset | undefined;
+  datasets: Dataset[];
 }
 
 export interface DatasetSelectorItemDispatchProps {

@@ -1,4 +1,5 @@
 import { Algorithm, Dataset, Experiment } from 'api';
+import ConfigurationStoreReducer from 'apps/BenchmarkApp/store/ConfigurationStoreReducer';
 import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
 import {
   BenchmarkAppConfigStore,
@@ -45,6 +46,16 @@ const removeExpandedSubEntity = (
 
 const BenchmarkAppReducer = (
   state: BenchmarkAppModel = initialState,
+  action: SnowmanAction
+): BenchmarkAppModel => {
+  return ConfigurationStoreReducer(
+    InternalBenchmarkAppReducer(state, action),
+    action
+  );
+};
+
+const InternalBenchmarkAppReducer = (
+  state: BenchmarkAppModel,
   action: SnowmanAction
 ): BenchmarkAppModel => {
   switch (action.type) {

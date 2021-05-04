@@ -17,20 +17,20 @@ export type ConfigurationStoreModel = {
 };
 
 export interface SimThresholdConfigurationModel {
-  threshold: number;
+  threshold?: number;
 }
 export interface SimFunctionConfigurationModel {
-  functionId: number;
+  functionId?: number;
   forceExperimentFilter?: StoreCacheKey;
 }
 export interface ExperimentConfigurationModel {
-  experimentId: number;
+  experimentId?: number;
   forceDatasetFilter?: StoreCacheKey;
   forceAlgorithmFilter?: StoreCacheKey;
 }
 export interface DatasetConfigurationModel {
-  datasetId: number;
+  datasetId?: number;
 }
 export interface AlgorithmConfigurationModel {
-  algorithmId: number;
+  algorithmId?: number;
 }
