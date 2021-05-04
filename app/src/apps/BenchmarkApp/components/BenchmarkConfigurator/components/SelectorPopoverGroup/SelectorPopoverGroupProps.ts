@@ -1,6 +1,6 @@
-import { SelectorGroupOwnProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupProps';
-
-export type SelectorPopoverGroupOwnProps = SelectorGroupOwnProps;
+export interface SelectorPopoverGroupOwnProps {
+  items: { icon: string; title: string; indent?: number }[];
+}
 
 export interface SelectorPopoverGroupStateProps {
   isOpen: boolean;
