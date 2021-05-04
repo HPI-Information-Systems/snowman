@@ -29,6 +29,7 @@ import DataViewerApp from 'apps/DataViewerApp/DataViewerApp';
 import ExperimentDialog from 'apps/ExperimentDialog/ExperimentDialog';
 import ExperimentsApp from 'apps/ExperimentsApp/ExperimentsApp';
 import PreviewDialog from 'apps/PreviewDialog/PreviewDialog';
+import SimilarityFuncsDialog from 'apps/SimilarityFuncsDialog/SimilarityFuncsDialog';
 import BlockingLoading from 'apps/SnowmanApp/components/BlockingLoading/BlockingLoading';
 import TabBar from 'apps/SnowmanApp/components/TabBar/TabBar';
 import { SnowmanAppProps } from 'apps/SnowmanApp/SnowmanAppProps';
@@ -60,6 +61,7 @@ const SnowmanAppView = ({
       <DatasetDialog />
       <ExperimentDialog />
       <PreviewDialog />
+      <SimilarityFuncsDialog />
       <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
       <BlockingLoading />
       <ToastContainer

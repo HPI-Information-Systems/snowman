@@ -38,7 +38,7 @@ const mapDispatchToProps = (
     );
   },
   editSimilarityFunctions() {
-    console.log('Hello');
+    doOpenDialog(ViewIDs.SimilarityFuncsDialog, ownProps.experiment.id);
   },
 });
 
