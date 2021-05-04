@@ -1,8 +1,8 @@
 import React from 'react';
 
-export interface SelectorItemOwnProps {
+export interface SelectorGroupOwnProps {
   onClick: (event: React.MouseEvent) => void;
-  items: { icon: string; title: string; indent: number }[];
+  items: { icon: string; title: string; indent?: number }[];
 }
 
-export type SelectorItemProps = SelectorItemOwnProps;
+export type SelectorGroupProps = SelectorGroupOwnProps;

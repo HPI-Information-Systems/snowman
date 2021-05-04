@@ -5,7 +5,9 @@ export interface DatasetSelectorItemStateProps {
   dataset: Dataset | undefined;
 }
 
-export interface DatasetSelectorItemDispatchProps {}
+export interface DatasetSelectorItemDispatchProps {
+  setDatasetId(datasetId: number): void;
+}
 
 export interface DatasetSelectorItemOwnProps {
   cacheKey: StoreCacheKey;

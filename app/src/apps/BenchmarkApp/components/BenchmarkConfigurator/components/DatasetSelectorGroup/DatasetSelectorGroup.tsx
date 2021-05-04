@@ -1,12 +1,12 @@
 import { Dataset } from 'api';
-import DatasetSelectorView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelector/DatasetSelector.View';
 import { DatasetSelectorOwnProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelector/DatasetSelectorProps';
+import DatasetSelectorGroupView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroup.View';
 import {
   DatasetSelectorItemDispatchProps,
   DatasetSelectorItemStateProps,
-} from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorItem/DatasetSelectorItemProps';
+} from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroupProps';
+import { setDatasetId } from 'apps/BenchmarkApp/store/ConfigurationStoreActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
@@ -21,12 +21,16 @@ const mapStateToProps = (
 });
 
 const mapDispatchToProps = (
-  dispatch: SnowmanDispatch<ConfigurationStoreModel>
-): DatasetSelectorItemDispatchProps => ({});
+  dispatch: SnowmanDispatch<BenchmarkAppModel>,
+  ownProps: DatasetSelectorOwnProps
+): DatasetSelectorItemDispatchProps => ({
+  setDatasetId: (datasetId) =>
+    dispatch(setDatasetId(ownProps.cacheKey, datasetId)),
+});
 
 const DatasetSelectorItem = connect(
   mapStateToProps,
   mapDispatchToProps
-)(DatasetSelectorView);
+)(DatasetSelectorGroupView);
 
 export default DatasetSelectorItem;
