@@ -2,8 +2,8 @@ import SelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/co
 import { SelectorPopoverGroupProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/SelectorPopoverGroupProps';
 import React from 'react';
 
-const SelectorPopoverGroupView = (
-  props: SelectorPopoverGroupProps
-): JSX.Element => <SelectorGroup {...props}></SelectorGroup>;
+const SelectorPopoverGroupView = ({}: SelectorPopoverGroupProps): JSX.Element => (
+  <SelectorGroup {...props}></SelectorGroup>
+);
 
 export default SelectorPopoverGroupView;
