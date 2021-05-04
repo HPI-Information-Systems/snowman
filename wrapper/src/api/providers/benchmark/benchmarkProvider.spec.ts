@@ -224,6 +224,7 @@ describe('test benchmark functions', () => {
       experimentId,
       similarityThresholdFunction: {
         type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+        name: 'similarityFunction',
         similarityThreshold: 'sim',
       },
     });

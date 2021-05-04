@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -14,10 +14,10 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    SimilarityThresholdFunctionValues,
-    SimilarityThresholdFunctionValuesFromJSON,
-    SimilarityThresholdFunctionValuesFromJSONTyped,
-    SimilarityThresholdFunctionValuesToJSON,
+    SimilarityThresholdFunctionDefinition,
+    SimilarityThresholdFunctionDefinitionFromJSON,
+    SimilarityThresholdFunctionDefinitionFromJSONTyped,
+    SimilarityThresholdFunctionDefinitionToJSON,
 } from './';
 
 /**
@@ -28,16 +28,16 @@ import {
 export interface SimilarityThresholdFunctionOperator {
     /**
      * 
-     * @type {SimilarityThresholdFunctionValues}
+     * @type {SimilarityThresholdFunctionDefinition}
      * @memberof SimilarityThresholdFunctionOperator
      */
-    left: SimilarityThresholdFunctionValues;
+    left: SimilarityThresholdFunctionDefinition;
     /**
      * 
-     * @type {SimilarityThresholdFunctionValues}
+     * @type {SimilarityThresholdFunctionDefinition}
      * @memberof SimilarityThresholdFunctionOperator
      */
-    right: SimilarityThresholdFunctionValues;
+    right: SimilarityThresholdFunctionDefinition;
     /**
      * 
      * @type {string}
@@ -72,8 +72,8 @@ export function SimilarityThresholdFunctionOperatorFromJSONTyped(json: any, igno
     }
     return {
         
-        'left': SimilarityThresholdFunctionValuesFromJSON(json['left']),
-        'right': SimilarityThresholdFunctionValuesFromJSON(json['right']),
+        'left': SimilarityThresholdFunctionDefinitionFromJSON(json['left']),
+        'right': SimilarityThresholdFunctionDefinitionFromJSON(json['right']),
         'operator': json['operator'],
     };
 }
@@ -87,8 +87,8 @@ export function SimilarityThresholdFunctionOperatorToJSON(value?: SimilarityThre
     }
     return {
         
-        'left': SimilarityThresholdFunctionValuesToJSON(value.left),
-        'right': SimilarityThresholdFunctionValuesToJSON(value.right),
+        'left': SimilarityThresholdFunctionDefinitionToJSON(value.left),
+        'right': SimilarityThresholdFunctionDefinitionToJSON(value.right),
         'operator': value.operator,
     };
 }
