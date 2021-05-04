@@ -1,4 +1,4 @@
-import { DatasetSelectorItemProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroupProps';
+import { DatasetSelectorGroupProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroupProps';
 import SearchableList from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/SearchableList';
 import SelectorPopoverGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/SelectorPopoverGroup';
 import { fileTrayFull } from 'ionicons/icons';
@@ -10,7 +10,7 @@ const DatasetSelectorGroupView = ({
   selectedDatasets,
   updateSelection,
   allowMultiple,
-}: DatasetSelectorItemProps): JSX.Element => (
+}: DatasetSelectorGroupProps): JSX.Element => (
   <SelectorPopoverGroup
     instanceDescriptor={getCacheKey()}
     items={selectedDatasets.map((dataset) => ({

@@ -1,9 +1,9 @@
 import { Dataset } from 'api';
-import { DatasetSelectorOwnProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelector/DatasetSelectorProps';
 import DatasetSelectorGroupView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroup.View';
 import {
-  DatasetSelectorItemDispatchProps,
-  DatasetSelectorItemStateProps,
+  DatasetSelectorGroupDispatchProps,
+  DatasetSelectorGroupOwnProps,
+  DatasetSelectorGroupStateProps,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroupProps';
 import {
   setDatasetId,
@@ -16,14 +16,16 @@ import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 const mapStateToProps = (
   state: BenchmarkAppModel,
-  ownProps: DatasetSelectorOwnProps
-): DatasetSelectorItemStateProps => {
+  ownProps: DatasetSelectorGroupOwnProps
+): DatasetSelectorGroupStateProps => {
   const selectedIds = new Set(
-    getMultiSelectorItems(
-      ownProps.getCacheKey,
-      state.config.multiSelects,
-      state.config.datasets
-    ).map((dataset) => dataset?.datasetId)
+    ownProps.allowMultiple
+      ? getMultiSelectorItems(
+          ownProps.getCacheKey,
+          state.config.multiSelects,
+          state.config.datasets
+        ).map((dataset) => dataset?.datasetId)
+      : [state.config.datasets[ownProps.getCacheKey()]?.datasetId]
   );
   return {
     selectedDatasets: state.resources.datasets.filter(
@@ -34,8 +36,8 @@ const mapStateToProps = (
 };
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch<BenchmarkAppModel>,
-  ownProps: DatasetSelectorOwnProps
-): DatasetSelectorItemDispatchProps => ({
+  ownProps: DatasetSelectorGroupOwnProps
+): DatasetSelectorGroupDispatchProps => ({
   updateSelection: (datasetIds) =>
     dispatch(updateSelection(ownProps.getCacheKey, setDatasetId, datasetIds)),
 });
