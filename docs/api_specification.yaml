@@ -853,9 +853,9 @@ components:
       type: object
       properties:
         left:
-          $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+          $ref: "#/components/schemas/SimilarityThresholdFunctionDefinition"
         right:
-          $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+          $ref: "#/components/schemas/SimilarityThresholdFunctionDefinition"
         operator:
           type: string
           enum: [ADD, SUBTRACT, MULTIPLY, DIVIDE, POWER, POW, ATAN2, LOG, MOD]
@@ -868,7 +868,7 @@ components:
       type: object
       properties:
         func:
-          $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+          $ref: "#/components/schemas/SimilarityThresholdFunctionDefinition"
         operator:
           type: string
           enum:
@@ -900,7 +900,7 @@ components:
         - func
         - operator
 
-    SimilarityThresholdFunctionValues:
+    SimilarityThresholdFunctionDefinition:
       type: object
       properties:
         type:
@@ -916,6 +916,15 @@ components:
           $ref: "#/components/schemas/SimilarityThresholdFunctionUnaryOperator"
       required:
         - type
+    
+    SimilarityThresholdFunctionValues:
+      allOf:
+        - properties:
+            name:
+              type: string
+          required:
+            - name
+        - $ref: "#/components/schemas/SimilarityThresholdFunctionDefinition"
 
     SimilarityThresholdFunction:
       allOf:

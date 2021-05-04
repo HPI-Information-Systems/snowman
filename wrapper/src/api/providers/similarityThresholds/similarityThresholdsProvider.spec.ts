@@ -6,6 +6,7 @@ import {
   FileResponse,
   SetExperimentFileFormatEnum,
   SimilarityThresholdFunction,
+  SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionId,
   SimilarityThresholdFunctionOperatorOperatorEnum,
   SimilarityThresholdFunctionTypeEnum,
@@ -91,32 +92,34 @@ describe('Similarity Threshold Provider', () => {
         name: 'function2',
         operator: {
           left: {
-            type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+            type:
+              SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
             similarityThreshold: 'sim1',
           },
           operator: SimilarityThresholdFunctionOperatorOperatorEnum.Add,
           right: {
-            type: SimilarityThresholdFunctionValuesTypeEnum.Operator,
+            type: SimilarityThresholdFunctionDefinitionTypeEnum.Operator,
             operator: {
               left: {
-                type: SimilarityThresholdFunctionValuesTypeEnum.Operator,
+                type: SimilarityThresholdFunctionDefinitionTypeEnum.Operator,
                 operator: {
                   left: {
-                    type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
+                    type:
+                      SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
                     constant: 0,
                   },
                   operator:
                     SimilarityThresholdFunctionOperatorOperatorEnum.Multiply,
                   right: {
                     type:
-                      SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+                      SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
                     similarityThreshold: 'sim2',
                   },
                 },
               },
               operator: SimilarityThresholdFunctionOperatorOperatorEnum.Divide,
               right: {
-                type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
+                type: SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
                 constant: -22.2412,
               },
             },
@@ -129,7 +132,8 @@ describe('Similarity Threshold Provider', () => {
         name: 'function3',
         unaryOperator: {
           func: {
-            type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+            type:
+              SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
             similarityThreshold: 'sim1',
           },
           operator: SimilarityThresholdFunctionUnaryOperatorOperatorEnum.Sqrt,
@@ -141,23 +145,24 @@ describe('Similarity Threshold Provider', () => {
         name: 'function4',
         operator: {
           left: {
-            type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+            type:
+              SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
             similarityThreshold: 'sim1',
           },
           operator: SimilarityThresholdFunctionOperatorOperatorEnum.Add,
           right: {
-            type: SimilarityThresholdFunctionValuesTypeEnum.Operator,
+            type: SimilarityThresholdFunctionDefinitionTypeEnum.Operator,
             operator: {
               left: {
-                type: SimilarityThresholdFunctionValuesTypeEnum.Operator,
+                type: SimilarityThresholdFunctionDefinitionTypeEnum.Operator,
                 operator: {
                   left: {
                     type:
-                      SimilarityThresholdFunctionValuesTypeEnum.UnaryOperator,
+                      SimilarityThresholdFunctionDefinitionTypeEnum.UnaryOperator,
                     unaryOperator: {
                       func: {
                         type:
-                          SimilarityThresholdFunctionValuesTypeEnum.Constant,
+                          SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
                         constant: 200,
                       },
                       operator:
@@ -168,14 +173,14 @@ describe('Similarity Threshold Provider', () => {
                     SimilarityThresholdFunctionOperatorOperatorEnum.Power,
                   right: {
                     type:
-                      SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+                      SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
                     similarityThreshold: 'sim2',
                   },
                 },
               },
               operator: SimilarityThresholdFunctionOperatorOperatorEnum.Mod,
               right: {
-                type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
+                type: SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
                 constant: -22.2412,
               },
             },
@@ -243,6 +248,7 @@ describe('Similarity Threshold Provider', () => {
       functionId: id1,
       similarityThresholdFunction: {
         type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+        name: 'function4',
         similarityThreshold: 'sim2',
       },
     });
@@ -260,7 +266,7 @@ describe('Similarity Threshold Provider', () => {
     ).toEqual<SimilarityThresholdFunction>({
       id: id1,
       type: SimilarityThresholdFunctionTypeEnum.SimilarityThreshold,
-      name: 'function1',
+      name: 'function4',
       similarityThreshold: 'sim2',
     });
   });
@@ -271,6 +277,7 @@ describe('Similarity Threshold Provider', () => {
         experimentId,
         similarityThresholdFunction: {
           type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+          name: 'functionX',
           similarityThreshold: 'nonExistentSimilarityThreshold',
         },
       })

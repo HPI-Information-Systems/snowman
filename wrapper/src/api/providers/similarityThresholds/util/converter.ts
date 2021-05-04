@@ -4,7 +4,7 @@ import { ColumnValues } from '../../../database/tools/types';
 import {
   ExperimentId,
   SimilarityThresholdFunction,
-  SimilarityThresholdFunctionValues,
+  SimilarityThresholdFunctionDefinition,
 } from '../../../server/types';
 import { expressionToFunction } from './expressionToFunction';
 import { functionToExpression } from './functionToExpression';
@@ -23,7 +23,7 @@ export class SimilarityThresholdFunctionConverter {
       id: apiFunction.id,
       name: apiFunction.name,
       expression: functionToExpression(
-        (apiFunction as unknown) as SimilarityThresholdFunctionValues,
+        (apiFunction as unknown) as SimilarityThresholdFunctionDefinition,
         tables.experiment.experiment(experimentId).schema.columns
       ),
     };
@@ -34,10 +34,8 @@ export class SimilarityThresholdFunctionConverter {
   ): SimilarityThresholdFunction {
     return ({
       id: storedFunction.id,
-      ...expressionToFunction({
-        expression: storedFunction.expression,
-        name: storedFunction.name,
-      }),
+      name: storedFunction.name,
+      ...expressionToFunction(storedFunction.expression),
     } as unknown) as SimilarityThresholdFunction;
   }
 }
