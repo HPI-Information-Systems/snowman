@@ -5,10 +5,7 @@ import {
   DatasetSelectorGroupOwnProps,
   DatasetSelectorGroupStateProps,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroupProps';
-import {
-  setDatasetId,
-  updateSelection,
-} from 'apps/BenchmarkApp/store/ConfigurationStoreActions';
+import { updateDatasetSelection } from 'apps/BenchmarkApp/store/ConfigurationStoreActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { getMultiSelectorItems } from 'apps/BenchmarkApp/utils/getMultiSelectorItems';
 import { connect } from 'react-redux';
@@ -39,7 +36,13 @@ const mapDispatchToProps = (
   ownProps: DatasetSelectorGroupOwnProps
 ): DatasetSelectorGroupDispatchProps => ({
   updateSelection: (datasetIds) =>
-    dispatch(updateSelection(ownProps.getCacheKey, setDatasetId, datasetIds)),
+    dispatch(
+      updateDatasetSelection(
+        ownProps.getCacheKey,
+        datasetIds,
+        ownProps.allowMultiple
+      )
+    ),
 });
 
 const DatasetSelectorGroup = connect(
