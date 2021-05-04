@@ -1,4 +1,4 @@
 export enum SelectorPopoverGroupActionsTypes {
-  OPEN_POPOVER = 'SelectorPopoverGroupActionsTypes-OPEN_POPOVER',
+  SHOW_POPOVER = 'SelectorPopoverGroupActionsTypes-SHOW_POPOVER',
   CLOSE_POPOVER = 'SelectorPopoverGroupActionsTypes-CLOSE_POPOVER',
 }
