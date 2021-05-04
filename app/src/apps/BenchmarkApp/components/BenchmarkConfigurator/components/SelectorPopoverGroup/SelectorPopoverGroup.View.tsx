@@ -11,11 +11,14 @@ const SelectorPopoverGroupView = ({
   event,
   isOpen,
   items,
+  children,
 }: SelectorPopoverGroupProps): JSX.Element => (
   <>
     <SelectorGroup items={items} onClick={(event) => open(event.nativeEvent)} />
     <IonPopover isOpen={isOpen} event={event} onDidDismiss={() => close()}>
-      <Provider store={BenchmarkAppStoreMagistrate.getStore()}></Provider>
+      <Provider store={BenchmarkAppStoreMagistrate.getStore()}>
+        {children}
+      </Provider>
     </IonPopover>
   </>
 );
