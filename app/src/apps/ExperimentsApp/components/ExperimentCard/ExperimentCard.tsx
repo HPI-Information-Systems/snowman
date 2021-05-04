@@ -37,6 +37,9 @@ const mapDispatchToProps = (
       PreviewDialogTypes.EXPERIMENT
     );
   },
+  editSimilarityFunctions() {
+    console.log('Hello');
+  },
 });
 
 const ExperimentCard = connect(
