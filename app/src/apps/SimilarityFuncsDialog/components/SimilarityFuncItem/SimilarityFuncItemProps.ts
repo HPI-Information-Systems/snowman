@@ -1,9 +1,12 @@
+import { SimilarityThresholdFunction } from 'api';
+
 export interface SimilarityFuncItemOwnProps {
-  functionName: string;
+  similarityFunction: SimilarityThresholdFunction;
 }
 
 export interface SimilarityFuncItemDispatchProps {
   openEditFunctionBuilder(): void;
+  deleteFunction(): void;
 }
 
 export type SimilarityFuncItemProps = SimilarityFuncItemDispatchProps &

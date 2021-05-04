@@ -1,6 +1,6 @@
-import { SimilarityThresholdFunctionValues } from 'api';
+import { SimilarityThresholdFunction } from 'api';
 
 export interface SimilarityFuncsDialogModel {
-  similarityFuncs: SimilarityThresholdFunctionValues[];
+  similarityFuncs: SimilarityThresholdFunction[];
   searchString: string;
 }

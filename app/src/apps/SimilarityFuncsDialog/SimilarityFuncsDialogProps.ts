@@ -1,11 +1,11 @@
-import { SimilarityThresholdFunctionValues } from 'api';
+import { SimilarityThresholdFunction } from 'api';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
 export type SimilarityFuncsDialogOwnProps = DialogProps;
 
 export interface SimilarityFuncsDialogStateProps {
-  similarityThresholdFuncs: SimilarityThresholdFunctionValues[];
+  similarityThresholdFuncs: SimilarityThresholdFunction[];
   searchString: string;
 }
 

@@ -1,3 +1,4 @@
+import { SimilarityThresholdFunction } from 'api';
 import { SimilarityFuncsDialogActionTypes } from 'apps/SimilarityFuncsDialog/types/SimilarityFuncsDialogActionTypes';
 import { SimilarityFuncsDialogModel } from 'apps/SimilarityFuncsDialog/types/SimilarityFuncsDilaogModel';
 import { SnowmanAction } from 'types/SnowmanAction';
@@ -16,6 +17,11 @@ const SimilarityFuncsDialogReducer = (
       return {
         ...state,
         searchString: action.payload as string,
+      };
+    case SimilarityFuncsDialogActionTypes.LOAD_SIMILARITY_FUNCTIONS:
+      return {
+        ...state,
+        similarityFuncs: action.payload as SimilarityThresholdFunction[],
       };
     default:
       return state;

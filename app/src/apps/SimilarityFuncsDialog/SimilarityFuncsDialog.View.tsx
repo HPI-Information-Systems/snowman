@@ -1,4 +1,5 @@
 import { IonButton, IonIcon, IonList, IonSearchbar } from '@ionic/react';
+import { SimilarityThresholdFunction } from 'api';
 import SimilarityFuncItem from 'apps/SimilarityFuncsDialog/components/SimilarityFuncItem/SimilarityFuncItem';
 import { SimilarityFuncsDialogProps } from 'apps/SimilarityFuncsDialog/SimilarityFuncsDialogProps';
 import { addCircle } from 'ionicons/icons';
@@ -13,12 +14,14 @@ const SimilarityFuncsDialogView = ({
   <>
     <IonSearchbar value={searchString} onIonChange={onChangeSearchString} />
     <IonList>
-      <SimilarityFuncItem functionName="Sample1" />
-      <SimilarityFuncItem functionName="Sample2" />
-      <SimilarityFuncItem functionName="Sample3" />
-      <SimilarityFuncItem functionName="Sample4" />
-      <SimilarityFuncItem functionName="Sample5" />
-      <SimilarityFuncItem functionName="Sample6" />
+      {similarityThresholdFuncs.map(
+        (aSimilarityFunction: SimilarityThresholdFunction): JSX.Element => (
+          <SimilarityFuncItem
+            key={aSimilarityFunction.id}
+            similarityFunction={aSimilarityFunction}
+          />
+        )
+      )}
     </IonList>
     <IonButton onClick={openAddFunctionBuilder}>
       <IonIcon icon={addCircle} />
