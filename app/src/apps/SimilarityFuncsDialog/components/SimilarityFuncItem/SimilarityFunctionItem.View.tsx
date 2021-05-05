@@ -5,6 +5,7 @@ import React from 'react';
 
 const SimilarityFunctionItemView = ({
   openEditFunctionBuilder,
+  deleteFunction,
   similarityFunction,
 }: SimilarityFuncItemProps): JSX.Element => (
   <IonItem>
@@ -13,7 +14,7 @@ const SimilarityFunctionItemView = ({
     <IonButton onClick={openEditFunctionBuilder}>
       <IonIcon icon={construct} />
     </IonButton>
-    <IonButton>
+    <IonButton onClick={deleteFunction}>
       <IonIcon icon={trash} />
     </IonButton>
   </IonItem>
