@@ -29,9 +29,8 @@ const BinaryMetricsStrategyReducer = (
         StoreCacheKeysEnum.dataset,
         appConfig.datasets
       );
-      // Todo: Change to groundTruth
       const goldStandardId = getSingleItem(
-        StoreCacheKeysEnum.experiment,
+        StoreCacheKeysEnum.groundTruth,
         appConfig.experiments
       );
       const experimentId = getSingleItem(
