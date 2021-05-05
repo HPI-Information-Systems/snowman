@@ -1,5 +1,4 @@
 import { IonList } from '@ionic/react';
-import AlgorithmSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AlgorithmSelectorGroup';
 import DatasetSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/DatasetSelectorGroup';
 import ExperimentSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/ExperimentSelectorGroup';
 import ConfiguratorItem from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/ConfiguratorItem/ConfiguratorItem';
@@ -14,28 +13,16 @@ const BinaryMetricsConfiguratorView = (): JSX.Element => (
         allowMultiple={false}
       />
     </ConfiguratorItem>
-    <ConfiguratorItem title="2. Select Datasets">
-      <DatasetSelectorGroup
-        cacheKey={StoreCacheKey.dataset}
-        allowMultiple={true}
+    <ConfiguratorItem title="2. Select Ground Truth">
+      <ExperimentSelectorGroup
+        cacheKey={StoreCacheKey.groundTruth}
+        allowMultiple={false}
       />
     </ConfiguratorItem>
-    <ConfiguratorItem title="3. Select Algorithms">
-      <AlgorithmSelectorGroup
-        cacheKey={StoreCacheKey.algorithm}
-        allowMultiple={true}
-      />
-    </ConfiguratorItem>
-    <ConfiguratorItem title="4. Select Experiments">
+    <ConfiguratorItem title="3. Select Experiments">
       <ExperimentSelectorGroup
         cacheKey={StoreCacheKey.experiment}
-        allowMultiple={true}
-      />
-    </ConfiguratorItem>
-    <ConfiguratorItem title="4. Select Experiments">
-      <ExperimentSelectorGroup
-        cacheKey={StoreCacheKey.experiment}
-        allowMultiple={true}
+        allowMultiple={false}
       />
     </ConfiguratorItem>
   </IonList>
