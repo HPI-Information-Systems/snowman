@@ -1,4 +1,4 @@
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 
 export interface MultiSelectorOwnProps {
   title: string;

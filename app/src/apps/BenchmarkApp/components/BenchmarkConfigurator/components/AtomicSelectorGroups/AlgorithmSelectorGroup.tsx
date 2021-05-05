@@ -43,7 +43,6 @@ const mapDispatchToProps = (
         aCacheKey: ownProps.cacheKey,
         newSelection: algorithmIds,
         allowMultiple: ownProps.allowMultiple,
-        filter: ownProps.filter,
       })
     ),
 });

@@ -2,7 +2,7 @@ import { Dataset, Experiment, ExperimentIntersectionCount, Metric } from 'api';
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
 import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { StoreCacheKeysEnum } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 import { getSingleItem } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { SnowmanAction } from 'types/SnowmanAction';
@@ -26,15 +26,15 @@ const BinaryMetricsStrategyReducer = (
       const appStore = action.payload as BenchmarkAppModel;
       const appConfig = appStore.config;
       const datasetId = getSingleItem(
-        StoreCacheKeysEnum.dataset,
+        StoreCacheKey.dataset,
         appConfig.datasets
       );
       const goldStandardId = getSingleItem(
-        StoreCacheKeysEnum.groundTruth,
+        StoreCacheKey.groundTruth,
         appConfig.experiments
       );
       const experimentId = getSingleItem(
-        StoreCacheKeysEnum.experiment,
+        StoreCacheKey.experiment,
         appConfig.experiments
       );
       if (

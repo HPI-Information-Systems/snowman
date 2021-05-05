@@ -1,20 +1,20 @@
 import { SearchableEntity } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/types/SearchableEntity';
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 
 export interface FilterComponentProps<Filter> {
   filter?: Filter;
 }
 
-export interface AtomicSelectorGroupOwnProps<Filter = undefined> {
+export interface AtomicSelectorGroupOwnProps {
   cacheKey: StoreCacheKey;
   allowMultiple?: boolean;
-  filter?: Filter;
 }
 
 export interface AtomicSelectorGroupStateProps<Filter = undefined> {
   selectedEntities: SearchableEntity[];
   entities: SearchableEntity[];
   icon: string;
+  filter?: Filter;
   filterComponent?: (props: FilterComponentProps<Filter>) => JSX.Element;
 }
 
@@ -24,6 +24,6 @@ export interface AtomicSelectorGroupDispatchProps {
 
 export type AtomicSelectorGroupProps<
   Filter = undefined
-> = AtomicSelectorGroupOwnProps<Filter> &
+> = AtomicSelectorGroupOwnProps &
   AtomicSelectorGroupStateProps<Filter> &
   AtomicSelectorGroupDispatchProps;

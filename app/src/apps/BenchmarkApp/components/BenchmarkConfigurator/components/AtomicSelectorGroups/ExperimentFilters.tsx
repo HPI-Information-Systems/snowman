@@ -3,10 +3,7 @@ import AlgorithmSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfig
 import { FilterComponentProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
 import DatasetSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/DatasetSelectorGroup';
 import ConfiguratorItem from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/ConfiguratorItem/ConfiguratorItem';
-import {
-  fallbackFilterChacheKey,
-  StoreCacheKeysEnum,
-} from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 import { ExperimentFilterModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import React from 'react';
 
@@ -17,7 +14,7 @@ const ExperimentFilters = ({
     {filter?.forceDatasetFilter === undefined ? (
       <ConfiguratorItem title="Filter by Dataset">
         <DatasetSelectorGroup
-          cacheKey={fallbackFilterChacheKey(StoreCacheKeysEnum.dataset)}
+          cacheKey={StoreCacheKey.filter}
           allowMultiple={filter?.allowMultipleDatasetFilter ?? true}
         />
       </ConfiguratorItem>
@@ -25,7 +22,7 @@ const ExperimentFilters = ({
     {filter?.forceAlgorithmFilter === undefined ? (
       <ConfiguratorItem title="Filter by Matching Solution">
         <AlgorithmSelectorGroup
-          cacheKey={fallbackFilterChacheKey(StoreCacheKeysEnum.algorithm)}
+          cacheKey={StoreCacheKey.filter}
           allowMultiple={filter?.allowMultipleAlgorithmFilter ?? true}
         />
       </ConfiguratorItem>

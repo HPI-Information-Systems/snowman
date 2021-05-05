@@ -1,8 +1,11 @@
 import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreGenericActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import {
+  ConfigurationFilters,
+  StoreCacheKey,
+} from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
-import { AlgorithmFilterModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
+import { SimFunctionFilterModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 
@@ -10,12 +13,10 @@ export const updateSimFunctionSelection = ({
   aCacheKey,
   newSelection,
   allowMultiple = true,
-  filter,
 }: {
   aCacheKey: StoreCacheKey;
   newSelection: number[];
   allowMultiple?: boolean;
-  filter: AlgorithmFilterModel;
 }): SnowmanThunkAction<void, BenchmarkAppModel> => (
   dispatch: SnowmanDispatch<BenchmarkAppModel>,
   getState: () => BenchmarkAppModel
@@ -24,7 +25,7 @@ export const updateSimFunctionSelection = ({
     updateSelection({
       cache: getState().config.simFunctions,
       aCacheKey,
-      filter,
+      filter: (ConfigurationFilters[aCacheKey] ?? {}) as SimFunctionFilterModel,
       newSelection,
       setSelectionAction:
         ConfigurationStoreActionTypes.SET_SIM_FUNCTION_SELECTION,

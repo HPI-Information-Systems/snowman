@@ -9,8 +9,8 @@ import ExperimentFilters from 'apps/BenchmarkApp/components/BenchmarkConfigurato
 import { updateExperimentSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreExperimentActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import {
-  fallbackFilterChacheKey,
-  StoreCacheKeysEnum,
+  ConfigurationFilters,
+  StoreCacheKey,
 } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 import { ExperimentFilterModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import {
@@ -24,25 +24,24 @@ import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 const mapStateToProps = (
   state: BenchmarkAppModel,
-  ownProps: AtomicSelectorGroupOwnProps<ExperimentFilterModel>
+  ownProps: AtomicSelectorGroupOwnProps
 ): AtomicSelectorGroupStateProps<ExperimentFilterModel> => {
+  const filter = ConfigurationFilters[StoreCacheKey.experiment];
   let availableExperiments = filterEntities({
-    aFilterCacheKey:
-      ownProps.filter?.forceDatasetFilter ??
-      fallbackFilterChacheKey(StoreCacheKeysEnum.dataset),
+    aFilterCacheKey: filter?.forceDatasetFilter,
+    fallbackCacheKey: StoreCacheKey.filter,
     cache: state.config.datasets,
     entities: state.resources.experiments,
     isAllowed: ({ datasetId }, filter) => filter.has(datasetId),
-    allowMultipleFilters: ownProps.filter?.allowMultipleAlgorithmFilter,
+    allowMultipleFilters: filter?.allowMultipleDatasetFilter,
   });
   availableExperiments = filterEntities({
-    aFilterCacheKey:
-      ownProps.filter?.forceAlgorithmFilter ??
-      fallbackFilterChacheKey(StoreCacheKeysEnum.algorithm),
+    aFilterCacheKey: filter?.forceAlgorithmFilter,
+    fallbackCacheKey: StoreCacheKey.filter,
     cache: state.config.algorithms,
     entities: availableExperiments,
     isAllowed: ({ algorithmId }, filter) => filter.has(algorithmId),
-    allowMultipleFilters: ownProps.filter?.allowMultipleAlgorithmFilter,
+    allowMultipleFilters: filter?.allowMultipleAlgorithmFilter,
   });
   const selectedIds = new Set(
     ownProps.allowMultiple
@@ -56,12 +55,13 @@ const mapStateToProps = (
     entities: availableExperiments,
     icon: flask,
     filterComponent: ExperimentFilters,
+    filter,
   };
 };
 
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch<BenchmarkAppModel>,
-  ownProps: AtomicSelectorGroupOwnProps<ExperimentFilterModel>
+  ownProps: AtomicSelectorGroupOwnProps
 ): AtomicSelectorGroupDispatchProps => ({
   updateSelection: (algorithmIds) =>
     dispatch(
@@ -69,7 +69,6 @@ const mapDispatchToProps = (
         aCacheKey: ownProps.cacheKey,
         newSelection: algorithmIds,
         allowMultiple: ownProps.allowMultiple,
-        filter: ownProps.filter ?? {},
       })
     ),
 });
@@ -78,7 +77,7 @@ const ExperimentSelectorGroup = connect(
   mapStateToProps,
   mapDispatchToProps
 )(AtomicSelectorGroupView) as (
-  props: AtomicSelectorGroupOwnProps<ExperimentFilterModel>
+  props: AtomicSelectorGroupOwnProps
 ) => JSX.Element;
 
 export default ExperimentSelectorGroup;

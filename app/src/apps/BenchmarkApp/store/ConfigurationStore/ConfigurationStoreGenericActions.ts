@@ -1,10 +1,10 @@
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
 import {
   ConfigurationCache,
   ConfigurationCacheItem,
 } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import {
