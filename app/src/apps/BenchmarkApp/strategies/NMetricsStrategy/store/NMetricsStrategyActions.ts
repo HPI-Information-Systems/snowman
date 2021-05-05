@@ -1,10 +1,7 @@
 import { BenchmarkApi, Experiment, Metric } from 'api';
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
-import {
-  BenchmarkAppModel,
-  BenchmarkAppResourcesStore,
-} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { MagicNotPossibleId } from 'structs/constants';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
@@ -14,11 +11,11 @@ import {
 } from 'utils/easyActionsFactory';
 
 export const updateConfig = (
-  benchmarkConfig: BenchmarkAppResourcesStore
+  appStore: BenchmarkAppModel
 ): easyPrimitiveActionReturn<NMetricsStrategyModel> =>
   easyPrimitiveAction<NMetricsStrategyModel>({
     type: NMetricsStrategyActionTypes.UPDATE_CONFIG,
-    payload: benchmarkConfig,
+    payload: appStore,
   });
 
 export const setMetrics = (
@@ -62,6 +59,6 @@ export const loadStrategyData = (
   dispatch: SnowmanDispatch<NMetricsStrategyModel>,
   appStore: BenchmarkAppModel
 ): void => {
-  dispatch(updateConfig(appStore.resources));
+  dispatch(updateConfig(appStore));
   dispatch(loadNMetrics());
 };

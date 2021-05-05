@@ -1,8 +1,12 @@
 import { Experiment, Metric } from 'api';
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
-import { BenchmarkAppResourcesStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { GoldStandardId } from 'snowman-library';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
+import {
+  getDefinedItems,
+  getSingleItem,
+} from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: NMetricsStrategyModel = {
@@ -18,45 +22,33 @@ const NMetricsStrategyReducer = (
 ): NMetricsStrategyModel => {
   switch (action.type) {
     case NMetricsStrategyActionTypes.UPDATE_CONFIG: {
-      const config = action.payload as BenchmarkAppResourcesStore;
-      const selectedExperiments = config.experiments.filter(
-        (anExperiment: Experiment): boolean =>
-          config.selectedExperimentIds.includes(anExperiment.id)
+      const appStore = action.payload as BenchmarkAppModel;
+      const appConfig = appStore.config;
+      const goldStandardId = getSingleItem(
+        StoreCacheKey.groundTruth,
+        appConfig.experiments
       );
-      const goldStandards = selectedExperiments.filter(
-        (anExperiment: Experiment): boolean =>
-          anExperiment.algorithmId === GoldStandardId
+      const experimentIds = getDefinedItems(
+        StoreCacheKey.experiment,
+        appConfig.experiments
       );
-      if (goldStandards.length !== 1) {
+      if (goldStandardId === undefined || experimentIds.length === 0)
         return {
           ...state,
           isValidConfig: false,
         };
-      }
-      const goldStandard = goldStandards[0];
-      const currentExperiments =
-        goldStandard !== undefined
-          ? selectedExperiments.filter(
-              (anExperiment: Experiment): boolean =>
-                anExperiment.algorithmId !== GoldStandardId &&
-                goldStandard.datasetId === anExperiment.datasetId
-            )
-          : [];
-      if (
-        selectedExperiments.length - 1 !== currentExperiments.length ||
-        currentExperiments.length === 0
-      ) {
-        return {
-          ...state,
-          isValidConfig: false,
-        };
-      }
       return {
         ...state,
-        experiments: currentExperiments,
-        goldStandard: goldStandard,
-        isValidConfig:
-          currentExperiments.length > 0 && goldStandard !== undefined,
+        goldStandard: appStore.resources.experiments.find(
+          (anExperiment: Experiment): boolean =>
+            anExperiment.id === goldStandardId
+        ),
+        experiments: appStore.resources.experiments.filter(
+          (anExperiment: Experiment): boolean =>
+            experimentIds.includes(anExperiment.id)
+        ),
+        metrics: [],
+        isValidConfig: true,
       };
     }
     case NMetricsStrategyActionTypes.SET_METRICS:
