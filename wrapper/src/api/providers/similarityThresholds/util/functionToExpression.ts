@@ -4,12 +4,11 @@ import { Columns } from '../../../database/tools/types';
 import {
   SimilarityThresholdFunctionDefinition,
   SimilarityThresholdFunctionDefinitionTypeEnum,
-  SimilarityThresholdFunctionValues,
 } from '../../../server/types';
 import { enumToOperator } from './operators';
 
 function thresholdToExpression(
-  threshold: SimilarityThresholdFunctionValues['similarityThreshold'],
+  threshold: SimilarityThresholdFunctionDefinition['similarityThreshold'],
   columns: Columns
 ): string {
   if (threshold) {
@@ -29,7 +28,7 @@ function thresholdToExpression(
 }
 
 function operatorToExpression(
-  operator: SimilarityThresholdFunctionValues['operator'],
+  operator: SimilarityThresholdFunctionDefinition['operator'],
   columns: Columns,
   expression: { index: number }
 ): string {
@@ -50,7 +49,7 @@ function operatorToExpression(
 }
 
 function constantToExpression(
-  constant: SimilarityThresholdFunctionValues['constant']
+  constant: SimilarityThresholdFunctionDefinition['constant']
 ): string {
   if (typeof constant === 'number') {
     return `/*CONSTANT*/${constant}`;
@@ -62,7 +61,7 @@ function constantToExpression(
 }
 
 function unaryOperatorToExpression(
-  unaryOperator: SimilarityThresholdFunctionValues['unaryOperator'],
+  unaryOperator: SimilarityThresholdFunctionDefinition['unaryOperator'],
   columns: Columns,
   expression: { index: number }
 ): string {

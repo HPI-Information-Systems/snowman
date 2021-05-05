@@ -18,14 +18,6 @@ import {
     SimilarityThresholdFunctionDefinitionFromJSON,
     SimilarityThresholdFunctionDefinitionFromJSONTyped,
     SimilarityThresholdFunctionDefinitionToJSON,
-    SimilarityThresholdFunctionOperator,
-    SimilarityThresholdFunctionOperatorFromJSON,
-    SimilarityThresholdFunctionOperatorFromJSONTyped,
-    SimilarityThresholdFunctionOperatorToJSON,
-    SimilarityThresholdFunctionUnaryOperator,
-    SimilarityThresholdFunctionUnaryOperatorFromJSON,
-    SimilarityThresholdFunctionUnaryOperatorFromJSONTyped,
-    SimilarityThresholdFunctionUnaryOperatorToJSON,
     SimilarityThresholdFunctionValuesAllOf,
     SimilarityThresholdFunctionValuesAllOfFromJSON,
     SimilarityThresholdFunctionValuesAllOfFromJSONTyped,
@@ -46,45 +38,16 @@ export interface SimilarityThresholdFunctionValues {
     name: string;
     /**
      * 
-     * @type {string}
-     * @memberof SimilarityThresholdFunctionValues
-     */
-    type: SimilarityThresholdFunctionValuesTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof SimilarityThresholdFunctionValues
-     */
-    similarityThreshold?: string;
-    /**
-     * 
-     * @type {SimilarityThresholdFunctionOperator}
-     * @memberof SimilarityThresholdFunctionValues
-     */
-    operator?: SimilarityThresholdFunctionOperator;
-    /**
-     * 
      * @type {number}
      * @memberof SimilarityThresholdFunctionValues
      */
-    constant?: number;
+    experimentId: number;
     /**
      * 
-     * @type {SimilarityThresholdFunctionUnaryOperator}
+     * @type {SimilarityThresholdFunctionDefinition}
      * @memberof SimilarityThresholdFunctionValues
      */
-    unaryOperator?: SimilarityThresholdFunctionUnaryOperator;
-}
-
-/**
-* @export
-* @enum {string}
-*/
-export enum SimilarityThresholdFunctionValuesTypeEnum {
-    SimilarityThreshold = 'SimilarityThreshold',
-    Operator = 'Operator',
-    Constant = 'Constant',
-    UnaryOperator = 'UnaryOperator'
+    definition: SimilarityThresholdFunctionDefinition;
 }
 
 export function SimilarityThresholdFunctionValuesFromJSON(json: any): SimilarityThresholdFunctionValues {
@@ -98,11 +61,8 @@ export function SimilarityThresholdFunctionValuesFromJSONTyped(json: any, ignore
     return {
         
         'name': json['name'],
-        'type': json['type'],
-        'similarityThreshold': !exists(json, 'similarityThreshold') ? undefined : json['similarityThreshold'],
-        'operator': !exists(json, 'operator') ? undefined : SimilarityThresholdFunctionOperatorFromJSON(json['operator']),
-        'constant': !exists(json, 'constant') ? undefined : json['constant'],
-        'unaryOperator': !exists(json, 'unaryOperator') ? undefined : SimilarityThresholdFunctionUnaryOperatorFromJSON(json['unaryOperator']),
+        'experimentId': json['experimentId'],
+        'definition': SimilarityThresholdFunctionDefinitionFromJSON(json['definition']),
     };
 }
 
@@ -116,11 +76,8 @@ export function SimilarityThresholdFunctionValuesToJSON(value?: SimilarityThresh
     return {
         
         'name': value.name,
-        'type': value.type,
-        'similarityThreshold': value.similarityThreshold,
-        'operator': SimilarityThresholdFunctionOperatorToJSON(value.operator),
-        'constant': value.constant,
-        'unaryOperator': SimilarityThresholdFunctionUnaryOperatorToJSON(value.unaryOperator),
+        'experimentId': value.experimentId,
+        'definition': SimilarityThresholdFunctionDefinitionToJSON(value.definition),
     };
 }
 

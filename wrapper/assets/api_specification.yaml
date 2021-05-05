@@ -4,7 +4,7 @@ info:
     email: snowman@groups.sap.com
     url: https://github.com/HPI-Information-Systems/snowman
   description: |
-    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
+    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms.
   license:
     name: LICENSE (MIT)
     url: https://github.com/HPI-Information-Systems/snowman/blob/main/LICENSE
@@ -600,17 +600,9 @@ paths:
       - Experiments
       x-codegen-request-body-name: file
       x-eov-operation-handler: controllers/ExperimentsController
-  /experiments/{experimentId}/similarity-threshold-functions:
+  /similarity-threshold-functions:
     get:
       operationId: getSimilarityThresholdFunctions
-      parameters:
-      - explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
       responses:
         "200":
           content:
@@ -622,20 +614,12 @@ paths:
           description: OK
         "404":
           description: Not Found
-      summary: Get all similarity threshold functions of an experiment
+      summary: Get all similarity threshold functions
       tags:
       - Similarity Thresholds
       x-eov-operation-handler: controllers/SimilarityThresholdsController
     post:
       operationId: addSimilarityThresholdFunction
-      parameters:
-      - explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
       requestBody:
         content:
           application/json:
@@ -656,17 +640,10 @@ paths:
       - Similarity Thresholds
       x-codegen-request-body-name: similarityThresholdFunction
       x-eov-operation-handler: controllers/SimilarityThresholdsController
-  /experiments/{experimentId}/similarity-threshold-functions/{functionId}:
+  /similarity-threshold-functions/{functionId}:
     delete:
       operationId: deleteSimilarityThresholdFunction
       parameters:
-      - explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
       - explode: false
         in: path
         name: functionId
@@ -684,13 +661,6 @@ paths:
     get:
       operationId: getSimilarityThresholdFunction
       parameters:
-      - explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
       - explode: false
         in: path
         name: functionId
@@ -714,13 +684,6 @@ paths:
     put:
       operationId: setSimilarityThresholdFunction
       parameters:
-      - explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
       - explode: false
         in: path
         name: functionId
@@ -1079,7 +1042,6 @@ components:
     SimilarityThresholdFunctionValues:
       allOf:
       - $ref: '#/components/schemas/SimilarityThresholdFunctionValues_allOf'
-      - $ref: '#/components/schemas/SimilarityThresholdFunctionDefinition'
     SimilarityThresholdFunction:
       allOf:
       - $ref: '#/components/schemas/SimilarityThresholdFunction_allOf'
@@ -1259,7 +1221,14 @@ components:
       properties:
         name:
           type: string
+        experimentId:
+          example: 1
+          type: integer
+        definition:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionDefinition'
       required:
+      - definition
+      - experimentId
       - name
     SimilarityThresholdFunction_allOf:
       properties:
