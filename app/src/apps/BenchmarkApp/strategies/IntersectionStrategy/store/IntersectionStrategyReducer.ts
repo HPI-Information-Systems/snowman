@@ -1,7 +1,9 @@
 import { Experiment, ExperimentIntersectionCount } from 'api';
 import { IntersectionStrategyActionTypes } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyActionTypes';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
-import { BenchmarkAppResourcesStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
+import { getDefinedItems } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { difference, nth } from 'lodash';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';
@@ -37,33 +39,22 @@ const IntersectionStrategyReducer = (
 ): IntersectionStrategyModel => {
   switch (action.type) {
     case IntersectionStrategyActionTypes.UPDATE_CONFIG: {
-      const config = action.payload as BenchmarkAppResourcesStore;
-
-      if (config.selectedExperimentIds.length < 1) {
-        return {
-          ...state,
-          isValidConfig: false,
-        };
-      }
-
-      const selectedExperiments = config.experiments.filter(
-        (anExperiment: Experiment): boolean =>
-          config.selectedExperimentIds.includes(anExperiment.id)
+      const appStore = action.payload as BenchmarkAppModel;
+      const appConfig = appStore.config;
+      const experimentIds = getDefinedItems(
+        StoreCacheKey.experiment,
+        appConfig.experiments
       );
-
-      if (
-        selectedExperiments.length !==
-        selectedExperiments.filter(
-          (anExperiment: Experiment): boolean =>
-            anExperiment.datasetId === selectedExperiments[0].datasetId
-        ).length
-      ) {
+      if (experimentIds.length === 0)
         return {
           ...state,
           isValidConfig: false,
         };
-      }
 
+      const selectedExperiments = appStore.resources.experiments.filter(
+        (anExperiment: Experiment): boolean =>
+          experimentIds.includes(anExperiment.id)
+      );
       return {
         ...state,
         available: selectedExperiments,
