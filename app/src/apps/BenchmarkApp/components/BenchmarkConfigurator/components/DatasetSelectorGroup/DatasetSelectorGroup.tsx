@@ -7,7 +7,7 @@ import {
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroupProps';
 import { updateDatasetSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreDatasetActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { getMultiSelectorItems } from 'apps/BenchmarkApp/utils/getMultiSelectorItems';
+import { getItems } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
@@ -17,7 +17,7 @@ const mapStateToProps = (
 ): DatasetSelectorGroupStateProps => {
   const selectedIds = new Set(
     ownProps.allowMultiple
-      ? getMultiSelectorItems(
+      ? getItems(
           ownProps.getCacheKey,
           state.config.multiSelects,
           state.config.datasets

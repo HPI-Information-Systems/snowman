@@ -4,7 +4,7 @@ import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { GetCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
 import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
-import { getMultiSelectorItems } from 'apps/BenchmarkApp/utils/getMultiSelectorItems';
+import { getItems } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import {
   easyPrimitiveAction,
@@ -28,7 +28,7 @@ export const updateDatasetSelection = (
 ): SnowmanThunkAction<void, BenchmarkAppModel> => (dispatch) => {
   if (!allowMultiple) {
     const config = BenchmarkAppStoreMagistrate.getStore().getState().config;
-    const currentSelection = getMultiSelectorItems(
+    const currentSelection = getItems(
       getCacheKey,
       config.multiSelects,
       config.datasets

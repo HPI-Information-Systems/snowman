@@ -1,34 +1,37 @@
 import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 
-export type ConfigurationCache<Target> = { [key in StoreCacheKey]?: Target };
+export interface ConfigurationCacheItem<Target, Filter = undefined> {
+  targets: Target[];
+  filter: Filter;
+}
 
-export type ConfigurationStoreModel = {
-  datasets: ConfigurationCache<DatasetConfigurationModel>;
-  algorithms: ConfigurationCache<AlgorithmConfigurationModel>;
-  experiments: ConfigurationCache<ExperimentConfigurationModel>;
-  simFunctions: ConfigurationCache<SimFunctionConfigurationModel>;
-  simThresholds: ConfigurationCache<SimThresholdConfigurationModel>;
-  multiSelects: ConfigurationCache<MultiSelectConfigurationModel>;
+export type ConfigurationCache<Target, Filter = undefined> = {
+  [key in StoreCacheKey]?: ConfigurationCacheItem<Target, Filter>;
 };
 
-export interface SimThresholdConfigurationModel {
-  threshold?: number;
+export interface ConfigurationStoreModel {
+  datasets: ConfigurationCache<DatasetConfigurationModel>;
+  algorithms: ConfigurationCache<AlgorithmConfigurationModel>;
+  experiments: ConfigurationCache<
+    ExperimentConfigurationModel,
+    ExperimentFilterModel
+  >;
+  simFunctions: ConfigurationCache<
+    SimFunctionConfigurationModel,
+    SimFunctionFilterModel
+  >;
+  simThresholds: ConfigurationCache<SimThresholdConfigurationModel>;
 }
-export interface SimFunctionConfigurationModel {
-  functionId?: number;
-  forceExperimentFilter?: StoreCacheKey;
-}
-export interface ExperimentConfigurationModel {
-  experimentId?: number;
+
+export type DatasetConfigurationModel = number;
+export type AlgorithmConfigurationModel = number;
+export type ExperimentConfigurationModel = number;
+export interface ExperimentFilterModel {
   forceDatasetFilter?: StoreCacheKey;
   forceAlgorithmFilter?: StoreCacheKey;
 }
-export interface DatasetConfigurationModel {
-  datasetId?: number;
+export type SimFunctionConfigurationModel = number;
+export interface SimFunctionFilterModel {
+  forceExperimentFilter?: StoreCacheKey;
 }
-export interface AlgorithmConfigurationModel {
-  algorithmId?: number;
-}
-export interface MultiSelectConfigurationModel {
-  numberEntries?: number;
-}
+export type SimThresholdConfigurationModel = number;
