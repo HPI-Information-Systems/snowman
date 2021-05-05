@@ -2,6 +2,7 @@ import { SimilarityThresholdFunction, SimilarityThresholdsApi } from 'api';
 import { SimilarityFuncsDialogActionTypes } from 'apps/SimilarityFuncsDialog/types/SimilarityFuncsDialogActionTypes';
 import { SimilarityFuncsDialogModel } from 'apps/SimilarityFuncsDialog/types/SimilarityFuncsDilaogModel';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
+import { head } from 'lodash';
 import { MagicNotPossibleId } from 'structs/constants';
 import { SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION } from 'structs/statusMessages';
 import { EntityId } from 'types/EntityId';
@@ -56,8 +57,9 @@ export const deleteSimilarityThresholdFunction = (
   dispatch: SnowmanDispatch<SimilarityFuncsDialogModel>
 ): Promise<void> => {
   const experimentId =
-    SnowmanAppMagistrate.getStore().getState().RenderLogicStore.entityId ??
-    MagicNotPossibleId;
+    head(
+      SnowmanAppMagistrate.getStore().getState().RenderLogicStore.dialogStack
+    )?.entityId ?? MagicNotPossibleId;
   return RequestHandler<void>(
     (): Promise<void> =>
       new SimilarityThresholdsApi().deleteSimilarityThresholdFunction({
