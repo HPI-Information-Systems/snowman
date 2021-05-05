@@ -1,9 +1,6 @@
 import { IonButton, IonChip, IonItemDivider } from '@ionic/react';
 import { SimilarityThresholdFunctionDefinitionTypeEnum } from 'api';
-import ConstantStrategy from 'apps/FunctionBuilderDialog/components/ConstantStrategy/ConstantStrategy';
-import OperatorStrategy from 'apps/FunctionBuilderDialog/components/OperatorStrategy/OperatorStrategy';
-import SimilarityThresholdStrategy from 'apps/FunctionBuilderDialog/components/SimilarityThresholdStrategy/SimilarityThresholdStrategy';
-import UnaryOperatorStrategy from 'apps/FunctionBuilderDialog/components/UnaryOperatorStrategy/UnaryOperatorStrategy';
+import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
 import { FunctionBuilderDialogProps } from 'apps/FunctionBuilderDialog/FunctionBuilderDialogProps';
 import React from 'react';
 
@@ -15,10 +12,7 @@ const FunctionBuilderDialogView = ({
   selectRootType,
 }: FunctionBuilderDialogProps): JSX.Element => (
   <>
-    <OperatorStrategy />
-    <SimilarityThresholdStrategy />
-    <ConstantStrategy />
-    <UnaryOperatorStrategy />
+    <StrategyMapper targetStrategyType={operator.type} />
     <IonItemDivider />
     {Object.keys(SimilarityThresholdFunctionDefinitionTypeEnum).map(
       (aType: string): JSX.Element => (
