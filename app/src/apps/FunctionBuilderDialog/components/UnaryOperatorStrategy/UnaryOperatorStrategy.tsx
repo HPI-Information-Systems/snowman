@@ -1,10 +1,4 @@
-import {
-  IonButton,
-  IonChip,
-  IonIcon,
-  IonSelect,
-  IonSelectOption,
-} from '@ionic/react';
+import { IonChip, IonIcon, IonSelect, IonSelectOption } from '@ionic/react';
 import {
   SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
@@ -12,14 +6,11 @@ import {
 import ConstantStrategy from 'apps/FunctionBuilderDialog/components/ConstantStrategy/ConstantStrategy';
 import OperatorStrategy from 'apps/FunctionBuilderDialog/components/OperatorStrategy/OperatorStrategy';
 import SimilarityThresholdStrategy from 'apps/FunctionBuilderDialog/components/SimilarityThresholdStrategy/SimilarityThresholdStrategy';
-import { UnaryOperatorStrategyProps } from 'apps/FunctionBuilderDialog/components/UnaryOperatorStrategy/UnaryOperatorStrategyProps';
 import { closeCircle } from 'ionicons/icons';
 import React, { useState } from 'react';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-const UnaryOperatorStrategy = ({
-  children,
-}: UnaryOperatorStrategyProps): JSX.Element => {
+const UnaryOperatorStrategy = (): JSX.Element => {
   const [operator, setOperator] = useState(
     SimilarityThresholdFunctionUnaryOperatorOperatorEnum.Acos as string
   );
