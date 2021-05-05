@@ -1,11 +1,7 @@
 import { tables } from '../../../database';
 import { tableSchemas } from '../../../database/schemas';
 import { ColumnValues } from '../../../database/tools/types';
-import {
-  ExperimentId,
-  SimilarityThresholdFunction,
-  SimilarityThresholdFunctionDefinition,
-} from '../../../server/types';
+import { SimilarityThresholdFunction } from '../../../server/types';
 import { expressionToFunction } from './expressionToFunction';
 import { functionToExpression } from './functionToExpression';
 
@@ -15,16 +11,15 @@ type StoredSimilarityThresholdFunction = ColumnValues<
 
 export class SimilarityThresholdFunctionConverter {
   apiFunctionToStoredFunction(
-    apiFunction: SimilarityThresholdFunction,
-    experimentId: ExperimentId
+    apiFunction: SimilarityThresholdFunction
   ): StoredSimilarityThresholdFunction {
     return {
-      experiment: experimentId,
+      experiment: apiFunction.experimentId,
       id: apiFunction.id,
       name: apiFunction.name,
       expression: functionToExpression(
-        (apiFunction as unknown) as SimilarityThresholdFunctionDefinition,
-        tables.experiment.experiment(experimentId).schema.columns
+        apiFunction.definition,
+        tables.experiment.experiment(apiFunction.experimentId).schema.columns
       ),
     };
   }
@@ -35,7 +30,8 @@ export class SimilarityThresholdFunctionConverter {
     return ({
       id: storedFunction.id,
       name: storedFunction.name,
-      ...expressionToFunction(storedFunction.expression),
+      experimentId: storedFunction.experiment,
+      definition: expressionToFunction(storedFunction.expression),
     } as unknown) as SimilarityThresholdFunction;
   }
 }
