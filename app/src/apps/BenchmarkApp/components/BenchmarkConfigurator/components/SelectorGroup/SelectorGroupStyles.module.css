@@ -1,35 +1,35 @@
 .listNoPadding {
-    padding: 0;
+  padding: 0;
 }
 
 .noBackground,
 .noBackground *::part(native),
 .noBackground * {
-    background: transparent;
+  background: transparent;
 }
 
 .itemNoBorder {
-    --border-style: none;
+  --border-style: none;
 }
 
 .oneLine {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .smallItem {
-    --padding-start: 0;
+  --padding-start: 0;
 }
 
 .smallItem::part(native) {
-    height: 2em;
-    min-height: unset;
-    font-size: small;
-    line-height: 1em;
+  height: 2em;
+  min-height: unset;
+  font-size: small;
+  line-height: 1em;
 }
 
 .smallItemIcon {
-    margin-right: 5px !important;
-    font-size: small;
+  margin-right: 5px !important;
+  font-size: small;
 }

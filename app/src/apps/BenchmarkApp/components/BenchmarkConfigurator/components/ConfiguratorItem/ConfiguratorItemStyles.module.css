@@ -1,11 +1,11 @@
 .marginedHeading {
-    margin-bottom: 6px !important;
+  margin-bottom: 6px !important;
 }
 
 .itemNoBorder {
-    --border-style: none;
+  --border-style: none;
 }
 
 .fullWidth {
-    width: 100%;
+  width: 100%;
 }
