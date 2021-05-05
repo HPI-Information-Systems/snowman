@@ -6,7 +6,6 @@ import {
   DeleteSimilarityThresholdFunctionRequest,
   ExperimentId,
   GetSimilarityThresholdFunctionRequest,
-  GetSimilarityThresholdFunctionsRequest,
   SetSimilarityThresholdFunctionRequest,
   SimilarityThresholdFunction,
   SimilarityThresholdFunctionDefinition,
@@ -79,58 +78,70 @@ export class SimilarityThresholdsProvider {
   }
 
   addSimilarityThresholdFunction({
-    experimentId,
     similarityThresholdFunction,
   }: AddSimilarityThresholdFunctionRequest): SimilarityThresholdFunctionId {
     return databaseBackend().transaction(() => {
-      providers.experiment.getExperiment(experimentId);
+      providers.experiment.getExperiment(
+        similarityThresholdFunction.experimentId
+      );
       const expression = functionToExpression(
-        (similarityThresholdFunction as unknown) as SimilarityThresholdFunctionDefinition,
-        tables.experiment.experiment(experimentId).schema.columns
+        similarityThresholdFunction.definition,
+        tables.experiment.experiment(similarityThresholdFunction.experimentId)
+          .schema.columns
       );
       const [functionId] = tables.meta.similarityfunction.upsert([
         {
-          experiment: experimentId,
-          expression,
+          experiment: similarityThresholdFunction.experimentId,
           name: similarityThresholdFunction.name,
+          expression,
         },
       ]);
-      this.writeSimilarities(experimentId, functionId, expression);
+      this.writeSimilarities(
+        similarityThresholdFunction.experimentId,
+        functionId,
+        expression
+      );
       return functionId;
     })();
   }
 
   setSimilarityThresholdFunction({
-    experimentId,
     functionId,
     similarityThresholdFunction,
   }: SetSimilarityThresholdFunctionRequest): void {
     return databaseBackend().transaction(() => {
-      providers.experiment.getExperiment(experimentId);
+      providers.experiment.getExperiment(
+        similarityThresholdFunction.experimentId
+      );
       const expression = functionToExpression(
-        (similarityThresholdFunction as unknown) as SimilarityThresholdFunctionDefinition,
-        tables.experiment.experiment(experimentId).schema.columns
+        similarityThresholdFunction.definition,
+        tables.experiment.experiment(similarityThresholdFunction.experimentId)
+          .schema.columns
       );
       tables.meta.similarityfunction.upsert([
         {
-          experiment: experimentId,
+          experiment: similarityThresholdFunction.experimentId,
           name: similarityThresholdFunction.name,
           expression,
           id: functionId,
         },
       ]);
-      this.writeSimilarities(experimentId, functionId, expression);
+      this.writeSimilarities(
+        similarityThresholdFunction.experimentId,
+        functionId,
+        expression
+      );
       BenchmarkCache.invalidateSimilarityFunction(functionId);
     })();
   }
 
   deleteSimilarityThresholdFunction({
-    experimentId,
     functionId,
   }: DeleteSimilarityThresholdFunctionRequest): void {
+    const experimentId = this.getSimilarityThresholdFunction({ functionId })
+      .experimentId;
     return databaseBackend().transaction(() => {
       tables.meta.similarityfunction.delete({
-        experiment: experimentId,
         id: functionId,
       });
       tables.experiment
@@ -141,28 +152,22 @@ export class SimilarityThresholdsProvider {
   }
 
   getSimilarityThresholdFunction({
-    experimentId,
     functionId,
   }: GetSimilarityThresholdFunctionRequest): SimilarityThresholdFunction {
     const func = tables.meta.similarityfunction.get({
-      experiment: experimentId,
       id: functionId,
     });
     if (!func) {
       throw new Error(
-        `A similarity threshold function with the id ${functionId} does not exist in the experiment ${experimentId}.`
+        `A similarity threshold function with the id ${functionId} does not exist.`
       );
     }
     return this.converter.storedFunctionToApiFunction(func);
   }
 
-  getSimilarityThresholdFunctions({
-    experimentId,
-  }: GetSimilarityThresholdFunctionsRequest): SimilarityThresholdFunction[] {
+  getSimilarityThresholdFunctions(): SimilarityThresholdFunction[] {
     return tables.meta.similarityfunction
-      .all({
-        experiment: experimentId,
-      })
+      .all()
       .map((func) => this.converter.storedFunctionToApiFunction(func));
   }
 }
