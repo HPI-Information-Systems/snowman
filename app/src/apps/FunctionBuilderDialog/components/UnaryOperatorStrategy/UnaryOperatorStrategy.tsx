@@ -3,9 +3,8 @@ import {
   SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
 } from 'api';
-import ConstantStrategy from 'apps/FunctionBuilderDialog/components/ConstantStrategy/ConstantStrategy';
-import OperatorStrategy from 'apps/FunctionBuilderDialog/components/OperatorStrategy/OperatorStrategy';
-import SimilarityThresholdStrategy from 'apps/FunctionBuilderDialog/components/SimilarityThresholdStrategy/SimilarityThresholdStrategy';
+import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
+import UndefinedStrategy from 'apps/FunctionBuilderDialog/components/StrategyMapper/UndefinedStrategy';
 import { closeCircle } from 'ionicons/icons';
 import React, { useState } from 'react';
 import { IonChangeEvent } from 'types/IonChangeEvent';
@@ -14,7 +13,7 @@ const UnaryOperatorStrategy = (): JSX.Element => {
   const [operator, setOperator] = useState(
     SimilarityThresholdFunctionUnaryOperatorOperatorEnum.Acos as string
   );
-  const [childType, setChildType] = useState('');
+  const [childType, setChildType] = useState(UndefinedStrategy);
   return (
     <>
       <IonChip>
@@ -35,21 +34,11 @@ const UnaryOperatorStrategy = (): JSX.Element => {
           )}
         </IonSelect>
       </IonChip>
-      (
-      {childType !== '' ? (
-        ((): JSX.Element => {
-          switch (childType) {
-            case SimilarityThresholdFunctionDefinitionTypeEnum.Operator:
-              return <OperatorStrategy />;
-            case SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold:
-              return <SimilarityThresholdStrategy />;
-            case SimilarityThresholdFunctionDefinitionTypeEnum.UnaryOperator:
-              return <UnaryOperatorStrategy />;
-            default:
-              return <ConstantStrategy />;
-          }
-        })()
-      ) : (
+      <StrategyMapper
+        targetStrategyType={
+          childType as SimilarityThresholdFunctionDefinitionTypeEnum
+        }
+      >
         <IonChip>
           <IonSelect
             value={childType}
@@ -66,8 +55,12 @@ const UnaryOperatorStrategy = (): JSX.Element => {
             )}
           </IonSelect>
         </IonChip>
-      )}
-      <IonIcon icon={closeCircle} onClick={(): void => setChildType('')} />)
+      </StrategyMapper>
+      <IonIcon
+        icon={closeCircle}
+        onClick={(): void => setChildType(UndefinedStrategy)}
+      />
+      )
     </>
   );
 };
