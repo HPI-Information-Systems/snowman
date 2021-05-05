@@ -1,4 +1,7 @@
-import { BenchmarkAppConfigStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import {
+  BenchmarkAppModel,
+  BenchmarkAppResourcesStore,
+} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { Store } from 'redux';
 import { SnowmanAction } from 'types/SnowmanAction';
@@ -6,7 +9,7 @@ import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 export interface GenericBenchmarkStrategyStateProps {
   activeStrategy: StrategyIDs;
-  benchmarkConfig: BenchmarkAppConfigStore;
+  benchmarkStore: BenchmarkAppModel;
 }
 
 export interface GenericBenchmarkStrategyOwnProps {
@@ -15,7 +18,7 @@ export interface GenericBenchmarkStrategyOwnProps {
   createStrategyStore(): Store<unknown, SnowmanAction>;
   loadStrategyData?(
     dispatch: SnowmanDispatch<unknown>,
-    config: BenchmarkAppConfigStore
+    appStore: BenchmarkAppModel
   ): void;
 }
 

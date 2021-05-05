@@ -1,7 +1,7 @@
 import { Experiment, Metric } from 'api';
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
-import { BenchmarkAppConfigStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { BenchmarkAppResourcesStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { GoldStandardId } from 'snowman-library';
 import { SnowmanAction } from 'types/SnowmanAction';
 
@@ -18,7 +18,7 @@ const NMetricsStrategyReducer = (
 ): NMetricsStrategyModel => {
   switch (action.type) {
     case NMetricsStrategyActionTypes.UPDATE_CONFIG: {
-      const config = action.payload as BenchmarkAppConfigStore;
+      const config = action.payload as BenchmarkAppResourcesStore;
       const selectedExperiments = config.experiments.filter(
         (anExperiment: Experiment): boolean =>
           config.selectedExperimentIds.includes(anExperiment.id)

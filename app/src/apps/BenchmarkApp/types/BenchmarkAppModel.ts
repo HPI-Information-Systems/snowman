@@ -6,14 +6,14 @@ import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 
 export interface BenchmarkAppModel {
-  resources: BenchmarkAppConfigStore;
+  resources: BenchmarkAppResourcesStore;
   expandedAlgorithmsInDatasets: ExpandedEntity[];
   searchString: string;
   activeStrategy: StrategyIDs;
   config: ConfigurationStoreModel;
 }
 
-export interface BenchmarkAppConfigStore {
+export interface BenchmarkAppResourcesStore {
   algorithms: Algorithm[];
   datasets: Dataset[];
   experiments: Experiment[];

@@ -7,7 +7,10 @@ import {
 } from 'api';
 import { IntersectionStrategyActionTypes } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyActionTypes';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
-import { BenchmarkAppConfigStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import {
+  BenchmarkAppModel,
+  BenchmarkAppResourcesStore,
+} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { DropResult } from 'react-beautiful-dnd';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -22,7 +25,7 @@ import RequestHandler from 'utils/requestHandler';
 import { datasetTuplesLoader } from 'utils/tuplesLoaders';
 
 export const updateConfig = (
-  benchmarkConfig: BenchmarkAppConfigStore
+  benchmarkConfig: BenchmarkAppResourcesStore
 ): easyPrimitiveActionReturn<IntersectionStrategyModel> =>
   easyPrimitiveAction<IntersectionStrategyModel>({
     type: IntersectionStrategyActionTypes.UPDATE_CONFIG,
@@ -172,8 +175,8 @@ export const intersectionTuplesLoader = (
 
 export const loadStrategyData = (
   dispatch: SnowmanDispatch<IntersectionStrategyModel>,
-  benchmarkConfig: BenchmarkAppConfigStore
+  appStore: BenchmarkAppModel
 ): void => {
-  dispatch(updateConfig(benchmarkConfig));
+  dispatch(updateConfig(appStore.resources));
   dispatch(loadCounts()).then();
 };

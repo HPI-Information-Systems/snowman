@@ -1,7 +1,7 @@
 import { Experiment, ExperimentIntersectionCount } from 'api';
 import { IntersectionStrategyActionTypes } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyActionTypes';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
-import { BenchmarkAppConfigStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { BenchmarkAppResourcesStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { difference, nth } from 'lodash';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';
@@ -37,7 +37,7 @@ const IntersectionStrategyReducer = (
 ): IntersectionStrategyModel => {
   switch (action.type) {
     case IntersectionStrategyActionTypes.UPDATE_CONFIG: {
-      const config = action.payload as BenchmarkAppConfigStore;
+      const config = action.payload as BenchmarkAppResourcesStore;
 
       if (config.selectedExperimentIds.length < 1) {
         return {

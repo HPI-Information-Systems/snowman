@@ -2,15 +2,15 @@ import { Algorithm, Dataset, Experiment } from 'api';
 import ConfigurationStoreReducer from 'apps/BenchmarkApp/store/ConfigurationStoreReducer';
 import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
 import {
-  BenchmarkAppConfigStore,
   BenchmarkAppModel,
+  BenchmarkAppResourcesStore,
 } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ExpandedEntity } from 'apps/BenchmarkApp/types/ExpandedEntity';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { union } from 'lodash';
 import { SnowmanAction } from 'types/SnowmanAction';
 
-const initialConfigState: BenchmarkAppConfigStore = {
+const initialConfigState: BenchmarkAppResourcesStore = {
   algorithms: [],
   datasets: [],
   experiments: [],
