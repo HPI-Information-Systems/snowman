@@ -2,7 +2,6 @@ import { AtomicSelectorGroupProps } from 'apps/BenchmarkApp/components/Benchmark
 import SearchableList from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/SearchableList';
 import SelectorPopoverGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/SelectorPopoverGroup';
 import { useInstanceDescriptor } from 'apps/BenchmarkApp/utils/useInstanceDescriptor';
-import { fileTrayFull } from 'ionicons/icons';
 import React from 'react';
 
 const AtomicSelectorGroupView = ({
@@ -21,7 +20,7 @@ const AtomicSelectorGroupView = ({
   >
     <SearchableList
       entities={entities}
-      icon={fileTrayFull}
+      icon={icon}
       selectedEntities={selectedEntities.map(({ id }) => id)}
       updateSelection={updateSelection}
       allowMultiple={allowMultiple}
