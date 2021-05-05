@@ -18,6 +18,7 @@ import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { TuplesLoader } from 'types/TuplesLoader';
 import { intersectionDescription } from 'utils/intersectionDescription';
 import { dummyTuplesLoader } from 'utils/tuplesLoaders';
+import { numberOfDistinctPairs } from 'utils/numberOfDistinctPairs';
 
 const getCountsByTuplesCategory = (
   store: BinaryMetricsStrategyModel,
@@ -117,7 +118,9 @@ const mapStateToProps = (
       ? getTuplesLoaderByTuplesCategory(state, state.selectedDataView)
       : dummyTuplesLoader,
   confusionMatrix: {
-    totalCount: Math.pow(state.dataset?.numberOfRecords ?? 0, 2),
+    totalCount: numberOfDistinctPairs(
+      state.dataset?.numberOfRecords ?? 0
+    ),
     falseNegatives: getPairCountByTuplesCategory(
       state,
       MetricsTuplesCategories.falseNegatives
