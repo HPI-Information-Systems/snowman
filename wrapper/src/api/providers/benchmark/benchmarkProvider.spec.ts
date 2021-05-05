@@ -3,7 +3,7 @@ import {
   DatasetValues,
   ExperimentValues,
   SetExperimentFileFormatEnum,
-  SimilarityThresholdFunctionValuesTypeEnum,
+  SimilarityThresholdFunctionDefinitionTypeEnum,
 } from '../../server/types';
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { providers } from '..';
@@ -221,11 +221,14 @@ describe('test benchmark functions', () => {
       ])
     );
     const func = providers.similarityThresholds.addSimilarityThresholdFunction({
-      experimentId,
       similarityThresholdFunction: {
-        type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+        definition: {
+          type:
+            SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+          similarityThreshold: 'sim',
+        },
         name: 'similarityFunction',
-        similarityThreshold: 'sim',
+        experimentId,
       },
     });
     expect(

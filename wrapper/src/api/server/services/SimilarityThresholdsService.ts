@@ -3,7 +3,6 @@ import {
   AddSimilarityThresholdFunctionRequest,
   DeleteSimilarityThresholdFunctionRequest,
   GetSimilarityThresholdFunctionRequest,
-  GetSimilarityThresholdFunctionsRequest,
   SetSimilarityThresholdFunctionRequest,
   SimilarityThresholdFunction,
   SimilarityThresholdFunctionId,
@@ -44,11 +43,11 @@ export async function getSimilarityThresholdFunction(
   );
 }
 
-export async function getSimilarityThresholdFunctions(
-  params: GetSimilarityThresholdFunctionsRequest
-): Promise<SuccessResponse<SimilarityThresholdFunction[]>> {
+export async function getSimilarityThresholdFunctions(): Promise<
+  SuccessResponse<SimilarityThresholdFunction[]>
+> {
   return Service.response(
-    () => provider().getSimilarityThresholdFunctions(params),
+    () => provider().getSimilarityThresholdFunctions(),
     200,
     404
   );
