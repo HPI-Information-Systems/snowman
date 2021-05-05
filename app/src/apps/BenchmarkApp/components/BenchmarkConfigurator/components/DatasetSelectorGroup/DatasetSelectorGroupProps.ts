@@ -1,8 +1,8 @@
 import { Dataset } from 'api';
-import { GetCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 
 export interface DatasetSelectorGroupOwnProps {
-  getCacheKey: GetCacheKey;
+  cacheKey: StoreCacheKey;
   allowMultiple?: boolean;
 }
 

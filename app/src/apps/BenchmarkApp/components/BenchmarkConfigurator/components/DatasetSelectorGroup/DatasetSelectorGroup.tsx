@@ -7,7 +7,10 @@ import {
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroupProps';
 import { updateDatasetSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreDatasetActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { getItems } from 'apps/BenchmarkApp/utils/configurationItemGetter';
+import {
+  getItems,
+  getSingleItem,
+} from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
@@ -17,12 +20,8 @@ const mapStateToProps = (
 ): DatasetSelectorGroupStateProps => {
   const selectedIds = new Set(
     ownProps.allowMultiple
-      ? getItems(
-          ownProps.getCacheKey,
-          state.config.multiSelects,
-          state.config.datasets
-        ).map((dataset) => dataset?.datasetId)
-      : [state.config.datasets[ownProps.getCacheKey()]?.datasetId]
+      ? getItems(ownProps.cacheKey, state.config.datasets)
+      : [getSingleItem(ownProps.cacheKey, state.config.datasets)]
   );
   return {
     selectedDatasets: state.resources.datasets.filter(
@@ -38,7 +37,7 @@ const mapDispatchToProps = (
   updateSelection: (datasetIds) =>
     dispatch(
       updateDatasetSelection({
-        aCacheKey: ownProps.getCacheKey,
+        aCacheKey: ownProps.cacheKey,
         newSelection: datasetIds,
         allowMultiple: ownProps.allowMultiple,
       })
