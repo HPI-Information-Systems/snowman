@@ -20,13 +20,10 @@ class GenericBenchmarkStrategyView extends Component<GenericBenchmarkStrategyPro
         (prevProps.activeStrategy !== this.props.strategyId &&
           this.props.activeStrategy === this.props.strategyId) ||
         (this.props.activeStrategy === this.props.strategyId &&
-          !isEqual(prevProps.benchmarkStore, this.props.benchmarkStore))
+          !isEqual(prevProps.appStore, this.props.appStore))
       ) {
         // If (strategy became active just now) or (is active and has properties updated)
-        this.props.loadStrategyData(
-          this.store.dispatch,
-          this.props.benchmarkStore
-        );
+        this.props.loadStrategyData(this.store.dispatch, this.props.appStore);
       }
     }
   }

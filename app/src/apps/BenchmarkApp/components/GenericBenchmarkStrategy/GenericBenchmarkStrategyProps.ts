@@ -9,7 +9,7 @@ import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 export interface GenericBenchmarkStrategyStateProps {
   activeStrategy: StrategyIDs;
-  benchmarkStore: BenchmarkAppModel;
+  appStore: BenchmarkAppModel;
 }
 
 export interface GenericBenchmarkStrategyOwnProps {

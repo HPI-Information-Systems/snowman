@@ -7,7 +7,7 @@ const mapStateToProps = (
   state: BenchmarkAppModel
 ): GenericBenchmarkStrategyStateProps => ({
   activeStrategy: state.activeStrategy,
-  benchmarkStore: state.resources,
+  appStore: state.resources,
 });
 
 const GenericBenchmarkStrategy = connect(mapStateToProps)(
