@@ -37,11 +37,11 @@ const mapDispatchToProps = (
 ): DatasetSelectorGroupDispatchProps => ({
   updateSelection: (datasetIds) =>
     dispatch(
-      updateDatasetSelection(
-        ownProps.getCacheKey,
-        datasetIds,
-        ownProps.allowMultiple
-      )
+      updateDatasetSelection({
+        aCacheKey: ownProps.getCacheKey,
+        newSelection: datasetIds,
+        allowMultiple: ownProps.allowMultiple,
+      })
     ),
 });
 

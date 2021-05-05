@@ -1,7 +1,7 @@
 import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 
 export interface ConfigurationCacheItem<Target, Filter = undefined> {
-  targets: Target[];
+  targets: (Target | undefined)[];
   filter: Filter;
 }
 

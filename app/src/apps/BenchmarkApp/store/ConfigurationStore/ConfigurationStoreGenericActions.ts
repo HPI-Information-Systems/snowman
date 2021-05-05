@@ -1,49 +1,68 @@
-import { BenchmarkAppStoreMagistrate } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import {
-  GetCacheKey,
-  GetMultiSelectCacheKey,
-} from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
+import {
+  ConfigurationCache,
+  ConfigurationCacheItem,
+} from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 
-const setMultiSelectNumberEntries = (
+const setSelection = <Target, Filter>(
+  setSelectionAction: ConfigurationStoreActionTypes,
   aCacheKey: StoreCacheKey,
-  numberEntries: number
+  aCacheItem: ConfigurationCacheItem<Target, Filter>
 ): easyPrimitiveActionReturn<BenchmarkAppModel> =>
-  easyPrimitiveAction({
-    type: ConfigurationStoreActionTypes.SET_NUMBER_ENTRIES,
+  easyPrimitiveAction<BenchmarkAppModel>({
+    type: setSelectionAction,
     payload: aCacheKey,
-    optionalPayload: numberEntries,
+    optionalPayload: aCacheItem,
   });
 
-export const updateSelection = <T>(
-  getCacheKey: GetCacheKey,
-  setter: (
-    cacheKey: StoreCacheKey,
-    value: T | undefined
-  ) => easyPrimitiveActionReturn<BenchmarkAppModel>,
-  selection: (T | undefined)[]
-): SnowmanThunkAction<void, BenchmarkAppModel> => (dispatch) => {
-  let oldNumberEntries =
-    BenchmarkAppStoreMagistrate.getStore().getState().config.multiSelects[
-      getCacheKey(GetMultiSelectCacheKey)
-    ]?.numberEntries ?? 0;
-  for (let index = 0; index < selection.length; ++index) {
-    dispatch(setter(getCacheKey(index), selection[index]));
+const getSelection = <Target, Filter>(
+  cache: ConfigurationCache<Target, Filter>,
+  aCacheKey: StoreCacheKey,
+  filter: Filter
+): ConfigurationCacheItem<Target, Filter> =>
+  cache[aCacheKey] ?? { filter, targets: [] };
+
+export const updateSelection = <Target, Filter>({
+  cache,
+  aCacheKey,
+  filter,
+  newSelection,
+  setSelectionAction,
+  allowMultiple = true,
+}: {
+  cache: ConfigurationCache<Target, Filter>;
+  aCacheKey: StoreCacheKey;
+  filter: Filter;
+  newSelection: Target[];
+  setSelectionAction: ConfigurationStoreActionTypes;
+  allowMultiple?: boolean;
+}): SnowmanThunkAction<void, BenchmarkAppModel> => (
+  dispatch: SnowmanDispatch<BenchmarkAppModel>
+): void => {
+  const selection = { ...getSelection(cache, aCacheKey, filter) };
+  if (!allowMultiple) {
+    if (newSelection.length > 0) {
+      const swapIndex = selection.targets.indexOf(newSelection[0]);
+      if (swapIndex > 0) {
+        selection.targets = selection.targets.slice();
+        if (selection.targets[0] === undefined) {
+          selection.targets.splice(swapIndex, 1);
+        } else {
+          selection.targets[swapIndex] = selection.targets[0];
+        }
+      }
+    }
+    selection.targets[0] = newSelection[0];
+  } else {
+    selection.targets = newSelection;
   }
-  dispatch(
-    setMultiSelectNumberEntries(
-      getCacheKey(GetMultiSelectCacheKey),
-      selection.length
-    )
-  );
-  while (oldNumberEntries > selection.length) {
-    dispatch(setter(getCacheKey(--oldNumberEntries), undefined));
-  }
+  dispatch(setSelection(setSelectionAction, aCacheKey, selection));
 };
