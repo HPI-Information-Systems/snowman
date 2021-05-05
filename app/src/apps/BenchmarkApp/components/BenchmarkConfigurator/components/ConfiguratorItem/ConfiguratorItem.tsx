@@ -10,9 +10,9 @@ const ConfiguratorItem = ({
   <IonItem className={styles.itemNoBorder}>
     <div className={styles.fullWidth}>
       <IonLabel>
-        <h3 className={styles.marginedHeading}>
+        <h2 className={styles.marginedHeading}>
           <b>{title}</b>
-        </h3>
+        </h2>
       </IonLabel>
       {children}
     </div>

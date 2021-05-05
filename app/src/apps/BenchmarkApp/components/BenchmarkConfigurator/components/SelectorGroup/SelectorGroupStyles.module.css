@@ -25,11 +25,11 @@
 .smallItem::part(native) {
   height: 2em;
   min-height: unset;
-  font-size: small;
+  font-size: medium;
   line-height: 1em;
 }
 
 .smallItemIcon {
   margin-right: 5px !important;
-  font-size: small;
+  font-size: medium;
 }
