@@ -7,7 +7,7 @@ import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import React from 'react';
 
-const BinaryMetricsConfiguratorView = (): JSX.Element => (
+const BinaryMetricsConfigurator = (): JSX.Element => (
   <GenericConfigurator strategyID={StrategyIDs.BinaryMetrics}>
     <IonList>
       <ConfiguratorItem title="1. Select Dataset">
@@ -32,4 +32,4 @@ const BinaryMetricsConfiguratorView = (): JSX.Element => (
   </GenericConfigurator>
 );
 
-export default BinaryMetricsConfiguratorView;
+export default BinaryMetricsConfigurator;
