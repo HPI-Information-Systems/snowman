@@ -1,17 +1,17 @@
-import { Dataset } from 'api';
+import { Algorithm } from 'api';
 import AtomicSelectorGroupView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroup.View';
 import {
   AtomicSelectorGroupDispatchProps,
   AtomicSelectorGroupOwnProps,
   AtomicSelectorGroupStateProps,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
-import { updateDatasetSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreDatasetActions';
+import { updateAlgorithmSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreAlgorithmActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import {
   getItems,
   getSingleItem,
 } from 'apps/BenchmarkApp/utils/configurationItemGetter';
-import { fileTrayFull } from 'ionicons/icons';
+import { hardwareChip } from 'ionicons/icons';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
@@ -21,15 +21,15 @@ const mapStateToProps = (
 ): AtomicSelectorGroupStateProps => {
   const selectedIds = new Set(
     ownProps.allowMultiple
-      ? getItems(ownProps.cacheKey, state.config.datasets)
-      : [getSingleItem(ownProps.cacheKey, state.config.datasets)]
+      ? getItems(ownProps.cacheKey, state.config.algorithms)
+      : [getSingleItem(ownProps.cacheKey, state.config.algorithms)]
   );
   return {
-    selectedEntities: state.resources.datasets.filter(
-      (aDataset: Dataset): boolean => selectedIds.has(aDataset.id)
+    selectedEntities: state.resources.algorithms.filter(
+      (anAlgorithm: Algorithm): boolean => selectedIds.has(anAlgorithm.id)
     ),
-    entities: state.resources.datasets,
-    icon: fileTrayFull,
+    entities: state.resources.algorithms,
+    icon: hardwareChip,
   };
 };
 
@@ -37,20 +37,20 @@ const mapDispatchToProps = (
   dispatch: SnowmanDispatch<BenchmarkAppModel>,
   ownProps: AtomicSelectorGroupOwnProps
 ): AtomicSelectorGroupDispatchProps => ({
-  updateSelection: (datasetIds) =>
+  updateSelection: (algorithmIds) =>
     dispatch(
-      updateDatasetSelection({
+      updateAlgorithmSelection({
         aCacheKey: ownProps.cacheKey,
-        newSelection: datasetIds,
+        newSelection: algorithmIds,
         allowMultiple: ownProps.allowMultiple,
         filter: ownProps.filter,
       })
     ),
 });
 
-const DatasetSelectorGroup = connect(
+const AlgorithmSelectorGroup = connect(
   mapStateToProps,
   mapDispatchToProps
 )(AtomicSelectorGroupView);
 
-export default DatasetSelectorGroup;
+export default AlgorithmSelectorGroup;
