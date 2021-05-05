@@ -57,7 +57,7 @@ const ConfigurationStoreReducer = (
         },
       };
     }
-    case ConfigurationStoreActionTypes.SET_FUNCTION_SELECTION: {
+    case ConfigurationStoreActionTypes.SET_SIM_FUNCTION_SELECTION: {
       return {
         ...state,
         config: {
@@ -72,7 +72,7 @@ const ConfigurationStoreReducer = (
         },
       };
     }
-    case ConfigurationStoreActionTypes.SET_THRESHOLD_SELECTION: {
+    case ConfigurationStoreActionTypes.SET_SIM_THRESHOLD_SELECTION: {
       return {
         ...state,
         config: {
