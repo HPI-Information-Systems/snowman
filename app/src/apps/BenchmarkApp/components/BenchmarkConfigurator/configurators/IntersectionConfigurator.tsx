@@ -7,8 +7,8 @@ import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import React from 'react';
 
-const BinaryMetricsConfigurator = (): JSX.Element => (
-  <GenericConfigurator strategyID={StrategyIDs.BinaryMetrics}>
+const IntersectionConfigurator = (): JSX.Element => (
+  <GenericConfigurator strategyID={StrategyIDs.NaryIntersection}>
     <IonList>
       <ConfiguratorItem title="1. Select Dataset">
         <DatasetSelectorGroup
@@ -16,20 +16,14 @@ const BinaryMetricsConfigurator = (): JSX.Element => (
           allowMultiple={false}
         />
       </ConfiguratorItem>
-      <ConfiguratorItem title="2. Select Ground Truth">
-        <ExperimentSelectorGroup
-          cacheKey={StoreCacheKey.groundTruth}
-          allowMultiple={false}
-        />
-      </ConfiguratorItem>
-      <ConfiguratorItem title="3. Select Experiment">
+      <ConfiguratorItem title="2. Select Experiments">
         <ExperimentSelectorGroup
           cacheKey={StoreCacheKey.experiment}
-          allowMultiple={false}
+          allowMultiple={true}
         />
       </ConfiguratorItem>
     </IonList>
   </GenericConfigurator>
 );
 
-export default BinaryMetricsConfigurator;
+export default IntersectionConfigurator;
