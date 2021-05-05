@@ -10,8 +10,11 @@ export type ConfigurationCache<Target, Filter = undefined> = {
 };
 
 export interface ConfigurationStoreModel {
-  datasets: ConfigurationCache<DatasetConfigurationModel>;
-  algorithms: ConfigurationCache<AlgorithmConfigurationModel>;
+  datasets: ConfigurationCache<DatasetConfigurationModel, DatasetFilterModel>;
+  algorithms: ConfigurationCache<
+    AlgorithmConfigurationModel,
+    AlgorithmFilterModel
+  >;
   experiments: ConfigurationCache<
     ExperimentConfigurationModel,
     ExperimentFilterModel
@@ -20,11 +23,16 @@ export interface ConfigurationStoreModel {
     SimFunctionConfigurationModel,
     SimFunctionFilterModel
   >;
-  simThresholds: ConfigurationCache<SimThresholdConfigurationModel>;
+  simThresholds: ConfigurationCache<
+    SimThresholdConfigurationModel,
+    SimThresholdFilterModel
+  >;
 }
 
 export type DatasetConfigurationModel = number;
+export type DatasetFilterModel = undefined;
 export type AlgorithmConfigurationModel = number;
+export type AlgorithmFilterModel = undefined;
 export type ExperimentConfigurationModel = number;
 export interface ExperimentFilterModel {
   forceDatasetFilter?: StoreCacheKey;
@@ -35,3 +43,4 @@ export interface SimFunctionFilterModel {
   forceExperimentFilter?: StoreCacheKey;
 }
 export type SimThresholdConfigurationModel = number;
+export type SimThresholdFilterModel = undefined;

@@ -1,30 +1,31 @@
-import { DatasetSelectorGroupProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroupProps';
+import { AtomicSelectorGroupProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
 import SearchableList from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/SearchableList';
 import SelectorPopoverGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/SelectorPopoverGroup';
 import { useInstanceDescriptor } from 'apps/BenchmarkApp/utils/useInstanceDescriptor';
 import { fileTrayFull } from 'ionicons/icons';
 import React from 'react';
 
-const DatasetSelectorGroupView = ({
-  datasets,
-  selectedDatasets,
+const AtomicSelectorGroupView = ({
+  entities,
+  selectedEntities,
   updateSelection,
   allowMultiple,
-}: DatasetSelectorGroupProps): JSX.Element => (
+  icon,
+}: AtomicSelectorGroupProps): JSX.Element => (
   <SelectorPopoverGroup
     instanceDescriptor={useInstanceDescriptor()}
-    items={selectedDatasets.map((dataset) => ({
-      icon: fileTrayFull,
-      title: dataset.name ?? '',
+    items={selectedEntities.map((entity) => ({
+      icon,
+      title: entity.name ?? '',
     }))}
   >
     <SearchableList
-      entities={datasets}
+      entities={entities}
       icon={fileTrayFull}
-      selectedEntities={selectedDatasets.map(({ id }) => id)}
+      selectedEntities={selectedEntities.map(({ id }) => id)}
       updateSelection={updateSelection}
       allowMultiple={allowMultiple}
     />
   </SelectorPopoverGroup>
 );
-export default DatasetSelectorGroupView;
+export default AtomicSelectorGroupView;
