@@ -6,6 +6,7 @@ import {
   closeDialog,
   navigateTo,
   openDialog,
+  returnToPreviousDialog,
 } from 'apps/SnowmanApp/store/RenderLogicActions';
 import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { ViewIDs } from 'types/ViewIDs';
@@ -22,6 +23,9 @@ export const doOpenDialog = (
 };
 export const doCloseDialog = (): void => {
   SnowmanAppDispatch(closeDialog());
+};
+export const doReturnToPreviousDialog = (): void => {
+  SnowmanAppDispatch(returnToPreviousDialog());
 };
 export const doShowBlockingLoading = (): void => {
   SnowmanAppDispatch(showLoading());
