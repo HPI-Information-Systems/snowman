@@ -17,6 +17,10 @@ import { MagicNotPossibleId } from 'structs/constants';
 import { SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION } from 'structs/statusMessages';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
+import {
+  easyPrimitiveAction,
+  easyPrimitiveActionReturn,
+} from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
 
 const getExperimentId = (): number =>
@@ -44,6 +48,14 @@ export const createSimilarityThresholdFunction = (): SnowmanThunkAction<
     SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION
   ).then((): void => doCloseDialog());
 };
+
+export const changeFunctionName = (
+  newFunctionName: string
+): easyPrimitiveActionReturn<FunctionBuilderDialogModel> =>
+  easyPrimitiveAction<FunctionBuilderDialogModel>({
+    type: FunctionBuilderDialogActionTypes.CHANGE_FUNCTION_NAME,
+    payload: newFunctionName,
+  });
 
 export class FunctionBuildingBlockMagistrate {
   private static dispatch: SnowmanDispatch<FunctionBuilderDialogModel> = FunctionBuilderDialogMagistrate.getStore()
