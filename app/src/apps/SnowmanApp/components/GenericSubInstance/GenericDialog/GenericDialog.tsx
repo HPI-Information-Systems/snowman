@@ -27,7 +27,7 @@ const mapDispatchToProps = (
   ownProps: GenericDialogOwnProps
 ): GenericDialogDispatchProps => ({
   closeDialog() {
-    dispatch(closeDialog(ownProps.instanceId));
+    dispatch(closeDialog(ownProps.instanceId, true));
   },
 });
 

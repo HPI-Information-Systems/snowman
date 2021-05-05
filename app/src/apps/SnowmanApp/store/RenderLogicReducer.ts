@@ -48,7 +48,10 @@ const RenderLogicReducer = (
         ],
       };
     case RenderLogicActionTypes.CLOSE_DIALOG: {
-      if (head(state.dialogStack)?.dialogId === (action.payload as ViewIDs))
+      if (
+        head(state.dialogStack)?.dialogId === (action.payload as ViewIDs) ||
+        !(action.optionalPayload as boolean)
+      )
         return {
           ...state,
           dialogStack: state.dialogStack.slice(1),

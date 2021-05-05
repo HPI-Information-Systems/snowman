@@ -12,10 +12,14 @@ export const navigateTo = (aTarget: ViewIDs): easyPrimitiveActionReturn =>
     payload: aTarget,
   });
 
-export const closeDialog = (dialogId?: ViewIDs): easyPrimitiveActionReturn =>
+export const closeDialog = (
+  dialogId?: ViewIDs,
+  sensitive?: boolean
+): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
     type: RenderLogicActionTypes.CLOSE_DIALOG,
     payload: dialogId,
+    optionalPayload: sensitive === undefined ? false : sensitive,
   });
 
 export const openDialog = (
