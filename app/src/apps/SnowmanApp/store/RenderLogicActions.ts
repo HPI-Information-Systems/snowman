@@ -1,7 +1,5 @@
 import { RenderLogicActionTypes } from 'apps/SnowmanApp/types/RenderLogicActionTypes';
 import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
-import { SnowmanDispatch } from 'types/SnowmanDispatch';
-import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import { ViewIDs } from 'types/ViewIDs';
 import {
   easyPrimitiveAction,
@@ -14,34 +12,20 @@ export const navigateTo = (aTarget: ViewIDs): easyPrimitiveActionReturn =>
     payload: aTarget,
   });
 
-export const closeDialog = (instanceId?: ViewIDs): easyPrimitiveActionReturn =>
+export const closeDialog = (dialogId?: ViewIDs): easyPrimitiveActionReturn =>
   easyPrimitiveAction({
     type: RenderLogicActionTypes.CLOSE_DIALOG,
-    payload: instanceId,
+    payload: dialogId,
   });
-
-export let returnToPreviousDialog: () => easyPrimitiveActionReturn = closeDialog;
 
 export const openDialog = (
   aDialog: ViewIDs,
   entityId?: number,
   entityType?: string
-): SnowmanThunkAction<void, SnowmanAppModel> => (
-  dispatch: SnowmanDispatch<SnowmanAppModel>,
-  getState: () => SnowmanAppModel
-): void => {
-  const plainActionToReturnToCurrentDialog = {
-    type: RenderLogicActionTypes.OPEN_DIALOG,
-    payload: getState().RenderLogicStore.openedDialog,
-    optionalPayload: getState().RenderLogicStore.entityId,
-    optionalPayload2: getState().RenderLogicStore.entityType,
-  };
-  returnToPreviousDialog = (): easyPrimitiveActionReturn =>
-    easyPrimitiveAction(plainActionToReturnToCurrentDialog);
-  dispatch({
+): easyPrimitiveActionReturn =>
+  easyPrimitiveAction({
     type: RenderLogicActionTypes.OPEN_DIALOG,
     payload: aDialog,
     optionalPayload: entityId ?? null,
     optionalPayload2: entityType ?? null,
   });
-};

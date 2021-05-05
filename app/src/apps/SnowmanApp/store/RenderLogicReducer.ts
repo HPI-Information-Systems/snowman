@@ -1,5 +1,8 @@
 import { RenderLogicActionTypes } from 'apps/SnowmanApp/types/RenderLogicActionTypes';
 import { RenderLogicModel } from 'apps/SnowmanApp/types/RenderLogicModel';
+import { head } from 'lodash';
+import { EntityId } from 'types/EntityId';
+import { EntityType } from 'types/EntityType';
 import { SnowmanAction } from 'types/SnowmanAction';
 import { viewIdQueryParam } from 'types/ViewIdQueryParam';
 import { ViewIDs } from 'types/ViewIDs';
@@ -18,9 +21,8 @@ const getInitialViewId = (): ViewIDs => {
 
 const initialRenderLogicState: RenderLogicModel = {
   currentViewID: getInitialViewId(),
-  openedDialog: null,
   entityId: null,
-  entityType: null,
+  dialogStack: [],
 };
 
 const RenderLogicReducer = (
@@ -36,13 +38,21 @@ const RenderLogicReducer = (
     case RenderLogicActionTypes.OPEN_DIALOG:
       return {
         ...state,
-        openedDialog: action.payload as ViewIDs,
-        entityId: action.optionalPayload as null | number,
-        entityType: action.optionalPayload2 as null | string,
+        dialogStack: [
+          {
+            entityId: action.optionalPayload as EntityId,
+            entityType: action.optionalPayload2 as EntityType,
+            dialogId: action.payload as ViewIDs,
+          },
+          ...state.dialogStack,
+        ],
       };
     case RenderLogicActionTypes.CLOSE_DIALOG: {
-      if (action.payload === state.openedDialog)
-        return { ...state, openedDialog: null };
+      if (head(state.dialogStack)?.dialogId === (action.payload as ViewIDs))
+        return {
+          ...state,
+          dialogStack: state.dialogStack.slice(1),
+        };
       return state;
     }
     default:

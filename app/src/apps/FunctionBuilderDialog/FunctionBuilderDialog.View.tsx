@@ -4,9 +4,11 @@ import React from 'react';
 
 const FunctionBuilderDialogView = ({
   clickOnCancel,
+  isAddDialog,
 }: FunctionBuilderDialogProps): JSX.Element => (
   <>
     <IonButton onClick={clickOnCancel}>Cancel</IonButton>
+    <IonButton>{isAddDialog ? 'Add' : 'Update'}</IonButton>
   </>
 );
 

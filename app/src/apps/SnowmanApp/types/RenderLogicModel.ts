@@ -1,8 +1,9 @@
+import { DialogRenderConfiguration } from 'apps/SnowmanApp/types/DialogRenderConfiguration';
+import { EntityId } from 'types/EntityId';
 import { ViewIDs } from 'types/ViewIDs';
 
 export interface RenderLogicModel {
   currentViewID: ViewIDs;
-  openedDialog: ViewIDs | null;
-  entityId: number | null;
-  entityType: string | null;
+  entityId: EntityId;
+  dialogStack: DialogRenderConfiguration[];
 }
