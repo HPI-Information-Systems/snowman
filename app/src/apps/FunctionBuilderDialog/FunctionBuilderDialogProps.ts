@@ -2,6 +2,7 @@ import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/Gener
 
 export interface FunctionBuilderDialogDispatchProps {
   clickOnCancel(): void;
+  clickOnAddOrUpdate(): void;
 }
 
 export type FunctionBuilderDialogOwnProps = DialogProps;

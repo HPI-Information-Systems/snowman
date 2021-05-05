@@ -3,6 +3,7 @@ import { SimilarityFuncsDialogActionTypes } from 'apps/SimilarityFuncsDialog/typ
 import { SimilarityFuncsDialogModel } from 'apps/SimilarityFuncsDialog/types/SimilarityFuncsDilaogModel';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { MagicNotPossibleId } from 'structs/constants';
+import { SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION } from 'structs/statusMessages';
 import { EntityId } from 'types/EntityId';
 import { EntityType } from 'types/EntityType';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -62,7 +63,8 @@ export const deleteSimilarityThresholdFunction = (
       new SimilarityThresholdsApi().deleteSimilarityThresholdFunction({
         experimentId: experimentId,
         functionId: functionId,
-      })
+      }),
+    SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION
   ).then(
     (): Promise<void> => dispatch(getSimilarityThresholdFunctions(experimentId))
   );

@@ -26,3 +26,7 @@ export const SUCCESS_TO_DELETE_DATASET = 'Successfully deleted the dataset!';
 export const SUCCESS_TO_DELETE_EXPERIMENT =
   'Successfully deleted the experiment!';
 export const COULD_NOT_OPEN_CHILD_WINDOW_ERROR = 'Could not open child window.';
+export const SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION =
+  'Successfully created new similarity threshold function';
+export const SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION =
+  'Successfully deleted similarity threshold function';
