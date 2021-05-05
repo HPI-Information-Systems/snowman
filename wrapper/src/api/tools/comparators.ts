@@ -1,4 +1,4 @@
-import { NestedArray } from './types';
+import { NestedArray } from 'snowman-library';
 
 export function compareArrays(
   array1: NestedArray<number>,
