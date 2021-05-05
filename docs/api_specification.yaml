@@ -3,8 +3,8 @@ info:
   description: >
     _This document describes the REST API of the snowman data matching benchmark
     tool._
-    Comparing data matching algorithms is still an unsolved topic in both industry and research. 
-    With snowman, developers and researchers will be able to compare the performance of different data matching 
+    Comparing data matching algorithms is still an unsolved topic in both industry and research.
+    With snowman, developers and researchers will be able to compare the performance of different data matching
     solutions or improve new algorithms.
   version: 1.0.0
   title: Snowman API
@@ -490,18 +490,11 @@ paths:
           description: Bad Request
 
   #### SIMILARITY THRESHOLDS ####
-  /experiments/{experimentId}/similarity-threshold-functions:
-    parameters:
-      - name: experimentId
-        in: path
-        required: true
-        schema:
-          $ref: "#/components/schemas/ExperimentId"
-
+  /similarity-threshold-functions:
     get:
       tags:
         - Similarity Thresholds
-      summary: Get all similarity threshold functions of an experiment
+      summary: Get all similarity threshold functions
       operationId: getSimilarityThresholdFunctions
       responses:
         200:
@@ -537,13 +530,8 @@ paths:
         400:
           description: Bad Request
 
-  /experiments/{experimentId}/similarity-threshold-functions/{functionId}:
+  /similarity-threshold-functions/{functionId}:
     parameters:
-      - name: experimentId
-        in: path
-        required: true
-        schema:
-          $ref: "#/components/schemas/ExperimentId"
       - name: functionId
         in: path
         required: true
@@ -916,15 +904,20 @@ components:
           $ref: "#/components/schemas/SimilarityThresholdFunctionUnaryOperator"
       required:
         - type
-    
+
     SimilarityThresholdFunctionValues:
       allOf:
         - properties:
             name:
               type: string
+            experimentId:
+              $ref: "#/components/schemas/ExperimentId"
+            definition:
+              $ref: "#/components/schemas/SimilarityThresholdFunctionDefinition"
           required:
             - name
-        - $ref: "#/components/schemas/SimilarityThresholdFunctionDefinition"
+            - experimentId
+            - definition
 
     SimilarityThresholdFunction:
       allOf:
@@ -1046,3 +1039,4 @@ components:
       required:
         - header
         - data
+

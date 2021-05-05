@@ -3,9 +3,9 @@ import {
   DatasetId,
   ExperimentId,
   SetExperimentFileFormatEnum,
+  SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionId,
   SimilarityThresholdFunctionValues,
-  SimilarityThresholdFunctionValuesTypeEnum,
 } from '../../../../server/types';
 import { fileToReadable } from '../../../../tools/test/filtToReadable';
 import { providers } from '../../..';
@@ -35,9 +35,12 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
     datasetNumberOfRecords: 2,
     links: [[0, 1, 1]],
     func: {
-      type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+      definition: {
+        type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+        similarityThreshold: 'similarity',
+      },
       name: 'function1',
-      similarityThreshold: 'similarity',
+      experimentId: 0,
     },
     params: {
       groundTruth: [[0, 1]],
@@ -68,9 +71,12 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
       [0, 2, 0],
     ],
     func: {
-      type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+      experimentId: 0,
+      definition: {
+        similarityThreshold: 'similarity',
+        type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+      },
       name: 'function2',
-      similarityThreshold: 'similarity',
     },
     params: {
       groundTruth: [
@@ -124,9 +130,12 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
       [0, 2, 1],
     ],
     func: {
-      type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-      name: 'function3',
-      similarityThreshold: 'similarity',
+      definition: {
+        type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+        similarityThreshold: 'similarity',
+      },
+      name: 'function4',
+      experimentId: 0,
     },
     params: {
       groundTruth: [[0, 1], [2]],
@@ -149,9 +158,12 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
       [0, 2, 1],
     ],
     func: {
-      type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-      name: 'function4',
-      similarityThreshold: 'similarity',
+      definition: {
+        type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+        similarityThreshold: 'similarity',
+      },
+      experimentId: 0,
+      name: 'function3',
     },
     params: {
       groundTruth: [[0, 1], [2]],
@@ -178,9 +190,12 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
     datasetNumberOfRecords: 2,
     links: [],
     func: {
-      type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
-      name: 'function4',
-      constant: 0,
+      definition: {
+        type: SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
+        constant: 0,
+      },
+      name: 'function5',
+      experimentId: 0,
     },
     params: {
       groundTruth: [[0, 1]],
@@ -225,8 +240,7 @@ describe.each<SimilarityFunctionPlotTestCase>(testCases)(
         ])
       );
       funcId = providers.similarityThresholds.addSimilarityThresholdFunction({
-        experimentId,
-        similarityThresholdFunction: func,
+        similarityThresholdFunction: { ...func, experimentId },
       });
     });
 

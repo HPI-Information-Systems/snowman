@@ -13,8 +13,7 @@
  */
 
 import {
-    SimilarityThresholdFunctionOperator,
-    SimilarityThresholdFunctionUnaryOperator,
+    SimilarityThresholdFunctionDefinition,
 } from './';
 
 /**
@@ -31,43 +30,14 @@ export interface SimilarityThresholdFunctionValues {
     name: string;
     /**
      * 
-     * @type {string}
-     * @memberof SimilarityThresholdFunctionValues
-     */
-    type: SimilarityThresholdFunctionValuesTypeEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof SimilarityThresholdFunctionValues
-     */
-    similarityThreshold?: string;
-    /**
-     * 
-     * @type {SimilarityThresholdFunctionOperator}
-     * @memberof SimilarityThresholdFunctionValues
-     */
-    operator?: SimilarityThresholdFunctionOperator;
-    /**
-     * 
      * @type {number}
      * @memberof SimilarityThresholdFunctionValues
      */
-    constant?: number;
+    experimentId: number;
     /**
      * 
-     * @type {SimilarityThresholdFunctionUnaryOperator}
+     * @type {SimilarityThresholdFunctionDefinition}
      * @memberof SimilarityThresholdFunctionValues
      */
-    unaryOperator?: SimilarityThresholdFunctionUnaryOperator;
-}
-
-/**
-* @export
-* @enum {string}
-*/
-export enum SimilarityThresholdFunctionValuesTypeEnum {
-    SimilarityThreshold = 'SimilarityThreshold',
-    Operator = 'Operator',
-    Constant = 'Constant',
-    UnaryOperator = 'UnaryOperator'
+    definition: SimilarityThresholdFunctionDefinition;
 }
