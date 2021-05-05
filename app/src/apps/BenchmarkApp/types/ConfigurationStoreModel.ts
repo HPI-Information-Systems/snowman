@@ -36,11 +36,14 @@ export type AlgorithmFilterModel = undefined;
 export type ExperimentConfigurationModel = number;
 export interface ExperimentFilterModel {
   forceDatasetFilter?: StoreCacheKey;
+  allowMultipleDatasetFilter?: boolean;
   forceAlgorithmFilter?: StoreCacheKey;
+  allowMultipleAlgorithmFilter?: boolean;
 }
 export type SimFunctionConfigurationModel = number;
 export interface SimFunctionFilterModel {
   forceExperimentFilter?: StoreCacheKey;
+  allowMultipleExperimentFilter?: boolean;
 }
 export type SimThresholdConfigurationModel = number;
 export type SimThresholdFilterModel = undefined;

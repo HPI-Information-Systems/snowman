@@ -32,6 +32,15 @@ const BinaryMetricsConfiguratorView = (): JSX.Element => (
         allowMultiple={true}
       />
     </ConfiguratorItem>
+    <ConfiguratorItem title="4. Select Experiments">
+      <ExperimentSelectorGroup
+        cacheKey={StoreCacheKeysEnum.experiment}
+        allowMultiple={true}
+        filter={{
+          forceDatasetFilter: StoreCacheKeysEnum.dataset,
+        }}
+      />
+    </ConfiguratorItem>
   </IonList>
 );
 

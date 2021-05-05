@@ -17,6 +17,7 @@ import {
   getItems,
   getSingleItem,
 } from 'apps/BenchmarkApp/utils/configurationItemGetter';
+import { filterEntities } from 'apps/BenchmarkApp/utils/filterItems';
 import { flask } from 'ionicons/icons';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -25,18 +26,34 @@ const mapStateToProps = (
   state: BenchmarkAppModel,
   ownProps: AtomicSelectorGroupOwnProps<ExperimentFilterModel>
 ): AtomicSelectorGroupStateProps<ExperimentFilterModel> => {
+  let availableExperiments = filterEntities({
+    aFilterCacheKey:
+      ownProps.filter?.forceDatasetFilter ??
+      fallbackFilterChacheKey(StoreCacheKeysEnum.dataset),
+    cache: state.config.datasets,
+    entities: state.resources.experiments,
+    isAllowed: ({ datasetId }, filter) => filter.has(datasetId),
+    allowMultipleFilters: ownProps.filter?.allowMultipleAlgorithmFilter,
+  });
+  availableExperiments = filterEntities({
+    aFilterCacheKey:
+      ownProps.filter?.forceAlgorithmFilter ??
+      fallbackFilterChacheKey(StoreCacheKeysEnum.algorithm),
+    cache: state.config.algorithms,
+    entities: availableExperiments,
+    isAllowed: ({ algorithmId }, filter) => filter.has(algorithmId),
+    allowMultipleFilters: ownProps.filter?.allowMultipleAlgorithmFilter,
+  });
   const selectedIds = new Set(
     ownProps.allowMultiple
       ? getItems(ownProps.cacheKey, state.config.experiments)
       : [getSingleItem(ownProps.cacheKey, state.config.experiments)]
   );
-  fallbackFilterChacheKey(StoreCacheKeysEnum.algorithm);
-  fallbackFilterChacheKey(StoreCacheKeysEnum.dataset);
   return {
-    selectedEntities: state.resources.experiments.filter(
+    selectedEntities: availableExperiments.filter(
       (anExperiment: Experiment): boolean => selectedIds.has(anExperiment.id)
     ),
-    entities: state.resources.experiments,
+    entities: availableExperiments,
     icon: flask,
     filterComponent: ExperimentFilters,
   };
@@ -60,6 +77,8 @@ const mapDispatchToProps = (
 const ExperimentSelectorGroup = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AtomicSelectorGroupView);
+)(AtomicSelectorGroupView) as (
+  props: AtomicSelectorGroupOwnProps<ExperimentFilterModel>
+) => JSX.Element;
 
 export default ExperimentSelectorGroup;

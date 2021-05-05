@@ -14,24 +14,22 @@ const ExperimentFilters = ({
   filter,
 }: FilterComponentProps<ExperimentFilterModel>): JSX.Element => (
   <IonList>
-    <ConfiguratorItem title="Filter by Dataset">
-      <DatasetSelectorGroup
-        cacheKey={
-          filter?.forceDatasetFilter ??
-          fallbackFilterChacheKey(StoreCacheKeysEnum.dataset)
-        }
-        allowMultiple={true}
-      />
-    </ConfiguratorItem>
-    <ConfiguratorItem title="Filter by Matching Solution">
-      <AlgorithmSelectorGroup
-        cacheKey={
-          filter?.forceAlgorithmFilter ??
-          fallbackFilterChacheKey(StoreCacheKeysEnum.algorithm)
-        }
-        allowMultiple={true}
-      />
-    </ConfiguratorItem>
+    {filter?.forceDatasetFilter === undefined ? (
+      <ConfiguratorItem title="Filter by Dataset">
+        <DatasetSelectorGroup
+          cacheKey={fallbackFilterChacheKey(StoreCacheKeysEnum.dataset)}
+          allowMultiple={filter?.allowMultipleDatasetFilter ?? true}
+        />
+      </ConfiguratorItem>
+    ) : null}
+    {filter?.forceAlgorithmFilter === undefined ? (
+      <ConfiguratorItem title="Filter by Matching Solution">
+        <AlgorithmSelectorGroup
+          cacheKey={fallbackFilterChacheKey(StoreCacheKeysEnum.algorithm)}
+          allowMultiple={filter?.allowMultipleAlgorithmFilter ?? true}
+        />
+      </ConfiguratorItem>
+    ) : null}
   </IonList>
 );
 
