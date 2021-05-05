@@ -8,10 +8,7 @@ import {
 } from 'api';
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
 import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyModel';
-import {
-  BenchmarkAppModel,
-  BenchmarkAppResourcesStore,
-} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { MagicNotPossibleId } from 'structs/constants';
 import { SUCCESS_LOAD_BINARY_METRICS } from 'structs/statusMessages';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
@@ -24,7 +21,7 @@ import {
 import RequestHandler from 'utils/requestHandler';
 
 export const updateConfig = (
-  benchmarkConfig: BenchmarkAppResourcesStore
+  benchmarkConfig: BenchmarkAppModel
 ): easyPrimitiveActionReturn<BinaryMetricsStrategyModel> =>
   easyPrimitiveAction<BinaryMetricsStrategyModel>({
     type: BinaryMetricsStrategyActionTypes.UPDATE_CONFIG,
@@ -223,7 +220,7 @@ export const loadStrategyData = (
   dispatch: SnowmanDispatch<BinaryMetricsStrategyModel>,
   appStore: BenchmarkAppModel
 ): void => {
-  dispatch(updateConfig(appStore.resources));
+  dispatch(updateConfig(appStore));
   dispatch(loadMetrics()).then();
   dispatch(loadBinaryMetricsTuplesCounts()).then();
   // Todo: Load smth
