@@ -1,7 +1,4 @@
-import {
-  BenchmarkAppModel,
-  BenchmarkAppResourcesStore,
-} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { Store } from 'redux';
 import { SnowmanAction } from 'types/SnowmanAction';
