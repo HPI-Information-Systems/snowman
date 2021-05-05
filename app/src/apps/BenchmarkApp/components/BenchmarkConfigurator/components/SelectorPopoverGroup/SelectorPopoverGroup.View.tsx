@@ -5,15 +5,19 @@ import React from 'react';
 
 const SelectorPopoverGroupView = ({
   close,
-  open,
-  event,
+  show,
+  eventPopover,
   isOpen,
   items,
   children,
 }: SelectorPopoverGroupProps): JSX.Element => (
   <>
-    <SelectorGroup items={items} onClick={(event) => open(event.nativeEvent)} />
-    <IonPopover isOpen={isOpen} event={event} onDidDismiss={() => close()}>
+    <SelectorGroup items={items} onClick={(event) => show(event.nativeEvent)} />
+    <IonPopover
+      isOpen={isOpen}
+      event={eventPopover}
+      onDidDismiss={() => close()}
+    >
       {children}
     </IonPopover>
   </>

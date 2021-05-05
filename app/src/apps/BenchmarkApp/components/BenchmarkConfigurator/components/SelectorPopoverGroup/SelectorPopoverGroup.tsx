@@ -18,15 +18,15 @@ const mapStateToProps = ({
   isOpen,
   eventPopover,
 }: SelectorPopoverGroupModel): SelectorPopoverGroupStateProps => ({
-  isOpen,
-  event: eventPopover,
+  isOpen: isOpen,
+  eventPopover: eventPopover,
 });
 
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch<SelectorPopoverGroupModel>
 ): SelectorPopoverGroupDispatchProps => ({
   close: () => dispatch(closePopover()),
-  open: (event: MouseEvent) => dispatch(showPopover(event)),
+  show: (event: MouseEvent) => dispatch(showPopover(event)),
 });
 
 const SelectorPopoverGroup = GenericStoreComponentFactory<

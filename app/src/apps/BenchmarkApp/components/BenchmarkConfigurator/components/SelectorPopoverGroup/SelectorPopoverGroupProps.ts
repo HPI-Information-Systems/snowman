@@ -8,11 +8,11 @@ export interface SelectorPopoverGroupOwnProps
 
 export interface SelectorPopoverGroupStateProps {
   isOpen: boolean;
-  event: Event | undefined;
+  eventPopover: Event | undefined;
 }
 
 export interface SelectorPopoverGroupDispatchProps {
-  open(event: Event): void;
+  show(event: Event): void;
   close(): void;
 }
 
