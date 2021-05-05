@@ -5,7 +5,7 @@ import {
   DatasetSelectorGroupOwnProps,
   DatasetSelectorGroupStateProps,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/DatasetSelectorGroup/DatasetSelectorGroupProps';
-import { updateDatasetSelection } from 'apps/BenchmarkApp/store/ConfigurationStoreActions';
+import { updateDatasetSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreDatasetActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { getMultiSelectorItems } from 'apps/BenchmarkApp/utils/getMultiSelectorItems';
 import { connect } from 'react-redux';
