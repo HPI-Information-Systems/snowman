@@ -8,6 +8,7 @@ export interface SearchableListOwnProps extends GenericStoreComponentProps {
   updateSelection: (selectedEntities: number[]) => void;
   selectedEntities: number[];
   allowMultiple?: boolean;
+  children?: JSX.Element | JSX.Element[];
 }
 
 export interface SearchableListStateProps {

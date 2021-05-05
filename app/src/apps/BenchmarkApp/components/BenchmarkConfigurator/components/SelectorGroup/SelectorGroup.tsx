@@ -11,7 +11,11 @@ const SelectorGroup = ({ onClick, items }: SelectorGroupProps): JSX.Element => (
       {items.map(({ icon, indent, title }, index) => (
         <IonItem
           key={index}
-          className={style(styles.smallItem, styles.itemNoBorder)}
+          className={style(
+            styles.smallItem,
+            styles.itemNoBorder,
+            styles.oneLine
+          )}
           style={{
             marginLeft: 8 * (indent ?? 0),
           }}

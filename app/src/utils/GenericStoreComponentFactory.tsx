@@ -6,13 +6,11 @@ export interface GenericStoreComponentProps {
   instanceDescriptor: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const GenericStoreComponentFactory = function <
   Model,
   OwnProps extends GenericStoreComponentProps
->(
-  magistrate: StoreMagistrate<Model>,
-  component: React.FC<OwnProps>
-): typeof Component {
+>(magistrate: StoreMagistrate<Model>, component: React.FC<OwnProps>) {
   return class GenericStoreComponent extends Component<OwnProps> {
     render(): JSX.Element {
       return (
