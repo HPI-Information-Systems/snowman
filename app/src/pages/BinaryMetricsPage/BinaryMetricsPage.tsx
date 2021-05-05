@@ -25,6 +25,7 @@ import { Store } from 'store/models';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { TuplesLoader } from 'types/TuplesLoader';
 import { intersectionDescription } from 'utils/intersectionDescription';
+import { numberOfDistinctPairs } from 'utils/numberOfDistinctPairs';
 
 const getCountsByTuplesCategory = (
   store: Store,
@@ -118,9 +119,8 @@ const mapStateToProps = (state: Store): BinaryMetricsPageStateProps => ({
     state.BinaryMetricsStore.selectedDataView
   ),
   confusionMatrix: {
-    totalCount: Math.pow(
-      state.BenchmarkConfigurationStore.selectedDataset?.numberOfRecords ?? 0,
-      2
+    totalCount: numberOfDistinctPairs(
+      state.BenchmarkConfigurationStore.selectedDataset?.numberOfRecords ?? 0
     ),
     falseNegatives: getPairCountByTuplesCategory(
       state,
