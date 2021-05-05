@@ -1,4 +1,4 @@
-import { SimilarityThresholdFunctionValues } from './SimilarityThresholdFunctionValues';
+import { SimilarityThresholdFunctionValues } from '.';
 
 export interface AddSimilarityThresholdFunctionRequest {
   experimentId: number;

@@ -16,6 +16,8 @@ export * from './FileResponse';
 export * from './Metric';
 export * from './SimilarityThresholdFunction';
 export * from './SimilarityThresholdFunctionAllOf';
+export * from './SimilarityThresholdFunctionDefinition';
 export * from './SimilarityThresholdFunctionOperator';
 export * from './SimilarityThresholdFunctionUnaryOperator';
 export * from './SimilarityThresholdFunctionValues';
+export * from './SimilarityThresholdFunctionValuesAllOf';

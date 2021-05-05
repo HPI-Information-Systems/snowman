@@ -9,6 +9,7 @@ import {
   GetSimilarityThresholdFunctionsRequest,
   SetSimilarityThresholdFunctionRequest,
   SimilarityThresholdFunction,
+  SimilarityThresholdFunctionDefinition,
   SimilarityThresholdFunctionId,
 } from '../../server/types';
 import { providers } from '..';
@@ -84,13 +85,14 @@ export class SimilarityThresholdsProvider {
     return databaseBackend().transaction(() => {
       providers.experiment.getExperiment(experimentId);
       const expression = functionToExpression(
-        similarityThresholdFunction,
+        (similarityThresholdFunction as unknown) as SimilarityThresholdFunctionDefinition,
         tables.experiment.experiment(experimentId).schema.columns
       );
       const [functionId] = tables.meta.similarityfunction.upsert([
         {
           experiment: experimentId,
           expression,
+          name: similarityThresholdFunction.name,
         },
       ]);
       this.writeSimilarities(experimentId, functionId, expression);
@@ -106,12 +108,13 @@ export class SimilarityThresholdsProvider {
     return databaseBackend().transaction(() => {
       providers.experiment.getExperiment(experimentId);
       const expression = functionToExpression(
-        similarityThresholdFunction,
+        (similarityThresholdFunction as unknown) as SimilarityThresholdFunctionDefinition,
         tables.experiment.experiment(experimentId).schema.columns
       );
       tables.meta.similarityfunction.upsert([
         {
           experiment: experimentId,
+          name: similarityThresholdFunction.name,
           expression,
           id: functionId,
         },

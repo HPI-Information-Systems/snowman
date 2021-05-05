@@ -62,6 +62,8 @@ const BinaryMetricsStrategyReducer = (
           (aDataset: Dataset): boolean => aDataset.id === datasetId
         ),
         isValidConfig: true,
+        metrics: [],
+        counts: [],
       };
     }
     case BinaryMetricsStrategyActionTypes.RESET_METRICS:
