@@ -3,7 +3,7 @@ import { ActivityIndicatorStateProps } from 'apps/SnowmanApp/components/Activity
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
 import { connect } from 'react-redux';
-import storeLink from 'utils/storeLink';
+import GenericStoreComponentFactory from 'utils/GenericStoreComponentFactory';
 
 const mapStateToProps = (
   state: SnowmanAppModel
@@ -11,8 +11,8 @@ const mapStateToProps = (
   existsActiveRequest: state.ActionLogicStore.ongoingRequestsCount > 0,
 });
 
-export const ActivityIndicator = storeLink(
-  SnowmanAppMagistrate.getStore(),
+export const ActivityIndicator = GenericStoreComponentFactory(
+  SnowmanAppMagistrate,
   connect(mapStateToProps)(ActivityIndicatorView)
 );
 
