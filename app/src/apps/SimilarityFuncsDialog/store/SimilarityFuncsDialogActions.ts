@@ -3,6 +3,8 @@ import { SimilarityFuncsDialogActionTypes } from 'apps/SimilarityFuncsDialog/typ
 import { SimilarityFuncsDialogModel } from 'apps/SimilarityFuncsDialog/types/SimilarityFuncsDilaogModel';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { MagicNotPossibleId } from 'structs/constants';
+import { EntityId } from 'types/EntityId';
+import { EntityType } from 'types/EntityType';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import {
@@ -19,17 +21,16 @@ export const changeSearchString = (
     payload: newSearchString,
   });
 
-export const getSimilarityThresholdFunctions = (): SnowmanThunkAction<
-  Promise<void>,
-  SimilarityFuncsDialogModel
-> => (dispatch: SnowmanDispatch<SimilarityFuncsDialogModel>): Promise<void> => {
+const getSimilarityThresholdFunctions = (
+  experimentId: EntityId
+): SnowmanThunkAction<Promise<void>, SimilarityFuncsDialogModel> => (
+  dispatch: SnowmanDispatch<SimilarityFuncsDialogModel>
+): Promise<void> => {
   return RequestHandler<void>(
     (): Promise<void> =>
       new SimilarityThresholdsApi()
         .getSimilarityThresholdFunctions({
-          experimentId:
-            SnowmanAppMagistrate.getStore().getState().RenderLogicStore
-              .entityId ?? MagicNotPossibleId,
+          experimentId: experimentId ?? MagicNotPossibleId,
         })
         .then((functions: SimilarityThresholdFunction[]): void => {
           dispatch({
@@ -40,18 +41,29 @@ export const getSimilarityThresholdFunctions = (): SnowmanThunkAction<
   );
 };
 
+export const loadSimilarityThresholdFunctionsOnDialogOpen = (
+  dispatch: SnowmanDispatch<SimilarityFuncsDialogModel>,
+  entityId: EntityId,
+  _?: EntityType
+): void => {
+  dispatch(getSimilarityThresholdFunctions(entityId)).then();
+};
+
 export const deleteSimilarityThresholdFunction = (
   functionId: number
 ): SnowmanThunkAction<Promise<void>, SimilarityFuncsDialogModel> => (
   dispatch: SnowmanDispatch<SimilarityFuncsDialogModel>
 ): Promise<void> => {
+  const experimentId =
+    SnowmanAppMagistrate.getStore().getState().RenderLogicStore.entityId ??
+    MagicNotPossibleId;
   return RequestHandler<void>(
     (): Promise<void> =>
       new SimilarityThresholdsApi().deleteSimilarityThresholdFunction({
-        experimentId:
-          SnowmanAppMagistrate.getStore().getState().RenderLogicStore
-            .entityId ?? MagicNotPossibleId,
+        experimentId: experimentId,
         functionId: functionId,
       })
-  ).then((): Promise<void> => dispatch(getSimilarityThresholdFunctions()));
+  ).then(
+    (): Promise<void> => dispatch(getSimilarityThresholdFunctions(experimentId))
+  );
 };

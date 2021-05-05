@@ -1,4 +1,5 @@
 import SimilarityFuncsDialogContainer from 'apps/SimilarityFuncsDialog/SimilarityFuncsDialog.Container';
+import { loadSimilarityThresholdFunctionsOnDialogOpen } from 'apps/SimilarityFuncsDialog/store/SimilarityFuncsDialogActions';
 import { SimilarityFuncsDialogMagistrate } from 'apps/SimilarityFuncsDialog/store/SimilarityFuncsDialogStore';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import GenericDialog from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialog';
@@ -16,6 +17,7 @@ const SimilarityFuncsDialog = (): JSX.Element => (
     }
     instanceId={ViewIDs.SimilarityFuncsDialog}
     createSubAppStore={SimilarityFuncsDialogMagistrate.getStore}
+    onDialogOpen={loadSimilarityThresholdFunctionsOnDialogOpen}
   >
     {(ownProps: DialogProps): JSX.Element => (
       <SimilarityFuncsDialogContainer {...ownProps} />
