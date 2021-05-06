@@ -11,7 +11,7 @@ const FunctionBuilderDialog = (): JSX.Element => (
     getHeading={(entityId: EntityId): string =>
       entityId
         ? `Edit Existing Function (ID: ${entityId})`
-        : 'Create New Function'
+        : 'Create New Similarity Function'
     }
     instanceId={ViewIDs.FunctionBuilderDialog}
     createSubAppStore={FunctionBuilderDialogMagistrate.getStore}

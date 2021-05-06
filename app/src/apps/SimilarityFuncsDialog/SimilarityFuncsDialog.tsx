@@ -11,7 +11,7 @@ const SimilarityFuncsDialog = (): JSX.Element => (
   <GenericDialog
     getHeading={(entityId: EntityId): string =>
       entityId
-        ? `Manage Similarity Threshold Functions Of Experiment ${entityId}`
+        ? `Manage Similarity Functions (ID: ${entityId})`
         : // it will never happen that we open the dialog without an entity id
           'Unknown'
     }
