@@ -1,8 +1,10 @@
 import { BenchmarkAppStoreMagistrate } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
 import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
-import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import {
+  BenchmarkAppDispatch,
+  BenchmarkAppModel,
+} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
-import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
@@ -17,6 +19,7 @@ export const openStrategy = (
   });
 
 export const doOpenStrategy = (aStrategyId: StrategyIDs): void => {
-  (BenchmarkAppStoreMagistrate.getStore()
-    .dispatch as SnowmanDispatch<BenchmarkAppModel>)(openStrategy(aStrategyId));
+  (BenchmarkAppStoreMagistrate.getStore().dispatch as BenchmarkAppDispatch)(
+    openStrategy(aStrategyId)
+  );
 };

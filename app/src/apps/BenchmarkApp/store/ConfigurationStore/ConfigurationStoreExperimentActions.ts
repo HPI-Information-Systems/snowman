@@ -1,6 +1,9 @@
 import { BenchmarkAppStoreMagistrate } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
 import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreGenericActions';
-import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import {
+  BenchmarkAppDispatch,
+  BenchmarkAppModel,
+} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
 import { ExperimentFilterModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import {
@@ -54,8 +57,7 @@ export const doPrimeExperimentSelection = (
   aCacheKey: StoreCacheKey,
   experimentId: number
 ): void => {
-  (BenchmarkAppStoreMagistrate.getStore()
-    .dispatch as SnowmanDispatch<BenchmarkAppModel>)(
+  (BenchmarkAppStoreMagistrate.getStore().dispatch as BenchmarkAppDispatch)(
     primeExperimentSelection(aCacheKey, experimentId)
   );
 };
