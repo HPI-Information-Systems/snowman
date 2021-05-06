@@ -1,4 +1,4 @@
-import { IonChip, IonIcon, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonChip, IonSelect, IonSelectOption } from '@ionic/react';
 import {
   SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionOperatorOperatorEnum,
@@ -6,7 +6,7 @@ import {
 import NextStrategySelector from 'apps/FunctionBuilderDialog/components/NextStrategySelector/NextStrategySelector';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
 import UndefinedStrategy from 'apps/FunctionBuilderDialog/components/StrategyMapper/UndefinedStrategy';
-import { closeCircle } from 'ionicons/icons';
+import StrategyUnselector from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector';
 import React, { useState } from 'react';
 
 const OperatorStrategy = (): JSX.Element => {
@@ -28,10 +28,6 @@ const OperatorStrategy = (): JSX.Element => {
           setNextStrategy={setLeftChildType}
         />
       </StrategyMapper>
-      <IonIcon
-        icon={closeCircle}
-        onClick={(): void => setLeftChildType(UndefinedStrategy)}
-      />
       <IonChip>
         <IonSelect>
           {Object.keys(SimilarityThresholdFunctionOperatorOperatorEnum).map(
@@ -51,9 +47,9 @@ const OperatorStrategy = (): JSX.Element => {
           setNextStrategy={setRightChildType}
         />
       </StrategyMapper>
-      <IonIcon
-        icon={closeCircle}
-        onClick={(): void => setRightChildType(UndefinedStrategy)}
+      <StrategyUnselector
+        strategyType={rightChildType}
+        setStrategyType={setRightChildType}
       />
       )
     </>
