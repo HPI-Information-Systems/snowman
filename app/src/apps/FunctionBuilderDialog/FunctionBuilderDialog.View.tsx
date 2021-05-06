@@ -1,7 +1,14 @@
-import { IonButton, IonItemDivider } from '@ionic/react';
+import { IonButton, IonIcon, IonItemDivider } from '@ionic/react';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
 import { FunctionBuilderDialogProps } from 'apps/FunctionBuilderDialog/FunctionBuilderDialogProps';
+import styles from 'apps/FunctionBuilderDialog/FunctionBuilderDialogStyles.module.css';
+import {
+  addCircleOutline,
+  checkmarkCircleOutline,
+  closeCircleOutline,
+} from 'ionicons/icons';
 import React from 'react';
+import style from 'theme/style';
 
 const FunctionBuilderDialogView = ({
   clickOnCancel,
@@ -16,10 +23,26 @@ const FunctionBuilderDialogView = ({
       setNextStrategyType={selectRootType}
     />
     <IonItemDivider />
-    <IonButton onClick={clickOnCancel}>Cancel</IonButton>
-    <IonButton onClick={clickOnAddOrUpdate}>
-      {isAddDialog ? 'Add' : 'Update'}
-    </IonButton>
+    <div className={style(styles.center, styles.buttonRow)}>
+      <IonButton
+        onClick={clickOnAddOrUpdate}
+        className={style(styles.buttonHugh, styles.buttonPadding)}
+      >
+        <IonIcon
+          slot="start"
+          icon={isAddDialog ? addCircleOutline : checkmarkCircleOutline}
+        />
+        {isAddDialog ? 'Add' : 'Update'}
+      </IonButton>
+      <IonButton
+        onClick={clickOnCancel}
+        color="light"
+        className={style(styles.buttonHugh, styles.buttonPadding)}
+      >
+        <IonIcon slot="start" icon={closeCircleOutline} />
+        Cancel
+      </IonButton>
+    </div>
   </>
 );
 
