@@ -3,7 +3,10 @@ import {
   StrategyMap,
   StrategyMapItem,
 } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMap';
-import { StrategyMapperProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
+import {
+  StrategyMapperProps,
+  StrategyMapperStateProps,
+} from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
 import StrategyUnselector from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector';
 import React, { Component, createElement } from 'react';
 
@@ -36,10 +39,10 @@ class StrategyMapper extends Component<
           </span>
         ) : (
           <span style={{ marginLeft: 10, marginRight: 10 }}>
-          <NextStrategySelector
-            nextStrategyType={this.props.nextStrategyType}
-            setNextStrategyType={this.props.setNextStrategyType}
-          />
+            <NextStrategySelector
+              nextStrategyType={this.props.nextStrategyType}
+              setNextStrategyType={this.props.setNextStrategyType}
+            />
           </span>
         )}
       </>
