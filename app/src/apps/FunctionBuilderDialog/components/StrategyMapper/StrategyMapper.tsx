@@ -3,14 +3,23 @@ import {
   StrategyMap,
   StrategyMapItem,
 } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMap';
-import { StrategyMapperProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
+import {
+  StrategyMapperProps,
+  StrategyMapperStateProps,
+} from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
 import StrategyUnselector from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector';
+import { getNewAccessKey } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
 import React, { Component, createElement } from 'react';
 
 class StrategyMapper extends Component<
   StrategyMapperProps,
   StrategyMapperStateProps
 > {
+  blockAccessKey: number;
+  constructor(props: StrategyMapperProps) {
+    super(props);
+    this.blockAccessKey = this.props.blockAccessKey ?? getNewAccessKey();
+  }
   componentDidUpdate(prevProps: Readonly<StrategyMapperProps>): void {
     if (prevProps.nextStrategyType !== this.props.nextStrategyType) {
       this.setState({
@@ -36,10 +45,10 @@ class StrategyMapper extends Component<
           </span>
         ) : (
           <span style={{ marginLeft: 10, marginRight: 10 }}>
-          <NextStrategySelector
-            nextStrategyType={this.props.nextStrategyType}
-            setNextStrategyType={this.props.setNextStrategyType}
-          />
+            <NextStrategySelector
+              nextStrategyType={this.props.nextStrategyType}
+              setNextStrategyType={this.props.setNextStrategyType}
+            />
           </span>
         )}
       </>

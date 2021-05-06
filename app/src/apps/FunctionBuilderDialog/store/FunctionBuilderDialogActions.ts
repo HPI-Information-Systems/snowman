@@ -78,7 +78,7 @@ class FunctionBuildingBlockKeyMagistrate {
     FunctionBuilderDialogModel
   > {
     return function (
-      _: SnowmanDispatch<FunctionBuilderDialogModel>,
+      dispatch: SnowmanDispatch<FunctionBuilderDialogModel>,
       getState: () => FunctionBuilderDialogModel
     ): number {
       return (max(getState().reservedAccessKeys) ?? RootAccessKey) + 1;
@@ -91,4 +91,5 @@ class FunctionBuildingBlockKeyMagistrate {
 }
 
 const FunctionBuildingBlockKeyMagistrateInstance = new FunctionBuildingBlockKeyMagistrate();
-export const getNewAccessKey = FunctionBuildingBlockKeyMagistrateInstance.getNewAccessKey();
+export const getNewAccessKey: () => number =
+  FunctionBuildingBlockKeyMagistrateInstance.getNewAccessKey;

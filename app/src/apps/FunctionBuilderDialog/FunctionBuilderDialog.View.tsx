@@ -1,5 +1,5 @@
-import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/RootAccessKey';
 import { IonButton, IonIcon, IonItemDivider } from '@ionic/react';
+import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/RootAccessKey';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
 import { FunctionBuilderDialogProps } from 'apps/FunctionBuilderDialog/FunctionBuilderDialogProps';
 import styles from 'apps/FunctionBuilderDialog/FunctionBuilderDialogStyles.module.css';
