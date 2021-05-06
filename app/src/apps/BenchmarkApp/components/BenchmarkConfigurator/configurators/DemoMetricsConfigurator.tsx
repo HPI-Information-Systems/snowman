@@ -2,6 +2,7 @@ import { IonList } from '@ionic/react';
 import AlgorithmSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AlgorithmSelectorGroup';
 import DatasetSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/DatasetSelectorGroup';
 import ExperimentSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/ExperimentSelectorGroup';
+import SimFunctionSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/SimFunctionSelectorGroup';
 import ConfiguratorItem from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/ConfiguratorItem/ConfiguratorItem';
 import GenericConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/GenericConfigurator/GenericConfigurator';
 import NumberInputGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/NumberInputGroup/NumberInputGroup';
@@ -45,6 +46,18 @@ const DemoMetricsConfigurator = (): JSX.Element => (
       <ConfiguratorItem title="5. Select Ground Truth">
         <ExperimentSelectorGroup
           cacheKey={StoreCacheKey.groundTruth}
+          allowMultiple={false}
+        />
+      </ConfiguratorItem>
+      <ConfiguratorItem title="6. Select Experiment">
+        <ExperimentSelectorGroup
+          cacheKey={StoreCacheKey.experiment}
+          allowMultiple={false}
+        />
+      </ConfiguratorItem>
+      <ConfiguratorItem title="6a. Select SimFunction">
+        <SimFunctionSelectorGroup
+          cacheKey={StoreCacheKey.simFunction}
           allowMultiple={false}
         />
       </ConfiguratorItem>
