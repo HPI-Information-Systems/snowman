@@ -7,7 +7,7 @@ import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: FunctionBuilderDialogModel = {
   operator: {
-    type: SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
+    type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
   },
   reservedAccessKeys: [RootAccessKey],
   functionBuildingStack: {
