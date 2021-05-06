@@ -29,7 +29,7 @@ const OperatorStrategy = (): JSX.Element => {
         nextStrategyType={leftChildType as FunctionBuildingBlockType}
         setNextStrategyType={setLeftChildType}
       />
-      <IonChip>
+      <IonChip color="success">
         <IonSelect>
           {Object.keys(SimilarityThresholdFunctionOperatorOperatorEnum).map(
             (anOperator: string): JSX.Element => (

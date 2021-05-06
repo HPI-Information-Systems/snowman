@@ -1,6 +1,7 @@
 import { IonButton, IonIcon, IonItem, IonLabel } from '@ionic/react';
 import { SimilarityFuncItemProps } from 'apps/SimilarityFuncsDialog/components/SimilarityFuncItem/SimilarityFuncItemProps';
-import { analytics, construct, trash } from 'ionicons/icons';
+import styles from 'apps/SimilarityFuncsDialog/components/SimilarityFuncItem/SimilarityFuncItemStyles.module.css';
+import { analytics, create, trash } from 'ionicons/icons';
 import React from 'react';
 
 const SimilarityFunctionItemView = ({
@@ -9,12 +10,17 @@ const SimilarityFunctionItemView = ({
   similarityFunction,
 }: SimilarityFuncItemProps): JSX.Element => (
   <IonItem>
-    <IonIcon icon={analytics} />
+    <IonIcon
+      icon={analytics}
+      slot="start"
+      className={styles.iconStart}
+      color="primary"
+    />
     <IonLabel>{similarityFunction.name}</IonLabel>
-    <IonButton onClick={openEditFunctionBuilder}>
-      <IonIcon icon={construct} />
+    <IonButton onClick={openEditFunctionBuilder} color="primary">
+      <IonIcon icon={create} />
     </IonButton>
-    <IonButton onClick={deleteFunction}>
+    <IonButton onClick={deleteFunction} color="danger">
       <IonIcon icon={trash} />
     </IonButton>
   </IonItem>

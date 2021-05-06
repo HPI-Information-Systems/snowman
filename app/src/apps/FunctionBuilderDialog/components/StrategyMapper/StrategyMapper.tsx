@@ -3,10 +3,7 @@ import {
   StrategyMap,
   StrategyMapItem,
 } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMap';
-import {
-  StrategyMapperProps,
-  StrategyMapperStateProps,
-} from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
+import { StrategyMapperProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
 import StrategyUnselector from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector';
 import React, { Component, createElement } from 'react';
 
@@ -30,18 +27,20 @@ class StrategyMapper extends Component<
     return (
       <>
         {this.state?.targetStrategy !== undefined ? (
-          <>
+          <span style={{ marginLeft: 10, marginRight: 10 }}>
             {createElement(this.state.targetStrategy.targetStrategyComponent)}
             <StrategyUnselector
               nextStrategyType={this.props.nextStrategyType}
               setNextStrategyType={this.props.setNextStrategyType}
             />
-          </>
+          </span>
         ) : (
+          <span style={{ marginLeft: 10, marginRight: 10 }}>
           <NextStrategySelector
             nextStrategyType={this.props.nextStrategyType}
             setNextStrategyType={this.props.setNextStrategyType}
           />
+          </span>
         )}
       </>
     );
