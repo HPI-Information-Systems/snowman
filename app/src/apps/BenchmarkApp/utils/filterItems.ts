@@ -5,7 +5,7 @@ import {
   getSingleItem,
 } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 
-export const filterEntities = <Entity, FilterEntity>({
+export const filterEntities = <Entity, FilterEntity, Filter>({
   entities,
   isAllowed,
   allowMultipleFilters = true,
@@ -18,7 +18,7 @@ export const filterEntities = <Entity, FilterEntity>({
   allowMultipleFilters?: boolean;
   aFilterCacheKey?: StoreCacheKey;
   fallbackCacheKey: StoreCacheKey;
-  cache: ConfigurationCache<FilterEntity>;
+  cache: ConfigurationCache<FilterEntity, Filter>;
 }): Entity[] => {
   const filter = new Set<FilterEntity>(
     allowMultipleFilters
