@@ -8,11 +8,11 @@ import {
 import ExperimentFilters from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/ExperimentFilters';
 import { updateExperimentSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreExperimentActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { ExperimentFilterModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import {
   ConfigurationFilters,
   StoreCacheKey,
-} from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
-import { ExperimentFilterModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+} from 'apps/BenchmarkApp/types/StoreCacheKey';
 import {
   getItems,
   getSingleItem,

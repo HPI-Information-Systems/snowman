@@ -1,5 +1,5 @@
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 import { ConfigurationCache } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 
 export const getItems = <Target, Filter = undefined>(
   aCacheKey: StoreCacheKey,

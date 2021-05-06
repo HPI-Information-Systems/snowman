@@ -1,5 +1,4 @@
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
 import {
   AlgorithmConfigurationModel,
@@ -12,6 +11,7 @@ import {
   SimFunctionFilterModel,
   SimThresholdConfigurationModel,
 } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const filterEntities = <Entity extends { id: number }, Filter>({

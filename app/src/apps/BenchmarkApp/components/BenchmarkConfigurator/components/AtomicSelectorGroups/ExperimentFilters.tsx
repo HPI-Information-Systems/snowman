@@ -3,8 +3,8 @@ import AlgorithmSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfig
 import { FilterComponentProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
 import DatasetSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/DatasetSelectorGroup';
 import ConfiguratorItem from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/ConfiguratorItem/ConfiguratorItem';
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
 import { ExperimentFilterModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 import React from 'react';
 
 const ExperimentFilters = ({

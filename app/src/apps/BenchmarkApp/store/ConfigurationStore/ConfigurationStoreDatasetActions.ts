@@ -1,11 +1,11 @@
 import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreGenericActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
+import { DatasetFilterModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import {
   ConfigurationFilters,
   StoreCacheKey,
-} from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
-import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
-import { DatasetFilterModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+} from 'apps/BenchmarkApp/types/StoreCacheKey';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 
