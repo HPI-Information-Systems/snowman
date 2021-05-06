@@ -6,6 +6,7 @@ import styles from 'apps/SimilarityFuncsDialog/SimiliarityFuncsDialogStyles.modu
 import { addCircle } from 'ionicons/icons';
 import React from 'react';
 import style from 'theme/style';
+import { fuzzyStringIncludes } from 'utils/fuzzyStringIncludes';
 
 const SimilarityFuncsDialogView = ({
   searchString,
@@ -14,16 +15,24 @@ const SimilarityFuncsDialogView = ({
   openAddFunctionBuilder,
 }: SimilarityFuncsDialogProps): JSX.Element => (
   <>
-    <IonSearchbar value={searchString} onIonChange={onChangeSearchString} />
+    <IonSearchbar
+      value={searchString}
+      onIonChange={onChangeSearchString}
+      debounce={500}
+    />
     <IonList>
-      {similarityThresholdFuncs.map(
-        (aSimilarityFunction: SimilarityThresholdFunction): JSX.Element => (
-          <SimilarityFuncItem
-            key={aSimilarityFunction.id}
-            similarityFunction={aSimilarityFunction}
-          />
+      {similarityThresholdFuncs
+        .filter((aFunction: SimilarityThresholdFunction): boolean =>
+          fuzzyStringIncludes(aFunction.name, searchString)
         )
-      )}
+        .map(
+          (aSimilarityFunction: SimilarityThresholdFunction): JSX.Element => (
+            <SimilarityFuncItem
+              key={aSimilarityFunction.id}
+              similarityFunction={aSimilarityFunction}
+            />
+          )
+        )}
     </IonList>
     <div className={style(styles.center, styles.buttonRow)}>
       <IonButton onClick={openAddFunctionBuilder}>
