@@ -8,7 +8,7 @@ export type FunctionBuildingBlockType = SimilarityThresholdFunctionDefinitionTyp
 export interface FunctionBuildingBlock {
   accessKey: number;
   type: FunctionBuildingBlockType;
-  left: FunctionBuildingBlock | number | string;
-  mid: SimilarityThresholdFunctionOperatorOperatorEnum;
-  right: FunctionBuildingBlock | number | string;
+  left: FunctionBuildingBlock | number | string | null;
+  mid: SimilarityThresholdFunctionOperatorOperatorEnum | null;
+  right: FunctionBuildingBlock | number | string | null;
 }

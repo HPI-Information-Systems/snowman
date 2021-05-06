@@ -5,4 +5,9 @@ export interface StrategyMapperForwardProps {
   setNextStrategyType(nextStrategy: FunctionBuildingBlockType): void;
 }
 
-export type StrategyMapperProps = StrategyMapperForwardProps;
+export interface StrategyMapperOwnProps {
+  blockAccessKey?: number;
+}
+
+export type StrategyMapperProps = StrategyMapperForwardProps &
+  StrategyMapperOwnProps;

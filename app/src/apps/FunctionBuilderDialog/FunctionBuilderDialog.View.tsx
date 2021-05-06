@@ -1,4 +1,5 @@
 import { IonButton, IonItemDivider } from '@ionic/react';
+import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/RootAccessKey';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
 import { FunctionBuilderDialogProps } from 'apps/FunctionBuilderDialog/FunctionBuilderDialogProps';
 import React from 'react';
@@ -12,6 +13,7 @@ const FunctionBuilderDialogView = ({
 }: FunctionBuilderDialogProps): JSX.Element => (
   <>
     <StrategyMapper
+      blockAccessKey={RootAccessKey}
       nextStrategyType={operator.type}
       setNextStrategyType={selectRootType}
     />

@@ -1,13 +1,21 @@
 import { SimilarityThresholdFunctionDefinitionTypeEnum } from 'api';
+import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/RootAccessKey';
 import { FunctionBuilderDialogActionTypes } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogActionTypes';
 import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogModel';
+import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: FunctionBuilderDialogModel = {
   operator: {
     type: SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
   },
-  functionElementFields: [],
+  functionBuildingStack: {
+    accessKey: RootAccessKey,
+    type: UndefinedStrategy,
+    left: null,
+    mid: null,
+    right: null,
+  },
 };
 
 const FunctionBuilderDialogReducer = (
@@ -24,7 +32,6 @@ const FunctionBuilderDialogReducer = (
       }
       return {
         ...state,
-        functionElementFields: [],
         operator: {
           type: action.payload as SimilarityThresholdFunctionDefinitionTypeEnum,
         },
