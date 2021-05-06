@@ -1,4 +1,4 @@
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 
 export interface ConfigurationCacheItem<Target, Filter = undefined> {
   targets: (Target | undefined)[];

@@ -2,7 +2,7 @@ import { Experiment, ExperimentIntersectionCount } from 'api';
 import { IntersectionStrategyActionTypes } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyActionTypes';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 import { getDefinedItems } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { difference, nth } from 'lodash';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';

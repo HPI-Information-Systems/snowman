@@ -2,7 +2,7 @@ import { Experiment, Metric } from 'api';
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/CacheBaseKeyEnum';
+import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 import {
   getDefinedItems,
   getSingleItem,
