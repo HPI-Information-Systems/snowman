@@ -1,3 +1,3 @@
-const UndefinedStrategy = '';
+const UndefinedStrategy = null;
 
 export default UndefinedStrategy;

@@ -1,6 +1,6 @@
 import { IonIcon } from '@ionic/react';
-import UndefinedStrategy from 'apps/FunctionBuilderDialog/components/StrategyMapper/UndefinedStrategy';
 import { StrategyUnselectorProps } from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselectorProps';
+import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
 import { closeCircle } from 'ionicons/icons';
 import React from 'react';
 

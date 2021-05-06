@@ -1,6 +1,8 @@
+import { FunctionBuildingBlockType } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+
 export interface StrategyMapperForwardProps {
-  nextStrategyType: string;
-  setNextStrategyType(nextStrategy: string): void;
+  nextStrategyType: FunctionBuildingBlockType;
+  setNextStrategyType(nextStrategy: FunctionBuildingBlockType): void;
 }
 
 export type StrategyMapperProps = StrategyMapperForwardProps;

@@ -1,6 +1,7 @@
 import { IonChip, IonSelect, IonSelectOption } from '@ionic/react';
 import { SimilarityThresholdFunctionDefinitionTypeEnum } from 'api';
 import { NextStrategySelectorProps } from 'apps/FunctionBuilderDialog/components/NextStrategySelector/NextStrategySelectorProps';
+import { FunctionBuildingBlockType } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import React from 'react';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
@@ -13,7 +14,7 @@ const NextStrategySelector = ({
       <IonSelect
         value={nextStrategyType}
         onIonChange={(event: IonChangeEvent): void =>
-          setNextStrategyType(event.detail.value as string)
+          setNextStrategyType(event.detail.value as FunctionBuildingBlockType)
         }
       >
         {Object.keys(SimilarityThresholdFunctionDefinitionTypeEnum).map(

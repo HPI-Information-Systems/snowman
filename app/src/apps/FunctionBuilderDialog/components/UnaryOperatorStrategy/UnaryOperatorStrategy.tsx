@@ -4,7 +4,8 @@ import {
   SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
 } from 'api';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
-import UndefinedStrategy from 'apps/FunctionBuilderDialog/components/StrategyMapper/UndefinedStrategy';
+import { FunctionBuildingBlockType } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
 import React, { useState } from 'react';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
@@ -12,7 +13,9 @@ const UnaryOperatorStrategy = (): JSX.Element => {
   const [operator, setOperator] = useState(
     SimilarityThresholdFunctionUnaryOperatorOperatorEnum.Acos as string
   );
-  const [childType, setChildType] = useState(UndefinedStrategy);
+  const [childType, setChildType] = useState<FunctionBuildingBlockType>(
+    UndefinedStrategy
+  );
   return (
     <>
       <IonChip>

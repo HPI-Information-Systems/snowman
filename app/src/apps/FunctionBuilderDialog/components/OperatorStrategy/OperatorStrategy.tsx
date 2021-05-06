@@ -4,22 +4,29 @@ import {
   SimilarityThresholdFunctionOperatorOperatorEnum,
 } from 'api';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
-import UndefinedStrategy from 'apps/FunctionBuilderDialog/components/StrategyMapper/UndefinedStrategy';
+import {
+  FunctionBuildingBlock,
+  FunctionBuildingBlockType,
+} from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
 import React, { useState } from 'react';
 
 const OperatorStrategy = (): JSX.Element => {
   const [operator, setOperator] = useState(
     SimilarityThresholdFunctionOperatorOperatorEnum.Add as string
   );
-  const [leftChildType, setLeftChildType] = useState(UndefinedStrategy);
-  const [rightChildType, setRightChildType] = useState(UndefinedStrategy);
+  const [leftChildType, setLeftChildType] = useState<FunctionBuildingBlockType>(
+    UndefinedStrategy
+  );
+  const [
+    rightChildType,
+    setRightChildType,
+  ] = useState<FunctionBuildingBlockType>(UndefinedStrategy);
   return (
     <>
       (
       <StrategyMapper
-        nextStrategyType={
-          leftChildType as SimilarityThresholdFunctionDefinitionTypeEnum
-        }
+        nextStrategyType={leftChildType as FunctionBuildingBlockType}
         setNextStrategyType={setLeftChildType}
       />
       <IonChip>
