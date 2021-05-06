@@ -5,28 +5,29 @@ import {
   BenchmarkAppModel,
   BenchmarkAppResourcesStore,
 } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { SnowmanAction } from 'types/SnowmanAction';
 
-const initialConfigState: BenchmarkAppResourcesStore = {
+const initialResourcesState: BenchmarkAppResourcesStore = {
   algorithms: [],
   datasets: [],
   experiments: [],
-  selectedExperimentIds: [],
+  simFunctions: [],
+};
+
+const initialConfigState: ConfigurationStoreModel = {
+  datasets: {},
+  algorithms: {},
+  experiments: {},
+  simFunctions: {},
+  simThresholds: {},
 };
 
 const initialState: BenchmarkAppModel = {
-  resources: initialConfigState,
-  expandedAlgorithmsInDatasets: [],
-  searchString: '',
+  resources: initialResourcesState,
   activeStrategy: StrategyIDs.Dashboard,
-  config: {
-    datasets: {},
-    algorithms: {},
-    experiments: {},
-    simFunctions: {},
-    simThresholds: {},
-  },
+  config: initialConfigState,
 };
 
 const BenchmarkAppReducer = (
@@ -34,12 +35,15 @@ const BenchmarkAppReducer = (
   action: SnowmanAction
 ): BenchmarkAppModel => {
   return ConfigurationStoreReducer(
-    InternalBenchmarkAppReducer(state, action),
+    BenchmarkResourcesReducer(
+      InternalBenchmarkAppReducer(state, action),
+      action
+    ),
     action
   );
 };
 
-const InternalBenchmarkAppReducer = (
+const BenchmarkResourcesReducer = (
   state: BenchmarkAppModel,
   action: SnowmanAction
 ): BenchmarkAppModel => {
@@ -47,7 +51,6 @@ const InternalBenchmarkAppReducer = (
     case BenchmarkAppActionsTypes.SET_ALGORITHMS:
       return {
         ...state,
-        expandedAlgorithmsInDatasets: [],
         resources: {
           ...state.resources,
           algorithms: action.payload as Algorithm[],
@@ -56,7 +59,6 @@ const InternalBenchmarkAppReducer = (
     case BenchmarkAppActionsTypes.SET_DATASETS:
       return {
         ...state,
-        expandedAlgorithmsInDatasets: [],
         resources: {
           ...state.resources,
           datasets: action.payload as Dataset[],
@@ -65,12 +67,21 @@ const InternalBenchmarkAppReducer = (
     case BenchmarkAppActionsTypes.SET_EXPERIMENTS:
       return {
         ...state,
-        expandedAlgorithmsInDatasets: [],
         resources: {
           ...state.resources,
           experiments: action.payload as Experiment[],
         },
       };
+    default:
+      return state;
+  }
+};
+
+const InternalBenchmarkAppReducer = (
+  state: BenchmarkAppModel,
+  action: SnowmanAction
+): BenchmarkAppModel => {
+  switch (action.type) {
     case BenchmarkAppActionsTypes.OPEN_STRATEGY:
       return {
         ...state,

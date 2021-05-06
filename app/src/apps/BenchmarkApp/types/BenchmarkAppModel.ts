@@ -1,4 +1,9 @@
-import { Algorithm, Dataset, Experiment } from 'api';
+import {
+  Algorithm,
+  Dataset,
+  Experiment,
+  SimilarityThresholdFunction,
+} from 'api';
 import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -14,7 +19,7 @@ export interface BenchmarkAppResourcesStore {
   algorithms: Algorithm[];
   datasets: Dataset[];
   experiments: Experiment[];
-  selectedExperimentIds: number[];
+  simFunctions: SimilarityThresholdFunction[];
 }
 
 export type BenchmarkAppThunkAction<R> = SnowmanThunkAction<
