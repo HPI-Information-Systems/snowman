@@ -4,7 +4,9 @@ import {
   NumberInputGroupOwnProps,
   NumberInputGroupStateProps,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/NumberInputGroup/NumberInputGroupProps';
+import { updateSimThresholdValue } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreSimThresholdActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { getSingleItem } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { connect } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -14,7 +16,7 @@ const mapStateToProps = (
   state: BenchmarkAppModel,
   ownProps: NumberInputGroupOwnProps
 ): NumberInputGroupStateProps => ({
-  value: 0,
+  value: getSingleItem(ownProps.cacheKey, state.config.simThresholds),
 });
 
 const mapDispatchToProps = (
@@ -22,7 +24,10 @@ const mapDispatchToProps = (
   ownProps: NumberInputGroupOwnProps
 ): NumberInputGroupDispatchProps => ({
   setValue: (event: IonChangeEvent): void => {
-    parseInputToNumberOrUndef(event.detail.value);
+    const input = parseInputToNumberOrUndef(event.detail.value);
+    dispatch(
+      updateSimThresholdValue({ aCacheKey: ownProps.cacheKey, newValue: input })
+    );
   },
 });
 

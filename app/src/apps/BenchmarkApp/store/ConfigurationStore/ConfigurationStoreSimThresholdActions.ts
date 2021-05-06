@@ -9,14 +9,12 @@ import {
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 
-export const updateSimThresholdSelection = ({
+export const updateSimThresholdValue = ({
   aCacheKey,
-  newSelection,
-  allowMultiple = true,
+  newValue,
 }: {
   aCacheKey: StoreCacheKey;
-  newSelection: number[];
-  allowMultiple?: boolean;
+  newValue: number | undefined;
 }): SnowmanThunkAction<void, BenchmarkAppModel> => (
   dispatch: SnowmanDispatch<BenchmarkAppModel>,
   getState: () => BenchmarkAppModel
@@ -27,10 +25,10 @@ export const updateSimThresholdSelection = ({
       aCacheKey,
       filter: (ConfigurationFilters[aCacheKey] ??
         undefined) as SimThresholdFilterModel,
-      newSelection,
+      newSelection: [newValue],
       setSelectionAction:
         ConfigurationStoreActionTypes.SET_SIM_THRESHOLD_SELECTION,
-      allowMultiple,
+      allowMultiple: false,
     })
   );
 };
