@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 const SimilarityThresholdStrategy = (): JSX.Element => {
   const [similarityThreshold, setSimilarityThreshold] = useState('a');
   return (
-    <IonChip>
-      <IonSelect>
+    <IonChip outline>
+      <IonSelect placeholder="?">
         <IonSelectOption>a</IonSelectOption>
         <IonSelectOption>b</IonSelectOption>
         <IonSelectOption>c</IonSelectOption>

@@ -7,7 +7,7 @@ import { parseInputToNumberOrUndef } from 'utils/questionHelpers';
 const ConstantStrategy = (): JSX.Element => {
   const [constVal, setConstVal] = useState<number | undefined>(0);
   return (
-    <IonChip color="tertiary">
+    <IonChip outline>
       <IonInput
         className={styles.input}
         value={constVal}

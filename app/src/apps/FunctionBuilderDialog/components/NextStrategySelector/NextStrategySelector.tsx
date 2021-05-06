@@ -10,12 +10,13 @@ const NextStrategySelector = ({
   setNextStrategyType,
 }: NextStrategySelectorProps): JSX.Element => (
   <>
-    <IonChip>
+    <IonChip color="danger">
       <IonSelect
         value={nextStrategyType}
         onIonChange={(event: IonChangeEvent): void =>
           setNextStrategyType(event.detail.value as FunctionBuildingBlockType)
         }
+        placeholder="?"
       >
         {Object.keys(SimilarityThresholdFunctionDefinitionTypeEnum).map(
           (anOperatorType: string): JSX.Element => (

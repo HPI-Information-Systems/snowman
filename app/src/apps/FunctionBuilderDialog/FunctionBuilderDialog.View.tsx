@@ -19,12 +19,13 @@ const FunctionBuilderDialogView = ({
   selectRootType,
 }: FunctionBuilderDialogProps): JSX.Element => (
   <>
-    <StrategyMapper
-      blockAccessKey={RootAccessKey}
-      nextStrategyType={operator.type}
-      setNextStrategyType={selectRootType}
-    />
-    <IonItemDivider />
+    <div className={styles.container}>
+      <StrategyMapper
+        blockAccessKey={RootAccessKey}
+        nextStrategyType={operator.type}
+        setNextStrategyType={selectRootType}
+      />
+    </div>
     <div className={style(styles.center, styles.buttonRow)}>
       <IonButton
         onClick={clickOnAddOrUpdate}

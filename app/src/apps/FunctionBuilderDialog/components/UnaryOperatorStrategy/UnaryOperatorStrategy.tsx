@@ -4,6 +4,7 @@ import {
   SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
 } from 'api';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
+import styles from 'apps/FunctionBuilderDialog/components/UnaryOperatorStrategy/UnaryOperatorStrategyStyles.module.css';
 import { FunctionBuildingBlockType } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
 import React, { useState } from 'react';
@@ -18,12 +19,13 @@ const UnaryOperatorStrategy = (): JSX.Element => {
   );
   return (
     <>
-      <IonChip>
+      <IonChip className={styles.chip}>
         <IonSelect
           value={operator}
           onIonChange={(event: IonChangeEvent): void =>
             setOperator(event.detail.value as string)
           }
+          placeholder="?"
         >
           {Object.keys(
             SimilarityThresholdFunctionUnaryOperatorOperatorEnum
@@ -35,6 +37,7 @@ const UnaryOperatorStrategy = (): JSX.Element => {
             )
           )}
         </IonSelect>
+        (
       </IonChip>
       <StrategyMapper
         nextStrategyType={
@@ -42,7 +45,7 @@ const UnaryOperatorStrategy = (): JSX.Element => {
         }
         setNextStrategyType={setChildType}
       />
-      )
+      <IonChip className={styles.chip}>)</IonChip>
     </>
   );
 };
