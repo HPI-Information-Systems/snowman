@@ -1,5 +1,5 @@
 import { Algorithm, Dataset, Experiment } from 'api';
-import ConfigurationStoreReducer from 'apps/BenchmarkApp/store/ConfigurationStoreReducer';
+import ConfigurationStoreReducer from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreReducer';
 import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
 import {
   BenchmarkAppModel,
