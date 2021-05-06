@@ -4,4 +4,5 @@ import { FunctionBuildingBlock } from 'apps/FunctionBuilderDialog/types/Function
 export interface FunctionBuilderDialogModel {
   operator: SimilarityThresholdFunctionDefinition;
   functionBuildingStack: FunctionBuildingBlock;
+  reservedAccessKeys: number[];
 }

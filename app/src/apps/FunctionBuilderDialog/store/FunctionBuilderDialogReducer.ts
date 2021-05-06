@@ -9,6 +9,7 @@ const initialState: FunctionBuilderDialogModel = {
   operator: {
     type: SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
   },
+  reservedAccessKeys: [RootAccessKey],
   functionBuildingStack: {
     accessKey: RootAccessKey,
     type: UndefinedStrategy,
