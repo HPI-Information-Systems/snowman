@@ -63,11 +63,11 @@ const mapDispatchToProps = (
   dispatch: SnowmanDispatch<BenchmarkAppModel>,
   ownProps: AtomicSelectorGroupOwnProps
 ): AtomicSelectorGroupDispatchProps => ({
-  updateSelection: (algorithmIds) =>
+  updateSelection: (experimendIds) =>
     dispatch(
       updateExperimentSelection({
         aCacheKey: ownProps.cacheKey,
-        newSelection: algorithmIds,
+        newSelection: experimendIds,
         allowMultiple: ownProps.allowMultiple,
       })
     ),
