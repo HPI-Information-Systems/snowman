@@ -1,29 +1,36 @@
-import { SimilarityThresholdFunctionDefinitionTypeEnum } from 'api';
-import ConstantStrategy from 'apps/FunctionBuilderDialog/components/ConstantStrategy/ConstantStrategy';
-import OperatorStrategy from 'apps/FunctionBuilderDialog/components/OperatorStrategy/OperatorStrategy';
-import SimilarityThresholdStrategy from 'apps/FunctionBuilderDialog/components/SimilarityThresholdStrategy/SimilarityThresholdStrategy';
+import NextStrategySelector from 'apps/FunctionBuilderDialog/components/NextStrategySelector/NextStrategySelector';
+import {
+  StrategyMap,
+  StrategyMapItem,
+} from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMap';
 import { StrategyMapperProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
-import UnaryOperatorStrategy from 'apps/FunctionBuilderDialog/components/UnaryOperatorStrategy/UnaryOperatorStrategy';
-import React from 'react';
+import StrategyUnselector from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector';
+import React, { createElement } from 'react';
 
 const StrategyMapper = ({
-  targetStrategyType,
-  children,
+  nextStrategyType,
+  setNextStrategyType,
 }: StrategyMapperProps): JSX.Element => (
   <>
     {((): JSX.Element => {
-      switch (targetStrategyType) {
-        case SimilarityThresholdFunctionDefinitionTypeEnum.Operator:
-          return <OperatorStrategy />;
-        case SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold:
-          return <SimilarityThresholdStrategy />;
-        case SimilarityThresholdFunctionDefinitionTypeEnum.UnaryOperator:
-          return <UnaryOperatorStrategy />;
-        case SimilarityThresholdFunctionDefinitionTypeEnum.Constant:
-          return <ConstantStrategy />;
-        default:
-          return <>{children}</>;
-      }
+      const targetStrategy = StrategyMap.find(
+        (aStrategyMapItem: StrategyMapItem): boolean =>
+          aStrategyMapItem.targetStrategyKey === nextStrategyType
+      )?.targetStrategyComponent;
+      return targetStrategy !== undefined ? (
+        <>
+          {createElement(targetStrategy)}
+          <StrategyUnselector
+            nextStrategyType={nextStrategyType}
+            setNextStrategyType={setNextStrategyType}
+          />
+        </>
+      ) : (
+        <NextStrategySelector
+          nextStrategyType={nextStrategyType}
+          setNextStrategyType={setNextStrategyType}
+        />
+      );
     })()}
   </>
 );

@@ -5,14 +5,14 @@ import { closeCircle } from 'ionicons/icons';
 import React from 'react';
 
 const StrategyUnselector = ({
-  strategyType,
-  setStrategyType,
+  nextStrategyType,
+  setNextStrategyType,
 }: StrategyUnselectorProps): JSX.Element => (
   <>
-    {strategyType !== UndefinedStrategy ? (
+    {nextStrategyType !== UndefinedStrategy ? (
       <IonIcon
         icon={closeCircle}
-        onClick={(): void => setStrategyType(UndefinedStrategy)}
+        onClick={(): void => setNextStrategyType(UndefinedStrategy)}
       />
     ) : null}
   </>

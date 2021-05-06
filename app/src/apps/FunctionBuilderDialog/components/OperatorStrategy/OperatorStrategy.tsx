@@ -3,10 +3,8 @@ import {
   SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionOperatorOperatorEnum,
 } from 'api';
-import NextStrategySelector from 'apps/FunctionBuilderDialog/components/NextStrategySelector/NextStrategySelector';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
 import UndefinedStrategy from 'apps/FunctionBuilderDialog/components/StrategyMapper/UndefinedStrategy';
-import StrategyUnselector from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector';
 import React, { useState } from 'react';
 
 const OperatorStrategy = (): JSX.Element => {
@@ -19,15 +17,11 @@ const OperatorStrategy = (): JSX.Element => {
     <>
       (
       <StrategyMapper
-        targetStrategyType={
+        nextStrategyType={
           leftChildType as SimilarityThresholdFunctionDefinitionTypeEnum
         }
-      >
-        <NextStrategySelector
-          nextStrategy={leftChildType}
-          setNextStrategy={setLeftChildType}
-        />
-      </StrategyMapper>
+        setNextStrategyType={setLeftChildType}
+      />
       <IonChip>
         <IonSelect>
           {Object.keys(SimilarityThresholdFunctionOperatorOperatorEnum).map(
@@ -38,18 +32,10 @@ const OperatorStrategy = (): JSX.Element => {
         </IonSelect>
       </IonChip>
       <StrategyMapper
-        targetStrategyType={
+        nextStrategyType={
           rightChildType as SimilarityThresholdFunctionDefinitionTypeEnum
         }
-      >
-        <NextStrategySelector
-          nextStrategy={rightChildType}
-          setNextStrategy={setRightChildType}
-        />
-      </StrategyMapper>
-      <StrategyUnselector
-        strategyType={rightChildType}
-        setStrategyType={setRightChildType}
+        setNextStrategyType={setRightChildType}
       />
       )
     </>

@@ -1,4 +1,3 @@
-export interface NextStrategySelectorProps {
-  nextStrategy: string;
-  setNextStrategy(nextStrategy: string): void;
-}
+import { StrategyMapperForwardProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
+
+export type NextStrategySelectorProps = StrategyMapperForwardProps;

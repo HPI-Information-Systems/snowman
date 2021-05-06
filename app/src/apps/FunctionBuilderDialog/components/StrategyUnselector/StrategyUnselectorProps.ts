@@ -1,4 +1,3 @@
-export interface StrategyUnselectorProps {
-  strategyType: string;
-  setStrategyType(newStrategy: string): void;
-}
+import { StrategyMapperForwardProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
+
+export type StrategyUnselectorProps = StrategyMapperForwardProps;

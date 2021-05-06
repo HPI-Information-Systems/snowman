@@ -1,6 +1,6 @@
-import { SimilarityThresholdFunctionDefinitionTypeEnum } from 'api';
-
-export interface StrategyMapperProps {
-  targetStrategyType: SimilarityThresholdFunctionDefinitionTypeEnum;
-  children?: JSX.Element;
+export interface StrategyMapperForwardProps {
+  nextStrategyType: string;
+  setNextStrategyType(nextStrategy: string): void;
 }
+
+export type StrategyMapperProps = StrategyMapperForwardProps;

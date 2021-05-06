@@ -5,15 +5,15 @@ import React from 'react';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
 const NextStrategySelector = ({
-  nextStrategy,
-  setNextStrategy,
+  nextStrategyType,
+  setNextStrategyType,
 }: NextStrategySelectorProps): JSX.Element => (
   <>
     <IonChip>
       <IonSelect
-        value={nextStrategy}
+        value={nextStrategyType}
         onIonChange={(event: IonChangeEvent): void =>
-          setNextStrategy(event.detail.value as string)
+          setNextStrategyType(event.detail.value as string)
         }
       >
         {Object.keys(SimilarityThresholdFunctionDefinitionTypeEnum).map(
