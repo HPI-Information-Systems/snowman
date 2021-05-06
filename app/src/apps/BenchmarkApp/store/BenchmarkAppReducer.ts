@@ -1,4 +1,9 @@
-import { Algorithm, Dataset, Experiment } from 'api';
+import {
+  Algorithm,
+  Dataset,
+  Experiment,
+  SimilarityThresholdFunction,
+} from 'api';
 import ConfigurationStoreReducer from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreReducer';
 import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
 import {
@@ -70,6 +75,14 @@ const BenchmarkResourcesReducer = (
         resources: {
           ...state.resources,
           experiments: action.payload as Experiment[],
+        },
+      };
+    case BenchmarkAppActionsTypes.SET_SIM_FUNCTIONS:
+      return {
+        ...state,
+        resources: {
+          ...state.resources,
+          simFunctions: action.payload as SimilarityThresholdFunction[],
         },
       };
     default:
