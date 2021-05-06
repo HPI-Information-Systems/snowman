@@ -18,18 +18,20 @@ const StrategyMapper = ({
           aStrategyMapItem.targetStrategyKey === nextStrategyType
       )?.targetStrategyComponent;
       return targetStrategy !== undefined ? (
-        <>
+        <span style={{ marginLeft: 10, marginRight: 10 }}>
           {createElement(targetStrategy)}
           <StrategyUnselector
             nextStrategyType={nextStrategyType}
             setNextStrategyType={setNextStrategyType}
           />
-        </>
+        </span>
       ) : (
-        <NextStrategySelector
-          nextStrategyType={nextStrategyType}
-          setNextStrategyType={setNextStrategyType}
-        />
+        <span style={{ marginLeft: 10, marginRight: 10 }}>
+          <NextStrategySelector
+            nextStrategyType={nextStrategyType}
+            setNextStrategyType={setNextStrategyType}
+          />
+        </span>
       );
     })()}
   </>
