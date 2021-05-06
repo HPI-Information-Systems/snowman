@@ -3,6 +3,7 @@ import {
   SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionOperatorOperatorEnum,
 } from 'api';
+import styles from 'apps/FunctionBuilderDialog/components/OperatorStrategy/OperatorStrategyStyles.module.css';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
 import {
   FunctionBuildingBlock,
@@ -24,13 +25,15 @@ const OperatorStrategy = (): JSX.Element => {
   ] = useState<FunctionBuildingBlockType>(UndefinedStrategy);
   return (
     <>
-      (
-      <StrategyMapper
-        nextStrategyType={leftChildType as FunctionBuildingBlockType}
-        setNextStrategyType={setLeftChildType}
-      />
-      <IonChip color="success">
-        <IonSelect>
+      <IonChip className={styles.chip}>(</IonChip>
+      <div className={styles.container}>
+        <StrategyMapper
+          nextStrategyType={leftChildType as FunctionBuildingBlockType}
+          setNextStrategyType={setLeftChildType}
+        />
+      </div>
+      <IonChip className={styles.chip}>
+        <IonSelect placeholder="?">
           {Object.keys(SimilarityThresholdFunctionOperatorOperatorEnum).map(
             (anOperator: string): JSX.Element => (
               <IonSelectOption key={anOperator}>{anOperator}</IonSelectOption>
@@ -38,13 +41,15 @@ const OperatorStrategy = (): JSX.Element => {
           )}
         </IonSelect>
       </IonChip>
-      <StrategyMapper
-        nextStrategyType={
-          rightChildType as SimilarityThresholdFunctionDefinitionTypeEnum
-        }
-        setNextStrategyType={setRightChildType}
-      />
-      )
+      <div className={styles.container}>
+        <StrategyMapper
+          nextStrategyType={
+            rightChildType as SimilarityThresholdFunctionDefinitionTypeEnum
+          }
+          setNextStrategyType={setRightChildType}
+        />
+      </div>
+      <IonChip className={styles.chip}>)</IonChip>
     </>
   );
 };
