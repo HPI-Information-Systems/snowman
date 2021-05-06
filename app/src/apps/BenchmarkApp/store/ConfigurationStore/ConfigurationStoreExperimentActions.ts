@@ -7,7 +7,6 @@ import {
   ConfigurationFilters,
   StoreCacheKey,
 } from 'apps/BenchmarkApp/types/StoreCacheKey';
-import { getDefinedItems } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 
@@ -40,19 +39,15 @@ export const primeExperimentSelection = (
   aCacheKey: StoreCacheKey,
   experimentId: number
 ): SnowmanThunkAction<void, BenchmarkAppModel> => (
-  dispatch: SnowmanDispatch<BenchmarkAppModel>,
-  getState: () => BenchmarkAppModel
+  dispatch: SnowmanDispatch<BenchmarkAppModel>
 ): void => {
-  const newSelection = [
-    ...getDefinedItems(aCacheKey, getState().config.experiments),
-  ];
-  const sourceIndex = newSelection.indexOf(experimentId);
-  if (sourceIndex > 0) {
-    const tmp = newSelection[0];
-    newSelection[0] = newSelection[sourceIndex];
-    newSelection[sourceIndex] = tmp;
-    dispatch(updateExperimentSelection({ aCacheKey, newSelection }));
-  }
+  dispatch(
+    updateExperimentSelection({
+      aCacheKey,
+      newSelection: [experimentId],
+      allowMultiple: false,
+    })
+  );
 };
 
 export const doPrimeExperimentSelection = (
