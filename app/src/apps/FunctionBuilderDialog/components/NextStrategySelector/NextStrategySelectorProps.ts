@@ -1,4 +1,4 @@
 export interface NextStrategySelectorProps {
-  nextStrategy: string | undefined;
-  setNextStrategy(nextStrategy: string | undefined): void;
+  nextStrategy: string;
+  setNextStrategy(nextStrategy: string): void;
 }
