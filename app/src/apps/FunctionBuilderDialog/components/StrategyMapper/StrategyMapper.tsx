@@ -1,4 +1,3 @@
-import NextStrategySelector from 'apps/FunctionBuilderDialog/components/NextStrategySelector/NextStrategySelector';
 import {
   StrategyMap,
   StrategyMapItem,
@@ -8,6 +7,7 @@ import {
   StrategyMapperStateProps,
 } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
 import styles from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperStyles.module.css';
+import StrategySelector from 'apps/FunctionBuilderDialog/components/StrategySelector/StrategySelector';
 import StrategyUnselector from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector';
 import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
 import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
@@ -58,7 +58,7 @@ class StrategyMapper extends Component<
             </span>
           </>
         ) : (
-          <NextStrategySelector blockAccessKey={this.blockAccessKey} />
+          <StrategySelector blockAccessKey={this.blockAccessKey} />
         )}
       </>
     );

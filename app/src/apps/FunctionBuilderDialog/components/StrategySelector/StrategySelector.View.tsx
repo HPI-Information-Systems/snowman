@@ -1,20 +1,20 @@
 import { IonChip, IonSelect, IonSelectOption } from '@ionic/react';
 import { SimilarityThresholdFunctionDefinitionTypeEnum } from 'api';
-import { NextStrategySelectorProps } from 'apps/FunctionBuilderDialog/components/NextStrategySelector/NextStrategySelectorProps';
+import { StrategySelectorProps } from 'apps/FunctionBuilderDialog/components/StrategySelector/StrategySelectorProps';
 import { FunctionBuildingBlockType } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import React from 'react';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-const NextStrategySelector = ({
-  nextStrategyType,
-  setNextStrategyType,
-}: NextStrategySelectorProps): JSX.Element => (
+const StrategySelectorView = ({
+  chosenStrategyType,
+  setStrategyType,
+}: StrategySelectorProps): JSX.Element => (
   <>
     <IonChip color="danger">
       <IonSelect
-        value={nextStrategyType}
+        value={chosenStrategyType}
         onIonChange={(event: IonChangeEvent): void =>
-          setNextStrategyType(event.detail.value as FunctionBuildingBlockType)
+          setStrategyType(event.detail.value as FunctionBuildingBlockType)
         }
         placeholder="?"
       >
@@ -30,4 +30,4 @@ const NextStrategySelector = ({
   </>
 );
 
-export default NextStrategySelector;
+export default StrategySelectorView;
