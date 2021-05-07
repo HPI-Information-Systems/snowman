@@ -81,9 +81,10 @@ const NMetricsStrategyView = ({
                         <span
                           data-tip={`${metricsOfAnExperiment[
                             index
-                          ].value.toString()} &isin; [${metricsOfAnExperiment[
-                            index
-                          ].range.toString()}]`}
+                          ].value.toString()} &isin; [${
+                            metricsOfAnExperiment[index].range?.toString() ??
+                            '?'
+                          }]`}
                         >
                           {metricsOfAnExperiment[index]?.value.toPrecision(8) ??
                             'unknown'}
