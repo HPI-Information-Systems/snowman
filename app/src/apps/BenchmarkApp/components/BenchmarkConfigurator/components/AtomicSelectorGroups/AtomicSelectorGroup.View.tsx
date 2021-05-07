@@ -23,10 +23,14 @@ const AtomicSelectorGroupView = ({
   return (
     <SelectorPopoverGroup
       instanceDescriptor={useInstanceDescriptor()}
-      items={selectedEntities.map((entity) => ({
-        icon,
-        title: entity.name ?? '',
-      }))}
+      items={
+        selectedEntities.length > 0
+          ? selectedEntities.map((entity) => ({
+              icon,
+              title: entity.name ?? '',
+            }))
+          : [{ icon, title: '' }]
+      }
     >
       <SearchableList
         instanceDescriptor={useInstanceDescriptor()}

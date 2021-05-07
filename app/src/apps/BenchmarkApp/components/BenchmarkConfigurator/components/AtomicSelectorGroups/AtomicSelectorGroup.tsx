@@ -30,7 +30,6 @@ export const AtomicSelectorGroup = ({
         'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/ExperimentSelectorGroup'
       );
       break;
-    //TODO
     case 'simFunctions':
       selectorGroupPromise = selectorGroupPromise = import(
         'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/SimFunctionSelectorGroup'
@@ -41,6 +40,7 @@ export const AtomicSelectorGroup = ({
         'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/NumberInput/NumberInput'
       );
       break;
+    //TODO
     case 'multiSelects':
     // SelectorGroup = MultiSelectSelectorGroup;
     // break;

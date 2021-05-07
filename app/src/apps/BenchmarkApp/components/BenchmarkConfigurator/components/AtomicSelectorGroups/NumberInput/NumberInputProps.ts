@@ -1,10 +1,7 @@
-import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
+import { AtomicSelectorGroupOwnProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-export interface NumberInputOwnProps {
-  cacheKey: StoreCacheKey;
-  title?: string;
-}
+export type NumberInputOwnProps = AtomicSelectorGroupOwnProps;
 
 export interface NumberInputStateProps {
   value: number | undefined;

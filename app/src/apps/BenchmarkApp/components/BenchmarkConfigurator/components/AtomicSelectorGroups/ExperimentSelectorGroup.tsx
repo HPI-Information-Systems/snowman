@@ -1,11 +1,11 @@
 import { Experiment } from 'api';
 import { getCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
+import AtomicSelectorGroupView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroup.View';
 import {
   AtomicSelectorGroupDispatchProps,
   AtomicSelectorGroupOwnProps,
   AtomicSelectorGroupStateProps,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
-import AtomicSelectorGroupView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupView';
 import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStoreActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import {

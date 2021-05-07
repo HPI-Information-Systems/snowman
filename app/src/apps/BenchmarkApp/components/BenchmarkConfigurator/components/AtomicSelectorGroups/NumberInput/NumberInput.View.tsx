@@ -1,14 +1,18 @@
-import { IonInput, IonItem, IonLabel } from '@ionic/react';
+import { IonIcon, IonInput, IonItem } from '@ionic/react';
 import { NumberInputProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/NumberInput/NumberInputProps';
+import styles from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/NumberInput/NumberInputStyles.module.css';
+import { gitCommitOutline } from 'ionicons/icons';
 import React from 'react';
-
 const NumberInputGroupView = ({
-  title,
   value,
   setValue,
 }: NumberInputProps): JSX.Element => (
   <IonItem>
-    <IonLabel position="fixed">{`${title ?? 'Threshold'}:`}</IonLabel>
+    <IonIcon
+      icon={gitCommitOutline}
+      color={'primarydark'}
+      className={styles.smallItemIcon}
+    />
     <IonInput
       type="number"
       value={value}
