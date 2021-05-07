@@ -5,6 +5,7 @@ import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/Fun
 import {
   CellDescriptor,
   FunctionBuildingBlock,
+  FunctionBuildingBlockType,
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
 import { produce } from 'immer';
@@ -71,6 +72,22 @@ const FunctionBuilderDialogReducer = (
         state,
         (state: FunctionBuilderDialogModel): FunctionBuilderDialogModel => {
           state.functionBuildingStack.removeBlock(action.payload as number);
+          return state;
+        }
+      );
+    }
+    case FunctionBuilderDialogActionTypes.CHOOSE_STRATEGY: {
+      return produce(
+        state,
+        (state: FunctionBuilderDialogModel): FunctionBuilderDialogModel => {
+          const targetBlockKey = action.payload as number;
+          const targetStrategy = action.optionalPayload as FunctionBuildingBlockType;
+          state.functionBuildingStack.navigateToBlockAndMutate(
+            targetBlockKey,
+            (targetBlock: FunctionBuildingBlock): void => {
+              targetBlock.type = targetStrategy;
+            }
+          );
           return state;
         }
       );
