@@ -4,10 +4,7 @@ export interface StrategyMapperForwardProps {
   blockAccessKey: number;
 }
 
-export interface StrategyMapperOwnProps {
+export interface StrategyMapperProps {
   parentAccessKey: number | null;
   ownLocation?: CellDescriptor;
 }
-
-export type StrategyMapperProps = StrategyMapperForwardProps &
-  StrategyMapperOwnProps;

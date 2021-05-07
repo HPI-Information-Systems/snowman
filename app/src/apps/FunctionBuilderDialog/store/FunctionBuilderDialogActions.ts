@@ -1,5 +1,4 @@
 import {
-  SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionValuesTypeEnum,
   SimilarityThresholdsApi,
 } from 'api';
@@ -15,17 +14,12 @@ import {
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
-import autoBind from 'auto-bind';
 import { nth } from 'lodash';
 import { max } from 'lodash';
 import { MagicNotPossibleId } from 'structs/constants';
 import { SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION } from 'structs/statusMessages';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
-import {
-  easyPrimitiveAction,
-  easyPrimitiveActionReturn,
-} from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
 
 const getExperimentId = (): number =>
@@ -53,33 +47,11 @@ export const createSimilarityThresholdFunction = (): SnowmanThunkAction<
   ).then((): void => doCloseDialog());
 };
 
-export const selectRootFunctionType = (
-  aType: SimilarityThresholdFunctionDefinitionTypeEnum
-): easyPrimitiveActionReturn<FunctionBuilderDialogModel> =>
-  easyPrimitiveAction<FunctionBuilderDialogModel>({
-    type: FunctionBuilderDialogActionTypes.SELECT_ROOT_TYPE,
-    payload: aType,
-  });
-
-export const getOwnFunctionBuildingBlock = (
-  accessKey: number
-): SnowmanThunkAction<number, FunctionBuilderDialogModel> => (
-  _: SnowmanDispatch<FunctionBuilderDialogModel>,
-  getState: () => FunctionBuilderDialogModel
-): number => {
-  return 4;
-};
-
 export class FunctionBuildingBlockMagistrate {
-  dispatch: SnowmanDispatch<FunctionBuilderDialogModel>;
+  private static dispatch: SnowmanDispatch<FunctionBuilderDialogModel> = FunctionBuilderDialogMagistrate.getStore()
+    .dispatch as SnowmanDispatch<FunctionBuilderDialogModel>;
 
-  constructor() {
-    autoBind(this);
-    this.dispatch = FunctionBuilderDialogMagistrate.getStore()
-      .dispatch as SnowmanDispatch<FunctionBuilderDialogModel>;
-  }
-
-  private getNewAccessKeyAction(): SnowmanThunkAction<
+  private static getNewAccessKeyAction(): SnowmanThunkAction<
     number,
     FunctionBuilderDialogModel
   > {
@@ -91,11 +63,13 @@ export class FunctionBuildingBlockMagistrate {
     };
   }
 
-  getNewAccessKey(): number {
-    return this.dispatch(this.getNewAccessKeyAction());
+  static getNewAccessKey(): number {
+    return FunctionBuildingBlockMagistrate.dispatch(
+      FunctionBuildingBlockMagistrate.getNewAccessKeyAction()
+    );
   }
 
-  private registerBuildingBlockAction(
+  private static registerBuildingBlockAction(
     ownAccessKey: number,
     parentAccessKey: number | null,
     cellDescriptor: CellDescriptor
@@ -112,13 +86,13 @@ export class FunctionBuildingBlockMagistrate {
     };
   }
 
-  registerBuildingBlock(
+  static registerBuildingBlock(
     ownAccessKey: number,
     parentAccessKey: number | null,
     cellDescriptor: CellDescriptor
   ): void {
-    return this.dispatch(
-      this.registerBuildingBlockAction(
+    return FunctionBuildingBlockMagistrate.dispatch(
+      FunctionBuildingBlockMagistrate.registerBuildingBlockAction(
         ownAccessKey,
         parentAccessKey,
         cellDescriptor
@@ -126,7 +100,7 @@ export class FunctionBuildingBlockMagistrate {
     );
   }
 
-  private unregisterBuildingBlockAction(
+  private static unregisterBuildingBlockAction(
     ownAccessKey: number
   ): SnowmanThunkAction<void, FunctionBuilderDialogModel> {
     return function (
@@ -139,8 +113,12 @@ export class FunctionBuildingBlockMagistrate {
     };
   }
 
-  unregisterBuildingBlock(ownAccessKey: number): void {
-    this.dispatch(this.unregisterBuildingBlockAction(ownAccessKey));
+  static unregisterBuildingBlock(ownAccessKey: number): void {
+    FunctionBuildingBlockMagistrate.dispatch(
+      FunctionBuildingBlockMagistrate.unregisterBuildingBlockAction(
+        ownAccessKey
+      )
+    );
   }
 
   static chooseStrategyAction(
@@ -158,11 +136,11 @@ export class FunctionBuildingBlockMagistrate {
     };
   }
 
-  chooseStrategy(
+  static chooseStrategy(
     ownAccessKey: number,
     targetStrategy: FunctionBuildingBlockType
   ): void {
-    this.dispatch(
+    FunctionBuildingBlockMagistrate.dispatch(
       FunctionBuildingBlockMagistrate.chooseStrategyAction(
         ownAccessKey,
         targetStrategy
@@ -170,7 +148,7 @@ export class FunctionBuildingBlockMagistrate {
     );
   }
 
-  private setLeftValueAction(
+  private static setLeftValueAction(
     ownAccessKey: number,
     value: LeftRightCellContent
   ): SnowmanThunkAction<void, FunctionBuilderDialogModel> {
@@ -183,11 +161,13 @@ export class FunctionBuildingBlockMagistrate {
     };
   }
 
-  setLeftValue(ownAccessKey: number, value: LeftRightCellContent): void {
-    this.dispatch(this.setLeftValueAction(ownAccessKey, value));
+  static setLeftValue(ownAccessKey: number, value: LeftRightCellContent): void {
+    FunctionBuildingBlockMagistrate.dispatch(
+      FunctionBuildingBlockMagistrate.setLeftValueAction(ownAccessKey, value)
+    );
   }
 
-  private setRightValueAction(
+  private static setRightValueAction(
     ownAccessKey: number,
     value: LeftRightCellContent
   ): SnowmanThunkAction<void, FunctionBuilderDialogModel> {
@@ -200,11 +180,16 @@ export class FunctionBuildingBlockMagistrate {
     };
   }
 
-  setRightValue(ownAccessKey: number, value: LeftRightCellContent): void {
-    this.dispatch(this.setRightValueAction(ownAccessKey, value));
+  static setRightValue(
+    ownAccessKey: number,
+    value: LeftRightCellContent
+  ): void {
+    FunctionBuildingBlockMagistrate.dispatch(
+      FunctionBuildingBlockMagistrate.setRightValueAction(ownAccessKey, value)
+    );
   }
 
-  private setMidValueAction(
+  private static setMidValueAction(
     ownAccessKey: number,
     value: MidCellContent
   ): SnowmanThunkAction<void, FunctionBuilderDialogModel> {
@@ -217,7 +202,9 @@ export class FunctionBuildingBlockMagistrate {
     };
   }
 
-  setMidValue(ownAccessKey: number, value: MidCellContent): void {
-    return this.dispatch(this.setMidValueAction(ownAccessKey, value));
+  static setMidValue(ownAccessKey: number, value: MidCellContent): void {
+    return FunctionBuildingBlockMagistrate.dispatch(
+      FunctionBuildingBlockMagistrate.setMidValueAction(ownAccessKey, value)
+    );
   }
 }

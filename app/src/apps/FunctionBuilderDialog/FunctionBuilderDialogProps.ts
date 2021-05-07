@@ -1,7 +1,4 @@
-import {
-  SimilarityThresholdFunctionDefinition,
-  SimilarityThresholdFunctionDefinitionTypeEnum,
-} from 'api';
+import { SimilarityThresholdFunctionDefinition } from 'api';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 
 export interface FunctionBuilderDialogStateProps {
@@ -11,7 +8,6 @@ export interface FunctionBuilderDialogStateProps {
 export interface FunctionBuilderDialogDispatchProps {
   clickOnCancel(): void;
   clickOnAddOrUpdate(): void;
-  selectRootType(aType: SimilarityThresholdFunctionDefinitionTypeEnum): void;
 }
 
 export type FunctionBuilderDialogOwnProps = DialogProps;

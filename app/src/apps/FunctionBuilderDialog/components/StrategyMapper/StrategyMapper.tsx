@@ -5,14 +5,12 @@ import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildin
 import React, { Component } from 'react';
 
 class StrategyMapper extends Component<StrategyMapperProps> {
-  blockMagistrate: FunctionBuildingBlockMagistrate;
   blockAccessKey: number;
 
   constructor(props: StrategyMapperProps) {
     super(props);
-    this.blockMagistrate = new FunctionBuildingBlockMagistrate();
-    this.blockAccessKey = this.blockMagistrate.getNewAccessKey();
-    this.blockMagistrate.registerBuildingBlock(
+    this.blockAccessKey = FunctionBuildingBlockMagistrate.getNewAccessKey();
+    FunctionBuildingBlockMagistrate.registerBuildingBlock(
       this.blockAccessKey,
       this.props.parentAccessKey,
       this.props.ownLocation ?? CellDescriptor.left
@@ -20,7 +18,9 @@ class StrategyMapper extends Component<StrategyMapperProps> {
   }
 
   componentWillUnmount(): void {
-    this.blockMagistrate.unregisterBuildingBlock(this.blockAccessKey);
+    FunctionBuildingBlockMagistrate.unregisterBuildingBlock(
+      this.blockAccessKey
+    );
   }
 
   render(): JSX.Element {

@@ -32,20 +32,6 @@ const FunctionBuilderDialogReducer = (
   action: SnowmanAction
 ): FunctionBuilderDialogModel => {
   switch (action.type) {
-    case FunctionBuilderDialogActionTypes.SELECT_ROOT_TYPE: {
-      if (
-        (action.payload as SimilarityThresholdFunctionDefinitionTypeEnum) ===
-        state.operator.type
-      ) {
-        return state;
-      }
-      return {
-        ...state,
-        operator: {
-          type: action.payload as SimilarityThresholdFunctionDefinitionTypeEnum,
-        },
-      };
-    }
     case FunctionBuilderDialogActionTypes.REGISTER_BUILDING_BLOCK: {
       return produce(
         state,

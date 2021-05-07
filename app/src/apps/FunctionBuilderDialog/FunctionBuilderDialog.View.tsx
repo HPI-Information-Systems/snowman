@@ -1,5 +1,4 @@
 import { IonButton, IonIcon } from '@ionic/react';
-import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/RootAccessKey';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
 import { FunctionBuilderDialogProps } from 'apps/FunctionBuilderDialog/FunctionBuilderDialogProps';
 import styles from 'apps/FunctionBuilderDialog/FunctionBuilderDialogStyles.module.css';
@@ -13,18 +12,12 @@ import style from 'theme/style';
 
 const FunctionBuilderDialogView = ({
   clickOnCancel,
-  operator,
   clickOnAddOrUpdate,
   isAddDialog,
-  selectRootType,
 }: FunctionBuilderDialogProps): JSX.Element => (
   <>
     <div className={styles.container}>
-      <StrategyMapper
-        parentAccessKey={null}
-        nextStrategyType={operator.type}
-        setNextStrategyType={selectRootType}
-      />
+      <StrategyMapper parentAccessKey={null} />
     </div>
     <div className={style(styles.center, styles.buttonRow)}>
       <IonButton

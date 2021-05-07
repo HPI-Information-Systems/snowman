@@ -1,13 +1,9 @@
-import { SimilarityThresholdFunctionDefinitionTypeEnum } from 'api';
 import FunctionBuilderDialogView from 'apps/FunctionBuilderDialog/FunctionBuilderDialog.View';
 import {
   FunctionBuilderDialogDispatchProps,
   FunctionBuilderDialogStateProps,
 } from 'apps/FunctionBuilderDialog/FunctionBuilderDialogProps';
-import {
-  createSimilarityThresholdFunction,
-  selectRootFunctionType,
-} from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
+import { createSimilarityThresholdFunction } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
 import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogModel';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
@@ -27,9 +23,6 @@ const mapDispatchToProps = (
   },
   clickOnAddOrUpdate() {
     dispatch(createSimilarityThresholdFunction());
-  },
-  selectRootType(aType: SimilarityThresholdFunctionDefinitionTypeEnum) {
-    dispatch(selectRootFunctionType(aType));
   },
 });
 
