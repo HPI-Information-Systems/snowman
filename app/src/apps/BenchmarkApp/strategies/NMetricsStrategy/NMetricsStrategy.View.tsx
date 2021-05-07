@@ -23,14 +23,13 @@ const NMetricsStrategyView = ({
   });
   return (
     <>
-      {!isValidSelection ? (
-        <ErroneousBackdrop
-          message={
-            'Please select one gold standard and at least one other experiment ' +
-            'from a single dataset!'
-          }
-        />
-      ) : null}
+      <ErroneousBackdrop
+        shouldShow={!isValidSelection}
+        message={
+          'Please select one gold standard and at least one other experiment ' +
+          'from a single dataset!'
+        }
+      />
       <IonCard>
         <table className={styles.materialTable}>
           <thead>
