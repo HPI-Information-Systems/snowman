@@ -143,7 +143,7 @@ export class FunctionBuildingBlockMagistrate {
     this.dispatch(this.unregisterBuildingBlockAction(ownAccessKey));
   }
 
-  private chooseStrategyAction(
+  static chooseStrategyAction(
     ownAccessKey: number,
     targetStrategy: FunctionBuildingBlockType
   ): SnowmanThunkAction<void, FunctionBuilderDialogModel> {
@@ -162,7 +162,12 @@ export class FunctionBuildingBlockMagistrate {
     ownAccessKey: number,
     targetStrategy: FunctionBuildingBlockType
   ): void {
-    this.dispatch(this.chooseStrategyAction(ownAccessKey, targetStrategy));
+    this.dispatch(
+      FunctionBuildingBlockMagistrate.chooseStrategyAction(
+        ownAccessKey,
+        targetStrategy
+      )
+    );
   }
 
   private setLeftValueAction(

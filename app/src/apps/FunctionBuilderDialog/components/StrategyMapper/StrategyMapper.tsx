@@ -10,11 +10,7 @@ import {
 import styles from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperStyles.module.css';
 import StrategyUnselector from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector';
 import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
-import {
-  CellDescriptor,
-  FunctionBuildingBlockType,
-} from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
-import { FunctionToChooseStrategy } from 'apps/FunctionBuilderDialog/types/FunctionToChooseStrategy';
+import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import React, { Component, createElement } from 'react';
 
 class StrategyMapper extends Component<
@@ -23,7 +19,6 @@ class StrategyMapper extends Component<
 > {
   blockMagistrate: FunctionBuildingBlockMagistrate;
   blockAccessKey: number;
-  setStrategy: FunctionToChooseStrategy;
 
   constructor(props: StrategyMapperProps) {
     super(props);
@@ -34,8 +29,6 @@ class StrategyMapper extends Component<
       this.props.parentAccessKey,
       this.props.ownLocation ?? CellDescriptor.left
     );
-    this.setStrategy = (strategy: FunctionBuildingBlockType): void =>
-      this.blockMagistrate.chooseStrategy(this.blockAccessKey, strategy);
   }
 
   componentDidUpdate(prevProps: Readonly<StrategyMapperProps>): void {
@@ -61,17 +54,11 @@ class StrategyMapper extends Component<
           <>
             {createElement(this.state.targetStrategy.targetStrategyComponent)}
             <span className={styles.unselectorMargin}>
-              <StrategyUnselector
-                nextStrategyType={this.props.nextStrategyType}
-                setNextStrategyType={this.setStrategy}
-              />
+              <StrategyUnselector blockAccessKey={this.blockAccessKey} />
             </span>
           </>
         ) : (
-          <NextStrategySelector
-            nextStrategyType={this.props.nextStrategyType}
-            setNextStrategyType={this.setStrategy}
-          />
+          <NextStrategySelector blockAccessKey={this.blockAccessKey} />
         )}
       </>
     );

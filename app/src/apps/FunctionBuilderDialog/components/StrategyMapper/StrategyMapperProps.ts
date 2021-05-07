@@ -1,13 +1,8 @@
 import { StrategyMapItem } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMap';
-import {
-  CellDescriptor,
-  FunctionBuildingBlockType,
-} from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
-import { FunctionToChooseStrategy } from 'apps/FunctionBuilderDialog/types/FunctionToChooseStrategy';
+import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 
 export interface StrategyMapperForwardProps {
-  nextStrategyType: FunctionBuildingBlockType;
-  setNextStrategyType: FunctionToChooseStrategy;
+  blockAccessKey: number;
 }
 
 export interface StrategyMapperOwnProps {

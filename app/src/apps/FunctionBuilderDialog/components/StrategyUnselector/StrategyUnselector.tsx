@@ -1,24 +1,41 @@
-import { IonIcon } from '@ionic/react';
-import { StrategyUnselectorProps } from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselectorProps';
-import styles from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselectorStyles.module.css';
+import StrategyUnselectorView from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector.View';
+import {
+  StrategyUnselectorDispatchProps,
+  StrategyUnselectorOwnProps,
+  StrategyUnselectorStateProps,
+} from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselectorProps';
+import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
+import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogModel';
 import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
-import { closeCircleOutline } from 'ionicons/icons';
-import React from 'react';
+import { connect } from 'react-redux';
+import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
-const StrategyUnselector = ({
-  nextStrategyType,
-  setNextStrategyType,
-}: StrategyUnselectorProps): JSX.Element => (
-  <>
-    {nextStrategyType !== UndefinedStrategy ? (
-      <IonIcon
-        className={styles.icon}
-        icon={closeCircleOutline}
-        color="danger"
-        onClick={(): void => setNextStrategyType(UndefinedStrategy)}
-      />
-    ) : null}
-  </>
-);
+const mapStateToProps = (
+  state: FunctionBuilderDialogModel,
+  ownProps: StrategyUnselectorOwnProps
+): StrategyUnselectorStateProps => ({
+  isStrategySelected:
+    state.functionBuildingStack.getBlock(ownProps.blockAccessKey)?.type !==
+      UndefinedStrategy ?? false,
+});
+
+const mapDispatchToProps = (
+  dispatch: SnowmanDispatch<FunctionBuilderDialogModel>,
+  ownProps: StrategyUnselectorOwnProps
+): StrategyUnselectorDispatchProps => ({
+  unselectStrategy() {
+    dispatch(
+      FunctionBuildingBlockMagistrate.chooseStrategyAction(
+        ownProps.blockAccessKey,
+        UndefinedStrategy
+      )
+    );
+  },
+});
+
+const StrategyUnselector = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(StrategyUnselectorView);
 
 export default StrategyUnselector;
