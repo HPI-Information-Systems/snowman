@@ -4,13 +4,17 @@ import {
   StrategyMapItem,
 } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMap';
 import {
+  chooseStrategyFunction,
   StrategyMapperProps,
   StrategyMapperStateProps,
 } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
 import styles from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperStyles.module.css';
 import StrategyUnselector from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector';
 import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
-import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import {
+  CellDescriptor,
+  FunctionBuildingBlockType,
+} from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import React, { Component, createElement } from 'react';
 
 class StrategyMapper extends Component<
@@ -19,6 +23,7 @@ class StrategyMapper extends Component<
 > {
   blockMagistrate: FunctionBuildingBlockMagistrate;
   blockAccessKey: number;
+  setStrategy: chooseStrategyFunction;
 
   constructor(props: StrategyMapperProps) {
     super(props);
@@ -29,6 +34,8 @@ class StrategyMapper extends Component<
       this.props.parentAccessKey,
       this.props.ownLocation ?? CellDescriptor.left
     );
+    this.setStrategy = (strategy: FunctionBuildingBlockType): void =>
+      this.blockMagistrate.chooseStrategy(this.blockAccessKey, strategy);
   }
 
   componentDidUpdate(prevProps: Readonly<StrategyMapperProps>): void {
@@ -56,14 +63,14 @@ class StrategyMapper extends Component<
             <span className={styles.unselectorMargin}>
               <StrategyUnselector
                 nextStrategyType={this.props.nextStrategyType}
-                setNextStrategyType={this.props.setNextStrategyType}
+                setNextStrategyType={this.setStrategy}
               />
             </span>
           </>
         ) : (
           <NextStrategySelector
             nextStrategyType={this.props.nextStrategyType}
-            setNextStrategyType={this.props.setNextStrategyType}
+            setNextStrategyType={this.setStrategy}
           />
         )}
       </>

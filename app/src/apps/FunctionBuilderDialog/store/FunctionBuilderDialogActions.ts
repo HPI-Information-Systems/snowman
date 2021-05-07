@@ -7,7 +7,10 @@ import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/
 import { FunctionBuilderDialogMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogStore';
 import { FunctionBuilderDialogActionTypes } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogActionTypes';
 import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogModel';
-import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import {
+  CellDescriptor,
+  FunctionBuildingBlockType,
+} from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import autoBind from 'auto-bind';
@@ -136,5 +139,27 @@ export class FunctionBuildingBlockMagistrate {
 
   unregisterBuildingBlock(ownAccessKey: number): void {
     this.dispatch(this.unregisterBuildingBlockAction(ownAccessKey));
+  }
+
+  private chooseStrategyAction(
+    ownAccessKey: number,
+    targetStrategy: FunctionBuildingBlockType
+  ): SnowmanThunkAction<void, FunctionBuilderDialogModel> {
+    return function (
+      dispatch: SnowmanDispatch<FunctionBuilderDialogModel>
+    ): void {
+      dispatch({
+        type: FunctionBuilderDialogActionTypes.CHOOSE_STRATEGY,
+        payload: ownAccessKey,
+        optionalPayload: targetStrategy,
+      });
+    };
+  }
+
+  chooseStrategy(
+    ownAccessKey: number,
+    targetStrategy: FunctionBuildingBlockType
+  ): void {
+    this.dispatch(this.chooseStrategyAction(ownAccessKey, targetStrategy));
   }
 }

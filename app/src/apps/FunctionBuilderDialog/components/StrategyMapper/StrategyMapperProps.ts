@@ -4,9 +4,13 @@ import {
   FunctionBuildingBlockType,
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 
+export type chooseStrategyFunction = (
+  strategy: FunctionBuildingBlockType
+) => void;
+
 export interface StrategyMapperForwardProps {
   nextStrategyType: FunctionBuildingBlockType;
-  setNextStrategyType(nextStrategy: FunctionBuildingBlockType): void;
+  setNextStrategyType: chooseStrategyFunction;
 }
 
 export interface StrategyMapperOwnProps {
