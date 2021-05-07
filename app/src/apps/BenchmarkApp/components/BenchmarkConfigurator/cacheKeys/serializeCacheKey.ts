@@ -4,4 +4,8 @@ export type SerializedStoreCacheKey = string;
 
 export const serializeCacheKey = (
   cacheKey: StoreCacheKey
-): SerializedStoreCacheKey => cacheKey.map((item) => String(item)).join('#');
+): SerializedStoreCacheKey => JSON.stringify(cacheKey);
+
+export const decodeCacheKey = (
+  encodedCacheKey: SerializedStoreCacheKey
+): StoreCacheKey => JSON.parse(encodedCacheKey);

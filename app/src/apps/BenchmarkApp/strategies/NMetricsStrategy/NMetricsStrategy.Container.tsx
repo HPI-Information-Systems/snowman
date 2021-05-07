@@ -1,6 +1,7 @@
 import { Experiment } from 'api';
 import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
+import { MULTI_SELECTOR_START } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
 import { doOpenStrategy } from 'apps/BenchmarkApp/store/BenchmarkAppActions';
 import { doPrimeSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreActions';
 import NMetricsStrategyView from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategy.View';
@@ -28,8 +29,12 @@ const mapDispatchToProps = (
   dispatch: SnowmanDispatch<NMetricsStrategyModel>
 ): NMetricsStrategyDispatchProps => ({
   inspectExperiment(anExperiment: Experiment) {
-    doPrimeSelection('experiments', {
-      aCacheKey: getCacheKey(StoreCacheKeyBaseEnum.experiment),
+    doPrimeSelection({
+      aCacheKey: getCacheKey(
+        StoreCacheKeyBaseEnum.experiment,
+        MULTI_SELECTOR_START,
+        MULTI_SELECTOR_START
+      ),
       selectFirst: anExperiment.id,
     });
     doOpenStrategy(StrategyIDs.BinaryMetrics);

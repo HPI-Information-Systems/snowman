@@ -11,13 +11,13 @@ import { ExperimentConfigurationModel } from 'apps/BenchmarkApp/types/Configurat
 
 export const simFuntionCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.similarityFunction,
-  [datasetMultiSelectId?: number, experimentMultiSelectId?: number],
+  [datasetMultiSelectId: number, experimentMultiSelectId: number],
   SimilarityThresholdFunction,
   'simFunctions'
 >({
   keyBase: StoreCacheKeyBaseEnum.similarityFunction,
-  defaultArgs: [0, 0],
   targetCache: () => 'simFunctions',
+  getEntities: (state) => state.resources.simFunctions,
   filter: {
     dependsOn: (dataset, experiment) => [
       experimentCacheKeyAndFilter(dataset, experiment).cacheKey,

@@ -1,6 +1,7 @@
 import { Dataset, Experiment, ExperimentIntersectionCount, Metric } from 'api';
 import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
+import { MULTI_SELECTOR_START } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
 import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
@@ -26,15 +27,19 @@ const BinaryMetricsStrategyReducer = (
     case BinaryMetricsStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
       const datasetId = getSingleItem(
-        getCacheKey(StoreCacheKeyBaseEnum.dataset),
+        getCacheKey(StoreCacheKeyBaseEnum.dataset, MULTI_SELECTOR_START),
         appStore
       );
       const goldStandardId = getSingleItem(
-        getCacheKey(StoreCacheKeyBaseEnum.groundTruth),
+        getCacheKey(StoreCacheKeyBaseEnum.groundTruth, MULTI_SELECTOR_START),
         appStore
       );
       const experimentId = getSingleItem(
-        getCacheKey(StoreCacheKeyBaseEnum.experiment),
+        getCacheKey(
+          StoreCacheKeyBaseEnum.experiment,
+          MULTI_SELECTOR_START,
+          MULTI_SELECTOR_START
+        ),
         appStore
       );
       if (

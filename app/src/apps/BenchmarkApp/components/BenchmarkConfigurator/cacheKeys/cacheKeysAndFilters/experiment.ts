@@ -12,13 +12,13 @@ import { DatasetConfigurationModel } from 'apps/BenchmarkApp/types/Configuration
 
 export const experimentCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.experiment,
-  [datasetMultiSelectId?: number, experimentMultiSelectId?: number],
+  [datasetMultiSelectId: number, experimentMultiSelectId: number],
   Experiment,
   'experiments'
 >({
   keyBase: StoreCacheKeyBaseEnum.experiment,
-  defaultArgs: [0, 0],
   targetCache: () => 'experiments',
+  getEntities: (state) => state.resources.experiments,
   filter: {
     dependsOn: (dataset) => [datasetCacheKeyAndFilter(dataset).cacheKey],
     viewFilters: () => [filterCacheKeyAndFilter('algorithms').cacheKey],

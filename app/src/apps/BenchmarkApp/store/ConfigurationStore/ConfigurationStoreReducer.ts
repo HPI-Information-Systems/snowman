@@ -52,12 +52,12 @@ const ConfigurationStoreReducer = (
   switch (action.type) {
     case ConfigurationStoreActionTypes.SET_SELECTION:
       return produce(state, (state: BenchmarkAppModel) => {
-        const cache = action.payload as keyof ConfigurationStoreModel;
-        const key = action.optionalPayload as StoreCacheKey;
-        const newSelection = action.optionalPayload2 as (
+        const key = action.payload as StoreCacheKey;
+        const newSelection = action.optionalPayload as (
           | ModelOfCache<typeof cache>
           | undefined
         )[];
+        const cache = getCacheKeyAndFilter(key).targetCache;
         const item = getItem({ state, cache: state.config[cache], key });
         item.targets = newSelection as typeof item.targets;
         for (const {
