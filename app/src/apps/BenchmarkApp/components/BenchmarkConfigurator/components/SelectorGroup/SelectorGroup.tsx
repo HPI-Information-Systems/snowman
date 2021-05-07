@@ -6,7 +6,7 @@ import React from 'react';
 import style from 'theme/style';
 
 const EmptyPlaceholder = (): JSX.Element => (
-  <IonText color="medium">Empty</IonText>
+  <IonText color="medium">{'<None>'}</IonText>
 );
 
 const SelectorGroup = ({ onClick, items }: SelectorGroupProps): JSX.Element => (
