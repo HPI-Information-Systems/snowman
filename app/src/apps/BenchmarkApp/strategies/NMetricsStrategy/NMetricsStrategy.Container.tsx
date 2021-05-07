@@ -2,7 +2,7 @@ import { Experiment } from 'api';
 import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { doOpenStrategy } from 'apps/BenchmarkApp/store/BenchmarkAppActions';
-import { doPrimeSelection } from 'apps/BenchmarkApp/store/ConfigurationStoreActions';
+import { doPrimeSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreActions';
 import NMetricsStrategyView from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategy.View';
 import {
   NMetricsStrategyDispatchProps,

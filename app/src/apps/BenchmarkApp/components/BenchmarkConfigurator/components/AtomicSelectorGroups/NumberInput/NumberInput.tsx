@@ -4,7 +4,7 @@ import {
   NumberInputOwnProps,
   NumberInputStateProps,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/NumberInput/NumberInputProps';
-import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStoreActions';
+import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { getSingleItem } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { connect } from 'react-redux';
@@ -16,7 +16,7 @@ const mapStateToProps = (
   state: BenchmarkAppModel,
   ownProps: NumberInputOwnProps
 ): NumberInputStateProps => ({
-  value: getSingleItem(ownProps.cacheKey, state),
+  value: getSingleItem(ownProps.cacheKey, state) as number | undefined,
 });
 
 const mapDispatchToProps = (

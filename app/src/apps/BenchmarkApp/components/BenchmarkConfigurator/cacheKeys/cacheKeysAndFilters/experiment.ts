@@ -8,17 +8,11 @@ import {
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/filter';
 import { serializeCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/serializeCacheKey';
 import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
-import {
-  DatasetConfigurationModel,
-  MultiSelectConfigurationModel,
-} from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+import { DatasetConfigurationModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 
 export const experimentCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.experiment,
-  [
-    datasetMultiSelectId?: MultiSelectConfigurationModel,
-    experimentMultiSelectId?: MultiSelectConfigurationModel
-  ],
+  [datasetMultiSelectId?: number, experimentMultiSelectId?: number],
   Experiment,
   'experiments'
 >({

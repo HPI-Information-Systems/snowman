@@ -7,7 +7,7 @@ import {
 export const multiSelectCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.multiSelect,
   [...cacheKey: StoreCacheKey],
-  unknown,
+  never,
   'multiSelects'
 >({
   keyBase: StoreCacheKeyBaseEnum.multiSelect,

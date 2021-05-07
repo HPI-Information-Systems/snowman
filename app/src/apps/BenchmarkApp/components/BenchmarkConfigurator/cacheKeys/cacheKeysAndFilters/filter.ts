@@ -5,7 +5,7 @@ import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationSt
 export const filterCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.filter,
   [targetCache: keyof ConfigurationStoreModel],
-  unknown
+  never
 >({
   keyBase: StoreCacheKeyBaseEnum.filter,
   targetCache: (targetCache) => targetCache,

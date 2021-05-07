@@ -6,7 +6,7 @@ import {
   AtomicSelectorGroupOwnProps,
   AtomicSelectorGroupStateProps,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
-import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStoreActions';
+import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import {
   getItems,

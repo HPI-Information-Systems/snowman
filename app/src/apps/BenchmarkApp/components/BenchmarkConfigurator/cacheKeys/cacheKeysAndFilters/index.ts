@@ -7,14 +7,11 @@ import { groundTruthCacheKeyAndFilter } from 'apps/BenchmarkApp/components/Bench
 import { multiSelectCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
 import { simFuntionCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/simFunction';
 import { simThresholdCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/simThreshold';
-import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 import { assertType } from 'snowman-library';
 
 export const CacheKeysAndFilters = assertType<
   {
-    [Key in StoreCacheKeyBaseEnum]: ReturnType<
-      typeof MakeStoreCacheKeyAndFilter
-    >;
+    [Key in StoreCacheKeyBaseEnum]: unknown;
   }
 >()({
   [StoreCacheKeyBaseEnum.algorithm]: algorithmCacheKeyAndFilter,

@@ -12,7 +12,13 @@ const DemoMetricsConfigurator = (): JSX.Element => (
       <ConfiguratorItem
         title="1a. Select Threshold"
         configurators={[
-          [getCacheKey(StoreCacheKeyBaseEnum.similarityThreshold), true],
+          [
+            getCacheKey(
+              StoreCacheKeyBaseEnum.multiSelect,
+              ...getCacheKey(StoreCacheKeyBaseEnum.similarityThreshold)
+            ),
+            true,
+          ],
         ]}
       />
     </IonList>

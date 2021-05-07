@@ -51,7 +51,7 @@ const ConfigurationStoreReducer = (
 ): BenchmarkAppModel => {
   switch (action.type) {
     case ConfigurationStoreActionTypes.SET_SELECTION:
-      return produce(state, (state) => {
+      return produce(state, (state: BenchmarkAppModel) => {
         const cache = action.payload as keyof ConfigurationStoreModel;
         const key = action.optionalPayload as StoreCacheKey;
         const newSelection = action.optionalPayload2 as (
@@ -59,7 +59,7 @@ const ConfigurationStoreReducer = (
           | undefined
         )[];
         const item = getItem({ state, cache: state.config[cache], key });
-        item.targets = newSelection;
+        item.targets = newSelection as typeof item.targets;
         for (const {
           cacheKey,
           targetCache,
@@ -74,12 +74,12 @@ const ConfigurationStoreReducer = (
               filteredEntity.targets = filter.filter({
                 action,
                 state,
-                currentSelection: filteredEntity?.targets || [],
-              });
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                currentSelection: (filteredEntity?.targets || []) as any,
+              }) as typeof filteredEntity.targets;
             }
           }
         }
-        return state;
       });
     default:
       return state;

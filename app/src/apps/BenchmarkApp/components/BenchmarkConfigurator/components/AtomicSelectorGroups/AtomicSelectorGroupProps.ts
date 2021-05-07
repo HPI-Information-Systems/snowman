@@ -1,8 +1,11 @@
+import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 import { SearchableEntity } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/types/SearchableEntity';
 
-export interface AtomicSelectorGroupOwnProps {
-  cacheKey: StoreCacheKey;
+export interface AtomicSelectorGroupOwnProps<
+  Base extends StoreCacheKeyBaseEnum = StoreCacheKeyBaseEnum
+> {
+  cacheKey: StoreCacheKey<Base>;
   allowMultiple?: boolean;
 }
 

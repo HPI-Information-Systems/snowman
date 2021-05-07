@@ -53,7 +53,7 @@ export const MakeStoreCacheKeyAndFilter = <
   ...args: Args
 ) => {
   cacheKey: StoreCacheKey<KeyBase, MakeRequired<Args>>;
-  targetCache: keyof ConfigurationStoreModel;
+  targetCache: TargetCache;
   filter?: {
     dependsOn: () => StoreCacheKey[];
     filter: (
@@ -66,8 +66,10 @@ export const MakeStoreCacheKeyAndFilter = <
     viewFilters: () => StoreCacheKey[];
   };
 }) => (...incomingArgs) => {
-  const args = defaultArgs.map(
-    (defaultArg, index) => incomingArgs[index] ?? defaultArg
+  const longerArgs =
+    incomingArgs.length > defaultArgs.length ? incomingArgs : defaultArgs;
+  const args = longerArgs.map(
+    (_, index) => incomingArgs[index] ?? defaultArgs[index]
   ) as MakeRequired<Args>;
   return {
     cacheKey: [keyBase, ...args],
