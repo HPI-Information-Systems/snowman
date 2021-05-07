@@ -86,31 +86,38 @@ export class FunctionBuildingBlockMagistrate {
     };
   }
 
+  getNewAccessKey(): number {
+    return this.dispatch(this.getNewAccessKeyAction());
+  }
+
   private registerBuildingBlockAction(
+    ownAccessKey: number,
     parentAccessKey: number | null,
     cellDescriptor: CellDescriptor
-  ): SnowmanThunkAction<number, FunctionBuilderDialogModel> {
+  ): SnowmanThunkAction<void, FunctionBuilderDialogModel> {
     return function (
-      dispatch: SnowmanDispatch<FunctionBuilderDialogModel>,
-      getState: () => FunctionBuilderDialogModel
-    ): number {
-      const newAccessKey =
-        (max(getState().reservedAccessKeys) ?? RootAccessKey) + 1;
+      dispatch: SnowmanDispatch<FunctionBuilderDialogModel>
+    ): void {
       dispatch({
         type: FunctionBuilderDialogActionTypes.REGISTER_BUILDING_BLOCK,
-        payload: parentAccessKey,
-        optionalPayload: cellDescriptor,
+        payload: ownAccessKey,
+        optionalPayload: parentAccessKey,
+        optionalPayload2: cellDescriptor,
       });
-      return newAccessKey;
     };
   }
 
   registerBuildingBlock(
+    ownAccessKey: number,
     parentAccessKey: number | null,
     cellDescriptor: CellDescriptor
-  ): number {
+  ): void {
     return this.dispatch(
-      this.registerBuildingBlockAction(parentAccessKey, cellDescriptor)
+      this.registerBuildingBlockAction(
+        ownAccessKey,
+        parentAccessKey,
+        cellDescriptor
+      )
     );
   }
 
@@ -129,9 +136,5 @@ export class FunctionBuildingBlockMagistrate {
 
   unregisterBuildingBlock(ownAccessKey: number): void {
     this.dispatch(this.unregisterBuildingBlockAction(ownAccessKey));
-  }
-
-  getNewAccessKey(): number {
-    return this.dispatch(this.getNewAccessKeyAction());
   }
 }

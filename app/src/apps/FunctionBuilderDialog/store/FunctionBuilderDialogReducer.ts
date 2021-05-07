@@ -47,18 +47,17 @@ const FunctionBuilderDialogReducer = (
       return produce(
         state,
         (state: FunctionBuilderDialogModel): FunctionBuilderDialogModel => {
-          const parentAccessKey = action.payload as number;
+          const ownAccessKey = action.payload as number;
+          const parentAccessKey = action.optionalPayload as number | null;
+          const targetCell = action.optionalPayload2 as CellDescriptor;
           state.functionBuildingStack.navigateToBlockAndMutate(
-            parentAccessKey,
+            parentAccessKey ?? RootAccessKey,
             (targetBlock: FunctionBuildingBlock): void => {
               const newBlock = new FunctionBuildingBlock(
-                FunctionBuildingBlock.getNewAccessKey(state.reservedAccessKeys),
+                ownAccessKey,
                 UndefinedStrategy
               );
-              if (
-                (action.optionalPayload as CellDescriptor) ===
-                CellDescriptor.left
-              )
+              if (targetCell === CellDescriptor.left)
                 targetBlock.left = newBlock;
               else targetBlock.right = newBlock;
             }

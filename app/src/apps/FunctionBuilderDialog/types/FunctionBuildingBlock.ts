@@ -24,10 +24,6 @@ export class FunctionBuildingBlock {
   mid: MidCellContent;
   right: LeftRightCellContent;
 
-  public static getNewAccessKey(reservedAccessKeys: number[]): number {
-    return (max(reservedAccessKeys) ?? RootAccessKey) + 1;
-  }
-
   constructor(
     accessKey: number,
     type: FunctionBuildingBlockType,

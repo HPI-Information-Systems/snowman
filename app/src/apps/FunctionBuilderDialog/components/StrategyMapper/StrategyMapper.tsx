@@ -25,6 +25,7 @@ class StrategyMapper extends Component<
     this.blockMagistrate = new FunctionBuildingBlockMagistrate();
     this.blockAccessKey = this.blockMagistrate.getNewAccessKey();
     this.blockMagistrate.registerBuildingBlock(
+      this.blockAccessKey,
       this.props.parentAccessKey,
       this.props.ownLocation ?? CellDescriptor.left
     );
