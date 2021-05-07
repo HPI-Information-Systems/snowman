@@ -941,10 +941,13 @@ components:
               hrAmount: 6
             deploymentType:
             - cloud
+            - cloud
             useCase:
+            - merging
             - merging
             generalCosts: 1
             solutionType:
+            - rulebased
             - rulebased
           configurationEffort:
             interfaces:
@@ -957,6 +960,7 @@ components:
               expertise: 0
               hrAmount: 6
             supportedOSs:
+            - Windows
             - Windows
         name: Magellan
         description: This is an open source python library
@@ -1279,6 +1283,9 @@ components:
             $ref: '#/components/schemas/ExperimentId'
           threshold:
             type: number
+        required:
+        - x
+        - "y"
       type: array
     softKPIsAlgorithmEnum:
       enum:
