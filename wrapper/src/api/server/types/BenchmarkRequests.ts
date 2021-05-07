@@ -1,5 +1,17 @@
-import { ExperimentConfigItem } from './ExperimentConfigItem';
-import { ExperimentIntersectionItem } from './ExperimentIntersectionItem';
+import {
+  ExperimentConfigItem,
+  ExperimentIntersectionItem,
+  InlineObject,
+  MetricsEnum,
+  SoftKPIsAlgorithmEnum,
+  SoftKPIsExperimentEnum,
+} from '.';
+
+export interface CalculateDiagramDataRequest {
+  xAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
+  yAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
+  diagram: InlineObject;
+}
 
 export interface CalculateExperimentIntersectionCountRequest {
   intersection: Array<ExperimentIntersectionItem>;

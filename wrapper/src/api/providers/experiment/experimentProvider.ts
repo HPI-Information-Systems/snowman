@@ -38,6 +38,8 @@ export class ExperimentProvider {
         description: experiment.description,
         algorithm: experiment.algorithmId,
         dataset: experiment.datasetId,
+        hrAmount: experiment.softKPIs?.hrAmount,
+        expertise: experiment.softKPIs?.expertise,
       },
     ])[0];
   }

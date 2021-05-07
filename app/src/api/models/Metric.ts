@@ -30,6 +30,12 @@ export interface Metric {
      * @type {string}
      * @memberof Metric
      */
+    id?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Metric
+     */
     formula: string;
     /**
      * 
@@ -54,7 +60,7 @@ export interface Metric {
      * @type {Array<number>}
      * @memberof Metric
      */
-    range: Array<number>;
+    range?: Array<number>;
 }
 
 export function MetricFromJSON(json: any): Metric {
@@ -68,11 +74,12 @@ export function MetricFromJSONTyped(json: any, ignoreDiscriminator: boolean): Me
     return {
         
         'name': json['name'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
         'formula': json['formula'],
         'info': !exists(json, 'info') ? undefined : json['info'],
         'infoLink': !exists(json, 'infoLink') ? undefined : json['infoLink'],
         'value': json['value'],
-        'range': json['range'],
+        'range': !exists(json, 'range') ? undefined : json['range'],
     };
 }
 
@@ -86,6 +93,7 @@ export function MetricToJSON(value?: Metric | null): any {
     return {
         
         'name': value.name,
+        'id': value.id,
         'formula': value.formula,
         'info': value.info,
         'infoLink': value.infoLink,

@@ -12,8 +12,12 @@
  * Do not edit the class manually.
  */
 
+import {
+    AlgorithmValuesSoftKPIs,
+} from './';
+
 /**
- *
+ * 
  * @export
  * @interface AlgorithmValues
  */
@@ -30,4 +34,10 @@ export interface AlgorithmValues {
      * @memberof AlgorithmValues
      */
     description?: string;
+    /**
+     * 
+     * @type {AlgorithmValuesSoftKPIs}
+     * @memberof AlgorithmValues
+     */
+    softKPIs?: AlgorithmValuesSoftKPIs;
 }
