@@ -1,5 +1,6 @@
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { CacheKeysAndFilters } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters';
+import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/types';
 import {
   ModelOfCache,
   StoreCacheKey,
@@ -22,6 +23,13 @@ export const getCacheKeyAndFilter = <Key extends StoreCacheKey>([
   (CacheKeysAndFilters[base] as any)(...args) as ReturnType<
     typeof CacheKeysAndFilters[Key[0]]
   >;
+
+export const getCacheKeyAndFilterUntyped = ([
+  base,
+  ...args
+]: StoreCacheKey): ReturnType<ReturnType<typeof MakeStoreCacheKeyAndFilter>> =>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (CacheKeysAndFilters[base] as any)(...args);
 
 export type ModelOfCacheKeyBase<
   Base extends StoreCacheKeyBaseEnum

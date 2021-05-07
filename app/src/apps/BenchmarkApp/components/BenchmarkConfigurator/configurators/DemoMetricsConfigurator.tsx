@@ -19,32 +19,50 @@ const DemoMetricsConfigurator = (): JSX.Element => (
               ...getCacheKey(
                 StoreCacheKeyBaseEnum.group,
                 [MULTI_SELECTOR_INCREMENT_ID],
-                getCacheKey(
-                  StoreCacheKeyBaseEnum.dataset,
-                  MULTI_SELECTOR_INCREMENT_ID
-                ),
-                getCacheKey(
-                  StoreCacheKeyBaseEnum.multiSelect,
-                  ...getCacheKey(
-                    StoreCacheKeyBaseEnum.group,
-                    [MULTI_SELECTOR_INCREMENT_ID, MULTI_SELECTOR_INCREMENT_ID],
-                    getCacheKey(
-                      StoreCacheKeyBaseEnum.experiment,
-                      MULTI_SELECTOR_INCREMENT_ID,
-                      MULTI_SELECTOR_INCREMENT_ID
-                    ),
-                    getCacheKey(
-                      StoreCacheKeyBaseEnum.similarityFunction,
-                      MULTI_SELECTOR_INCREMENT_ID,
-                      MULTI_SELECTOR_INCREMENT_ID
-                    ),
-                    getCacheKey(
-                      StoreCacheKeyBaseEnum.similarityThreshold,
-                      MULTI_SELECTOR_INCREMENT_ID,
-                      MULTI_SELECTOR_INCREMENT_ID
+                [
+                  'dataset',
+                  getCacheKey(
+                    StoreCacheKeyBaseEnum.dataset,
+                    MULTI_SELECTOR_INCREMENT_ID
+                  ),
+                ],
+                [
+                  'experiments',
+                  getCacheKey(
+                    StoreCacheKeyBaseEnum.multiSelect,
+                    ...getCacheKey(
+                      StoreCacheKeyBaseEnum.group,
+                      [
+                        MULTI_SELECTOR_INCREMENT_ID,
+                        MULTI_SELECTOR_INCREMENT_ID,
+                      ],
+                      [
+                        'experiment',
+                        getCacheKey(
+                          StoreCacheKeyBaseEnum.experiment,
+                          MULTI_SELECTOR_INCREMENT_ID,
+                          MULTI_SELECTOR_INCREMENT_ID
+                        ),
+                      ],
+                      [
+                        'simFunction',
+                        getCacheKey(
+                          StoreCacheKeyBaseEnum.similarityFunction,
+                          MULTI_SELECTOR_INCREMENT_ID,
+                          MULTI_SELECTOR_INCREMENT_ID
+                        ),
+                      ],
+                      [
+                        'simThreshold',
+                        getCacheKey(
+                          StoreCacheKeyBaseEnum.similarityThreshold,
+                          MULTI_SELECTOR_INCREMENT_ID,
+                          MULTI_SELECTOR_INCREMENT_ID
+                        ),
+                      ]
                     )
-                  )
-                )
+                  ),
+                ]
               )
             ),
             true,

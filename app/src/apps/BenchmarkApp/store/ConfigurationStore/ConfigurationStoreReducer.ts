@@ -32,7 +32,7 @@ const getItem = <Cache extends ValueOf<ConfigurationStoreModel>>({
     if (filter) {
       for (const cacheKeyAndFilter of filter
         .dependsOn()
-        .map((dependsOn) => getCacheKeyAndFilter(dependsOn))) {
+        .map((dependsOn: StoreCacheKey) => getCacheKeyAndFilter(dependsOn))) {
         getItem({
           state,
           key: cacheKeyAndFilter.cacheKey,
