@@ -1,6 +1,14 @@
-import { IonCol, IonGrid, IonItem, IonLabel, IonRow } from '@ionic/react';
+import {
+  IonCard,
+  IonCol,
+  IonGrid,
+  IonItem,
+  IonLabel,
+  IonRow,
+} from '@ionic/react';
 import { MetricsEnum } from 'api';
 import { KpiInvestigatorStrategyProps } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyProps';
+import styles from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyStyles.module.css';
 import { ScatterChart } from 'components/simple/ChartComponent/ScatterChart';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
@@ -45,13 +53,23 @@ const KpiInvestigatorStrategyView = ({
           </IonItem>
         </IonCol>
       </IonRow>
+      <IonRow>
+        <IonCol size="12">
+          <IonCard>
+            <div className={styles.chartContainer}>
+              <ScatterChart
+                data={{
+                  datasets: datasets,
+                }}
+                options={{
+                  scales: { x: { min: 0, max: 1 }, y: { min: 0, max: 1 } },
+                }}
+              />
+            </div>
+          </IonCard>
+        </IonCol>
+      </IonRow>
     </IonGrid>
-    <ScatterChart
-      data={{
-        datasets: datasets,
-      }}
-      options={{ scales: { x: { min: 0, max: 1 }, y: { min: 0, max: 1 } } }}
-    />
   </>
 );
 
