@@ -8,6 +8,17 @@
 }
 
 .itemNoSafePad::part(native) {
-  margin-left: var(--padding-start);
   padding-left: 0;
+}
+
+.itemNoEndPad {
+  --inner-padding-end: 0;
+}
+
+.itemResetEndPad {
+  --inner-padding-end: 16px;
+}
+
+.itemNoBorder {
+  --border-style: none;
 }

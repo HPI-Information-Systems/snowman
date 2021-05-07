@@ -8,18 +8,32 @@ const NumberInputGroupView = ({
   value,
   setValue,
 }: NumberInputProps): JSX.Element => (
-  <IonItem className={style(styles.fullWidth, styles.itemNoSafePad)}>
-    <IonIcon
-      icon={gitCommit}
-      color={'primarydark'}
-      className={styles.smallItemIcon}
-    />
-    <IonInput
-      type="number"
-      value={value}
-      onIonChange={setValue}
-      placeholder="0"
-    />
+  <IonItem
+    className={style(
+      styles.fullWidth,
+      styles.itemNoEndPad,
+      styles.itemNoBorder
+    )}
+  >
+    <IonItem
+      className={style(
+        styles.fullWidth,
+        styles.itemNoSafePad,
+        styles.itemResetEndPad
+      )}
+    >
+      <IonIcon
+        icon={gitCommit}
+        color={'primarydark'}
+        className={styles.smallItemIcon}
+      />
+      <IonInput
+        type="number"
+        value={value}
+        onIonChange={setValue}
+        placeholder="0"
+      />
+    </IonItem>
   </IonItem>
 );
 
