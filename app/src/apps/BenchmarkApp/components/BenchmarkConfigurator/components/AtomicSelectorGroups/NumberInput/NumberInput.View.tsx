@@ -1,15 +1,16 @@
 import { IonIcon, IonInput, IonItem } from '@ionic/react';
 import { NumberInputProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/NumberInput/NumberInputProps';
 import styles from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/NumberInput/NumberInputStyles.module.css';
-import { gitCommitOutline } from 'ionicons/icons';
+import { gitCommit } from 'ionicons/icons';
 import React from 'react';
+import style from 'theme/style';
 const NumberInputGroupView = ({
   value,
   setValue,
 }: NumberInputProps): JSX.Element => (
-  <IonItem>
+  <IonItem className={style(styles.fullWidth, styles.itemNoSafePad)}>
     <IonIcon
-      icon={gitCommitOutline}
+      icon={gitCommit}
       color={'primarydark'}
       className={styles.smallItemIcon}
     />

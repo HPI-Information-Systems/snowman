@@ -1,8 +1,24 @@
 .list {
-    padding: 0;
-    width: 100%;
+  width: 100%;
+  padding: 0;
+}
+
+.itemNoSafePad::part(native) {
+  padding-left: 0;
+}
+
+.itemNoEndPad {
+  --inner-padding-end: 0;
+}
+
+.itemResetEndPad {
+  --inner-padding-end: 16px;
 }
 
 .itemNoBorder {
-    --border-style: none;
+  --border-style: none;
+}
+
+.pointer {
+  cursor: pointer;
 }
