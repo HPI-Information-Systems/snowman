@@ -20,8 +20,8 @@ const mapStateToProps = (
 ): AtomicSelectorGroupStateProps => {
   const selectedIds = new Set(
     ownProps.allowMultiple
-      ? getItems(ownProps.cacheKey, state.config.algorithms)
-      : [getSingleItem(ownProps.cacheKey, state.config.algorithms)]
+      ? getItems(ownProps.cacheKey, state)
+      : [getSingleItem(ownProps.cacheKey, state)]
   );
   return {
     selectedEntities: state.resources.algorithms.filter(

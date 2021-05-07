@@ -41,10 +41,9 @@ const IntersectionStrategyReducer = (
   switch (action.type) {
     case IntersectionStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
-      const appConfig = appStore.config;
       const experimentIds = getDefinedItems(
         getCacheKey(StoreCacheKeyBaseEnum.experiment),
-        appConfig.experiments
+        appStore
       );
       if (experimentIds.length === 0)
         return {

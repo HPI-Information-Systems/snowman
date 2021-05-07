@@ -16,7 +16,7 @@ const mapStateToProps = (
   state: BenchmarkAppModel,
   ownProps: NumberInputOwnProps
 ): NumberInputStateProps => ({
-  value: getSingleItem(ownProps.cacheKey, state.config.simThresholds),
+  value: getSingleItem(ownProps.cacheKey, state),
 });
 
 const mapDispatchToProps = (

@@ -24,14 +24,13 @@ const NMetricsStrategyReducer = (
   switch (action.type) {
     case NMetricsStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
-      const appConfig = appStore.config;
       const goldStandardId = getSingleItem(
         getCacheKey(StoreCacheKeyBaseEnum.groundTruth),
-        appConfig.experiments
+        appStore
       );
       const experimentIds = getDefinedItems(
         getCacheKey(StoreCacheKeyBaseEnum.experiment),
-        appConfig.experiments
+        appStore
       );
       if (goldStandardId === undefined || experimentIds.length === 0)
         return {

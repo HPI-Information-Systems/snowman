@@ -25,18 +25,17 @@ const BinaryMetricsStrategyReducer = (
   switch (action.type) {
     case BinaryMetricsStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
-      const appConfig = appStore.config;
       const datasetId = getSingleItem(
         getCacheKey(StoreCacheKeyBaseEnum.dataset),
-        appConfig.datasets
+        appStore
       );
       const goldStandardId = getSingleItem(
         getCacheKey(StoreCacheKeyBaseEnum.groundTruth),
-        appConfig.experiments
+        appStore
       );
       const experimentId = getSingleItem(
         getCacheKey(StoreCacheKeyBaseEnum.experiment),
-        appConfig.experiments
+        appStore
       );
       if (
         datasetId === undefined ||

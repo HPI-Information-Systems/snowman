@@ -39,7 +39,7 @@ export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
       const datasetFilter =
         state.config.datasets[serializeCacheKey(dependsOn[0])]?.targets[0];
       const algorithmFilter =
-        state.config.experiments[serializeCacheKey(viewFilters[0])]?.targets ??
+        state.config.algorithms[serializeCacheKey(viewFilters[0])]?.targets ??
         [];
       return experiments.filter(
         ({ datasetId, algorithmId }) =>

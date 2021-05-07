@@ -31,8 +31,8 @@ const mapStateToProps = (
   }
   const selectedIds = new Set(
     ownProps.allowMultiple
-      ? getItems(ownProps.cacheKey, state.config.experiments)
-      : [getSingleItem(ownProps.cacheKey, state.config.experiments)]
+      ? getItems(ownProps.cacheKey, state)
+      : [getSingleItem(ownProps.cacheKey, state)]
   );
   return {
     selectedEntities: availableExperiments.filter(

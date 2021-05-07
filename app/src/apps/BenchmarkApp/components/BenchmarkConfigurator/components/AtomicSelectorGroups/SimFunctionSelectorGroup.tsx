@@ -31,8 +31,8 @@ const mapStateToProps = (
   }
   const selectedIds = new Set(
     ownProps.allowMultiple
-      ? getItems(ownProps.cacheKey, state.config.simFunctions)
-      : [getSingleItem(ownProps.cacheKey, state.config.simFunctions)]
+      ? getItems(ownProps.cacheKey, state)
+      : [getSingleItem(ownProps.cacheKey, state)]
   );
   return {
     selectedEntities: availableFunctions.filter(
