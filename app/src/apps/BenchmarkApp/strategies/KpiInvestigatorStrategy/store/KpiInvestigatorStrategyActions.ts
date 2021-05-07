@@ -43,7 +43,9 @@ export const loadCoordinates = (): SnowmanThunkAction<
           yAxis: MetricsEnum.Recall,
           diagram: { multipleExperiments: getState().experimentItems },
         })
-        .then((coordinates) => dispatch(setCoordinates(coordinates))),
+        .then((coordinates) =>
+          dispatch(setCoordinates(coordinates as DiagramCoordinates[]))
+        ),
     'It worked!'
   );
 };
