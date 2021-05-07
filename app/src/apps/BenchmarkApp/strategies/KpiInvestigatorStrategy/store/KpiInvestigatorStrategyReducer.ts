@@ -21,9 +21,11 @@ const KpiInvestigatorStrategyReducer = (
 ): KpiInvestigatorStrategyModel => {
   switch (action.type) {
     case KpiInvestigatorStrategyActionTypes.UPDATE_CONFIG: {
+      // Todo: Connect with store and retrieve from cache
+      const retrievedExperimentItems = MockDiagramExperimentItems;
       return {
         ...state,
-        experimentItems: MockDiagramExperimentItems,
+        experimentItems: retrievedExperimentItems,
         selectedExperiment: (action.payload as BenchmarkAppModel).resources
           .experiments,
         coordinates: [],
