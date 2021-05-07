@@ -58,13 +58,12 @@ const IntersectionStrategyView = ({
 
   return (
     <>
-      {!isValidConfig ? (
-        <ErroneousBackdrop
-          message={
-            'Please select at least one experiment - but all from a single dataset!'
-          }
-        />
-      ) : null}
+      <ErroneousBackdrop
+        shouldShow={!isValidConfig}
+        message={
+          'Please select at least one experiment - but all from a single dataset!'
+        }
+      />
       <IonGrid>
         <IonRow>
           <IonCol className="col-no-padding" size="12" sizeXl="6">

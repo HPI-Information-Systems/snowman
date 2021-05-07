@@ -27,6 +27,54 @@ export const metaSchemas = assertType<
           name: 'description' as const,
           dataType: 'TEXT',
         },
+        installationExpertise: {
+          name: 'installationExpertise' as const,
+          dataType: 'INTEGER',
+        },
+        installationHrAmount: {
+          name: 'installationHrAmount' as const,
+          dataType: 'INTEGER',
+        },
+        deploymentType: {
+          name: 'deploymentType' as const,
+          dataType: 'TEXT',
+        },
+        solutionType: {
+          name: 'solutionType' as const,
+          dataType: 'TEXT',
+        },
+        useCase: {
+          name: 'useCase' as const,
+          dataType: 'TEXT',
+        },
+        generalCosts: {
+          name: 'generalCosts' as const,
+          dataType: 'INTEGER',
+        },
+        matchingSolutionExpertise: {
+          name: 'matchingSolutionExpertise' as const,
+          dataType: 'INTEGER',
+        },
+        matchingSolutionHrAmount: {
+          name: 'matchingSolutionHrAmount' as const,
+          dataType: 'INTEGER',
+        },
+        domainExpertise: {
+          name: 'domainExpertise' as const,
+          dataType: 'INTEGER',
+        },
+        domainHrAmount: {
+          name: 'domainHrAmount' as const,
+          dataType: 'INTEGER',
+        },
+        interfaces: {
+          name: 'interfaces' as const,
+          dataType: 'TEXT',
+        },
+        supportedOSs: {
+          name: 'supportedOSs' as const,
+          dataType: 'TEXT',
+        },
       },
     },
     dataset: {
@@ -109,6 +157,14 @@ export const metaSchemas = assertType<
         },
         numberOfUploadedRecords: {
           name: 'numberOfUploadedRecords' as const,
+          dataType: 'INTEGER',
+        },
+        hrAmount: {
+          name: 'hrAmount' as const,
+          dataType: 'INTEGER',
+        },
+        expertise: {
+          name: 'expertise' as const,
           dataType: 'INTEGER',
         },
       },

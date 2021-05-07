@@ -10,10 +10,52 @@ describe('AlgorithmProvider', () => {
     {
       description: 'Mock 1',
       name: 'Mock 1',
+      softKPIs: {
+        integrationEffort: {
+          installationEffort: {
+            expertise: 20,
+          },
+          deploymentType: ['cloud'],
+          solutionType: ['rulebased'],
+          useCase: ['merging'],
+          generalCosts: 20,
+        },
+        configurationEffort: {
+          matchingSolution: {
+            expertise: 20,
+          },
+          domain: {
+            hrAmount: 20,
+          },
+          interfaces: ['GUI'],
+          supportedOSs: ['Windows'],
+        },
+      },
     },
     {
       description: 'Mock 2',
       name: 'Mock 2',
+      softKPIs: {
+        integrationEffort: {
+          installationEffort: {
+            expertise: 20,
+          },
+          deploymentType: ['on-premise', 'cloud'],
+          solutionType: ['activeLearning'],
+          useCase: ['merging', 'search'],
+          generalCosts: 30,
+        },
+        configurationEffort: {
+          matchingSolution: {
+            expertise: 100,
+          },
+          domain: {
+            hrAmount: 70,
+          },
+          interfaces: ['GUI', 'CLI'],
+          supportedOSs: ['Windows', 'MacOS'],
+        },
+      },
     },
   ];
   let addedAlgorithmids: AlgorithmId[];
@@ -31,7 +73,10 @@ describe('AlgorithmProvider', () => {
     expect(new Set(provider.listAlgorithms())).toMatchObject(
       new Set(
         addedAlgorithms.map((algorithm, index) => {
-          return { ...algorithm, id: addedAlgorithmids[index] };
+          return {
+            ...algorithm,
+            id: addedAlgorithmids[index],
+          };
         })
       )
     );
@@ -42,6 +87,27 @@ describe('AlgorithmProvider', () => {
     const addedAlgorithm: AlgorithmValues = {
       description: 'Added Algorithm',
       name: 'Added Algorithm',
+      softKPIs: {
+        integrationEffort: {
+          installationEffort: {
+            expertise: 20,
+          },
+          deploymentType: ['cloud'],
+          solutionType: ['rulebased'],
+          useCase: ['merging'],
+          generalCosts: 201,
+        },
+        configurationEffort: {
+          matchingSolution: {
+            expertise: 202,
+          },
+          domain: {
+            hrAmount: 22,
+          },
+          interfaces: ['GUI'],
+          supportedOSs: ['Windows'],
+        },
+      },
     };
     const addedAlgorithmId = provider.addAlgorithm(addedAlgorithm);
     const newAlgorithmsCount = provider.listAlgorithms().length;
@@ -66,6 +132,27 @@ describe('AlgorithmProvider', () => {
     const setAlgorithmValues: AlgorithmValues = {
       name: 'Not Mock 1',
       description: 'Not Mock 1',
+      softKPIs: {
+        integrationEffort: {
+          installationEffort: {
+            expertise: 20,
+          },
+          deploymentType: ['onPremise'],
+          solutionType: ['rulebased', 'activeLearning'],
+          useCase: ['search'],
+          generalCosts: 14,
+        },
+        configurationEffort: {
+          matchingSolution: {
+            expertise: 100,
+          },
+          domain: {
+            hrAmount: 99,
+          },
+          interfaces: ['GUI'],
+          supportedOSs: ['Windows', 'Linux'],
+        },
+      },
     };
     provider.setAlgorithm(addedAlgorithmids[0], setAlgorithmValues);
     expect(provider.getAlgorithm(addedAlgorithmids[0])).toEqual({
@@ -73,7 +160,63 @@ describe('AlgorithmProvider', () => {
       id: addedAlgorithmids[0],
     });
   });
-
+  test('test effort calculation', () => {
+    const setAlgorithmValues: AlgorithmValues = {
+      name: 'Not Mock 1',
+      description: 'Not Mock 1',
+      softKPIs: {
+        integrationEffort: {
+          installationEffort: {
+            hrAmount: 30,
+          },
+          deploymentType: ['onPremise'],
+          solutionType: ['rulebased', 'activeLearning'],
+          useCase: ['search'],
+          generalCosts: 14,
+        },
+        configurationEffort: {
+          matchingSolution: {
+            expertise: 100,
+            hrAmount: 60,
+          },
+          domain: {
+            hrAmount: 99,
+          },
+          interfaces: ['GUI'],
+          supportedOSs: ['Windows', 'Linux'],
+        },
+      },
+    };
+    provider.setAlgorithm(addedAlgorithmids[0], setAlgorithmValues);
+    expect(
+      provider
+        .getAlgorithm(addedAlgorithmids[0])
+        .matchingSolutionEffort?.map(({ name, value }) => {
+          return { name, value: value.toFixed(4) };
+        })
+    ).toEqual(
+      expect.arrayContaining(
+        [
+          {
+            value: '160.0000',
+            name: 'manhattan distance-based effort',
+          },
+          {
+            value: '163.0969',
+            name: 'expertise weighted effort',
+          },
+          {
+            value: '1.1420073898156842e+26',
+            name: 'HR-amount weighted effort',
+          },
+          {
+            value: '6000.0000',
+            name: 'simple multiplied effort',
+          },
+        ].map((effort) => expect.objectContaining(effort))
+      )
+    );
+  });
   test('delete deletes an algorithm', () => {
     const priorCount = provider.listAlgorithms().length;
     provider.deleteAlgorithm(addedAlgorithmids[0]);
