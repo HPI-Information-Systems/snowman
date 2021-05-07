@@ -1,9 +1,10 @@
+import { SelectorItem } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupProps';
 import { GenericStoreComponentProps } from 'utils/GenericStoreComponentFactory';
 
 export interface SelectorPopoverGroupOwnProps
   extends GenericStoreComponentProps {
   children?: JSX.Element | JSX.Element[];
-  items: { icon: string; title: string; indent?: number }[];
+  items: SelectorItem[];
 }
 
 export interface SelectorPopoverGroupStateProps {

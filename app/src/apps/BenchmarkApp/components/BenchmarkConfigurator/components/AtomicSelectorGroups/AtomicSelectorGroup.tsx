@@ -15,9 +15,9 @@ export const AtomicSelectorGroup = ({
     default: (props: AtomicSelectorGroupOwnProps) => JSX.Element | null;
   }>;
   if (cacheKey[0] === StoreCacheKeyBaseEnum.group) {
-    selectorGroupPromise = import(
+    selectorGroupPromise = (import(
       'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/GroupInput/GroupInput'
-    ) as typeof selectorGroupPromise;
+    ) as unknown) as typeof selectorGroupPromise;
   } else {
     switch (targetCache) {
       case 'algorithms':
