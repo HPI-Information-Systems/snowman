@@ -22,7 +22,7 @@ export function getDiagramDataProvider(
     return new DiagramAlgorithmSoftKPIsDataProvider();
   }
   throw new Error(
-    'The provided axis-parameter does not belong to any known metric'
+    `The provided axis-parameter ${axis} does not belong to any known metric`
   );
 }
 

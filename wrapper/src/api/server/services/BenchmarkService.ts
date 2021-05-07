@@ -6,6 +6,7 @@ import {
   CalculateExperimentIntersectionCountsRequest,
   CalculateExperimentIntersectionRecordsRequest,
   DiagramCoordinate,
+  DiagramExperimentItem,
   ExperimentIntersectionCount,
   FileResponse,
   GetBinaryMetricsRequest,
@@ -20,9 +21,10 @@ function provider() {
 export async function calculateDiagramData({
   xAxis,
   yAxis,
-  steps,
   diagram,
-}: any): Promise<SuccessResponse<Array<DiagramCoordinate>>> {
+}: CalculateDiagramDataRequest): Promise<
+  SuccessResponse<Array<DiagramCoordinate>>
+> {
   return Service.response(
     () =>
       provider().calculateDiagramData({

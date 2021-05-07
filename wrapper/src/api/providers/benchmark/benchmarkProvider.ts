@@ -1,6 +1,7 @@
 import {
   CalculateDiagramDataRequest,
   DiagramCoordinate,
+  DiagramExperimentItem,
   ExperimentConfigItem,
   ExperimentIntersectionCount,
   ExperimentIntersectionItem,
@@ -8,6 +9,7 @@ import {
   MetricsEnum,
 } from '../../server/types';
 import { Metric } from '../../server/types';
+import { numberOfPairs } from '../../tools/numberOfPairs';
 import { ConfusionMatrixCache } from './cache/flavors/confusionMatrixCache';
 import { IntersectionCache } from './cache/flavors/intersectionCache';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
@@ -36,7 +38,7 @@ export class BenchmarkProvider {
     diagram,
   }: CalculateDiagramDataRequest): Array<DiagramCoordinate> {
     if (diagram === undefined) {
-      throw new Error('Missing experiments!');
+      throw new Error('No experiments have been sent!');
     }
     if (
       isInEnum(MetricsEnum, xAxis) &&
@@ -61,8 +63,9 @@ export class BenchmarkProvider {
     const xGetter: DiagramDataProvider = getDiagramDataProvider(xAxis);
     const yGetter: DiagramDataProvider = getDiagramDataProvider(yAxis);
     return diagram.multipleExperiments
-      .map((experiment) => {
+      .map((experiment: DiagramExperimentItem) => {
         return {
+          experimentId: experiment.experiment.experimentId,
           x: xGetter.getData(xAxis, experiment),
           y: yGetter.getData(yAxis, experiment),
         };
