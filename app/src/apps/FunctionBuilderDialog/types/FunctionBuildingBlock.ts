@@ -2,9 +2,7 @@ import {
   SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionOperatorOperatorEnum,
 } from 'api';
-import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/RootAccessKey';
 import autoBind from 'auto-bind';
-import { max } from 'lodash';
 
 export type FunctionBuildingBlockType = SimilarityThresholdFunctionDefinitionTypeEnum | null;
 
@@ -14,8 +12,12 @@ export enum CellDescriptor {
   right,
 }
 
-type LeftRightCellContent = FunctionBuildingBlock | number | string | null;
-type MidCellContent = SimilarityThresholdFunctionOperatorOperatorEnum | null;
+export type LeftRightCellContent =
+  | FunctionBuildingBlock
+  | number
+  | string
+  | null;
+export type MidCellContent = SimilarityThresholdFunctionOperatorOperatorEnum | null;
 
 export class FunctionBuildingBlock {
   accessKey: number;

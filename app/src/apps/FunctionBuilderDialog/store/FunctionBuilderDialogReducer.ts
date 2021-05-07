@@ -6,6 +6,8 @@ import {
   CellDescriptor,
   FunctionBuildingBlock,
   FunctionBuildingBlockType,
+  LeftRightCellContent,
+  MidCellContent,
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
 import { produce } from 'immer';
@@ -86,6 +88,51 @@ const FunctionBuilderDialogReducer = (
             targetBlockKey,
             (targetBlock: FunctionBuildingBlock): void => {
               targetBlock.type = targetStrategy;
+            }
+          );
+          return state;
+        }
+      );
+    }
+    case FunctionBuilderDialogActionTypes.SET_MID_VALUE: {
+      return produce(
+        state,
+        (state: FunctionBuilderDialogModel): FunctionBuilderDialogModel => {
+          const targetBlockKey = action.payload as number;
+          state.functionBuildingStack.navigateToBlockAndMutate(
+            targetBlockKey,
+            (targetBlock: FunctionBuildingBlock): void => {
+              targetBlock.mid = action.optionalPayload as MidCellContent;
+            }
+          );
+          return state;
+        }
+      );
+    }
+    case FunctionBuilderDialogActionTypes.SET_LEFT_VALUE: {
+      return produce(
+        state,
+        (state: FunctionBuilderDialogModel): FunctionBuilderDialogModel => {
+          const targetBlockKey = action.payload as number;
+          state.functionBuildingStack.navigateToBlockAndMutate(
+            targetBlockKey,
+            (targetBlock: FunctionBuildingBlock): void => {
+              targetBlock.left = action.optionalPayload as LeftRightCellContent;
+            }
+          );
+          return state;
+        }
+      );
+    }
+    case FunctionBuilderDialogActionTypes.SET_RIGHT_VALUE: {
+      return produce(
+        state,
+        (state: FunctionBuilderDialogModel): FunctionBuilderDialogModel => {
+          const targetBlockKey = action.payload as number;
+          state.functionBuildingStack.navigateToBlockAndMutate(
+            targetBlockKey,
+            (targetBlock: FunctionBuildingBlock): void => {
+              targetBlock.right = action.optionalPayload as LeftRightCellContent;
             }
           );
           return state;

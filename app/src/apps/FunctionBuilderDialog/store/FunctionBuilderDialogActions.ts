@@ -10,6 +10,8 @@ import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/Fun
 import {
   CellDescriptor,
   FunctionBuildingBlockType,
+  LeftRightCellContent,
+  MidCellContent,
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
@@ -161,5 +163,56 @@ export class FunctionBuildingBlockMagistrate {
     targetStrategy: FunctionBuildingBlockType
   ): void {
     this.dispatch(this.chooseStrategyAction(ownAccessKey, targetStrategy));
+  }
+
+  private setLeftValueAction(
+    ownAccessKey: number,
+    value: LeftRightCellContent
+  ): SnowmanThunkAction<void, FunctionBuilderDialogModel> {
+    return function (dispatch: SnowmanDispatch<FunctionBuilderDialogModel>) {
+      dispatch({
+        type: FunctionBuilderDialogActionTypes.SET_LEFT_VALUE,
+        payload: ownAccessKey,
+        optionalPayload: value,
+      });
+    };
+  }
+
+  setLeftValue(ownAccessKey: number, value: LeftRightCellContent): void {
+    this.dispatch(this.setLeftValueAction(ownAccessKey, value));
+  }
+
+  private setRightValueAction(
+    ownAccessKey: number,
+    value: LeftRightCellContent
+  ): SnowmanThunkAction<void, FunctionBuilderDialogModel> {
+    return function (dispatch: SnowmanDispatch<FunctionBuilderDialogModel>) {
+      dispatch({
+        type: FunctionBuilderDialogActionTypes.SET_RIGHT_VALUE,
+        payload: ownAccessKey,
+        optionalPayload: value,
+      });
+    };
+  }
+
+  setRightValue(ownAccessKey: number, value: LeftRightCellContent): void {
+    this.dispatch(this.setRightValueAction(ownAccessKey, value));
+  }
+
+  private setMidValueAction(
+    ownAccessKey: number,
+    value: MidCellContent
+  ): SnowmanThunkAction<void, FunctionBuilderDialogModel> {
+    return function (dispatch: SnowmanDispatch<FunctionBuilderDialogModel>) {
+      dispatch({
+        type: FunctionBuilderDialogActionTypes.SET_MID_VALUE,
+        payload: ownAccessKey,
+        optionalPayload: value,
+      });
+    };
+  }
+
+  setMidValue(ownAccessKey: number, value: MidCellContent): void {
+    return this.dispatch(this.setMidValueAction(ownAccessKey, value));
   }
 }
