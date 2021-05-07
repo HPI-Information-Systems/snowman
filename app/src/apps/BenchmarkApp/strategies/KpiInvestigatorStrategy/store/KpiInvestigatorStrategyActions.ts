@@ -52,18 +52,16 @@ export const loadCoordinates = (): SnowmanThunkAction<
   getState: () => KpiInvestigatorStrategyModel
 ): Promise<void> => {
   if (!getState().isValidConfig) return Promise.resolve();
-  return RequestHandler(
-    () =>
-      new BenchmarkApi()
-        .calculateDiagramData({
-          xAxis: getState().xAxis,
-          yAxis: getState().yAxis,
-          diagram: { multipleExperiments: getState().experimentItems },
-        })
-        .then((coordinates) =>
-          dispatch(setCoordinates(coordinates as DiagramCoordinates[]))
-        ),
-    'It worked!'
+  return RequestHandler(() =>
+    new BenchmarkApi()
+      .calculateDiagramData({
+        xAxis: getState().xAxis,
+        yAxis: getState().yAxis,
+        diagram: { multipleExperiments: getState().experimentItems },
+      })
+      .then((coordinates) =>
+        dispatch(setCoordinates(coordinates as DiagramCoordinates[]))
+      )
   );
 };
 
