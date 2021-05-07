@@ -1,5 +1,8 @@
 import { StrategyMapItem } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMap';
-import { FunctionBuildingBlockType } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import {
+  CellDescriptor,
+  FunctionBuildingBlockType,
+} from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 
 export interface StrategyMapperForwardProps {
   nextStrategyType: FunctionBuildingBlockType;
@@ -7,7 +10,8 @@ export interface StrategyMapperForwardProps {
 }
 
 export interface StrategyMapperOwnProps {
-  blockAccessKey?: number;
+  parentAccessKey: number | null;
+  ownLocation?: CellDescriptor;
 }
 
 export interface StrategyMapperStateProps {

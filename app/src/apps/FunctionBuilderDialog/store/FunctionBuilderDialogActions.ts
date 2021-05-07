@@ -65,7 +65,7 @@ export const getOwnFunctionBuildingBlock = (
   return 4;
 };
 
-class FunctionBuildingBlockKeyMagistrate {
+export class FunctionBuildingBlockMagistrate {
   dispatch: SnowmanDispatch<FunctionBuilderDialogModel>;
 
   constructor() {
@@ -87,7 +87,7 @@ class FunctionBuildingBlockKeyMagistrate {
   }
 
   private registerBuildingBlockAction(
-    parentAccessKey: number,
+    parentAccessKey: number | null,
     cellDescriptor: CellDescriptor
   ): SnowmanThunkAction<number, FunctionBuilderDialogModel> {
     return function (
@@ -106,7 +106,7 @@ class FunctionBuildingBlockKeyMagistrate {
   }
 
   registerBuildingBlock(
-    parentAccessKey: number,
+    parentAccessKey: number | null,
     cellDescriptor: CellDescriptor
   ): number {
     return this.dispatch(
@@ -135,7 +135,3 @@ class FunctionBuildingBlockKeyMagistrate {
     return this.dispatch(this.getNewAccessKeyAction());
   }
 }
-
-const FunctionBuildingBlockKeyMagistrateInstance = new FunctionBuildingBlockKeyMagistrate();
-export const getNewAccessKey: () => number =
-  FunctionBuildingBlockKeyMagistrateInstance.getNewAccessKey;

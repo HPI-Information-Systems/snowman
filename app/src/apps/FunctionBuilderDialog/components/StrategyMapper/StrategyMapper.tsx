@@ -9,18 +9,27 @@ import {
 } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
 import styles from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperStyles.module.css';
 import StrategyUnselector from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector';
-import { getNewAccessKey } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
+import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
+import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import React, { Component, createElement } from 'react';
 
 class StrategyMapper extends Component<
   StrategyMapperProps,
   StrategyMapperStateProps
 > {
+  blockMagistrate: FunctionBuildingBlockMagistrate;
   blockAccessKey: number;
+
   constructor(props: StrategyMapperProps) {
     super(props);
-    this.blockAccessKey = this.props.blockAccessKey ?? getNewAccessKey();
+    this.blockMagistrate = new FunctionBuildingBlockMagistrate();
+    this.blockAccessKey = this.blockMagistrate.getNewAccessKey();
+    this.blockMagistrate.registerBuildingBlock(
+      this.props.parentAccessKey,
+      this.props.ownLocation ?? CellDescriptor.left
+    );
   }
+
   componentDidUpdate(prevProps: Readonly<StrategyMapperProps>): void {
     if (prevProps.nextStrategyType !== this.props.nextStrategyType) {
       this.setState({
@@ -31,6 +40,10 @@ class StrategyMapper extends Component<
         ),
       });
     }
+  }
+
+  componentWillUnmount(): void {
+    this.blockMagistrate.unregisterBuildingBlock(this.blockAccessKey);
   }
 
   render(): JSX.Element {
