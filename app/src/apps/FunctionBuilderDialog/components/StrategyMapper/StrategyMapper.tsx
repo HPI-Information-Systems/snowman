@@ -1,22 +1,10 @@
-import {
-  StrategyMap,
-  StrategyMapItem,
-} from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMap';
-import {
-  StrategyMapperProps,
-  StrategyMapperStateProps,
-} from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
-import styles from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperStyles.module.css';
-import StrategySelector from 'apps/FunctionBuilderDialog/components/StrategySelector/StrategySelector';
-import StrategyUnselector from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector';
+import { StrategyMapperProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
+import StrategyViewer from 'apps/FunctionBuilderDialog/components/StrategyViewer/StrategyViewer';
 import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
 import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
-import React, { Component, createElement } from 'react';
+import React, { Component } from 'react';
 
-class StrategyMapper extends Component<
-  StrategyMapperProps,
-  StrategyMapperStateProps
-> {
+class StrategyMapper extends Component<StrategyMapperProps> {
   blockMagistrate: FunctionBuildingBlockMagistrate;
   blockAccessKey: number;
 
@@ -31,37 +19,12 @@ class StrategyMapper extends Component<
     );
   }
 
-  componentDidUpdate(prevProps: Readonly<StrategyMapperProps>): void {
-    if (prevProps.nextStrategyType !== this.props.nextStrategyType) {
-      this.setState({
-        ...this.state,
-        targetStrategy: StrategyMap.find(
-          (aStrategyMapItem: StrategyMapItem): boolean =>
-            aStrategyMapItem.targetStrategyKey === this.props.nextStrategyType
-        ),
-      });
-    }
-  }
-
   componentWillUnmount(): void {
     this.blockMagistrate.unregisterBuildingBlock(this.blockAccessKey);
   }
 
   render(): JSX.Element {
-    return (
-      <>
-        {this.state?.targetStrategy !== undefined ? (
-          <>
-            {createElement(this.state.targetStrategy.targetStrategyComponent)}
-            <span className={styles.unselectorMargin}>
-              <StrategyUnselector blockAccessKey={this.blockAccessKey} />
-            </span>
-          </>
-        ) : (
-          <StrategySelector blockAccessKey={this.blockAccessKey} />
-        )}
-      </>
-    );
+    return <StrategyViewer blockAccessKey={this.blockAccessKey} />;
   }
 }
 
