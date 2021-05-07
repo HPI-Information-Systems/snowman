@@ -4,6 +4,7 @@ import { datasetCacheKeyAndFilter } from 'apps/BenchmarkApp/components/Benchmark
 import { experimentCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/experiment';
 import { filterCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/filter';
 import { groundTruthCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/groundTruth';
+import { groupCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/group';
 import { multiSelectCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
 import { simFuntionCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/simFunction';
 import { simThresholdCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/simThreshold';
@@ -22,4 +23,5 @@ export const CacheKeysAndFilters = assertType<
   [StoreCacheKeyBaseEnum.similarityFunction]: simFuntionCacheKeyAndFilter,
   [StoreCacheKeyBaseEnum.multiSelect]: multiSelectCacheKeyAndFilter,
   [StoreCacheKeyBaseEnum.similarityThreshold]: simThresholdCacheKeyAndFilter,
+  [StoreCacheKeyBaseEnum.group]: groupCacheKeyAndFilter,
 });

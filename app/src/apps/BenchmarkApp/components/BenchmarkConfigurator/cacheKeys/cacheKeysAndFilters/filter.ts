@@ -9,5 +9,4 @@ export const filterCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.filter,
   targetCache: (targetCache) => targetCache,
-  defaultArgs: ['simThresholds'],
 });

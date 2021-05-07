@@ -4,6 +4,9 @@ import {
   StoreCacheKey,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 
+export const MULTI_SELECTOR_START = 0;
+export const MULTI_SELECTOR_INCREMENT_ID = Number.MIN_SAFE_INTEGER;
+
 export const multiSelectCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.multiSelect,
   [...cacheKey: StoreCacheKey],
@@ -12,5 +15,4 @@ export const multiSelectCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.multiSelect,
   targetCache: () => 'multiSelects',
-  defaultArgs: [StoreCacheKeyBaseEnum.multiSelect],
 });

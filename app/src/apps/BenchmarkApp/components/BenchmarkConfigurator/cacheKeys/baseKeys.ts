@@ -7,4 +7,5 @@ export enum StoreCacheKeyBaseEnum {
   similarityFunction = 'StoreCacheKey-similarityFunction',
   similarityThreshold = 'StoreCachekey-similarityThreshold',
   multiSelect = 'StoreCacheKey-multiSelect',
+  group = 'StoreCacheKey-group',
 }

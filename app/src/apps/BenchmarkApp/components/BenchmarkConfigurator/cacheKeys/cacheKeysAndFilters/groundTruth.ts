@@ -12,12 +12,11 @@ import { DatasetConfigurationModel } from 'apps/BenchmarkApp/types/Configuration
 
 export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.groundTruth,
-  [datasetMultiSelectId?: number],
+  [datasetMultiSelectId: number],
   Experiment,
   'experiments'
 >({
   keyBase: StoreCacheKeyBaseEnum.groundTruth,
-  defaultArgs: [0],
   targetCache: () => 'experiments',
   filter: {
     dependsOn: (dataset) => [datasetCacheKeyAndFilter(dataset).cacheKey],

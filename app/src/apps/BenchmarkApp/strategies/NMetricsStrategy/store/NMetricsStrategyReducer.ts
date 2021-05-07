@@ -1,6 +1,7 @@
 import { Experiment, Metric } from 'api';
 import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
+import { MULTI_SELECTOR_START } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
@@ -25,11 +26,15 @@ const NMetricsStrategyReducer = (
     case NMetricsStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
       const goldStandardId = getSingleItem(
-        getCacheKey(StoreCacheKeyBaseEnum.groundTruth),
+        getCacheKey(StoreCacheKeyBaseEnum.groundTruth, MULTI_SELECTOR_START),
         appStore
       );
       const experimentIds = getDefinedItems(
-        getCacheKey(StoreCacheKeyBaseEnum.experiment),
+        getCacheKey(
+          StoreCacheKeyBaseEnum.experiment,
+          MULTI_SELECTOR_START,
+          MULTI_SELECTOR_START
+        ),
         appStore
       );
       if (goldStandardId === undefined || experimentIds.length === 0)

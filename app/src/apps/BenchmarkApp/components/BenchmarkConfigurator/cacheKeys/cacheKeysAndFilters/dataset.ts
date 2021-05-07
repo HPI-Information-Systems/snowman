@@ -4,11 +4,10 @@ import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/Benchma
 
 export const datasetCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.dataset,
-  [datasetMultiSelectId?: number],
+  [datasetMultiSelectId: number],
   Dataset,
   'datasets'
 >({
   keyBase: StoreCacheKeyBaseEnum.dataset,
-  defaultArgs: [0],
   targetCache: () => 'datasets',
 });

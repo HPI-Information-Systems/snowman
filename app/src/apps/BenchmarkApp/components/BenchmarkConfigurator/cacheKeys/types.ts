@@ -2,12 +2,14 @@
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
-import { Define, MakeRequired, Primitive, ValueOf } from 'snowman-library';
+import { Define, NestedArray, ValueOf } from 'snowman-library';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 export type StoreCacheKey<
   Base extends StoreCacheKeyBaseEnum = StoreCacheKeyBaseEnum,
-  Args extends Primitive[] = Primitive[]
+  Args extends NestedArray<string | number | null>[] = NestedArray<
+    string | number | null
+  >[]
 > = [Base, ...Args];
 
 type FilterEvent<ConfigurationModel> = {
@@ -22,37 +24,35 @@ export type ModelOfCache<
 
 export const MakeStoreCacheKeyAndFilter = <
   KeyBase extends StoreCacheKeyBaseEnum,
-  Args extends any[],
+  Args extends NestedArray<string | number | null>[],
   Entity,
   TargetCache extends keyof ConfigurationStoreModel = keyof ConfigurationStoreModel
 >({
   keyBase,
-  defaultArgs,
   targetCache,
   filter,
 }: {
   keyBase: KeyBase;
-  defaultArgs: MakeRequired<Args>;
-  targetCache: (...args: MakeRequired<Args>) => TargetCache;
+  targetCache: (...args: Args) => TargetCache;
   filter?: {
-    dependsOn: (...args: MakeRequired<Args>) => StoreCacheKey[];
-    viewFilters: (...args: MakeRequired<Args>) => StoreCacheKey[];
+    dependsOn: (...args: Args) => StoreCacheKey[];
+    viewFilters: (...args: Args) => StoreCacheKey[];
     filter: (
       event: FilterEvent<ModelOfCache<TargetCache>>,
-      ...args: MakeRequired<Args>
+      ...args: Args
     ) => (ModelOfCache<TargetCache> | undefined)[];
     filterAvailableEntities: (
       state: BenchmarkAppModel,
       entities: Entity[],
       dependsOn: StoreCacheKey[],
       viewFilters: StoreCacheKey[],
-      ...args: MakeRequired<Args>
+      ...args: Args
     ) => Entity[];
   };
 }): ((
   ...args: Args
 ) => {
-  cacheKey: StoreCacheKey<KeyBase, MakeRequired<Args>>;
+  cacheKey: StoreCacheKey<KeyBase, Args>;
   targetCache: TargetCache;
   filter?: {
     dependsOn: () => StoreCacheKey[];
@@ -65,30 +65,23 @@ export const MakeStoreCacheKeyAndFilter = <
     ) => Entity[];
     viewFilters: () => StoreCacheKey[];
   };
-}) => (...incomingArgs) => {
-  const longerArgs =
-    incomingArgs.length > defaultArgs.length ? incomingArgs : defaultArgs;
-  const args = longerArgs.map(
-    (_, index) => incomingArgs[index] ?? defaultArgs[index]
-  ) as MakeRequired<Args>;
-  return {
-    cacheKey: [keyBase, ...args],
-    targetCache: targetCache(...args),
-    ...(filter
-      ? {
-          filter: {
-            filter: (...args2) => filter.filter(...args2, ...args),
-            filterAvailableEntities: (...args2) =>
-              filter.filterAvailableEntities(
-                ...args2,
-                filter.dependsOn(...args),
-                filter.viewFilters(...args),
-                ...args
-              ),
-            dependsOn: () => filter.dependsOn(...args),
-            viewFilters: () => filter.viewFilters(...args),
-          },
-        }
-      : {}),
-  };
-};
+}) => (...args) => ({
+  cacheKey: [keyBase, ...args],
+  targetCache: targetCache(...args),
+  ...(filter
+    ? {
+        filter: {
+          filter: (...args2) => filter.filter(...args2, ...args),
+          filterAvailableEntities: (...args2) =>
+            filter.filterAvailableEntities(
+              ...args2,
+              filter.dependsOn(...args),
+              filter.viewFilters(...args),
+              ...args
+            ),
+          dependsOn: () => filter.dependsOn(...args),
+          viewFilters: () => filter.viewFilters(...args),
+        },
+      }
+    : {}),
+});

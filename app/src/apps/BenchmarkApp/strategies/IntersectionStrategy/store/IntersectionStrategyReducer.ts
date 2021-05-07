@@ -1,6 +1,7 @@
 import { Experiment, ExperimentIntersectionCount } from 'api';
 import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
+import { MULTI_SELECTOR_START } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
 import { IntersectionStrategyActionTypes } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyActionTypes';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
@@ -42,7 +43,11 @@ const IntersectionStrategyReducer = (
     case IntersectionStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
       const experimentIds = getDefinedItems(
-        getCacheKey(StoreCacheKeyBaseEnum.experiment),
+        getCacheKey(
+          StoreCacheKeyBaseEnum.experiment,
+          MULTI_SELECTOR_START,
+          MULTI_SELECTOR_START
+        ),
         appStore
       );
       if (experimentIds.length === 0)

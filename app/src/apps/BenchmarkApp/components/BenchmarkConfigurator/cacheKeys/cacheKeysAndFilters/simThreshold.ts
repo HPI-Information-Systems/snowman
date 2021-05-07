@@ -3,11 +3,10 @@ import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/Benchma
 
 export const simThresholdCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.similarityThreshold,
-  [datasetMultiSelectId?: number, experimentMultiSelectId?: number],
+  [datasetMultiSelectId: number, experimentMultiSelectId: number],
   number,
   'simThresholds'
 >({
   keyBase: StoreCacheKeyBaseEnum.similarityThreshold,
-  defaultArgs: [0, 0],
   targetCache: () => 'simThresholds',
 });
