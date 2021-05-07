@@ -27,6 +27,22 @@ export const setCoordinates = (
     payload: coordinates,
   });
 
+export const setXAxis = (
+  aMetric: MetricsEnum
+): easyPrimitiveActionReturn<KpiInvestigatorStrategyModel> =>
+  easyPrimitiveAction<KpiInvestigatorStrategyModel>({
+    type: KpiInvestigatorStrategyActionTypes.SET_X_AXIS,
+    payload: aMetric,
+  });
+
+export const setYAxis = (
+  aMetric: MetricsEnum
+): easyPrimitiveActionReturn<KpiInvestigatorStrategyModel> =>
+  easyPrimitiveAction<KpiInvestigatorStrategyModel>({
+    type: KpiInvestigatorStrategyActionTypes.SET_Y_AXIS,
+    payload: aMetric,
+  });
+
 export const loadCoordinates = (): SnowmanThunkAction<
   Promise<void>,
   KpiInvestigatorStrategyModel
@@ -39,8 +55,8 @@ export const loadCoordinates = (): SnowmanThunkAction<
     () =>
       new BenchmarkApi()
         .calculateDiagramData({
-          xAxis: MetricsEnum.Accuracy,
-          yAxis: MetricsEnum.Recall,
+          xAxis: getState().xAxis,
+          yAxis: getState().yAxis,
           diagram: { multipleExperiments: getState().experimentItems },
         })
         .then((coordinates) =>

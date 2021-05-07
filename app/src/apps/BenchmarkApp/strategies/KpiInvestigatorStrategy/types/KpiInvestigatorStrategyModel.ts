@@ -1,4 +1,4 @@
-import { DiagramExperimentItem, Experiment } from 'api';
+import { DiagramExperimentItem, Experiment, MetricsEnum } from 'api';
 import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
 
 export interface KpiInvestigatorStrategyModel {
@@ -6,4 +6,6 @@ export interface KpiInvestigatorStrategyModel {
   experimentItems: DiagramExperimentItem[];
   coordinates: DiagramCoordinates[];
   selectedExperiment: Experiment[];
+  yAxis: MetricsEnum;
+  xAxis: MetricsEnum;
 }

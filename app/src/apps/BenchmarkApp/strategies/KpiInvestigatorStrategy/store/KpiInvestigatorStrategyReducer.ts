@@ -1,3 +1,4 @@
+import { MetricsEnum } from 'api';
 import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
 import { KpiInvestigatorStrategyActionTypes } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyActionTypes';
 import { KpiInvestigatorStrategyModel } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
@@ -10,6 +11,8 @@ const initialState: KpiInvestigatorStrategyModel = {
   experimentItems: [],
   coordinates: [],
   selectedExperiment: [],
+  xAxis: MetricsEnum.Precision,
+  yAxis: MetricsEnum.Recall,
 };
 
 const KpiInvestigatorStrategyReducer = (
@@ -28,6 +31,18 @@ const KpiInvestigatorStrategyReducer = (
     }
     case KpiInvestigatorStrategyActionTypes.SET_COORDINATES: {
       return { ...state, coordinates: action.payload as DiagramCoordinates[] };
+    }
+    case KpiInvestigatorStrategyActionTypes.SET_X_AXIS: {
+      return {
+        ...state,
+        xAxis: action.payload as MetricsEnum,
+      };
+    }
+    case KpiInvestigatorStrategyActionTypes.SET_Y_AXIS: {
+      return {
+        ...state,
+        yAxis: action.payload as MetricsEnum,
+      };
     }
     default:
       return state;
