@@ -29,7 +29,7 @@ const mapDispatchToProps = (
   dispatch: SnowmanDispatch<NMetricsStrategyModel>
 ): NMetricsStrategyDispatchProps => ({
   inspectExperiment(anExperiment: Experiment) {
-    doPrimeSelection('experiments', {
+    doPrimeSelection({
       aCacheKey: getCacheKey(
         StoreCacheKeyBaseEnum.experiment,
         MULTI_SELECTOR_START,

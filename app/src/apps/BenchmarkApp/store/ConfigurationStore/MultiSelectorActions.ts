@@ -50,7 +50,7 @@ export const push = (
     nextId: MULTI_SELECTOR_START,
   };
   dispatch(
-    updateSelection('multiSelects', {
+    updateSelection({
       aCacheKey,
       newSelection: [
         {
@@ -76,7 +76,7 @@ export const remove = (
     nextId: 0,
   };
   dispatch(
-    updateSelection('multiSelects', {
+    updateSelection({
       aCacheKey,
       newSelection: [
         {

@@ -11,11 +11,7 @@ const DemoMetricsConfigurator = (): JSX.Element => (
   <GenericConfigurator strategyID={StrategyIDs.Dashboard}>
     <IonList>
       <ConfiguratorItem
-        title="1. Select Dataset"
-        configurators={[[getCacheKey(StoreCacheKeyBaseEnum.dataset), false]]}
-      />
-      <ConfiguratorItem
-        title="1a. Select Threshold"
+        title="Select Diagram tracks"
         configurators={[
           [
             getCacheKey(
@@ -54,22 +50,6 @@ const DemoMetricsConfigurator = (): JSX.Element => (
             true,
           ],
         ]}
-      />
-      <ConfiguratorItem
-        title="1a. Select Dataset32"
-        configurators={[
-          [
-            getCacheKey(
-              StoreCacheKeyBaseEnum.multiSelect,
-              ...getCacheKey(StoreCacheKeyBaseEnum.dataset)
-            ),
-            true,
-          ],
-        ]}
-      />
-      <ConfiguratorItem
-        title="1. Select Dataset"
-        configurators={[[getCacheKey(StoreCacheKeyBaseEnum.dataset), false]]}
       />
     </IonList>
   </GenericConfigurator>

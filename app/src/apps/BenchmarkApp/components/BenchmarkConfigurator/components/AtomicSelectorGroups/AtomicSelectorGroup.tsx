@@ -21,23 +21,11 @@ export const AtomicSelectorGroup = ({
   } else {
     switch (targetCache) {
       case 'algorithms':
-        selectorGroupPromise = import(
-          'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AlgorithmSelectorGroup'
-        ) as typeof selectorGroupPromise;
-        break;
       case 'datasets':
-        selectorGroupPromise = import(
-          'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/DatasetSelectorGroup'
-        ) as typeof selectorGroupPromise;
-        break;
       case 'experiments':
-        selectorGroupPromise = import(
-          'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/ExperimentSelectorGroup'
-        ) as typeof selectorGroupPromise;
-        break;
       case 'simFunctions':
         selectorGroupPromise = import(
-          'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/SimFunctionSelectorGroup'
+          'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/EntityInput/EntityInput'
         ) as typeof selectorGroupPromise;
         break;
       case 'simThresholds':

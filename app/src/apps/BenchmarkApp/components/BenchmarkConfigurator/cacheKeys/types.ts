@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
+import { SearchableEntity } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/types/SearchableEntity';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { Define, NestedArray, ValueOf } from 'snowman-library';
@@ -25,15 +26,17 @@ export type ModelOfCache<
 export const MakeStoreCacheKeyAndFilter = <
   KeyBase extends StoreCacheKeyBaseEnum,
   Args extends NestedArray<string | number | null>[],
-  Entity,
+  Entity extends SearchableEntity,
   TargetCache extends keyof ConfigurationStoreModel = keyof ConfigurationStoreModel
 >({
   keyBase,
   targetCache,
   filter,
+  getEntities,
 }: {
   keyBase: KeyBase;
   targetCache: (...args: Args) => TargetCache;
+  getEntities?: (state: BenchmarkAppModel) => Entity[];
   filter?: {
     dependsOn: (...args: Args) => StoreCacheKey[];
     viewFilters: (...args: Args) => StoreCacheKey[];
@@ -54,6 +57,7 @@ export const MakeStoreCacheKeyAndFilter = <
 ) => {
   cacheKey: StoreCacheKey<KeyBase, Args>;
   targetCache: TargetCache;
+  getEntities: (state: BenchmarkAppModel) => Entity[];
   filter?: {
     dependsOn: () => StoreCacheKey[];
     filter: (
@@ -68,6 +72,7 @@ export const MakeStoreCacheKeyAndFilter = <
 }) => (...args) => ({
   cacheKey: [keyBase, ...args],
   targetCache: targetCache(...args),
+  getEntities: getEntities ?? (() => []),
   ...(filter
     ? {
         filter: {

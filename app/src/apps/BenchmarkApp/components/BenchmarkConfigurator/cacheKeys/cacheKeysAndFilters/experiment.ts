@@ -18,6 +18,7 @@ export const experimentCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.experiment,
   targetCache: () => 'experiments',
+  getEntities: (state) => state.resources.experiments,
   filter: {
     dependsOn: (dataset) => [datasetCacheKeyAndFilter(dataset).cacheKey],
     viewFilters: () => [filterCacheKeyAndFilter('algorithms').cacheKey],

@@ -26,7 +26,7 @@ const mapDispatchToProps = (
   setValue: (event: IonChangeEvent): void => {
     const input = parseInputToNumberOrUndef(event.detail.value);
     dispatch(
-      updateSelection('simThresholds', {
+      updateSelection({
         aCacheKey: ownProps.cacheKey,
         newSelection: [input],
         allowMultiple: false,

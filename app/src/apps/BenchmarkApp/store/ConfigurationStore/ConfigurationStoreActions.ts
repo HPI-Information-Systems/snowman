@@ -1,4 +1,5 @@
-import { serializeCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/serializeCacheKey';
+import { ModelOfCacheKeyBase } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
+import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import {
   ModelOfCache,
   StoreCacheKey,
@@ -10,6 +11,7 @@ import {
 } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
 import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+import { getItems } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import {
   easyPrimitiveAction,
@@ -17,42 +19,26 @@ import {
 } from 'utils/easyActionsFactory';
 
 const setSelection = <Cache extends keyof ConfigurationStoreModel>(
-  cache: Cache,
   aCacheKey: StoreCacheKey,
   newSelection: (ModelOfCache<Cache> | undefined)[]
 ): easyPrimitiveActionReturn<BenchmarkAppModel> =>
   easyPrimitiveAction<BenchmarkAppModel>({
     type: ConfigurationStoreActionTypes.SET_SELECTION,
-    payload: cache,
-    optionalPayload: aCacheKey,
-    optionalPayload2: newSelection,
+    payload: aCacheKey,
+    optionalPayload: newSelection,
   });
 
-export const getSelection = <Cache extends keyof ConfigurationStoreModel>(
-  state: BenchmarkAppModel,
-  cache: Cache,
-  aCacheKey: StoreCacheKey
-): (ModelOfCache<Cache> | undefined)[] => [
-  ...((state.config[cache][serializeCacheKey(aCacheKey)]?.targets ?? []) as (
-    | ModelOfCache<Cache>
-    | undefined
-  )[]),
-];
-
-export const updateSelection = <Cache extends keyof ConfigurationStoreModel>(
-  cache: Cache,
-  {
-    aCacheKey,
-    newSelection,
-    allowMultiple = true,
-  }: {
-    aCacheKey: StoreCacheKey;
-    newSelection: (ModelOfCache<Cache> | undefined)[];
-    allowMultiple?: boolean;
-  }
-): SnowmanThunkAction<void, BenchmarkAppModel> => (dispatch, state): void => {
+export const updateSelection = <Base extends StoreCacheKeyBaseEnum>({
+  aCacheKey,
+  newSelection,
+  allowMultiple = true,
+}: {
+  aCacheKey: StoreCacheKey<Base>;
+  newSelection: (ModelOfCacheKeyBase<Base> | undefined)[];
+  allowMultiple?: boolean;
+}): SnowmanThunkAction<void, BenchmarkAppModel> => (dispatch, state): void => {
   if (!allowMultiple) {
-    const currentSelection = getSelection(state(), cache, aCacheKey);
+    const currentSelection = getItems(aCacheKey, state()).slice();
     if (newSelection.length > 0) {
       const swapIndex = currentSelection.indexOf(newSelection[0]);
       if (swapIndex > 0) {
@@ -66,21 +52,18 @@ export const updateSelection = <Cache extends keyof ConfigurationStoreModel>(
     currentSelection[0] = newSelection[0];
     newSelection = currentSelection;
   }
-  dispatch(setSelection(cache, aCacheKey, newSelection));
+  dispatch(setSelection(aCacheKey, newSelection));
 };
 
-export const doPrimeSelection = <Cache extends keyof ConfigurationStoreModel>(
-  cache: Cache,
-  {
-    aCacheKey,
-    selectFirst,
-  }: {
-    aCacheKey: StoreCacheKey;
-    selectFirst: ModelOfCache<Cache>;
-  }
-): void => {
+export const doPrimeSelection = <Base extends StoreCacheKeyBaseEnum>({
+  aCacheKey,
+  selectFirst,
+}: {
+  aCacheKey: StoreCacheKey<Base>;
+  selectFirst: ModelOfCacheKeyBase<Base>;
+}): void => {
   (BenchmarkAppStoreMagistrate.getStore().dispatch as BenchmarkAppDispatch)(
-    updateSelection(cache, {
+    updateSelection({
       aCacheKey,
       newSelection: [selectFirst],
       allowMultiple: false,

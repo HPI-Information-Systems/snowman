@@ -17,6 +17,7 @@ export const simFuntionCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.similarityFunction,
   targetCache: () => 'simFunctions',
+  getEntities: (state) => state.resources.simFunctions,
   filter: {
     dependsOn: (dataset, experiment) => [
       experimentCacheKeyAndFilter(dataset, experiment).cacheKey,
