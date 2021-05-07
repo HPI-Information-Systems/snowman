@@ -1,9 +1,12 @@
 import { providers } from '../../providers';
 import { getSimilarity } from '../../tools/getSimilarity';
 import {
+  CalculateDiagramDataRequest,
   CalculateExperimentIntersectionCountRequest,
   CalculateExperimentIntersectionCountsRequest,
   CalculateExperimentIntersectionRecordsRequest,
+  DiagramCoordinate,
+  DiagramExperimentItem,
   ExperimentIntersectionCount,
   FileResponse,
   GetBinaryMetricsRequest,
@@ -13,6 +16,25 @@ import { Service, SuccessResponse } from './Service';
 
 function provider() {
   return providers.benchmark;
+}
+
+export async function calculateDiagramData({
+  xAxis,
+  yAxis,
+  diagram,
+}: CalculateDiagramDataRequest): Promise<
+  SuccessResponse<Array<DiagramCoordinate>>
+> {
+  return Service.response(
+    () =>
+      provider().calculateDiagramData({
+        xAxis,
+        yAxis,
+        diagram,
+      }),
+    200,
+    404
+  );
 }
 
 export async function calculateExperimentIntersectionCount({

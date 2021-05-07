@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    Metric,
+    MetricFromJSON,
+    MetricFromJSONTyped,
+    MetricToJSON,
+} from './';
+
 /**
  * 
  * @export
@@ -31,6 +38,12 @@ export interface ExperimentAllOf {
      * @memberof ExperimentAllOf
      */
     numberOfUploadedRecords?: number;
+    /**
+     * 
+     * @type {Array<Metric>}
+     * @memberof ExperimentAllOf
+     */
+    effort?: Array<Metric>;
 }
 
 export function ExperimentAllOfFromJSON(json: any): ExperimentAllOf {
@@ -45,6 +58,7 @@ export function ExperimentAllOfFromJSONTyped(json: any, ignoreDiscriminator: boo
         
         'id': json['id'],
         'numberOfUploadedRecords': !exists(json, 'numberOfUploadedRecords') ? undefined : json['numberOfUploadedRecords'],
+        'effort': !exists(json, 'effort') ? undefined : ((json['effort'] as Array<any>).map(MetricFromJSON)),
     };
 }
 
@@ -59,6 +73,7 @@ export function ExperimentAllOfToJSON(value?: ExperimentAllOf | null): any {
         
         'id': value.id,
         'numberOfUploadedRecords': value.numberOfUploadedRecords,
+        'effort': value.effort === undefined ? undefined : ((value.effort as Array<any>).map(MetricToJSON)),
     };
 }
 
