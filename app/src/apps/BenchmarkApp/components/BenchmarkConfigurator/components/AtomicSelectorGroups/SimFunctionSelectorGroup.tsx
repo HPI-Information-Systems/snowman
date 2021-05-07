@@ -1,4 +1,4 @@
-import { Experiment } from 'api';
+import { SimilarityThresholdFunction } from 'api';
 import { getCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import {
   AtomicSelectorGroupDispatchProps,
@@ -12,7 +12,7 @@ import {
   getItems,
   getSingleItem,
 } from 'apps/BenchmarkApp/utils/configurationItemGetter';
-import { flask } from 'ionicons/icons';
+import { analytics } from 'ionicons/icons';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
@@ -20,26 +20,27 @@ const mapStateToProps = (
   state: BenchmarkAppModel,
   ownProps: AtomicSelectorGroupOwnProps
 ): AtomicSelectorGroupStateProps => {
-  let availableExperiments = state.resources.experiments;
+  let availableFunctions = state.resources.simFunctions;
   const filterEntities = getCacheKeyAndFilter(ownProps.cacheKey).filter
     ?.filterAvailableEntities;
   if (filterEntities) {
-    availableExperiments = filterEntities(
+    availableFunctions = filterEntities(
       state,
-      availableExperiments
-    ) as Experiment[];
+      availableFunctions
+    ) as SimilarityThresholdFunction[];
   }
   const selectedIds = new Set(
     ownProps.allowMultiple
-      ? getItems(ownProps.cacheKey, state.config.experiments)
-      : [getSingleItem(ownProps.cacheKey, state.config.experiments)]
+      ? getItems(ownProps.cacheKey, state.config.simFunctions)
+      : [getSingleItem(ownProps.cacheKey, state.config.simFunctions)]
   );
   return {
-    selectedEntities: availableExperiments.filter(
-      (anExperiment: Experiment): boolean => selectedIds.has(anExperiment.id)
+    selectedEntities: availableFunctions.filter(
+      (aFunction: SimilarityThresholdFunction): boolean =>
+        selectedIds.has(aFunction.id)
     ),
-    entities: availableExperiments,
-    icon: flask,
+    entities: availableFunctions,
+    icon: analytics,
   };
 };
 
@@ -47,19 +48,21 @@ const mapDispatchToProps = (
   dispatch: SnowmanDispatch<BenchmarkAppModel>,
   ownProps: AtomicSelectorGroupOwnProps
 ): AtomicSelectorGroupDispatchProps => ({
-  updateSelection: (experimendIds) =>
+  updateSelection: (simFuncIds) =>
     dispatch(
-      updateSelection('experiments', {
+      updateSelection('simFunctions', {
         aCacheKey: ownProps.cacheKey,
-        newSelection: experimendIds,
+        newSelection: simFuncIds,
         allowMultiple: ownProps.allowMultiple,
       })
     ),
 });
 
-const ExperimentSelectorGroup = connect(
+const SimFunctionsSelectorGroup = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AtomicSelectorGroupView);
+)(AtomicSelectorGroupView) as (
+  props: AtomicSelectorGroupOwnProps
+) => JSX.Element;
 
-export default ExperimentSelectorGroup;
+export default SimFunctionsSelectorGroup;

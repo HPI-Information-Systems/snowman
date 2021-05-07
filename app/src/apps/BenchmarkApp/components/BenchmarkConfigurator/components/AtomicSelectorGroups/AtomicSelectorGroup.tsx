@@ -30,16 +30,20 @@ export const AtomicSelectorGroup = ({
         'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/ExperimentSelectorGroup'
       );
       break;
-    case 'multiSelects':
     //TODO
-    //   SelectorGroup = MultiSelectSelectorGroup;
-    //   break;
     case 'simFunctions':
-    //   SelectorGroup = SimFunctionSelectorGroup;
-    //   break;
+      selectorGroupPromise = selectorGroupPromise = import(
+        'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/SimFunctionSelectorGroup'
+      );
+      break;
     case 'simThresholds':
-    //   SelectorGroup = SimThresholdSelectorGroup;
-    //   break;
+      selectorGroupPromise = selectorGroupPromise = import(
+        'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/NumberInput/NumberInput'
+      );
+      break;
+    case 'multiSelects':
+    // SelectorGroup = MultiSelectSelectorGroup;
+    // break;
     default:
       throw new Error('Unknown atomic selector group');
   }

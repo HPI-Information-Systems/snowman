@@ -4,6 +4,8 @@ import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkCon
 import AlgorithmSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AlgorithmSelectorGroup';
 import DatasetSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/DatasetSelectorGroup';
 import ExperimentSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/ExperimentSelectorGroup';
+import NumberInput from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/NumberInput/NumberInput';
+import SimFunctionSelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/SimFunctionSelectorGroup';
 import ConfiguratorItem from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/ConfiguratorItem/ConfiguratorItem';
 import GenericConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/GenericConfigurator/GenericConfigurator';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
@@ -16,6 +18,16 @@ const DemoMetricsConfigurator = (): JSX.Element => (
         <DatasetSelectorGroup
           cacheKey={getCacheKey(StoreCacheKeyBaseEnum.dataset)}
           allowMultiple={false}
+        />
+      </ConfiguratorItem>
+      <ConfiguratorItem title="1a. Select Threshold">
+        <NumberInput
+          cacheKey={getCacheKey(StoreCacheKeyBaseEnum.similarityThreshold)}
+        />
+      </ConfiguratorItem>
+      <ConfiguratorItem title="1b. Select Threshold">
+        <NumberInput
+          cacheKey={getCacheKey(StoreCacheKeyBaseEnum.similarityThreshold)}
         />
       </ConfiguratorItem>
       <ConfiguratorItem title="2. Select Datasets">
@@ -39,6 +51,18 @@ const DemoMetricsConfigurator = (): JSX.Element => (
       <ConfiguratorItem title="5. Select Ground Truth">
         <ExperimentSelectorGroup
           cacheKey={getCacheKey(StoreCacheKeyBaseEnum.groundTruth)}
+          allowMultiple={false}
+        />
+      </ConfiguratorItem>
+      <ConfiguratorItem title="6. Select Experiment">
+        <ExperimentSelectorGroup
+          cacheKey={getCacheKey(StoreCacheKeyBaseEnum.experiment)}
+          allowMultiple={false}
+        />
+      </ConfiguratorItem>
+      <ConfiguratorItem title="6a. Select SimFunction">
+        <SimFunctionSelectorGroup
+          cacheKey={getCacheKey(StoreCacheKeyBaseEnum.similarityFunction)}
           allowMultiple={false}
         />
       </ConfiguratorItem>

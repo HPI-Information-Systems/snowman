@@ -3,7 +3,11 @@ import {
   ModelOfCache,
   StoreCacheKey,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
-import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { BenchmarkAppStoreMagistrate } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
+import {
+  BenchmarkAppDispatch,
+  BenchmarkAppModel,
+} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
 import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
@@ -63,4 +67,23 @@ export const updateSelection = <Cache extends keyof ConfigurationStoreModel>(
     newSelection = currentSelection;
   }
   dispatch(setSelection(cache, aCacheKey, newSelection));
+};
+
+export const doPrimeSelection = <Cache extends keyof ConfigurationStoreModel>(
+  cache: Cache,
+  {
+    aCacheKey,
+    selectFirst,
+  }: {
+    aCacheKey: StoreCacheKey;
+    selectFirst: ModelOfCache<Cache>;
+  }
+): void => {
+  (BenchmarkAppStoreMagistrate.getStore().dispatch as BenchmarkAppDispatch)(
+    updateSelection(cache, {
+      aCacheKey,
+      newSelection: [selectFirst],
+      allowMultiple: false,
+    })
+  );
 };

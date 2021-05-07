@@ -5,5 +5,6 @@ export enum StoreCacheKeyBaseEnum {
   algorithm = 'StoreCacheKey-algorithm',
   filter = 'StoreCacheKey-filter',
   similarityFunction = 'StoreCacheKey-similarityFunction',
+  similarityThreshold = 'StoreCachekey-similarityThreshold',
   multiSelect = 'StoreCacheKey-multiSelect',
 }
