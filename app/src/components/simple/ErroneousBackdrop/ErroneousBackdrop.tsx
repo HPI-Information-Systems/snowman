@@ -10,7 +10,6 @@ const ErroneousBackdrop = ({
   <>
     {shouldShow ? (
       <>
-        {' '}
         <div className={styles.errorOverlay}>{message}</div>
         <IonBackdrop tappable={false} className={styles.heavyBackdrop} />
       </>
