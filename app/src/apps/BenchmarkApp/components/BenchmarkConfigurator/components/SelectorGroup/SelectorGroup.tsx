@@ -5,7 +5,9 @@ import { ellipsisVerticalCircle } from 'ionicons/icons';
 import React from 'react';
 import style from 'theme/style';
 
-const EmptyPlaceholder = (): JSX.Element => <IonText color="medium">?</IonText>;
+const EmptyPlaceholder = (): JSX.Element => (
+  <IonText color="medium">Empty</IonText>
+);
 
 const SelectorGroup = ({ onClick, items }: SelectorGroupProps): JSX.Element => (
   <IonItem button onClick={onClick} className={style(styles.fullWidth)}>
