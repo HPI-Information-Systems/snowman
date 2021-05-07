@@ -1,5 +1,7 @@
+import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
+
 export interface ConfiguratorItemOwnProps {
-  children?: JSX.Element | JSX.Element[];
+  configurators: [cacheKey: StoreCacheKey, allowMultiSelect: boolean][];
   title: string;
 }
 
