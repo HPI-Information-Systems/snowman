@@ -1,4 +1,4 @@
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
+import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 
 export interface MultiSelectorOwnProps {
   title: string;

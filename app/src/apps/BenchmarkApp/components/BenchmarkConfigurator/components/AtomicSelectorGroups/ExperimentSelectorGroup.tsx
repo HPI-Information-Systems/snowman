@@ -1,23 +1,17 @@
 import { Experiment } from 'api';
-import AtomicSelectorGroupView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroup.View';
+import { getCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import {
   AtomicSelectorGroupDispatchProps,
   AtomicSelectorGroupOwnProps,
   AtomicSelectorGroupStateProps,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
-import ExperimentFilters from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/ExperimentFilters';
-import { updateExperimentSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreExperimentActions';
+import AtomicSelectorGroupView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupView';
+import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStoreActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { ExperimentFilterModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
-import {
-  ConfigurationFilters,
-  StoreCacheKey,
-} from 'apps/BenchmarkApp/types/StoreCacheKey';
 import {
   getItems,
   getSingleItem,
 } from 'apps/BenchmarkApp/utils/configurationItemGetter';
-import { filterEntities } from 'apps/BenchmarkApp/utils/filterItems';
 import { flask } from 'ionicons/icons';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -25,24 +19,16 @@ import { SnowmanDispatch } from 'types/SnowmanDispatch';
 const mapStateToProps = (
   state: BenchmarkAppModel,
   ownProps: AtomicSelectorGroupOwnProps
-): AtomicSelectorGroupStateProps<ExperimentFilterModel> => {
-  const filter = ConfigurationFilters[StoreCacheKey.experiment];
-  let availableExperiments = filterEntities({
-    aFilterCacheKey: filter?.forceDatasetFilter,
-    fallbackCacheKey: StoreCacheKey.filter,
-    cache: state.config.datasets,
-    entities: state.resources.experiments,
-    isAllowed: ({ datasetId }, filter) => filter.has(datasetId),
-    allowMultipleFilters: filter?.allowMultipleDatasetFilter,
-  });
-  availableExperiments = filterEntities({
-    aFilterCacheKey: filter?.forceAlgorithmFilter,
-    fallbackCacheKey: StoreCacheKey.filter,
-    cache: state.config.algorithms,
-    entities: availableExperiments,
-    isAllowed: ({ algorithmId }, filter) => filter.has(algorithmId),
-    allowMultipleFilters: filter?.allowMultipleAlgorithmFilter,
-  });
+): AtomicSelectorGroupStateProps => {
+  let availableExperiments = state.resources.experiments;
+  const filterEntities = getCacheKeyAndFilter(ownProps.cacheKey).filter
+    ?.filterAvailableEntities;
+  if (filterEntities) {
+    availableExperiments = filterEntities(
+      state,
+      availableExperiments
+    ) as Experiment[];
+  }
   const selectedIds = new Set(
     ownProps.allowMultiple
       ? getItems(ownProps.cacheKey, state.config.experiments)
@@ -54,8 +40,6 @@ const mapStateToProps = (
     ),
     entities: availableExperiments,
     icon: flask,
-    filterComponent: ExperimentFilters,
-    filter,
   };
 };
 
@@ -65,7 +49,7 @@ const mapDispatchToProps = (
 ): AtomicSelectorGroupDispatchProps => ({
   updateSelection: (algorithmIds) =>
     dispatch(
-      updateExperimentSelection({
+      updateSelection('experiments', {
         aCacheKey: ownProps.cacheKey,
         newSelection: algorithmIds,
         allowMultiple: ownProps.allowMultiple,
@@ -76,8 +60,6 @@ const mapDispatchToProps = (
 const ExperimentSelectorGroup = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AtomicSelectorGroupView) as (
-  props: AtomicSelectorGroupOwnProps
-) => JSX.Element;
+)(AtomicSelectorGroupView);
 
 export default ExperimentSelectorGroup;

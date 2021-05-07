@@ -1,55 +1,48 @@
+import { getCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
+import { serializeCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/serializeCacheKey';
+import {
+  ModelOfCache,
+  StoreCacheKey,
+} from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
-import {
-  AlgorithmConfigurationModel,
-  ConfigurationCache,
-  ConfigurationCacheItem,
-  DatasetConfigurationModel,
-  ExperimentConfigurationModel,
-  ExperimentFilterModel,
-  SimFunctionConfigurationModel,
-  SimFunctionFilterModel,
-  SimThresholdConfigurationModel,
-} from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
+import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+import { produce } from 'immer';
+import { Define, ValueOf } from 'snowman-library';
 import { SnowmanAction } from 'types/SnowmanAction';
 
-const filterEntities = <Entity extends { id: number }, Filter>({
-  shouldResetEntity,
-  filterApplies,
-  allEntities,
-  selected,
+const getItem = <Cache extends ValueOf<ConfigurationStoreModel>>({
+  state,
+  key,
+  cache,
 }: {
-  shouldResetEntity: (entity: Entity, filter?: Filter) => boolean;
-  filterApplies: (filter?: Filter) => boolean;
-  allEntities: Entity[];
-  selected: ConfigurationCache<number, Filter>;
-}): ConfigurationCache<number, Filter> => {
-  const allEntitiesMap = new Map(
-    allEntities.map((target) => [target.id, target])
-  );
-  return Object.fromEntries(
-    Object.entries(selected).map(([key, item]) => [
-      key,
-      filterApplies(item?.filter)
-        ? ({
-            filter: item?.filter,
-            targets: item?.targets.filter((entityId) => {
-              if (entityId !== undefined) {
-                const entity = allEntitiesMap.get(entityId);
-                if (
-                  entity !== undefined &&
-                  !shouldResetEntity(entity, item.filter)
-                ) {
-                  return true;
-                }
-              }
-              return false;
-            }),
-          } as ConfigurationCacheItem<number, Filter>)
-        : item,
-    ])
-  );
+  state: BenchmarkAppModel;
+  key: StoreCacheKey;
+  cache: Cache;
+}): Define<ValueOf<Cache>> => {
+  const serializedKey = serializeCacheKey(key);
+  let item = cache[serializedKey] as Define<ValueOf<Cache>>;
+  if (!item) {
+    item = {
+      cacheKey: key as Define<ValueOf<Cache>>['cacheKey'],
+      dependents: [] as Define<ValueOf<Cache>>['dependents'],
+      targets: [] as Define<ValueOf<Cache>>['targets'],
+    } as Define<ValueOf<Cache>>;
+    const { filter } = getCacheKeyAndFilter(key);
+    if (filter) {
+      for (const cacheKeyAndFilter of filter
+        .dependsOn()
+        .map((dependsOn) => getCacheKeyAndFilter(dependsOn))) {
+        getItem({
+          state,
+          key: cacheKeyAndFilter.cacheKey,
+          cache: state.config[cacheKeyAndFilter.targetCache],
+        }).dependents.push(key);
+      }
+    }
+    (cache as ValueOf<ConfigurationStoreModel>)[serializedKey] = item;
+  }
+  return item;
 };
 
 const ConfigurationStoreReducer = (
@@ -57,96 +50,37 @@ const ConfigurationStoreReducer = (
   action: SnowmanAction
 ): BenchmarkAppModel => {
   switch (action.type) {
-    case ConfigurationStoreActionTypes.SET_DATASET_SELECTION: {
-      const newSelection = action.optionalPayload as ConfigurationCacheItem<DatasetConfigurationModel>;
-      const newSelectionTargets = new Set(newSelection.targets);
-      return {
-        ...state,
-        config: {
-          ...state.config,
-          experiments: filterEntities({
-            allEntities: state.resources.experiments,
-            selected: state.config.experiments,
-            filterApplies: (filter) =>
-              filter?.forceDatasetFilter === action.payload,
-            shouldResetEntity: ({ datasetId }, filter) =>
-              !(filter?.allowMultipleDatasetFilter ?? true
-                ? newSelectionTargets.has(datasetId)
-                : datasetId === newSelection.targets[0]),
-          }),
-          datasets: {
-            ...state.config.datasets,
-            [action.payload as StoreCacheKey]: newSelection,
-          },
-        },
-      };
-    }
-    case ConfigurationStoreActionTypes.SET_ALGORITHM_SELECTION: {
-      const newSelection = action.optionalPayload as ConfigurationCacheItem<AlgorithmConfigurationModel>;
-      const newSelectionTargets = new Set(newSelection.targets);
-      return {
-        ...state,
-        config: {
-          ...state.config,
-          experiments: filterEntities({
-            allEntities: state.resources.experiments,
-            selected: state.config.experiments,
-            filterApplies: (filter) =>
-              filter?.forceAlgorithmFilter === action.payload,
-            shouldResetEntity: ({ algorithmId }, filter) =>
-              !(filter?.allowMultipleDatasetFilter ?? true
-                ? newSelectionTargets.has(algorithmId)
-                : algorithmId === newSelection.targets[0]),
-          }),
-          algorithms: {
-            ...state.config.algorithms,
-            [action.payload as StoreCacheKey]: action.optionalPayload as ConfigurationCacheItem<AlgorithmConfigurationModel>,
-          },
-        },
-      };
-    }
-    case ConfigurationStoreActionTypes.SET_EXPERIMENT_SELECTION: {
-      return {
-        ...state,
-        config: {
-          ...state.config,
-          experiments: {
-            ...state.config.experiments,
-            [action.payload as StoreCacheKey]: action.optionalPayload as ConfigurationCacheItem<
-              ExperimentConfigurationModel,
-              ExperimentFilterModel
-            >,
-          },
-        },
-      };
-    }
-    case ConfigurationStoreActionTypes.SET_SIM_FUNCTION_SELECTION: {
-      return {
-        ...state,
-        config: {
-          ...state.config,
-          simFunctions: {
-            ...state.config.simFunctions,
-            [action.payload as StoreCacheKey]: action.optionalPayload as ConfigurationCacheItem<
-              SimFunctionConfigurationModel,
-              SimFunctionFilterModel
-            >,
-          },
-        },
-      };
-    }
-    case ConfigurationStoreActionTypes.SET_SIM_THRESHOLD_SELECTION: {
-      return {
-        ...state,
-        config: {
-          ...state.config,
-          simThresholds: {
-            ...state.config.simThresholds,
-            [action.payload as StoreCacheKey]: action.optionalPayload as ConfigurationCacheItem<SimThresholdConfigurationModel>,
-          },
-        },
-      };
-    }
+    case ConfigurationStoreActionTypes.SET_SELECTION:
+      return produce(state, (state) => {
+        const cache = action.payload as keyof ConfigurationStoreModel;
+        const key = action.optionalPayload as StoreCacheKey;
+        const newSelection = action.optionalPayload2 as (
+          | ModelOfCache<typeof cache>
+          | undefined
+        )[];
+        const item = getItem({ state, cache: state.config[cache], key });
+        item.targets = newSelection;
+        for (const {
+          cacheKey,
+          targetCache,
+          filter,
+        } of item.dependents.map((dependent) =>
+          getCacheKeyAndFilter(dependent)
+        )) {
+          if (filter) {
+            const filteredEntity =
+              state.config[targetCache][serializeCacheKey(cacheKey)];
+            if (filteredEntity) {
+              filteredEntity.targets = filter.filter({
+                action,
+                state,
+                currentSelection: filteredEntity?.targets || [],
+              });
+            }
+          }
+        }
+        return state;
+      });
     default:
       return state;
   }

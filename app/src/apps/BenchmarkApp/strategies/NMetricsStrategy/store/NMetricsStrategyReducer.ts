@@ -1,8 +1,9 @@
 import { Experiment, Metric } from 'api';
+import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
+import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 import {
   getDefinedItems,
   getSingleItem,
@@ -25,11 +26,11 @@ const NMetricsStrategyReducer = (
       const appStore = action.payload as BenchmarkAppModel;
       const appConfig = appStore.config;
       const goldStandardId = getSingleItem(
-        StoreCacheKey.groundTruth,
+        getCacheKey(StoreCacheKeyBaseEnum.groundTruth),
         appConfig.experiments
       );
       const experimentIds = getDefinedItems(
-        StoreCacheKey.experiment,
+        getCacheKey(StoreCacheKeyBaseEnum.experiment),
         appConfig.experiments
       );
       if (goldStandardId === undefined || experimentIds.length === 0)

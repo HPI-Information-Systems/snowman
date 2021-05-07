@@ -1,11 +1,11 @@
 .marginedHeading {
-  margin-bottom: 6px !important;
+    margin-bottom: 6px !important;
 }
 
 .listNoPadding {
-  padding: 0;
+    padding: 0;
 }
 
 .itemNoBorder {
-  --border-style: none;
+    --border-style: none;
 }

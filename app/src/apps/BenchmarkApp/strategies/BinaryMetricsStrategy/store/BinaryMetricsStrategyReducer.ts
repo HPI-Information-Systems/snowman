@@ -1,8 +1,9 @@
 import { Dataset, Experiment, ExperimentIntersectionCount, Metric } from 'api';
+import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
+import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
 import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 import { getSingleItem } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { SnowmanAction } from 'types/SnowmanAction';
@@ -26,15 +27,15 @@ const BinaryMetricsStrategyReducer = (
       const appStore = action.payload as BenchmarkAppModel;
       const appConfig = appStore.config;
       const datasetId = getSingleItem(
-        StoreCacheKey.dataset,
+        getCacheKey(StoreCacheKeyBaseEnum.dataset),
         appConfig.datasets
       );
       const goldStandardId = getSingleItem(
-        StoreCacheKey.groundTruth,
+        getCacheKey(StoreCacheKeyBaseEnum.groundTruth),
         appConfig.experiments
       );
       const experimentId = getSingleItem(
-        StoreCacheKey.experiment,
+        getCacheKey(StoreCacheKeyBaseEnum.experiment),
         appConfig.experiments
       );
       if (

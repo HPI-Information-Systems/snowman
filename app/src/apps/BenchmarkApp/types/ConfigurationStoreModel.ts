@@ -1,49 +1,31 @@
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
+import { SerializedStoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/serializeCacheKey';
+import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 
-export interface ConfigurationCacheItem<Target, Filter = undefined> {
+export interface ConfigurationCacheItem<
+  Target,
+  Key extends StoreCacheKey = StoreCacheKey
+> {
   targets: (Target | undefined)[];
-  filter: Filter;
+  cacheKey: Key;
+  dependents: StoreCacheKey[];
 }
 
-export type ConfigurationCache<Target, Filter = undefined> = {
-  [key in StoreCacheKey]?: ConfigurationCacheItem<Target, Filter>;
+export type ConfigurationCache<Target> = {
+  [key in SerializedStoreCacheKey]?: ConfigurationCacheItem<Target>;
 };
 
 export interface ConfigurationStoreModel {
-  datasets: ConfigurationCache<DatasetConfigurationModel, DatasetFilterModel>;
-  algorithms: ConfigurationCache<
-    AlgorithmConfigurationModel,
-    AlgorithmFilterModel
-  >;
-  experiments: ConfigurationCache<
-    ExperimentConfigurationModel,
-    ExperimentFilterModel
-  >;
-  simFunctions: ConfigurationCache<
-    SimFunctionConfigurationModel,
-    SimFunctionFilterModel
-  >;
-  simThresholds: ConfigurationCache<
-    SimThresholdConfigurationModel,
-    SimThresholdFilterModel
-  >;
+  datasets: ConfigurationCache<DatasetConfigurationModel>;
+  algorithms: ConfigurationCache<AlgorithmConfigurationModel>;
+  experiments: ConfigurationCache<ExperimentConfigurationModel>;
+  simFunctions: ConfigurationCache<SimFunctionConfigurationModel>;
+  simThresholds: ConfigurationCache<SimThresholdConfigurationModel>;
+  multiSelects: ConfigurationCache<MultiSelectConfigurationModel>;
 }
 
 export type DatasetConfigurationModel = number;
-export type DatasetFilterModel = undefined;
 export type AlgorithmConfigurationModel = number;
-export type AlgorithmFilterModel = undefined;
 export type ExperimentConfigurationModel = number;
-export interface ExperimentFilterModel {
-  forceDatasetFilter?: StoreCacheKey;
-  allowMultipleDatasetFilter?: boolean;
-  forceAlgorithmFilter?: StoreCacheKey;
-  allowMultipleAlgorithmFilter?: boolean;
-}
 export type SimFunctionConfigurationModel = number;
-export interface SimFunctionFilterModel {
-  forceExperimentFilter?: StoreCacheKey;
-  allowMultipleExperimentFilter?: boolean;
-}
 export type SimThresholdConfigurationModel = number;
-export type SimThresholdFilterModel = undefined;
+export type MultiSelectConfigurationModel = number;

@@ -1,11 +1,11 @@
 import { Dataset } from 'api';
-import AtomicSelectorGroupView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroup.View';
 import {
   AtomicSelectorGroupDispatchProps,
   AtomicSelectorGroupOwnProps,
   AtomicSelectorGroupStateProps,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
-import { updateDatasetSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreDatasetActions';
+import AtomicSelectorGroupView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupView';
+import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStoreActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import {
   getItems,
@@ -39,7 +39,7 @@ const mapDispatchToProps = (
 ): AtomicSelectorGroupDispatchProps => ({
   updateSelection: (datasetIds) =>
     dispatch(
-      updateDatasetSelection({
+      updateSelection('datasets', {
         aCacheKey: ownProps.cacheKey,
         newSelection: datasetIds,
         allowMultiple: ownProps.allowMultiple,

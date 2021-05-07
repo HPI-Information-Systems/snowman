@@ -28,6 +28,7 @@ const initialState: BenchmarkAppModel = {
     experiments: {},
     simFunctions: {},
     simThresholds: {},
+    multiSelects: {},
   },
 };
 

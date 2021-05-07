@@ -1,8 +1,9 @@
 import { Experiment, ExperimentIntersectionCount } from 'api';
+import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
+import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { IntersectionStrategyActionTypes } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyActionTypes';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { StoreCacheKey } from 'apps/BenchmarkApp/types/StoreCacheKey';
 import { getDefinedItems } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { difference, nth } from 'lodash';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
@@ -42,7 +43,7 @@ const IntersectionStrategyReducer = (
       const appStore = action.payload as BenchmarkAppModel;
       const appConfig = appStore.config;
       const experimentIds = getDefinedItems(
-        StoreCacheKey.experiment,
+        getCacheKey(StoreCacheKeyBaseEnum.experiment),
         appConfig.experiments
       );
       if (experimentIds.length === 0)
