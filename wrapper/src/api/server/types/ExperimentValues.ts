@@ -12,8 +12,12 @@
  * Do not edit the class manually.
  */
 
+import {
+    EffortParts,
+} from './';
+
 /**
- *
+ * 
  * @export
  * @interface ExperimentValues
  */
@@ -42,4 +46,10 @@ export interface ExperimentValues {
      * @memberof ExperimentValues
      */
     algorithmId: number;
+    /**
+     * 
+     * @type {EffortParts}
+     * @memberof ExperimentValues
+     */
+    softKPIs?: EffortParts;
 }
