@@ -1,13 +1,13 @@
-import { MetricsEnum } from 'api';
 import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
 import { ScatterChartDatasets } from 'components/simple/ChartComponent/ScatterChart';
+import { AllMetricsEnum } from 'types/AllMetricsEnum';
 
 export interface KpiInvestigatorStrategyStateProps {
   isValidConfig: boolean;
   coordinates: DiagramCoordinates[];
   datasets: ScatterChartDatasets;
-  xAxis: MetricsEnum;
-  yAxis: MetricsEnum;
+  xAxis: AllMetricsEnum;
+  yAxis: AllMetricsEnum;
 }
 
 export interface KpiInvestigatorStrategyDispatchProps {

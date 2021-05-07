@@ -6,14 +6,13 @@ import {
   IonLabel,
   IonRow,
 } from '@ionic/react';
-import { MetricsEnum } from 'api';
 import { KpiInvestigatorStrategyProps } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyStyles.module.css';
 import { ScatterChart } from 'components/simple/ChartComponent/ScatterChart';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
 import React from 'react';
-import { $enum } from 'ts-enum-util';
+import { AllMetricsObject } from 'types/AllMetricsEnum';
 
 const KpiInvestigatorStrategyView = ({
   isValidConfig,
@@ -34,7 +33,9 @@ const KpiInvestigatorStrategyView = ({
           <IonItem>
             <IonLabel>X Axis Metric:</IonLabel>
             <SelectableInput
-              allOptions={$enum(MetricsEnum).map((metric) => metric as string)}
+              allOptions={Object.values(AllMetricsObject).map(
+                (metric) => metric as string
+              )}
               currentOption={xAxis}
               setOption={changeXAxis}
               instanceDescriptor="KpiInvestigatorXAxis"
@@ -45,7 +46,9 @@ const KpiInvestigatorStrategyView = ({
           <IonItem>
             <IonLabel>Y Axis Metric:</IonLabel>
             <SelectableInput
-              allOptions={$enum(MetricsEnum).map((metric) => metric as string)}
+              allOptions={Object.values(AllMetricsObject).map(
+                (metric) => metric as string
+              )}
               currentOption={yAxis}
               setOption={changeYAxis}
               instanceDescriptor="KpiInvestigatorYAxis"

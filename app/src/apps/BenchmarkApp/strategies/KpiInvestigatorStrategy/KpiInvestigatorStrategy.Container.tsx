@@ -1,4 +1,4 @@
-import { Experiment, MetricsEnum } from 'api';
+import { Experiment } from 'api';
 import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
 import KpiInvestigatorStrategyView from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategy.View';
 import {
@@ -15,6 +15,7 @@ import { getNextColor } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrate
 import { ScatterChartDataset } from 'components/simple/ChartComponent/ScatterChart';
 import { groupBy, map } from 'lodash';
 import { connect } from 'react-redux';
+import { AllMetricsEnum } from 'types/AllMetricsEnum';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 const mapStateToProps = (
@@ -47,11 +48,11 @@ const mapDispatchToProps = (
   dispatch: SnowmanDispatch<KpiInvestigatorStrategyModel>
 ): KpiInvestigatorStrategyDispatchProps => ({
   changeXAxis: (anOption: string): void => {
-    dispatch(setXAxis(anOption as MetricsEnum));
+    dispatch(setXAxis(anOption as AllMetricsEnum));
     dispatch(loadCoordinates()).then();
   },
   changeYAxis: (anOption: string): void => {
-    dispatch(setYAxis(anOption as MetricsEnum));
+    dispatch(setYAxis(anOption as AllMetricsEnum));
     dispatch(loadCoordinates()).then();
   },
 });

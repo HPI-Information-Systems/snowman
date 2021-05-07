@@ -1,8 +1,9 @@
-import { BenchmarkApi, MetricsEnum } from 'api';
+import { BenchmarkApi } from 'api';
 import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
 import { KpiInvestigatorStrategyActionTypes } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyActionTypes';
 import { KpiInvestigatorStrategyModel } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { AllMetricsEnum } from 'types/AllMetricsEnum';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import {
@@ -28,7 +29,7 @@ export const setCoordinates = (
   });
 
 export const setXAxis = (
-  aMetric: MetricsEnum
+  aMetric: AllMetricsEnum
 ): easyPrimitiveActionReturn<KpiInvestigatorStrategyModel> =>
   easyPrimitiveAction<KpiInvestigatorStrategyModel>({
     type: KpiInvestigatorStrategyActionTypes.SET_X_AXIS,
@@ -36,7 +37,7 @@ export const setXAxis = (
   });
 
 export const setYAxis = (
-  aMetric: MetricsEnum
+  aMetric: AllMetricsEnum
 ): easyPrimitiveActionReturn<KpiInvestigatorStrategyModel> =>
   easyPrimitiveAction<KpiInvestigatorStrategyModel>({
     type: KpiInvestigatorStrategyActionTypes.SET_Y_AXIS,
