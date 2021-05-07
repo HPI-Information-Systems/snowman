@@ -98,7 +98,6 @@ paths:
                 $ref: "#/components/schemas/Algorithm"
         404:
           description: Not Found
-
     put:
       tags:
         - Algorithm
@@ -714,6 +713,54 @@ paths:
                 type: array
         404:
           description: Not Found
+  /benchmark/diagram:
+    post:
+      tags:
+        - Benchmark
+      description: returns diagram data based on two metrics and multiple experiments
+      operationId: calculateDiagramData
+      parameters:
+      - name: xAxis
+        in: query
+        schema:
+          anyOf:
+            - $ref: "#/components/schemas/softKPIsAlgorithmEnum"
+            - $ref: "#/components/schemas/MetricsEnum"
+            - $ref: "#/components/schemas/softKPIsExperimentEnum"
+        required: true
+        description: metric to be visualised on the x-axis of the diagram
+      - name: yAxis
+        in: query
+        schema:
+          anyOf:
+            - $ref: "#/components/schemas/softKPIsAlgorithmEnum"
+            - $ref: "#/components/schemas/MetricsEnum"
+            - $ref: "#/components/schemas/softKPIsExperimentEnum"
+        description: metric to be visualised on the y-axis of the diagram
+        required: true
+      x-codegen-request-body-name: diagram
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                multipleExperiments:
+                  $ref: "#/components/schemas/DiagramExperiments"
+                similarityThresholds:
+                  $ref: "#/components/schemas/ExperimentSimilarityConfig"
+              type: object
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiagramCoordinates"
+        403:
+          description: Forbidden
+        404:
+          description: Experiments or metrics not found
 
 components:
   requestBodies:
@@ -743,6 +790,48 @@ components:
         description:
           type: string
           example: This is an open source python library
+        softKPIs:
+          properties:
+            integrationEffort:
+              properties:
+                installationEffort:
+                   $ref: "#/components/schemas/EffortParts"
+                deploymentType:
+                  items:
+                    type: string
+                    example: "cloud"
+                  type: array
+                solutionType:
+                  items:
+                    type: string
+                    example: "rulebased"
+                  type: array
+                useCase:
+                  items:
+                    type: string
+                    example: "merging"
+                  type: array
+                generalCosts:
+                  type: integer
+              type: object
+            configurationEffort:
+              properties:
+                matchingSolution:
+                  $ref: "#/components/schemas/EffortParts"
+                domain:
+                  $ref: "#/components/schemas/EffortParts"
+                interfaces:
+                  items:
+                    type: string
+                    example: "GUI"
+                  type: array
+                supportedOSs:
+                  items:
+                    type: string
+                    example: "Windows"
+                  type: array
+              type: object
+          type: object
     Algorithm:
       allOf:
         - type: object
@@ -751,6 +840,17 @@ components:
           properties:
             id:
               $ref: "#/components/schemas/AlgorithmId"
+            matchingSolutionEffort:
+              items:
+                $ref: "#/components/schemas/Metric"
+              type: array
+            domainEffort:
+              items:
+                $ref: "#/components/schemas/Metric"
+            installationEffort:
+              items:
+                $ref: "#/components/schemas/Metric"
+              type: array
         - $ref: "#/components/schemas/AlgorithmValues"
 
     #### DATASET ####
@@ -814,6 +914,8 @@ components:
           $ref: "#/components/schemas/DatasetId"
         algorithmId:
           $ref: "#/components/schemas/AlgorithmId"
+        softKPIs:
+          $ref: "#/components/schemas/EffortParts"
     Experiment:
       allOf:
         - type: object
@@ -825,6 +927,10 @@ components:
             numberOfUploadedRecords:
               type: integer
               example: 2005
+            effort:
+              items:
+                $ref: "#/components/schemas/Metric"
+              type: array
         - $ref: "#/components/schemas/ExperimentValues"
 
     #### SIMILARITY THRESHOLDS ####
@@ -936,6 +1042,8 @@ components:
         name:
           type: string
           example: "precision"
+        id:
+          type: string
         formula:
           type: string
           example: "\\frac{truePositives}{truePositives + falsePositives}"
@@ -959,7 +1067,6 @@ components:
         - name
         - formula
         - value
-        - range
 
     ExperimentConfigItem:
       type: object
@@ -1008,6 +1115,106 @@ components:
         - numberRows
         - numberPairs
         - experiments
+    EffortParts:
+      properties:
+        expertise:
+          type: integer
+        hrAmount:
+          type: integer
+      type: object
+    ExperimentSimilarityConfig:
+      properties:
+        experimentId:
+          $ref: "#/components/schemas/ExperimentId"
+        groundTruthId:
+          $ref: "#/components/schemas/ExperimentId"
+        steps:
+          type: integer
+        func:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+      required:
+        - func
+        - experimentId
+        - groundTruthId
+        - steps
+    DiagramExperimentItem:
+      properties:
+        experiment:
+          $ref: "#/components/schemas/ExperimentConfigItem"
+        groundTruth:
+          $ref: "#/components/schemas/ExperimentConfigItem"
+      required:
+        - experiment
+      type: object
+    DiagramExperiments:
+      items:
+        $ref: "#/components/schemas/DiagramExperimentItem"
+      type: array
+    DiagramCoordinates:
+      items:
+        properties:
+          x:
+            type: number
+          y:
+            type: number
+          experimentId:
+            $ref: "#/components/schemas/ExperimentId"
+          threshold:
+            type: number
+      type: array
+    softKPIsAlgorithmEnum:
+      type: string
+      enum:
+        - domainExpertise
+        - domainHrAmount
+        - domainManhattanDistanceBasedEffort
+        - domainHrAmountWeightedEffort
+        - domainMultiplyEffort
+        - domainExpertiseWeightedEffort
+        - matchingSolutionExpertise
+        - matchingSolutionHrAmount
+        - matchingSolutionManhattanDistanceBasedEffort
+        - matchingSolutionHrAmountWeightedEffort
+        - matchingSolutionMultiplyEffort
+        - matchingSolutionExpertiseWeightedEffort
+        - generalCosts
+        - installationExpertise
+        - installationHrAmount
+        - installationManhattanDistanceBasedEffort
+        - installationHrAmountWeightedEffort
+        - installationMultiplyEffort
+        - installationExpertiseWeightedEffort
+    softKPIsExperimentEnum:
+      type: string
+      enum:
+        - expertise
+        - hrAmount
+        - manhattanDistanceBasedEffort
+        - hrAmountWeightedEffort
+        - multiplyEffort
+        - expertiseWeightedEffort
+    MetricsEnum:
+      type: string
+      enum:
+        - similarity
+        - falseDiscoveryRate
+        - falseNegativeRate
+        - falseOmissionRate
+        - falsePositiveRate
+        - negativePredictiveValue
+        - precision
+        - prevalenceThreshold
+        - recall
+        - specificity
+        - threatScore
+        - accuracy
+        - balancedAccuracy
+        - bookmakerInformedness
+        - fStarScore
+        - f1Score
+        - fowlkesMallowsIndex
+        - markedness
+        - matthewsCorrelationCoefficient
 
     #### GENERAL ####
     CSVFile:
@@ -1039,4 +1246,3 @@ components:
       required:
         - header
         - data
-

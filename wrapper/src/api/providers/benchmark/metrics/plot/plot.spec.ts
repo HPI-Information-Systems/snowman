@@ -12,7 +12,7 @@ import { providers } from '../../..';
 import { ConfusionMatrixCache } from '../../cache/flavors/confusionMatrixCache';
 import { RelaxedClustering } from '../../cluster/test/relaxedClusterings';
 import { loadTestCase } from '../../intersection/test/testCases';
-import { Precision } from '../basic/precision';
+import { Precision } from '../metrics/precision';
 import { plot, PlotResult } from './plot';
 import {
   plotSimilarityConfusionMatrix,

@@ -22,6 +22,14 @@ import {
     AlgorithmValuesFromJSON,
     AlgorithmValuesFromJSONTyped,
     AlgorithmValuesToJSON,
+    AlgorithmValuesSoftKPIs,
+    AlgorithmValuesSoftKPIsFromJSON,
+    AlgorithmValuesSoftKPIsFromJSONTyped,
+    AlgorithmValuesSoftKPIsToJSON,
+    Metric,
+    MetricFromJSON,
+    MetricFromJSONTyped,
+    MetricToJSON,
 } from './';
 
 /**
@@ -38,6 +46,24 @@ export interface Algorithm {
     id: number;
     /**
      * 
+     * @type {Array<Metric>}
+     * @memberof Algorithm
+     */
+    matchingSolutionEffort?: Array<Metric>;
+    /**
+     * 
+     * @type {Array<Metric>}
+     * @memberof Algorithm
+     */
+    domainEffort?: Array<Metric>;
+    /**
+     * 
+     * @type {Array<Metric>}
+     * @memberof Algorithm
+     */
+    installationEffort?: Array<Metric>;
+    /**
+     * 
      * @type {string}
      * @memberof Algorithm
      */
@@ -48,6 +74,12 @@ export interface Algorithm {
      * @memberof Algorithm
      */
     description?: string;
+    /**
+     * 
+     * @type {AlgorithmValuesSoftKPIs}
+     * @memberof Algorithm
+     */
+    softKPIs?: AlgorithmValuesSoftKPIs;
 }
 
 export function AlgorithmFromJSON(json: any): Algorithm {
@@ -61,8 +93,12 @@ export function AlgorithmFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     return {
         
         'id': json['id'],
+        'matchingSolutionEffort': !exists(json, 'matchingSolutionEffort') ? undefined : ((json['matchingSolutionEffort'] as Array<any>).map(MetricFromJSON)),
+        'domainEffort': !exists(json, 'domainEffort') ? undefined : ((json['domainEffort'] as Array<any>).map(MetricFromJSON)),
+        'installationEffort': !exists(json, 'installationEffort') ? undefined : ((json['installationEffort'] as Array<any>).map(MetricFromJSON)),
         'name': json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
+        'softKPIs': !exists(json, 'softKPIs') ? undefined : AlgorithmValuesSoftKPIsFromJSON(json['softKPIs']),
     };
 }
 
@@ -76,8 +112,12 @@ export function AlgorithmToJSON(value?: Algorithm | null): any {
     return {
         
         'id': value.id,
+        'matchingSolutionEffort': value.matchingSolutionEffort === undefined ? undefined : ((value.matchingSolutionEffort as Array<any>).map(MetricToJSON)),
+        'domainEffort': value.domainEffort === undefined ? undefined : ((value.domainEffort as Array<any>).map(MetricToJSON)),
+        'installationEffort': value.installationEffort === undefined ? undefined : ((value.installationEffort as Array<any>).map(MetricToJSON)),
         'name': value.name,
         'description': value.description,
+        'softKPIs': AlgorithmValuesSoftKPIsToJSON(value.softKPIs),
     };
 }
 

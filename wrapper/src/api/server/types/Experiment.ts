@@ -12,8 +12,13 @@
  * Do not edit the class manually.
  */
 
+import {
+    EffortParts,
+    Metric,
+} from './';
+
 /**
- *
+ * 
  * @export
  * @interface Experiment
  */
@@ -30,6 +35,12 @@ export interface Experiment {
      * @memberof Experiment
      */
     numberOfUploadedRecords?: number;
+    /**
+     * 
+     * @type {Array<Metric>}
+     * @memberof Experiment
+     */
+    effort?: Array<Metric>;
     /**
      * 
      * @type {string}
@@ -54,4 +65,10 @@ export interface Experiment {
      * @memberof Experiment
      */
     algorithmId: number;
+    /**
+     * 
+     * @type {EffortParts}
+     * @memberof Experiment
+     */
+    softKPIs?: EffortParts;
 }
