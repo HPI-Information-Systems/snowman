@@ -2,14 +2,26 @@ import { getCacheKeyAndFilterUntyped } from 'apps/BenchmarkApp/components/Benchm
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/types';
 import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
-import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { SelectorItem } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupProps';
+import { selectId } from 'apps/BenchmarkApp/store/ConfigurationStore/MultiSelectorActions';
 import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
-import { RemoveFirst } from 'snowman-library';
 
 export type GroupArgsT = [
   autoIncrementsInEachStoreCacheKey: number[],
   ...storeCacheKeys: [key: string, value: StoreCacheKey][]
 ];
+
+export const resolveMultiSelectorAutoIncrements = (
+  ...[autoIncrements, ...cacheKeysNoAutoIncrement]: GroupArgsT
+): [string, StoreCacheKey][] => {
+  const cacheKeys = cacheKeysNoAutoIncrement.map(([id, cacheKey], index) => {
+    for (const id of autoIncrements) {
+      cacheKey = selectId(cacheKey, id) ?? cacheKey;
+    }
+    return [id, cacheKey] as [string, StoreCacheKey];
+  });
+  return cacheKeys;
+};
 
 export const groupCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.group,
@@ -21,21 +33,39 @@ export const groupCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.group,
   targetCache: () => 'multiSelects',
-  getValue: <
-    Key extends StoreCacheKey<StoreCacheKeyBaseEnum.group, GroupArgsT>,
+  getValue: (state, _, ...[, ...cacheKeys]) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ResultT extends { [key in RemoveFirst<Key>[number][0]]: any }
-  >(
-    state: BenchmarkAppModel,
-    _: Key,
-    ...[, ...cacheKeys]: GroupArgsT
-  ): ResultT => {
-    const result = {} as ResultT;
+    const result: Record<string, any> = {};
     for (const [key, cacheKey] of cacheKeys) {
-      result[key as keyof typeof result] = getCacheKeyAndFilterUntyped(
+      result[key] = getCacheKeyAndFilterUntyped(
         cacheKey
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ).getValue(state) as any;
+    }
+    return result;
+  },
+  selectorItems: (state, _, ...args) => {
+    const result = [] as SelectorItem[];
+    let first = true;
+    for (const [, cacheKey] of resolveMultiSelectorAutoIncrements(...args)) {
+      result.push(
+        ...getCacheKeyAndFilterUntyped(
+          cacheKey
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        )
+          .getSelectorItems(state)
+          .map(
+            // eslint-disable-next-line no-loop-func
+            (item): SelectorItem => {
+              if (first) {
+                first = false;
+                return item;
+              } else {
+                return { ...item, indent: (item.indent ?? 0) + 1 };
+              }
+            }
+          )
+      );
     }
     return result;
   },

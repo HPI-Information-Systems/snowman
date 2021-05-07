@@ -1,41 +1,35 @@
+import {
+  getCacheKey,
+  getCacheKeyAndFilter,
+} from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
-import { GroupArgsT } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/group';
-import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
-import { AtomicSelectorGroup } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroup';
-import { GroupInputOwnProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/GroupInput/GroupInputProps';
-import SelectorPopoverGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/SelectorPopoverGroup';
-import { BenchmarkAppStoreMagistrate } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
-import { selectId } from 'apps/BenchmarkApp/store/ConfigurationStore/MultiSelectorActions';
-import { useInstanceDescriptor } from 'apps/BenchmarkApp/utils/useInstanceDescriptor';
-import React from 'react';
-import { Provider } from 'react-redux';
+import {
+  GroupArgsT,
+  resolveMultiSelectorAutoIncrements,
+} from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/group';
+import GroupInputView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/GroupInput/GroupInput.View';
+import {
+  GroupInputOwnProps,
+  GroupInputStateProps,
+} from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/GroupInput/GroupInputProps';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { connect } from 'react-redux';
 
-const GroupInput = ({ cacheKey }: GroupInputOwnProps): JSX.Element => {
-  const [, autoIncrements, ...cacheKeys] = cacheKey as StoreCacheKey<
-    StoreCacheKeyBaseEnum.group,
-    GroupArgsT
-  >;
-  return (
-    <SelectorPopoverGroup
-      instanceDescriptor={useInstanceDescriptor()}
-      items={[]}
-    >
-      <Provider store={BenchmarkAppStoreMagistrate.getStore()}>
-        {cacheKeys.map(([, cacheKey], index) => {
-          for (const id of autoIncrements) {
-            cacheKey = selectId(cacheKey, id) ?? cacheKey;
-          }
-          return (
-            <AtomicSelectorGroup
-              key={index}
-              cacheKey={cacheKey}
-              allowMultiple={false}
-            />
-          );
-        })}
-      </Provider>
-    </SelectorPopoverGroup>
+const mapStateToProps = (
+  state: BenchmarkAppModel,
+  ownProps: GroupInputOwnProps
+): GroupInputStateProps => {
+  const cacheKeys = resolveMultiSelectorAutoIncrements(
+    ...(ownProps.cacheKey.slice(1) as GroupArgsT)
   );
+  return {
+    cacheKeys: cacheKeys.map(([, cacheKey]) => cacheKey),
+    items: getCacheKeyAndFilter(
+      getCacheKey(StoreCacheKeyBaseEnum.group, [], ...cacheKeys)
+    ).getSelectorItems(state),
+  };
 };
+
+const GroupInput = connect(mapStateToProps)(GroupInputView);
 
 export default GroupInput;

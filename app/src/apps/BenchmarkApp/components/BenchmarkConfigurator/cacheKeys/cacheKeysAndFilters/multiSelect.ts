@@ -2,7 +2,7 @@ import { getCacheKeyAndFilterUntyped } from 'apps/BenchmarkApp/components/Benchm
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/types';
 import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
-import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { SelectorItem } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupProps';
 import { MultiSelectConfigurationModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { getItemsUntyped } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 
@@ -19,10 +19,18 @@ export const multiSelectCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.multiSelect,
   targetCache: () => 'multiSelects',
-  getValue: <T>(state: BenchmarkAppModel, cacheKey: StoreCacheKey): T[] =>
-    ((getItemsUntyped(cacheKey, state).filter((x) => x !== undefined)[0] as
+  getValue: (state, cacheKey) =>
+    (getItemsUntyped(cacheKey, state).filter((x) => x !== undefined)[0] as
       | MultiSelectConfigurationModel
       | undefined)?.currentCacheKeys.map((cacheKey) =>
       getCacheKeyAndFilterUntyped(cacheKey).getValue(state)
-    ) ?? []) as T[],
+    ) ?? [],
+  selectorItems: (state, cacheKey) =>
+    ((getItemsUntyped(cacheKey, state).filter((x) => x !== undefined)[0] as
+      | MultiSelectConfigurationModel
+      | undefined)?.currentCacheKeys
+      .map((cacheKey) =>
+        getCacheKeyAndFilterUntyped(cacheKey).getSelectorItems(state)
+      )
+      .flat() ?? []) as SelectorItem[],
 });

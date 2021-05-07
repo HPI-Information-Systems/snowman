@@ -9,6 +9,7 @@ import {
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/filter';
 import { serializeCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/serializeCacheKey';
 import { DatasetConfigurationModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+import { flask } from 'ionicons/icons';
 
 export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.groundTruth,
@@ -49,4 +50,5 @@ export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
       );
     },
   },
+  icon: () => flask,
 });

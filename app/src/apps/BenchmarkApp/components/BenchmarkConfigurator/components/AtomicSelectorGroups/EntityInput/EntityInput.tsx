@@ -12,7 +12,6 @@ import {
   getItems,
   getSingleItem,
 } from 'apps/BenchmarkApp/utils/configurationItemGetter';
-import { flask } from 'ionicons/icons';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
@@ -38,7 +37,7 @@ const mapStateToProps = (
       selectedIds.has(anEntity.id)
     ),
     entities: availableEntities,
-    icon: flask,
+    icon: (cacheKeyAndFilter.icon ?? (() => ''))(),
   };
 };
 

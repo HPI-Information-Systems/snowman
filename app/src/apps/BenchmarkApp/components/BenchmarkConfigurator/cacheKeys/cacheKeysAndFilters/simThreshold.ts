@@ -1,5 +1,9 @@
+import { getCacheKeyAndFilterUntyped } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/types';
+import { gitCommit } from 'ionicons/icons';
+
+const icon = gitCommit;
 
 export const simThresholdCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.similarityThreshold,
@@ -9,4 +13,9 @@ export const simThresholdCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.similarityThreshold,
   targetCache: () => 'simThresholds',
+  icon: () => icon,
+  selectorItems: (state, cacheKey) =>
+    (getCacheKeyAndFilterUntyped(cacheKey).getValue(state) as number[])
+      .map((title) => `${title}`)
+      .map((title) => ({ title, icon, indent: 0 })),
 });

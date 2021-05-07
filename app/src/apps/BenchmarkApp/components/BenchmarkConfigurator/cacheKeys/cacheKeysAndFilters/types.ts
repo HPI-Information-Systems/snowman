@@ -5,6 +5,7 @@ import {
   StoreCacheKey,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 import { SearchableEntity } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/types/SearchableEntity';
+import { SelectorItem } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupProps';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { getItemsUntyped } from 'apps/BenchmarkApp/utils/configurationItemGetter';
@@ -18,22 +19,16 @@ type FilterEvent<ConfigurationModel> = {
   currentSelection: (ConfigurationModel | undefined)[];
 };
 
-export const MakeStoreCacheKeyAndFilter = <
+type MakeStoreCacheKeyAndFilterArgs<
   KeyBase extends StoreCacheKeyBaseEnum,
   Args extends NestedArray<string | number | null>[],
   Entity extends SearchableEntity,
   TargetCache extends keyof ConfigurationStoreModel = keyof ConfigurationStoreModel,
   ResultT = ModelOfCache<TargetCache>[]
->({
-  keyBase,
-  targetCache,
-  filter,
-  getEntities,
-  getValue,
-}: {
+> = {
   keyBase: KeyBase;
   targetCache: (...args: Args) => TargetCache;
-  getEntities?: (state: BenchmarkAppModel) => Entity[];
+  getEntities?: (state: BenchmarkAppModel, ...args: Args) => Entity[];
   getValue?: (
     state: BenchmarkAppModel,
     cacheKey: StoreCacheKey<KeyBase, Args>,
@@ -54,7 +49,21 @@ export const MakeStoreCacheKeyAndFilter = <
       ...args: Args
     ) => Entity[];
   };
-}): ((
+  selectorItems?: (
+    state: BenchmarkAppModel,
+    cacheKey: StoreCacheKey<KeyBase, Args>,
+    ...args: Args
+  ) => SelectorItem[];
+  icon?: (...args: Args) => string;
+};
+
+type GetStoreCacheKeyAndFilter<
+  KeyBase extends StoreCacheKeyBaseEnum,
+  Args extends NestedArray<string | number | null>[],
+  Entity extends SearchableEntity,
+  TargetCache extends keyof ConfigurationStoreModel = keyof ConfigurationStoreModel,
+  ResultT = ModelOfCache<TargetCache>[]
+> = (
   ...args: Args
 ) => {
   cacheKey: StoreCacheKey<KeyBase, Args>;
@@ -72,12 +81,63 @@ export const MakeStoreCacheKeyAndFilter = <
     viewFilters: () => StoreCacheKey[];
   };
   getValue: (state: BenchmarkAppModel) => ResultT;
-}) => (...args) => {
+  icon?: () => string;
+  getSelectorItems: (state: BenchmarkAppModel) => SelectorItem[];
+};
+
+export const MakeStoreCacheKeyAndFilter = <
+  KeyBase extends StoreCacheKeyBaseEnum,
+  Args extends NestedArray<string | number | null>[],
+  Entity extends SearchableEntity,
+  TargetCache extends keyof ConfigurationStoreModel = keyof ConfigurationStoreModel,
+  ResultT = ModelOfCache<TargetCache>[]
+>({
+  keyBase,
+  targetCache,
+  filter,
+  getEntities,
+  getValue,
+  icon,
+  selectorItems,
+}: MakeStoreCacheKeyAndFilterArgs<
+  KeyBase,
+  Args,
+  Entity,
+  TargetCache,
+  ResultT
+>): GetStoreCacheKeyAndFilter<KeyBase, Args, Entity, TargetCache, ResultT> => (
+  ...args
+) => {
   const cacheKey = [keyBase, ...args] as StoreCacheKey<KeyBase, Args>;
-  return {
+  const result: ReturnType<
+    GetStoreCacheKeyAndFilter<KeyBase, Args, Entity, TargetCache, ResultT>
+  > = {
     cacheKey,
     targetCache: targetCache(...args),
-    getEntities: getEntities ?? (() => []),
+    getEntities: (state) => (getEntities ?? (() => []))(state, ...args),
+    getSelectorItems: (state) => {
+      if (selectorItems) {
+        return selectorItems(state, cacheKey, ...args);
+      } else {
+        const entities = result.getEntities(state);
+        const s1 = (result.getValue(state) as unknown) as number[];
+        const s2 = s1
+          .map((id) => entities.find((e) => id === e.id))
+          .filter(
+            (entity: Entity | undefined): entity is Entity =>
+              entity !== undefined
+          );
+        const s3 = s2.map(
+          (entity) =>
+            ({
+              icon: result.icon ? result.icon() : '',
+              title: entity.name,
+              indent: 0,
+            } as SelectorItem)
+        );
+        return s3;
+      }
+    },
     getValue: (state) =>
       getValue
         ? getValue(state, cacheKey, ...args)
@@ -100,5 +160,7 @@ export const MakeStoreCacheKeyAndFilter = <
           },
         }
       : {}),
+    icon: icon ? () => icon(...args) : undefined,
   };
+  return result;
 };

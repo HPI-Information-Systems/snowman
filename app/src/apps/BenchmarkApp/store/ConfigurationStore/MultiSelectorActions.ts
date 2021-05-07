@@ -73,7 +73,7 @@ export const remove = (
 ): SnowmanThunkAction<void, BenchmarkAppModel> => (dispatch, getState) => {
   const currentConfiguration = getSingleItem(aCacheKey, getState()) ?? {
     currentCacheKeys: [],
-    nextId: 0,
+    nextId: MULTI_SELECTOR_START,
   };
   dispatch(
     updateSelection({
