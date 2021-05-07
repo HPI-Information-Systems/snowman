@@ -6,6 +6,12 @@ export type ScatterChartConfiguration = Omit<
   ChartConfiguration<'scatter'>,
   'type'
 >;
-export const ScatterChart = (props: ScatterChartConfiguration): JSX.Element => (
-  <GenericChart {...props} type={'scatter'} />
-);
+
+export const ScatterChart = (props: ScatterChartConfiguration): JSX.Element => {
+  const genericProps: ChartConfiguration = {
+    ...props,
+    type: 'scatter',
+  } as ChartConfiguration;
+
+  return <GenericChart {...genericProps} />;
+};
