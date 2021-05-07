@@ -1,4 +1,13 @@
 .smallItemIcon {
-    margin-right: 8px !important;
-    font-size: medium;
+  margin-right: 8px !important;
+  font-size: medium;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.itemNoSafePad::part(native) {
+  margin-left: var(--padding-start);
+  padding-left: 0;
 }

@@ -6,7 +6,7 @@ import React from 'react';
 import style from 'theme/style';
 
 const SelectorGroup = ({ onClick, items }: SelectorGroupProps): JSX.Element => (
-  <IonItem button onClick={onClick}>
+  <IonItem button onClick={onClick} className={style(styles.fullWidth)}>
     <IonList className={style(styles.listNoPadding, styles.noBackground)}>
       {items.map(({ icon, indent, title }, index) => (
         <IonItem
