@@ -1,13 +1,26 @@
-import { IonIcon, IonItem, IonList } from '@ionic/react';
+import { IonIcon, IonItem, IonList, IonText } from '@ionic/react';
 import { SelectorGroupProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupProps';
 import styles from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupStyles.module.css';
 import { ellipsisVerticalCircle } from 'ionicons/icons';
 import React from 'react';
 import style from 'theme/style';
 
+const EmptyPlaceholder = (): JSX.Element => <IonText color="medium">?</IonText>;
+
 const SelectorGroup = ({ onClick, items }: SelectorGroupProps): JSX.Element => (
   <IonItem button onClick={onClick} className={style(styles.fullWidth)}>
     <IonList className={style(styles.listNoPadding, styles.noBackground)}>
+      {items.length === 0 ? (
+        <IonItem
+          className={style(
+            styles.smallItem,
+            styles.itemNoBorder,
+            styles.oneLine
+          )}
+        >
+          <EmptyPlaceholder />
+        </IonItem>
+      ) : null}
       {items.map(({ icon, indent, title }, index) => (
         <IonItem
           key={index}
@@ -26,7 +39,7 @@ const SelectorGroup = ({ onClick, items }: SelectorGroupProps): JSX.Element => (
             className={styles.smallItemIcon}
             slot="start"
           />
-          {title}
+          {title.length > 0 ? title : <EmptyPlaceholder />}
         </IonItem>
       ))}
     </IonList>
