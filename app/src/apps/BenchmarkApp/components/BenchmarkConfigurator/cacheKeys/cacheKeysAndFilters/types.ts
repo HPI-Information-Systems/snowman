@@ -30,10 +30,11 @@ export const MakeStoreCacheKeyAndFilter = <
   filter,
   getEntities,
   getValue,
+  icon,
 }: {
   keyBase: KeyBase;
   targetCache: (...args: Args) => TargetCache;
-  getEntities?: (state: BenchmarkAppModel) => Entity[];
+  getEntities?: (state: BenchmarkAppModel, ...args: Args) => Entity[];
   getValue?: (
     state: BenchmarkAppModel,
     cacheKey: StoreCacheKey<KeyBase, Args>,
@@ -54,6 +55,7 @@ export const MakeStoreCacheKeyAndFilter = <
       ...args: Args
     ) => Entity[];
   };
+  icon?: (...args: Args) => string;
 }): ((
   ...args: Args
 ) => {
@@ -72,12 +74,13 @@ export const MakeStoreCacheKeyAndFilter = <
     viewFilters: () => StoreCacheKey[];
   };
   getValue: (state: BenchmarkAppModel) => ResultT;
+  icon?: () => string;
 }) => (...args) => {
   const cacheKey = [keyBase, ...args] as StoreCacheKey<KeyBase, Args>;
   return {
     cacheKey,
     targetCache: targetCache(...args),
-    getEntities: getEntities ?? (() => []),
+    getEntities: (state) => (getEntities ?? (() => []))(state, ...args),
     getValue: (state) =>
       getValue
         ? getValue(state, cacheKey, ...args)
@@ -100,5 +103,6 @@ export const MakeStoreCacheKeyAndFilter = <
           },
         }
       : {}),
+    icon: icon ? () => icon(...args) : undefined,
   };
 };

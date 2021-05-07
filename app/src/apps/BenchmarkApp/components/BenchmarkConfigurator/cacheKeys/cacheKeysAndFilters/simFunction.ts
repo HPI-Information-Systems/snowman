@@ -8,6 +8,7 @@ import {
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/filter';
 import { serializeCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/serializeCacheKey';
 import { ExperimentConfigurationModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+import { analytics } from 'ionicons/icons';
 
 export const simFuntionCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.similarityFunction,
@@ -45,4 +46,5 @@ export const simFuntionCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
       );
     },
   },
+  icon: () => analytics,
 });
