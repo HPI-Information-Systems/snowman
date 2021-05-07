@@ -61,4 +61,27 @@ export class FunctionBuildingBlock {
       return this.right.navigateToBlockAndMutate(targetBlockAccessKey, mutator);
     return resultForLeftRecursion;
   }
+
+  public removeBlock(targetBlockAccessKey: number): boolean {
+    if (
+      this.right instanceof FunctionBuildingBlock &&
+      this.right.accessKey === targetBlockAccessKey
+    ) {
+      this.right = null;
+      return true;
+    }
+    if (
+      this.left instanceof FunctionBuildingBlock &&
+      this.left.accessKey === targetBlockAccessKey
+    ) {
+      this.left = null;
+      return true;
+    }
+    let resultForLeftRecursion = false;
+    if (this.right instanceof FunctionBuildingBlock)
+      resultForLeftRecursion = this.right.removeBlock(targetBlockAccessKey);
+    if (this.left instanceof FunctionBuildingBlock && !resultForLeftRecursion)
+      return this.left.removeBlock(targetBlockAccessKey);
+    return resultForLeftRecursion;
+  }
 }

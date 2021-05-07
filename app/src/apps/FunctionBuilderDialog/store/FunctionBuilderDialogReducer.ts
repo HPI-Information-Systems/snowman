@@ -67,6 +67,15 @@ const FunctionBuilderDialogReducer = (
         }
       );
     }
+    case FunctionBuilderDialogActionTypes.UNREGISTER_BUILDING_BLOCK: {
+      return produce(
+        state,
+        (state: FunctionBuilderDialogModel): FunctionBuilderDialogModel => {
+          state.functionBuildingStack.removeBlock(action.payload as number);
+          return state;
+        }
+      );
+    }
     default:
       return state;
   }
