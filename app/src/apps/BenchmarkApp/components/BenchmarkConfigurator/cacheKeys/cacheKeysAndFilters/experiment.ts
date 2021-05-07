@@ -2,12 +2,12 @@ import { Experiment } from 'api';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { datasetCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/dataset';
 import { filterCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/filter';
+import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/types';
 import {
   filterBy,
   resolveEntity,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/filter';
 import { serializeCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/serializeCacheKey';
-import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 import { DatasetConfigurationModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 
 export const experimentCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<

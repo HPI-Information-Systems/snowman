@@ -1,12 +1,12 @@
 import { SimilarityThresholdFunction } from 'api';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { experimentCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/experiment';
+import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/types';
 import {
   filterBy,
   resolveEntity,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/filter';
 import { serializeCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/serializeCacheKey';
-import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 import { ExperimentConfigurationModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 
 export const simFuntionCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<

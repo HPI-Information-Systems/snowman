@@ -18,9 +18,8 @@ const EntityInputView = ({
   icon,
   cacheKey,
 }: AtomicSelectorGroupProps): JSX.Element => {
-  const viewFilters =
-    getCacheKeyAndFilter(cacheKey).filter?.viewFilters() ??
-    ([] as StoreCacheKey[]);
+  const viewFilters = (getCacheKeyAndFilter(cacheKey).filter?.viewFilters() ??
+    []) as StoreCacheKey[];
   return (
     <SelectorPopoverGroup
       instanceDescriptor={useInstanceDescriptor()}

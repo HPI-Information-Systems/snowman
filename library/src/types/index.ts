@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type ValueOf<T> = T[keyof T];
 export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
@@ -27,12 +28,16 @@ export type NonUndefinedKeys<T> = {
 export type MakeOptional<T> = { [P in keyof T]?: T[P] };
 export type MakeRequired<T> = { [key in keyof T]-?: T[key] };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type InstantiableAbstractClass<T> = (new (...args: any) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [x: string]: any;
 }) &
   T;
 export type AbstractConstructorParameters<T> = ConstructorParameters<
   InstantiableAbstractClass<T>
 >;
+
+export declare type Define<T> = Exclude<T, null | undefined>;
+
+export type RemoveFirst<Array extends any[]> = Array extends [any, ...infer U]
+  ? U
+  : Array;

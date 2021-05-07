@@ -1,3 +1,5 @@
+import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
+import { GroupArgsT } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/group';
 import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 import { AtomicSelectorGroup } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroup';
 import { GroupInputOwnProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/GroupInput/GroupInputProps';
@@ -9,14 +11,17 @@ import React from 'react';
 import { Provider } from 'react-redux';
 
 const GroupInput = ({ cacheKey }: GroupInputOwnProps): JSX.Element => {
-  const [, autoIncrements, ...cacheKeys] = cacheKey;
+  const [, autoIncrements, ...cacheKeys] = cacheKey as StoreCacheKey<
+    StoreCacheKeyBaseEnum.group,
+    GroupArgsT
+  >;
   return (
     <SelectorPopoverGroup
       instanceDescriptor={useInstanceDescriptor()}
       items={[]}
     >
       <Provider store={BenchmarkAppStoreMagistrate.getStore()}>
-        {(cacheKeys as StoreCacheKey[]).map((cacheKey, index) => {
+        {cacheKeys.map(([, cacheKey], index) => {
           for (const id of autoIncrements) {
             cacheKey = selectId(cacheKey, id) ?? cacheKey;
           }
