@@ -51,7 +51,10 @@ const FunctionBuilderDialogReducer = (
               else targetBlock.right = newBlock;
             }
           );
-          return state;
+          return {
+            ...state,
+            reservedAccessKeys: [...state.reservedAccessKeys, ownAccessKey],
+          };
         }
       );
     }
@@ -60,7 +63,12 @@ const FunctionBuilderDialogReducer = (
         state,
         (state: FunctionBuilderDialogModel): FunctionBuilderDialogModel => {
           state.functionBuildingStack.removeBlock(action.payload as number);
-          return state;
+          return {
+            ...state,
+            reservedAccessKeys: state.reservedAccessKeys.filter(
+              (anKey: number): boolean => anKey !== (action.payload as number)
+            ),
+          };
         }
       );
     }

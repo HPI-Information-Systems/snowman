@@ -1,16 +1,19 @@
 import { IonChip, IonSelect, IonSelectOption } from '@ionic/react';
-import {
-  SimilarityThresholdFunctionDefinitionTypeEnum,
-  SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
-} from 'api';
+import { SimilarityThresholdFunctionUnaryOperatorOperatorEnum } from 'api';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
+import { StrategyMapperForwardProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
 import styles from 'apps/FunctionBuilderDialog/components/UnaryOperatorStrategy/UnaryOperatorStrategyStyles.module.css';
-import { FunctionBuildingBlockType } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import {
+  CellDescriptor,
+  FunctionBuildingBlockType,
+} from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
 import React, { useState } from 'react';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-const UnaryOperatorStrategy = (): JSX.Element => {
+const UnaryOperatorStrategy = ({
+  blockAccessKey,
+}: StrategyMapperForwardProps): JSX.Element => {
   const [operator, setOperator] = useState(
     SimilarityThresholdFunctionUnaryOperatorOperatorEnum.Acos as string
   );
@@ -40,10 +43,8 @@ const UnaryOperatorStrategy = (): JSX.Element => {
         (
       </IonChip>
       <StrategyMapper
-        nextStrategyType={
-          childType as SimilarityThresholdFunctionDefinitionTypeEnum
-        }
-        setNextStrategyType={setChildType}
+        parentAccessKey={blockAccessKey}
+        ownLocation={CellDescriptor.right}
       />
       <IonChip className={styles.chip}>)</IonChip>
     </>

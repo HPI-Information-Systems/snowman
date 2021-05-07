@@ -1,3 +1,4 @@
+import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/RootAccessKey';
 import { StrategyMapperProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
 import StrategyViewer from 'apps/FunctionBuilderDialog/components/StrategyViewer/StrategyViewer';
 import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
@@ -9,7 +10,9 @@ class StrategyMapper extends Component<StrategyMapperProps> {
 
   constructor(props: StrategyMapperProps) {
     super(props);
-    this.blockAccessKey = FunctionBuildingBlockMagistrate.getNewAccessKey();
+    this.blockAccessKey = !this.props.parentAccessKey
+      ? FunctionBuildingBlockMagistrate.getNewAccessKey()
+      : RootAccessKey;
     FunctionBuildingBlockMagistrate.registerBuildingBlock(
       this.blockAccessKey,
       this.props.parentAccessKey,
