@@ -16,6 +16,7 @@ export class CalculateRowsOneExclude extends CalculateRowsFlavor {
       datasetId: this.config.datasetId,
       base: this.config.included,
       partition: this.config.excluded,
+      forceStatic: this.config.forceStatic,
     }).clustering.subclustersFromBaseClusterId(this.clusterId);
     this.calculateRowsPrepared();
     return [this.skip - this.skipRemains, this.rows];
@@ -26,6 +27,7 @@ export class CalculateRowsOneExclude extends CalculateRowsFlavor {
       datasetId: this.config.datasetId,
       included: this.config.included,
       excluded: [],
+      forceStatic: this.config.forceStatic,
     }) as IntersectionOnlyIncludes).clustering.clusterFromClusterId(
       this.clusterId
     ).length;

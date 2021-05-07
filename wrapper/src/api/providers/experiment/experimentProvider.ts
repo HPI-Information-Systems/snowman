@@ -153,11 +153,8 @@ export class ExperimentProvider {
   private deleteSimilarityThresholdFunctions(experimentId: ExperimentId): void {
     for (const {
       id: functionId,
-    } of providers.similarityThresholds.getSimilarityThresholdFunctions({
-      experimentId,
-    })) {
+    } of providers.similarityThresholds.getSimilarityThresholdFunctions()) {
       providers.similarityThresholds.deleteSimilarityThresholdFunction({
-        experimentId,
         functionId,
       });
     }

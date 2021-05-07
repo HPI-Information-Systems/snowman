@@ -5,16 +5,17 @@ import {
   ExperimentValues,
   MetricsEnum,
   SetExperimentFileFormatEnum,
-  SimilarityThresholdFunctionValuesTypeEnum,
+  SimilarityThresholdFunctionDefinitionTypeEnum,
+  SimilarityThresholdFunctionValues,
   SoftKPIsAlgorithmEnum,
   SoftKPIsExperimentEnum,
 } from '../../server/types';
 import { fileToReadable } from '../../tools/test/filtToReadable';
-import { AlgorithmProvider } from '../algorithm/algorithmProvider';
-import { DatasetProvider } from '../dataset/datasetProvider';
-import { ExperimentProvider } from '../experiment/experimentProvider';
+import { providers } from '..';
 import { SimilarityThresholdsProvider } from '../similarityThresholds/similarityThresholdsProvider';
 import { BenchmarkProvider } from './benchmarkProvider';
+import { sortTestFileResponse } from './idsToRecords/test/sortFileResponse';
+import { loadTestDataset } from './intersection/test/testCases';
 
 interface metaDataset {
   name: string;
@@ -25,17 +26,12 @@ interface metaExperiment {
   data: { meta: ExperimentValues; file: string[][] };
 }
 
-let datasetProvider: DatasetProvider;
-let algorithmProvider: AlgorithmProvider;
-let experimentProvider: ExperimentProvider;
 const datasetIds: Record<string, number> = {};
 const experimentIds: Record<string, number> = {};
+let addedAlgorithmId: number;
 
 beforeAll(async () => {
   await setupDatabase({ temporary: true, loadExampleEntries: false });
-  experimentProvider = new ExperimentProvider();
-  algorithmProvider = new AlgorithmProvider();
-  datasetProvider = new DatasetProvider();
   const metaDatasets: metaDataset[] = [
     {
       name: 'default',
@@ -67,7 +63,7 @@ beforeAll(async () => {
   ];
 
   for (const metaDataset of metaDatasets) {
-    const id = datasetProvider.addDataset(metaDataset.data);
+    const id = providers.dataset.addDataset(metaDataset.data);
     datasetIds[metaDataset.name] = id;
   }
 
@@ -99,7 +95,8 @@ beforeAll(async () => {
       },
     },
   };
-  const addedAlgorithmId = algorithmProvider.addAlgorithm(meta_algorithm);
+  addedAlgorithmId = providers.algorithm.addAlgorithm(meta_algorithm);
+
   const experiments: metaExperiment[] = [
     {
       name: 'goldstandard',
@@ -179,8 +176,8 @@ beforeAll(async () => {
   ];
 
   for (const experiment of experiments) {
-    const id = experimentProvider.addExperiment(experiment.data.meta);
-    await experimentProvider.setExperimentFile(
+    const id = providers.experiment.addExperiment(experiment.data.meta);
+    await providers.experiment.setExperimentFile(
       id,
       SetExperimentFileFormatEnum.Pilot,
       fileToReadable(experiment.data.file)
@@ -263,12 +260,15 @@ describe('test benchmark functions', () => {
   });
   test('test metric-metric threshold diagram calculation', () => {
     const similarityThresholdProvider = new SimilarityThresholdsProvider();
-    const func = {
-      type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-      similarityThreshold: 'similarity',
+    const func: SimilarityThresholdFunctionValues = {
+      definition: {
+        type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+        similarityThreshold: 'similarity',
+      },
+      name: 'function1',
+      experimentId: experimentIds.experiment1,
     };
     const funcId = similarityThresholdProvider.addSimilarityThresholdFunction({
-      experimentId: experimentIds.experiment1,
       similarityThresholdFunction: func,
     });
     expect(
@@ -361,7 +361,7 @@ describe('test benchmark functions', () => {
   describe('metrics', () => {
     test('test metrics calculation', () => {
       expect(
-        benchmarkProvider
+        providers.benchmark
           .getBinaryMetrics(
             {
               experimentId: experimentIds.goldstandard,
@@ -396,21 +396,117 @@ describe('test benchmark functions', () => {
         )
       );
     });
+
     test('throw error at empty datasetAmount', () => {
       expect(() =>
-        benchmarkProvider.getBinaryMetrics(
+        providers.benchmark.getBinaryMetrics(
           { experimentId: experimentIds.goldstandard },
           { experimentId: experimentIds.experiment2 }
         )
       ).toThrowError();
     });
+
     test('throw error when tests belong to different datasets', () => {
       expect(() =>
-        benchmarkProvider.getBinaryMetrics(
+        providers.benchmark.getBinaryMetrics(
           { experimentId: experimentIds.experiment2 },
           { experimentId: experimentIds.experiment_dataset2 }
         )
       ).toThrowError();
     });
+  });
+
+  test('Returns correct intersection when same experiment occurs multiple times in single config', async () => {
+    const datasetId = await loadTestDataset(4);
+    const experimentId = providers.experiment.addExperiment({
+      algorithmId: addedAlgorithmId,
+      datasetId,
+      name: '',
+    });
+    await providers.experiment.setExperimentFile(
+      experimentId,
+      SetExperimentFileFormatEnum.Pilot,
+      fileToReadable([
+        ['p1', 'p2', 'sim'],
+        ['0', '1', '3'],
+        ['1', '2', '2'],
+        ['2', '3', '1'],
+      ])
+    );
+    const func = providers.similarityThresholds.addSimilarityThresholdFunction({
+      similarityThresholdFunction: {
+        definition: {
+          type:
+            SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+          similarityThreshold: 'sim',
+        },
+        name: 'similarityFunction',
+        experimentId,
+      },
+    });
+    expect(
+      sortTestFileResponse(
+        providers.benchmark.calculateExperimentIntersectionRecords({
+          intersection: [
+            { experimentId, predictedCondition: true },
+            { experimentId, predictedCondition: true },
+            {
+              experimentId,
+              predictedCondition: false,
+              similarity: { func, threshold: 2 },
+            },
+          ],
+        })
+      )
+    ).toEqual(
+      sortTestFileResponse({
+        header: ['id'],
+        data: [['1'], ['3'], [], ['0'], ['3'], [], ['2'], ['3'], []],
+      })
+    );
+    expect(
+      sortTestFileResponse(
+        providers.benchmark.calculateExperimentIntersectionRecords({
+          intersection: [
+            {
+              experimentId,
+              predictedCondition: true,
+              similarity: { func, threshold: 0 },
+            },
+            {
+              experimentId,
+              predictedCondition: false,
+              similarity: { func, threshold: 2 },
+            },
+            {
+              experimentId,
+              predictedCondition: false,
+              similarity: { func, threshold: 3 },
+            },
+          ],
+        })
+      )
+    ).toEqual(
+      sortTestFileResponse({
+        header: ['id'],
+        data: [['3'], ['2'], [], ['3'], ['1'], [], ['3'], ['0'], []],
+      })
+    );
+    expect(
+      providers.benchmark.calculateExperimentIntersectionCount({
+        intersection: [
+          {
+            experimentId,
+            predictedCondition: true,
+            similarity: { func, threshold: 1 },
+          },
+          {
+            experimentId,
+            predictedCondition: false,
+            similarity: { func, threshold: 3 },
+          },
+        ],
+      }).numberPairs
+    ).toEqual(5);
   });
 });

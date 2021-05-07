@@ -3,9 +3,9 @@ import {
   DatasetId,
   ExperimentId,
   SetExperimentFileFormatEnum,
+  SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionId,
   SimilarityThresholdFunctionValues,
-  SimilarityThresholdFunctionValuesTypeEnum,
 } from '../../../../server/types';
 import { fileToReadable } from '../../../../tools/test/filtToReadable';
 import { providers } from '../../..';
@@ -25,8 +25,6 @@ type SimilarityFunctionPlotTestCase = {
   func: SimilarityThresholdFunctionValues;
   params: {
     groundTruth: RelaxedClustering;
-    minThreshold?: number;
-    maxThreshold?: number;
     steps: number;
   };
   result: PlotSimilarityConfusionMatrixResult;
@@ -37,8 +35,12 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
     datasetNumberOfRecords: 2,
     links: [[0, 1, 1]],
     func: {
-      type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-      similarityThreshold: 'similarity',
+      definition: {
+        type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+        similarityThreshold: 'similarity',
+      },
+      name: 'function1',
+      experimentId: 0,
     },
     params: {
       groundTruth: [[0, 1]],
@@ -54,36 +56,6 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
       },
       {
         threshold: 1,
-        truePositives: 1,
-        falsePositives: 0,
-        falseNegatives: 0,
-        trueNegatives: 0,
-      },
-    ],
-  },
-  {
-    datasetNumberOfRecords: 2,
-    links: [[0, 1, 1]],
-    func: {
-      type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-      similarityThreshold: 'similarity',
-    },
-    params: {
-      groundTruth: [[0, 1]],
-      steps: 2,
-      maxThreshold: 100,
-      minThreshold: -100,
-    },
-    result: [
-      {
-        threshold: 100,
-        truePositives: 0,
-        falsePositives: 0,
-        falseNegatives: 1,
-        trueNegatives: 0,
-      },
-      {
-        threshold: -100,
         truePositives: 1,
         falsePositives: 0,
         falseNegatives: 0,
@@ -99,8 +71,12 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
       [0, 2, 0],
     ],
     func: {
-      type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-      similarityThreshold: 'similarity',
+      experimentId: 0,
+      definition: {
+        similarityThreshold: 'similarity',
+        type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+      },
+      name: 'function2',
     },
     params: {
       groundTruth: [
@@ -118,10 +94,10 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
         trueNegatives: 4,
       },
       {
-        threshold: 1.5,
-        truePositives: 1,
+        threshold: 1,
+        truePositives: 2,
         falsePositives: 0,
-        falseNegatives: 1,
+        falseNegatives: 0,
         trueNegatives: 4,
       },
       {
@@ -132,11 +108,11 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
         trueNegatives: 4,
       },
       {
-        threshold: 0.5,
+        threshold: 0,
         truePositives: 2,
-        falsePositives: 0,
+        falsePositives: 4,
         falseNegatives: 0,
-        trueNegatives: 4,
+        trueNegatives: 0,
       },
       {
         threshold: 0,
@@ -154,8 +130,12 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
       [0, 2, 1],
     ],
     func: {
-      type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-      similarityThreshold: 'similarity',
+      definition: {
+        type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+        similarityThreshold: 'similarity',
+      },
+      name: 'function4',
+      experimentId: 0,
     },
     params: {
       groundTruth: [[0, 1], [2]],
@@ -178,8 +158,12 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
       [0, 2, 1],
     ],
     func: {
-      type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
-      similarityThreshold: 'similarity',
+      definition: {
+        type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+        similarityThreshold: 'similarity',
+      },
+      experimentId: 0,
+      name: 'function3',
     },
     params: {
       groundTruth: [[0, 1], [2]],
@@ -206,8 +190,12 @@ const testCases: SimilarityFunctionPlotTestCase[] = [
     datasetNumberOfRecords: 2,
     links: [],
     func: {
-      type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
-      constant: 0,
+      definition: {
+        type: SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
+        constant: 0,
+      },
+      name: 'function5',
+      experimentId: 0,
     },
     params: {
       groundTruth: [[0, 1]],
@@ -252,8 +240,7 @@ describe.each<SimilarityFunctionPlotTestCase>(testCases)(
         ])
       );
       funcId = providers.similarityThresholds.addSimilarityThresholdFunction({
-        experimentId,
-        similarityThresholdFunction: func,
+        similarityThresholdFunction: { ...func, experimentId },
       });
     });
 
@@ -296,32 +283,27 @@ describe.each<SimilarityFunctionPlotTestCase>(testCases)(
     });
 
     test('calculates correct metrics', () => {
-      if (
-        params.maxThreshold === undefined &&
-        params.minThreshold === undefined
-      ) {
-        const received = plot({
-          datasetId,
-          experimentId,
-          func: funcId,
-          groundTruth: [groundTruthId],
-          steps: params.steps,
-          X: 'similarity',
-          Y: Precision,
-        });
-        expect(received).toEqual(
-          result
-            .map(
-              ({ threshold, ...matrix }) =>
-                ({
-                  threshold,
-                  x: threshold,
-                  y: new Precision(matrix).value,
-                } as PlotResult[number])
-            )
-            .reverse()
-        );
-      }
+      const received = plot({
+        datasetId,
+        experimentId,
+        func: funcId,
+        groundTruth: [groundTruthId],
+        steps: params.steps,
+        X: 'similarity',
+        Y: Precision,
+      });
+      expect(received).toEqual(
+        result
+          .map(
+            ({ threshold, ...matrix }) =>
+              ({
+                threshold,
+                x: threshold,
+                y: new Precision(matrix).value,
+              } as PlotResult[number])
+          )
+          .reverse()
+      );
     });
   }
 );

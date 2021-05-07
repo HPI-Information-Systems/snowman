@@ -32,6 +32,7 @@ export class StaticIntersectionOnlyIncludes extends IntersectionOnlyIncludes {
         datasetId: this.config.datasetId,
         base: this.config.included.slice(0, splitIndex),
         partition: this.config.included.slice(splitIndex),
+        forceStatic: this.config.forceStatic,
       }).clustering;
     }
   }

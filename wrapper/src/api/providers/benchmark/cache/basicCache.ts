@@ -14,8 +14,8 @@ export abstract class BasicBenchmarkCache<
   Content extends BenchmarkCacheContent<Config>
 > {
   get(config: Config): Content {
-    const baseConfig = this.sortConfig(
-      this.mapCustomConfigToBaseConfig(config)
+    const baseConfig = this.markIfStaticConfig(
+      this.sortConfig(this.mapCustomConfigToBaseConfig(config))
     );
     const key = this.keyOfBaseConfig(baseConfig, this.keyPrefix);
     let intersection = this.cache.get(key);
@@ -71,6 +71,10 @@ export abstract class BasicBenchmarkCache<
           ? -1
           : b.similarity && !a.similarity
           ? 1
+          : a.experimentId - b.experimentId === 0 &&
+            a.similarity &&
+            b.similarity
+          ? a.similarity.threshold - b.similarity.threshold
           : a.experimentId - b.experimentId
       );
   }
@@ -84,6 +88,27 @@ export abstract class BasicBenchmarkCache<
       group1: this.sortExperimentConfigItems(group1),
       group2: this.sortExperimentConfigItems(group2),
       ...rest,
+    };
+  }
+
+  protected markIfStaticConfig(
+    config: BenchmarkCacheBaseConfig
+  ): BenchmarkCacheBaseConfig {
+    let forceStatic = config.forceStatic;
+    if (!forceStatic) {
+      const seenIds = new Set();
+      for (const { experimentId } of [...config.group1, ...config.group2]) {
+        if (seenIds.has(experimentId)) {
+          forceStatic = true;
+          break;
+        } else {
+          seenIds.add(experimentId);
+        }
+      }
+    }
+    return {
+      ...config,
+      forceStatic,
     };
   }
 

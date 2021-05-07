@@ -12,16 +12,32 @@
  * Do not edit the class manually.
  */
 
+import {
+    SimilarityThresholdFunctionDefinition,
+} from './';
+
 /**
  * 
  * @export
- * @interface SimilarityThresholdFunctionAllOf
+ * @interface SimilarityThresholdFunctionValuesAllOf
  */
-export interface SimilarityThresholdFunctionAllOf {
+export interface SimilarityThresholdFunctionValuesAllOf {
+    /**
+     * 
+     * @type {string}
+     * @memberof SimilarityThresholdFunctionValuesAllOf
+     */
+    name: string;
     /**
      * 
      * @type {number}
-     * @memberof SimilarityThresholdFunctionAllOf
+     * @memberof SimilarityThresholdFunctionValuesAllOf
      */
-    id: number;
+    experimentId: number;
+    /**
+     * 
+     * @type {SimilarityThresholdFunctionDefinition}
+     * @memberof SimilarityThresholdFunctionValuesAllOf
+     */
+    definition: SimilarityThresholdFunctionDefinition;
 }

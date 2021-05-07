@@ -9,6 +9,7 @@ export type SubclusteringConfig = {
   base: ExperimentConfigItem[];
   partition: ExperimentConfigItem[];
   datasetId: DatasetId;
+  forceStatic?: boolean;
 };
 
 class SubclusterCacheClass extends BenchmarkCache<
@@ -21,22 +22,27 @@ class SubclusterCacheClass extends BenchmarkCache<
     datasetId,
     base,
     partition,
+    forceStatic,
   }: SubclusteringConfig): BenchmarkCacheBaseConfig {
     return {
       datasetId,
       group1: base,
       group2: partition,
+
+      forceStatic,
     };
   }
   protected mapBaseConfigToCustomConfig({
     datasetId,
     group2,
     group1,
+    forceStatic,
   }: BenchmarkCacheBaseConfig): SubclusteringConfig {
     return {
       datasetId,
       base: group1,
       partition: group2,
+      forceStatic,
     };
   }
 
@@ -44,7 +50,11 @@ class SubclusterCacheClass extends BenchmarkCache<
     config: SubclusteringConfig,
     key: string
   ): CacheableSubclustingBase {
-    if (config.base.length === 1 && config.base[0].similarity) {
+    if (
+      !config.forceStatic &&
+      config.base.length === 1 &&
+      config.base[0].similarity
+    ) {
       return new CacheableModularSubclusting(config, key);
     } else {
       return new CacheableSubclusting(config, key);
@@ -56,7 +66,12 @@ class SubclusterCacheClass extends BenchmarkCache<
     config: BenchmarkCacheBaseConfig
   ): string {
     const { base } = this.mapBaseConfigToCustomConfig(config);
-    if (base.length === 1 && base[0].similarity && item === base[0]) {
+    if (
+      !config.forceStatic &&
+      base.length === 1 &&
+      base[0].similarity &&
+      item === base[0]
+    ) {
       const { experimentId, similarity } = item;
       return `${this.stringifyExperiment(experimentId)}${
         similarity

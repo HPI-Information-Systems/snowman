@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -24,26 +24,18 @@ import {
 } from '../models';
 
 export interface AddSimilarityThresholdFunctionRequest {
-    experimentId: number;
     similarityThresholdFunction: SimilarityThresholdFunctionValues;
 }
 
 export interface DeleteSimilarityThresholdFunctionRequest {
-    experimentId: number;
     functionId: number;
 }
 
 export interface GetSimilarityThresholdFunctionRequest {
-    experimentId: number;
     functionId: number;
 }
 
-export interface GetSimilarityThresholdFunctionsRequest {
-    experimentId: number;
-}
-
 export interface SetSimilarityThresholdFunctionRequest {
-    experimentId: number;
     functionId: number;
     similarityThresholdFunction: SimilarityThresholdFunctionValues;
 }
@@ -57,10 +49,6 @@ export class SimilarityThresholdsApi extends runtime.BaseAPI {
      * Creates a new similarity threshold function
      */
     async addSimilarityThresholdFunctionRaw(requestParameters: AddSimilarityThresholdFunctionRequest): Promise<runtime.ApiResponse<number>> {
-        if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
-            throw new runtime.RequiredError('experimentId','Required parameter requestParameters.experimentId was null or undefined when calling addSimilarityThresholdFunction.');
-        }
-
         if (requestParameters.similarityThresholdFunction === null || requestParameters.similarityThresholdFunction === undefined) {
             throw new runtime.RequiredError('similarityThresholdFunction','Required parameter requestParameters.similarityThresholdFunction was null or undefined when calling addSimilarityThresholdFunction.');
         }
@@ -72,7 +60,7 @@ export class SimilarityThresholdsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/experiments/{experimentId}/similarity-threshold-functions`.replace(`{${"experimentId"}}`, encodeURIComponent(String(requestParameters.experimentId))),
+            path: `/similarity-threshold-functions`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -94,10 +82,6 @@ export class SimilarityThresholdsApi extends runtime.BaseAPI {
      * Deletes a similarity threshold function
      */
     async deleteSimilarityThresholdFunctionRaw(requestParameters: DeleteSimilarityThresholdFunctionRequest): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
-            throw new runtime.RequiredError('experimentId','Required parameter requestParameters.experimentId was null or undefined when calling deleteSimilarityThresholdFunction.');
-        }
-
         if (requestParameters.functionId === null || requestParameters.functionId === undefined) {
             throw new runtime.RequiredError('functionId','Required parameter requestParameters.functionId was null or undefined when calling deleteSimilarityThresholdFunction.');
         }
@@ -107,7 +91,7 @@ export class SimilarityThresholdsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/experiments/{experimentId}/similarity-threshold-functions/{functionId}`.replace(`{${"experimentId"}}`, encodeURIComponent(String(requestParameters.experimentId))).replace(`{${"functionId"}}`, encodeURIComponent(String(requestParameters.functionId))),
+            path: `/similarity-threshold-functions/{functionId}`.replace(`{${"functionId"}}`, encodeURIComponent(String(requestParameters.functionId))),
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -127,10 +111,6 @@ export class SimilarityThresholdsApi extends runtime.BaseAPI {
      * Get a similarity threshold function
      */
     async getSimilarityThresholdFunctionRaw(requestParameters: GetSimilarityThresholdFunctionRequest): Promise<runtime.ApiResponse<SimilarityThresholdFunction>> {
-        if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
-            throw new runtime.RequiredError('experimentId','Required parameter requestParameters.experimentId was null or undefined when calling getSimilarityThresholdFunction.');
-        }
-
         if (requestParameters.functionId === null || requestParameters.functionId === undefined) {
             throw new runtime.RequiredError('functionId','Required parameter requestParameters.functionId was null or undefined when calling getSimilarityThresholdFunction.');
         }
@@ -140,7 +120,7 @@ export class SimilarityThresholdsApi extends runtime.BaseAPI {
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/experiments/{experimentId}/similarity-threshold-functions/{functionId}`.replace(`{${"experimentId"}}`, encodeURIComponent(String(requestParameters.experimentId))).replace(`{${"functionId"}}`, encodeURIComponent(String(requestParameters.functionId))),
+            path: `/similarity-threshold-functions/{functionId}`.replace(`{${"functionId"}}`, encodeURIComponent(String(requestParameters.functionId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -158,19 +138,15 @@ export class SimilarityThresholdsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all similarity threshold functions of an experiment
+     * Get all similarity threshold functions
      */
-    async getSimilarityThresholdFunctionsRaw(requestParameters: GetSimilarityThresholdFunctionsRequest): Promise<runtime.ApiResponse<Array<SimilarityThresholdFunction>>> {
-        if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
-            throw new runtime.RequiredError('experimentId','Required parameter requestParameters.experimentId was null or undefined when calling getSimilarityThresholdFunctions.');
-        }
-
+    async getSimilarityThresholdFunctionsRaw(): Promise<runtime.ApiResponse<Array<SimilarityThresholdFunction>>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
 
         const response = await this.request({
-            path: `/experiments/{experimentId}/similarity-threshold-functions`.replace(`{${"experimentId"}}`, encodeURIComponent(String(requestParameters.experimentId))),
+            path: `/similarity-threshold-functions`,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -180,10 +156,10 @@ export class SimilarityThresholdsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Get all similarity threshold functions of an experiment
+     * Get all similarity threshold functions
      */
-    async getSimilarityThresholdFunctions(requestParameters: GetSimilarityThresholdFunctionsRequest): Promise<Array<SimilarityThresholdFunction>> {
-        const response = await this.getSimilarityThresholdFunctionsRaw(requestParameters);
+    async getSimilarityThresholdFunctions(): Promise<Array<SimilarityThresholdFunction>> {
+        const response = await this.getSimilarityThresholdFunctionsRaw();
         return await response.value();
     }
 
@@ -191,10 +167,6 @@ export class SimilarityThresholdsApi extends runtime.BaseAPI {
      * Updates or creates a similarity threshold function
      */
     async setSimilarityThresholdFunctionRaw(requestParameters: SetSimilarityThresholdFunctionRequest): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
-            throw new runtime.RequiredError('experimentId','Required parameter requestParameters.experimentId was null or undefined when calling setSimilarityThresholdFunction.');
-        }
-
         if (requestParameters.functionId === null || requestParameters.functionId === undefined) {
             throw new runtime.RequiredError('functionId','Required parameter requestParameters.functionId was null or undefined when calling setSimilarityThresholdFunction.');
         }
@@ -210,7 +182,7 @@ export class SimilarityThresholdsApi extends runtime.BaseAPI {
         headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
-            path: `/experiments/{experimentId}/similarity-threshold-functions/{functionId}`.replace(`{${"experimentId"}}`, encodeURIComponent(String(requestParameters.experimentId))).replace(`{${"functionId"}}`, encodeURIComponent(String(requestParameters.functionId))),
+            path: `/similarity-threshold-functions/{functionId}`.replace(`{${"functionId"}}`, encodeURIComponent(String(requestParameters.functionId))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

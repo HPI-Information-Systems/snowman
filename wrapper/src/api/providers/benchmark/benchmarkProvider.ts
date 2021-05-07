@@ -128,6 +128,11 @@ export class BenchmarkProvider {
         state
       );
 
+      const intersection = IntersectionCache.get({
+        datasetId,
+        included: included,
+        excluded: excluded,
+      });
       counts.push({
         experiments: [
           ...included.map((experiment) => {
@@ -143,16 +148,8 @@ export class BenchmarkProvider {
             };
           }),
         ],
-        numberPairs: IntersectionCache.get({
-          datasetId,
-          included: included,
-          excluded: excluded,
-        }).numberPairs,
-        numberRows: IntersectionCache.get({
-          datasetId,
-          included: included,
-          excluded: excluded,
-        }).numberRows,
+        numberPairs: intersection.numberPairs,
+        numberRows: intersection.numberRows,
       });
     } while (nextState());
     return counts;
@@ -207,18 +204,16 @@ export class BenchmarkProvider {
   protected intersection(
     experiments: ExperimentIntersectionItem[]
   ): IntersectionBase {
-    const included = experiments.filter(
-      ({ predictedCondition }) => predictedCondition
-    );
-    const excluded = experiments.filter(
-      ({ predictedCondition }) => !predictedCondition
-    );
     return IntersectionCache.get({
       datasetId: datasetFromExperimentIds(
         experiments.map(({ experimentId }) => experimentId)
       ).id,
-      excluded: excluded,
-      included: included,
+      excluded: experiments.filter(
+        ({ predictedCondition }) => !predictedCondition
+      ),
+      included: experiments.filter(
+        ({ predictedCondition }) => predictedCondition
+      ),
     });
   }
 }

@@ -14,70 +14,55 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    SimilarityThresholdFunctionAllOf,
-    SimilarityThresholdFunctionAllOfFromJSON,
-    SimilarityThresholdFunctionAllOfFromJSONTyped,
-    SimilarityThresholdFunctionAllOfToJSON,
     SimilarityThresholdFunctionDefinition,
     SimilarityThresholdFunctionDefinitionFromJSON,
     SimilarityThresholdFunctionDefinitionFromJSONTyped,
     SimilarityThresholdFunctionDefinitionToJSON,
-    SimilarityThresholdFunctionValues,
-    SimilarityThresholdFunctionValuesFromJSON,
-    SimilarityThresholdFunctionValuesFromJSONTyped,
-    SimilarityThresholdFunctionValuesToJSON,
 } from './';
 
 /**
  * 
  * @export
- * @interface SimilarityThresholdFunction
+ * @interface SimilarityThresholdFunctionValuesAllOf
  */
-export interface SimilarityThresholdFunction {
-    /**
-     * 
-     * @type {number}
-     * @memberof SimilarityThresholdFunction
-     */
-    id: number;
+export interface SimilarityThresholdFunctionValuesAllOf {
     /**
      * 
      * @type {string}
-     * @memberof SimilarityThresholdFunction
+     * @memberof SimilarityThresholdFunctionValuesAllOf
      */
     name: string;
     /**
      * 
      * @type {number}
-     * @memberof SimilarityThresholdFunction
+     * @memberof SimilarityThresholdFunctionValuesAllOf
      */
     experimentId: number;
     /**
      * 
      * @type {SimilarityThresholdFunctionDefinition}
-     * @memberof SimilarityThresholdFunction
+     * @memberof SimilarityThresholdFunctionValuesAllOf
      */
     definition: SimilarityThresholdFunctionDefinition;
 }
 
-export function SimilarityThresholdFunctionFromJSON(json: any): SimilarityThresholdFunction {
-    return SimilarityThresholdFunctionFromJSONTyped(json, false);
+export function SimilarityThresholdFunctionValuesAllOfFromJSON(json: any): SimilarityThresholdFunctionValuesAllOf {
+    return SimilarityThresholdFunctionValuesAllOfFromJSONTyped(json, false);
 }
 
-export function SimilarityThresholdFunctionFromJSONTyped(json: any, ignoreDiscriminator: boolean): SimilarityThresholdFunction {
+export function SimilarityThresholdFunctionValuesAllOfFromJSONTyped(json: any, ignoreDiscriminator: boolean): SimilarityThresholdFunctionValuesAllOf {
     if ((json === undefined) || (json === null)) {
         return json;
     }
     return {
         
-        'id': json['id'],
         'name': json['name'],
         'experimentId': json['experimentId'],
         'definition': SimilarityThresholdFunctionDefinitionFromJSON(json['definition']),
     };
 }
 
-export function SimilarityThresholdFunctionToJSON(value?: SimilarityThresholdFunction | null): any {
+export function SimilarityThresholdFunctionValuesAllOfToJSON(value?: SimilarityThresholdFunctionValuesAllOf | null): any {
     if (value === undefined) {
         return undefined;
     }
@@ -86,7 +71,6 @@ export function SimilarityThresholdFunctionToJSON(value?: SimilarityThresholdFun
     }
     return {
         
-        'id': value.id,
         'name': value.name,
         'experimentId': value.experimentId,
         'definition': SimilarityThresholdFunctionDefinitionToJSON(value.definition),

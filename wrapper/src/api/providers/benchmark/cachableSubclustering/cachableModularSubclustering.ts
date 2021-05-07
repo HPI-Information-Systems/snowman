@@ -13,6 +13,7 @@ export class CacheableModularSubclusting extends CacheableSubclustingBase {
       datasetId: this.config.datasetId,
       included: this.config.partition,
       excluded: [],
+      forceStatic: this.config.forceStatic,
     }) as IntersectionOnlyIncludes;
   }
   protected modularBase = new LazyProperty(
@@ -21,6 +22,7 @@ export class CacheableModularSubclusting extends CacheableSubclustingBase {
         datasetId: this.config.datasetId,
         included: this.config.base,
         excluded: [],
+        forceStatic: this.config.forceStatic,
       }) as ModularIntersectionOneInclude
   );
 
@@ -58,6 +60,7 @@ export class CacheableModularSubclusting extends CacheableSubclustingBase {
       datasetId: this.config.datasetId,
       included: this.config.base,
       excluded: [],
+      forceStatic: this.config.forceStatic,
     });
     this.modularBase.value.update();
     for (const merges of this.changes) {

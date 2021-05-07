@@ -18,6 +18,7 @@ export class ModularIntersectionOnlyIncludes extends IntersectionOnlyIncludes {
       datasetId: this.config.datasetId,
       base: this.config.included.slice(0, this.splitIndex.value),
       partition: this.config.included.slice(this.splitIndex.value),
+      forceStatic: this.config.forceStatic,
     }).clustering;
   }
 

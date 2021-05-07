@@ -36,6 +36,7 @@ export class CalculateRows {
         datasetId: this.config.datasetId,
         included: this.config.included,
         excluded: [],
+        forceStatic: this.config.forceStatic,
       }) as IntersectionOnlyIncludes).clustering.numberClusters
   );
 

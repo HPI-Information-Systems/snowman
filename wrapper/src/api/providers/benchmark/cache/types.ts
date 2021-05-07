@@ -4,6 +4,7 @@ export type BenchmarkCacheBaseConfig = {
   group1: ExperimentConfigItem[];
   group2: ExperimentConfigItem[];
   datasetId: DatasetId;
+  forceStatic?: boolean;
 };
 
 export interface BenchmarkCacheContent<Config> {

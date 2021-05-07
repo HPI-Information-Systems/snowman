@@ -600,17 +600,9 @@ paths:
       - Experiments
       x-codegen-request-body-name: file
       x-eov-operation-handler: controllers/ExperimentsController
-  /experiments/{experimentId}/similarity-threshold-functions:
+  /similarity-threshold-functions:
     get:
       operationId: getSimilarityThresholdFunctions
-      parameters:
-      - explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
       responses:
         "200":
           content:
@@ -622,20 +614,12 @@ paths:
           description: OK
         "404":
           description: Not Found
-      summary: Get all similarity threshold functions of an experiment
+      summary: Get all similarity threshold functions
       tags:
       - Similarity Thresholds
       x-eov-operation-handler: controllers/SimilarityThresholdsController
     post:
       operationId: addSimilarityThresholdFunction
-      parameters:
-      - explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
       requestBody:
         content:
           application/json:
@@ -656,17 +640,10 @@ paths:
       - Similarity Thresholds
       x-codegen-request-body-name: similarityThresholdFunction
       x-eov-operation-handler: controllers/SimilarityThresholdsController
-  /experiments/{experimentId}/similarity-threshold-functions/{functionId}:
+  /similarity-threshold-functions/{functionId}:
     delete:
       operationId: deleteSimilarityThresholdFunction
       parameters:
-      - explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
       - explode: false
         in: path
         name: functionId
@@ -684,13 +661,6 @@ paths:
     get:
       operationId: getSimilarityThresholdFunction
       parameters:
-      - explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
       - explode: false
         in: path
         name: functionId
@@ -714,13 +684,6 @@ paths:
     put:
       operationId: setSimilarityThresholdFunction
       parameters:
-      - explode: false
-        in: path
-        name: experimentId
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
       - explode: false
         in: path
         name: functionId
@@ -978,13 +941,10 @@ components:
               hrAmount: 6
             deploymentType:
             - cloud
-            - cloud
             useCase:
-            - merging
             - merging
             generalCosts: 1
             solutionType:
-            - rulebased
             - rulebased
           configurationEffort:
             interfaces:
@@ -997,7 +957,6 @@ components:
               expertise: 0
               hrAmount: 6
             supportedOSs:
-            - Windows
             - Windows
         name: Magellan
         description: This is an open source python library
@@ -1096,13 +1055,11 @@ components:
     SimilarityThresholdFunctionConstant:
       type: number
     SimilarityThresholdFunctionOperator:
-      example:
-        operator: ADD
       properties:
         left:
-          $ref: '#/components/schemas/SimilarityThresholdFunctionValues'
+          $ref: '#/components/schemas/SimilarityThresholdFunctionDefinition'
         right:
-          $ref: '#/components/schemas/SimilarityThresholdFunctionValues'
+          $ref: '#/components/schemas/SimilarityThresholdFunctionDefinition'
         operator:
           enum:
           - ADD
@@ -1121,11 +1078,9 @@ components:
       - right
       type: object
     SimilarityThresholdFunctionUnaryOperator:
-      example:
-        operator: ACOS
       properties:
         func:
-          $ref: '#/components/schemas/SimilarityThresholdFunctionValues'
+          $ref: '#/components/schemas/SimilarityThresholdFunctionDefinition'
         operator:
           enum:
           - ACOS
@@ -1157,15 +1112,7 @@ components:
       - func
       - operator
       type: object
-    SimilarityThresholdFunctionValues:
-      example:
-        constant: 0.8008281904610115
-        unaryOperator:
-          operator: ACOS
-        similarityThreshold: similarityThreshold
-        type: SimilarityThreshold
-        operator:
-          operator: ADD
+    SimilarityThresholdFunctionDefinition:
       properties:
         type:
           enum:
@@ -1185,6 +1132,9 @@ components:
       required:
       - type
       type: object
+    SimilarityThresholdFunctionValues:
+      allOf:
+      - $ref: '#/components/schemas/SimilarityThresholdFunctionValues_allOf'
     SimilarityThresholdFunction:
       allOf:
       - $ref: '#/components/schemas/SimilarityThresholdFunction_allOf'
@@ -1593,6 +1543,19 @@ components:
       required:
       - id
       type: object
+    SimilarityThresholdFunctionValues_allOf:
+      properties:
+        name:
+          type: string
+        experimentId:
+          example: 1
+          type: integer
+        definition:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionDefinition'
+      required:
+      - definition
+      - experimentId
+      - name
     SimilarityThresholdFunction_allOf:
       properties:
         id:
