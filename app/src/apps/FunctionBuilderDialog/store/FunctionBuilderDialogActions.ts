@@ -7,6 +7,7 @@ import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/
 import { FunctionBuilderDialogMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogStore';
 import { FunctionBuilderDialogActionTypes } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogActionTypes';
 import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogModel';
+import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import autoBind from 'auto-bind';
@@ -73,7 +74,7 @@ class FunctionBuildingBlockKeyMagistrate {
       .dispatch as SnowmanDispatch<FunctionBuilderDialogModel>;
   }
 
-  getNewAccessKeyAction(): SnowmanThunkAction<
+  private getNewAccessKeyAction(): SnowmanThunkAction<
     number,
     FunctionBuilderDialogModel
   > {
@@ -83,6 +84,51 @@ class FunctionBuildingBlockKeyMagistrate {
     ): number {
       return (max(getState().reservedAccessKeys) ?? RootAccessKey) + 1;
     };
+  }
+
+  private registerBuildingBlockAction(
+    parentAccessKey: number,
+    cellDescriptor: CellDescriptor
+  ): SnowmanThunkAction<number, FunctionBuilderDialogModel> {
+    return function (
+      dispatch: SnowmanDispatch<FunctionBuilderDialogModel>,
+      getState: () => FunctionBuilderDialogModel
+    ): number {
+      const newAccessKey =
+        (max(getState().reservedAccessKeys) ?? RootAccessKey) + 1;
+      dispatch({
+        type: FunctionBuilderDialogActionTypes.REGISTER_BUILDING_BLOCK,
+        payload: parentAccessKey,
+        optionalPayload: cellDescriptor,
+      });
+      return newAccessKey;
+    };
+  }
+
+  registerBuildingBlock(
+    parentAccessKey: number,
+    cellDescriptor: CellDescriptor
+  ): number {
+    return this.dispatch(
+      this.registerBuildingBlockAction(parentAccessKey, cellDescriptor)
+    );
+  }
+
+  private unregisterBuildingBlockAction(
+    ownAccessKey: number
+  ): SnowmanThunkAction<void, FunctionBuilderDialogModel> {
+    return function (
+      dispatch: SnowmanDispatch<FunctionBuilderDialogModel>
+    ): void {
+      dispatch({
+        type: FunctionBuilderDialogActionTypes.UNREGISTER_BUILDING_BLOCK,
+        payload: ownAccessKey,
+      });
+    };
+  }
+
+  unregisterBuildingBlock(ownAccessKey: number): void {
+    this.dispatch(this.unregisterBuildingBlockAction(ownAccessKey));
   }
 
   getNewAccessKey(): number {
