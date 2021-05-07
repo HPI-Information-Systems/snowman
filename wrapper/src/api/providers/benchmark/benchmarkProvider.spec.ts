@@ -274,7 +274,7 @@ describe('test benchmark functions', () => {
     expect(
       benchmarkProvider.calculateDiagramData({
         xAxis: MetricsEnum.Precision,
-        yAxis: MetricsEnum.Recall,
+        yAxis: MetricsEnum.Similarity,
         diagram: {
           similarityThresholds: {
             steps: 2,
@@ -285,78 +285,103 @@ describe('test benchmark functions', () => {
         },
       })
     ).toMatchObject([
-      { x: 0, y: 0, threshold: 0.7 },
-      { threshold: 0.5, x: 0.5, y: 0.125 },
+      { x: 0, y: 0.7, threshold: 0.7 },
+      { threshold: 0.5, x: 0.5, y: 0.5 },
     ]);
   });
-  test('TEST', () => {
-    const array = [
-      SoftKPIsAlgorithmEnum.DomainExpertise,
-      SoftKPIsAlgorithmEnum.DomainHrAmount,
-      SoftKPIsAlgorithmEnum.DomainManhattanDistanceBasedEffort,
-      SoftKPIsAlgorithmEnum.DomainHrAmountWeightedEffort,
-      SoftKPIsAlgorithmEnum.DomainMultiplyEffort,
-      SoftKPIsAlgorithmEnum.DomainExpertiseWeightedEffort,
-      SoftKPIsAlgorithmEnum.MatchingSolutionExpertise,
-      SoftKPIsAlgorithmEnum.MatchingSolutionHrAmount,
-      SoftKPIsAlgorithmEnum.MatchingSolutionManhattanDistanceBasedEffort,
-      SoftKPIsAlgorithmEnum.MatchingSolutionHrAmountWeightedEffort,
-      SoftKPIsAlgorithmEnum.MatchingSolutionMultiplyEffort,
-      SoftKPIsAlgorithmEnum.MatchingSolutionExpertiseWeightedEffort,
-      SoftKPIsAlgorithmEnum.GeneralCosts,
-      SoftKPIsAlgorithmEnum.InstallationExpertise,
-      SoftKPIsAlgorithmEnum.InstallationHrAmount,
-      SoftKPIsAlgorithmEnum.InstallationManhattanDistanceBasedEffort,
-      SoftKPIsAlgorithmEnum.InstallationHrAmountWeightedEffort,
-      SoftKPIsAlgorithmEnum.InstallationMultiplyEffort,
-      SoftKPIsAlgorithmEnum.InstallationExpertiseWeightedEffort,
-      SoftKPIsExperimentEnum.Expertise,
-      SoftKPIsExperimentEnum.HrAmount,
-      SoftKPIsExperimentEnum.ManhattanDistanceBasedEffort,
-      SoftKPIsExperimentEnum.HrAmountWeightedEffort,
-      SoftKPIsExperimentEnum.MultiplyEffort,
-      SoftKPIsExperimentEnum.ExpertiseWeightedEffort,
-      //!MetricsEnum.Similarity,
-      MetricsEnum.FalseDiscoveryRate,
-      MetricsEnum.FalseNegativeRate,
-      MetricsEnum.FalseOmissionRate,
-      MetricsEnum.FalsePositiveRate,
-      MetricsEnum.NegativePredictiveValue,
-      MetricsEnum.Precision,
-      MetricsEnum.PrevalenceThreshold,
-      MetricsEnum.Recall,
-      MetricsEnum.Specificity,
-      MetricsEnum.ThreatScore,
-      MetricsEnum.Accuracy,
-      MetricsEnum.BalancedAccuracy,
-      MetricsEnum.BookmakerInformedness,
-      MetricsEnum.FStarScore,
-      MetricsEnum.F1Score,
-      MetricsEnum.FowlkesMallowsIndex,
-      MetricsEnum.Markedness,
-      MetricsEnum.MatthewsCorrelationCoefficient,
-    ];
-    for (let i = 0; i < array.length; i += 2) {
-      console.log(array[i], array[i + 1]);
-      const x = benchmarkProvider.calculateDiagramData({
-        xAxis: array[i],
-        yAxis: array[i + 1] ?? array[array.length - 1],
-        diagram: {
-          multipleExperiments: [
-            {
-              experiment: {
-                experimentId: experimentIds.experiment1,
-              },
-              groundTruth: {
-                experimentId: experimentIds.goldstandard,
-              },
+  test('test if all enum values return value', () => {
+    const diagramAxisValues = {
+      ...SoftKPIsAlgorithmEnum,
+      ...SoftKPIsExperimentEnum,
+      ...MetricsEnum,
+    };
+    const result = [];
+    for (const value of Object.values(diagramAxisValues)) {
+      if (
+        (value as
+          | SoftKPIsExperimentEnum
+          | SoftKPIsAlgorithmEnum
+          | MetricsEnum) === MetricsEnum.Similarity
+      )
+        continue;
+      result.push({
+        name: value,
+        value: benchmarkProvider
+          .calculateDiagramData({
+            xAxis: value as
+              | SoftKPIsExperimentEnum
+              | SoftKPIsAlgorithmEnum
+              | MetricsEnum,
+            yAxis: value as
+              | SoftKPIsExperimentEnum
+              | SoftKPIsAlgorithmEnum
+              | MetricsEnum,
+            diagram: {
+              multipleExperiments: [
+                {
+                  experiment: {
+                    experimentId: experimentIds.experiment1,
+                  },
+                  groundTruth: {
+                    experimentId: experimentIds.goldstandard,
+                  },
+                },
+              ],
             },
-          ],
-        },
+          })[0]
+          .x.toFixed(4),
       });
-      console.log(x);
     }
-    expect(true).toBe(true);
+    expect(result).toEqual(
+      expect.arrayContaining([
+        { name: 'domainExpertise', value: '12.0000' },
+        { name: 'domainHrAmount', value: '10.0000' },
+        { name: 'domainManhattanDistanceBasedEffort', value: '22.0000' },
+        { name: 'domainHrAmountWeightedEffort', value: '2643.1759' },
+        { name: 'domainMultiplyEffort', value: '120.0000' },
+        { name: 'domainExpertiseWeightedEffort', value: '11.2750' },
+        { name: 'matchingSolutionExpertise', value: '12.0000' },
+        { name: 'matchingSolutionHrAmount', value: '10.0000' },
+        {
+          name: 'matchingSolutionManhattanDistanceBasedEffort',
+          value: '22.0000',
+        },
+        { name: 'matchingSolutionHrAmountWeightedEffort', value: '2643.1759' },
+        { name: 'matchingSolutionMultiplyEffort', value: '120.0000' },
+        { name: 'matchingSolutionExpertiseWeightedEffort', value: '11.2750' },
+        { name: 'generalCosts', value: '10.0000' },
+        { name: 'installationExpertise', value: '30.0000' },
+        { name: 'installationHrAmount', value: '10.0000' },
+        { name: 'installationManhattanDistanceBasedEffort', value: '40.0000' },
+        { name: 'installationHrAmountWeightedEffort', value: '6607.9397' },
+        { name: 'installationMultiplyEffort', value: '300.0000' },
+        { name: 'installationExpertiseWeightedEffort', value: '13.4986' },
+        { name: 'expertise', value: '11.0000' },
+        { name: 'hrAmount', value: '11.0000' },
+        { name: 'manhattanDistanceBasedEffort', value: '22.0000' },
+        { name: 'hrAmountWeightedEffort', value: '6586.1556' },
+        { name: 'multiplyEffort', value: '121.0000' },
+        { name: 'expertiseWeightedEffort', value: '12.2791' },
+        { name: 'falseDiscoveryRate', value: '0.5000' },
+        { name: 'falseNegativeRate', value: '0.8750' },
+        { name: 'falseOmissionRate', value: '0.0372' },
+        { name: 'falsePositiveRate', value: '0.0055' },
+        { name: 'negativePredictiveValue', value: '0.9628' },
+        { name: 'precision', value: '0.5000' },
+        { name: 'prevalenceThreshold', value: '0.1733' },
+        { name: 'recall', value: '0.1250' },
+        { name: 'specificity', value: '0.9945' },
+        { name: 'threatScore', value: '0.1111' },
+        { name: 'accuracy', value: '0.9579' },
+        { name: 'balancedAccuracy', value: '0.5598' },
+        { name: 'bookmakerInformedness', value: '0.1195' },
+        { name: 'fStarScore', value: '0.1111' },
+        { name: 'f1Score', value: '0.2000' },
+        { name: 'fowlkesMallowsIndex', value: '0.2500' },
+        { name: 'markedness', value: '0.4628' },
+        { name: 'matthewsCorrelationCoefficient', value: '0.2352' },
+      ])
+    );
   });
   describe('metrics', () => {
     test('test metrics calculation', () => {
