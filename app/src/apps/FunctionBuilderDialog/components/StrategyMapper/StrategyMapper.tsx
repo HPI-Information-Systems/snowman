@@ -4,7 +4,6 @@ import {
   StrategyMapItem,
 } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMap';
 import {
-  chooseStrategyFunction,
   StrategyMapperProps,
   StrategyMapperStateProps,
 } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
@@ -15,6 +14,7 @@ import {
   CellDescriptor,
   FunctionBuildingBlockType,
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import { FunctionToChooseStrategy } from 'apps/FunctionBuilderDialog/types/FunctionToChooseStrategy';
 import React, { Component, createElement } from 'react';
 
 class StrategyMapper extends Component<
@@ -23,7 +23,7 @@ class StrategyMapper extends Component<
 > {
   blockMagistrate: FunctionBuildingBlockMagistrate;
   blockAccessKey: number;
-  setStrategy: chooseStrategyFunction;
+  setStrategy: FunctionToChooseStrategy;
 
   constructor(props: StrategyMapperProps) {
     super(props);

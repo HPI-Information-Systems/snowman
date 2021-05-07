@@ -3,14 +3,11 @@ import {
   CellDescriptor,
   FunctionBuildingBlockType,
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
-
-export type chooseStrategyFunction = (
-  strategy: FunctionBuildingBlockType
-) => void;
+import { FunctionToChooseStrategy } from 'apps/FunctionBuilderDialog/types/FunctionToChooseStrategy';
 
 export interface StrategyMapperForwardProps {
   nextStrategyType: FunctionBuildingBlockType;
-  setNextStrategyType: chooseStrategyFunction;
+  setNextStrategyType: FunctionToChooseStrategy;
 }
 
 export interface StrategyMapperOwnProps {
