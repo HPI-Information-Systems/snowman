@@ -10,7 +10,7 @@ const colors = [
   '#76ff03',
 ];
 
-let currentId = Math.floor(Math.random() * colors.length);
+let currentId = 0;
 
 export const getNextColor = (): string => {
   if (currentId >= colors.length) currentId = 0;

@@ -50,6 +50,7 @@ const KpiInvestigatorStrategyView = ({
       data={{
         datasets: datasets,
       }}
+      options={{ scales: { x: { min: 0, max: 1 }, y: { min: 0, max: 1 } } }}
     />
   </>
 );

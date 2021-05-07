@@ -1,11 +1,11 @@
 import { MetricsEnum } from 'api';
 import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
-import { DiagramDataset } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/DiagramDataset';
+import { ScatterChartDatasets } from 'components/simple/ChartComponent/ScatterChart';
 
 export interface KpiInvestigatorStrategyStateProps {
   isValidConfig: boolean;
   coordinates: DiagramCoordinates[];
-  datasets: DiagramDataset[];
+  datasets: ScatterChartDatasets;
   xAxis: MetricsEnum;
   yAxis: MetricsEnum;
 }

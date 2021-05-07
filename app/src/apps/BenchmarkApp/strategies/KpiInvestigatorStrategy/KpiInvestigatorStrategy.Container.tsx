@@ -10,9 +10,9 @@ import {
   setXAxis,
   setYAxis,
 } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/store/KpiInvestigatorStrategyActions';
-import { DiagramDataset } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/DiagramDataset';
 import { KpiInvestigatorStrategyModel } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
 import { getNextColor } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/utils/colorGenerator';
+import { ScatterChartDataset } from 'components/simple/ChartComponent/ScatterChart';
 import { groupBy, map } from 'lodash';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -27,7 +27,7 @@ const mapStateToProps = (
       state.coordinates,
       (aCoordinate: DiagramCoordinates) => aCoordinate.experimentId ?? 0
     ),
-    (anArray, aKey): DiagramDataset => ({
+    (anArray, aKey): ScatterChartDataset => ({
       label:
         state.selectedExperiment.find(
           (anExperiment: Experiment): boolean =>
@@ -35,6 +35,8 @@ const mapStateToProps = (
         )?.name ?? aKey,
       backgroundColor: getNextColor(),
       data: anArray,
+      pointRadius: 6,
+      pointHoverRadius: 10,
     })
   ),
   xAxis: state.xAxis,
