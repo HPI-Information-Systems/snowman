@@ -82,4 +82,18 @@ export class FunctionBuildingBlock {
       return this.left.removeBlock(targetBlockAccessKey);
     return resultForLeftRecursion;
   }
+
+  public getBlock(
+    targetBlockAccessKey: number
+  ): FunctionBuildingBlock | undefined {
+    if (this.accessKey === targetBlockAccessKey) {
+      return this;
+    }
+    let resultForLeftRecursion = undefined;
+    if (this.left instanceof FunctionBuildingBlock)
+      resultForLeftRecursion = this.left.getBlock(targetBlockAccessKey);
+    if (this.right instanceof FunctionBuildingBlock && !resultForLeftRecursion)
+      return this.right.getBlock(targetBlockAccessKey);
+    return resultForLeftRecursion;
+  }
 }
