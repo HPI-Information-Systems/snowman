@@ -39,7 +39,7 @@ const OperatorStrategy = ({
             )
           }
         >
-          {Object.keys(SimilarityThresholdFunctionOperatorOperatorEnum).map(
+          {Object.values(SimilarityThresholdFunctionOperatorOperatorEnum).map(
             (anOperator: string): JSX.Element => (
               <IonSelectOption
                 key={anOperator}

@@ -31,7 +31,7 @@ const UnaryOperatorStrategy = ({
           }
           placeholder="?"
         >
-          {Object.keys(
+          {Object.values(
             SimilarityThresholdFunctionUnaryOperatorOperatorEnum
           ).map(
             (anOperator: string): JSX.Element => (
