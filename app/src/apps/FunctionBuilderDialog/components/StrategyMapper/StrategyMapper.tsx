@@ -10,9 +10,10 @@ class StrategyMapper extends Component<StrategyMapperProps> {
 
   constructor(props: StrategyMapperProps) {
     super(props);
-    this.blockAccessKey = !this.props.parentAccessKey
-      ? FunctionBuildingBlockMagistrate.getNewAccessKey()
-      : RootAccessKey;
+    this.blockAccessKey =
+      this.props.parentAccessKey !== null
+        ? FunctionBuildingBlockMagistrate.getNewAccessKey()
+        : RootAccessKey;
     FunctionBuildingBlockMagistrate.registerBuildingBlock(
       this.blockAccessKey,
       this.props.parentAccessKey,
