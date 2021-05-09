@@ -1,4 +1,4 @@
-import { SimilarityThresholdsApi } from 'api';
+import { ExperimentsApi, FileResponse, SimilarityThresholdsApi } from 'api';
 import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/RootAccessKey';
 import { FunctionBuilderDialogMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogStore';
 import { FunctionBuilderDialogActionTypes } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogActionTypes';
@@ -47,6 +47,33 @@ export const createSimilarityThresholdFunction = (): SnowmanThunkAction<
       }),
     SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION
   ).then((): void => doCloseDialog());
+};
+
+const loadExperimentColumns = (): SnowmanThunkAction<
+  Promise<void>,
+  FunctionBuilderDialogModel
+> => (dispatch: SnowmanDispatch<FunctionBuilderDialogModel>): Promise<void> =>
+  RequestHandler<void>(
+    (): Promise<void> =>
+      new ExperimentsApi()
+        .getExperimentFile({
+          experimentId: getExperimentId(),
+          // an arbitrary number so that not all records will be loaded
+          limit: 5,
+        })
+        .then((file: FileResponse): void => {
+          dispatch({
+            type: FunctionBuilderDialogActionTypes.LOAD_EXPERIMENT_COLUMNS,
+            payload: file.header,
+          });
+        })
+  );
+
+export const onFunctionBuilderDialogOpen = (
+  dispatch: SnowmanDispatch<FunctionBuilderDialogModel>
+): void => {
+  console.log('open');
+  dispatch(loadExperimentColumns()).then();
 };
 
 export const changeFunctionName = (

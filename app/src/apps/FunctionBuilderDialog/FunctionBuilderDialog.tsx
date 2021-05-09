@@ -1,4 +1,5 @@
 import FunctionBuilderDialogContainer from 'apps/FunctionBuilderDialog/FunctionBuilderDialog.Container';
+import { onFunctionBuilderDialogOpen } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
 import { FunctionBuilderDialogMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogStore';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import GenericDialog from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialog';
@@ -15,6 +16,7 @@ const FunctionBuilderDialog = (): JSX.Element => (
     }
     instanceId={ViewIDs.FunctionBuilderDialog}
     createSubAppStore={FunctionBuilderDialogMagistrate.getStore}
+    onDialogOpen={onFunctionBuilderDialogOpen}
   >
     {(ownProps: DialogProps): JSX.Element => (
       <FunctionBuilderDialogContainer {...ownProps} />

@@ -14,6 +14,9 @@ const SimilarityThresholdStrategy = ({
       (state.functionBuildingStack.getBlock(blockAccessKey)?.left as string) ??
       null
   );
+  const availableThresholdValues = useSelector(
+    (state: FunctionBuilderDialogModel): string[] => state.experimentColumns
+  );
   return (
     <IonChip outline>
       <IonSelect
@@ -26,9 +29,13 @@ const SimilarityThresholdStrategy = ({
           )
         }
       >
-        <IonSelectOption>a</IonSelectOption>
-        <IonSelectOption>b</IonSelectOption>
-        <IonSelectOption>c</IonSelectOption>
+        {availableThresholdValues.map(
+          (aValue: string): JSX.Element => (
+            <IonSelectOption value={aValue} key={aValue}>
+              {aValue}
+            </IonSelectOption>
+          )
+        )}
       </IonSelect>
     </IonChip>
   );
