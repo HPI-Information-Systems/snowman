@@ -34,7 +34,7 @@ jobs:
       - name: Force HTTPs for Git
         run: 'git config --global url."https://github.com/".insteadOf ssh://git@github.com/'
       - name: Run (root) npm install
-        run: npm ci
+        run: npm ci --no-optional
         working-directory: ./
       - name: Run (app) npm install
         run: npm ci
@@ -111,7 +111,7 @@ jobs:
       - name: Force HTTPs for Git
         run: 'git config --global url."https://github.com/".insteadOf ssh://git@github.com/'
       - name: Run (root) npm install
-        run: npm ci
+        run: npm ci --no-optional
         working-directory: ./
       - name: Run (app) npm install
         run: npm ci

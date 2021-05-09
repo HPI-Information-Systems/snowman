@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -14,6 +14,10 @@
 
 import { exists, mapValues } from '../runtime';
 import {
+    EffortParts,
+    EffortPartsFromJSON,
+    EffortPartsFromJSONTyped,
+    EffortPartsToJSON,
     ExperimentAllOf,
     ExperimentAllOfFromJSON,
     ExperimentAllOfFromJSONTyped,
@@ -22,6 +26,10 @@ import {
     ExperimentValuesFromJSON,
     ExperimentValuesFromJSONTyped,
     ExperimentValuesToJSON,
+    Metric,
+    MetricFromJSON,
+    MetricFromJSONTyped,
+    MetricToJSON,
 } from './';
 
 /**
@@ -42,6 +50,12 @@ export interface Experiment {
      * @memberof Experiment
      */
     numberOfUploadedRecords?: number;
+    /**
+     * 
+     * @type {Array<Metric>}
+     * @memberof Experiment
+     */
+    effort?: Array<Metric>;
     /**
      * 
      * @type {string}
@@ -66,6 +80,12 @@ export interface Experiment {
      * @memberof Experiment
      */
     algorithmId: number;
+    /**
+     * 
+     * @type {EffortParts}
+     * @memberof Experiment
+     */
+    softKPIs?: EffortParts;
 }
 
 export function ExperimentFromJSON(json: any): Experiment {
@@ -80,10 +100,12 @@ export function ExperimentFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         
         'id': json['id'],
         'numberOfUploadedRecords': !exists(json, 'numberOfUploadedRecords') ? undefined : json['numberOfUploadedRecords'],
+        'effort': !exists(json, 'effort') ? undefined : ((json['effort'] as Array<any>).map(MetricFromJSON)),
         'name': json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'datasetId': json['datasetId'],
         'algorithmId': json['algorithmId'],
+        'softKPIs': !exists(json, 'softKPIs') ? undefined : EffortPartsFromJSON(json['softKPIs']),
     };
 }
 
@@ -98,10 +120,12 @@ export function ExperimentToJSON(value?: Experiment | null): any {
         
         'id': value.id,
         'numberOfUploadedRecords': value.numberOfUploadedRecords,
+        'effort': value.effort === undefined ? undefined : ((value.effort as Array<any>).map(MetricToJSON)),
         'name': value.name,
         'description': value.description,
         'datasetId': value.datasetId,
         'algorithmId': value.algorithmId,
+        'softKPIs': EffortPartsToJSON(value.softKPIs),
     };
 }
 

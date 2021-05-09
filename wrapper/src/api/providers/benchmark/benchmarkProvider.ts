@@ -1,35 +1,24 @@
 import {
+  CalculateDiagramDataRequest,
+  DiagramCoordinate,
+  DiagramExperimentItem,
   ExperimentConfigItem,
   ExperimentIntersectionCount,
   ExperimentIntersectionItem,
   FileResponse,
+  MetricsEnum,
 } from '../../server/types';
 import { Metric } from '../../server/types';
+import { numberOfPairs } from '../../tools/numberOfPairs';
 import { ConfusionMatrixCache } from './cache/flavors/confusionMatrixCache';
 import { IntersectionCache } from './cache/flavors/intersectionCache';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
+import { DiagramDataProvider, getDiagramDataProvider } from './diagram';
 import { idClustersToRecordClusters } from './idsToRecords';
 import { IntersectionBase } from './intersection/intersectionBase';
-import {
-  Accuracy,
-  BalancedAccuracy,
-  BookmakerInformedness,
-  F1Score,
-  FalseDiscoveryRate,
-  FalseNegativeRate,
-  FalseOmissionRate,
-  FalsePositiveRate,
-  FowlkesMallowsIndex,
-  FStarScore,
-  Markedness,
-  MatthewsCorrelationCoefficient,
-  NegativePredictiveValue,
-  Precision,
-  PrevalenceThreshold,
-  Recall,
-  Specificity,
-  ThreatScore,
-} from './metrics';
+import { metrics, metricsMap } from './metrics/allMetrics';
+import { plot } from './metrics/plot/plot';
+import { isInEnum } from './util/enumChecker';
 
 enum ExperimentState {
   IRRELEVANT,
@@ -43,6 +32,46 @@ const states = [
 ];
 
 export class BenchmarkProvider {
+  calculateDiagramData({
+    xAxis,
+    yAxis,
+    diagram,
+  }: CalculateDiagramDataRequest): Array<DiagramCoordinate> {
+    if (diagram === undefined) {
+      throw new Error('No experiments have been sent!');
+    }
+    if (
+      isInEnum(MetricsEnum, xAxis) &&
+      isInEnum(MetricsEnum, yAxis) &&
+      diagram.similarityThresholds
+    ) {
+      const datasetId = datasetFromExperimentIds([
+        diagram.similarityThresholds.experimentId,
+      ]).id;
+      const X = xAxis === 'similarity' ? 'similarity' : metricsMap.get(xAxis);
+      const Y = yAxis === 'similarity' ? 'similarity' : metricsMap.get(yAxis);
+      const experimentId = diagram.similarityThresholds.experimentId;
+      const groundTruth = [diagram.similarityThresholds.groundTruthId];
+      const steps = diagram.similarityThresholds.steps;
+      const func = diagram.similarityThresholds.func;
+      if (!X || !Y)
+        throw new Error(`At least one metric to be plotted does not exist!`);
+      return plot({ X, Y, datasetId, experimentId, groundTruth, steps, func });
+    }
+    if (!diagram.multipleExperiments) throw new Error('S');
+
+    const xGetter: DiagramDataProvider = getDiagramDataProvider(xAxis);
+    const yGetter: DiagramDataProvider = getDiagramDataProvider(yAxis);
+    return diagram.multipleExperiments
+      .map((experiment: DiagramExperimentItem) => {
+        return {
+          experimentId: experiment.experiment.experimentId,
+          x: xGetter.getData(xAxis, experiment),
+          y: yGetter.getData(yAxis, experiment),
+        };
+      })
+      .sort(({ x: x1 }, { x: x2 }) => x1 - x2);
+  }
   calculateExperimentIntersectionCount({
     intersection: experiments,
   }: {
@@ -155,28 +184,7 @@ export class BenchmarkProvider {
       groundTruthExperiment.experimentId,
       predictedExperiment.experimentId,
     ]).id;
-    const metrics = [
-      Accuracy,
-      Precision,
-      Recall,
-      F1Score,
-      FStarScore,
 
-      FalsePositiveRate,
-      FalseNegativeRate,
-      FalseDiscoveryRate,
-      FalseOmissionRate,
-      NegativePredictiveValue,
-      Specificity,
-
-      BalancedAccuracy,
-      BookmakerInformedness,
-      FowlkesMallowsIndex,
-      Markedness,
-      MatthewsCorrelationCoefficient,
-      PrevalenceThreshold,
-      ThreatScore,
-    ];
     const matrix = ConfusionMatrixCache.get({
       datasetId,
       predicted: [predictedExperiment],
