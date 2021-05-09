@@ -32,6 +32,14 @@ const FunctionBuilderDialogReducer = (
   action: SnowmanAction
 ): FunctionBuilderDialogModel => {
   switch (action.type) {
+    case FunctionBuilderDialogActionTypes.REGISTER_NEW_ACCESS_KEY:
+      return {
+        ...state,
+        reservedAccessKeys: [
+          ...state.reservedAccessKeys,
+          action.payload as number,
+        ],
+      };
     case FunctionBuilderDialogActionTypes.REGISTER_BUILDING_BLOCK: {
       return produce(
         state,
@@ -39,7 +47,7 @@ const FunctionBuilderDialogReducer = (
           const ownAccessKey = action.payload as number;
           const parentAccessKey = action.optionalPayload as number | null;
           const targetCell = action.optionalPayload2 as CellDescriptor;
-          if (!parentAccessKey) return state;
+          if (parentAccessKey === null) return state;
           state.functionBuildingStack.navigateToBlockAndMutate(
             parentAccessKey ?? RootAccessKey,
             (targetBlock: FunctionBuildingBlock): void => {
@@ -52,14 +60,12 @@ const FunctionBuilderDialogReducer = (
               else targetBlock.right = newBlock;
             }
           );
-          return {
-            ...state,
-            reservedAccessKeys: [...state.reservedAccessKeys, ownAccessKey],
-          };
+          return state;
         }
       );
     }
     case FunctionBuilderDialogActionTypes.UNREGISTER_BUILDING_BLOCK: {
+      if ((action.payload as number) === RootAccessKey) return initialState;
       return produce(
         state,
         (state: FunctionBuilderDialogModel): FunctionBuilderDialogModel => {

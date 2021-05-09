@@ -1,12 +1,31 @@
 import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/RootAccessKey';
-import { StrategyMapperProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
-import StrategyViewer from 'apps/FunctionBuilderDialog/components/StrategyViewer/StrategyViewer';
+import {
+  StrategyMap,
+  StrategyMapItem,
+} from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMap';
+import {
+  StrategyMapperProps,
+  StrategyMapperStateProps,
+} from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
+import styles from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperStyles.module.css';
+import StrategySelector from 'apps/FunctionBuilderDialog/components/StrategySelector/StrategySelector';
+import StrategyUnselector from 'apps/FunctionBuilderDialog/components/StrategyUnselector/StrategyUnselector';
 import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
-import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
-import React, { Component } from 'react';
+import { FunctionBuilderDialogMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogStore';
+import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogModel';
+import {
+  CellDescriptor,
+  FunctionBuildingBlockType,
+} from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
+import React, { Component, createElement } from 'react';
 
-class StrategyMapper extends Component<StrategyMapperProps> {
+class StrategyMapper extends Component<
+  StrategyMapperProps,
+  StrategyMapperStateProps
+> {
   blockAccessKey: number;
+  storeUnsubscription: () => void;
 
   constructor(props: StrategyMapperProps) {
     super(props);
@@ -19,16 +38,52 @@ class StrategyMapper extends Component<StrategyMapperProps> {
       this.props.parentAccessKey,
       this.props.ownLocation ?? CellDescriptor.left
     );
+    // initialize within constructor due to tsc paradigm
+    this.storeUnsubscription = (): void => undefined;
+  }
+
+  componentDidMount(): void {
+    this.storeUnsubscription = FunctionBuilderDialogMagistrate.getStore().subscribe(
+      (): void => {
+        const newState: FunctionBuilderDialogModel = FunctionBuilderDialogMagistrate.getStore().getState();
+        const strategyType: FunctionBuildingBlockType =
+          newState.functionBuildingStack.getBlock(this.blockAccessKey)?.type ??
+          UndefinedStrategy;
+        this.setState({
+          ...this.state,
+          targetStrategy: StrategyMap.find(
+            (aStrategyMapItem: StrategyMapItem): boolean =>
+              aStrategyMapItem.targetStrategyKey === strategyType
+          ),
+        });
+      }
+    );
   }
 
   componentWillUnmount(): void {
     FunctionBuildingBlockMagistrate.unregisterBuildingBlock(
       this.blockAccessKey
     );
+    this.storeUnsubscription();
   }
 
   render(): JSX.Element {
-    return <StrategyViewer blockAccessKey={this.blockAccessKey} />;
+    return (
+      <>
+        {this.state?.targetStrategy !== undefined ? (
+          <>
+            {createElement(this.state.targetStrategy.targetStrategyComponent, {
+              blockAccessKey: this.blockAccessKey,
+            })}
+            <span className={styles.unselectorMargin}>
+              <StrategyUnselector blockAccessKey={this.blockAccessKey} />
+            </span>
+          </>
+        ) : (
+          <StrategySelector blockAccessKey={this.blockAccessKey} />
+        )}
+      </>
+    );
   }
 }
 

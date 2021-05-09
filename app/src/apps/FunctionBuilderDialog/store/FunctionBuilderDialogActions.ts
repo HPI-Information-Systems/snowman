@@ -59,7 +59,12 @@ export class FunctionBuildingBlockMagistrate {
       dispatch: SnowmanDispatch<FunctionBuilderDialogModel>,
       getState: () => FunctionBuilderDialogModel
     ): number {
-      return (max(getState().reservedAccessKeys) ?? RootAccessKey) + 1;
+      const newKey = (max(getState().reservedAccessKeys) ?? RootAccessKey) + 1;
+      dispatch({
+        type: FunctionBuilderDialogActionTypes.REGISTER_NEW_ACCESS_KEY,
+        payload: newKey,
+      });
+      return newKey;
     };
   }
 
