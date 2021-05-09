@@ -1,7 +1,4 @@
-import {
-  SimilarityThresholdFunctionValuesTypeEnum,
-  SimilarityThresholdsApi,
-} from 'api';
+import { SimilarityThresholdsApi } from 'api';
 import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/RootAccessKey';
 import { FunctionBuilderDialogMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogStore';
 import { FunctionBuilderDialogActionTypes } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogActionTypes';
@@ -31,15 +28,17 @@ const getExperimentId = (): number =>
 export const createSimilarityThresholdFunction = (): SnowmanThunkAction<
   void,
   FunctionBuilderDialogModel
-> => (): void => {
+> => (
+  _: SnowmanDispatch<FunctionBuilderDialogModel>,
+  getState: () => FunctionBuilderDialogModel
+): void => {
   RequestHandler<number>(
     (): Promise<number> =>
       new SimilarityThresholdsApi().addSimilarityThresholdFunction({
-        experimentId: getExperimentId(),
         similarityThresholdFunction: {
-          name: 'New SimFunc',
-          type: SimilarityThresholdFunctionValuesTypeEnum.Constant,
-          constant: 4,
+          name: getState().functionName,
+          experimentId: getExperimentId(),
+          definition: getState().functionBuildingStack.getFunctionDefinition(),
         },
       }),
     SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION

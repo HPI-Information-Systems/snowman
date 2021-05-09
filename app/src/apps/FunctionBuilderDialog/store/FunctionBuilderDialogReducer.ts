@@ -14,6 +14,7 @@ import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: FunctionBuilderDialogModel = {
   reservedAccessKeys: [RootAccessKey],
+  functionName: '',
   functionBuildingStack: new FunctionBuildingBlock(
     RootAccessKey,
     UndefinedStrategy,
@@ -28,6 +29,11 @@ const FunctionBuilderDialogReducer = (
   action: SnowmanAction
 ): FunctionBuilderDialogModel => {
   switch (action.type) {
+    case FunctionBuilderDialogActionTypes.CHANGE_FUNCTION_NAME:
+      return {
+        ...state,
+        functionName: action.payload as string,
+      };
     case FunctionBuilderDialogActionTypes.REGISTER_NEW_ACCESS_KEY:
       return {
         ...state,
