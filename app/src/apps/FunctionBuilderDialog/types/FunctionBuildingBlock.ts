@@ -1,6 +1,8 @@
 import {
+  SimilarityThresholdFunctionDefinition,
   SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionOperatorOperatorEnum,
+  SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
 } from 'api';
 import autoBind from 'auto-bind';
 
@@ -39,6 +41,55 @@ export class FunctionBuildingBlock {
     this.mid = mid ?? null;
     this.right = right ?? null;
     autoBind(this);
+  }
+
+  public getFunctionDefinition():
+    | SimilarityThresholdFunctionDefinition
+    | never {
+    switch (this.type) {
+      case SimilarityThresholdFunctionDefinitionTypeEnum.Constant:
+        if (this.left === null) throw Error('No constant value given');
+        return {
+          type: SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
+          constant: this.left as number,
+        };
+      case SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold:
+        if (this.left === null) throw Error('No similarity threshold given');
+        return {
+          type:
+            SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+          similarityThreshold: this.left as string,
+        };
+      case SimilarityThresholdFunctionDefinitionTypeEnum.UnaryOperator:
+        if (this.left === null) throw Error('No operator set');
+        if (!(this.right instanceof FunctionBuildingBlock))
+          throw Error('No operand set');
+        return {
+          type: SimilarityThresholdFunctionDefinitionTypeEnum.UnaryOperator,
+          unaryOperator: {
+            func: this.right.getFunctionDefinition(),
+            operator: this
+              .left as SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
+          },
+        };
+      case SimilarityThresholdFunctionDefinitionTypeEnum.Operator:
+        if (!(this.left instanceof FunctionBuildingBlock))
+          throw Error('No left operand set');
+        if (!(this.right instanceof FunctionBuildingBlock))
+          throw Error('No right operand set');
+        if (this.mid === null) throw Error('No operator set');
+        return {
+          type: SimilarityThresholdFunctionDefinitionTypeEnum.Operator,
+          operator: {
+            left: this.left.getFunctionDefinition(),
+            right: this.left.getFunctionDefinition(),
+            operator: this
+              .mid as SimilarityThresholdFunctionOperatorOperatorEnum,
+          },
+        };
+      default:
+        throw Error('Type not set');
+    }
   }
 
   public navigateToBlockAndMutate(

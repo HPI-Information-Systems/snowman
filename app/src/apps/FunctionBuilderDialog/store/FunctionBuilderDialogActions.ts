@@ -32,7 +32,6 @@ export const createSimilarityThresholdFunction = (): SnowmanThunkAction<
   void,
   FunctionBuilderDialogModel
 > => (): void => {
-  console.log(getExperimentId());
   RequestHandler<number>(
     (): Promise<number> =>
       new SimilarityThresholdsApi().addSimilarityThresholdFunction({
