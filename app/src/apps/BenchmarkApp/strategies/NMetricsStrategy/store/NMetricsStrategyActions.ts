@@ -43,14 +43,18 @@ export const loadNMetrics = (): SnowmanThunkAction<
   if (!getState().isValidConfig) {
     return;
   }
-  const goldStandard = getState().groundTruth;
+  const groundTruth = getState().groundTruth;
   dispatch(resetMetrics());
   Promise.all(
     getState().experiments.map((anEntity: ExperimentEntity) =>
       new BenchmarkApi().getBinaryMetrics({
+        groundTruthSimilarityThresholdFunction: groundTruth?.similarity?.func,
+        groundTruthSimilarityThreshold: groundTruth?.similarity?.threshold,
         groundTruthExperimentId:
-          goldStandard?.experiment.id ?? MagicNotPossibleId,
-        predictedExperimentId: anEntity.experiment.id,
+          groundTruth?.experiment.id ?? MagicNotPossibleId,
+        predictedSimilarityThresholdFunction: anEntity.similarity?.func,
+        predictedSimilarityThreshold: anEntity.similarity?.threshold,
+        predictedExperimentId: anEntity.experiment?.id ?? MagicNotPossibleId,
       })
     )
   ).then((metrics: Metric[][]): void => {
