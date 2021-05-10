@@ -5,6 +5,7 @@ import { SelectorItem } from 'apps/BenchmarkApp/components/BenchmarkConfigurator
 
 export type GroupInputOwnProps = AtomicSelectorGroupOwnProps & {
   cacheKey: ReturnType<typeof groupCacheKeyAndFilter>['cacheKey'];
+  spreadItemsToParent?: boolean;
 };
 
 export interface GroupInputStateProps {

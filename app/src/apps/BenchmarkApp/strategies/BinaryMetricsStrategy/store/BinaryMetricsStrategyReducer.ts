@@ -1,11 +1,8 @@
 import { Dataset, Experiment, ExperimentIntersectionCount, Metric } from 'api';
-import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
-import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
-import { MULTI_SELECTOR_START } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
+import { BinaryMetricsConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/BinaryMetricsConfigurator';
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
 import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { getSingleItem } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { SnowmanAction } from 'types/SnowmanAction';
 
@@ -26,44 +23,31 @@ const BinaryMetricsStrategyReducer = (
   switch (action.type) {
     case BinaryMetricsStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
-      const datasetId = getSingleItem(
-        getCacheKey(StoreCacheKeyBaseEnum.dataset, MULTI_SELECTOR_START),
-        appStore
-      );
-      const goldStandardId = getSingleItem(
-        getCacheKey(StoreCacheKeyBaseEnum.groundTruth, MULTI_SELECTOR_START),
-        appStore
-      );
-      const experimentId = getSingleItem(
-        getCacheKey(
-          StoreCacheKeyBaseEnum.experiment,
-          MULTI_SELECTOR_START,
-          MULTI_SELECTOR_START
-        ),
-        appStore
-      );
+      const configuration = BinaryMetricsConfiguration.getValue(appStore);
       if (
-        datasetId === undefined ||
-        goldStandardId === undefined ||
-        experimentId === undefined
-      )
+        configuration.dataset[0] === undefined ||
+        configuration.groundTruth[0] === undefined ||
+        configuration.experiment[0] === undefined
+      ) {
         return {
           ...state,
           isValidConfig: false,
         };
+      }
 
       return {
         ...state,
         goldStandard: appStore.resources.experiments.find(
           (anExperiment: Experiment): boolean =>
-            anExperiment.id === goldStandardId
+            anExperiment.id === configuration.groundTruth[0]
         ),
         experiment: appStore.resources.experiments.find(
           (anExperiment: Experiment): boolean =>
-            anExperiment.id === experimentId
+            anExperiment.id === configuration.experiment[0]
         ),
         dataset: appStore.resources.datasets.find(
-          (aDataset: Dataset): boolean => aDataset.id === datasetId
+          (aDataset: Dataset): boolean =>
+            aDataset.id === configuration.dataset[0]
         ),
         isValidConfig: true,
         metrics: [],

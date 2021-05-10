@@ -4,31 +4,41 @@ import ConfiguratorItem from 'apps/BenchmarkApp/components/BenchmarkConfigurator
 import SelectorPopoverGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/SelectorPopoverGroup';
 import { BenchmarkAppStoreMagistrate } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
 import { useInstanceDescriptor } from 'apps/BenchmarkApp/utils/useInstanceDescriptor';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Provider } from 'react-redux';
 
-const GroupInputView = ({ cacheKeys, items }: GroupInputProps): JSX.Element => {
-  return (
-    <SelectorPopoverGroup
-      instanceDescriptor={useInstanceDescriptor()}
-      items={items}
-    >
+const GroupInputView = ({
+  cacheKeys,
+  items,
+  spreadItemsToParent,
+}: GroupInputProps): JSX.Element => {
+  const instanceDescriptor = useInstanceDescriptor();
+  const itemElements = useMemo(
+    () =>
+      cacheKeys.map(([cacheKey, heading], index) =>
+        heading ? (
+          <ConfiguratorItem
+            key={index}
+            title={heading}
+            configurators={[[cacheKey, false]]}
+          />
+        ) : (
+          <AtomicSelectorGroup
+            key={index}
+            cacheKey={cacheKey}
+            allowMultiple={false}
+          />
+        )
+      ),
+    [cacheKeys]
+  );
+
+  return spreadItemsToParent ? (
+    <>{itemElements}</>
+  ) : (
+    <SelectorPopoverGroup instanceDescriptor={instanceDescriptor} items={items}>
       <Provider store={BenchmarkAppStoreMagistrate.getStore()}>
-        {cacheKeys.map(([cacheKey, heading], index) =>
-          heading ? (
-            <ConfiguratorItem
-              key={index}
-              title={heading}
-              configurators={[[cacheKey, false]]}
-            />
-          ) : (
-            <AtomicSelectorGroup
-              key={index}
-              cacheKey={cacheKey}
-              allowMultiple={false}
-            />
-          )
-        )}
+        {itemElements}
       </Provider>
     </SelectorPopoverGroup>
   );

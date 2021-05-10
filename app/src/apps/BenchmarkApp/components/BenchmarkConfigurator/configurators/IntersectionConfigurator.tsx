@@ -1,39 +1,35 @@
-import { IonList } from '@ionic/react';
-import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
-import { MULTI_SELECTOR_START } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
-import ConfiguratorItem from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/ConfiguratorItem/ConfiguratorItem';
+import { buildConfigurator } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/builder';
 import GenericConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/GenericConfigurator/GenericConfigurator';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import React from 'react';
 
+export const IntersectionConfiguration = buildConfigurator([
+  'first',
+  {
+    dataset: {
+      configuration: StoreCacheKeyBaseEnum.dataset,
+      heading: '1. Select Dataset',
+      position: 1,
+    },
+    groundTruth: {
+      configuration: StoreCacheKeyBaseEnum.groundTruth,
+      heading: '2. (Optional) Select Ground Truth',
+      position: 2,
+    },
+    experiments: {
+      configuration: [StoreCacheKeyBaseEnum.experiment],
+      heading: '3. Select Experiments',
+      position: 3,
+    },
+  },
+]);
+
 const IntersectionConfigurator = (): JSX.Element => (
-  <GenericConfigurator strategyID={StrategyIDs.NaryIntersection}>
-    <IonList>
-      <ConfiguratorItem
-        title="1. Select Dataset"
-        configurators={[
-          [
-            getCacheKey(StoreCacheKeyBaseEnum.dataset, MULTI_SELECTOR_START),
-            false,
-          ],
-        ]}
-      />
-      <ConfiguratorItem
-        title="2. Select Experiments"
-        configurators={[
-          [
-            getCacheKey(
-              StoreCacheKeyBaseEnum.experiment,
-              MULTI_SELECTOR_START,
-              MULTI_SELECTOR_START
-            ),
-            true,
-          ],
-        ]}
-      />
-    </IonList>
-  </GenericConfigurator>
+  <GenericConfigurator
+    cacheKey={IntersectionConfiguration.cacheKey}
+    strategyID={StrategyIDs.NaryIntersection}
+  />
 );
 
 export default IntersectionConfigurator;

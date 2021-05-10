@@ -1,11 +1,8 @@
 import { Experiment, ExperimentIntersectionCount } from 'api';
-import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
-import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
-import { MULTI_SELECTOR_START } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
+import { IntersectionConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/IntersectionConfigurator';
 import { IntersectionStrategyActionTypes } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyActionTypes';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { getDefinedItems } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { difference, nth } from 'lodash';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';
@@ -42,14 +39,11 @@ const IntersectionStrategyReducer = (
   switch (action.type) {
     case IntersectionStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
-      const experimentIds = getDefinedItems(
-        getCacheKey(
-          StoreCacheKeyBaseEnum.experiment,
-          MULTI_SELECTOR_START,
-          MULTI_SELECTOR_START
-        ),
-        appStore
-      );
+      const configuration = IntersectionConfiguration.getValue(appStore);
+      const experimentIds = [
+        ...configuration.experiments.flat(),
+        ...configuration.groundTruth,
+      ];
       if (experimentIds.length === 0)
         return {
           ...state,
