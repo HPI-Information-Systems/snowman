@@ -25,17 +25,17 @@ const KpiInvestigatorStrategyReducer = (
       const configuration = KPIDiagramConfiguration.getValue(
         action.payload as BenchmarkAppModel
       );
-      const diagramItems = configuration
+      const diagramItems = configuration.diagramTracks
         .filter(
           (aTrack): boolean =>
             aTrack.dataset[0] !== undefined &&
             aTrack.experiments[0].experiment[0] !== undefined &&
-            aTrack.experiments[0].groundTruth[0] !== undefined
+            aTrack.groundTruth[0] !== undefined
         )
         .map((aTrack): DiagramExperimentItem[] =>
           aTrack.experiments.map(
             (anEntity): DiagramExperimentItem => ({
-              groundTruth: { experimentId: anEntity.groundTruth[0] },
+              groundTruth: { experimentId: aTrack.groundTruth[0] },
               experiment: { experimentId: anEntity.experiment[0] },
             })
           )
