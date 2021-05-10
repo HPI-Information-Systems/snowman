@@ -55,7 +55,7 @@ type ConfigurationValue<
   ? MultiSelectConfigurationValue<Configuration>
   : never;
 
-function buildConfigurator<Configuration extends ConfigurationT>(
+export function buildConfigurator<Configuration extends ConfigurationT>(
   configuration: Configuration,
   multiSelectCount = 0
 ): {
@@ -91,7 +91,7 @@ function buildConfigurator<Configuration extends ConfigurationT>(
     );
   } else {
     cacheKey = getCacheKey(
-      configuration,
+      configuration as StoreCacheKeyBaseEnum,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ...(Array(multiSelectCount).fill(MULTI_SELECTOR_INCREMENT_ID) as any)
     );
@@ -104,14 +104,3 @@ function buildConfigurator<Configuration extends ConfigurationT>(
       ) as ConfigurationValue<Configuration>,
   };
 }
-
-const a = buildConfigurator({
-  test: {
-    configuration: [[StoreCacheKeyBaseEnum.algorithm]],
-    position: 1,
-  },
-  test2: {
-    configuration: StoreCacheKeyBaseEnum.dataset,
-    position: 2,
-  },
-});
