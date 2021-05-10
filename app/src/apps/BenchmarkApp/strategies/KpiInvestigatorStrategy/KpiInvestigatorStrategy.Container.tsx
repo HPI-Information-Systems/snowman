@@ -19,10 +19,9 @@ const mapStateToProps = (
   state: KpiInvestigatorStrategyModel
 ): KpiInvestigatorStrategyStateProps => ({
   isValidConfig: state.isValidConfig,
-  // Todo: Improve this
   datasets: state.coordinates.map(
     (myCoordinates, index): ScatterChartDataset => ({
-      label: state.diagramTracks[index].name ?? '???',
+      label: state.diagramTracks[index].name ?? index.toString(),
       backgroundColor: getMyColor(index),
       data: myCoordinates,
       pointRadius: 6,
