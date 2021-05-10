@@ -1,9 +1,8 @@
-import { MetricsEnum } from 'api';
+import { DiagramExperimentItem, MetricsEnum } from 'api';
 import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
-import { SoftKPIDiagramConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
+import { KPIDiagramConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
 import { KpiInvestigatorStrategyActionTypes } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyActionTypes';
 import { KpiInvestigatorStrategyModel } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
-import { MockDiagramExperimentItems } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/utils/mockDiagramExperimentItems';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { AllMetricsEnum } from 'types/AllMetricsEnum';
 import { SnowmanAction } from 'types/SnowmanAction';
@@ -12,7 +11,7 @@ const initialState: KpiInvestigatorStrategyModel = {
   isValidConfig: true,
   experimentItems: [],
   coordinates: [],
-  selectedExperiment: [],
+  experiments: [],
   xAxis: MetricsEnum.Precision,
   yAxis: MetricsEnum.Recall,
 };
@@ -23,16 +22,24 @@ const KpiInvestigatorStrategyReducer = (
 ): KpiInvestigatorStrategyModel => {
   switch (action.type) {
     case KpiInvestigatorStrategyActionTypes.UPDATE_CONFIG: {
-      // Todo: Connect with store and retrieve from cache
-      const retrievedExperimentItems = MockDiagramExperimentItems;
-      const configuration = SoftKPIDiagramConfiguration.getValue(
+      const configuration = KPIDiagramConfiguration.getValue(
         action.payload as BenchmarkAppModel
       );
+      console.log(configuration);
+      const selectedExperiments = configuration.flatMap(
+        (aTrack) => aTrack.experiments
+      );
+      console.log(selectedExperiments);
 
       return {
         ...state,
-        experimentItems: retrievedExperimentItems,
-        selectedExperiment: (action.payload as BenchmarkAppModel).resources
+        experimentItems: selectedExperiments.map(
+          (anEntity): DiagramExperimentItem => ({
+            groundTruth: { experimentId: anEntity.groundTruth },
+            experiment: { experimentId: anEntity.experiment },
+          })
+        ),
+        experiments: (action.payload as BenchmarkAppModel).resources
           .experiments,
         coordinates: [],
       };
