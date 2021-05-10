@@ -21,11 +21,11 @@ export const updateConfig = (
   });
 
 export const setCoordinates = (
-  coordinates: DiagramCoordinates[]
+  allCoordinates: DiagramCoordinates[][]
 ): easyPrimitiveActionReturn<KpiInvestigatorStrategyModel> =>
   easyPrimitiveAction<KpiInvestigatorStrategyModel>({
     type: KpiInvestigatorStrategyActionTypes.SET_COORDINATES,
-    payload: coordinates,
+    payload: allCoordinates,
   });
 
 export const setXAxis = (
@@ -52,17 +52,20 @@ export const loadCoordinates = (): SnowmanThunkAction<
   getState: () => KpiInvestigatorStrategyModel
 ): Promise<void> => {
   if (!getState().isValidConfig) return Promise.resolve();
-  return RequestHandler(() =>
-    new BenchmarkApi()
-      .calculateDiagramData({
-        xAxis: getState().xAxis,
-        yAxis: getState().yAxis,
-        diagram: { multipleExperiments: getState().experimentItems },
-      })
-      .then((coordinates) =>
-        dispatch(setCoordinates(coordinates as DiagramCoordinates[]))
-      )
-  );
+  return Promise.all(
+    getState().diagramItems.map(
+      (anItem): Promise<DiagramCoordinates[]> =>
+        RequestHandler(() =>
+          new BenchmarkApi()
+            .calculateDiagramData({
+              xAxis: getState().xAxis,
+              yAxis: getState().yAxis,
+              diagram: { multipleExperiments: anItem },
+            })
+            .then((coordinates) => coordinates as DiagramCoordinates[])
+        )
+    )
+  ).then((allCoordinates) => dispatch(setCoordinates(allCoordinates)));
 };
 
 export const loadStrategyData = (

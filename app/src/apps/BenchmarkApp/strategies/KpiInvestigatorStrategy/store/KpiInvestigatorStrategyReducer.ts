@@ -9,7 +9,7 @@ import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: KpiInvestigatorStrategyModel = {
   isValidConfig: true,
-  experimentItems: [],
+  diagramItems: [],
   coordinates: [],
   experiments: [],
   xAxis: MetricsEnum.Precision,
@@ -33,19 +33,23 @@ const KpiInvestigatorStrategyReducer = (
 
       return {
         ...state,
-        experimentItems: selectedExperiments.map(
-          (anEntity): DiagramExperimentItem => ({
-            groundTruth: { experimentId: anEntity.groundTruth },
-            experiment: { experimentId: anEntity.experiment },
-          })
+        diagramItems: configuration.map((aConfig): DiagramExperimentItem[] =>
+          aConfig.experiments.map(
+            (anEntity): DiagramExperimentItem => ({
+              groundTruth: { experimentId: anEntity.groundTruth },
+              experiment: { experimentId: anEntity.experiment },
+            })
+          )
         ),
         experiments: (action.payload as BenchmarkAppModel).resources
           .experiments,
-        coordinates: [],
       };
     }
     case KpiInvestigatorStrategyActionTypes.SET_COORDINATES: {
-      return { ...state, coordinates: action.payload as DiagramCoordinates[] };
+      return {
+        ...state,
+        coordinates: action.payload as DiagramCoordinates[][],
+      };
     }
     case KpiInvestigatorStrategyActionTypes.SET_X_AXIS: {
       return {
