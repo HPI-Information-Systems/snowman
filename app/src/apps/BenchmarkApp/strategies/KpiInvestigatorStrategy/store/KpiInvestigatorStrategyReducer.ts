@@ -29,14 +29,13 @@ const KpiInvestigatorStrategyReducer = (
       const selectedExperiments = configuration.flatMap(
         (aTrack) => aTrack.experiments
       );
-      console.log(selectedExperiments);
 
       return {
         ...state,
         experimentItems: selectedExperiments.map(
           (anEntity): DiagramExperimentItem => ({
-            groundTruth: { experimentId: anEntity.groundTruth },
-            experiment: { experimentId: anEntity.experiment },
+            groundTruth: { experimentId: anEntity.groundTruth[0] },
+            experiment: { experimentId: anEntity.experiment[0] },
           })
         ),
         experiments: (action.payload as BenchmarkAppModel).resources

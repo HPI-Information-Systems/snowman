@@ -39,7 +39,11 @@ export const groupCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.group,
   targetCache: () => 'multiSelects',
-  getValue: (state, _, ...[, ...cacheKeys]) => {
+  getValue: (state, _, ...[autoIncrements, ...cacheKeys]) => {
+    cacheKeys = resolveMultiSelectorAutoIncrements(
+      autoIncrements,
+      ...cacheKeys
+    );
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result: Record<string, any> = {};
     for (const [key, cacheKey] of cacheKeys) {
