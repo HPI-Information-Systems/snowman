@@ -7,7 +7,7 @@ import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: NMetricsStrategyModel = {
   experiments: [],
-  goldStandard: undefined,
+  groundTruth: undefined,
   metrics: [],
   isValidConfig: false,
 };
@@ -29,7 +29,7 @@ const NMetricsStrategyReducer = (
         };
       return {
         ...state,
-        goldStandard: appStore.resources.experiments.find(
+        groundTruth: appStore.resources.experiments.find(
           (anExperiment: Experiment): boolean =>
             anExperiment.id === goldStandardId
         ),

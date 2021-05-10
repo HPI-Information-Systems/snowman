@@ -4,7 +4,7 @@ import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 export interface BinaryMetricsStrategyModel {
   isValidConfig: boolean;
   experiment: Experiment | undefined;
-  goldStandard: Experiment | undefined;
+  groundTruth: Experiment | undefined;
   dataset: Dataset | undefined;
   counts: ExperimentIntersectionCount[];
   metrics: Metric[];

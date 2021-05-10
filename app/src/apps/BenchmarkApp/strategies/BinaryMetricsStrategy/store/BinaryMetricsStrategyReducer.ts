@@ -9,7 +9,7 @@ import { SnowmanAction } from 'types/SnowmanAction';
 const initialState: BinaryMetricsStrategyModel = {
   isValidConfig: false,
   experiment: undefined,
-  goldStandard: undefined,
+  groundTruth: undefined,
   dataset: undefined,
   metrics: [],
   counts: [],
@@ -37,7 +37,7 @@ const BinaryMetricsStrategyReducer = (
 
       return {
         ...state,
-        goldStandard: appStore.resources.experiments.find(
+        groundTruth: appStore.resources.experiments.find(
           (anExperiment: Experiment): boolean =>
             anExperiment.id === configuration.groundTruth[0]
         ),

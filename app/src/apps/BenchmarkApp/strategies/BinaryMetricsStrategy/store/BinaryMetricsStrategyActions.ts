@@ -42,7 +42,7 @@ export const loadMetrics = (): SnowmanThunkAction<
         () =>
           new BenchmarkApi().getBinaryMetrics({
             groundTruthExperimentId:
-              getState().goldStandard?.id ?? MagicNotPossibleId,
+              getState().groundTruth?.id ?? MagicNotPossibleId,
             predictedExperimentId:
               getState().experiment?.id ?? MagicNotPossibleId,
           }),
@@ -112,7 +112,7 @@ type LoadTuplesRequestBody = ReturnType<typeof getRequestBodyForTruePositives>;
 const getExperimentsComparisonTuple = (
   state: BinaryMetricsStrategyModel
 ): [ExperimentConfigItem, ExperimentConfigItem] => [
-  { experimentId: state.goldStandard?.id ?? MagicNotPossibleId },
+  { experimentId: state.groundTruth?.id ?? MagicNotPossibleId },
   { experimentId: state.experiment?.id ?? MagicNotPossibleId },
 ];
 

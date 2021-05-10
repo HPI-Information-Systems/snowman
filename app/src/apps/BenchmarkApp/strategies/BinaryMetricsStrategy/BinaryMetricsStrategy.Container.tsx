@@ -25,7 +25,7 @@ const getCountsByTuplesCategory = (
   aMetricsTuplesCategory: MetricsTuplesCategories
 ): ExperimentIntersectionCount | undefined => {
   const experiment = store.experiment;
-  const goldStandard = store.goldStandard;
+  const goldStandard = store.groundTruth;
   if (experiment === undefined || goldStandard === undefined) {
     return undefined;
   }
@@ -114,7 +114,7 @@ const mapStateToProps = (
   selectedMetricsTuplesCategory: state.selectedDataView,
   rowCount: getRowCountByTuplesCategory(state, state.selectedDataView),
   tuplesLoader:
-    state.experiment !== undefined && state.goldStandard !== undefined
+    state.experiment !== undefined && state.groundTruth !== undefined
       ? getTuplesLoaderByTuplesCategory(state, state.selectedDataView)
       : dummyTuplesLoader,
   confusionMatrix: {
@@ -137,24 +137,24 @@ const mapStateToProps = (
     ),
   },
   dataViewerTitle:
-    state.experiment !== undefined && state.goldStandard !== undefined
+    state.experiment !== undefined && state.groundTruth !== undefined
       ? intersectionDescription(
           state.selectedDataView === MetricsTuplesCategories.truePositives
             ? {
-                included: [state.experiment.name, state.goldStandard.name],
+                included: [state.experiment.name, state.groundTruth.name],
               }
             : state.selectedDataView === MetricsTuplesCategories.falsePositives
             ? {
                 included: [state.experiment.name],
-                excluded: [state.goldStandard.name],
+                excluded: [state.groundTruth.name],
               }
             : state.selectedDataView === MetricsTuplesCategories.falseNegatives
             ? {
                 excluded: [state.experiment.name],
-                included: [state.goldStandard.name],
+                included: [state.groundTruth.name],
               }
             : {
-                excluded: [state.experiment.name, state.goldStandard.name],
+                excluded: [state.experiment.name, state.groundTruth.name],
               }
         )
       : 'unknown',

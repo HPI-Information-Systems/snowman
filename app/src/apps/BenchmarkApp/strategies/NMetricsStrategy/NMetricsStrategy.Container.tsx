@@ -20,7 +20,7 @@ const mapStateToProps = (
   return {
     metrics: state.metrics,
     experiments: state.experiments,
-    goldStandard: state.goldStandard,
+    goldStandard: state.groundTruth,
     isValidSelection: state.isValidConfig,
   };
 };

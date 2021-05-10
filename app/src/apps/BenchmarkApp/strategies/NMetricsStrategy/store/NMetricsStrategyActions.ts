@@ -42,7 +42,7 @@ export const loadNMetrics = (): SnowmanThunkAction<
   if (!getState().isValidConfig) {
     return;
   }
-  const goldStandard = getState().goldStandard;
+  const goldStandard = getState().groundTruth;
   dispatch(resetMetrics());
   Promise.all(
     getState().experiments.map((anExperiment: Experiment) =>
