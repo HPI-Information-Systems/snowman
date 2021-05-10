@@ -4,11 +4,7 @@ import {
   ModelOfCache,
   StoreCacheKey,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
-import { BenchmarkAppStoreMagistrate } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
-import {
-  BenchmarkAppDispatch,
-  BenchmarkAppModel,
-} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
 import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { getItems } from 'apps/BenchmarkApp/utils/configurationItemGetter';
@@ -53,20 +49,4 @@ export const updateSelection = <Base extends StoreCacheKeyBaseEnum>({
     newSelection = currentSelection;
   }
   dispatch(setSelection(aCacheKey, newSelection));
-};
-
-export const doPrimeSelection = <Base extends StoreCacheKeyBaseEnum>({
-  aCacheKey,
-  selectFirst,
-}: {
-  aCacheKey: StoreCacheKey<Base>;
-  selectFirst: ModelOfCacheKeyBase<Base>;
-}): void => {
-  (BenchmarkAppStoreMagistrate.getStore().dispatch as BenchmarkAppDispatch)(
-    updateSelection({
-      aCacheKey,
-      newSelection: [selectFirst],
-      allowMultiple: false,
-    })
-  );
 };

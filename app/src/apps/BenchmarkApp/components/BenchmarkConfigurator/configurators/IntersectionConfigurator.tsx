@@ -5,7 +5,6 @@ import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import React from 'react';
 
 export const IntersectionConfiguration = buildConfigurator([
-  'first',
   {
     dataset: {
       configuration: StoreCacheKeyBaseEnum.dataset,
@@ -18,7 +17,10 @@ export const IntersectionConfiguration = buildConfigurator([
       position: 2,
     },
     experiments: {
-      configuration: [StoreCacheKeyBaseEnum.experiment],
+      configuration: [
+        StoreCacheKeyBaseEnum.experiment,
+        StoreCacheKeyBaseEnum.experiment,
+      ],
       heading: '3. Select Experiments',
       position: 3,
     },

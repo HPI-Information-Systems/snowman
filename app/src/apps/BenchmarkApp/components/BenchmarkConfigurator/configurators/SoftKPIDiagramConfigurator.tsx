@@ -38,11 +38,13 @@ export const KPIDiagramConfiguration = buildConfigurator({
                 position: 3,
               },
             },
+            StoreCacheKeyBaseEnum.experiment,
           ],
           position: 3,
           heading: 'Select Experiments',
         },
       },
+      StoreCacheKeyBaseEnum.dataset,
     ],
   },
 });

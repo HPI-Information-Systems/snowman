@@ -1,16 +1,21 @@
 import { IonIcon, IonItem, IonList } from '@ionic/react';
+import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
+import { MULTI_SELECTOR_START } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
+import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 import { AtomicSelectorGroup } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroup';
 import { MultiSelectorProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/MultiSelector/MultiSelectorProps';
 import styles from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/MultiSelector/MultiSelectorStyles.module.css';
+import { createCacheKey } from 'apps/BenchmarkApp/store/ConfigurationStore/MultiSelectorActions';
 import { addCircle, closeCircleOutline } from 'ionicons/icons';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
 import style from 'theme/style';
 
 const MultiSelectorView = ({
-  cacheKeys,
+  ids,
   push,
   remove,
+  cacheKey,
 }: MultiSelectorProps): JSX.Element => {
   useEffect(() => {
     // Triggered on every component update!
@@ -25,7 +30,7 @@ const MultiSelectorView = ({
       )}
     >
       <IonList className={styles.list}>
-        {cacheKeys.map((cacheKey, index) => (
+        {ids.map((id, index) => (
           <IonItem
             key={index}
             className={style(
@@ -34,16 +39,27 @@ const MultiSelectorView = ({
               styles.itemNoSafePad
             )}
           >
-            <AtomicSelectorGroup cacheKey={cacheKey} allowMultiple={false} />
+            <AtomicSelectorGroup
+              cacheKey={createCacheKey(
+                cacheKey as StoreCacheKey<
+                  StoreCacheKeyBaseEnum.multiSelect,
+                  [string, number[], ...StoreCacheKey]
+                >,
+                id
+              )}
+              allowMultiple={false}
+            />
 
             <IonIcon
               className={styles.pointer}
               icon={closeCircleOutline}
-              color={index > 0 ? 'danger' : 'light'}
+              color={id !== MULTI_SELECTOR_START ? 'danger' : 'light'}
               data-tip={
-                index === 0 ? 'The first item cannot be removed' : undefined
+                id !== MULTI_SELECTOR_START
+                  ? 'This item cannot be removed'
+                  : undefined
               }
-              onClick={() => remove(cacheKey)}
+              onClick={() => remove(id)}
               slot="end"
             />
           </IonItem>

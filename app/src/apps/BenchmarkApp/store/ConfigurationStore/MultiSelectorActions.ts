@@ -1,9 +1,9 @@
+import { getCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import {
   MULTI_SELECTOR_INCREMENT_ID,
   MULTI_SELECTOR_START,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
-import { serializeCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/serializeCacheKey';
 import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
@@ -37,17 +37,36 @@ export const selectId = <
   return aCacheKey;
 };
 
-const createCacheKey = (
-  aCacheKey: StoreCacheKey<StoreCacheKeyBaseEnum.multiSelect>,
+export const resolveMultiSelectorAutoIncrements = (
+  autoIncrements: number[],
+  ...cacheKey: StoreCacheKey
+): StoreCacheKey => {
+  for (const id of autoIncrements) {
+    cacheKey = selectId(cacheKey, id) ?? cacheKey;
+  }
+  return cacheKey;
+};
+
+export const createCacheKey = (
+  aCacheKey: StoreCacheKey<
+    StoreCacheKeyBaseEnum.multiSelect,
+    [string, number[], ...StoreCacheKey]
+  >,
   id: number
-): StoreCacheKey => selectId(aCacheKey.slice(1) as StoreCacheKey, id);
+): StoreCacheKey =>
+  selectId(
+    resolveMultiSelectorAutoIncrements(
+      ...(aCacheKey.slice(2) as [number[], ...StoreCacheKey])
+    ),
+    id
+  );
 
 export const getMultiSelectConfiguration = (
   aCacheKey: StoreCacheKey<StoreCacheKeyBaseEnum.multiSelect>,
   state: BenchmarkAppModel
 ): MultiSelectConfigurationModel =>
   getSingleItem(aCacheKey, state) ?? {
-    currentCacheKeys: [createCacheKey(aCacheKey, MULTI_SELECTOR_START)],
+    currentIds: [MULTI_SELECTOR_START],
     nextId: MULTI_SELECTOR_START + 1,
   };
 
@@ -64,9 +83,9 @@ export const push = (
       newSelection: [
         {
           ...currentConfiguration,
-          currentCacheKeys: [
-            ...currentConfiguration.currentCacheKeys,
-            createCacheKey(aCacheKey, currentConfiguration.nextId) ?? aCacheKey,
+          currentIds: [
+            ...currentConfiguration.currentIds,
+            currentConfiguration.nextId,
           ],
           nextId: currentConfiguration.nextId + 1,
         },
@@ -78,13 +97,9 @@ export const push = (
 
 export const remove = (
   aCacheKey: StoreCacheKey<StoreCacheKeyBaseEnum.multiSelect>,
-  removeCacheKey: StoreCacheKey
+  removeId: number
 ): SnowmanThunkAction<void, BenchmarkAppModel> => (dispatch, getState) => {
-  const serializedRemovedCacheKey = serializeCacheKey(removeCacheKey);
-  if (
-    serializedRemovedCacheKey !==
-    serializeCacheKey(createCacheKey(aCacheKey, MULTI_SELECTOR_START))
-  ) {
+  if (removeId !== MULTI_SELECTOR_START) {
     const currentConfiguration = getMultiSelectConfiguration(
       aCacheKey,
       getState()
@@ -95,12 +110,40 @@ export const remove = (
         newSelection: [
           {
             ...currentConfiguration,
-            currentCacheKeys: currentConfiguration.currentCacheKeys.filter(
-              (key) =>
-                serializeCacheKey(key) !== serializeCacheKey(removeCacheKey)
+            currentIds: currentConfiguration.currentIds.filter(
+              (id) => id !== removeId
             ),
           },
         ],
+        allowMultiple: true,
+      })
+    );
+  }
+};
+
+export const moveValueFront = (
+  aCacheKey: StoreCacheKey<StoreCacheKeyBaseEnum.multiSelect>,
+  value: unknown
+): SnowmanThunkAction<void, BenchmarkAppModel> => (dispatch, getState) => {
+  const state = getState();
+  const currentConfiguration = {
+    ...getMultiSelectConfiguration(aCacheKey, state),
+  };
+  const values = getCacheKeyAndFilter(aCacheKey).getValue(state).flat();
+  const swapIndex = values.indexOf(value);
+  if (swapIndex >= 0) {
+    currentConfiguration.currentIds = currentConfiguration.currentIds.slice();
+    [
+      currentConfiguration.currentIds[0],
+      currentConfiguration.currentIds[swapIndex],
+    ] = [
+      currentConfiguration.currentIds[swapIndex],
+      currentConfiguration.currentIds[0],
+    ];
+    dispatch(
+      updateSelection({
+        aCacheKey,
+        newSelection: [currentConfiguration],
         allowMultiple: true,
       })
     );

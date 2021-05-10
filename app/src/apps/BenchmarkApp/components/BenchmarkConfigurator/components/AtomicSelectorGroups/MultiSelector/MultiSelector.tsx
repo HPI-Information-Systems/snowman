@@ -1,4 +1,3 @@
-import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 import MultiSelectorView from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/MultiSelector/MultiSelector.View';
 import {
   MultiSelectorDispatchProps,
@@ -19,8 +18,9 @@ const mapStateToProps = (
   ownProps: MultiSelectorOwnProps
 ): MultiSelectorStateProps => {
   return {
-    cacheKeys: getMultiSelectConfiguration(ownProps.cacheKey, state)
-      .currentCacheKeys,
+    ids: getMultiSelectConfiguration(ownProps.cacheKey, state)
+      .currentIds.slice()
+      .sort(),
   };
 };
 
@@ -32,8 +32,8 @@ const mapDispatchToProps = (
     push() {
       dispatch(push(ownProps.cacheKey));
     },
-    remove(cacheKey: StoreCacheKey) {
-      dispatch(remove(ownProps.cacheKey, cacheKey));
+    remove(id: number) {
+      dispatch(remove(ownProps.cacheKey, id));
     },
   };
 };

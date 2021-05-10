@@ -1,11 +1,9 @@
+import { getCacheKeyAndFilterUntyped } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 
 export type SerializedStoreCacheKey = string;
 
 export const serializeCacheKey = (
   cacheKey: StoreCacheKey
-): SerializedStoreCacheKey => JSON.stringify(cacheKey);
-
-export const decodeCacheKey = (
-  encodedCacheKey: SerializedStoreCacheKey
-): StoreCacheKey => JSON.parse(encodedCacheKey);
+): SerializedStoreCacheKey =>
+  JSON.stringify(getCacheKeyAndFilterUntyped(cacheKey).prepareSerialization());

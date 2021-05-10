@@ -1,9 +1,10 @@
 import { Experiment } from 'api';
-import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
-import { MULTI_SELECTOR_START } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
+import { buildAnyConfigurator } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/builder';
+import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 import { doOpenStrategy } from 'apps/BenchmarkApp/store/BenchmarkAppActions';
-import { doPrimeSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreActions';
+import { BenchmarkAppStoreMagistrate } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
+import { moveValueFront } from 'apps/BenchmarkApp/store/ConfigurationStore/MultiSelectorActions';
 import NMetricsStrategyView from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategy.View';
 import {
   NMetricsStrategyDispatchProps,
@@ -12,6 +13,7 @@ import {
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { connect } from 'react-redux';
+import { SnowmanAction } from 'types/SnowmanAction';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 const mapStateToProps = (
@@ -31,14 +33,20 @@ const mapDispatchToProps = (
   dispatch: SnowmanDispatch<NMetricsStrategyModel>
 ): NMetricsStrategyDispatchProps => ({
   inspectExperiment(anExperiment: Experiment) {
-    doPrimeSelection({
-      aCacheKey: getCacheKey(
-        StoreCacheKeyBaseEnum.experiment,
-        MULTI_SELECTOR_START,
-        MULTI_SELECTOR_START
-      ),
-      selectFirst: anExperiment.id,
-    });
+    BenchmarkAppStoreMagistrate.getStore().dispatch(
+      (moveValueFront(
+        buildAnyConfigurator(
+          [
+            [
+              StoreCacheKeyBaseEnum.experiment,
+              StoreCacheKeyBaseEnum.experiment,
+            ],
+          ],
+          []
+        ).cacheKey as StoreCacheKey<StoreCacheKeyBaseEnum.multiSelect>,
+        anExperiment.id
+      ) as unknown) as SnowmanAction<unknown>
+    );
     doOpenStrategy(StrategyIDs.BinaryMetrics);
   },
 });

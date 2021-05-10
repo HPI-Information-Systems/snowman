@@ -20,9 +20,12 @@ type GroupConfigurationT = {
   };
 };
 
-type MultiSelectConfigurationT = readonly [ConfigurationT];
+type MultiSelectConfigurationT = readonly [
+  configuration: ConfigurationT,
+  id: string
+];
 
-type FakeMultiSelectConfigurationT = readonly ['first', ConfigurationT];
+type FakeMultiSelectConfigurationT = readonly [configuration: ConfigurationT];
 
 type BaseConfigurationT =
   | StoreCacheKeyBaseEnum.algorithm
@@ -50,7 +53,7 @@ type MultiSelectConfigurationValue<
 
 type FakeMultiSelectConfigurationValue<
   FakeMultiSelectConfiguration extends FakeMultiSelectConfigurationT
-> = ConfigurationValue<FakeMultiSelectConfiguration[1]>;
+> = ConfigurationValue<FakeMultiSelectConfiguration[0]>;
 
 type BaseConfigurationValue<
   BaseConfiguration extends BaseConfigurationT
@@ -62,13 +65,13 @@ type ConfigurationValue<
   ? BaseConfigurationValue<Configuration>
   : Configuration extends GroupConfigurationT
   ? GroupConfigurationValue<Configuration>
-  : Configuration extends FakeMultiSelectConfigurationT
-  ? FakeMultiSelectConfigurationValue<Configuration>
   : Configuration extends MultiSelectConfigurationT
   ? MultiSelectConfigurationValue<Configuration>
+  : Configuration extends FakeMultiSelectConfigurationT
+  ? FakeMultiSelectConfigurationValue<Configuration>
   : never;
 
-function buildConfiguratorInternal<Configuration extends ConfigurationT>(
+export function buildAnyConfigurator<Configuration extends ConfigurationT>(
   configuration: Configuration,
   outerMultiSelects: number[]
 ): {
@@ -77,16 +80,18 @@ function buildConfiguratorInternal<Configuration extends ConfigurationT>(
 } {
   let cacheKey: StoreCacheKey;
   if (Array.isArray(configuration)) {
-    if (configuration[0] === 'first') {
-      cacheKey = buildConfiguratorInternal(configuration[1], [
+    if (configuration.length === 1) {
+      cacheKey = buildAnyConfigurator(configuration[0], [
         ...outerMultiSelects,
         MULTI_SELECTOR_START,
       ]).cacheKey;
     } else {
       cacheKey = getCacheKey(
         StoreCacheKeyBaseEnum.multiSelect,
-        ...buildConfiguratorInternal(configuration[0], [
-          ...outerMultiSelects,
+        configuration[1],
+        outerMultiSelects,
+        ...buildAnyConfigurator(configuration[0], [
+          ...outerMultiSelects.map(() => MULTI_SELECTOR_INCREMENT_ID),
           MULTI_SELECTOR_INCREMENT_ID,
         ]).cacheKey
       );
@@ -94,15 +99,17 @@ function buildConfiguratorInternal<Configuration extends ConfigurationT>(
   } else if (typeof configuration === 'object') {
     cacheKey = getCacheKey(
       StoreCacheKeyBaseEnum.group,
-      outerMultiSelects.filter((x) => x === MULTI_SELECTOR_INCREMENT_ID),
+      outerMultiSelects,
       ...Object.entries(configuration as GroupConfigurationT)
         .sort(([, cA], [, cB]) => cA.position - cB.position)
         .map(
           ([key, { configuration, heading }]) =>
             [
               key,
-              buildConfiguratorInternal(configuration, outerMultiSelects)
-                .cacheKey,
+              buildAnyConfigurator(
+                configuration,
+                outerMultiSelects.map(() => MULTI_SELECTOR_INCREMENT_ID)
+              ).cacheKey,
               heading,
             ] as [string, StoreCacheKey] | [string, StoreCacheKey, string]
         )
@@ -131,7 +138,7 @@ export function buildConfigurator<
   cacheKey: ReturnType<typeof groupCacheKeyAndFilter>['cacheKey'];
   getValue(state: BenchmarkAppModel): ConfigurationValue<Configuration>;
 } {
-  return buildConfiguratorInternal(configuration, []) as {
+  return buildAnyConfigurator(configuration, []) as {
     cacheKey: ReturnType<typeof groupCacheKeyAndFilter>['cacheKey'];
     getValue(state: BenchmarkAppModel): ConfigurationValue<Configuration>;
   };

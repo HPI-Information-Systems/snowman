@@ -9,7 +9,6 @@ import { SelectorItem } from 'apps/BenchmarkApp/components/BenchmarkConfigurator
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { getItemsUntyped } from 'apps/BenchmarkApp/utils/configurationItemGetter';
-// import { getItemsUntyped } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { NestedArray } from 'snowman-library';
 import { SnowmanAction } from 'types/SnowmanAction';
 
@@ -55,6 +54,9 @@ type MakeStoreCacheKeyAndFilterArgs<
     ...args: Args
   ) => SelectorItem[];
   icon?: (...args: Args) => string;
+  prepareSerialization?: (
+    cacheKey: StoreCacheKey<KeyBase, Args>
+  ) => StoreCacheKey;
 };
 
 type GetStoreCacheKeyAndFilter<
@@ -83,6 +85,7 @@ type GetStoreCacheKeyAndFilter<
   getValue: (state: BenchmarkAppModel) => ResultT;
   icon?: () => string;
   getSelectorItems: (state: BenchmarkAppModel) => SelectorItem[];
+  prepareSerialization: () => StoreCacheKey;
 };
 
 export const MakeStoreCacheKeyAndFilter = <
@@ -99,6 +102,7 @@ export const MakeStoreCacheKeyAndFilter = <
   getValue,
   icon,
   selectorItems,
+  prepareSerialization,
 }: MakeStoreCacheKeyAndFilterArgs<
   KeyBase,
   Args,
@@ -114,6 +118,8 @@ export const MakeStoreCacheKeyAndFilter = <
   > = {
     cacheKey,
     targetCache: targetCache(...args),
+    prepareSerialization: () =>
+      prepareSerialization ? prepareSerialization(cacheKey) : cacheKey,
     getEntities: (state) => (getEntities ?? (() => []))(state, ...args),
     getSelectorItems: (state) => {
       if (selectorItems) {

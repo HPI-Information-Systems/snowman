@@ -5,7 +5,6 @@ import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import React from 'react';
 
 export const BinaryMetricsConfiguration = buildConfigurator([
-  'first',
   {
     dataset: {
       configuration: StoreCacheKeyBaseEnum.dataset,
@@ -18,7 +17,7 @@ export const BinaryMetricsConfiguration = buildConfigurator([
       position: 2,
     },
     experiment: {
-      configuration: ['first', StoreCacheKeyBaseEnum.experiment],
+      configuration: [StoreCacheKeyBaseEnum.experiment],
       heading: '3. Select Experiment',
       position: 3,
     },

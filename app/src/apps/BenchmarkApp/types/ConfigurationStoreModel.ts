@@ -29,6 +29,6 @@ export type ExperimentConfigurationModel = number;
 export type SimFunctionConfigurationModel = number;
 export type SimThresholdConfigurationModel = number;
 export interface MultiSelectConfigurationModel {
-  currentCacheKeys: StoreCacheKey[];
+  currentIds: number[];
   nextId: number;
 }

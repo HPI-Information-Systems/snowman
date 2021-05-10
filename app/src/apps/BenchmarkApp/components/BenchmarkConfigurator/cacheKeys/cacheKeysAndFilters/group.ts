@@ -79,4 +79,12 @@ export const groupCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
     }
     return result;
   },
+  prepareSerialization: ([base, ...[autoIncrements, ...cacheKeys]]) => [
+    base,
+    autoIncrements,
+    ...cacheKeys.map(([, cacheKey]) => [
+      '',
+      getCacheKeyAndFilterUntyped(cacheKey).prepareSerialization(),
+    ]),
+  ],
 });
