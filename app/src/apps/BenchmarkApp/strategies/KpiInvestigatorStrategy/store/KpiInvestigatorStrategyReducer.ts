@@ -28,13 +28,14 @@ const KpiInvestigatorStrategyReducer = (
       //Todo: Filter invalid ones out
       return {
         ...state,
-        diagramItems: configuration.map((aConfig): DiagramExperimentItem[] =>
-          aConfig.experiments.map(
-            (anEntity): DiagramExperimentItem => ({
-              groundTruth: { experimentId: anEntity.groundTruth[0] },
-              experiment: { experimentId: anEntity.experiment[0] },
-            })
-          )
+        diagramItems: configuration.diagramTracks.map(
+          (aConfig): DiagramExperimentItem[] =>
+            aConfig.experiments.map(
+              (anEntity): DiagramExperimentItem => ({
+                groundTruth: { experimentId: aConfig.groundTruth[0] },
+                experiment: { experimentId: anEntity.experiment[0] },
+              })
+            )
         ),
         experiments: (action.payload as BenchmarkAppModel).resources
           .experiments,

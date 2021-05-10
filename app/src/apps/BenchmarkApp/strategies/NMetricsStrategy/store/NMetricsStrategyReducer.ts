@@ -1,14 +1,8 @@
 import { Experiment, Metric } from 'api';
-import { getCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
-import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
-import { MULTI_SELECTOR_START } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/multiSelect';
+import { NMetricsConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/NMetricsConfigurator';
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import {
-  getDefinedItems,
-  getSingleItem,
-} from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: NMetricsStrategyModel = {
@@ -25,18 +19,9 @@ const NMetricsStrategyReducer = (
   switch (action.type) {
     case NMetricsStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
-      const goldStandardId = getSingleItem(
-        getCacheKey(StoreCacheKeyBaseEnum.groundTruth, MULTI_SELECTOR_START),
-        appStore
-      );
-      const experimentIds = getDefinedItems(
-        getCacheKey(
-          StoreCacheKeyBaseEnum.experiment,
-          MULTI_SELECTOR_START,
-          MULTI_SELECTOR_START
-        ),
-        appStore
-      );
+      const configuration = NMetricsConfiguration.getValue(appStore);
+      const goldStandardId = configuration.groundTruth[0];
+      const experimentIds = configuration.experiments.flat();
       if (goldStandardId === undefined || experimentIds.length === 0)
         return {
           ...state,

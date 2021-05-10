@@ -1,7 +1,8 @@
+import { groupCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/group';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 
 export interface GenericConfiguratorOwnProps {
-  children: JSX.Element | JSX.Element[];
+  cacheKey: ReturnType<typeof groupCacheKeyAndFilter>['cacheKey'];
   strategyID: StrategyIDs;
 }
 

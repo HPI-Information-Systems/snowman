@@ -7,10 +7,9 @@ import {
 } from '@ionic/react';
 import { BenchmarkConfiguratorProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/BenchmarkConfiguratorProps';
 import BinaryMetricsConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/BinaryMetricsConfigurator';
-import DemoMetricsConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/DemoMetricsConfigurator';
 import IntersectionConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/IntersectionConfigurator';
 import NMetricsConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/NMetricsConfigurator';
-import { SoftKPIDiagramConfigurator } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
+import { KPIDiagramConfigurator } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
 import React from 'react';
 
 const BenchmarkConfigurator = ({
@@ -23,11 +22,10 @@ const BenchmarkConfigurator = ({
       </IonToolbar>
     </IonHeader>
     <IonContent>
-      <DemoMetricsConfigurator />
       <BinaryMetricsConfigurator />
       <NMetricsConfigurator />
       <IntersectionConfigurator />
-      <SoftKPIDiagramConfigurator />
+      <KPIDiagramConfigurator />
     </IonContent>
   </IonMenu>
 );
