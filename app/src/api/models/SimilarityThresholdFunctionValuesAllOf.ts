@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    SimilarityThresholdFunctionDefinition,
+    SimilarityThresholdFunctionDefinitionFromJSON,
+    SimilarityThresholdFunctionDefinitionFromJSONTyped,
+    SimilarityThresholdFunctionDefinitionToJSON,
+} from './';
+
 /**
  * 
  * @export
@@ -25,6 +32,18 @@ export interface SimilarityThresholdFunctionValuesAllOf {
      * @memberof SimilarityThresholdFunctionValuesAllOf
      */
     name: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SimilarityThresholdFunctionValuesAllOf
+     */
+    experimentId: number;
+    /**
+     * 
+     * @type {SimilarityThresholdFunctionDefinition}
+     * @memberof SimilarityThresholdFunctionValuesAllOf
+     */
+    definition: SimilarityThresholdFunctionDefinition;
 }
 
 export function SimilarityThresholdFunctionValuesAllOfFromJSON(json: any): SimilarityThresholdFunctionValuesAllOf {
@@ -38,6 +57,8 @@ export function SimilarityThresholdFunctionValuesAllOfFromJSONTyped(json: any, i
     return {
         
         'name': json['name'],
+        'experimentId': json['experimentId'],
+        'definition': SimilarityThresholdFunctionDefinitionFromJSON(json['definition']),
     };
 }
 
@@ -51,6 +72,8 @@ export function SimilarityThresholdFunctionValuesAllOfToJSON(value?: SimilarityT
     return {
         
         'name': value.name,
+        'experimentId': value.experimentId,
+        'definition': SimilarityThresholdFunctionDefinitionToJSON(value.definition),
     };
 }
 

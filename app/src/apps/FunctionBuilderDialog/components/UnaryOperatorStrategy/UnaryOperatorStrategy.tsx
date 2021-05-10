@@ -1,21 +1,22 @@
 import { IonChip, IonSelect, IonSelectOption } from '@ionic/react';
-import {
-  SimilarityThresholdFunctionDefinitionTypeEnum,
-  SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
-} from 'api';
+import { SimilarityThresholdFunctionUnaryOperatorOperatorEnum } from 'api';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
+import { StrategyMapperForwardProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
 import styles from 'apps/FunctionBuilderDialog/components/UnaryOperatorStrategy/UnaryOperatorStrategyStyles.module.css';
-import { FunctionBuildingBlockType } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
-import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
-import React, { useState } from 'react';
+import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
+import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogModel';
+import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-const UnaryOperatorStrategy = (): JSX.Element => {
-  const [operator, setOperator] = useState(
-    SimilarityThresholdFunctionUnaryOperatorOperatorEnum.Acos as string
-  );
-  const [childType, setChildType] = useState<FunctionBuildingBlockType>(
-    UndefinedStrategy
+const UnaryOperatorStrategy = ({
+  blockAccessKey,
+}: StrategyMapperForwardProps): JSX.Element => {
+  const operator: string | null = useSelector(
+    (state: FunctionBuilderDialogModel): string | null =>
+      (state.functionBuildingStack.getBlock(blockAccessKey)?.left as string) ??
+      null
   );
   return (
     <>
@@ -23,11 +24,14 @@ const UnaryOperatorStrategy = (): JSX.Element => {
         <IonSelect
           value={operator}
           onIonChange={(event: IonChangeEvent): void =>
-            setOperator(event.detail.value as string)
+            FunctionBuildingBlockMagistrate.setLeftValue(
+              blockAccessKey,
+              (event.detail.value as string) ?? null
+            )
           }
           placeholder="?"
         >
-          {Object.keys(
+          {Object.values(
             SimilarityThresholdFunctionUnaryOperatorOperatorEnum
           ).map(
             (anOperator: string): JSX.Element => (
@@ -40,10 +44,8 @@ const UnaryOperatorStrategy = (): JSX.Element => {
         (
       </IonChip>
       <StrategyMapper
-        nextStrategyType={
-          childType as SimilarityThresholdFunctionDefinitionTypeEnum
-        }
-        setNextStrategyType={setChildType}
+        parentAccessKey={blockAccessKey}
+        ownLocation={CellDescriptor.right}
       />
       <IonChip className={styles.chip}>)</IonChip>
     </>

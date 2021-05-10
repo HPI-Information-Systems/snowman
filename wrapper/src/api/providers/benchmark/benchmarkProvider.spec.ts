@@ -1,12 +1,19 @@
 import { setupDatabase } from '../../database';
 import {
+  AlgorithmValues,
   DatasetValues,
   ExperimentValues,
+  MetricsEnum,
   SetExperimentFileFormatEnum,
-  SimilarityThresholdFunctionValuesTypeEnum,
+  SimilarityThresholdFunctionDefinitionTypeEnum,
+  SimilarityThresholdFunctionValues,
+  SoftKPIsAlgorithmEnum,
+  SoftKPIsExperimentEnum,
 } from '../../server/types';
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { providers } from '..';
+import { SimilarityThresholdsProvider } from '../similarityThresholds/similarityThresholdsProvider';
+import { BenchmarkProvider } from './benchmarkProvider';
 import { sortTestFileResponse } from './idsToRecords/test/sortFileResponse';
 import { loadTestDataset } from './intersection/test/testCases';
 
@@ -60,7 +67,34 @@ beforeAll(async () => {
     datasetIds[metaDataset.name] = id;
   }
 
-  const meta_algorithm = { description: 'Mock 1', name: 'Mock 1' };
+  const meta_algorithm: AlgorithmValues = {
+    description: 'Mock 1',
+    name: 'Mock 1',
+    softKPIs: {
+      integrationEffort: {
+        installationEffort: {
+          expertise: 30,
+          hrAmount: 10,
+        },
+        deploymentType: ['cloud'],
+        solutionType: ['rulebased'],
+        useCase: ['merging'],
+        generalCosts: 10,
+      },
+      configurationEffort: {
+        domain: {
+          expertise: 12,
+          hrAmount: 10,
+        },
+        matchingSolution: {
+          expertise: 12,
+          hrAmount: 10,
+        },
+        interfaces: ['GUI'],
+        supportedOSs: ['Windows'],
+      },
+    },
+  };
   addedAlgorithmId = providers.algorithm.addAlgorithm(meta_algorithm);
 
   const experiments: metaExperiment[] = [
@@ -72,6 +106,10 @@ beforeAll(async () => {
           datasetId: datasetIds.default,
           description: 'Dataset file',
           name: 'Dataset file',
+          softKPIs: {
+            hrAmount: 12,
+            expertise: 67,
+          },
         },
         file: [
           ['p1', 'p2'],
@@ -91,11 +129,15 @@ beforeAll(async () => {
           datasetId: datasetIds.default,
           description: 'No dataset file',
           name: 'No dataset file',
+          softKPIs: {
+            expertise: 11,
+            hrAmount: 11,
+          },
         },
         file: [
-          ['p1', 'p2'],
-          ['1', '2'],
-          ['9', '10'],
+          ['p1', 'p2', 'similarity'],
+          ['1', '2', '0.5'],
+          ['9', '10', '0.7'],
         ],
       },
     },
@@ -143,8 +185,204 @@ beforeAll(async () => {
     experimentIds[experiment.name] = id;
   }
 });
-
 describe('test benchmark functions', () => {
+  const benchmarkProvider = new BenchmarkProvider();
+  test('test developer diagram calculation', () => {
+    expect(
+      benchmarkProvider.calculateDiagramData({
+        xAxis: SoftKPIsExperimentEnum.HrAmount,
+        yAxis: MetricsEnum.Precision,
+        diagram: {
+          multipleExperiments: [
+            {
+              experiment: {
+                experimentId: experimentIds.experiment1,
+              },
+              groundTruth: {
+                experimentId: experimentIds.goldstandard,
+              },
+            },
+          ],
+        },
+      })
+    ).toMatchObject([{ x: 11, y: 0.5 }]);
+  });
+  test('test softKPI-softKPI diagram calculation', () => {
+    expect(
+      benchmarkProvider.calculateDiagramData({
+        xAxis: SoftKPIsExperimentEnum.HrAmount,
+        yAxis: SoftKPIsAlgorithmEnum.DomainExpertise,
+        diagram: {
+          multipleExperiments: [
+            {
+              experiment: {
+                experimentId: experimentIds.experiment1,
+              },
+              groundTruth: {
+                experimentId: experimentIds.goldstandard,
+              },
+            },
+            {
+              experiment: {
+                experimentId: experimentIds.experiment1,
+              },
+              groundTruth: {
+                experimentId: experimentIds.goldstandard,
+              },
+            },
+          ],
+        },
+      })
+    ).toMatchObject([
+      { x: 11, y: 12 },
+      { x: 11, y: 12 },
+    ]);
+  });
+  test('test metric-metric diagram calculation', () => {
+    expect(
+      benchmarkProvider.calculateDiagramData({
+        xAxis: MetricsEnum.Precision,
+        yAxis: MetricsEnum.Recall,
+        diagram: {
+          multipleExperiments: [
+            {
+              experiment: {
+                experimentId: experimentIds.experiment1,
+              },
+              groundTruth: {
+                experimentId: experimentIds.goldstandard,
+              },
+            },
+          ],
+        },
+      })
+    ).toMatchObject([{ x: 0.5, y: 0.125 }]);
+  });
+  test('test metric-metric threshold diagram calculation', () => {
+    const similarityThresholdProvider = new SimilarityThresholdsProvider();
+    const func: SimilarityThresholdFunctionValues = {
+      definition: {
+        type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+        similarityThreshold: 'similarity',
+      },
+      name: 'function1',
+      experimentId: experimentIds.experiment1,
+    };
+    const funcId = similarityThresholdProvider.addSimilarityThresholdFunction({
+      similarityThresholdFunction: func,
+    });
+    expect(
+      benchmarkProvider.calculateDiagramData({
+        xAxis: MetricsEnum.Precision,
+        yAxis: MetricsEnum.Similarity,
+        diagram: {
+          similarityThresholds: {
+            steps: 2,
+            groundTruthId: experimentIds.goldstandard,
+            experimentId: experimentIds.experiment1,
+            func: funcId,
+          },
+        },
+      })
+    ).toMatchObject([
+      { x: 0, y: 0.7, threshold: 0.7 },
+      { threshold: 0.5, x: 0.5, y: 0.5 },
+    ]);
+  });
+  test('test if all enum values return value', () => {
+    const diagramAxisValues = {
+      ...SoftKPIsAlgorithmEnum,
+      ...SoftKPIsExperimentEnum,
+      ...MetricsEnum,
+    };
+    const result = [];
+    for (const value of Object.values(diagramAxisValues)) {
+      if (
+        (value as
+          | SoftKPIsExperimentEnum
+          | SoftKPIsAlgorithmEnum
+          | MetricsEnum) === MetricsEnum.Similarity
+      )
+        continue;
+      result.push({
+        name: value,
+        value: benchmarkProvider
+          .calculateDiagramData({
+            xAxis: value as
+              | SoftKPIsExperimentEnum
+              | SoftKPIsAlgorithmEnum
+              | MetricsEnum,
+            yAxis: value as
+              | SoftKPIsExperimentEnum
+              | SoftKPIsAlgorithmEnum
+              | MetricsEnum,
+            diagram: {
+              multipleExperiments: [
+                {
+                  experiment: {
+                    experimentId: experimentIds.experiment1,
+                  },
+                  groundTruth: {
+                    experimentId: experimentIds.goldstandard,
+                  },
+                },
+              ],
+            },
+          })[0]
+          .x.toFixed(4),
+      });
+    }
+    expect(result).toEqual(
+      expect.arrayContaining([
+        { name: 'domainExpertise', value: '12.0000' },
+        { name: 'domainHrAmount', value: '10.0000' },
+        { name: 'domainManhattanDistanceBasedEffort', value: '22.0000' },
+        { name: 'domainHrAmountWeightedEffort', value: '2643.1759' },
+        { name: 'domainMultiplyEffort', value: '120.0000' },
+        { name: 'domainExpertiseWeightedEffort', value: '11.2750' },
+        { name: 'matchingSolutionExpertise', value: '12.0000' },
+        { name: 'matchingSolutionHrAmount', value: '10.0000' },
+        {
+          name: 'matchingSolutionManhattanDistanceBasedEffort',
+          value: '22.0000',
+        },
+        { name: 'matchingSolutionHrAmountWeightedEffort', value: '2643.1759' },
+        { name: 'matchingSolutionMultiplyEffort', value: '120.0000' },
+        { name: 'matchingSolutionExpertiseWeightedEffort', value: '11.2750' },
+        { name: 'generalCosts', value: '10.0000' },
+        { name: 'installationExpertise', value: '30.0000' },
+        { name: 'installationHrAmount', value: '10.0000' },
+        { name: 'installationManhattanDistanceBasedEffort', value: '40.0000' },
+        { name: 'installationHrAmountWeightedEffort', value: '6607.9397' },
+        { name: 'installationMultiplyEffort', value: '300.0000' },
+        { name: 'installationExpertiseWeightedEffort', value: '13.4986' },
+        { name: 'expertise', value: '11.0000' },
+        { name: 'hrAmount', value: '11.0000' },
+        { name: 'manhattanDistanceBasedEffort', value: '22.0000' },
+        { name: 'hrAmountWeightedEffort', value: '6586.1556' },
+        { name: 'multiplyEffort', value: '121.0000' },
+        { name: 'expertiseWeightedEffort', value: '12.2791' },
+        { name: 'falseDiscoveryRate', value: '0.5000' },
+        { name: 'falseNegativeRate', value: '0.8750' },
+        { name: 'falseOmissionRate', value: '0.0372' },
+        { name: 'falsePositiveRate', value: '0.0055' },
+        { name: 'negativePredictiveValue', value: '0.9628' },
+        { name: 'precision', value: '0.5000' },
+        { name: 'prevalenceThreshold', value: '0.1733' },
+        { name: 'recall', value: '0.1250' },
+        { name: 'specificity', value: '0.9945' },
+        { name: 'threatScore', value: '0.1111' },
+        { name: 'accuracy', value: '0.9579' },
+        { name: 'balancedAccuracy', value: '0.5598' },
+        { name: 'bookmakerInformedness', value: '0.1195' },
+        { name: 'fStarScore', value: '0.1111' },
+        { name: 'f1Score', value: '0.2000' },
+        { name: 'fowlkesMallowsIndex', value: '0.2500' },
+        { name: 'markedness', value: '0.4628' },
+        { name: 'matthewsCorrelationCoefficient', value: '0.2352' },
+      ])
+    );
+  });
   describe('metrics', () => {
     test('test metrics calculation', () => {
       expect(
@@ -221,11 +459,14 @@ describe('test benchmark functions', () => {
       ])
     );
     const func = providers.similarityThresholds.addSimilarityThresholdFunction({
-      experimentId,
       similarityThresholdFunction: {
-        type: SimilarityThresholdFunctionValuesTypeEnum.SimilarityThreshold,
+        definition: {
+          type:
+            SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+          similarityThreshold: 'sim',
+        },
         name: 'similarityFunction',
-        similarityThreshold: 'sim',
+        experimentId,
       },
     });
     expect(

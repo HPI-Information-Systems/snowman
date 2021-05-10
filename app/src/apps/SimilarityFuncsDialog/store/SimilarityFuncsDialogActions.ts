@@ -31,9 +31,16 @@ const getSimilarityThresholdFunctions = (
   return RequestHandler<void>(
     (): Promise<void> =>
       new SimilarityThresholdsApi()
-        .getSimilarityThresholdFunctions({
-          experimentId: experimentId ?? MagicNotPossibleId,
-        })
+        .getSimilarityThresholdFunctions()
+        .then(
+          (
+            functions: SimilarityThresholdFunction[]
+          ): SimilarityThresholdFunction[] =>
+            functions.filter(
+              (aFunction: SimilarityThresholdFunction): boolean =>
+                aFunction.experimentId === experimentId
+            )
+        )
         .then((functions: SimilarityThresholdFunction[]): void => {
           dispatch({
             type: SimilarityFuncsDialogActionTypes.LOAD_SIMILARITY_FUNCTIONS,
@@ -63,7 +70,6 @@ export const deleteSimilarityThresholdFunction = (
   return RequestHandler<void>(
     (): Promise<void> =>
       new SimilarityThresholdsApi().deleteSimilarityThresholdFunction({
-        experimentId: experimentId,
         functionId: functionId,
       }),
     SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION

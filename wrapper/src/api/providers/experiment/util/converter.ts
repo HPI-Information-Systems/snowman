@@ -1,6 +1,7 @@
 import { tableSchemas } from '../../../database/schemas';
 import { ColumnValues } from '../../../database/tools/types';
-import { Experiment } from '../../../server/types';
+import { Experiment, Metric } from '../../../server/types';
+import { calculateEffort } from '../../algorithm/util/effortPoints/calculateEffort';
 
 type StoredExperiment = ColumnValues<
   typeof tableSchemas['meta']['experiment']['columns']
@@ -15,20 +16,34 @@ export class ExperimentConverter {
       name: apiExperiment.name,
       id: apiExperiment.id,
       numberOfUploadedRecords: apiExperiment.numberOfUploadedRecords ?? null,
+      hrAmount: apiExperiment.softKPIs?.hrAmount ?? null,
+      expertise: apiExperiment.softKPIs?.expertise ?? null,
     };
   }
 
   storedExperimentToApiExperiment(
     storedExperiment: StoredExperiment
   ): Experiment {
+    let effort: Metric[] | undefined;
+    if (storedExperiment.expertise && storedExperiment.hrAmount) {
+      effort = calculateEffort(
+        storedExperiment.expertise,
+        storedExperiment.hrAmount
+      );
+    }
     return {
       algorithmId: storedExperiment.algorithm,
       datasetId: storedExperiment.dataset,
       description: storedExperiment.description ?? undefined,
+      effort: effort,
       id: storedExperiment.id,
       name: storedExperiment.name,
       numberOfUploadedRecords:
         storedExperiment.numberOfUploadedRecords ?? undefined,
+      softKPIs: {
+        hrAmount: storedExperiment.hrAmount ?? undefined,
+        expertise: storedExperiment.expertise ?? undefined,
+      },
     };
   }
 }

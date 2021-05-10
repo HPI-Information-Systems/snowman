@@ -13,7 +13,6 @@ import ReactTooltip from 'react-tooltip';
 const NMetricsStrategyView = ({
   metrics,
   experiments,
-  goldStandard,
   inspectExperiment,
   isValidSelection,
 }: NMetricsStrategyProps): JSX.Element => {
@@ -84,7 +83,7 @@ const NMetricsStrategyView = ({
                             index
                           ].value.toString()} &isin; [${metricsOfAnExperiment[
                             index
-                          ].range.toString()}]`}
+                          ]?.range?.toString()}]`}
                         >
                           {metricsOfAnExperiment[index]?.value.toPrecision(8) ??
                             'unknown'}
