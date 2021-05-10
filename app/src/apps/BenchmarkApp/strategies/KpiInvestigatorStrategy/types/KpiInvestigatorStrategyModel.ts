@@ -6,7 +6,7 @@ export interface KpiInvestigatorStrategyModel {
   isValidConfig: boolean;
   experimentItems: DiagramExperimentItem[];
   coordinates: DiagramCoordinates[];
-  selectedExperiment: Experiment[];
+  experiments: Experiment[];
   yAxis: AllMetricsEnum;
   xAxis: AllMetricsEnum;
 }

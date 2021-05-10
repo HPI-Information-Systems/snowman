@@ -6,7 +6,7 @@ import GenericConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigura
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import React from 'react';
 
-export const SoftKPIDiagramConfiguration = buildConfigurator([
+export const KPIDiagramConfiguration = buildConfigurator([
   {
     dataset: {
       configuration: StoreCacheKeyBaseEnum.dataset,
@@ -16,6 +16,11 @@ export const SoftKPIDiagramConfiguration = buildConfigurator([
     experiments: {
       configuration: [
         {
+          groundTruth: {
+            configuration: StoreCacheKeyBaseEnum.groundTruth,
+            position: 0,
+            heading: 'Select Ground Truth',
+          },
           experiment: {
             configuration: StoreCacheKeyBaseEnum.experiment,
             position: 1,
@@ -43,7 +48,7 @@ export const SoftKPIDiagramConfigurator = (): JSX.Element => (
     <IonList>
       <ConfiguratorItem
         title="1. Select Diagram Tracks"
-        configurators={[[SoftKPIDiagramConfiguration.cacheKey, false]]}
+        configurators={[[KPIDiagramConfiguration.cacheKey, false]]}
       />
     </IonList>
   </GenericConfigurator>

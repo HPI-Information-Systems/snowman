@@ -30,7 +30,7 @@ const mapStateToProps = (
     ),
     (anArray, aKey): ScatterChartDataset => ({
       label:
-        state.selectedExperiment.find(
+        state.experiments.find(
           (anExperiment: Experiment): boolean =>
             anExperiment.id.toString() === aKey
         )?.name ?? aKey,
