@@ -25,10 +25,6 @@ const KpiInvestigatorStrategyReducer = (
       const configuration = KPIDiagramConfiguration.getValue(
         action.payload as BenchmarkAppModel
       );
-      console.log(configuration);
-      const selectedExperiments = configuration.flatMap(
-        (aTrack) => aTrack.experiments
-      );
 
       return {
         ...state,
