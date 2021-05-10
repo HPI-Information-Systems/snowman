@@ -1,4 +1,12 @@
-import { IonButton, IonIcon, IonInput } from '@ionic/react';
+import {
+  IonButton,
+  IonIcon,
+  IonInput,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonNote,
+} from '@ionic/react';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
 import { FunctionBuilderDialogProps } from 'apps/FunctionBuilderDialog/FunctionBuilderDialogProps';
 import styles from 'apps/FunctionBuilderDialog/FunctionBuilderDialogStyles.module.css';
@@ -19,15 +27,18 @@ const FunctionBuilderDialogView = ({
   functionName,
 }: FunctionBuilderDialogProps): JSX.Element => (
   <>
-    <div>
-      Function Name:
-      <IonInput
-        value={functionName}
-        onIonChange={(event: IonChangeEvent): void =>
-          changeFunctionName(event.detail.value as string)
-        }
-      />
-    </div>
+    <IonList>
+      <IonItem>
+        <IonLabel>Function Name:</IonLabel>
+        <IonInput
+          value={functionName}
+          placeholder={'e.g. sumOfSquares'}
+          onIonChange={(event: IonChangeEvent): void =>
+            changeFunctionName(event.detail.value as string)
+          }
+        />
+      </IonItem>
+    </IonList>
     <div className={styles.container}>
       <StrategyMapper parentAccessKey={null} />
     </div>
@@ -50,6 +61,16 @@ const FunctionBuilderDialogView = ({
         <IonIcon slot="start" icon={closeCircleOutline} />
         Cancel
       </IonButton>
+    </div>
+    <div className={style(styles.center, styles.container)}>
+      <IonNote>
+        {`A similarity function calculates a custom similarity score for each candidate
+        pair using this pair's attributes. Usually, these attributes are calculated
+        by your matching solution, e.g. similarity for a certain column. After you 
+        created a similarity function here, you'll be able to use it together with 
+        a threshold value in the benchmark tab. All pairs with a score higher than 
+        the threshold will then be considered duplicates.`}
+      </IonNote>
     </div>
   </>
 );
