@@ -9,7 +9,7 @@ export type GroupInputOwnProps = AtomicSelectorGroupOwnProps & {
 
 export interface GroupInputStateProps {
   items: SelectorItem[];
-  cacheKeys: StoreCacheKey[];
+  cacheKeys: [key: StoreCacheKey, heading?: string][];
 }
 
 export type GroupInputProps = GroupInputOwnProps & GroupInputStateProps;

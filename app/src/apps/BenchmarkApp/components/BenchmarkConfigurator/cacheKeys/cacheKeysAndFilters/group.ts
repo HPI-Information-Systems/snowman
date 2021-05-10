@@ -5,20 +5,26 @@ import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurato
 import { SelectorItem } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupProps';
 import { selectId } from 'apps/BenchmarkApp/store/ConfigurationStore/MultiSelectorActions';
 import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+import { RemoveFirst } from 'snowman-library';
 
 export type GroupArgsT = [
   autoIncrementsInEachStoreCacheKey: number[],
-  ...storeCacheKeys: [key: string, value: StoreCacheKey][]
+  ...storeCacheKeys: (
+    | [key: string, value: StoreCacheKey]
+    | [key: string, value: StoreCacheKey, heading: string]
+  )[]
 ];
 
 export const resolveMultiSelectorAutoIncrements = (
   ...[autoIncrements, ...cacheKeysNoAutoIncrement]: GroupArgsT
-): [string, StoreCacheKey][] => {
-  const cacheKeys = cacheKeysNoAutoIncrement.map(([id, cacheKey], index) => {
+): RemoveFirst<GroupArgsT> => {
+  const cacheKeys = cacheKeysNoAutoIncrement.map(([id, cacheKey, heading]) => {
     for (const id of autoIncrements) {
       cacheKey = selectId(cacheKey, id) ?? cacheKey;
     }
-    return [id, cacheKey] as [string, StoreCacheKey];
+    return [id, cacheKey, heading] as
+      | [string, StoreCacheKey, string]
+      | [string, StoreCacheKey];
   });
   return cacheKeys;
 };

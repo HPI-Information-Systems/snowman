@@ -75,18 +75,12 @@ export function buildConfigurator<Configuration extends ConfigurationT>(
       ...Object.entries(configuration as GroupConfigurationT)
         .sort(([, cA], [, cB]) => cA.position - cB.position)
         .map(
-          ([
-            key,
-            {
-              configuration,
-              heading,
-              // TODO heading
-            },
-          ]) =>
+          ([key, { configuration, heading }]) =>
             [
               key,
               buildConfigurator(configuration, multiSelectCount).cacheKey,
-            ] as [string, StoreCacheKey]
+              heading,
+            ] as [string, StoreCacheKey] | [string, StoreCacheKey, string]
         )
     );
   } else {

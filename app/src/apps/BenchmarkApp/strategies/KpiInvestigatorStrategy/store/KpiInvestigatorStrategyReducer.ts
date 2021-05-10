@@ -1,5 +1,6 @@
 import { MetricsEnum } from 'api';
 import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
+import { SoftKPIDiagramConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
 import { KpiInvestigatorStrategyActionTypes } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyActionTypes';
 import { KpiInvestigatorStrategyModel } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
 import { MockDiagramExperimentItems } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/utils/mockDiagramExperimentItems';
@@ -24,6 +25,10 @@ const KpiInvestigatorStrategyReducer = (
     case KpiInvestigatorStrategyActionTypes.UPDATE_CONFIG: {
       // Todo: Connect with store and retrieve from cache
       const retrievedExperimentItems = MockDiagramExperimentItems;
+      const configuration = SoftKPIDiagramConfiguration.getValue(
+        action.payload as BenchmarkAppModel
+      );
+
       return {
         ...state,
         experimentItems: retrievedExperimentItems,

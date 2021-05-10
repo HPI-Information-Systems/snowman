@@ -10,6 +10,7 @@ import BinaryMetricsConfigurator from 'apps/BenchmarkApp/components/BenchmarkCon
 import DemoMetricsConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/DemoMetricsConfigurator';
 import IntersectionConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/IntersectionConfigurator';
 import NMetricsConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/NMetricsConfigurator';
+import { SoftKPIDiagramConfigurator } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
 import React from 'react';
 
 const BenchmarkConfigurator = ({
@@ -26,6 +27,7 @@ const BenchmarkConfigurator = ({
       <BinaryMetricsConfigurator />
       <NMetricsConfigurator />
       <IntersectionConfigurator />
+      <SoftKPIDiagramConfigurator />
     </IonContent>
   </IonMenu>
 );

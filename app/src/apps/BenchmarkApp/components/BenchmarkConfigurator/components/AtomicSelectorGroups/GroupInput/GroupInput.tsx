@@ -23,7 +23,7 @@ const mapStateToProps = (
     ...(ownProps.cacheKey.slice(1) as GroupArgsT)
   );
   return {
-    cacheKeys: cacheKeys.map(([, cacheKey]) => cacheKey),
+    cacheKeys: cacheKeys.map(([, cacheKey, heading]) => [cacheKey, heading]),
     items: getCacheKeyAndFilter(
       getCacheKey(StoreCacheKeyBaseEnum.group, [], ...cacheKeys)
     ).getSelectorItems(state),
