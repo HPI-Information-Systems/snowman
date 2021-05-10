@@ -25,7 +25,7 @@ const KpiInvestigatorStrategyReducer = (
       const configuration = KPIDiagramConfiguration.getValue(
         action.payload as BenchmarkAppModel
       );
-
+      //Todo: Filter invalid ones out
       return {
         ...state,
         diagramItems: configuration.map((aConfig): DiagramExperimentItem[] =>
