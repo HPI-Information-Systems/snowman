@@ -22,10 +22,12 @@ const mapStateToProps = (
   datasets: state.coordinates.map(
     (myCoordinates, index): ScatterChartDataset => ({
       label: state.diagramTracks[index].name ?? index.toString(),
-      backgroundColor: getMyColor(index),
+      backgroundColor: getMyColor(index, 0.5),
+      borderColor: getMyColor(index),
       data: myCoordinates,
       pointRadius: 6,
       pointHoverRadius: 10,
+      borderWidth: 3,
     })
   ),
   xAxis: state.xAxis,
