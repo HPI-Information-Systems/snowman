@@ -23,6 +23,8 @@ const SimilarityFuncsDialogReducer = (
         ...state,
         similarityFuncs: action.payload as SimilarityThresholdFunction[],
       };
+    case SimilarityFuncsDialogActionTypes.RESET_DIALOG:
+      return initialState;
     default:
       return state;
   }

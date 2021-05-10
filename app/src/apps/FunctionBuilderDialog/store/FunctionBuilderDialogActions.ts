@@ -69,12 +69,20 @@ const loadExperimentColumns = (): SnowmanThunkAction<
         })
   );
 
-export const onFunctionBuilderDialogOpen = (
+export const loadInitialState = (
   dispatch: SnowmanDispatch<FunctionBuilderDialogModel>
 ): void => {
   console.log('open');
+  dispatch(resetDialog());
   dispatch(loadExperimentColumns()).then();
 };
+
+export const resetDialog = (): easyPrimitiveActionReturn<FunctionBuilderDialogModel> =>
+  easyPrimitiveAction<FunctionBuilderDialogModel>({
+    type: FunctionBuilderDialogActionTypes.RESET_DIALOG,
+    // reducer ignores payload
+    payload: false,
+  });
 
 export const changeFunctionName = (
   newFunctionName: string

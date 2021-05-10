@@ -30,6 +30,8 @@ const FunctionBuilderDialogReducer = (
   action: SnowmanAction
 ): FunctionBuilderDialogModel => {
   switch (action.type) {
+    case FunctionBuilderDialogActionTypes.RESET_DIALOG:
+      return initialState;
     case FunctionBuilderDialogActionTypes.CHANGE_FUNCTION_NAME:
       return {
         ...state,

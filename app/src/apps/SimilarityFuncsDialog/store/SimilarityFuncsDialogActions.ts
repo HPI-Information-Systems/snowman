@@ -23,6 +23,13 @@ export const changeSearchString = (
     payload: newSearchString,
   });
 
+export const resetDialog = (): easyPrimitiveActionReturn<SimilarityFuncsDialogModel> =>
+  easyPrimitiveAction<SimilarityFuncsDialogModel>({
+    type: SimilarityFuncsDialogActionTypes.RESET_DIALOG,
+    // reducer ignores payload
+    payload: false,
+  });
+
 const getSimilarityThresholdFunctions = (
   experimentId: EntityId
 ): SnowmanThunkAction<Promise<void>, SimilarityFuncsDialogModel> => (
@@ -50,11 +57,12 @@ const getSimilarityThresholdFunctions = (
   );
 };
 
-export const loadSimilarityThresholdFunctionsOnDialogOpen = (
+export const loadInitialState = (
   dispatch: SnowmanDispatch<SimilarityFuncsDialogModel>,
   entityId: EntityId,
   _?: EntityType
 ): void => {
+  dispatch(resetDialog());
   dispatch(getSimilarityThresholdFunctions(entityId)).then();
 };
 
