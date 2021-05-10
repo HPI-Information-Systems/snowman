@@ -33,6 +33,7 @@ const NMetricsStrategyReducer = (
           (anExperiment: Experiment): boolean =>
             anExperiment.id === goldStandardId
         ),
+        // ignores duplicate experiments
         experiments: appStore.resources.experiments.filter(
           (anExperiment: Experiment): boolean =>
             experimentIds.includes(anExperiment.id)

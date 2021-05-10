@@ -49,7 +49,7 @@ const IntersectionStrategyReducer = (
           ...state,
           isValidConfig: false,
         };
-
+      // ignores duplicate experiments
       const selectedExperiments = appStore.resources.experiments.filter(
         (anExperiment: Experiment): boolean =>
           experimentIds.includes(anExperiment.id)
