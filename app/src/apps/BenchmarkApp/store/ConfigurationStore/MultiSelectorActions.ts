@@ -1,4 +1,3 @@
-import { getCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import {
   MULTI_SELECTOR_INCREMENT_ID,
@@ -115,35 +114,6 @@ export const remove = (
             ),
           },
         ],
-        allowMultiple: true,
-      })
-    );
-  }
-};
-
-export const moveValueFront = (
-  aCacheKey: StoreCacheKey<StoreCacheKeyBaseEnum.multiSelect>,
-  value: unknown
-): SnowmanThunkAction<void, BenchmarkAppModel> => (dispatch, getState) => {
-  const state = getState();
-  const currentConfiguration = {
-    ...getMultiSelectConfiguration(aCacheKey, state),
-  };
-  const values = getCacheKeyAndFilter(aCacheKey).getValue(state).flat();
-  const swapIndex = values.indexOf(value);
-  if (swapIndex >= 0) {
-    currentConfiguration.currentIds = currentConfiguration.currentIds.slice();
-    [
-      currentConfiguration.currentIds[0],
-      currentConfiguration.currentIds[swapIndex],
-    ] = [
-      currentConfiguration.currentIds[swapIndex],
-      currentConfiguration.currentIds[0],
-    ];
-    dispatch(
-      updateSelection({
-        aCacheKey,
-        newSelection: [currentConfiguration],
         allowMultiple: true,
       })
     );

@@ -55,7 +55,7 @@ const MultiSelectorView = ({
               icon={closeCircleOutline}
               color={id !== MULTI_SELECTOR_START ? 'danger' : 'light'}
               data-tip={
-                id !== MULTI_SELECTOR_START
+                id === MULTI_SELECTOR_START
                   ? 'This item cannot be removed'
                   : undefined
               }
