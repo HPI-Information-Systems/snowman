@@ -17,6 +17,7 @@ const GroupInputView = ({ cacheKeys, items }: GroupInputProps): JSX.Element => {
         {cacheKeys.map(([cacheKey, heading], index) =>
           heading ? (
             <ConfiguratorItem
+              key={index}
               title={heading}
               configurators={[[cacheKey, false]]}
             />
