@@ -2,14 +2,17 @@ import { DiagramExperimentItem, MetricsEnum } from 'api';
 import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
 import { KPIDiagramConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
 import { KpiInvestigatorStrategyActionTypes } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyActionTypes';
-import { KpiInvestigatorStrategyModel } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
+import {
+  DiagramTrack,
+  KpiInvestigatorStrategyModel,
+} from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { AllMetricsEnum } from 'types/AllMetricsEnum';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: KpiInvestigatorStrategyModel = {
   isValidConfig: true,
-  diagramItems: [],
+  diagramTracks: [],
   coordinates: [],
   experiments: [],
   xAxis: MetricsEnum.Precision,
@@ -25,7 +28,7 @@ const KpiInvestigatorStrategyReducer = (
       const configuration = KPIDiagramConfiguration.getValue(
         action.payload as BenchmarkAppModel
       );
-      const diagramItems = configuration.diagramTracks
+      const diagramTracks: DiagramTrack[] = configuration.diagramTracks
         .filter(
           (aTrack): boolean =>
             aTrack.dataset[0] !== undefined &&
@@ -33,27 +36,41 @@ const KpiInvestigatorStrategyReducer = (
             aTrack.experiments[0].experiment[0] !== undefined &&
             aTrack.groundTruth[0] !== undefined
         )
-        .map((aTrack): DiagramExperimentItem[] =>
-          aTrack.experiments.map(
-            (anEntity): DiagramExperimentItem => ({
-              groundTruth: { experimentId: aTrack.groundTruth[0] },
-              experiment: {
-                experimentId: anEntity.experiment[0],
-                similarity:
-                  anEntity.simFunction[0] !== undefined
-                    ? {
-                        func: anEntity.simFunction[0],
-                        threshold: anEntity.threshold[0] ?? 0,
-                      }
-                    : undefined,
-              },
-            })
-          )
+        .map(
+          (aTrack, index): DiagramTrack => ({
+            name:
+              'Track ' +
+              (index + 1).toString() +
+              ' (' +
+              ((action.payload as BenchmarkAppModel).resources.datasets.find(
+                (aDataset): boolean => aDataset.id === aTrack.dataset[0]
+              )?.name ?? '?') +
+              ')',
+            items: aTrack.experiments
+              .filter(
+                (anEntity): boolean => anEntity.experiment[0] !== undefined
+              )
+              .map(
+                (anEntity): DiagramExperimentItem => ({
+                  groundTruth: { experimentId: aTrack.groundTruth[0] },
+                  experiment: {
+                    experimentId: anEntity.experiment[0],
+                    similarity:
+                      anEntity.simFunction[0] !== undefined
+                        ? {
+                            func: anEntity.simFunction[0],
+                            threshold: anEntity.threshold[0] ?? 0,
+                          }
+                        : undefined,
+                  },
+                })
+              ),
+          })
         );
       return {
         ...state,
-        diagramItems: diagramItems,
-        isValidConfig: diagramItems.length > 0,
+        diagramTracks: diagramTracks,
+        isValidConfig: diagramTracks.length > 0,
         experiments: (action.payload as BenchmarkAppModel).resources
           .experiments,
       };

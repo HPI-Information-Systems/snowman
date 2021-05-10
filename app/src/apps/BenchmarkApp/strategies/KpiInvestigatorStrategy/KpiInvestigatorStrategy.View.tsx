@@ -66,6 +66,7 @@ const KpiInvestigatorStrategyView = ({
                 }}
                 options={{
                   scales: { x: { min: 0, max: 1 }, y: { min: 0, max: 1 } },
+                  animation: { duration: 0 },
                 }}
               />
             </div>

@@ -53,14 +53,14 @@ export const loadCoordinates = (): SnowmanThunkAction<
 ): Promise<void> => {
   if (!getState().isValidConfig) return Promise.resolve();
   return Promise.all(
-    getState().diagramItems.map(
+    getState().diagramTracks.map(
       (anItem): Promise<DiagramCoordinates[]> =>
         RequestHandler(() =>
           new BenchmarkApi()
             .calculateDiagramData({
               xAxis: getState().xAxis,
               yAxis: getState().yAxis,
-              diagram: { multipleExperiments: anItem },
+              diagram: { multipleExperiments: anItem.items },
             })
             .then((coordinates) => coordinates as DiagramCoordinates[])
         )

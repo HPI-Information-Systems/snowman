@@ -7,7 +7,7 @@ import React from 'react';
 export const KPIDiagramConfiguration = buildConfigurator({
   diagramTracks: {
     position: 0,
-    heading: '1. Select Diagram Track',
+    heading: '1. Select Diagram Tracks',
     configuration: [
       {
         dataset: {

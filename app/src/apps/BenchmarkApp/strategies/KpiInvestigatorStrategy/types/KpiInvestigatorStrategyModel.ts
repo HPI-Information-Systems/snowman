@@ -4,9 +4,14 @@ import { AllMetricsEnum } from 'types/AllMetricsEnum';
 
 export interface KpiInvestigatorStrategyModel {
   isValidConfig: boolean;
-  diagramItems: DiagramExperimentItem[][];
+  diagramTracks: DiagramTrack[];
   coordinates: DiagramCoordinates[][];
   experiments: Experiment[];
   yAxis: AllMetricsEnum;
   xAxis: AllMetricsEnum;
+}
+
+export interface DiagramTrack {
+  name: string;
+  items: DiagramExperimentItem[];
 }
