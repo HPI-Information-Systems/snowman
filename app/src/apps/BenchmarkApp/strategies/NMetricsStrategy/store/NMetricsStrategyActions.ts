@@ -1,8 +1,9 @@
-import { BenchmarkApi, Experiment, Metric } from 'api';
+import { BenchmarkApi, Metric } from 'api';
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { MagicNotPossibleId } from 'structs/constants';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import {
@@ -45,10 +46,11 @@ export const loadNMetrics = (): SnowmanThunkAction<
   const goldStandard = getState().groundTruth;
   dispatch(resetMetrics());
   Promise.all(
-    getState().experiments.map((anExperiment: Experiment) =>
+    getState().experiments.map((anEntity: ExperimentEntity) =>
       new BenchmarkApi().getBinaryMetrics({
-        groundTruthExperimentId: goldStandard?.id ?? MagicNotPossibleId,
-        predictedExperimentId: anExperiment.id,
+        groundTruthExperimentId:
+          goldStandard?.experiment.id ?? MagicNotPossibleId,
+        predictedExperimentId: anEntity.experiment.id,
       })
     )
   ).then((metrics: Metric[][]): void => {

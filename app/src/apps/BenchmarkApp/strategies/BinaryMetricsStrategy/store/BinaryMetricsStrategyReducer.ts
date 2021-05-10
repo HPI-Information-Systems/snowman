@@ -35,16 +35,29 @@ const BinaryMetricsStrategyReducer = (
         };
       }
 
+      const foundGroundTruth = appStore.resources.experiments.find(
+        (anExperiment: Experiment): boolean =>
+          anExperiment.id === configuration.groundTruth[0]
+      );
+      const foundExperiment = appStore.resources.experiments.find(
+        (anExperiment: Experiment): boolean =>
+          anExperiment.id === configuration.experiment[0]
+      );
+      if (foundGroundTruth === undefined || foundExperiment === undefined) {
+        return {
+          ...state,
+          isValidConfig: false,
+        };
+      }
+
       return {
         ...state,
-        groundTruth: appStore.resources.experiments.find(
-          (anExperiment: Experiment): boolean =>
-            anExperiment.id === configuration.groundTruth[0]
-        ),
-        experiment: appStore.resources.experiments.find(
-          (anExperiment: Experiment): boolean =>
-            anExperiment.id === configuration.experiment[0]
-        ),
+        groundTruth: {
+          experiment: foundGroundTruth,
+        },
+        experiment: {
+          experiment: foundExperiment,
+        },
         dataset: appStore.resources.datasets.find(
           (aDataset: Dataset): boolean =>
             aDataset.id === configuration.dataset[0]

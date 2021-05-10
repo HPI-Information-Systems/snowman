@@ -3,6 +3,7 @@ import { NMetricsConfiguration } from 'apps/BenchmarkApp/components/BenchmarkCon
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: NMetricsStrategyModel = {
@@ -27,16 +28,27 @@ const NMetricsStrategyReducer = (
           ...state,
           isValidConfig: false,
         };
+      const foundGroundTruth = appStore.resources.experiments.find(
+        (anExperiment: Experiment): boolean =>
+          anExperiment.id === goldStandardId
+      );
+      // ignores duplicate experiments
+      const foundExperiments = appStore.resources.experiments.filter(
+        (anExperiment: Experiment): boolean =>
+          experimentIds.includes(anExperiment.id)
+      );
+      if (foundGroundTruth === undefined || foundExperiments.length === 0)
+        return {
+          ...state,
+          isValidConfig: false,
+        };
       return {
         ...state,
-        groundTruth: appStore.resources.experiments.find(
-          (anExperiment: Experiment): boolean =>
-            anExperiment.id === goldStandardId
-        ),
-        // ignores duplicate experiments
-        experiments: appStore.resources.experiments.filter(
-          (anExperiment: Experiment): boolean =>
-            experimentIds.includes(anExperiment.id)
+        groundTruth: { experiment: foundGroundTruth },
+        experiments: foundExperiments.map(
+          (anExperiment): ExperimentEntity => ({
+            experiment: anExperiment,
+          })
         ),
         metrics: [],
         isValidConfig: true,

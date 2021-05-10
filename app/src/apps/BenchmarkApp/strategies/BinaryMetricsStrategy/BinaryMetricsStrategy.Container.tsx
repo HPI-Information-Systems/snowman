@@ -34,12 +34,12 @@ const getCountsByTuplesCategory = (
     .filter(({ experiments }) =>
       experiments
         .map(({ experimentId }) => experimentId)
-        .includes(experiment.id)
+        .includes(experiment.experiment.id)
     )
     .filter(({ experiments }) =>
       experiments
         .map(({ experimentId }) => experimentId)
-        .includes(goldStandard.id)
+        .includes(goldStandard.experiment.id)
     );
   switch (aMetricsTuplesCategory) {
     case MetricsTuplesCategories.truePositives:
@@ -49,7 +49,7 @@ const getCountsByTuplesCategory = (
     case MetricsTuplesCategories.falseNegatives:
       return counts.find(({ experiments }) =>
         experiments.every(({ predictedCondition, experimentId }) =>
-          goldStandard.id === experimentId
+          goldStandard.experiment.id === experimentId
             ? predictedCondition
             : !predictedCondition
         )
@@ -57,7 +57,7 @@ const getCountsByTuplesCategory = (
     case MetricsTuplesCategories.falsePositives:
       return counts.find(({ experiments }) =>
         experiments.every(({ predictedCondition, experimentId }) =>
-          experiment.id === experimentId
+          experiment.experiment.id === experimentId
             ? predictedCondition
             : !predictedCondition
         )
@@ -141,20 +141,26 @@ const mapStateToProps = (
       ? intersectionDescription(
           state.selectedDataView === MetricsTuplesCategories.truePositives
             ? {
-                included: [state.experiment.name, state.groundTruth.name],
+                included: [
+                  state.experiment.experiment.name,
+                  state.groundTruth.experiment.name,
+                ],
               }
             : state.selectedDataView === MetricsTuplesCategories.falsePositives
             ? {
-                included: [state.experiment.name],
-                excluded: [state.groundTruth.name],
+                included: [state.experiment.experiment.name],
+                excluded: [state.groundTruth.experiment.name],
               }
             : state.selectedDataView === MetricsTuplesCategories.falseNegatives
             ? {
-                excluded: [state.experiment.name],
-                included: [state.groundTruth.name],
+                excluded: [state.experiment.experiment.name],
+                included: [state.groundTruth.experiment.name],
               }
             : {
-                excluded: [state.experiment.name, state.groundTruth.name],
+                excluded: [
+                  state.experiment.experiment.name,
+                  state.groundTruth.experiment.name,
+                ],
               }
         )
       : 'unknown',

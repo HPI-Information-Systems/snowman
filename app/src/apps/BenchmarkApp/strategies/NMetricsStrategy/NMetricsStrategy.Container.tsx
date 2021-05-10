@@ -19,8 +19,10 @@ const mapStateToProps = (
 ): NMetricsStrategyStateProps => {
   return {
     metrics: state.metrics,
-    experiments: state.experiments,
-    goldStandard: state.groundTruth,
+    experiments: state.experiments.map(
+      (anEntity): Experiment => anEntity.experiment
+    ),
+    goldStandard: state.groundTruth?.experiment,
     isValidSelection: state.isValidConfig,
   };
 };
