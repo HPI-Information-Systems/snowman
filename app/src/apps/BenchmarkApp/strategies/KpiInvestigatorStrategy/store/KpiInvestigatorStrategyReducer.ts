@@ -29,6 +29,7 @@ const KpiInvestigatorStrategyReducer = (
         .filter(
           (aTrack): boolean =>
             aTrack.dataset[0] !== undefined &&
+            aTrack.experiments[0] !== undefined &&
             aTrack.experiments[0].experiment[0] !== undefined &&
             aTrack.groundTruth[0] !== undefined
         )
@@ -36,7 +37,16 @@ const KpiInvestigatorStrategyReducer = (
           aTrack.experiments.map(
             (anEntity): DiagramExperimentItem => ({
               groundTruth: { experimentId: aTrack.groundTruth[0] },
-              experiment: { experimentId: anEntity.experiment[0] },
+              experiment: {
+                experimentId: anEntity.experiment[0],
+                similarity:
+                  anEntity.simFunction[0] !== undefined
+                    ? {
+                        func: anEntity.simFunction[0],
+                        threshold: anEntity.threshold[0] ?? 0,
+                      }
+                    : undefined,
+              },
             })
           )
         );
