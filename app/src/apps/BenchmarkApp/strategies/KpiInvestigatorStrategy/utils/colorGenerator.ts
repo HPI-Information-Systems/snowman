@@ -16,3 +16,7 @@ export const getNextColor = (): string => {
   if (currentId >= colors.length) currentId = 0;
   return colors[currentId++];
 };
+
+export const getMyColor = (id: number): string => {
+  return colors[id % colors.length];
+};

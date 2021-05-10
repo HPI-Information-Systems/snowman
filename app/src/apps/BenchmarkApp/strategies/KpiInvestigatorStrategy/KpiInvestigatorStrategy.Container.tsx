@@ -11,9 +11,9 @@ import {
   setYAxis,
 } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/store/KpiInvestigatorStrategyActions';
 import { KpiInvestigatorStrategyModel } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
-import { getNextColor } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/utils/colorGenerator';
+import { getMyColor } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/utils/colorGenerator';
 import { ScatterChartDataset } from 'components/simple/ChartComponent/ScatterChart';
-import { groupBy, map } from 'lodash';
+import { groupBy } from 'lodash';
 import { connect } from 'react-redux';
 import { AllMetricsEnum } from 'types/AllMetricsEnum';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -23,19 +23,20 @@ const mapStateToProps = (
 ): KpiInvestigatorStrategyStateProps => ({
   isValidConfig: state.isValidConfig,
   coordinates: state.coordinates,
-  datasets: map(
+  datasets: Object.values(
     groupBy(
       state.coordinates,
       (aCoordinate: DiagramCoordinates) => aCoordinate.experimentId ?? 0
-    ),
-    (anArray, aKey): ScatterChartDataset => ({
+    )
+  ).map(
+    (anItemArray, index): ScatterChartDataset => ({
       label:
         state.experiments.find(
           (anExperiment: Experiment): boolean =>
-            anExperiment.id.toString() === aKey
-        )?.name ?? aKey,
-      backgroundColor: getNextColor(),
-      data: anArray,
+            anExperiment.id === anItemArray[0].experimentId
+        )?.name ?? anItemArray[0].experimentId?.toString(),
+      backgroundColor: getMyColor(index),
+      data: anItemArray,
       pointRadius: 6,
       pointHoverRadius: 10,
     })
