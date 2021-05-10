@@ -7,6 +7,7 @@ import { serializeCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigu
 import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
 import { updateSelection } from 'apps/BenchmarkApp/store/ConfigurationStore/ConfigurationStoreActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { MultiSelectConfigurationModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { getSingleItem } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { NestedArray } from 'snowman-library';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
@@ -39,16 +40,24 @@ export const selectId = <
 const createCacheKey = (
   aCacheKey: StoreCacheKey<StoreCacheKeyBaseEnum.multiSelect>,
   id: number
-): StoreCacheKey | undefined =>
-  selectId(aCacheKey.slice(1) as StoreCacheKey, id);
+): StoreCacheKey => selectId(aCacheKey.slice(1) as StoreCacheKey, id);
+
+export const getMultiSelectConfiguration = (
+  aCacheKey: StoreCacheKey<StoreCacheKeyBaseEnum.multiSelect>,
+  state: BenchmarkAppModel
+): MultiSelectConfigurationModel =>
+  getSingleItem(aCacheKey, state) ?? {
+    currentCacheKeys: [createCacheKey(aCacheKey, MULTI_SELECTOR_START)],
+    nextId: MULTI_SELECTOR_START + 1,
+  };
 
 export const push = (
   aCacheKey: StoreCacheKey<StoreCacheKeyBaseEnum.multiSelect>
 ): SnowmanThunkAction<void, BenchmarkAppModel> => (dispatch, getState) => {
-  const currentConfiguration = getSingleItem(aCacheKey, getState()) ?? {
-    currentCacheKeys: [],
-    nextId: MULTI_SELECTOR_START,
-  };
+  const currentConfiguration = getMultiSelectConfiguration(
+    aCacheKey,
+    getState()
+  );
   dispatch(
     updateSelection({
       aCacheKey,
@@ -71,23 +80,29 @@ export const remove = (
   aCacheKey: StoreCacheKey<StoreCacheKeyBaseEnum.multiSelect>,
   removeCacheKey: StoreCacheKey
 ): SnowmanThunkAction<void, BenchmarkAppModel> => (dispatch, getState) => {
-  const currentConfiguration = getSingleItem(aCacheKey, getState()) ?? {
-    currentCacheKeys: [],
-    nextId: MULTI_SELECTOR_START,
-  };
-  dispatch(
-    updateSelection({
+  const serializedRemovedCacheKey = serializeCacheKey(removeCacheKey);
+  if (
+    serializedRemovedCacheKey !==
+    serializeCacheKey(createCacheKey(aCacheKey, MULTI_SELECTOR_START))
+  ) {
+    const currentConfiguration = getMultiSelectConfiguration(
       aCacheKey,
-      newSelection: [
-        {
-          ...currentConfiguration,
-          currentCacheKeys: currentConfiguration.currentCacheKeys.filter(
-            (key) =>
-              serializeCacheKey(key) !== serializeCacheKey(removeCacheKey)
-          ),
-        },
-      ],
-      allowMultiple: true,
-    })
-  );
+      getState()
+    );
+    dispatch(
+      updateSelection({
+        aCacheKey,
+        newSelection: [
+          {
+            ...currentConfiguration,
+            currentCacheKeys: currentConfiguration.currentCacheKeys.filter(
+              (key) =>
+                serializeCacheKey(key) !== serializeCacheKey(removeCacheKey)
+            ),
+          },
+        ],
+        allowMultiple: true,
+      })
+    );
+  }
 };

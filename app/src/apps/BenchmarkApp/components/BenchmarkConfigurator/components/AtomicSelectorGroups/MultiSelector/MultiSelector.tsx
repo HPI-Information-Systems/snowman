@@ -6,11 +6,11 @@ import {
   MultiSelectorStateProps,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/MultiSelector/MultiSelectorProps';
 import {
+  getMultiSelectConfiguration,
   push,
   remove,
 } from 'apps/BenchmarkApp/store/ConfigurationStore/MultiSelectorActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { getSingleItem } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
@@ -19,7 +19,8 @@ const mapStateToProps = (
   ownProps: MultiSelectorOwnProps
 ): MultiSelectorStateProps => {
   return {
-    cacheKeys: getSingleItem(ownProps.cacheKey, state)?.currentCacheKeys ?? [],
+    cacheKeys: getMultiSelectConfiguration(ownProps.cacheKey, state)
+      .currentCacheKeys,
   };
 };
 
