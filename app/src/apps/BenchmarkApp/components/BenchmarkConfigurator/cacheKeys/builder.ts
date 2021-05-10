@@ -43,7 +43,7 @@ type MultiSelectConfigurationValue<
 
 type BaseConfigurationValue<
   BaseConfiguration extends BaseConfigurationT
-> = ModelOfCacheKeyBase<BaseConfiguration>;
+> = ModelOfCacheKeyBase<BaseConfiguration>[];
 
 type ConfigurationValue<
   Configuration extends ConfigurationT
