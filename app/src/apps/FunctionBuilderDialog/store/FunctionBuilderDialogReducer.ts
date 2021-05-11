@@ -32,6 +32,16 @@ const FunctionBuilderDialogReducer = (
   switch (action.type) {
     case FunctionBuilderDialogActionTypes.RESET_DIALOG:
       return initialState;
+    case FunctionBuilderDialogActionTypes.SUBSTITUTE_RESERVED_ACCESS_KEYS:
+      return {
+        ...state,
+        reservedAccessKeys: action.payload as number[],
+      };
+    case FunctionBuilderDialogActionTypes.SUBSTITUTE_FUNCTION_BUILDING_BLOCK:
+      return {
+        ...state,
+        functionBuildingStack: action.payload as FunctionBuildingBlock,
+      };
     case FunctionBuilderDialogActionTypes.CHANGE_FUNCTION_NAME:
       return {
         ...state,

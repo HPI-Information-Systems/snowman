@@ -1,10 +1,13 @@
 import {
+  SimilarityThresholdFunction,
   SimilarityThresholdFunctionDefinition,
   SimilarityThresholdFunctionDefinitionTypeEnum,
   SimilarityThresholdFunctionOperatorOperatorEnum,
   SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
 } from 'api';
+import { UpdatePrepareInformation } from 'apps/FunctionBuilderDialog/types/UpdatePrepareInformation';
 import autoBind from 'auto-bind';
+import KeyMagistrate from 'utils/keyMagistrate';
 
 export type FunctionBuildingBlockType = SimilarityThresholdFunctionDefinitionTypeEnum | null;
 
@@ -41,6 +44,80 @@ export class FunctionBuildingBlock {
     this.mid = mid ?? null;
     this.right = right ?? null;
     autoBind(this);
+  }
+
+  private static getFBBValueAssignment(
+    keyGenerator: KeyMagistrate,
+    aSimilarityThresholdFunctionDef: SimilarityThresholdFunctionDefinition
+  ): [
+    LeftRightCellContent | undefined,
+    MidCellContent | undefined,
+    LeftRightCellContent | undefined
+  ] {
+    switch (aSimilarityThresholdFunctionDef.type) {
+      case SimilarityThresholdFunctionDefinitionTypeEnum.Constant:
+        return [aSimilarityThresholdFunctionDef.constant, undefined, undefined];
+      case SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold:
+        return [
+          aSimilarityThresholdFunctionDef.similarityThreshold,
+          undefined,
+          undefined,
+        ];
+      case SimilarityThresholdFunctionDefinitionTypeEnum.UnaryOperator:
+        return [
+          aSimilarityThresholdFunctionDef.unaryOperator?.operator,
+          undefined,
+          aSimilarityThresholdFunctionDef.unaryOperator !== undefined
+            ? FunctionBuildingBlock.getFBBFromAPISimilarityFunctionDef(
+                keyGenerator,
+                aSimilarityThresholdFunctionDef.unaryOperator.func
+              )
+            : undefined,
+        ];
+      case SimilarityThresholdFunctionDefinitionTypeEnum.Operator:
+        return [
+          aSimilarityThresholdFunctionDef.operator !== undefined
+            ? FunctionBuildingBlock.getFBBFromAPISimilarityFunctionDef(
+                keyGenerator,
+                aSimilarityThresholdFunctionDef.operator.left
+              )
+            : undefined,
+          aSimilarityThresholdFunctionDef.operator?.operator,
+          aSimilarityThresholdFunctionDef.operator !== undefined
+            ? FunctionBuildingBlock.getFBBFromAPISimilarityFunctionDef(
+                keyGenerator,
+                aSimilarityThresholdFunctionDef.operator.right
+              )
+            : undefined,
+        ];
+    }
+  }
+
+  private static getFBBFromAPISimilarityFunctionDef(
+    keyGenerator: KeyMagistrate,
+    aSimilarityThresholdFunction: SimilarityThresholdFunctionDefinition
+  ): FunctionBuildingBlock {
+    return new FunctionBuildingBlock(
+      keyGenerator.getNewKey(),
+      aSimilarityThresholdFunction.type,
+      ...FunctionBuildingBlock.getFBBValueAssignment(
+        keyGenerator,
+        aSimilarityThresholdFunction
+      )
+    );
+  }
+
+  public static getFBBFromAPISimilarityFunction(
+    aSimilarityThresholdFunction: SimilarityThresholdFunction
+  ): UpdatePrepareInformation {
+    const keyMagistrate = new KeyMagistrate();
+    return [
+      FunctionBuildingBlock.getFBBFromAPISimilarityFunctionDef(
+        keyMagistrate,
+        aSimilarityThresholdFunction.definition
+      ),
+      keyMagistrate.revealKeys(),
+    ];
   }
 
   public getFunctionDefinition():
