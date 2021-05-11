@@ -5,26 +5,50 @@ import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import React from 'react';
 
 export const SimilarityDiagramConfiguration = buildConfigurator({
-  algorithms: {
+  diagramTracks: {
+    position: 0,
+    heading: '1. Select Diagram Tracks',
     configuration: [
       {
-        algorithm: {
-          configuration: StoreCacheKeyBaseEnum.algorithm,
+        dataset: {
+          configuration: StoreCacheKeyBaseEnum.dataset,
           position: 1,
-          heading: 'Select Algorithm',
+          heading: 'Select Dataset',
+        },
+        groundTruth: {
+          configuration: StoreCacheKeyBaseEnum.groundTruth,
+          position: 2,
+          heading: 'Select Ground Truth',
+        },
+        experiments: {
+          configuration: [
+            {
+              experiment: {
+                configuration: StoreCacheKeyBaseEnum.experiment,
+                position: 1,
+                heading: 'Select Experiment',
+              },
+              simFunction: {
+                configuration: StoreCacheKeyBaseEnum.similarityFunction,
+                position: 2,
+                heading: 'Select Similarity Function',
+              },
+            },
+            StoreCacheKeyBaseEnum.experiment,
+          ],
+          position: 3,
+          heading: 'Select Similarity Functions',
         },
       },
-      StoreCacheKeyBaseEnum.algorithm,
+      StoreCacheKeyBaseEnum.dataset,
     ],
-    position: 1,
-    heading: '1. Select Diagram Tracks',
   },
 });
 
 const SimilarityDiagramConfigurator = (): JSX.Element => (
   <GenericConfigurator
     cacheKey={SimilarityDiagramConfiguration.cacheKey}
-    strategyID={StrategyIDs.SimilarityFunctionInvestigator}
+    strategyID={StrategyIDs.SimilarityDiagram} // TODO
   />
 );
 

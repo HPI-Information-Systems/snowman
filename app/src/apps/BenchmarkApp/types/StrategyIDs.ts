@@ -5,5 +5,5 @@ export enum StrategyIDs {
   NaryIntersection = 'N-Intersection Viewer',
   KpiInvestigator = 'KPI Investigator',
   KpiDecisionMatrix = 'KPI Decision Matrix',
-  SimilarityFunctionInvestigator = 'Similarity Function Investigator',
+  SimilarityDiagram = 'Similarity Function Investigator',
 }
