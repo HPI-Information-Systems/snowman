@@ -18,6 +18,7 @@ import {
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { max, nth } from 'lodash';
+import { NonSimilarityThresholdColumns } from 'snowman-library';
 import { MagicNotPossibleId } from 'structs/constants';
 import { SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION } from 'structs/statusMessages';
 import { EntityId } from 'types/EntityId';
@@ -94,12 +95,14 @@ const loadExperimentColumns = (): SnowmanThunkAction<
         .getExperimentFile({
           experimentId: getExperimentId(),
           // an arbitrary number so that not all records will be loaded
-          limit: 5,
+          limit: 0,
         })
         .then((file: FileResponse): void => {
           dispatch({
             type: FunctionBuilderDialogActionTypes.LOAD_EXPERIMENT_COLUMNS,
-            payload: file.header,
+            payload: file.header.filter(
+              (column) => !NonSimilarityThresholdColumns.has(column)
+            ),
           });
         })
   );
