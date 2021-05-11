@@ -13,6 +13,49 @@ export const DecisionMatrixConfiguration = buildConfigurator({
     position: 1,
     heading: '1. Select Matching Solutions',
   },
+  metrics: {
+    position: 2,
+    heading:
+      '2. (Optional) Select Experiments used to calculate average metrics',
+    configuration: [
+      {
+        dataset: {
+          configuration: StoreCacheKeyBaseEnum.dataset,
+          position: 1,
+          heading: 'Select Dataset',
+        },
+        groundTruth: {
+          configuration: StoreCacheKeyBaseEnum.groundTruth,
+          position: 2,
+          heading: 'Select Ground Truth',
+        },
+        experiments: {
+          configuration: [
+            {
+              experiment: {
+                configuration: StoreCacheKeyBaseEnum.experiment,
+                position: 1,
+                heading: 'Select Experiment',
+              },
+              simFunction: {
+                configuration: StoreCacheKeyBaseEnum.similarityFunction,
+                position: 2,
+                heading: '(Optional) Select Similarity Function and Threshold',
+              },
+              simThreshold: {
+                configuration: StoreCacheKeyBaseEnum.similarityThreshold,
+                position: 3,
+              },
+            },
+            StoreCacheKeyBaseEnum.experiment,
+          ],
+          position: 3,
+          heading: 'Select Experiments',
+        },
+      },
+      StoreCacheKeyBaseEnum.dataset,
+    ],
+  },
 });
 
 const DecisionMatrixConfigurator = (): JSX.Element => (
