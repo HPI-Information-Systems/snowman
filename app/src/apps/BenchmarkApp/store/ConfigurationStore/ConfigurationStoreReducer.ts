@@ -4,9 +4,14 @@ import {
   ModelOfCache,
   StoreCacheKey,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
+import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreActionTypes } from 'apps/BenchmarkApp/types/ConfigurationStoreActionTypes';
-import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+import {
+  ConfigurationCache,
+  ConfigurationCacheItem,
+  ConfigurationStoreModel,
+} from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { produce } from 'immer';
 import { Define, ValueOf } from 'snowman-library';
 import { SnowmanAction } from 'types/SnowmanAction';
@@ -80,6 +85,29 @@ const ConfigurationStoreReducer = (
             }
           }
         }
+      });
+    case BenchmarkAppActionsTypes.SET_ALGORITHMS:
+    case BenchmarkAppActionsTypes.SET_DATASETS:
+    case BenchmarkAppActionsTypes.SET_EXPERIMENTS:
+    case BenchmarkAppActionsTypes.SET_SIM_FUNCTIONS:
+      return produce(state, (state: BenchmarkAppModel) => {
+        for (const item of (Object.values(
+          state.config
+        ) as ConfigurationCache<unknown>[])
+          .flatMap((cache) => Object.values(cache))
+          .filter(
+            (
+              value: ConfigurationCacheItem<unknown> | undefined
+            ): value is ConfigurationCacheItem<unknown> => value !== undefined
+          )) {
+          const cacheKeyAndFilter = getCacheKeyAndFilter(item.cacheKey);
+          if (cacheKeyAndFilter.resourcesUpdated) {
+            item.targets = cacheKeyAndFilter.resourcesUpdated(
+              state
+            ) as typeof item.targets;
+          }
+        }
+        return state;
       });
     default:
       return state;

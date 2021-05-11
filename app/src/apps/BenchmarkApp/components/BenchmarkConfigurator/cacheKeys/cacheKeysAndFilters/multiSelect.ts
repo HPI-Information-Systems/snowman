@@ -35,7 +35,7 @@ export const multiSelectCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
     ((getItemsUntyped(cacheKey, state).filter((x) => x !== undefined)[0] as
       | MultiSelectConfigurationModel
       | undefined)?.currentIds
-      .map((id) =>
+      ?.map((id) =>
         getCacheKeyAndFilterUntyped(
           createCacheKey(cacheKey, id)
         ).getSelectorItems(state)

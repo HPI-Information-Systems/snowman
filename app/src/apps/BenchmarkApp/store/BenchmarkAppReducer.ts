@@ -40,6 +40,7 @@ const BenchmarkAppReducer = (
   state: BenchmarkAppModel = initialState,
   action: SnowmanAction
 ): BenchmarkAppModel => {
+  // the order is important! benchmark resources reducer must come before configuration store reducer
   return ConfigurationStoreReducer(
     BenchmarkResourcesReducer(
       InternalBenchmarkAppReducer(state, action),

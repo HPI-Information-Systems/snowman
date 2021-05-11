@@ -42,8 +42,8 @@ const BinaryMetricsStrategyReducer = (
         dataset === undefined
       ) {
         return {
-          ...state,
-          isValidConfig: false,
+          ...initialState,
+          selectedDataView: state.selectedDataView,
         };
       }
 

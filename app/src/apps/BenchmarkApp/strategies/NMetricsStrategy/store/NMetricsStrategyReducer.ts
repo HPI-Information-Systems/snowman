@@ -33,10 +33,7 @@ const NMetricsStrategyReducer = (
             entity !== undefined
         );
       if (groundTruth === undefined || experiments.length === 0) {
-        return {
-          ...state,
-          isValidConfig: false,
-        };
+        return initialState;
       }
       return {
         ...state,

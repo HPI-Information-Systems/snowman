@@ -86,6 +86,9 @@ type GetStoreCacheKeyAndFilter<
   icon?: () => string;
   getSelectorItems: (state: BenchmarkAppModel) => SelectorItem[];
   prepareSerialization: () => StoreCacheKey;
+  resourcesUpdated:
+    | ((state: BenchmarkAppModel) => (ModelOfCache<TargetCache> | undefined)[])
+    | undefined;
 };
 
 export const MakeStoreCacheKeyAndFilter = <
@@ -167,6 +170,27 @@ export const MakeStoreCacheKeyAndFilter = <
         }
       : {}),
     icon: icon ? () => icon(...args) : undefined,
+    resourcesUpdated: getEntities
+      ? (state) => {
+          const selection = result.getValue(state);
+          if (
+            Array.isArray(selection) &&
+            selection.every(
+              (item) => item === undefined || typeof item === 'number'
+            )
+          ) {
+            const entities = result.getEntities(state);
+            return (selection.filter(
+              (item) => entities.find(({ id }) => id === item) !== undefined
+            ) as unknown) as (ModelOfCache<TargetCache> | undefined)[];
+          } else {
+            return (selection as unknown) as (
+              | ModelOfCache<TargetCache>
+              | undefined
+            )[];
+          }
+        }
+      : undefined,
   };
   return result;
 };

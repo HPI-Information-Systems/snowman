@@ -57,21 +57,37 @@ const IntersectionStrategyReducer = (
         uniqueExperimentEntityKey
       );
       if (experimentConfigs.length === 0) {
-        return {
-          ...state,
-          isValidConfig: false,
-        };
+        return initialState;
       }
 
-      return {
+      const resultState = {
         ...state,
         available: experimentConfigs,
-        ignored: [...experimentConfigs],
-        excluded: [],
-        included: [],
+        ignored: experimentConfigs.filter(
+          (entity1) =>
+            state.included.find((entity2) =>
+              experimentEntitiesEqual(entity1, entity2)
+            ) === undefined &&
+            state.excluded.find((entity2) =>
+              experimentEntitiesEqual(entity1, entity2)
+            ) === undefined
+        ),
+        excluded: experimentConfigs.filter(
+          (entity1) =>
+            state.excluded.find((entity2) =>
+              experimentEntitiesEqual(entity1, entity2)
+            ) !== undefined
+        ),
+        included: experimentConfigs.filter(
+          (entity1) =>
+            state.included.find((entity2) =>
+              experimentEntitiesEqual(entity1, entity2)
+            ) !== undefined
+        ),
         counts: [],
         isValidConfig: true,
       };
+      return resultState;
     }
     case IntersectionStrategyActionTypes.SET_COUNTS:
       return {
