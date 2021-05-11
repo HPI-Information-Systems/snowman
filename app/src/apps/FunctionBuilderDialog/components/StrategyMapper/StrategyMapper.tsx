@@ -29,6 +29,22 @@ class StrategyMapper extends Component<
 
   constructor(props: StrategyMapperProps) {
     super(props);
+    // initialize within constructor due to tsc paradigm
+    this.storeUnsubscription = (): void => undefined;
+    if (
+      this.props.ownLocation !== undefined &&
+      this.props.parentAccessKey !== null &&
+      FunctionBuildingBlockMagistrate.doesAnBlockAlreadyExists(
+        this.props.parentAccessKey,
+        this.props.ownLocation
+      )
+    ) {
+      this.blockAccessKey = FunctionBuildingBlockMagistrate.getAccessKeyOfExistingChildBlock(
+        this.props.parentAccessKey,
+        this.props.ownLocation
+      );
+      return;
+    }
     this.blockAccessKey =
       this.props.parentAccessKey !== null
         ? FunctionBuildingBlockMagistrate.getNewAccessKey()
@@ -38,8 +54,6 @@ class StrategyMapper extends Component<
       this.props.parentAccessKey,
       this.props.ownLocation ?? CellDescriptor.left
     );
-    // initialize within constructor due to tsc paradigm
-    this.storeUnsubscription = (): void => undefined;
   }
 
   componentDidMount(): void {

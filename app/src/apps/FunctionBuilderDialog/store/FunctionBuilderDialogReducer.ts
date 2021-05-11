@@ -108,6 +108,10 @@ const FunctionBuilderDialogReducer = (
           state.functionBuildingStack.navigateToBlockAndMutate(
             targetBlockKey,
             (targetBlock: FunctionBuildingBlock): void => {
+              if (targetBlock.type === targetStrategy) return;
+              targetBlock.right = null;
+              targetBlock.left = null;
+              targetBlock.mid = null;
               targetBlock.type = targetStrategy;
             }
           );

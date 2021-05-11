@@ -17,8 +17,7 @@ import {
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
-import { nth } from 'lodash';
-import { max } from 'lodash';
+import { max, nth } from 'lodash';
 import { MagicNotPossibleId } from 'structs/constants';
 import { SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION } from 'structs/statusMessages';
 import { EntityId } from 'types/EntityId';
@@ -333,6 +332,93 @@ export class FunctionBuildingBlockMagistrate {
   static setMidValue(ownAccessKey: number, value: MidCellContent): void {
     return FunctionBuildingBlockMagistrate.dispatch(
       FunctionBuildingBlockMagistrate.setMidValueAction(ownAccessKey, value)
+    );
+  }
+
+  private static doesAnBlockAlreadyExistsAction(
+    parentAccessKey: number,
+    location: CellDescriptor
+  ): SnowmanThunkAction<boolean, FunctionBuilderDialogModel> {
+    return function (
+      _: SnowmanDispatch<FunctionBuilderDialogModel>,
+      getState: () => FunctionBuilderDialogModel
+    ): boolean {
+      const targetBlock = getState().functionBuildingStack.getBlock(
+        parentAccessKey
+      );
+      if (targetBlock === undefined) return false;
+      switch (location) {
+        case CellDescriptor.left:
+          return targetBlock.left !== undefined && targetBlock.left !== null;
+        case CellDescriptor.right:
+          return targetBlock.right !== undefined && targetBlock.right !== null;
+        case CellDescriptor.mid:
+          return targetBlock.mid !== undefined && targetBlock.mid !== null;
+      }
+    };
+  }
+
+  static doesAnBlockAlreadyExists(
+    parentAccessKey: number,
+    location: CellDescriptor
+  ): boolean {
+    return FunctionBuildingBlockMagistrate.dispatch(
+      FunctionBuildingBlockMagistrate.doesAnBlockAlreadyExistsAction(
+        parentAccessKey,
+        location
+      )
+    );
+  }
+
+  private static getAccessKeyOfExistingChildBlockAction(
+    parentAccessKey: number,
+    location: CellDescriptor
+  ): SnowmanThunkAction<number, FunctionBuilderDialogModel> {
+    return function (
+      _dispatch: SnowmanDispatch<FunctionBuilderDialogModel>,
+      getState: () => FunctionBuilderDialogModel
+    ): number {
+      const targetBlock = getState().functionBuildingStack.getBlock(
+        parentAccessKey
+      );
+      if (targetBlock === null || targetBlock === undefined)
+        throw Error('Impossible to retrieve access key from undef child');
+      switch (location) {
+        case CellDescriptor.left: {
+          if (
+            targetBlock.left === null ||
+            targetBlock.left === undefined ||
+            !(targetBlock.left instanceof FunctionBuildingBlock)
+          )
+            throw Error('Impossible to retrieve access key from undef child');
+          return targetBlock.left.accessKey;
+        }
+        case CellDescriptor.right: {
+          if (
+            targetBlock.right === null ||
+            targetBlock.right === undefined ||
+            !(targetBlock.right instanceof FunctionBuildingBlock)
+          )
+            throw Error('Impossible to retrieve access key from undef child');
+          return targetBlock.right.accessKey;
+        }
+        default:
+          throw Error(
+            'FunctionBuildingBlocks could not exist at given location'
+          );
+      }
+    };
+  }
+
+  static getAccessKeyOfExistingChildBlock(
+    parentAccessKey: number,
+    location: CellDescriptor
+  ): number {
+    return FunctionBuildingBlockMagistrate.dispatch(
+      FunctionBuildingBlockMagistrate.getAccessKeyOfExistingChildBlockAction(
+        parentAccessKey,
+        location
+      )
     );
   }
 }
