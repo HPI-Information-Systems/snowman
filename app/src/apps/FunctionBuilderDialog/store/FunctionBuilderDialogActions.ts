@@ -161,6 +161,12 @@ export const resetDialog = (): easyPrimitiveActionReturn<FunctionBuilderDialogMo
     payload: false,
   });
 
+export const cleanUp = (
+  dispatch: SnowmanDispatch<FunctionBuilderDialogModel>
+): void => {
+  dispatch(resetDialog());
+};
+
 export const changeFunctionName = (
   newFunctionName: string
 ): easyPrimitiveActionReturn<FunctionBuilderDialogModel> =>
