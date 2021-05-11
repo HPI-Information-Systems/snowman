@@ -1,4 +1,4 @@
-import { IonPopover } from '@ionic/react';
+import { IonContent, IonItem, IonPopover } from '@ionic/react';
 import SelectorGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroup';
 import { SelectorPopoverGroupProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/SelectorPopoverGroupProps';
 import styles from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/SelectorPopoverGroupStyles.module.css';
@@ -19,7 +19,9 @@ const SelectorPopoverGroupView = ({
       onDidDismiss={() => close()}
       cssClass={styles.largePopover}
     >
-      <div className={styles.popoverContentPadding}>{children}</div>
+      <IonItem className={styles.popoverContentPadding}>
+        <IonContent>{children}</IonContent>
+      </IonItem>
     </IonPopover>
   </>
 );

@@ -4,6 +4,7 @@
 }
 
 .popoverContentPadding {
-    padding-top: 0.7rem;
-    padding-bottom: 0.7rem;
+    --padding-start: 0px;
+    --inner-padding-end: 0px;
+    --inner-padding-top: 0.7rem;
 }
