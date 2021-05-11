@@ -21,7 +21,7 @@ const mapStateToProps = (
   isValidConfig: state.isValidConfig,
   datasets: state.coordinates.map(
     (myCoordinates, index): ScatterChartDataset => ({
-      label: state.diagramTracks[index].name ?? index.toString(),
+      label: state.diagramTracks[index]?.name ?? index.toString(),
       backgroundColor: getMyColor(index, 0.7),
       borderColor: getMyColor(index),
       data: myCoordinates,

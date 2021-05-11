@@ -1,5 +1,4 @@
 import { IonText } from '@ionic/react';
-import { Experiment } from 'api';
 import { IntersectionVennDiagramConfig } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/config';
 import { IntersectionVennDiagramProps } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/IntersectionVennDiagramProps';
 import { IntersectionVennDiagramDefaultStrategy } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/strategies/default';
@@ -7,6 +6,7 @@ import { MAX_VENN_DIAGRAM_DIMENSION } from 'components/simple/VennDiagram/limits
 import VennDiagram from 'components/simple/VennDiagram/VennDiagram';
 import { useEffect, useState } from 'react';
 import React from 'react';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 
 export default function IntersectionVennDiagramView({
   experiments,
@@ -18,7 +18,7 @@ export default function IntersectionVennDiagramView({
   strategy = IntersectionVennDiagramDefaultStrategy,
 }: IntersectionVennDiagramProps): JSX.Element {
   function createIntersectWrapper() {
-    return (experiments: Experiment[]) => {
+    return (experiments: ExperimentEntity[]) => {
       intersect(experiments);
       if (onIntersect) {
         onIntersect(experiments);

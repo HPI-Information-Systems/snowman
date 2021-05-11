@@ -6,15 +6,10 @@ import { connect } from 'react-redux';
 const mapStateToProps = (
   state: IntersectionStrategyModel
 ): IntersectionDroppableStateProps => ({
-  pairCounts: new Map(
-    state.counts
-      .filter(({ experiments }) => experiments.length === 1)
-      .filter(({ experiments: [{ predictedCondition }] }) => predictedCondition)
-      .map(({ experiments: [{ experimentId }], numberPairs }) => [
-        experimentId,
-        numberPairs,
-      ])
-  ),
+  pairCounts: state.counts
+    .filter(({ experiments }) => experiments.length === 1)
+    .filter(({ experiments: [{ predictedCondition }] }) => predictedCondition)
+    .map(({ experiments: [config], numberPairs }) => [config, numberPairs]),
 });
 
 const IntersectionDroppable = connect(mapStateToProps)(

@@ -48,11 +48,12 @@ export const loadNMetrics = (): SnowmanThunkAction<
   Promise.all(
     getState().experiments.map((anEntity: ExperimentEntity) =>
       new BenchmarkApi().getBinaryMetrics({
-        groundTruthSimilarityThresholdFunction: groundTruth?.similarity?.func,
+        groundTruthSimilarityThresholdFunction:
+          groundTruth?.similarity?.func.id,
         groundTruthSimilarityThreshold: groundTruth?.similarity?.threshold,
         groundTruthExperimentId:
           groundTruth?.experiment.id ?? MagicNotPossibleId,
-        predictedSimilarityThresholdFunction: anEntity.similarity?.func,
+        predictedSimilarityThresholdFunction: anEntity.similarity?.func.id,
         predictedSimilarityThreshold: anEntity.similarity?.threshold,
         predictedExperimentId: anEntity.experiment?.id ?? MagicNotPossibleId,
       })

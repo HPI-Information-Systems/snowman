@@ -1,8 +1,9 @@
-import { Dataset, Experiment, ExperimentIntersectionCount, Metric } from 'api';
+import { Dataset, ExperimentIntersectionCount, Metric } from 'api';
 import { BinaryMetricsConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/BinaryMetricsConfigurator';
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
 import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { resolveExperimentEntity } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { SnowmanAction } from 'types/SnowmanAction';
 
@@ -24,26 +25,22 @@ const BinaryMetricsStrategyReducer = (
     case BinaryMetricsStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
       const configuration = BinaryMetricsConfiguration.getValue(appStore);
+      const groundTruth = resolveExperimentEntity(
+        configuration.groundTruth,
+        appStore
+      );
+      const experiment = resolveExperimentEntity(
+        configuration.experiment,
+        appStore
+      );
+      const dataset = appStore.resources.datasets.find(
+        (aDataset: Dataset): boolean => aDataset.id === configuration.dataset[0]
+      );
       if (
-        configuration.dataset[0] === undefined ||
-        configuration.groundTruth[0] === undefined ||
-        configuration.experiment[0] === undefined
+        groundTruth === undefined ||
+        experiment === undefined ||
+        dataset === undefined
       ) {
-        return {
-          ...state,
-          isValidConfig: false,
-        };
-      }
-
-      const foundGroundTruth = appStore.resources.experiments.find(
-        (anExperiment: Experiment): boolean =>
-          anExperiment.id === configuration.groundTruth[0]
-      );
-      const foundExperiment = appStore.resources.experiments.find(
-        (anExperiment: Experiment): boolean =>
-          anExperiment.id === configuration.experiment[0]
-      );
-      if (foundGroundTruth === undefined || foundExperiment === undefined) {
         return {
           ...state,
           isValidConfig: false,
@@ -52,16 +49,9 @@ const BinaryMetricsStrategyReducer = (
 
       return {
         ...state,
-        groundTruth: {
-          experiment: foundGroundTruth,
-        },
-        experiment: {
-          experiment: foundExperiment,
-        },
-        dataset: appStore.resources.datasets.find(
-          (aDataset: Dataset): boolean =>
-            aDataset.id === configuration.dataset[0]
-        ),
+        groundTruth,
+        experiment,
+        dataset,
         isValidConfig: true,
         metrics: [],
         counts: [],

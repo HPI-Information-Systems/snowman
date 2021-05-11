@@ -1,13 +1,19 @@
-import { Experiment, ExperimentIntersectionCount } from 'api';
+import { ExperimentIntersectionCount } from 'api';
 import { IntersectionConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/IntersectionConfigurator';
 import { IntersectionStrategyActionTypes } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyActionTypes';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { difference, nth } from 'lodash';
+import {
+  experimentEntitiesEqual,
+  resolveExperimentEntity,
+  uniqueExperimentEntityKey,
+} from 'apps/BenchmarkApp/utils/experimentEntity';
+import { difference, nth, uniqBy } from 'lodash';
 import { DragNDropDescriptor } from 'types/DragNDropDescriptor';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';
 import { SnowmanAction } from 'types/SnowmanAction';
-import { filterOutAnElement, insertElementAt } from 'utils/dragNDropHelpers';
+import { insertElementAt } from 'utils/dragNDropHelpers';
 
 const initialState: IntersectionStrategyModel = {
   isValidConfig: false,
@@ -21,7 +27,7 @@ const initialState: IntersectionStrategyModel = {
 export const getIntersectionBucketFromId = (
   state: IntersectionStrategyModel,
   BucketId: IntersectionBuckets
-): Experiment[] => {
+): ExperimentEntity[] => {
   switch (BucketId) {
     case IntersectionBuckets.IGNORED:
       return state.ignored;
@@ -40,24 +46,27 @@ const IntersectionStrategyReducer = (
     case IntersectionStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
       const configuration = IntersectionConfiguration.getValue(appStore);
-      const experimentIds = [
-        ...configuration.experiments.flat(),
-        ...configuration.groundTruth,
-      ];
-      if (experimentIds.length === 0)
+      const experimentConfigs = uniqBy(
+        [...configuration.experiments.flat(), configuration.groundTruth]
+          .map((config) => resolveExperimentEntity(config, appStore))
+          .filter(
+            (
+              entity: ExperimentEntity | undefined
+            ): entity is ExperimentEntity => entity !== undefined
+          ),
+        uniqueExperimentEntityKey
+      );
+      if (experimentConfigs.length === 0) {
         return {
           ...state,
           isValidConfig: false,
         };
-      // ignores duplicate experiments
-      const selectedExperiments = appStore.resources.experiments.filter(
-        (anExperiment: Experiment): boolean =>
-          experimentIds.includes(anExperiment.id)
-      );
+      }
+
       return {
         ...state,
-        available: selectedExperiments,
-        ignored: [...selectedExperiments],
+        available: experimentConfigs,
+        ignored: [...experimentConfigs],
         excluded: [],
         included: [],
         counts: [],
@@ -70,46 +79,45 @@ const IntersectionStrategyReducer = (
         counts: action.payload as ExperimentIntersectionCount[],
       };
     case IntersectionStrategyActionTypes.DRAG_N_DROP_EXPERIMENT: {
-      let newIgnored, newIncluded, newExcluded: Experiment[];
+      let newIgnored: ExperimentEntity[];
+      let newIncluded: ExperimentEntity[];
+      let newExcluded: ExperimentEntity[];
       const eventDescriptor: DragNDropDescriptor<IntersectionBuckets> = action.payload as DragNDropDescriptor<IntersectionBuckets>;
-      const draggedExperiment: Experiment | undefined = nth(
+      const draggedExperimentEntity: ExperimentEntity | undefined = nth(
         getIntersectionBucketFromId(state, eventDescriptor.sourceBucket),
         eventDescriptor.sourceIndex
       );
-      if (draggedExperiment === undefined) return state;
+      if (draggedExperimentEntity === undefined) return state;
 
-      newIgnored = filterOutAnElement<Experiment>(
-        state.ignored,
-        draggedExperiment
+      newIgnored = state.ignored.filter(
+        (entity) => !experimentEntitiesEqual(entity, draggedExperimentEntity)
       );
-      newIncluded = filterOutAnElement<Experiment>(
-        state.included,
-        draggedExperiment
+      newIncluded = state.included.filter(
+        (entity) => !experimentEntitiesEqual(entity, draggedExperimentEntity)
       );
-      newExcluded = filterOutAnElement<Experiment>(
-        state.excluded,
-        draggedExperiment
+      newExcluded = state.excluded.filter(
+        (entity) => !experimentEntitiesEqual(entity, draggedExperimentEntity)
       );
 
       switch (eventDescriptor.targetBucket) {
         case IntersectionBuckets.IGNORED:
-          newIgnored = insertElementAt<Experiment>(
+          newIgnored = insertElementAt<ExperimentEntity>(
             newIgnored,
-            draggedExperiment,
+            draggedExperimentEntity,
             eventDescriptor.targetIndex
           );
           break;
         case IntersectionBuckets.INCLUDED:
-          newIncluded = insertElementAt<Experiment>(
+          newIncluded = insertElementAt<ExperimentEntity>(
             newIncluded,
-            draggedExperiment,
+            draggedExperimentEntity,
             eventDescriptor.targetIndex
           );
           break;
         case IntersectionBuckets.EXCLUDED:
-          newExcluded = insertElementAt<Experiment>(
+          newExcluded = insertElementAt<ExperimentEntity>(
             newExcluded,
-            draggedExperiment,
+            draggedExperimentEntity,
             eventDescriptor.targetIndex
           );
           break;
@@ -126,9 +134,9 @@ const IntersectionStrategyReducer = (
         ...state,
         ignored: difference(
           [...state.available],
-          action.payload as Experiment[]
+          action.payload as ExperimentEntity[]
         ),
-        included: action.payload as Experiment[],
+        included: action.payload as ExperimentEntity[],
         excluded: [],
       };
     default:

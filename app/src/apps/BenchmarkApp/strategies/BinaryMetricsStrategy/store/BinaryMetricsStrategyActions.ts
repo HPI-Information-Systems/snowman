@@ -9,6 +9,7 @@ import {
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
 import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { experimentEntityToExperimentConfigItem } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { MagicNotPossibleId } from 'structs/constants';
 import { SUCCESS_LOAD_BINARY_METRICS } from 'structs/statusMessages';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
@@ -42,13 +43,13 @@ export const loadMetrics = (): SnowmanThunkAction<
         () =>
           new BenchmarkApi().getBinaryMetrics({
             groundTruthSimilarityThresholdFunction: getState().groundTruth
-              ?.similarity?.func,
+              ?.similarity?.func.id,
             groundTruthSimilarityThreshold: getState().groundTruth?.similarity
               ?.threshold,
             groundTruthExperimentId:
               getState().groundTruth?.experiment.id ?? MagicNotPossibleId,
             predictedSimilarityThresholdFunction: getState().experiment
-              ?.similarity?.func,
+              ?.similarity?.func.id,
             predictedSimilarityThreshold: getState().experiment?.similarity
               ?.threshold,
             predictedExperimentId:
@@ -120,14 +121,12 @@ type LoadTuplesRequestBody = ReturnType<typeof getRequestBodyForTruePositives>;
 const getExperimentsComparisonTuple = (
   state: BinaryMetricsStrategyModel
 ): [ExperimentConfigItem, ExperimentConfigItem] => [
-  {
-    experimentId: state.groundTruth?.experiment.id ?? MagicNotPossibleId,
-    similarity: state.groundTruth?.similarity,
-  },
-  {
-    experimentId: state.experiment?.experiment.id ?? MagicNotPossibleId,
-    similarity: state.experiment?.similarity,
-  },
+  state.groundTruth === undefined
+    ? { experimentId: MagicNotPossibleId }
+    : experimentEntityToExperimentConfigItem(state.groundTruth),
+  state.experiment === undefined
+    ? { experimentId: MagicNotPossibleId }
+    : experimentEntityToExperimentConfigItem(state.experiment),
 ];
 
 const loadTuples = (

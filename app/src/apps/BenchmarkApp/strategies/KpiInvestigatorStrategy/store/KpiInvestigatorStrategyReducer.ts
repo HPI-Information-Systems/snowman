@@ -7,7 +7,12 @@ import {
   KpiInvestigatorStrategyModel,
 } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import {
+  experimentEntityToExperimentConfigItem,
+  resolveExperimentEntity,
+} from 'apps/BenchmarkApp/utils/experimentEntity';
 import { AllMetricsEnum } from 'types/AllMetricsEnum';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: KpiInvestigatorStrategyModel = {
@@ -25,48 +30,50 @@ const KpiInvestigatorStrategyReducer = (
 ): KpiInvestigatorStrategyModel => {
   switch (action.type) {
     case KpiInvestigatorStrategyActionTypes.UPDATE_CONFIG: {
-      const configuration = KPIDiagramConfiguration.getValue(
-        action.payload as BenchmarkAppModel
-      );
+      const appStore = action.payload as BenchmarkAppModel;
+      const configuration = KPIDiagramConfiguration.getValue(appStore);
       const diagramTracks: DiagramTrack[] = configuration.diagramTracks
-        .filter(
-          (aTrack): boolean =>
-            aTrack.dataset[0] !== undefined &&
-            aTrack.experiments[0] !== undefined &&
-            aTrack.experiments[0].experiment[0] !== undefined &&
-            aTrack.groundTruth[0] !== undefined
-        )
+        .filter((aTrack): boolean => aTrack.dataset[0] !== undefined)
         .map(
-          (aTrack, index): DiagramTrack => ({
-            name:
-              'Track ' +
-              (index + 1).toString() +
-              ' (' +
-              ((action.payload as BenchmarkAppModel).resources.datasets.find(
-                (aDataset): boolean => aDataset.id === aTrack.dataset[0]
-              )?.name ?? '?') +
-              ')',
-            items: aTrack.experiments
-              .filter(
-                (anEntity): boolean => anEntity.experiment[0] !== undefined
-              )
-              .map(
-                (anEntity): DiagramExperimentItem => ({
-                  groundTruth: { experimentId: aTrack.groundTruth[0] },
-                  experiment: {
-                    experimentId: anEntity.experiment[0],
-                    similarity:
-                      anEntity.simFunction[0] !== undefined
-                        ? {
-                            func: anEntity.simFunction[0],
-                            threshold: anEntity.threshold[0] ?? 0,
-                          }
-                        : undefined,
-                  },
-                })
-              ),
-          })
-        );
+          (aTrack, index): DiagramTrack => {
+            const groundTruthEntity = resolveExperimentEntity(
+              aTrack.groundTruth,
+              appStore
+            );
+            const groundTruth =
+              groundTruthEntity !== undefined
+                ? experimentEntityToExperimentConfigItem(groundTruthEntity)
+                : undefined;
+            return {
+              name:
+                'Track ' +
+                (index + 1).toString() +
+                ' (' +
+                ((action.payload as BenchmarkAppModel).resources.datasets.find(
+                  (aDataset): boolean => aDataset.id === aTrack.dataset[0]
+                )?.name ?? '?') +
+                ')',
+              items: aTrack.experiments
+                .map((entity) => resolveExperimentEntity(entity, appStore))
+                .filter(
+                  (
+                    anEntity: ExperimentEntity | undefined
+                  ): anEntity is ExperimentEntity => anEntity !== undefined
+                )
+                .map(
+                  (anEntity): DiagramExperimentItem => {
+                    return {
+                      groundTruth,
+                      experiment: experimentEntityToExperimentConfigItem(
+                        anEntity
+                      ),
+                    };
+                  }
+                ),
+            };
+          }
+        )
+        .filter((track) => track.items.length > 0);
       return {
         ...state,
         diagramTracks: diagramTracks,

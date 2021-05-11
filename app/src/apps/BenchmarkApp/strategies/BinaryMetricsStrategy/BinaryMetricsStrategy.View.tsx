@@ -72,11 +72,11 @@ const BinaryMetricsStrategyView = ({
                       <IonCardTitle
                         className="metric-number"
                         color="primary"
-                        data-tip={`${value.toString()} &isin; [${
-                          range?.toString() ?? '?'
-                        }]`}
+                        data-tip={`${
+                          value?.toString() ?? 'divide by zero'
+                        } &isin; [${range?.toString() ?? '?'}]`}
                       >
-                        {value.toPrecision(3)}
+                        {value?.toPrecision(3) ?? 'divide by zero'}
                       </IonCardTitle>
                       <IonCardSubtitle
                         className="metric-name"

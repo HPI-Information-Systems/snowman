@@ -16,7 +16,22 @@ export const KPIDiagramConfiguration = buildConfigurator({
           heading: 'Select Dataset',
         },
         groundTruth: {
-          configuration: StoreCacheKeyBaseEnum.groundTruth,
+          configuration: {
+            experiment: {
+              configuration: StoreCacheKeyBaseEnum.groundTruth,
+              position: 1,
+              heading: 'Select Ground Truth Experiment',
+            },
+            simFunction: {
+              configuration: StoreCacheKeyBaseEnum.similarityFunction,
+              position: 2,
+              heading: '(Optional) Select Similarity Function and Threshold',
+            },
+            threshold: {
+              configuration: StoreCacheKeyBaseEnum.similarityThreshold,
+              position: 3,
+            },
+          },
           position: 2,
           heading: 'Select Ground Truth',
         },

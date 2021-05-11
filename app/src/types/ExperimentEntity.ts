@@ -1,6 +1,9 @@
-import { Experiment, ExperimentConfigItemSimilarity } from 'api';
+import { Experiment, SimilarityThresholdFunction } from 'api';
 
 export interface ExperimentEntity {
   experiment: Experiment;
-  similarity?: ExperimentConfigItemSimilarity;
+  similarity?: {
+    func: SimilarityThresholdFunction;
+    threshold: number;
+  };
 }

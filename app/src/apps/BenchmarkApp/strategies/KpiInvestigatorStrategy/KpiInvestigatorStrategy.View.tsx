@@ -25,7 +25,9 @@ const KpiInvestigatorStrategyView = ({
   <>
     <ErroneousBackdrop
       shouldShow={!isValidConfig}
-      message={'Please select at least a one diagram track!'}
+      message={
+        'Please select at least a one diagram track containing a dataset, gold standard and one or more experiments!'
+      }
     />
     <IonGrid>
       <IonRow>

@@ -1,10 +1,17 @@
-import { Experiment, ExperimentIntersectionCount } from 'api';
+import { ExperimentIntersectionCount } from 'api';
+import {
+  experimentConfigItemsEqual,
+  experimentEntitiesEqual,
+  experimentEntityToExperimentConfigItem,
+  stringifyExperimentEntity,
+} from 'apps/BenchmarkApp/utils/experimentEntity';
 import {
   VennDiagramEntity,
   VennDiagramIntersection,
   VennDiagramSet,
 } from 'components/simple/VennDiagram/venn/types/types';
 import { VennDiagramConfig } from 'components/simple/VennDiagram/VennDiagramProps';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 import { intersectionDescription } from 'utils/intersectionDescription';
 
 type PartialVennDiagramConfig = {
@@ -13,23 +20,19 @@ type PartialVennDiagramConfig = {
 
 export interface IntersectionVennDiagramConfigStrategy {
   backgroundColor: string | undefined;
-  color(experiments: Experiment[]): string | undefined;
-  opacity(experiment: Experiment): number | undefined;
+  color(experiments: ExperimentEntity[]): string | undefined;
+  opacity(experiment: ExperimentEntity): number | undefined;
 }
 
 export class IntersectionVennDiagramConfig {
   protected readonly intersectionCounts: ExperimentIntersectionCount[];
   protected readonly experimentCounts: ExperimentIntersectionCount[];
-  protected readonly experimentsMap: Map<number, Experiment>;
 
   constructor(
-    protected readonly experiments: Experiment[],
+    protected readonly experiments: ExperimentEntity[],
     counts: ExperimentIntersectionCount[],
-    protected readonly select: (experiments: Experiment[]) => void
+    protected readonly select: (experiments: ExperimentEntity[]) => void
   ) {
-    this.experimentsMap = new Map(
-      experiments.map((experiment) => [experiment.id, experiment])
-    );
     const relevantCounts = counts.filter(({ experiments }) =>
       experiments.every(({ predictedCondition }) => predictedCondition)
     );
@@ -56,7 +59,7 @@ export class IntersectionVennDiagramConfig {
     strategy: IntersectionVennDiagramConfigStrategy
   ): PartialVennDiagramConfig {
     return this.mapCounts(this.experimentCounts, strategy, ([experiment]) => ({
-      text: experiment.name,
+      text: stringifyExperimentEntity(experiment),
       opacity: strategy.opacity(experiment),
     }));
   }
@@ -70,13 +73,21 @@ export class IntersectionVennDiagramConfig {
   protected mapCounts(
     counts: ExperimentIntersectionCount[],
     strategy: IntersectionVennDiagramConfigStrategy,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    map: (experiments: Experiment[], numberPairs: number) => Record<string, any>
+    map: (
+      experiments: ExperimentEntity[],
+      numberPairs: number
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ) => Record<string, any>
   ): PartialVennDiagramConfig {
     return Object.fromEntries(
       counts.map(({ experiments, numberPairs }) => {
-        const experimentObjects = experiments.map(({ experimentId }) => {
-          const experiment = this.experimentsMap.get(experimentId);
+        const experimentObjects = experiments.map((searchEntity) => {
+          const experiment = this.experiments.find((entity) =>
+            experimentConfigItemsEqual(
+              experimentEntityToExperimentConfigItem(entity),
+              searchEntity
+            )
+          );
           if (!experiment) {
             throw new Error('Unselected experiment in pair counts.');
           }
@@ -87,7 +98,9 @@ export class IntersectionVennDiagramConfig {
           this.serialize(experimentObjects),
           {
             tooltip: intersectionDescription({
-              included: experimentObjects.map(({ name }) => name),
+              included: experimentObjects.map((entity) =>
+                stringifyExperimentEntity(entity)
+              ),
               pairCount: numberPairs,
             }),
             callback: () => this.select(experimentObjects),
@@ -99,13 +112,15 @@ export class IntersectionVennDiagramConfig {
     ) as PartialVennDiagramConfig;
   }
 
-  protected serialize(experiments: Experiment[]): string {
-    const activeExperiments = new Set(
-      experiments.map((experiment) => experiment.id)
-    );
+  protected serialize(activeExperiments: ExperimentEntity[]): string {
     let serialized = 'x';
-    for (const { id } of this.experiments) {
-      serialized += activeExperiments.has(id) ? '1' : '0';
+    for (const entity of this.experiments) {
+      serialized +=
+        activeExperiments.find((entity2) =>
+          experimentEntitiesEqual(entity, entity2)
+        ) !== undefined
+          ? '1'
+          : '0';
     }
     return serialized;
   }

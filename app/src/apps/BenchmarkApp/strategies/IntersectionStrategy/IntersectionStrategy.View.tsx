@@ -11,6 +11,7 @@ import { IntersectionVennDiagramConfigStrategy } from 'apps/BenchmarkApp/strateg
 import IntersectionVennDiagram from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/IntersectionVennDiagram';
 import { IntersectionVennDiagramIntersectionStrategy } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/strategies/intersection';
 import { IntersectionStrategyProps } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/IntersectionStrategyProps';
+import { stringifyExperimentEntity } from 'apps/BenchmarkApp/utils/experimentEntity';
 import DataViewer from 'components/simple/DataViewer/DataViewer';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -49,8 +50,8 @@ const IntersectionStrategyView = ({
   const intersectionDescriptionString = useMemo(
     () =>
       intersectionDescription({
-        excluded: excluded.map(({ name }) => name),
-        included: included.map(({ name }) => name),
+        excluded: excluded.map(stringifyExperimentEntity),
+        included: included.map(stringifyExperimentEntity),
         pairCount,
       }),
     [excluded, included, pairCount]

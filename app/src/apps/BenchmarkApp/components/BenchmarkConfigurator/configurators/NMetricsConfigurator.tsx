@@ -12,13 +12,43 @@ export const NMetricsConfiguration = buildConfigurator([
       position: 1,
     },
     groundTruth: {
-      configuration: StoreCacheKeyBaseEnum.groundTruth,
+      configuration: {
+        experiment: {
+          configuration: StoreCacheKeyBaseEnum.groundTruth,
+          position: 1,
+          heading: 'Select Ground Truth Experiment',
+        },
+        simFunction: {
+          configuration: StoreCacheKeyBaseEnum.similarityFunction,
+          position: 2,
+          heading: '(Optional) Select Similarity Function and Threshold',
+        },
+        threshold: {
+          configuration: StoreCacheKeyBaseEnum.similarityThreshold,
+          position: 3,
+        },
+      },
       heading: '2. Select Ground Truth',
       position: 2,
     },
     experiments: {
       configuration: [
-        StoreCacheKeyBaseEnum.experiment,
+        {
+          experiment: {
+            configuration: StoreCacheKeyBaseEnum.experiment,
+            position: 1,
+            heading: 'Select Experiment',
+          },
+          simFunction: {
+            configuration: StoreCacheKeyBaseEnum.similarityFunction,
+            position: 2,
+            heading: '(Optional) Select Similarity Function and Threshold',
+          },
+          threshold: {
+            configuration: StoreCacheKeyBaseEnum.similarityThreshold,
+            position: 3,
+          },
+        },
         StoreCacheKeyBaseEnum.experiment,
       ],
       heading: '3. Select Experiments',

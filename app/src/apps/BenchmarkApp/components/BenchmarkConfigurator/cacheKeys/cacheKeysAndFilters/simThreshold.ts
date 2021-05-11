@@ -7,14 +7,15 @@ const icon = gitCommit;
 
 export const simThresholdCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.similarityThreshold,
-  [datasetMultiSelectId: number, experimentMultiSelectId: number],
+  | [datasetMultiSelectId: number, experimentMultiSelectId: number]
+  | [datasetMultiSelectId: number],
   never,
   'simThresholds'
 >({
   keyBase: StoreCacheKeyBaseEnum.similarityThreshold,
   targetCache: () => 'simThresholds',
   icon: () => icon,
-  selectorItems: (state, cacheKey) =>
+  selectorItems: (state, cacheKey, ..._) =>
     (getCacheKeyAndFilterUntyped(cacheKey).getValue(state) as number[])
       .map((title) => `${title}`)
       .map((title) => ({ title, icon, indent: 0 })),

@@ -1,20 +1,21 @@
-import { Experiment, ExperimentIntersectionCount } from 'api';
+import { ExperimentIntersectionCount } from 'api';
 import { IntersectionVennDiagramConfigStrategy } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/config';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 
 export interface IntersectionVennDiagramOwnProps {
   strategy?: IntersectionVennDiagramConfigStrategy;
-  onIntersect?: (experiments: Experiment[]) => void;
+  onIntersect?: (experiments: ExperimentEntity[]) => void;
 }
 
 export interface IntersectionVennDiagramStateProps {
-  experiments: Experiment[];
-  included: Experiment[];
+  experiments: ExperimentEntity[];
+  included: ExperimentEntity[];
   counts: ExperimentIntersectionCount[];
   countsLoaded: boolean;
 }
 
 export interface IntersectionVennDiagramDispatchProps {
-  intersect(experiments: Experiment[]): void;
+  intersect(experiments: ExperimentEntity[]): void;
 }
 
 export type IntersectionVennDiagramProps = IntersectionVennDiagramOwnProps &

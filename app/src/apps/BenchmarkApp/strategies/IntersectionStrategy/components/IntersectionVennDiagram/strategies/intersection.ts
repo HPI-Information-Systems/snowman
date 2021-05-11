@@ -1,5 +1,6 @@
-import { Experiment } from 'api';
 import { IntersectionVennDiagramConfigStrategy } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/config';
+import { experimentEntitiesEqual } from 'apps/BenchmarkApp/utils/experimentEntity';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 
 // Ionic Colors: themes/variables.css
 export const IRRELEVANT_COLOR = '#92949c';
@@ -9,30 +10,29 @@ export const EXCLUDED_COLOR = '#eb445a';
 
 export class IntersectionVennDiagramIntersectionStrategy
   implements IntersectionVennDiagramConfigStrategy {
-  protected readonly includedSet: Set<number>;
-  protected readonly excludedSet: Set<number>;
-  protected readonly included: number[];
-  protected readonly excluded: number[];
-  protected readonly irrelevant: number[];
+  protected readonly included: ExperimentEntity[];
+  protected readonly excluded: ExperimentEntity[];
+  protected readonly irrelevant: ExperimentEntity[];
 
   constructor(
-    included: Experiment[],
-    excluded: Experiment[],
-    irrelevant: Experiment[]
+    included: ExperimentEntity[],
+    excluded: ExperimentEntity[],
+    irrelevant: ExperimentEntity[]
   ) {
-    this.included = included.map(({ id }) => id);
-    this.excluded = excluded.map(({ id }) => id);
-    this.irrelevant = irrelevant.map(({ id }) => id);
-    this.includedSet = new Set(this.included);
-    this.excludedSet = new Set(this.excluded);
+    this.included = [...included];
+    this.excluded = [...excluded];
+    this.irrelevant = [...irrelevant];
   }
 
-  color(experiments: Experiment[]): string | undefined {
-    const experimentIds = experiments.map(({ id }) => id);
-    const experimentsSet = new Set(experimentIds);
-
-    const isIncluded = this.included.every((id) => experimentsSet.has(id));
-    const isExcluded = !!experiments.find(({ id }) => this.excludedSet.has(id));
+  color(experiments: ExperimentEntity[]): string | undefined {
+    const isIncluded = this.included.every((entity) =>
+      experiments.find((experiment) =>
+        experimentEntitiesEqual(entity, experiment)
+      )
+    );
+    const isExcluded = !!experiments.find((entity) =>
+      this.excluded.find((entity2) => experimentEntitiesEqual(entity, entity2))
+    );
     const omegaIsIncluded = this.included.length === 0;
     const isIntersection = experiments.length > 1;
 
@@ -59,10 +59,14 @@ export class IntersectionVennDiagramIntersectionStrategy
     }
   }
 
-  opacity(experiment: Experiment): number | undefined {
-    const isIncluded = this.included.every((id) => experiment.id === id);
+  opacity(experiment: ExperimentEntity): number | undefined {
+    const isIncluded = this.included.every((entity) =>
+      experimentEntitiesEqual(experiment, entity)
+    );
     const isSmallestIncluded = isIncluded && this.included.length === 1;
-    const isExcluded = this.excludedSet.has(experiment.id);
+    const isExcluded = !!this.excluded.find((entity) =>
+      experimentEntitiesEqual(entity, experiment)
+    );
     if (isIncluded) {
       if (isExcluded) {
         return 1;

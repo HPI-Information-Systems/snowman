@@ -1,6 +1,7 @@
 import { SimilarityThresholdFunction } from 'api';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { experimentCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/experiment';
+import { groundTruthCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/groundTruth';
 import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/types';
 import {
   filterBy,
@@ -12,19 +13,21 @@ import { analytics } from 'ionicons/icons';
 
 export const simFuntionCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.similarityFunction,
-  [datasetMultiSelectId: number, experimentMultiSelectId: number],
+  | [datasetMultiSelectId: number, experimentMultiSelectId: number]
+  | [datasetMultiSelectId: number],
   SimilarityThresholdFunction,
   'simFunctions'
 >({
   keyBase: StoreCacheKeyBaseEnum.similarityFunction,
   targetCache: () => 'simFunctions',
-  getEntities: (state) => state.resources.simFunctions,
+  getEntities: (state, ..._) => state.resources.simFunctions,
   filter: {
-    dependsOn: (dataset, experiment) => [
-      experimentCacheKeyAndFilter(dataset, experiment).cacheKey,
-    ],
+    dependsOn: (dataset, experiment?) =>
+      experiment === undefined
+        ? [groundTruthCacheKeyAndFilter(dataset).cacheKey]
+        : [experimentCacheKeyAndFilter(dataset, experiment).cacheKey],
     viewFilters: () => [],
-    filter: ({ action, currentSelection, state }) => {
+    filter: ({ action, currentSelection, state }, ..._) => {
       return filterBy({
         currentSelection,
         filterBy: [
@@ -38,7 +41,7 @@ export const simFuntionCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
             ?.experimentId,
       });
     },
-    filterAvailableEntities: (state, funcs, dependsOn, _viewFilters) => {
+    filterAvailableEntities: (state, funcs, dependsOn, _viewFilters, ..._) => {
       return funcs.filter(
         ({ experimentId }) =>
           state.config.experiments[serializeCacheKey(dependsOn[0])]

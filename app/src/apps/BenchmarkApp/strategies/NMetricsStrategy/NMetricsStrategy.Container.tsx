@@ -1,4 +1,3 @@
-import { Experiment } from 'api';
 import {
   getCacheKey,
   getCacheKeyAndFilter,
@@ -19,6 +18,7 @@ import {
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { connect } from 'react-redux';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 import { SnowmanAction } from 'types/SnowmanAction';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
@@ -27,16 +27,13 @@ const mapStateToProps = (
 ): NMetricsStrategyStateProps => {
   return {
     metrics: state.metrics,
-    experiments: state.experiments.map(
-      (anEntity): Experiment => anEntity.experiment
-    ),
+    experiments: state.experiments,
     goldStandard: state.groundTruth?.experiment,
     isValidSelection: state.isValidConfig,
   };
 };
 
 const moveExperimentConfigFront = (swapExperimentId: number): void => {
-  // TODO this only looks for experiment id and not similarity function / threshold - this means the wrong sim function / threshold may be swapped
   const appStore = BenchmarkAppStoreMagistrate.getStore();
   const state = appStore.getState();
   const firstExperiment = buildAnyConfigurator(
@@ -123,11 +120,30 @@ const moveExperimentConfigFront = (swapExperimentId: number): void => {
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch<NMetricsStrategyModel>
 ): NMetricsStrategyDispatchProps => ({
-  inspectExperiment(anExperiment: Experiment) {
+  inspectExperiment(anExperiment: ExperimentEntity) {
     const experimentMultiSelect = buildAnyConfigurator(
-      [[StoreCacheKeyBaseEnum.experiment, StoreCacheKeyBaseEnum.experiment]],
+      [
+        [
+          {
+            experiment: {
+              configuration: StoreCacheKeyBaseEnum.experiment,
+              position: 0,
+            },
+            simFunc: {
+              configuration: StoreCacheKeyBaseEnum.similarityFunction,
+              position: 1,
+            },
+            threshold: {
+              configuration: StoreCacheKeyBaseEnum.similarityThreshold,
+              position: 2,
+            },
+          },
+          StoreCacheKeyBaseEnum.experiment,
+        ],
+      ],
       []
     );
+
     const state = BenchmarkAppStoreMagistrate.getStore().getState();
     const swapExperimentId = getMultiSelectConfiguration(
       experimentMultiSelect.cacheKey as StoreCacheKey<StoreCacheKeyBaseEnum.multiSelect>,
@@ -135,7 +151,12 @@ const mapDispatchToProps = (
     ).currentIds[
       experimentMultiSelect
         .getValue(state)
-        .findIndex(([id]) => id === anExperiment.id)
+        .findIndex(
+          ({ experiment, simFunc, threshold }) =>
+            experiment[0] === anExperiment.experiment.id &&
+            simFunc[0] === anExperiment.similarity?.func.id &&
+            (threshold[0] ?? 0) === (anExperiment.similarity?.threshold ?? 0)
+        )
     ];
     moveExperimentConfigFront(swapExperimentId);
     doOpenStrategy(StrategyIDs.BinaryMetrics);

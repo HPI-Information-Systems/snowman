@@ -1,14 +1,20 @@
 import {
   BenchmarkApi,
   CalculateExperimentIntersectionCountsRequest,
-  Experiment,
+  ExperimentConfigItem,
   ExperimentIntersectionCount,
   ExperimentIntersectionItem,
 } from 'api';
 import { IntersectionStrategyActionTypes } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyActionTypes';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import {
+  experimentConfigItemsEqual,
+  experimentEntityToExperimentConfigItem,
+  uniqueExperimentConfigKey,
+} from 'apps/BenchmarkApp/utils/experimentEntity';
 import { DropResult } from 'react-beautiful-dnd';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
@@ -41,7 +47,7 @@ export const dragNDropAnExperiment = (
   });
 
 export const resetIncludedExperiments = (
-  experiments: Experiment[]
+  experiments: ExperimentEntity[]
 ): easyPrimitiveActionReturn<IntersectionStrategyModel> =>
   easyPrimitiveAction<IntersectionStrategyModel>({
     type: IntersectionStrategyActionTypes.RESET_INCLUDED_EXPERIMENTS,
@@ -50,23 +56,26 @@ export const resetIncludedExperiments = (
 
 export const countsMatchConfiguration = (
   counts: ExperimentIntersectionCount[],
-  ...chosenExperiments: Experiment[][]
+  ...chosenExperiments: ExperimentEntity[][]
 ): boolean => {
-  const countsExperimentIds = new Set(
-    counts
-      .reduce<{
-        experiments: ExperimentIntersectionItem[];
-      }>(
-        (prev, current) =>
-          current.experiments.length > prev.experiments.length ? current : prev,
-        { experiments: [] }
-      )
-      .experiments.map(({ experimentId }) => experimentId)
-  );
+  const countsExperiments = counts.reduce<{
+    experiments: ExperimentIntersectionItem[];
+  }>(
+    (prev, current) =>
+      current.experiments.length > prev.experiments.length ? current : prev,
+    { experiments: [] }
+  ).experiments;
   const flatChosenExperiments = chosenExperiments.flat();
   return (
-    flatChosenExperiments.length === countsExperimentIds.size &&
-    flatChosenExperiments.every(({ id }) => countsExperimentIds.has(id))
+    flatChosenExperiments.length === countsExperiments.length &&
+    flatChosenExperiments.every(({ experiment, similarity: sim }) =>
+      countsExperiments.find(
+        ({ experimentId, similarity: sim2 }) =>
+          experiment.id === experimentId &&
+          sim?.func.id === sim2?.func &&
+          sim?.threshold === sim2?.threshold
+      )
+    )
   );
 };
 
@@ -81,14 +90,19 @@ const loadCountsRequestBody = (
   state: IntersectionStrategyModel
 ): CalculateExperimentIntersectionCountsRequest => {
   return {
-    experiments: [...state.available].map(({ id }) => ({ experimentId: id })),
+    experiments: state.available.map((entity) =>
+      experimentEntityToExperimentConfigItem(entity)
+    ),
   };
 };
 
 export const intersectionSorter = (
-  e1: ExperimentIntersectionItem,
-  e2: ExperimentIntersectionItem
-): number => e1.experimentId - e2.experimentId;
+  e1: ExperimentConfigItem,
+  e2: ExperimentConfigItem
+): number =>
+  e1.experimentId - e2.experimentId ||
+  (e1.similarity?.func ?? 0) - (e2.similarity?.func ?? 0) ||
+  (e1.similarity?.threshold ?? 0) - (e2.similarity?.threshold ?? 0);
 
 export const intersectionsMatch = (
   sortedConfig1: ExperimentIntersectionItem[],
@@ -96,8 +110,8 @@ export const intersectionsMatch = (
 ): boolean =>
   sortedConfig1.length === sortedConfig2.length &&
   sortedConfig1.every(
-    ({ experimentId, predictedCondition }, index) =>
-      sortedConfig2[index].experimentId === experimentId &&
+    ({ predictedCondition, ...config }, index) =>
+      experimentConfigItemsEqual(config, sortedConfig2[index]) &&
       sortedConfig2[index].predictedCondition === predictedCondition
   );
 
@@ -144,8 +158,8 @@ const serializeIntersection = (
 ): string =>
   sortedConfig
     .map(
-      ({ experimentId, predictedCondition }) =>
-        `${experimentId}${predictedCondition ? 'i' : 'e'}`
+      ({ predictedCondition, ...config }) =>
+        `${uniqueExperimentConfigKey(config)}${predictedCondition ? 'i' : 'e'}`
     )
     .join(':');
 export const intersectionTuplesLoader = (

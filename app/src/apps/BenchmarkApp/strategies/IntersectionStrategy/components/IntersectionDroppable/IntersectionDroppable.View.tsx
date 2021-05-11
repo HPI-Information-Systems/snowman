@@ -1,6 +1,11 @@
 import { IonChip, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react';
-import { Experiment } from 'api';
 import { IntersectionDroppableProps } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionDroppable/IntersectionDroppableProps';
+import {
+  experimentConfigItemsEqual,
+  experimentEntityToExperimentConfigItem,
+  stringifyExperimentEntity,
+  uniqueExperimentEntityKey,
+} from 'apps/BenchmarkApp/utils/experimentEntity';
 import React from 'react';
 import {
   Draggable,
@@ -10,6 +15,7 @@ import {
   Droppable,
   DroppableProvided,
 } from 'react-beautiful-dnd';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 import { IntersectionBuckets } from 'types/IntersectionBuckets';
 
 const IntersectionDroppableView = ({
@@ -22,7 +28,7 @@ const IntersectionDroppableView = ({
     _snapshot: DraggableStateSnapshot,
     rubric: DraggableRubric
   ): JSX.Element => {
-    const anExperiment: Experiment = bucketContent[rubric.source.index];
+    const anExperiment: ExperimentEntity = bucketContent[rubric.source.index];
     if (anExperiment === undefined)
       throw Error('referenced non-existent experiment');
 
@@ -42,11 +48,19 @@ const IntersectionDroppableView = ({
                 : 'dark'
             }
             outline={false}
-            key={anExperiment.id}
+            key={uniqueExperimentEntityKey(anExperiment)}
           >
             <IonLabel>
-              {anExperiment.name} (
-              {pairCounts.get(anExperiment.id) ?? 'unknown'})
+              {stringifyExperimentEntity(anExperiment)} (
+              {
+                (pairCounts.find(([entity]) =>
+                  experimentConfigItemsEqual(
+                    entity,
+                    experimentEntityToExperimentConfigItem(anExperiment)
+                  )
+                ) ?? [undefined, 'unknown'])[1]
+              }
+              )
             </IonLabel>
           </IonChip>
         </IonCol>
@@ -62,10 +76,10 @@ const IntersectionDroppableView = ({
           className="iongrid-droppable-container"
         >
           {bucketContent.map(
-            (anExperiment: Experiment, index: number): JSX.Element => (
+            (anExperiment: ExperimentEntity, index: number): JSX.Element => (
               <Draggable
-                key={anExperiment.id}
-                draggableId={anExperiment.id.toString()}
+                key={uniqueExperimentEntityKey(anExperiment)}
+                draggableId={uniqueExperimentEntityKey(anExperiment)}
                 index={index}
               >
                 {experimentRenderer}

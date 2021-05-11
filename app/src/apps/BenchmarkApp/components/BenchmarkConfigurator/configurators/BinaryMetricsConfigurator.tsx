@@ -12,12 +12,44 @@ export const BinaryMetricsConfiguration = buildConfigurator([
       position: 1,
     },
     groundTruth: {
-      configuration: StoreCacheKeyBaseEnum.groundTruth,
+      configuration: {
+        experiment: {
+          configuration: StoreCacheKeyBaseEnum.groundTruth,
+          position: 1,
+          heading: 'Select Ground Truth Experiment',
+        },
+        simFunction: {
+          configuration: StoreCacheKeyBaseEnum.similarityFunction,
+          position: 2,
+          heading: '(Optional) Select Similarity Function and Threshold',
+        },
+        threshold: {
+          configuration: StoreCacheKeyBaseEnum.similarityThreshold,
+          position: 3,
+        },
+      },
       heading: '2. Select Ground Truth',
       position: 2,
     },
     experiment: {
-      configuration: [StoreCacheKeyBaseEnum.experiment],
+      configuration: [
+        {
+          experiment: {
+            configuration: StoreCacheKeyBaseEnum.experiment,
+            position: 1,
+            heading: 'Select Ground Truth Experiment',
+          },
+          simFunction: {
+            configuration: StoreCacheKeyBaseEnum.similarityFunction,
+            position: 2,
+            heading: '(Optional) Select Similarity Function and Threshold',
+          },
+          threshold: {
+            configuration: StoreCacheKeyBaseEnum.similarityThreshold,
+            position: 3,
+          },
+        },
+      ],
       heading: '3. Select Experiment',
       position: 3,
     },

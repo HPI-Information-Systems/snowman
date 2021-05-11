@@ -1,8 +1,9 @@
-import { Experiment, Metric } from 'api';
+import { Metric } from 'api';
 import { NMetricsConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/NMetricsConfigurator';
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { resolveExperimentEntity } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { ExperimentEntity } from 'types/ExperimentEntity';
 import { SnowmanAction } from 'types/SnowmanAction';
 
@@ -21,35 +22,26 @@ const NMetricsStrategyReducer = (
     case NMetricsStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
       const configuration = NMetricsConfiguration.getValue(appStore);
-      const goldStandardId = configuration.groundTruth[0];
-      const experimentIds = configuration.experiments.flat();
-      if (goldStandardId === undefined || experimentIds.length === 0)
+      const groundTruth = resolveExperimentEntity(
+        configuration.groundTruth,
+        appStore
+      );
+      const experiments = configuration.experiments
+        .map((config) => resolveExperimentEntity(config, appStore))
+        .filter(
+          (entity: ExperimentEntity | undefined): entity is ExperimentEntity =>
+            entity !== undefined
+        );
+      if (groundTruth === undefined || experiments.length === 0) {
         return {
           ...state,
           isValidConfig: false,
         };
-      const foundGroundTruth = appStore.resources.experiments.find(
-        (anExperiment: Experiment): boolean =>
-          anExperiment.id === goldStandardId
-      );
-      // ignores duplicate experiments
-      const foundExperiments = appStore.resources.experiments.filter(
-        (anExperiment: Experiment): boolean =>
-          experimentIds.includes(anExperiment.id)
-      );
-      if (foundGroundTruth === undefined || foundExperiments.length === 0)
-        return {
-          ...state,
-          isValidConfig: false,
-        };
+      }
       return {
         ...state,
-        groundTruth: { experiment: foundGroundTruth },
-        experiments: foundExperiments.map(
-          (anExperiment): ExperimentEntity => ({
-            experiment: anExperiment,
-          })
-        ),
+        groundTruth,
+        experiments,
         metrics: [],
         isValidConfig: true,
       };
