@@ -25,24 +25,13 @@ export type LeftRightCellContent =
 export type MidCellContent = SimilarityThresholdFunctionOperatorOperatorEnum | null;
 
 export class FunctionBuildingBlock {
-  accessKey: number;
-  type: FunctionBuildingBlockType;
-  left: LeftRightCellContent;
-  mid: MidCellContent;
-  right: LeftRightCellContent;
-
   constructor(
-    accessKey: number,
-    type: FunctionBuildingBlockType,
-    left?: LeftRightCellContent,
-    mid?: MidCellContent,
-    right?: LeftRightCellContent
+    public accessKey: number,
+    public type: FunctionBuildingBlockType,
+    public left: LeftRightCellContent = null,
+    public mid: MidCellContent = null,
+    public right: LeftRightCellContent = null
   ) {
-    this.accessKey = accessKey;
-    this.type = type;
-    this.left = left ?? null;
-    this.mid = mid ?? null;
-    this.right = right ?? null;
     autoBind(this);
   }
 
