@@ -5,7 +5,7 @@ import { hardwareChip } from 'ionicons/icons';
 
 export const algorithmCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.algorithm,
-  [],
+  [algorithmMultiSelectId: number],
   Algorithm,
   'algorithms'
 >({
