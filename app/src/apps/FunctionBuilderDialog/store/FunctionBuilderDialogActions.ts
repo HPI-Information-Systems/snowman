@@ -2,7 +2,6 @@ import {
   ExperimentsApi,
   FileResponse,
   SimilarityThresholdFunction,
-  SimilarityThresholdFunctionDefinition,
   SimilarityThresholdsApi,
 } from 'api';
 import RootAccessKey from 'apps/FunctionBuilderDialog/components/StrategyMapper/RootAccessKey';
@@ -16,7 +15,6 @@ import {
   LeftRightCellContent,
   MidCellContent,
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
-import { UpdatePrepareInformation } from 'apps/FunctionBuilderDialog/types/UpdatePrepareInformation';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { nth } from 'lodash';
@@ -38,7 +36,7 @@ const getExperimentId = (): number =>
     1
   )?.entityId ?? MagicNotPossibleId;
 
-export const createSimilarityThresholdFunction = (): SnowmanThunkAction<
+const createSimilarityThresholdFunction = (): SnowmanThunkAction<
   void,
   FunctionBuilderDialogModel
 > => (
@@ -56,6 +54,35 @@ export const createSimilarityThresholdFunction = (): SnowmanThunkAction<
       }),
     SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION
   ).then((): void => doCloseDialog());
+};
+
+const updateSimilarityThresholdFunction = (
+  functionId: number
+): SnowmanThunkAction<void, FunctionBuilderDialogModel> => (
+  _: SnowmanDispatch<FunctionBuilderDialogModel>,
+  getState: () => FunctionBuilderDialogModel
+): void => {
+  RequestHandler<void>(
+    (): Promise<void> =>
+      new SimilarityThresholdsApi().setSimilarityThresholdFunction({
+        functionId: functionId,
+        similarityThresholdFunction: {
+          name: getState().functionName,
+          definition: getState().functionBuildingStack.getFunctionDefinition(),
+          experimentId: getExperimentId(),
+        },
+      }),
+    SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION
+  ).then((): void => doCloseDialog());
+};
+
+export const createOrUpdateSimilarityThresholdFunction = (
+  functionId: EntityId
+): SnowmanThunkAction<void, FunctionBuilderDialogModel> => (
+  dispatch: SnowmanDispatch<FunctionBuilderDialogModel>
+): void => {
+  if (functionId === null) return dispatch(createSimilarityThresholdFunction());
+  return dispatch(updateSimilarityThresholdFunction(functionId));
 };
 
 const loadExperimentColumns = (): SnowmanThunkAction<
