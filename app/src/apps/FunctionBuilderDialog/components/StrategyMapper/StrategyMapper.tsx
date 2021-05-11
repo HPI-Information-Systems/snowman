@@ -29,8 +29,6 @@ class StrategyMapper extends Component<
 
   constructor(props: StrategyMapperProps) {
     super(props);
-    // initialize within constructor due to tsc paradigm
-    this.storeUnsubscription = (): void => undefined;
     if (
       this.props.ownLocation !== undefined &&
       this.props.parentAccessKey !== null &&
@@ -43,20 +41,18 @@ class StrategyMapper extends Component<
         this.props.parentAccessKey,
         this.props.ownLocation
       );
-      return;
+    } else {
+      this.blockAccessKey =
+        this.props.parentAccessKey !== null
+          ? FunctionBuildingBlockMagistrate.getNewAccessKey()
+          : RootAccessKey;
+      FunctionBuildingBlockMagistrate.registerBuildingBlock(
+        this.blockAccessKey,
+        this.props.parentAccessKey,
+        this.props.ownLocation ?? CellDescriptor.left
+      );
     }
-    this.blockAccessKey =
-      this.props.parentAccessKey !== null
-        ? FunctionBuildingBlockMagistrate.getNewAccessKey()
-        : RootAccessKey;
-    FunctionBuildingBlockMagistrate.registerBuildingBlock(
-      this.blockAccessKey,
-      this.props.parentAccessKey,
-      this.props.ownLocation ?? CellDescriptor.left
-    );
-  }
 
-  componentDidMount(): void {
     this.storeUnsubscription = FunctionBuilderDialogMagistrate.getStore().subscribe(
       (): void => {
         const newState: FunctionBuilderDialogModel = FunctionBuilderDialogMagistrate.getStore().getState();
