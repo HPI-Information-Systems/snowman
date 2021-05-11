@@ -13,7 +13,7 @@ import {
   radioButtonOffOutline,
   radioButtonOnOutline,
 } from 'ionicons/icons';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { fuzzyStringIncludes } from 'utils/fuzzyStringIncludes';
 import {
   toggleSelectionArrayMultipleSelect,
@@ -41,44 +41,54 @@ const SearchableListView = ({
       );
     }
   };
+  const displayEntities = useMemo(
+    () =>
+      entities.filter((anEntity) =>
+        fuzzyStringIncludes(anEntity.name, searchString)
+      ),
+    [entities, searchString]
+  );
   return (
     <IonList inset={false} lines="none">
       <IonSearchbar value={searchString} onIonChange={changeSearchString} />
       {children}
       <div className={styles.selectablePopoverList}>
-        {entities.map((anEntity: SearchableEntity) =>
-          fuzzyStringIncludes(anEntity.name, searchString) ? (
-            <IonItem
-              button
-              key={`selectable-option-${anEntity.id}`}
-              onClick={(): void => toggleEntity(anEntity.id)}
-            >
+        {displayEntities.map((anEntity: SearchableEntity) => (
+          <IonItem
+            button
+            key={`selectable-option-${anEntity.id}`}
+            onClick={(): void => toggleEntity(anEntity.id)}
+          >
+            <IonIcon
+              className={styles.selectionIcon}
+              icon={
+                selectedEntities.includes(anEntity.id)
+                  ? allowMultiple
+                    ? checkmarkCircle
+                    : radioButtonOnOutline
+                  : radioButtonOffOutline
+              }
+              color={
+                selectedEntities.includes(anEntity.id) ? 'primary' : 'medium'
+              }
+              slot="start"
+            />
+            <IonLabel>
               <IonIcon
-                className={styles.selectionIcon}
-                icon={
-                  selectedEntities.includes(anEntity.id)
-                    ? allowMultiple
-                      ? checkmarkCircle
-                      : radioButtonOnOutline
-                    : radioButtonOffOutline
-                }
-                color={
-                  selectedEntities.includes(anEntity.id) ? 'primary' : 'medium'
-                }
+                icon={icon}
+                color={'primarydark'}
                 slot="start"
+                className={styles.itemIcon}
               />
-              <IonLabel>
-                <IonIcon
-                  icon={icon}
-                  color={'primarydark'}
-                  slot="start"
-                  className={styles.itemIcon}
-                />
-                {anEntity.name}
-              </IonLabel>
-            </IonItem>
-          ) : null
-        )}
+              {anEntity.name}
+            </IonLabel>
+          </IonItem>
+        ))}
+        {displayEntities.length === 0 ? (
+          <IonItem>
+            <i>Nothing here! Try setting a different filter.</i>
+          </IonItem>
+        ) : null}
       </div>
     </IonList>
   );
