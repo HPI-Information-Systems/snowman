@@ -27,7 +27,7 @@ export const simFuntionCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
         ? [groundTruthCacheKeyAndFilter(dataset).cacheKey]
         : [experimentCacheKeyAndFilter(dataset, experiment).cacheKey],
     viewFilters: () => [],
-    filter: ({ action, currentSelection, state }, ..._) => {
+    filter: ({ action, currentSelection, state }, _, ..._2) => {
       return filterBy({
         currentSelection,
         filterBy: [
@@ -41,7 +41,14 @@ export const simFuntionCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
             ?.experimentId,
       });
     },
-    filterAvailableEntities: (state, funcs, dependsOn, _viewFilters, ..._) => {
+    filterAvailableEntities: (
+      state,
+      funcs,
+      dependsOn,
+      _viewFilters,
+      _,
+      ..._2
+    ) => {
       return funcs.filter(
         ({ experimentId }) =>
           state.config.experiments[serializeCacheKey(dependsOn[0])]

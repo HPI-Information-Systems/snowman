@@ -31,7 +31,9 @@ const getItem = <Cache extends ValueOf<ConfigurationStoreModel>>({
     item = {
       cacheKey: key as Define<ValueOf<Cache>>['cacheKey'],
       dependents: [] as Define<ValueOf<Cache>>['dependents'],
-      targets: [] as Define<ValueOf<Cache>>['targets'],
+      targets: getCacheKeyAndFilter(key).createNew(state) as Define<
+        ValueOf<Cache>
+      >['targets'],
     } as Define<ValueOf<Cache>>;
     const { filter } = getCacheKeyAndFilter(key);
     if (filter) {
@@ -79,8 +81,11 @@ const ConfigurationStoreReducer = (
               filteredEntity.targets = filter.filter({
                 action,
                 state,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                currentSelection: (filteredEntity?.targets || []) as any,
+                currentSelection: (filteredEntity.targets ??
+                  getCacheKeyAndFilter(filteredEntity.cacheKey).createNew(
+                    state
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  )) as any,
               }) as typeof filteredEntity.targets;
             }
           }

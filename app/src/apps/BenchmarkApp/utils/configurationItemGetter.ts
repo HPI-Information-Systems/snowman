@@ -17,7 +17,10 @@ export const getItemsUntyped = (
 ): (ModelOfCache | undefined)[] =>
   (state.config[getCacheKeyAndFilter(aCacheKey).targetCache][
     serializeCacheKey(aCacheKey)
-  ]?.targets ?? []) as (ModelOfCache | undefined)[];
+  ]?.targets ?? getCacheKeyAndFilter(aCacheKey).createNew(state)) as (
+    | ModelOfCache
+    | undefined
+  )[];
 
 export const getItems = <Base extends StoreCacheKeyBaseEnum>(
   aCacheKey: StoreCacheKey<Base>,

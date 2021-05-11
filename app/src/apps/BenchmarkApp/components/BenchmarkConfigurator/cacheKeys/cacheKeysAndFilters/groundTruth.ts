@@ -10,6 +10,7 @@ import {
 import { serializeCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/serializeCacheKey';
 import { DatasetConfigurationModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { flask } from 'ionicons/icons';
+import { GoldStandardId } from 'snowman-library';
 
 export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.groundTruth,
@@ -23,8 +24,8 @@ export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   filter: {
     dependsOn: (dataset) => [datasetCacheKeyAndFilter(dataset).cacheKey],
     viewFilters: () => [filterCacheKeyAndFilter('algorithms').cacheKey],
-    filter: ({ action, currentSelection, state }) => {
-      return filterBy({
+    filter: ({ action, currentSelection, state }, createNew, ...args) => {
+      const newSelection = filterBy({
         currentSelection,
         filterBy: [
           (action.optionalPayload as (
@@ -35,6 +36,7 @@ export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
         entityToFilteredEntity: (experimentId) =>
           resolveEntity(experimentId, state.resources.experiments)?.datasetId,
       });
+      return newSelection.length === 0 ? createNew() : newSelection;
     },
     filterAvailableEntities: (state, experiments, dependsOn, viewFilters) => {
       const datasetFilter =
@@ -51,4 +53,13 @@ export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
     },
   },
   icon: () => flask,
+  createNew: (state, dependsOn) => {
+    const datasets =
+      state.config.datasets[serializeCacheKey(dependsOn[0])]?.targets ?? [];
+    const goldStandards = state.resources.experiments.filter(
+      ({ datasetId, algorithmId }) =>
+        algorithmId === GoldStandardId && datasets.includes(datasetId)
+    );
+    return goldStandards.length === 0 ? [] : [goldStandards[0].id];
+  },
 });

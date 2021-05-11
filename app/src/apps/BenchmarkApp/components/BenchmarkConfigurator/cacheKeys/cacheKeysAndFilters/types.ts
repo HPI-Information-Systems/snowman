@@ -38,6 +38,7 @@ type MakeStoreCacheKeyAndFilterArgs<
     viewFilters: (...args: Args) => StoreCacheKey[];
     filter: (
       event: FilterEvent<ModelOfCache<TargetCache>>,
+      createNew: () => (ModelOfCache<TargetCache> | undefined)[],
       ...args: Args
     ) => (ModelOfCache<TargetCache> | undefined)[];
     filterAvailableEntities: (
@@ -45,6 +46,7 @@ type MakeStoreCacheKeyAndFilterArgs<
       entities: Entity[],
       dependsOn: StoreCacheKey[],
       viewFilters: StoreCacheKey[],
+      cacheKey: StoreCacheKey<KeyBase, Args>,
       ...args: Args
     ) => Entity[];
   };
@@ -57,6 +59,10 @@ type MakeStoreCacheKeyAndFilterArgs<
   prepareSerialization?: (
     cacheKey: StoreCacheKey<KeyBase, Args>
   ) => StoreCacheKey;
+  createNew?: (
+    state: BenchmarkAppModel,
+    dependsOn: StoreCacheKey[]
+  ) => (ModelOfCache<TargetCache> | undefined)[];
 };
 
 type GetStoreCacheKeyAndFilter<
@@ -89,6 +95,9 @@ type GetStoreCacheKeyAndFilter<
   resourcesUpdated:
     | ((state: BenchmarkAppModel) => (ModelOfCache<TargetCache> | undefined)[])
     | undefined;
+  createNew: (
+    state: BenchmarkAppModel
+  ) => (ModelOfCache<TargetCache> | undefined)[];
 };
 
 export const MakeStoreCacheKeyAndFilter = <
@@ -106,6 +115,7 @@ export const MakeStoreCacheKeyAndFilter = <
   icon,
   selectorItems,
   prepareSerialization,
+  createNew,
 }: MakeStoreCacheKeyAndFilterArgs<
   KeyBase,
   Args,
@@ -156,12 +166,18 @@ export const MakeStoreCacheKeyAndFilter = <
     ...(filter
       ? {
           filter: {
-            filter: (...args2) => filter.filter(...args2, ...args),
+            filter: (event) =>
+              filter.filter(
+                event,
+                () => result.createNew(event.state),
+                ...args
+              ),
             filterAvailableEntities: (...args2) =>
               filter.filterAvailableEntities(
                 ...args2,
                 filter.dependsOn(...args),
                 filter.viewFilters(...args),
+                cacheKey,
                 ...args
               ),
             dependsOn: () => filter.dependsOn(...args),
@@ -191,6 +207,9 @@ export const MakeStoreCacheKeyAndFilter = <
           }
         }
       : undefined,
+    createNew: createNew
+      ? (state) => createNew(state, result.filter?.dependsOn() ?? [])
+      : () => [],
   };
   return result;
 };
