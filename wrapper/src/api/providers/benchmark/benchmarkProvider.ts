@@ -9,7 +9,6 @@ import {
   MetricsEnum,
 } from '../../server/types';
 import { Metric } from '../../server/types';
-import { numberOfPairs } from '../../tools/numberOfPairs';
 import { ConfusionMatrixCache } from './cache/flavors/confusionMatrixCache';
 import { IntersectionCache } from './cache/flavors/intersectionCache';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
