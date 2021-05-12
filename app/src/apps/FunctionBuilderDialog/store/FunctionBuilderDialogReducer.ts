@@ -12,7 +12,7 @@ import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrateg
 import { produce } from 'immer';
 import { SnowmanAction } from 'types/SnowmanAction';
 
-const initialState: FunctionBuilderDialogModel = {
+const getInitialState: () => FunctionBuilderDialogModel = (): FunctionBuilderDialogModel => ({
   reservedAccessKeys: [RootAccessKey],
   functionName: '',
   experimentColumns: [],
@@ -23,15 +23,15 @@ const initialState: FunctionBuilderDialogModel = {
     null,
     null
   ),
-};
+});
 
 const FunctionBuilderDialogReducer = (
-  state: FunctionBuilderDialogModel = initialState,
+  state: FunctionBuilderDialogModel = getInitialState(),
   action: SnowmanAction
 ): FunctionBuilderDialogModel => {
   switch (action.type) {
     case FunctionBuilderDialogActionTypes.RESET_DIALOG:
-      return initialState;
+      return getInitialState();
     case FunctionBuilderDialogActionTypes.SUBSTITUTE_RESERVED_ACCESS_KEYS:
       return {
         ...state,
@@ -85,7 +85,8 @@ const FunctionBuilderDialogReducer = (
       );
     }
     case FunctionBuilderDialogActionTypes.UNREGISTER_BUILDING_BLOCK: {
-      if ((action.payload as number) === RootAccessKey) return initialState;
+      if ((action.payload as number) === RootAccessKey)
+        return getInitialState();
       return produce(
         state,
         (state: FunctionBuilderDialogModel): FunctionBuilderDialogModel => {
