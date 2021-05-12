@@ -18,13 +18,15 @@ const StrategySelectorView = ({
         }
         placeholder="?"
       >
-        {Object.keys(SimilarityThresholdFunctionDefinitionTypeEnum).map(
-          (anOperatorType: string): JSX.Element => (
-            <IonSelectOption value={anOperatorType} key={anOperatorType}>
-              {anOperatorType}
-            </IonSelectOption>
-          )
-        )}
+        {Object.keys(SimilarityThresholdFunctionDefinitionTypeEnum)
+          .sort()
+          .map(
+            (anOperatorType: string): JSX.Element => (
+              <IonSelectOption value={anOperatorType} key={anOperatorType}>
+                {anOperatorType}
+              </IonSelectOption>
+            )
+          )}
       </IonSelect>
     </IonChip>
   </>

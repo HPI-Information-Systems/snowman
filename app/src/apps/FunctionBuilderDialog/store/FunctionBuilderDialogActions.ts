@@ -53,7 +53,11 @@ const createSimilarityThresholdFunction = (): SnowmanThunkAction<
         },
       }),
     SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION
-  ).then((): void => doCloseDialog());
+  )
+    .then((): void => doCloseDialog())
+    .catch(() => {
+      return;
+    });
 };
 
 const updateSimilarityThresholdFunction = (
