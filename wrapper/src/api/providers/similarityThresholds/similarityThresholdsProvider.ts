@@ -8,7 +8,6 @@ import {
   GetSimilarityThresholdFunctionRequest,
   SetSimilarityThresholdFunctionRequest,
   SimilarityThresholdFunction,
-  SimilarityThresholdFunctionDefinition,
   SimilarityThresholdFunctionId,
 } from '../../server/types';
 import { providers } from '..';
@@ -61,7 +60,12 @@ export class SimilarityThresholdsProvider {
         )
         .all();
       const unionFind = new UnionFind(numberOfRecords);
-      for (const { id1, id2, similarity } of similarities) {
+      for (const { id1, id2, similarity } of similarities.filter(
+        ({ similarity }) =>
+          similarity !== undefined &&
+          similarity !== null &&
+          !Number.isNaN(similarity)
+      )) {
         if (!unionFind.nodesAreLinked(id1, id2)) {
           unionFind.link([[id1, id2]]);
           similarityTable.upsert([

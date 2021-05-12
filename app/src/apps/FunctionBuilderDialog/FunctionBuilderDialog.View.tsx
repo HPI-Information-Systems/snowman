@@ -64,12 +64,20 @@ const FunctionBuilderDialogView = ({
     </div>
     <div className={style(styles.center, styles.container)}>
       <IonNote>
-        {`A similarity function calculates a custom similarity score for each candidate
-        pair using this pair's attributes. Usually, these attributes are calculated
-        by your matching solution, e.g. similarity for a certain column. After you 
-        created a similarity function here, you'll be able to use it together with 
-        a threshold value in the benchmark tab. All pairs with a score higher than 
-        the threshold will then be considered duplicates.`}
+        A similarity function calculates a custom similarity score for each
+        candidate pair using this pairs attributes. Usually, these attributes
+        are calculated by your matching solution, e.g. similarity for a certain
+        column. After you created a similarity function here, you will be able
+        to use it together with a threshold value in the benchmark tab. All
+        pairs with a score higher than the threshold will be considered
+        duplicates.
+        <br />
+        <br />
+        <b>
+          If the function does not produce a number for a pair, the pair will be
+          excluded.{' '}
+        </b>
+        This can for example occur when a number is divided by zero.
       </IonNote>
     </div>
   </>
