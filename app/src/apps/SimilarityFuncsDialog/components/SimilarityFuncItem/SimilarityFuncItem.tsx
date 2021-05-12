@@ -1,3 +1,4 @@
+import { PreviewDialogTypes } from 'apps/PreviewDialog/types/PreviewDialogTypes';
 import {
   SimilarityFuncItemDispatchProps,
   SimilarityFuncItemOwnProps,
@@ -21,6 +22,13 @@ const mapDispatchToProps = (
     dispatch(
       deleteSimilarityThresholdFunction(ownProps.similarityFunction.id)
     ).then();
+  },
+  previewSimilarityFunction() {
+    doOpenDialog(
+      ViewIDs.PreviewDialog,
+      ownProps.similarityFunction.id,
+      PreviewDialogTypes.SIM_FUNCTION
+    );
   },
 });
 

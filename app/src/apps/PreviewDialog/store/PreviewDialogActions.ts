@@ -1,4 +1,11 @@
-import { Dataset, DatasetsApi, Experiment, ExperimentsApi } from 'api';
+import {
+  Dataset,
+  DatasetsApi,
+  Experiment,
+  ExperimentsApi,
+  SimilarityThresholdFunction,
+  SimilarityThresholdsApi,
+} from 'api';
 import { PreviewDialogActionTypes } from 'apps/PreviewDialog/types/PreviewDialogActionTypes';
 import { PreviewDialogModel } from 'apps/PreviewDialog/types/PreviewDialogModel';
 import { PreviewDialogTypes } from 'apps/PreviewDialog/types/PreviewDialogTypes';
@@ -34,6 +41,14 @@ export const setExperiment = (
   easyPrimitiveAction<PreviewDialogModel>({
     type: PreviewDialogActionTypes.SET_EXPERIMENT,
     payload: anExperiment,
+  });
+
+export const setSimilarityFunction = (
+  aFunction: SimilarityThresholdFunction
+): easyPrimitiveActionReturn<PreviewDialogModel> =>
+  easyPrimitiveAction<PreviewDialogModel>({
+    type: PreviewDialogActionTypes.SET_SIM_FUNCTION,
+    payload: aFunction,
   });
 
 export const loadAndStoreDataset = (
@@ -72,6 +87,24 @@ export const loadAndStoreExperiment = (
     true
   );
 
+export const loadAndStoreSimilarityFunction = (
+  entityId: EntityId
+): SnowmanThunkAction<Promise<void>, PreviewDialogModel> => (
+  dispatch: SnowmanDispatch<PreviewDialogModel>
+): Promise<void> =>
+  RequestHandler<void>(
+    (): Promise<void> =>
+      new SimilarityThresholdsApi()
+        .getSimilarityThresholdFunction({
+          functionId: entityId ?? MagicNotPossibleId,
+        })
+        .then((theFunction: SimilarityThresholdFunction): void => {
+          dispatch(setSimilarityFunction(theFunction));
+        }),
+    undefined,
+    true
+  );
+
 export const onDialogOpen = (
   dispatch: SnowmanDispatch<PreviewDialogModel>,
   entityId: EntityId,
@@ -85,6 +118,11 @@ export const onDialogOpen = (
     entityId !== null
   ) {
     dispatch(loadAndStoreExperiment(entityId)).then();
+  } else if (
+    entityType === PreviewDialogTypes.SIM_FUNCTION &&
+    entityId !== null
+  ) {
+    dispatch(loadAndStoreSimilarityFunction(entityId)).then();
   } else {
     dispatch(setNone());
   }

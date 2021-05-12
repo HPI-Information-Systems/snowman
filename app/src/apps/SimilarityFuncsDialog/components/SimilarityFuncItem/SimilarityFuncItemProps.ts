@@ -7,6 +7,7 @@ export interface SimilarityFuncItemOwnProps {
 export interface SimilarityFuncItemDispatchProps {
   openEditFunctionBuilder(): void;
   deleteFunction(): void;
+  previewSimilarityFunction(): void;
 }
 
 export type SimilarityFuncItemProps = SimilarityFuncItemDispatchProps &
