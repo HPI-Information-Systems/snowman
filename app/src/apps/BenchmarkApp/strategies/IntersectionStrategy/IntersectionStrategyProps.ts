@@ -1,4 +1,4 @@
-import { Experiment } from 'api';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 import { TuplesLoader } from 'types/TuplesLoader';
 
 export interface IntersectionStrategyStateProps {
@@ -7,9 +7,9 @@ export interface IntersectionStrategyStateProps {
   tuplesCount: number;
   pairCount: number;
   countsLoaded: boolean;
-  included: Experiment[];
-  excluded: Experiment[];
-  ignored: Experiment[];
+  included: ExperimentEntity[];
+  excluded: ExperimentEntity[];
+  ignored: ExperimentEntity[];
 }
 
 export interface IntersectionStrategyDispatchProps {

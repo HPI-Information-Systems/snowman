@@ -8,7 +8,6 @@ import {
   GetSimilarityThresholdFunctionRequest,
   SetSimilarityThresholdFunctionRequest,
   SimilarityThresholdFunction,
-  SimilarityThresholdFunctionDefinition,
   SimilarityThresholdFunctionId,
 } from '../../server/types';
 import { providers } from '..';

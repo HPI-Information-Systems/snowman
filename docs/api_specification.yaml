@@ -1161,6 +1161,9 @@ components:
             $ref: "#/components/schemas/ExperimentId"
           threshold:
             type: number
+        required:
+          - x
+          - y
       type: array
     softKPIsAlgorithmEnum:
       type: string

@@ -1,8 +1,9 @@
-import { BenchmarkApi, Experiment, Metric } from 'api';
+import { BenchmarkApi, Metric } from 'api';
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
-import { BenchmarkAppConfigStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { MagicNotPossibleId } from 'structs/constants';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import {
@@ -11,11 +12,11 @@ import {
 } from 'utils/easyActionsFactory';
 
 export const updateConfig = (
-  benchmarkConfig: BenchmarkAppConfigStore
+  appStore: BenchmarkAppModel
 ): easyPrimitiveActionReturn<NMetricsStrategyModel> =>
   easyPrimitiveAction<NMetricsStrategyModel>({
     type: NMetricsStrategyActionTypes.UPDATE_CONFIG,
-    payload: benchmarkConfig,
+    payload: appStore,
   });
 
 export const setMetrics = (
@@ -42,13 +43,19 @@ export const loadNMetrics = (): SnowmanThunkAction<
   if (!getState().isValidConfig) {
     return;
   }
-  const goldStandard = getState().goldStandard;
+  const groundTruth = getState().groundTruth;
   dispatch(resetMetrics());
   Promise.all(
-    getState().experiments.map((anExperiment: Experiment) =>
+    getState().experiments.map((anEntity: ExperimentEntity) =>
       new BenchmarkApi().getBinaryMetrics({
-        groundTruthExperimentId: goldStandard?.id ?? MagicNotPossibleId,
-        predictedExperimentId: anExperiment.id,
+        groundTruthSimilarityThresholdFunction:
+          groundTruth?.similarity?.func.id,
+        groundTruthSimilarityThreshold: groundTruth?.similarity?.threshold,
+        groundTruthExperimentId:
+          groundTruth?.experiment.id ?? MagicNotPossibleId,
+        predictedSimilarityThresholdFunction: anEntity.similarity?.func.id,
+        predictedSimilarityThreshold: anEntity.similarity?.threshold,
+        predictedExperimentId: anEntity.experiment?.id ?? MagicNotPossibleId,
       })
     )
   ).then((metrics: Metric[][]): void => {
@@ -57,8 +64,8 @@ export const loadNMetrics = (): SnowmanThunkAction<
 };
 export const loadStrategyData = (
   dispatch: SnowmanDispatch<NMetricsStrategyModel>,
-  benchmarkConfig: BenchmarkAppConfigStore
+  appStore: BenchmarkAppModel
 ): void => {
-  dispatch(updateConfig(benchmarkConfig));
+  dispatch(updateConfig(appStore));
   dispatch(loadNMetrics());
 };

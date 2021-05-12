@@ -4,11 +4,16 @@ import styles from 'components/simple/ErroneousBackdrop/ErroneousBackdropStyles.
 import React from 'react';
 
 const ErroneousBackdrop = ({
+  shouldShow,
   message,
 }: ErroneousBackdropProps): JSX.Element => (
   <>
-    <div className={styles.errorOverlay}>{message}</div>
-    <IonBackdrop tappable={false} className={styles.heavyBackdrop} />
+    {shouldShow ? (
+      <>
+        <div className={styles.errorOverlay}>{message}</div>
+        <IonBackdrop tappable={false} className={styles.heavyBackdrop} />
+      </>
+    ) : null}
   </>
 );
 

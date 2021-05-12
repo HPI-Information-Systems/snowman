@@ -8,6 +8,7 @@ import {
   getAlgorithms,
   getDatasets,
   getExperiments,
+  getSimFunctions,
 } from 'apps/BenchmarkApp/store/BenchmarkAppThunkActions';
 import {
   BenchmarkAppDispatch,
@@ -27,6 +28,7 @@ const mapDispatchToProps = (
     dispatch(getAlgorithms()).then();
     dispatch(getDatasets()).then();
     dispatch(getExperiments()).then();
+    dispatch(getSimFunctions()).then();
   },
   openStrategy(id: StrategyIDs) {
     dispatch(openStrategy(id));

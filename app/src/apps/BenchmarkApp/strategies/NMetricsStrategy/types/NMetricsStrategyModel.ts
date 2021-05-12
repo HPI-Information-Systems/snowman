@@ -1,8 +1,9 @@
-import { Experiment, Metric } from 'api';
+import { Metric } from 'api';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 
 export interface NMetricsStrategyModel {
-  experiments: Experiment[];
-  goldStandard: Experiment | undefined;
+  experiments: ExperimentEntity[];
+  groundTruth: ExperimentEntity | undefined;
   metrics: Metric[][];
   isValidConfig: boolean;
 }

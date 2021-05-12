@@ -1,4 +1,5 @@
-import { assertType } from '../../tools/types';
+import { assertType } from 'snowman-library';
+
 import { ForeignKeys, Schemas } from '../tools/types';
 
 export const metaSchemas = assertType<

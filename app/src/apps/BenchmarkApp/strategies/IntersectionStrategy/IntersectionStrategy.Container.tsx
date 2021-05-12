@@ -1,3 +1,4 @@
+import { ExperimentIntersectionItem } from 'api';
 import IntersectionStrategyView from 'apps/BenchmarkApp/strategies/IntersectionStrategy/IntersectionStrategy.View';
 import {
   IntersectionStrategyDispatchProps,
@@ -10,6 +11,7 @@ import {
   intersectionTuplesLoader,
 } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/store/IntersectionStrategyActions';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
+import { experimentEntityToExperimentConfigItem } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { dummyTuplesLoader } from 'utils/tuplesLoaders';
@@ -22,23 +24,26 @@ const mapStateToProps = ({
   ignored,
   counts,
 }: IntersectionStrategyModel): IntersectionStrategyStateProps => {
-  const sortedConfig = [
-    ...included.map(({ id }) => ({
-      experimentId: id,
+  const sortedConfig: ExperimentIntersectionItem[] = [
+    ...included.map((entity) => ({
+      ...experimentEntityToExperimentConfigItem(entity),
       predictedCondition: true,
     })),
-    ...excluded.map(({ id }) => ({
-      experimentId: id,
+    ...excluded.map((entity) => ({
+      ...experimentEntityToExperimentConfigItem(entity),
       predictedCondition: false,
     })),
   ].sort(intersectionSorter);
   const configCounts = getCountsForIntersection(counts, sortedConfig);
 
   return {
-    isValidConfig: isValidConfig,
+    isValidConfig,
     loadTuples:
       available[0] !== undefined
-        ? intersectionTuplesLoader(sortedConfig, available[0].datasetId)
+        ? intersectionTuplesLoader(
+            sortedConfig,
+            available[0].experiment.datasetId
+          )
         : dummyTuplesLoader,
     tuplesCount: configCounts?.numberRows ?? 0,
     pairCount: configCounts?.numberPairs ?? 0,

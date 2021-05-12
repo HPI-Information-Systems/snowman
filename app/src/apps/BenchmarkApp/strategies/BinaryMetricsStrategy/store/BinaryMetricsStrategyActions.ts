@@ -8,7 +8,8 @@ import {
 } from 'api';
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
 import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyModel';
-import { BenchmarkAppConfigStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { experimentEntityToExperimentConfigItem } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { MagicNotPossibleId } from 'structs/constants';
 import { SUCCESS_LOAD_BINARY_METRICS } from 'structs/statusMessages';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
@@ -21,7 +22,7 @@ import {
 import RequestHandler from 'utils/requestHandler';
 
 export const updateConfig = (
-  benchmarkConfig: BenchmarkAppConfigStore
+  benchmarkConfig: BenchmarkAppModel
 ): easyPrimitiveActionReturn<BinaryMetricsStrategyModel> =>
   easyPrimitiveAction<BinaryMetricsStrategyModel>({
     type: BinaryMetricsStrategyActionTypes.UPDATE_CONFIG,
@@ -41,10 +42,18 @@ export const loadMetrics = (): SnowmanThunkAction<
       RequestHandler<Metric[]>(
         () =>
           new BenchmarkApi().getBinaryMetrics({
+            groundTruthSimilarityThresholdFunction: getState().groundTruth
+              ?.similarity?.func.id,
+            groundTruthSimilarityThreshold: getState().groundTruth?.similarity
+              ?.threshold,
             groundTruthExperimentId:
-              getState().goldStandard?.id ?? MagicNotPossibleId,
+              getState().groundTruth?.experiment.id ?? MagicNotPossibleId,
+            predictedSimilarityThresholdFunction: getState().experiment
+              ?.similarity?.func.id,
+            predictedSimilarityThreshold: getState().experiment?.similarity
+              ?.threshold,
             predictedExperimentId:
-              getState().experiment?.id ?? MagicNotPossibleId,
+              getState().experiment?.experiment.id ?? MagicNotPossibleId,
           }),
         SUCCESS_LOAD_BINARY_METRICS
       )
@@ -112,8 +121,12 @@ type LoadTuplesRequestBody = ReturnType<typeof getRequestBodyForTruePositives>;
 const getExperimentsComparisonTuple = (
   state: BinaryMetricsStrategyModel
 ): [ExperimentConfigItem, ExperimentConfigItem] => [
-  { experimentId: state.goldStandard?.id ?? MagicNotPossibleId },
-  { experimentId: state.experiment?.id ?? MagicNotPossibleId },
+  state.groundTruth === undefined
+    ? { experimentId: MagicNotPossibleId }
+    : experimentEntityToExperimentConfigItem(state.groundTruth),
+  state.experiment === undefined
+    ? { experimentId: MagicNotPossibleId }
+    : experimentEntityToExperimentConfigItem(state.experiment),
 ];
 
 const loadTuples = (
@@ -218,10 +231,9 @@ export const setAllCounts = (
 
 export const loadStrategyData = (
   dispatch: SnowmanDispatch<BinaryMetricsStrategyModel>,
-  benchmarkConfig: BenchmarkAppConfigStore
+  appStore: BenchmarkAppModel
 ): void => {
-  dispatch(updateConfig(benchmarkConfig));
+  dispatch(updateConfig(appStore));
   dispatch(loadMetrics()).then();
   dispatch(loadBinaryMetricsTuplesCounts()).then();
-  // Todo: Load smth
 };

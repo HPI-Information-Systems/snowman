@@ -1,4 +1,5 @@
-import { assertType } from '../../../tools/types';
+import { assertType } from 'snowman-library';
+
 import { SetupOptions } from '../../setup';
 import { Table } from '../../table';
 import { ForeignKeys, TableSchema } from '../../tools/types';

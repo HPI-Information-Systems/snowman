@@ -1,5 +1,5 @@
 import BenchmarkAppContainer from 'apps/BenchmarkApp/BenchmarkApp.Container';
-import BenchmarkSelector from 'apps/BenchmarkApp/components/BenchmarkSelector/BenchmarkSelector';
+import BenchmarkConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/BenchmarkConfigurator';
 import { BenchmarkAppStoreMagistrate } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
 import GenericSubApp from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubApp';
 import React from 'react';
@@ -10,7 +10,7 @@ const BenchmarkApp = (): JSX.Element => (
     instanceId={ViewIDs.BenchmarkApp}
     appTitle={'Benchmark Dashboard'}
     createSubAppStore={BenchmarkAppStoreMagistrate.getStore}
-    sideMenu={BenchmarkSelector}
+    sideMenu={BenchmarkConfigurator}
     usePageStruct={false}
   >
     <BenchmarkAppContainer />

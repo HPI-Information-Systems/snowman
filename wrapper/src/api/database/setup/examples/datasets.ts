@@ -1,10 +1,10 @@
 import path from 'path';
+import { assertType } from 'snowman-library';
 
 import { DATABASE_SETUP_DIR } from '../../../config';
 import { providers } from '../../../providers';
 import { DatasetId, DatasetValues } from '../../../server/types';
 import { readFile } from '../../../tools/readFile';
-import { assertType } from '../../../tools/types';
 
 export const EXAMPLE_DATASET_DIR = path.join(DATABASE_SETUP_DIR, 'datasets');
 

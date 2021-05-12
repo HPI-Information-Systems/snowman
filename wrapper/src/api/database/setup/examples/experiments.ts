@@ -1,4 +1,5 @@
 import path from 'path';
+import { assertType } from 'snowman-library';
 
 import { DATABASE_SETUP_DIR } from '../../../config';
 import { providers } from '../../../providers';
@@ -8,7 +9,6 @@ import {
   SetExperimentFileFormatEnum,
 } from '../../../server/types';
 import { readFile } from '../../../tools/readFile';
-import { assertType } from '../../../tools/types';
 import { exampleAlgorithms } from './algorithms';
 import { exampleDatasets } from './datasets';
 
