@@ -56,7 +56,10 @@ const SimilarityDiagramStrategyReducer = (
                 .filter(
                   (
                     anEntity: ExperimentEntity | undefined
-                  ): anEntity is ExperimentEntity => anEntity !== undefined
+                  ): anEntity is ExperimentEntity =>
+                    anEntity !== undefined &&
+                    anEntity.similarity !== undefined &&
+                    anEntity.similarity.func !== undefined
                 )
                 .map(
                   (anEntity): DiagramExperimentItem => {
