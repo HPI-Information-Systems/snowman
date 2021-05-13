@@ -46,8 +46,6 @@ const SimilarityDiagramStrategyView = ({
               />
             </IonItem>
           </IonCol>
-        </IonRow>
-        <IonRow>
           <IonCol size="6">
             <IonItem>
               <IonLabel>X Axis Metric:</IonLabel>

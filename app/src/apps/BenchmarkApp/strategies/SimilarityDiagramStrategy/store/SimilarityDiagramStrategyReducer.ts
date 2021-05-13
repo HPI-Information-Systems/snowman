@@ -1,4 +1,4 @@
-import { DiagramExperimentItem, MetricsEnum } from 'api';
+import { MetricsEnum } from 'api';
 import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
 import { KPIDiagramConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
 import { SimilarityDiagramStrategyActionTypes } from 'apps/BenchmarkApp/strategies/SimilarityDiagramStrategy/types/SimilarityDiagramStrategyActionTypes';
@@ -32,48 +32,47 @@ const SimilarityDiagramStrategyReducer = (
       const configuration = KPIDiagramConfiguration.getValue(appStore);
       const diagramTracks: DiagramTrack[] = configuration.diagramTracks
         .filter((aTrack): boolean => aTrack.dataset[0] !== undefined)
-        .map(
-          (aTrack, index): DiagramTrack => {
-            const groundTruthEntity = resolveExperimentEntity(
-              aTrack.groundTruth,
-              appStore
+        .map((aTrack): DiagramTrack[] => {
+          const groundTruthEntity = resolveExperimentEntity(
+            aTrack.groundTruth,
+            appStore
+          );
+          const groundTruth =
+            groundTruthEntity !== undefined
+              ? experimentEntityToExperimentConfigItem(groundTruthEntity)
+              : undefined;
+          return aTrack.experiments
+            .map((entity) => resolveExperimentEntity(entity, appStore))
+            .filter(
+              (
+                anEntity: ExperimentEntity | undefined
+              ): anEntity is ExperimentEntity =>
+                anEntity !== undefined &&
+                anEntity.similarity !== undefined &&
+                anEntity.similarity.func !== undefined
+            )
+            .map(
+              (anEntity, index): DiagramTrack => ({
+                name:
+                  'Track ' +
+                  (index + 1).toString() +
+                  ' (' +
+                  anEntity.experiment.name +
+                  ', ' +
+                  (anEntity.similarity?.func.name ?? '?') +
+                  ')',
+                items: [
+                  {
+                    groundTruth,
+                    experiment: experimentEntityToExperimentConfigItem(
+                      anEntity
+                    ),
+                  },
+                ],
+              })
             );
-            const groundTruth =
-              groundTruthEntity !== undefined
-                ? experimentEntityToExperimentConfigItem(groundTruthEntity)
-                : undefined;
-            return {
-              name:
-                'Track ' +
-                (index + 1).toString() +
-                ' (' +
-                ((action.payload as BenchmarkAppModel).resources.datasets.find(
-                  (aDataset): boolean => aDataset.id === aTrack.dataset[0]
-                )?.name ?? '?') +
-                ')',
-              items: aTrack.experiments
-                .map((entity) => resolveExperimentEntity(entity, appStore))
-                .filter(
-                  (
-                    anEntity: ExperimentEntity | undefined
-                  ): anEntity is ExperimentEntity =>
-                    anEntity !== undefined &&
-                    anEntity.similarity !== undefined &&
-                    anEntity.similarity.func !== undefined
-                )
-                .map(
-                  (anEntity): DiagramExperimentItem => {
-                    return {
-                      groundTruth,
-                      experiment: experimentEntityToExperimentConfigItem(
-                        anEntity
-                      ),
-                    };
-                  }
-                ),
-            };
-          }
-        )
+        })
+        .flat()
         .filter((track) => track.items.length > 0);
       return {
         ...state,
