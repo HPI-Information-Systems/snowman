@@ -4,6 +4,7 @@ import {
   StrategyMapItem,
 } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMap';
 import {
+  StrategyMapperForwardProps,
   StrategyMapperProps,
   StrategyMapperStateProps,
 } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
@@ -18,7 +19,47 @@ import {
   FunctionBuildingBlockType,
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
-import React, { Component, createElement } from 'react';
+import React, { Component, createElement, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+
+const StrategyViewer = ({
+  blockAccessKey,
+}: StrategyMapperForwardProps): JSX.Element => {
+  const [targetStrategy, setTargetStrategy] = useState<
+    StrategyMapItem | undefined
+  >(undefined);
+  const state = useSelector(
+    (state: FunctionBuilderDialogModel): FunctionBuilderDialogModel => state
+  );
+  useEffect((): void => {
+    const newState: FunctionBuilderDialogModel = FunctionBuilderDialogMagistrate.getStore().getState();
+    const strategyType: FunctionBuildingBlockType =
+      newState.functionBuildingStack.getBlock(blockAccessKey)?.type ??
+      UndefinedStrategy;
+    setTargetStrategy(
+      StrategyMap.find(
+        (aStrategyMapItem: StrategyMapItem): boolean =>
+          aStrategyMapItem.targetStrategyKey === strategyType
+      )
+    );
+  }, [state, blockAccessKey]);
+  return (
+    <>
+      {targetStrategy !== undefined ? (
+        <>
+          {createElement(targetStrategy.targetStrategyComponent, {
+            blockAccessKey: blockAccessKey,
+          })}
+          <span className={styles.unselectorMargin}>
+            <StrategyUnselector blockAccessKey={blockAccessKey} />
+          </span>
+        </>
+      ) : (
+        <StrategySelector blockAccessKey={blockAccessKey} />
+      )}
+    </>
+  );
+};
 
 class StrategyMapper extends Component<
   StrategyMapperProps,
@@ -78,22 +119,7 @@ class StrategyMapper extends Component<
   }
 
   render(): JSX.Element {
-    return (
-      <>
-        {this.state?.targetStrategy !== undefined ? (
-          <>
-            {createElement(this.state.targetStrategy.targetStrategyComponent, {
-              blockAccessKey: this.blockAccessKey,
-            })}
-            <span className={styles.unselectorMargin}>
-              <StrategyUnselector blockAccessKey={this.blockAccessKey} />
-            </span>
-          </>
-        ) : (
-          <StrategySelector blockAccessKey={this.blockAccessKey} />
-        )}
-      </>
-    );
+    return <StrategyViewer blockAccessKey={this.blockAccessKey} />;
   }
 }
 
