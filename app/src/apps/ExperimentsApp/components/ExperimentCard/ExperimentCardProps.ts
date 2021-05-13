@@ -13,6 +13,7 @@ export interface ExperimentCardOwnProps {
 export interface ExperimentCardDispatchProps {
   deleteExperiment(): void;
   editExperiment(): void;
+  editSimilarityFunctions(): void;
   previewExperiment(): void;
 }
 

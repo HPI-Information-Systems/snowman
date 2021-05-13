@@ -6,29 +6,30 @@ import {
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 
-export const navigateTo = (
-  aTarget: ViewIDs
-): easyPrimitiveActionReturn<SnowmanAppModel> =>
+export const navigateTo = (aTarget: ViewIDs): easyPrimitiveActionReturn =>
   easyPrimitiveAction<SnowmanAppModel>({
     type: RenderLogicActionTypes.NAVIGATE_TO,
     payload: aTarget,
+  });
+
+export const closeDialog = (
+  dialogId?: ViewIDs,
+  sensitive?: boolean
+): easyPrimitiveActionReturn =>
+  easyPrimitiveAction({
+    type: RenderLogicActionTypes.CLOSE_DIALOG,
+    payload: dialogId,
+    optionalPayload: sensitive === undefined ? false : sensitive,
   });
 
 export const openDialog = (
   aDialog: ViewIDs,
   entityId?: number,
   entityType?: string
-): easyPrimitiveActionReturn<SnowmanAppModel> =>
-  easyPrimitiveAction<SnowmanAppModel>({
+): easyPrimitiveActionReturn =>
+  easyPrimitiveAction({
     type: RenderLogicActionTypes.OPEN_DIALOG,
     payload: aDialog,
     optionalPayload: entityId ?? null,
     optionalPayload2: entityType ?? null,
-  });
-
-export const closeDialog = (): easyPrimitiveActionReturn<SnowmanAppModel> =>
-  easyPrimitiveAction({
-    type: RenderLogicActionTypes.CLOSE_DIALOG,
-    // reducer ignores payload
-    payload: null,
   });

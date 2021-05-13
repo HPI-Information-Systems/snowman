@@ -14,6 +14,7 @@ export const experimentSchemas = assertType<
       similarityScores: Column<'REAL'>[] = []
     ) => {
       const knownColumns = assertType<Columns>()({
+        // !ALL COLUMNS MUST BE DUPLICATED TO LIBRARY/CONSTANTS -> NonSimilarityThresholdColumns
         id1: {
           name: 'id1' as const,
           dataType: 'INTEGER',

@@ -20,8 +20,11 @@ export const doOpenDialog = (
 ): void => {
   SnowmanAppDispatch(openDialog(aDialog, entityId, entityType));
 };
-export const doCloseDialog = (): void => {
-  SnowmanAppDispatch(closeDialog());
+export const doCloseDialog = (
+  dialogId?: ViewIDs,
+  sensitive?: boolean
+): void => {
+  SnowmanAppDispatch(closeDialog(dialogId, sensitive));
 };
 export const doShowBlockingLoading = (): void => {
   SnowmanAppDispatch(showLoading());

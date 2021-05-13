@@ -1,4 +1,4 @@
-import { Dataset, Experiment } from 'api';
+import { Dataset, Experiment, SimilarityThresholdFunction } from 'api';
 import { PreviewDialogActionTypes } from 'apps/PreviewDialog/types/PreviewDialogActionTypes';
 import { PreviewDialogModel } from 'apps/PreviewDialog/types/PreviewDialogModel';
 import { PreviewDialogTypes } from 'apps/PreviewDialog/types/PreviewDialogTypes';
@@ -8,6 +8,7 @@ const initialState: PreviewDialogModel = {
   type: undefined,
   dataset: undefined,
   experiment: undefined,
+  similarityFunction: undefined,
 };
 
 const PreviewDialogReducer = (
@@ -17,17 +18,21 @@ const PreviewDialogReducer = (
   switch (action.type) {
     case PreviewDialogActionTypes.SET_DATASET:
       return {
-        ...state,
-        experiment: undefined,
+        ...initialState,
         type: PreviewDialogTypes.DATASET,
         dataset: action.payload as Dataset,
       };
     case PreviewDialogActionTypes.SET_EXPERIMENT:
       return {
-        ...state,
-        dataset: undefined,
+        ...initialState,
         type: PreviewDialogTypes.EXPERIMENT,
         experiment: action.payload as Experiment,
+      };
+    case PreviewDialogActionTypes.SET_SIM_FUNCTION:
+      return {
+        ...initialState,
+        type: PreviewDialogTypes.SIM_FUNCTION,
+        similarityFunction: action.payload as SimilarityThresholdFunction,
       };
     case PreviewDialogActionTypes.SET_NONE:
       return initialState;

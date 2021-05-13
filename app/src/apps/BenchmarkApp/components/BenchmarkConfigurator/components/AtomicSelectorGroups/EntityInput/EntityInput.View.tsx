@@ -29,7 +29,7 @@ const EntityInputView = ({
               icon,
               title: entity.name ?? '',
             }))
-          : [{ icon, title: '' }]
+          : [{ icon }]
       }
     >
       <SearchableList

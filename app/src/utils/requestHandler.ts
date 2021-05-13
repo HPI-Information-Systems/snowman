@@ -15,6 +15,8 @@ export const unwrapError = async (error: unknown): Promise<string> => {
     return (await error.text()) ?? UNKNOWN_ERROR;
   } else if (typeof error === 'string') {
     return error;
+  } else if (error instanceof Error) {
+    return `${error.name}: ${error.message}`;
   } else {
     return UNKNOWN_ERROR;
   }
@@ -27,7 +29,7 @@ const RequestHandler = async <T = void>(
 ): Promise<T> => {
   if (shouldShowLoadingBlocker) SnowmanAppDispatch(showLoading());
   SnowmanAppDispatch(registerOngoingRequest());
-  return wrapped()
+  return (async () => wrapped())()
     .then(
       (wrappedReturn: T): T => {
         if (successMessage !== undefined)

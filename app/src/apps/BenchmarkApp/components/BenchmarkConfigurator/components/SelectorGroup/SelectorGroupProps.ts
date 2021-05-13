@@ -1,7 +1,7 @@
 import React from 'react';
 export type SelectorItem = {
   icon: string;
-  title: string;
+  title?: string;
   indent?: number;
 };
 
