@@ -12,20 +12,19 @@ import { ScatterChart } from 'components/simple/ChartComponent/ScatterChart';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
 import React from 'react';
-import {
-  AllMetricsObject,
-  OmitMetricsOnSoftKPIPage,
-} from 'types/AllMetricsEnum';
+import { AllMetricsObject } from 'types/AllMetricsEnum';
 
 const SimilarityDiagramStrategyView = ({
   isValidConfig,
   yAxis,
+  xAxis,
   datasets,
   changeYAxis,
+  changeXAxis,
 }: SimilarityDiagramStrategyProps): JSX.Element => {
-  const metrics = Object.values(AllMetricsObject)
-    .filter((metric) => !OmitMetricsOnSoftKPIPage.has(metric))
-    .map((metric) => metric as string);
+  const metrics = Object.values(AllMetricsObject).map(
+    (metric) => metric as string
+  );
   return (
     <>
       <ErroneousBackdrop
@@ -36,7 +35,7 @@ const SimilarityDiagramStrategyView = ({
       />
       <IonGrid>
         <IonRow>
-          <IonCol size="12">
+          <IonCol size="6">
             <IonItem>
               <IonLabel>Y Axis Metric:</IonLabel>
               <SelectableInput
@@ -44,6 +43,19 @@ const SimilarityDiagramStrategyView = ({
                 currentOption={yAxis}
                 setOption={changeYAxis}
                 instanceDescriptor="SimilarityDiagramYAxis"
+              />
+            </IonItem>
+          </IonCol>
+        </IonRow>
+        <IonRow>
+          <IonCol size="6">
+            <IonItem>
+              <IonLabel>X Axis Metric:</IonLabel>
+              <SelectableInput
+                allOptions={metrics}
+                currentOption={xAxis}
+                setOption={changeXAxis}
+                instanceDescriptor="SimilarityDiagramXAxis"
               />
             </IonItem>
           </IonCol>
@@ -57,7 +69,6 @@ const SimilarityDiagramStrategyView = ({
                     datasets: datasets,
                   }}
                   options={{
-                    scales: { x: { min: 0, max: 1 }, y: { min: 0, max: 1 } },
                     animation: { duration: 0 },
                   }}
                 />

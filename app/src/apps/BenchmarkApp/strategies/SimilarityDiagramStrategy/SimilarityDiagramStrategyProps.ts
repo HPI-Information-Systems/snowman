@@ -5,10 +5,12 @@ export interface SimilarityDiagramStrategyStateProps {
   isValidConfig: boolean;
   datasets: ScatterChartDatasets;
   yAxis: AllMetricsEnum;
+  xAxis: AllMetricsEnum;
 }
 
 export interface SimilarityDiagramStrategyDispatchProps {
   changeYAxis: (anOption: string) => void;
+  changeXAxis: (anOption: string) => void;
 }
 
 export type SimilarityDiagramStrategyProps = SimilarityDiagramStrategyStateProps &

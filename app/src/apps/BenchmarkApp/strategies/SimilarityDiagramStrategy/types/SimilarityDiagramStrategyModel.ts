@@ -9,4 +9,5 @@ export interface SimilarityDiagramStrategyModel {
   coordinates: DiagramCoordinates[][];
   experiments: Experiment[];
   yAxis: AllMetricsEnum;
+  xAxis: AllMetricsEnum;
 }
