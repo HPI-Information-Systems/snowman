@@ -25,9 +25,9 @@ const mapStateToProps = (
       backgroundColor: getMyColor(index, 0.7),
       borderColor: getMyColor(index),
       data: myCoordinates,
-      pointRadius: 6,
-      pointHoverRadius: 10,
-      borderWidth: 3,
+      pointRadius: 3,
+      pointHoverRadius: 5,
+      borderWidth: 1,
     })
   ),
   xAxis: state.xAxis,
