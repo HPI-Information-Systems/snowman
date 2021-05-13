@@ -41,7 +41,7 @@ const SelectorGroup = ({ onClick, items }: SelectorGroupProps): JSX.Element => (
             className={styles.smallItemIcon}
             slot="start"
           />
-          {title.length > 0 ? title : <EmptyPlaceholder />}
+          {title ?? <EmptyPlaceholder />}
         </IonItem>
       ))}
     </IonList>
