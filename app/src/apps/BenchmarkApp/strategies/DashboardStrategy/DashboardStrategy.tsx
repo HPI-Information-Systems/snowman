@@ -13,7 +13,13 @@ import {
 import GenericBenchmarkStrategy from 'apps/BenchmarkApp/components/GenericBenchmarkStrategy/GenericBenchmarkStrategy';
 import { DashboardStrategyProps } from 'apps/BenchmarkApp/strategies/DashboardStrategy/DashboardStrategyProps';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
-import { barChart, calculator, colorFilter, pauseCircle } from 'ionicons/icons';
+import {
+  analytics,
+  barChart,
+  calculator,
+  colorFilter,
+  pauseCircle,
+} from 'ionicons/icons';
 import React from 'react';
 import { dummyStoreFactory } from 'utils/storeFactory';
 
@@ -174,6 +180,44 @@ const DashboardStrategy = ({
               expand="full"
               fill="clear"
               onClick={(): void => openStrategy(StrategyIDs.KpiInvestigator)}
+            >
+              Start Benchmark
+            </IonButton>
+          </IonCard>
+        </IonCol>
+        <IonCol size="4" sizeXl="3">
+          <IonCard>
+            <IonCardHeader>
+              <IonCardTitle>
+                Similarity Diagrams
+                <span>
+                  <IonIcon
+                    className="ion-float-right"
+                    icon={analytics}
+                    size="large"
+                    color="primarydark"
+                  />
+                </span>
+              </IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <p>
+                Discover changes in metrics with changing similarity to find the
+                sweet spot.
+              </p>
+            </IonCardContent>
+            <IonCardContent>
+              <IonText color="dark">
+                <p>
+                  <b>Requires:</b> a single experiment with similarity values
+                  (or function)
+                </p>
+              </IonText>
+            </IonCardContent>
+            <IonButton
+              expand="full"
+              fill="clear"
+              onClick={(): void => openStrategy(StrategyIDs.SimilarityDiagram)}
             >
               Start Benchmark
             </IonButton>
