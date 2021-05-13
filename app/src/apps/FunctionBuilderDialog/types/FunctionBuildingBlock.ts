@@ -115,8 +115,6 @@ export class FunctionBuildingBlock {
     switch (this.type) {
       case SimilarityThresholdFunctionDefinitionTypeEnum.Constant:
         if (this.left === null) throw Error('No constant value given');
-        console.log(this.left);
-        console.log(this.accessKey);
         return {
           type: SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
           constant: this.left as number,
