@@ -14,3 +14,7 @@ export const AllMetricsObject = {
   ...SoftKPIsAlgorithmEnum,
   ...SoftKPIsAlgorithmEnum,
 };
+
+export const OmitMetricsOnSoftKPIPage = new Set<AllMetricsEnum>([
+  MetricsEnum.Similarity,
+]);
