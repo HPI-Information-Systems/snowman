@@ -25,6 +25,7 @@ import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
+import { removeNaN } from 'utils/removeNaN';
 import RequestHandler from 'utils/requestHandler';
 
 export const resetDialog = (): easyPrimitiveActionReturn<ExperimentDialogModel> =>
@@ -82,6 +83,22 @@ export const changeSelectedFiles = (
     payload: files,
   });
 
+export const changeHRAmount = (
+  anHRAmount: number
+): easyPrimitiveActionReturn<ExperimentDialogModel> =>
+  easyPrimitiveAction<ExperimentDialogModel>({
+    type: ExperimentDialogActionTypes.CHANGE_HR_AMOUNT,
+    payload: anHRAmount,
+  });
+
+export const changeExpertise = (
+  anExpertise: number
+): easyPrimitiveActionReturn<ExperimentDialogModel> =>
+  easyPrimitiveAction<ExperimentDialogModel>({
+    type: ExperimentDialogActionTypes.CHANGE_EXPERTISE,
+    payload: anExpertise,
+  });
+
 export const prefillDialog = (
   anExperiment: Experiment
 ): easyPrimitiveActionReturn<ExperimentDialogModel> =>
@@ -135,6 +152,10 @@ const getExperimentValues = (
   algorithmId: state.selectedAlgorithm ?? MagicNotPossibleId,
   name: state.experimentName,
   description: state.experimentDescription,
+  softKPIs: {
+    expertise: removeNaN(state.expertise),
+    hrAmount: removeNaN(state.hrAmount),
+  },
 });
 
 const getExperimentFileValues = (
@@ -151,8 +172,8 @@ const createExperiment = (
 ): SnowmanThunkAction<Promise<number>, ExperimentDialogModel> => async (
   _: unknown,
   getState: () => ExperimentDialogModel
-): Promise<number> =>
-  RequestHandler<number>(
+): Promise<number> => {
+  return RequestHandler<number>(
     (): Promise<number> =>
       new ExperimentsApi().addExperiment({
         experiment: getExperimentValues(getState()),
@@ -160,6 +181,7 @@ const createExperiment = (
     showSuccess ? SUCCESS_TO_CREATE_NEW_EXPERIMENT : undefined,
     true
   );
+};
 
 const setExperiment = (
   id: number,
@@ -200,14 +222,13 @@ const addExperiment = (): SnowmanThunkAction<
   dispatch: SnowmanDispatch<ExperimentDialogModel>
 ): Promise<void> => {
   return dispatch(createExperiment(false))
-    .then((id) => {
-      doCloseDialog();
+    .then((id) =>
       dispatch(uploadExperimentFile(id, false)).catch((error) =>
         RequestHandler(() =>
           new ExperimentsApi().deleteExperiment({ experimentId: id })
-        ).finally(() => Promise.reject(error))
-      );
-    })
+        ).then(() => Promise.reject(error))
+      )
+    )
     .then(() => dispatch(resetDialog()))
     .then(() =>
       SnowmanAppDispatch(
@@ -215,6 +236,7 @@ const addExperiment = (): SnowmanThunkAction<
       )
     )
     .finally((): void => {
+      doCloseDialog();
       doRefreshCentralResources();
     });
 };

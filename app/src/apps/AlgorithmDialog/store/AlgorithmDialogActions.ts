@@ -15,6 +15,7 @@ import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
+import { removeNaN } from 'utils/removeNaN';
 import RequestHandler from 'utils/requestHandler';
 
 export const changeAlgorithmName = (
@@ -242,10 +243,6 @@ export const onDialogOpen = (
   if (entityId !== null) {
     dispatch(prepareUpdateDialog(entityId)).then();
   }
-};
-
-const removeNaN = (value?: number): number | undefined => {
-  return value === 0 ? 0 : value || undefined;
 };
 
 const getAlgorithmValues = (state: AlgorithmDialogModel): AlgorithmValues => ({

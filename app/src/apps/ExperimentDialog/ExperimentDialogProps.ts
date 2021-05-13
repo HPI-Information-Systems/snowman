@@ -2,7 +2,11 @@ import { Algorithm, Dataset } from 'api';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import { ChangeEvent } from 'react';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
-import { IonChangeEvent, IonSelectChangeEvent } from 'types/IonChangeEvent';
+import {
+  IonChangeEvent,
+  IonRangeChangeEvent,
+  IonSelectChangeEvent,
+} from 'types/IonChangeEvent';
 
 export interface ExperimentDialogDispatchProps {
   clickOnCancel(): void;
@@ -13,6 +17,8 @@ export interface ExperimentDialogDispatchProps {
   changeSelectedFiles(event: ChangeEvent<HTMLInputElement>): void;
   changeDataset(event: IonSelectChangeEvent): void;
   changeAlgorithm(event: IonSelectChangeEvent): void;
+  changeExpertise(event: IonRangeChangeEvent): void;
+  changeHRAmount(event: IonChangeEvent): void;
 }
 
 export interface ExperimentDialogStateProps {
@@ -26,6 +32,8 @@ export interface ExperimentDialogStateProps {
   selectedDataset: string | undefined;
   algorithms: Algorithm[];
   selectedAlgorithm: string | undefined;
+  expertise: number | undefined;
+  hrAmount: number | undefined;
 }
 
 export type ExperimentDialogOwnProps = DialogProps;
