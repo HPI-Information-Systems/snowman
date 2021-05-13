@@ -1,4 +1,3 @@
-import { EffortParts } from 'api';
 import AlgorithmDialogView from 'apps/AlgorithmDialog/AlgorithmDialog.View';
 import {
   AlgorithmDialogDispatchProps,
@@ -9,20 +8,23 @@ import {
   addOrUpdateAlgorithm,
   changeAlgorithmDescription,
   changeAlgorithmName,
-  changeConfigurationDomainEffort,
+  changeConfigurationDomainEffortExpertise,
+  changeConfigurationDomainEffortHRAmount,
   changeConfigurationInterfaces,
-  changeConfigurationMatchingSolutionEffort,
+  changeConfigurationMatchingSolutionEffortExpertise,
+  changeConfigurationMatchingSolutionEffortHRAmount,
   changeConfigurationSupportedOSs,
   changeIntegrationDeploymentType,
   changeIntegrationGeneralCosts,
-  changeIntegrationInstallationEffort,
+  changeIntegrationInstallationEffortExpertise,
+  changeIntegrationInstallationEffortHRAmount,
   changeIntegrationSolutionType,
   changeIntegrationUseCase,
 } from 'apps/AlgorithmDialog/store/AlgorithmDialogActions';
 import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
-import { IonChangeEvent } from 'types/IonChangeEvent';
+import { IonChangeEvent, IonRangeChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 const mapStateToProps = (
@@ -44,8 +46,19 @@ const mapDispatchToProps = (
   changeAlgorithmDescription(event: IonChangeEvent): void {
     dispatch(changeAlgorithmDescription(event.detail.value as string));
   },
-  changeIntegrationInstallationEffort(event: EffortParts): void {
-    dispatch(changeIntegrationInstallationEffort(event));
+  changeIntegrationInstallationEffortExpertise(
+    event: IonRangeChangeEvent
+  ): void {
+    dispatch(
+      changeIntegrationInstallationEffortExpertise(event.detail.value as number)
+    );
+  },
+  changeIntegrationInstallationEffortHRAmount(event: IonChangeEvent): void {
+    dispatch(
+      changeIntegrationInstallationEffortHRAmount(
+        parseFloat(event.detail.value as string)
+      )
+    );
   },
   changeIntegrationDeploymentType(event: string[]): void {
     dispatch(changeIntegrationDeploymentType(event));
@@ -61,11 +74,35 @@ const mapDispatchToProps = (
       changeIntegrationGeneralCosts(parseFloat(event.detail.value as string))
     );
   },
-  changeConfigurationMatchingSolutionEffort(event: EffortParts): void {
-    dispatch(changeConfigurationMatchingSolutionEffort(event));
+  changeConfigurationMatchingSolutionEffortExpertise(
+    event: IonRangeChangeEvent
+  ): void {
+    dispatch(
+      changeConfigurationMatchingSolutionEffortExpertise(
+        event.detail.value as number
+      )
+    );
   },
-  changeConfigurationDomainEffort(event: EffortParts): void {
-    dispatch(changeConfigurationDomainEffort(event));
+  changeConfigurationMatchingSolutionEffortHRAmount(
+    event: IonChangeEvent
+  ): void {
+    dispatch(
+      changeConfigurationMatchingSolutionEffortHRAmount(
+        parseFloat(event.detail.value as string)
+      )
+    );
+  },
+  changeConfigurationDomainEffortExpertise(event: IonRangeChangeEvent): void {
+    dispatch(
+      changeConfigurationDomainEffortExpertise(event.detail.value as number)
+    );
+  },
+  changeConfigurationDomainEffortHRAmount(event: IonChangeEvent): void {
+    dispatch(
+      changeConfigurationDomainEffortHRAmount(
+        parseFloat(event.detail.value as string)
+      )
+    );
   },
   changeConfigurationInterfaces(event: string[]): void {
     dispatch(changeConfigurationInterfaces(event));

@@ -1,4 +1,4 @@
-import { Algorithm, AlgorithmApi, AlgorithmValues, EffortParts } from 'api';
+import { Algorithm, AlgorithmApi, AlgorithmValues } from 'api';
 import { AlgorithmDialogActionTypes } from 'apps/AlgorithmDialog/types/AlgorithmDialogActionTypes';
 import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
@@ -33,12 +33,22 @@ export const changeAlgorithmDescription = (
     payload: aDescription,
   });
 
-export const changeIntegrationInstallationEffort = (
-  integrationInstallationEffort: EffortParts
+export const changeIntegrationInstallationEffortExpertise = (
+  expertise: number | undefined
 ): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
   easyPrimitiveAction<AlgorithmDialogModel>({
-    type: AlgorithmDialogActionTypes.CHANGE_INTEGRATION_INSTALLATION_EFFORT,
-    payload: integrationInstallationEffort,
+    type:
+      AlgorithmDialogActionTypes.CHANGE_INTEGRATION_INSTALLATION_EFFORT_EXPERTISE,
+    payload: expertise,
+  });
+
+export const changeIntegrationInstallationEffortHRAmount = (
+  hrAmount: number | undefined
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type:
+      AlgorithmDialogActionTypes.CHANGE_INTEGRATION_INSTALLATION_EFFORT_HR_AMOUNT,
+    payload: hrAmount,
   });
 
 export const changeIntegrationDeploymentType = (
@@ -66,28 +76,46 @@ export const changeIntegrationUseCase = (
   });
 
 export const changeIntegrationGeneralCosts = (
-  integrationGeneralCosts: number
+  integrationGeneralCosts: number | undefined
 ): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
   easyPrimitiveAction<AlgorithmDialogModel>({
     type: AlgorithmDialogActionTypes.CHANGE_INTEGRATION_GENERAL_COSTS,
     payload: integrationGeneralCosts,
   });
 
-export const changeConfigurationMatchingSolutionEffort = (
-  configurationMatchingSolutionEffort: EffortParts
+export const changeConfigurationMatchingSolutionEffortExpertise = (
+  expertise: number | undefined
 ): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
   easyPrimitiveAction<AlgorithmDialogModel>({
     type:
-      AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_MATCHING_SOLUTION_EFFORT,
-    payload: configurationMatchingSolutionEffort,
+      AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_MATCHING_SOLUTION_EFFORT_EXPERTISE,
+    payload: expertise,
   });
-
-export const changeConfigurationDomainEffort = (
-  configurationDomainEffort: EffortParts
+export const changeConfigurationMatchingSolutionEffortHRAmount = (
+  hrAmount: number | undefined
 ): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
   easyPrimitiveAction<AlgorithmDialogModel>({
-    type: AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_DOMAIN_EFFORT,
-    payload: configurationDomainEffort,
+    type:
+      AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_MATCHING_SOLUTION_EFFORT_HR_AMOUNT,
+    payload: hrAmount,
+  });
+
+export const changeConfigurationDomainEffortExpertise = (
+  expertise: number | undefined
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type:
+      AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_DOMAIN_EFFORT_EXPERTISE,
+    payload: expertise,
+  });
+
+export const changeConfigurationDomainEffortHRAmount = (
+  hrAmount: number | undefined
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type:
+      AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_DOMAIN_EFFORT_HR_AMOUNT,
+    payload: hrAmount,
   });
 
 export const changeConfigurationInterfaces = (
@@ -138,8 +166,15 @@ export const prepareUpdateDialog = (
           dispatch(changeAlgorithmName(theAlgorithm.name));
           dispatch(changeAlgorithmDescription(theAlgorithm.description ?? ''));
           dispatch(
-            changeIntegrationInstallationEffort(
-              theAlgorithm.softKPIs?.integrationEffort?.installationEffort ?? {}
+            changeIntegrationInstallationEffortExpertise(
+              theAlgorithm.softKPIs?.integrationEffort?.installationEffort
+                ?.expertise
+            )
+          );
+          dispatch(
+            changeIntegrationInstallationEffortHRAmount(
+              theAlgorithm.softKPIs?.integrationEffort?.installationEffort
+                ?.hrAmount
             )
           );
           dispatch(
@@ -159,17 +194,29 @@ export const prepareUpdateDialog = (
           );
           dispatch(
             changeIntegrationGeneralCosts(
-              theAlgorithm.softKPIs?.integrationEffort?.generalCosts ?? 0
+              theAlgorithm.softKPIs?.integrationEffort?.generalCosts
             )
           );
           dispatch(
-            changeConfigurationMatchingSolutionEffort(
-              theAlgorithm.softKPIs?.configurationEffort?.matchingSolution ?? {}
+            changeConfigurationMatchingSolutionEffortExpertise(
+              theAlgorithm.softKPIs?.configurationEffort?.matchingSolution
+                ?.expertise
             )
           );
           dispatch(
-            changeConfigurationDomainEffort(
-              theAlgorithm.softKPIs?.configurationEffort?.domain ?? {}
+            changeConfigurationMatchingSolutionEffortHRAmount(
+              theAlgorithm.softKPIs?.configurationEffort?.matchingSolution
+                ?.hrAmount
+            )
+          );
+          dispatch(
+            changeConfigurationDomainEffortExpertise(
+              theAlgorithm.softKPIs?.configurationEffort?.domain?.expertise
+            )
+          );
+          dispatch(
+            changeConfigurationDomainEffortHRAmount(
+              theAlgorithm.softKPIs?.configurationEffort?.domain?.hrAmount
             )
           );
           dispatch(
@@ -197,20 +244,35 @@ export const onDialogOpen = (
   }
 };
 
+const removeNaN = (value?: number): number | undefined => {
+  return value === 0 ? 0 : value || undefined;
+};
+
 const getAlgorithmValues = (state: AlgorithmDialogModel): AlgorithmValues => ({
   name: state.algorithmName,
   description: state.algorithmDescription,
   softKPIs: {
     configurationEffort: {
-      domain: state.configurationDomainEffort,
+      domain: {
+        expertise: removeNaN(state.configurationDomainEffortExpertise),
+        hrAmount: removeNaN(state.configurationDomainEffortHRAmount),
+      },
       interfaces: state.configurationInterfaces,
-      matchingSolution: state.configurationMatchingSolutionEffort,
+      matchingSolution: {
+        hrAmount: removeNaN(state.configurationMatchingSolutionEffortHRAmount),
+        expertise: removeNaN(
+          state.configurationMatchingSolutionEffortExpertise
+        ),
+      },
       supportedOSs: state.configurationSupportedOSs,
     },
     integrationEffort: {
       deploymentType: state.integrationDeploymentType,
-      generalCosts: state.integrationGeneralCosts,
-      installationEffort: state.integrationInstallationEffort,
+      generalCosts: removeNaN(state.integrationGeneralCosts),
+      installationEffort: {
+        hrAmount: removeNaN(state.integrationInstallationEffortHRAmount),
+        expertise: removeNaN(state.integrationInstallationEffortExpertise),
+      },
       solutionType: state.integrationSolutionType,
       useCase: state.integrationUseCase,
     },

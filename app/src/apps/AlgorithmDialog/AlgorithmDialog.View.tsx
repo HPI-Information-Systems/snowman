@@ -6,11 +6,11 @@ import {
   IonItemDivider,
   IonLabel,
   IonList,
+  IonRange,
   IonTextarea,
 } from '@ionic/react';
 import styles from 'apps/AlgorithmDialog/AlgorithmDialog.module.css';
 import { AlgorithmDialogProps } from 'apps/AlgorithmDialog/AlgorithmDialogProps';
-import EffortInput from 'components/simple/EffortInput/EffortInput';
 import TextMultiSelect from 'components/simple/TextMultiSelect/TextMultiSelect';
 import {
   addCircleOutline,
@@ -28,22 +28,16 @@ const AlgorithmDialogView = ({
   clickOnSubmit,
   changeAlgorithmDescription,
   changeAlgorithmName,
-  integrationInstallationEffort,
   integrationDeploymentType,
   integrationSolutionType,
   integrationUseCase,
   integrationGeneralCosts,
-  configurationMatchingSolutionEffort,
-  configurationDomainEffort,
   configurationInterfaces,
   configurationSupportedOSs,
-  changeIntegrationInstallationEffort,
   changeIntegrationDeploymentType,
   changeIntegrationSolutionType,
   changeIntegrationUseCase,
   changeIntegrationGeneralCosts,
-  changeConfigurationMatchingSolutionEffort,
-  changeConfigurationDomainEffort,
   changeConfigurationInterfaces,
   changeConfigurationSupportedOSs,
   availableConfigurationInterfaces,
@@ -51,6 +45,18 @@ const AlgorithmDialogView = ({
   availableConfigurationSupportedOSs,
   availableIntegrationDeploymentTypes,
   availableIntegrationSolutionTypes,
+  changeConfigurationDomainEffortExpertise,
+  changeConfigurationDomainEffortHRAmount,
+  changeConfigurationMatchingSolutionEffortExpertise,
+  changeConfigurationMatchingSolutionEffortHRAmount,
+  changeIntegrationInstallationEffortExpertise,
+  changeIntegrationInstallationEffortHRAmount,
+  configurationDomainEffortExpertise,
+  configurationDomainEffortHRAmount,
+  configurationMatchingSolutionEffortExpertise,
+  configurationMatchingSolutionEffortHRAmount,
+  integrationInstallationEffortExpertise,
+  integrationInstallationEffortHRAmount,
 }: AlgorithmDialogProps): JSX.Element => (
   <>
     <IonList>
@@ -72,69 +78,105 @@ const AlgorithmDialogView = ({
           placeholder="e.g. Matching solution developed by a team at our company."
         />
       </IonItem>
+
       <IonItemDivider>
         <IonLabel>INTEGRATION EFFORT</IonLabel>
       </IonItemDivider>
       <IonItem>
-        <IonLabel position="fixed">Installation Effort:</IonLabel>
-        <EffortInput
-          effortParts={integrationInstallationEffort}
-          onChange={changeIntegrationInstallationEffort}
+        <IonLabel position="fixed">
+          Installation <br /> Knowledge
+          <br /> Level:
+        </IonLabel>
+        <IonRange
+          min={0}
+          max={100}
+          value={integrationInstallationEffortExpertise}
+          color="primary"
+          onIonChange={changeIntegrationInstallationEffortExpertise}
         />
       </IonItem>
       <IonItem>
-        <IonLabel position="fixed">Deployment Type:</IonLabel>
-        <TextMultiSelect
-          content={integrationDeploymentType}
-          onChange={changeIntegrationDeploymentType}
-          suggestions={availableIntegrationDeploymentTypes}
-        />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">Matching Solution Type:</IonLabel>
-        <TextMultiSelect
-          content={integrationSolutionType}
-          onChange={changeIntegrationSolutionType}
-          suggestions={availableIntegrationSolutionTypes}
-        />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">Use Case:</IonLabel>
-        <TextMultiSelect
-          content={integrationUseCase}
-          onChange={changeIntegrationUseCase}
-          suggestions={availableIntegrationUseCases}
-        />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">General Costs:</IonLabel>
+        <IonLabel position="fixed">
+          Installation
+          <br /> HR Amount:
+        </IonLabel>
         <IonInput
-          value={integrationGeneralCosts}
-          onIonChange={changeIntegrationGeneralCosts}
-          placeholder="0"
           type="number"
-          step="1"
+          min="0"
+          placeholder="0"
+          value={integrationInstallationEffortHRAmount}
+          onIonChange={changeIntegrationInstallationEffortHRAmount}
         />
       </IonItem>
       <IonItemDivider>
         <IonLabel>CONFIGURATION EFFORT</IonLabel>
       </IonItemDivider>
+
       <IonItem>
-        <IonLabel position="fixed">Matching Solution Effort:</IonLabel>
-        <EffortInput
-          effortParts={configurationMatchingSolutionEffort}
-          onChange={changeConfigurationMatchingSolutionEffort}
+        <IonLabel position="fixed">
+          Matching
+          <br /> Solution
+          <br /> Knowledge
+          <br /> Level:
+        </IonLabel>
+        <IonRange
+          min={0}
+          max={100}
+          value={configurationMatchingSolutionEffortExpertise}
+          color="primary"
+          onIonChange={changeConfigurationMatchingSolutionEffortExpertise}
         />
       </IonItem>
       <IonItem>
-        <IonLabel position="fixed">Domain Effort:</IonLabel>
-        <EffortInput
-          effortParts={configurationDomainEffort}
-          onChange={changeConfigurationDomainEffort}
+        <IonLabel position="fixed">
+          Matching
+          <br /> Solution <br />
+          HR Amount:
+        </IonLabel>
+        <IonInput
+          type="number"
+          placeholder="0"
+          value={configurationMatchingSolutionEffortHRAmount}
+          onIonChange={changeConfigurationMatchingSolutionEffortHRAmount}
+        />
+      </IonItem>
+
+      <IonItem>
+        <IonLabel position="fixed">
+          Domain
+          <br /> Knowledge
+          <br /> Level:
+        </IonLabel>
+        <IonRange
+          min={0}
+          max={100}
+          value={configurationDomainEffortExpertise}
+          color="primary"
+          onIonChange={changeConfigurationDomainEffortExpertise}
         />
       </IonItem>
       <IonItem>
-        <IonLabel position="fixed">Interfaces:</IonLabel>
+        <IonLabel position="fixed">
+          Domain <br />
+          HR Amount:
+        </IonLabel>
+        <IonInput
+          type="number"
+          min="0"
+          placeholder="0"
+          value={configurationDomainEffortHRAmount}
+          onIonChange={changeConfigurationDomainEffortHRAmount}
+        />
+      </IonItem>
+
+      <IonItemDivider>
+        <IonLabel>ENVIRONMENT</IonLabel>
+      </IonItemDivider>
+      <IonItem>
+        <IonLabel position="fixed">
+          Provided <br />
+          Interfaces:
+        </IonLabel>
         <TextMultiSelect
           content={configurationInterfaces}
           onChange={changeConfigurationInterfaces}
@@ -142,11 +184,63 @@ const AlgorithmDialogView = ({
         />
       </IonItem>
       <IonItem>
-        <IonLabel position="fixed">Supported OSs:</IonLabel>
+        <IonLabel position="fixed">
+          Supported
+          <br /> OSs:
+        </IonLabel>
         <TextMultiSelect
           content={configurationSupportedOSs}
           onChange={changeConfigurationSupportedOSs}
           suggestions={availableConfigurationSupportedOSs}
+        />
+      </IonItem>
+      <IonItem>
+        <IonLabel position="fixed">
+          Deployment <br />
+          Type:
+        </IonLabel>
+        <TextMultiSelect
+          content={integrationDeploymentType}
+          onChange={changeIntegrationDeploymentType}
+          suggestions={availableIntegrationDeploymentTypes}
+        />
+      </IonItem>
+
+      <IonItemDivider>
+        <IonLabel>OTHER KPIs</IonLabel>
+      </IonItemDivider>
+
+      <IonItem>
+        <IonLabel position="fixed">
+          Matching
+          <br /> Solution
+          <br /> Type:
+        </IonLabel>
+        <TextMultiSelect
+          content={integrationSolutionType}
+          onChange={changeIntegrationSolutionType}
+          suggestions={availableIntegrationSolutionTypes}
+        />
+      </IonItem>
+      <IonItem>
+        <IonLabel position="fixed">Use Cases:</IonLabel>
+        <TextMultiSelect
+          content={integrationUseCase}
+          onChange={changeIntegrationUseCase}
+          suggestions={availableIntegrationUseCases}
+        />
+      </IonItem>
+      <IonItem>
+        <IonLabel position="fixed">
+          General <br />
+          Costs:
+        </IonLabel>
+        <IonInput
+          value={integrationGeneralCosts}
+          onIonChange={changeIntegrationGeneralCosts}
+          placeholder="0"
+          type="number"
+          step="1"
         />
       </IonItem>
     </IonList>

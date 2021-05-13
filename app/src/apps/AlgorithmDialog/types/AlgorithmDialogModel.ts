@@ -1,18 +1,19 @@
-import { EffortParts } from 'api';
-
 export interface AlgorithmDialogModel {
   algorithmName: string;
   algorithmDescription: string;
-  integrationInstallationEffort: EffortParts;
+  integrationInstallationEffortExpertise: number | undefined;
+  integrationInstallationEffortHRAmount: number | undefined;
   integrationDeploymentType: string[];
   availableIntegrationDeploymentTypes: string[];
   integrationSolutionType: string[];
   availableIntegrationSolutionTypes: string[];
   integrationUseCase: string[];
   availableIntegrationUseCases: string[];
-  integrationGeneralCosts: number;
-  configurationMatchingSolutionEffort: EffortParts;
-  configurationDomainEffort: EffortParts;
+  integrationGeneralCosts: number | undefined;
+  configurationMatchingSolutionEffortExpertise: number | undefined;
+  configurationMatchingSolutionEffortHRAmount: number | undefined;
+  configurationDomainEffortExpertise: number | undefined;
+  configurationDomainEffortHRAmount: number | undefined;
   configurationInterfaces: string[];
   availableConfigurationInterfaces: string[];
   configurationSupportedOSs: string[];

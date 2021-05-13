@@ -1,4 +1,3 @@
-import { EffortParts } from 'api';
 import { AlgorithmDialogActionTypes } from 'apps/AlgorithmDialog/types/AlgorithmDialogActionTypes';
 import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
 import { CentralResourcesGenericActionsTypes } from 'apps/SnowmanApp/types/CentralResourcesGenericActionsTypes';
@@ -9,13 +8,10 @@ import { SnowmanAction } from 'types/SnowmanAction';
 const initialState: AlgorithmDialogModel = {
   algorithmName: '',
   algorithmDescription: '',
-  configurationDomainEffort: {},
   configurationInterfaces: [],
-  configurationMatchingSolutionEffort: {},
   configurationSupportedOSs: [],
   integrationDeploymentType: [],
-  integrationGeneralCosts: 0,
-  integrationInstallationEffort: {},
+  integrationGeneralCosts: undefined,
   integrationSolutionType: [],
   integrationUseCase: [],
   availableConfigurationInterfaces: ['CLI', 'GUI', 'REST API'],
@@ -27,6 +23,12 @@ const initialState: AlgorithmDialogModel = {
     'Active Learning',
   ],
   availableIntegrationUseCases: ['Merging', 'Search', 'Deduplication'],
+  configurationDomainEffortExpertise: undefined,
+  configurationDomainEffortHRAmount: undefined,
+  configurationMatchingSolutionEffortExpertise: undefined,
+  configurationMatchingSolutionEffortHRAmount: undefined,
+  integrationInstallationEffortExpertise: undefined,
+  integrationInstallationEffortHRAmount: undefined,
 };
 
 const AlgorithmDialogReducer = (
@@ -84,10 +86,15 @@ const AlgorithmDialogReducer = (
         ...state,
         algorithmDescription: action.payload as string,
       };
-    case AlgorithmDialogActionTypes.CHANGE_INTEGRATION_INSTALLATION_EFFORT:
+    case AlgorithmDialogActionTypes.CHANGE_INTEGRATION_INSTALLATION_EFFORT_HR_AMOUNT:
       return {
         ...state,
-        integrationInstallationEffort: action.payload as EffortParts,
+        integrationInstallationEffortHRAmount: action.payload as number,
+      };
+    case AlgorithmDialogActionTypes.CHANGE_INTEGRATION_INSTALLATION_EFFORT_EXPERTISE:
+      return {
+        ...state,
+        integrationInstallationEffortExpertise: action.payload as number,
       };
     case AlgorithmDialogActionTypes.CHANGE_INTEGRATION_DEPLOYMENT_TYPE:
       return {
@@ -109,15 +116,25 @@ const AlgorithmDialogReducer = (
         ...state,
         integrationGeneralCosts: action.payload as number,
       };
-    case AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_MATCHING_SOLUTION_EFFORT:
+    case AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_MATCHING_SOLUTION_EFFORT_HR_AMOUNT:
       return {
         ...state,
-        configurationMatchingSolutionEffort: action.payload as EffortParts,
+        configurationMatchingSolutionEffortHRAmount: action.payload as number,
       };
-    case AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_DOMAIN_EFFORT:
+    case AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_MATCHING_SOLUTION_EFFORT_EXPERTISE:
       return {
         ...state,
-        configurationDomainEffort: action.payload as EffortParts,
+        configurationMatchingSolutionEffortExpertise: action.payload as number,
+      };
+    case AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_DOMAIN_EFFORT_HR_AMOUNT:
+      return {
+        ...state,
+        configurationDomainEffortHRAmount: action.payload as number,
+      };
+    case AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_DOMAIN_EFFORT_EXPERTISE:
+      return {
+        ...state,
+        configurationDomainEffortExpertise: action.payload as number,
       };
     case AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_INTERFACES:
       return {
