@@ -20,7 +20,10 @@ import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { max, nth } from 'lodash';
 import { NonSimilarityThresholdColumns } from 'snowman-library';
 import { MagicNotPossibleId } from 'structs/constants';
-import { SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION } from 'structs/statusMessages';
+import {
+  SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION,
+  SUCCESS_TO_UPDATE_SIMILARITY_THRESHOLD_FUNCTION,
+} from 'structs/statusMessages';
 import { EntityId } from 'types/EntityId';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
@@ -52,7 +55,8 @@ const createSimilarityThresholdFunction = (): SnowmanThunkAction<
           definition: getState().functionBuildingStack.getFunctionDefinition(),
         },
       }),
-    SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION
+    SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION,
+    true
   )
     .then((): void => doCloseDialog())
     .catch(() => {
@@ -76,7 +80,8 @@ const updateSimilarityThresholdFunction = (
           experimentId: getExperimentId(),
         },
       }),
-    SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION
+    SUCCESS_TO_UPDATE_SIMILARITY_THRESHOLD_FUNCTION,
+    true
   ).then((): void => doCloseDialog());
 };
 
