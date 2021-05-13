@@ -24,3 +24,6 @@ export const isMatchingSolutionSelected = (
     (oneMatchingSolution: Algorithm): boolean =>
       oneMatchingSolution.id === aMatchingSolution.id
   ) !== undefined;
+
+export const isPredefinedAlgorithm = (anAlgorithm: Algorithm): boolean =>
+  anAlgorithm.id < 0;

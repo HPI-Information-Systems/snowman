@@ -1,6 +1,6 @@
+import { MakeOptional } from 'snowman-library';
 import { dirSync } from 'tmp';
 
-import { MakeOptional } from '../../../tools/types';
 import { setupDatabase, SetupOptions } from '../../setup';
 import { loadOrCreateMainDatabase } from '../../setup/backend';
 import { latest } from '.';

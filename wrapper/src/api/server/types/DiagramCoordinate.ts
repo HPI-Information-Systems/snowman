@@ -16,4 +16,16 @@ export interface DiagramCoordinate {
    * @memberof DiagramCoordinate
    */
   y: number;
+  /**
+   *
+   * @type {number}
+   * @memberof DiagramCoordinate
+   */
+  experimentId?: number;
+  /**
+   *
+   * @type {number}
+   * @memberof DiagramCoordinate
+   */
+  threshold?: number;
 }

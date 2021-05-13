@@ -1,0 +1,10 @@
+.center {
+  text-align: center;
+}
+
+.modalCloseIcon {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+}

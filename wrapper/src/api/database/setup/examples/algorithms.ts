@@ -1,8 +1,8 @@
 import { GoldStandardId, SilverStandardId } from 'snowman-library';
+import { assertType } from 'snowman-library';
 
 import { providers } from '../../../providers';
 import { AlgorithmId, AlgorithmValues } from '../../../server/types';
-import { assertType } from '../../../tools/types';
 
 export type ExampleAlgorithms = {
   [key: string]: {

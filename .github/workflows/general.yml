@@ -79,14 +79,14 @@ jobs:
         run: npm ci
         working-directory: ./wrapper
       - name: Test app
-        run: npm run test
+        run: npm run test -- --passWithNoTests
         working-directory: ./app
       - name: Test wrapper
         run: npm run test-ci
         working-directory: ./wrapper
-      - name: Test integration
-        run: npm run test-ci
-        working-directory: ./
+      #- name: Test integration
+      #  run: npm run test-ci
+      #  working-directory: ./
 
   build:
     runs-on: ubuntu-latest

@@ -12,6 +12,40 @@
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #0093c5;
   --ion-color-primary-tint: #8bf6ff;
+
+  /** primarydark **/
+  --ion-color-primarydark: #28627c;
+  --ion-color-primarydark-rgb: 40, 98, 124;
+  --ion-color-primarydark-contrast: #fff;
+  --ion-color-primarydark-contrast-rgb: 255, 255, 255;
+  --ion-color-primarydark-shade: #23566d;
+  --ion-color-primarydark-tint: #3e7289;
+
+  /** primarylight **/
+  --ion-color-primarylight: #8bf6ff;
+  --ion-color-primarylight-rgb: 139, 246, 255;
+  --ion-color-primarylight-contrast: #000;
+  --ion-color-primarylight-contrast-rgb: 0, 0, 0;
+  --ion-color-primarylight-shade: #7ad8e0;
+  --ion-color-primarylight-tint: #97f7ff;
+}
+
+.ion-color-primarydark {
+  --ion-color-base: var(--ion-color-primarydark);
+  --ion-color-base-rgb: var(--ion-color-primarydark-rgb);
+  --ion-color-contrast: var(--ion-color-primarydark-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-primarydark-contrast-rgb);
+  --ion-color-shade: var(--ion-color-primarydark-shade);
+  --ion-color-tint: var(--ion-color-primarydark-tint);
+}
+
+.ion-color-primarylight {
+  --ion-color-base: var(--ion-color-primarylight);
+  --ion-color-base-rgb: var(--ion-color-primarylight-rgb);
+  --ion-color-contrast: var(--ion-color-primarylight-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-primarylight-contrast-rgb);
+  --ion-color-shade: var(--ion-color-primarylight-shade);
+  --ion-color-tint: var(--ion-color-primarylight-tint);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,6 +61,24 @@
     --ion-color-primary-contrast-rgb: 255, 255, 255;
     --ion-color-primary-shade: #0093c5;
     --ion-color-primary-tint: #8bf6ff;
+    --ion-color-primary-dark: #0093c5;
+    --ion-color-primary-light: #8bf6ff;
+
+    /** primarydark **/
+    --ion-color-primarydark: #28627c;
+    --ion-color-primarydark-rgb: 40, 98, 124;
+    --ion-color-primarydark-contrast: #fff;
+    --ion-color-primarydark-contrast-rgb: 255, 255, 255;
+    --ion-color-primarydark-shade: #23566d;
+    --ion-color-primarydark-tint: #3e7289;
+
+    /** primarylight **/
+    --ion-color-primarylight: #8bf6ff;
+    --ion-color-primarylight-rgb: 139, 246, 255;
+    --ion-color-primarylight-contrast: #000;
+    --ion-color-primarylight-contrast-rgb: 0, 0, 0;
+    --ion-color-primarylight-shade: #7ad8e0;
+    --ion-color-primarylight-tint: #97f7ff;
   }
 }
 
@@ -34,7 +86,7 @@
 .split-pane-fixed {
   /** This should rather be --side-max-width,
   but seems to be a bug in Ionic 5 for React **/
-  --side-width: 350px;
+  --side-width: 420px;
 }
 
 /** Classes for the displayed toast **/

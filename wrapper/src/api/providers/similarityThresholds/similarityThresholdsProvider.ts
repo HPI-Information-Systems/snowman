@@ -8,7 +8,6 @@ import {
   GetSimilarityThresholdFunctionRequest,
   SetSimilarityThresholdFunctionRequest,
   SimilarityThresholdFunction,
-  SimilarityThresholdFunctionDefinition,
   SimilarityThresholdFunctionId,
 } from '../../server/types';
 import { providers } from '..';
@@ -61,7 +60,12 @@ export class SimilarityThresholdsProvider {
         )
         .all();
       const unionFind = new UnionFind(numberOfRecords);
-      for (const { id1, id2, similarity } of similarities) {
+      for (const { id1, id2, similarity } of similarities.filter(
+        ({ similarity }) =>
+          similarity !== undefined &&
+          similarity !== null &&
+          !Number.isNaN(similarity)
+      )) {
         if (!unionFind.nodesAreLinked(id1, id2)) {
           unionFind.link([[id1, id2]]);
           similarityTable.upsert([
@@ -118,6 +122,9 @@ export class SimilarityThresholdsProvider {
         tables.experiment.experiment(similarityThresholdFunction.experimentId)
           .schema.columns
       );
+      const oldExpression = tables.meta.similarityfunction.get({
+        id: functionId,
+      })?.expression;
       tables.meta.similarityfunction.upsert([
         {
           experiment: similarityThresholdFunction.experimentId,
@@ -126,11 +133,13 @@ export class SimilarityThresholdsProvider {
           id: functionId,
         },
       ]);
-      this.writeSimilarities(
-        similarityThresholdFunction.experimentId,
-        functionId,
-        expression
-      );
+      if (expression !== oldExpression) {
+        this.writeSimilarities(
+          similarityThresholdFunction.experimentId,
+          functionId,
+          expression
+        );
+      }
       BenchmarkCache.invalidateSimilarityFunction(functionId);
     })();
   }

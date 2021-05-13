@@ -1,9 +1,9 @@
 import chmodr from 'chmodr';
 import { existsSync } from 'fs';
 import { copySync, removeSync } from 'fs-extra';
+import { MakeOptional } from 'snowman-library';
 
 import { PREBUILT_DATABASE_APP_PATH } from '../../config';
-import { MakeOptional } from '../../tools/types';
 import { schemas, tableSchemas } from '../schemas';
 import { latest } from '../schemas/migrations';
 import { SchemaVersion } from '../schemas/migrations/schemaVersion';

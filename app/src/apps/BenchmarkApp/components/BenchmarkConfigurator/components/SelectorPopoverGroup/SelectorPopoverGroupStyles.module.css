@@ -1,0 +1,10 @@
+.largePopover {
+  --width: 25rem;
+  --max-width: 80vw;
+}
+
+.popoverContentPadding {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  --inner-padding-top: 0.7rem;
+}
