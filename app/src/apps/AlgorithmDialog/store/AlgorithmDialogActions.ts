@@ -1,4 +1,4 @@
-import { Algorithm, AlgorithmApi, AlgorithmValues } from 'api';
+import { Algorithm, AlgorithmApi, AlgorithmValues, EffortParts } from 'api';
 import { AlgorithmDialogActionTypes } from 'apps/AlgorithmDialog/types/AlgorithmDialogActionTypes';
 import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
@@ -33,6 +33,79 @@ export const changeAlgorithmDescription = (
     payload: aDescription,
   });
 
+export const changeIntegrationInstallationEffort = (
+  integrationInstallationEffort: EffortParts
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type: AlgorithmDialogActionTypes.CHANGE_INTEGRATION_INSTALLATION_EFFORT,
+    payload: integrationInstallationEffort,
+  });
+
+export const changeIntegrationDeploymentType = (
+  integrationDeploymentType: string[]
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type: AlgorithmDialogActionTypes.CHANGE_INTEGRATION_DEPLOYMENT_TYPE,
+    payload: integrationDeploymentType,
+  });
+
+export const changeIntegrationSolutionType = (
+  integrationSolutionType: string[]
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type: AlgorithmDialogActionTypes.CHANGE_INTEGRATION_SOLUTION_TYPE,
+    payload: integrationSolutionType,
+  });
+
+export const changeIntegrationUseCase = (
+  integrationUseCase: string[]
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type: AlgorithmDialogActionTypes.CHANGE_INTEGRATION_USE_CASE,
+    payload: integrationUseCase,
+  });
+
+export const changeIntegrationGeneralCosts = (
+  integrationGeneralCosts: number
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type: AlgorithmDialogActionTypes.CHANGE_INTEGRATION_GENERAL_COSTS,
+    payload: integrationGeneralCosts,
+  });
+
+export const changeConfigurationMatchingSolutionEffort = (
+  configurationMatchingSolutionEffort: EffortParts
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type:
+      AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_MATCHING_SOLUTION_EFFORT,
+    payload: configurationMatchingSolutionEffort,
+  });
+
+export const changeConfigurationDomainEffort = (
+  configurationDomainEffort: EffortParts
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type: AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_DOMAIN_EFFORT,
+    payload: configurationDomainEffort,
+  });
+
+export const changeConfigurationInterfaces = (
+  configurationInterfaces: string[]
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type: AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_INTERFACES,
+    payload: configurationInterfaces,
+  });
+
+export const changeConfigurationSupportedOSs = (
+  configurationSupportedOSs: string[]
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type: AlgorithmDialogActionTypes.CHANGE_CONFIGURATION_SUPPORTED_OSS,
+    payload: configurationSupportedOSs,
+  });
+
 const resetDialog = (): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
   easyPrimitiveAction<AlgorithmDialogModel>({
     type: AlgorithmDialogActionTypes.RESET_DIALOG,
@@ -64,6 +137,51 @@ export const prepareUpdateDialog = (
         .then((theAlgorithm: Algorithm): void => {
           dispatch(changeAlgorithmName(theAlgorithm.name));
           dispatch(changeAlgorithmDescription(theAlgorithm.description ?? ''));
+          dispatch(
+            changeIntegrationInstallationEffort(
+              theAlgorithm.softKPIs?.integrationEffort?.installationEffort ?? {}
+            )
+          );
+          dispatch(
+            changeIntegrationDeploymentType(
+              theAlgorithm.softKPIs?.integrationEffort?.deploymentType ?? []
+            )
+          );
+          dispatch(
+            changeIntegrationSolutionType(
+              theAlgorithm.softKPIs?.integrationEffort?.solutionType ?? []
+            )
+          );
+          dispatch(
+            changeIntegrationUseCase(
+              theAlgorithm.softKPIs?.integrationEffort?.useCase ?? []
+            )
+          );
+          dispatch(
+            changeIntegrationGeneralCosts(
+              theAlgorithm.softKPIs?.integrationEffort?.generalCosts ?? 0
+            )
+          );
+          dispatch(
+            changeConfigurationMatchingSolutionEffort(
+              theAlgorithm.softKPIs?.configurationEffort?.matchingSolution ?? {}
+            )
+          );
+          dispatch(
+            changeConfigurationDomainEffort(
+              theAlgorithm.softKPIs?.configurationEffort?.domain ?? {}
+            )
+          );
+          dispatch(
+            changeConfigurationInterfaces(
+              theAlgorithm.softKPIs?.configurationEffort?.interfaces ?? []
+            )
+          );
+          dispatch(
+            changeConfigurationSupportedOSs(
+              theAlgorithm.softKPIs?.configurationEffort?.supportedOSs ?? []
+            )
+          );
         }),
     undefined,
     true
@@ -82,6 +200,21 @@ export const onDialogOpen = (
 const getAlgorithmValues = (state: AlgorithmDialogModel): AlgorithmValues => ({
   name: state.algorithmName,
   description: state.algorithmDescription,
+  softKPIs: {
+    configurationEffort: {
+      domain: state.configurationDomainEffort,
+      interfaces: state.configurationInterfaces,
+      matchingSolution: state.configurationMatchingSolutionEffort,
+      supportedOSs: state.configurationSupportedOSs,
+    },
+    integrationEffort: {
+      deploymentType: state.integrationDeploymentType,
+      generalCosts: state.integrationGeneralCosts,
+      installationEffort: state.integrationInstallationEffort,
+      solutionType: state.integrationSolutionType,
+      useCase: state.integrationUseCase,
+    },
+  },
 });
 
 const addAlgorithm = (): SnowmanThunkAction<
