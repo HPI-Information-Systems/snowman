@@ -6,7 +6,6 @@ import {
   CalculateExperimentIntersectionCountsRequest,
   CalculateExperimentIntersectionRecordsRequest,
   DiagramCoordinate,
-  DiagramExperimentItem,
   ExperimentIntersectionCount,
   FileResponse,
   GetBinaryMetricsRequest,

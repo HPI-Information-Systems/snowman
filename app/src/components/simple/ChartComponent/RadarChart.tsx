@@ -4,6 +4,11 @@ import React from 'react';
 
 export type RadarChartConfiguration = Omit<ChartConfiguration<'radar'>, 'type'>;
 export type RadarChartData = ChartData<'radar'>;
-export const RadarChart = (props: RadarChartConfiguration): JSX.Element => (
-  <GenericChart {...props} type={'radar'} />
-);
+export const RadarChart = (props: RadarChartConfiguration): JSX.Element => {
+  const genericProps: ChartConfiguration = {
+    ...props,
+    type: 'radar',
+  } as ChartConfiguration;
+
+  return <GenericChart {...genericProps} />;
+};

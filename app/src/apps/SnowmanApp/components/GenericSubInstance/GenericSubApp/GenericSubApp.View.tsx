@@ -50,7 +50,7 @@ class GenericSubAppView extends Component<GenericSubAppProps> {
               <IonSplitPane
                 when="lg"
                 contentId="mainViewContentId"
-                class="split-pane-fixed"
+                className="split-pane-fixed"
               >
                 {createElement(this.props.sideMenu, {
                   contentId: 'mainViewContentId',

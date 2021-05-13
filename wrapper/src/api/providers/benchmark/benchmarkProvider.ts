@@ -9,7 +9,6 @@ import {
   MetricsEnum,
 } from '../../server/types';
 import { Metric } from '../../server/types';
-import { numberOfPairs } from '../../tools/numberOfPairs';
 import { ConfusionMatrixCache } from './cache/flavors/confusionMatrixCache';
 import { IntersectionCache } from './cache/flavors/intersectionCache';
 import { datasetFromExperimentIds } from './datasetFromExperiments';
@@ -38,7 +37,7 @@ export class BenchmarkProvider {
     diagram,
   }: CalculateDiagramDataRequest): Array<DiagramCoordinate> {
     if (diagram === undefined) {
-      throw new Error('No experiments have been sent!');
+      throw new Error('No experiments to plot have been set!');
     }
     if (
       isInEnum(MetricsEnum, xAxis) &&
@@ -58,7 +57,8 @@ export class BenchmarkProvider {
         throw new Error(`At least one metric to be plotted does not exist!`);
       return plot({ X, Y, datasetId, experimentId, groundTruth, steps, func });
     }
-    if (!diagram.multipleExperiments) throw new Error('S');
+    if (!diagram.multipleExperiments)
+      throw new Error('No experiments to plot have been set!');
 
     const xGetter: DiagramDataProvider = getDiagramDataProvider(xAxis);
     const yGetter: DiagramDataProvider = getDiagramDataProvider(yAxis);

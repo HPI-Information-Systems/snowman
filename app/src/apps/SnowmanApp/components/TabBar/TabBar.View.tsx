@@ -36,10 +36,10 @@ const TabBarView = ({
   return showTabBar ? (
     <div className={styles.toolbar}>
       <div className={styles.toolbarContainer}>
-        <IonButtons slot="start" class={styles.buttonContainer}>
+        <IonButtons slot="start" className={styles.buttonContainer}>
           {TabBarConfigLeft.map(renderButtonFor)}
         </IonButtons>
-        <IonButtons slot="end" class={styles.buttonContainer}>
+        <IonButtons slot="end" className={styles.buttonContainer}>
           {TabBarConfigRight.map(renderButtonFor)}
         </IonButtons>
       </div>

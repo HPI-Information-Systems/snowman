@@ -1,13 +1,15 @@
-import { Experiment, Metric } from 'api';
+import { Metric } from 'api';
+import { NMetricsConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/NMetricsConfigurator';
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
-import { BenchmarkAppConfigStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { GoldStandardId } from 'snowman-library';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { resolveExperimentEntity } from 'apps/BenchmarkApp/utils/experimentEntity';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: NMetricsStrategyModel = {
   experiments: [],
-  goldStandard: undefined,
+  groundTruth: undefined,
   metrics: [],
   isValidConfig: false,
 };
@@ -18,45 +20,27 @@ const NMetricsStrategyReducer = (
 ): NMetricsStrategyModel => {
   switch (action.type) {
     case NMetricsStrategyActionTypes.UPDATE_CONFIG: {
-      const config = action.payload as BenchmarkAppConfigStore;
-      const selectedExperiments = config.experiments.filter(
-        (anExperiment: Experiment): boolean =>
-          config.selectedExperimentIds.includes(anExperiment.id)
+      const appStore = action.payload as BenchmarkAppModel;
+      const configuration = NMetricsConfiguration.getValue(appStore);
+      const groundTruth = resolveExperimentEntity(
+        configuration.groundTruth,
+        appStore
       );
-      const goldStandards = selectedExperiments.filter(
-        (anExperiment: Experiment): boolean =>
-          anExperiment.algorithmId === GoldStandardId
-      );
-      if (goldStandards.length !== 1) {
-        return {
-          ...state,
-          isValidConfig: false,
-        };
-      }
-      const goldStandard = goldStandards[0];
-      const currentExperiments =
-        goldStandard !== undefined
-          ? selectedExperiments.filter(
-              (anExperiment: Experiment): boolean =>
-                anExperiment.algorithmId !== GoldStandardId &&
-                goldStandard.datasetId === anExperiment.datasetId
-            )
-          : [];
-      if (
-        selectedExperiments.length - 1 !== currentExperiments.length ||
-        currentExperiments.length === 0
-      ) {
-        return {
-          ...state,
-          isValidConfig: false,
-        };
+      const experiments = configuration.experiments
+        .map((config) => resolveExperimentEntity(config, appStore))
+        .filter(
+          (entity: ExperimentEntity | undefined): entity is ExperimentEntity =>
+            entity !== undefined
+        );
+      if (groundTruth === undefined || experiments.length === 0) {
+        return initialState;
       }
       return {
         ...state,
-        experiments: currentExperiments,
-        goldStandard: goldStandard,
-        isValidConfig:
-          currentExperiments.length > 0 && goldStandard !== undefined,
+        groundTruth,
+        experiments,
+        metrics: [],
+        isValidConfig: true,
       };
     }
     case NMetricsStrategyActionTypes.SET_METRICS:

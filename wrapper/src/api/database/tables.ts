@@ -1,4 +1,5 @@
-import { ValueOf } from '../tools/types';
+import { ValueOf } from 'snowman-library';
+
 import { tableSchemas } from './schemas';
 import { databaseBackendSubject } from './setup/backend';
 import { Table } from './table';

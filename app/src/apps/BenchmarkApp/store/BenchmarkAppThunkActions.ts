@@ -5,6 +5,8 @@ import {
   DatasetsApi,
   Experiment,
   ExperimentsApi,
+  SimilarityThresholdFunction,
+  SimilarityThresholdsApi,
 } from 'api';
 import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
 import {
@@ -57,6 +59,22 @@ export const getExperiments = (): BenchmarkAppThunkAction<
           dispatch({
             type: BenchmarkAppActionsTypes.SET_EXPERIMENTS,
             payload: experiments,
+          })
+      )
+      .then()
+  );
+
+export const getSimFunctions = (): BenchmarkAppThunkAction<
+  Promise<void>
+> => async (dispatch: BenchmarkAppDispatch): Promise<void> =>
+  RequestHandler<void>(() =>
+    new SimilarityThresholdsApi()
+      .getSimilarityThresholdFunctions()
+      .then(
+        (simFunctions: SimilarityThresholdFunction[]): SnowmanAction =>
+          dispatch({
+            type: BenchmarkAppActionsTypes.SET_SIM_FUNCTIONS,
+            payload: simFunctions,
           })
       )
       .then()

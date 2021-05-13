@@ -1,15 +1,16 @@
-import { Dataset, Experiment, ExperimentIntersectionCount, Metric } from 'api';
+import { Dataset, ExperimentIntersectionCount, Metric } from 'api';
+import { BinaryMetricsConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/BinaryMetricsConfigurator';
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
 import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyModel';
-import { BenchmarkAppConfigStore } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { GoldStandardId } from 'snowman-library';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { resolveExperimentEntity } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: BinaryMetricsStrategyModel = {
   isValidConfig: false,
   experiment: undefined,
-  goldStandard: undefined,
+  groundTruth: undefined,
   dataset: undefined,
   metrics: [],
   counts: [],
@@ -22,43 +23,38 @@ const BinaryMetricsStrategyReducer = (
 ): BinaryMetricsStrategyModel => {
   switch (action.type) {
     case BinaryMetricsStrategyActionTypes.UPDATE_CONFIG: {
-      const config = action.payload as BenchmarkAppConfigStore;
-      const selectedExperiments = config.experiments.filter(
-        (anExperiment: Experiment): boolean =>
-          config.selectedExperimentIds.includes(anExperiment.id)
+      const appStore = action.payload as BenchmarkAppModel;
+      const configuration = BinaryMetricsConfiguration.getValue(appStore);
+      const groundTruth = resolveExperimentEntity(
+        configuration.groundTruth,
+        appStore
       );
-      const goldStandards = selectedExperiments.filter(
-        (anExperiment: Experiment): boolean =>
-          anExperiment.algorithmId === GoldStandardId
+      const experiment = resolveExperimentEntity(
+        configuration.experiment,
+        appStore
       );
-      if (goldStandards.length !== 1 || selectedExperiments.length !== 2) {
+      const dataset = appStore.resources.datasets.find(
+        (aDataset: Dataset): boolean => aDataset.id === configuration.dataset[0]
+      );
+      if (
+        groundTruth === undefined ||
+        experiment === undefined ||
+        dataset === undefined
+      ) {
         return {
-          ...state,
-          isValidConfig: false,
+          ...initialState,
+          selectedDataView: state.selectedDataView,
         };
       }
-      const goldStandard = goldStandards[0];
-      const currentExperiments = selectedExperiments.filter(
-        (anExperiment: Experiment): boolean =>
-          anExperiment.id !== goldStandard.id &&
-          anExperiment.datasetId === goldStandard.datasetId
-      );
-      if (currentExperiments.length !== 1) {
-        return {
-          ...state,
-          isValidConfig: false,
-        };
-      }
+
       return {
         ...state,
+        groundTruth,
+        experiment,
+        dataset,
         isValidConfig: true,
         metrics: [],
         counts: [],
-        dataset: config.datasets.find(
-          (aDataset: Dataset): boolean => aDataset.id === goldStandard.datasetId
-        ),
-        goldStandard: goldStandard,
-        experiment: currentExperiments[0],
       };
     }
     case BinaryMetricsStrategyActionTypes.RESET_METRICS:

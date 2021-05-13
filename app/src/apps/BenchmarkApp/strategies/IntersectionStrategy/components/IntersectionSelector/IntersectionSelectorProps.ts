@@ -1,10 +1,10 @@
-import { Experiment } from 'api';
 import { DropResult } from 'react-beautiful-dnd';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 
 export interface IntersectionSelectorStateProps {
-  ignored: Experiment[];
-  included: Experiment[];
-  excluded: Experiment[];
+  ignored: ExperimentEntity[];
+  included: ExperimentEntity[];
+  excluded: ExperimentEntity[];
 }
 
 export interface IntersectionSelectorDispatchProps {

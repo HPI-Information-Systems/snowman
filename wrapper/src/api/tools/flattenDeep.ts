@@ -1,4 +1,4 @@
-import { NestedArray } from './types';
+import { NestedArray } from 'snowman-library';
 
 export function flattenDeep<T>(nestedArray: NestedArray<T>): T[] {
   return Array.isArray(nestedArray)

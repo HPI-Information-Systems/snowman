@@ -1,9 +1,10 @@
+import { InstantiableAbstractClass } from 'snowman-library';
+
 import {
   DatasetId,
   ExperimentId,
   SimilarityThresholdFunctionId,
 } from '../../../../server/types';
-import { InstantiableAbstractClass } from '../../../../tools/types';
 import { BaseMetric } from '../base';
 import {
   plotSimilarityConfusionMatrix,

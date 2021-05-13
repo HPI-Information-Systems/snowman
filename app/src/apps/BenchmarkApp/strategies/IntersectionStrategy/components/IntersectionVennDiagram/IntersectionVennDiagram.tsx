@@ -5,10 +5,11 @@ import {
 } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/IntersectionVennDiagramProps';
 import {
   countsMatchConfiguration,
+  intersectionSorter,
   resetIncludedExperiments,
 } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/store/IntersectionStrategyActions';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
-import { sortBy } from 'lodash';
+import { experimentEntityToExperimentConfigItem } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
@@ -17,12 +18,19 @@ const mapStateToProps = ({
   counts,
   available,
 }: IntersectionStrategyModel): IntersectionVennDiagramStateProps => {
-  const availableExperiments = sortBy([...available], ({ id }) => id);
+  const experiments = available
+    .slice()
+    .sort((e1, e2) =>
+      intersectionSorter(
+        experimentEntityToExperimentConfigItem(e1),
+        experimentEntityToExperimentConfigItem(e2)
+      )
+    );
   return {
-    experiments: availableExperiments,
+    experiments,
     included,
     counts,
-    countsLoaded: countsMatchConfiguration(counts, availableExperiments),
+    countsLoaded: countsMatchConfiguration(counts, experiments),
   };
 };
 

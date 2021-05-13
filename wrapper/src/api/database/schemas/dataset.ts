@@ -1,4 +1,5 @@
-import { assertType } from '../../tools/types';
+import { assertType } from 'snowman-library';
+
 import { escapeColumnNames } from '../tools/escapeColumnNames';
 import { Column, Columns, Schemas } from '../tools/types';
 

@@ -3,6 +3,6 @@ import { SelectableInputModel } from 'components/stateful/SelectableInput/types/
 import { StoreMagistrate } from 'utils/storeFactory';
 
 export const SelectableInputStoreMagistrate: StoreMagistrate<SelectableInputModel> = new StoreMagistrate<SelectableInputModel>(
-  'Selectable Input',
+  'SelectableInput',
   SelectableInputReducer
 );

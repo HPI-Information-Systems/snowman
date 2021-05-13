@@ -1,4 +1,5 @@
-import { Writeable } from '../../tools/types';
+import { Writeable } from 'snowman-library';
+
 import { Column } from './types';
 
 export function escapeColumnName(columnName: string, addPrefix = ''): string {
