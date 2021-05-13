@@ -91,14 +91,6 @@ export const changeDatasetCSVEscape = (
     payload: anEscape,
   });
 
-export const addNewTag = (
-  aTag: string
-): easyPrimitiveActionReturn<DatasetDialogModel> =>
-  easyPrimitiveAction<DatasetDialogModel>({
-    type: DatasetDialogActionTypes.ADD_DATASET_TAG,
-    payload: aTag,
-  });
-
 export const resetDialog = (): easyPrimitiveActionReturn<DatasetDialogModel> =>
   easyPrimitiveAction<DatasetDialogModel>({
     type: DatasetDialogActionTypes.RESET_DIALOG,
@@ -114,12 +106,12 @@ export const setSelectedFiles = (
     payload: files,
   });
 
-export const clickOnDatasetTag = (
-  aTag: string
+export const changeTags = (
+  tags: string[]
 ): easyPrimitiveActionReturn<DatasetDialogModel> =>
   easyPrimitiveAction<DatasetDialogModel>({
-    type: DatasetDialogActionTypes.CLICK_ON_DATASET_TAG,
-    payload: aTag,
+    type: DatasetDialogActionTypes.CHANGE_TAGS,
+    payload: tags,
   });
 
 export const prefillDialog = (
