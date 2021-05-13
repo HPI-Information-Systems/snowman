@@ -1,4 +1,5 @@
-import { assertType } from '../tools/types';
+import { assertType } from 'snowman-library';
+
 import { attachDatabases } from './setup';
 import { databaseBackend, loadOrCreateMainDatabase } from './setup/backend';
 import { installTables } from './setup/install';

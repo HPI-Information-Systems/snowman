@@ -1,21 +1,25 @@
-import { Algorithm, Dataset, Experiment } from 'api';
-import { ExpandedEntity } from 'apps/BenchmarkApp/types/ExpandedEntity';
+import {
+  Algorithm,
+  Dataset,
+  Experiment,
+  SimilarityThresholdFunction,
+} from 'api';
+import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 
 export interface BenchmarkAppModel {
-  config: BenchmarkAppConfigStore;
-  expandedAlgorithmsInDatasets: ExpandedEntity[];
-  searchString: string;
+  resources: BenchmarkAppResourcesStore;
   activeStrategy: StrategyIDs;
+  config: ConfigurationStoreModel;
 }
 
-export interface BenchmarkAppConfigStore {
+export interface BenchmarkAppResourcesStore {
   algorithms: Algorithm[];
   datasets: Dataset[];
   experiments: Experiment[];
-  selectedExperimentIds: number[];
+  simFunctions: SimilarityThresholdFunction[];
 }
 
 export type BenchmarkAppThunkAction<R> = SnowmanThunkAction<

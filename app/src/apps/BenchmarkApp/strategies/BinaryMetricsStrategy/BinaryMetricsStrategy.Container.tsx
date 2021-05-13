@@ -17,6 +17,7 @@ import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { TuplesLoader } from 'types/TuplesLoader';
 import { intersectionDescription } from 'utils/intersectionDescription';
+import { numberOfDistinctPairs } from 'utils/numberOfDistinctPairs';
 import { dummyTuplesLoader } from 'utils/tuplesLoaders';
 
 const getCountsByTuplesCategory = (
@@ -24,7 +25,7 @@ const getCountsByTuplesCategory = (
   aMetricsTuplesCategory: MetricsTuplesCategories
 ): ExperimentIntersectionCount | undefined => {
   const experiment = store.experiment;
-  const goldStandard = store.goldStandard;
+  const goldStandard = store.groundTruth;
   if (experiment === undefined || goldStandard === undefined) {
     return undefined;
   }
@@ -33,12 +34,12 @@ const getCountsByTuplesCategory = (
     .filter(({ experiments }) =>
       experiments
         .map(({ experimentId }) => experimentId)
-        .includes(experiment.id)
+        .includes(experiment.experiment.id)
     )
     .filter(({ experiments }) =>
       experiments
         .map(({ experimentId }) => experimentId)
-        .includes(goldStandard.id)
+        .includes(goldStandard.experiment.id)
     );
   switch (aMetricsTuplesCategory) {
     case MetricsTuplesCategories.truePositives:
@@ -48,7 +49,7 @@ const getCountsByTuplesCategory = (
     case MetricsTuplesCategories.falseNegatives:
       return counts.find(({ experiments }) =>
         experiments.every(({ predictedCondition, experimentId }) =>
-          goldStandard.id === experimentId
+          goldStandard.experiment.id === experimentId
             ? predictedCondition
             : !predictedCondition
         )
@@ -56,7 +57,7 @@ const getCountsByTuplesCategory = (
     case MetricsTuplesCategories.falsePositives:
       return counts.find(({ experiments }) =>
         experiments.every(({ predictedCondition, experimentId }) =>
-          experiment.id === experimentId
+          experiment.experiment.id === experimentId
             ? predictedCondition
             : !predictedCondition
         )
@@ -113,12 +114,11 @@ const mapStateToProps = (
   selectedMetricsTuplesCategory: state.selectedDataView,
   rowCount: getRowCountByTuplesCategory(state, state.selectedDataView),
   tuplesLoader:
-    state.experiment !== undefined && state.goldStandard !== undefined
+    state.experiment !== undefined && state.groundTruth !== undefined
       ? getTuplesLoaderByTuplesCategory(state, state.selectedDataView)
       : dummyTuplesLoader,
   confusionMatrix: {
-    // Todo: retrieve dataset
-    totalCount: Math.pow(43, 0),
+    totalCount: numberOfDistinctPairs(state.dataset?.numberOfRecords ?? 0),
     falseNegatives: getPairCountByTuplesCategory(
       state,
       MetricsTuplesCategories.falseNegatives
@@ -137,24 +137,30 @@ const mapStateToProps = (
     ),
   },
   dataViewerTitle:
-    state.experiment !== undefined && state.goldStandard !== undefined
+    state.experiment !== undefined && state.groundTruth !== undefined
       ? intersectionDescription(
           state.selectedDataView === MetricsTuplesCategories.truePositives
             ? {
-                included: [state.experiment.name, state.goldStandard.name],
+                included: [
+                  state.experiment.experiment.name,
+                  state.groundTruth.experiment.name,
+                ],
               }
             : state.selectedDataView === MetricsTuplesCategories.falsePositives
             ? {
-                included: [state.experiment.name],
-                excluded: [state.goldStandard.name],
+                included: [state.experiment.experiment.name],
+                excluded: [state.groundTruth.experiment.name],
               }
             : state.selectedDataView === MetricsTuplesCategories.falseNegatives
             ? {
-                excluded: [state.experiment.name],
-                included: [state.goldStandard.name],
+                excluded: [state.experiment.experiment.name],
+                included: [state.groundTruth.experiment.name],
               }
             : {
-                excluded: [state.experiment.name, state.goldStandard.name],
+                excluded: [
+                  state.experiment.experiment.name,
+                  state.groundTruth.experiment.name,
+                ],
               }
         )
       : 'unknown',

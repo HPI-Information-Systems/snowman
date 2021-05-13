@@ -1,5 +1,6 @@
+import { assertType } from 'snowman-library';
+
 import { ExperimentId } from '../../server/types';
-import { assertType } from '../../tools/types';
 import { escapeColumnNames } from '../tools/escapeColumnNames';
 import { Column, Columns, Schemas } from '../tools/types';
 

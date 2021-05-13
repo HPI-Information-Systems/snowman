@@ -1,4 +1,5 @@
-import { InstantiableAbstractClass } from '../../../tools/types';
+import { InstantiableAbstractClass } from 'snowman-library';
+
 import {
   Accuracy,
   BalancedAccuracy,

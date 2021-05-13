@@ -1,0 +1,39 @@
+.listNoPadding {
+  padding: 0;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.noBackground,
+.noBackground *::part(native),
+.noBackground * {
+  background: transparent;
+}
+
+.itemNoBorder {
+  --border-style: none;
+}
+
+.oneLine {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.smallItem {
+  --padding-start: 0;
+}
+
+.smallItem::part(native) {
+  height: 2em;
+  min-height: unset;
+  font-size: medium;
+  line-height: 1em;
+}
+
+.smallItemIcon {
+  margin-right: 8px !important;
+  font-size: medium;
+}
