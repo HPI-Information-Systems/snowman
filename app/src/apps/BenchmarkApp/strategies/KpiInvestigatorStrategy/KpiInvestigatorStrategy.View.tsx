@@ -63,7 +63,7 @@ const KpiInvestigatorStrategyView = ({
         </IonRow>
         <IonRow>
           <IonCol size="12">
-            <IonCard>
+            <IonCard className={styles.noMargin}>
               <div className={styles.chartContainer}>
                 <ScatterChart
                   data={{
