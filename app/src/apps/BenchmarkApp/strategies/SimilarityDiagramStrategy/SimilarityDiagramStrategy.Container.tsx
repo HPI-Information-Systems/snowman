@@ -30,6 +30,7 @@ const mapStateToProps = (
       pointRadius: 3,
       pointHoverRadius: 5,
       borderWidth: 1,
+      showLine: true,
     })
   ),
 });
