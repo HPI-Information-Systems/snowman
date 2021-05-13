@@ -114,11 +114,7 @@ class StrategyMapper extends Component<
   }
 
   render(): JSX.Element {
-    return (
-      <Provider store={FunctionBuilderDialogMagistrate.getStore()}>
-        <StrategyViewer blockAccessKey={this.blockAccessKey} />
-      </Provider>
-    );
+    return <StrategyViewer blockAccessKey={this.blockAccessKey} />;
   }
 }
 
