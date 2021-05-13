@@ -122,6 +122,9 @@ export class SimilarityThresholdsProvider {
         tables.experiment.experiment(similarityThresholdFunction.experimentId)
           .schema.columns
       );
+      const oldExpression = tables.meta.similarityfunction.get({
+        id: functionId,
+      })?.expression;
       tables.meta.similarityfunction.upsert([
         {
           experiment: similarityThresholdFunction.experimentId,
@@ -130,11 +133,13 @@ export class SimilarityThresholdsProvider {
           id: functionId,
         },
       ]);
-      this.writeSimilarities(
-        similarityThresholdFunction.experimentId,
-        functionId,
-        expression
-      );
+      if (expression !== oldExpression) {
+        this.writeSimilarities(
+          similarityThresholdFunction.experimentId,
+          functionId,
+          expression
+        );
+      }
       BenchmarkCache.invalidateSimilarityFunction(functionId);
     })();
   }
