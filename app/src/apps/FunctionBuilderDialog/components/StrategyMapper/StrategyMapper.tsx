@@ -19,30 +19,25 @@ import {
   FunctionBuildingBlockType,
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
-import React, { Component, createElement, useEffect, useState } from 'react';
+import React, { Component, createElement } from 'react';
+import { Provider } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 const StrategyViewer = ({
   blockAccessKey,
 }: StrategyMapperForwardProps): JSX.Element => {
-  const [targetStrategy, setTargetStrategy] = useState<
-    StrategyMapItem | undefined
-  >(undefined);
-  const state = useSelector(
-    (state: FunctionBuilderDialogModel): FunctionBuilderDialogModel => state
-  );
-  useEffect((): void => {
-    const newState: FunctionBuilderDialogModel = FunctionBuilderDialogMagistrate.getStore().getState();
-    const strategyType: FunctionBuildingBlockType =
-      newState.functionBuildingStack.getBlock(blockAccessKey)?.type ??
-      UndefinedStrategy;
-    setTargetStrategy(
-      StrategyMap.find(
+  const targetStrategy: StrategyMapItem | undefined = useSelector(
+    (state: FunctionBuilderDialogModel): StrategyMapItem | undefined => {
+      const strategyType: FunctionBuildingBlockType =
+        state.functionBuildingStack.getBlock(blockAccessKey)?.type ??
+        UndefinedStrategy;
+      return StrategyMap.find(
         (aStrategyMapItem: StrategyMapItem): boolean =>
           aStrategyMapItem.targetStrategyKey === strategyType
-      )
-    );
-  }, [state, blockAccessKey]);
+      );
+    }
+  );
+
   return (
     <>
       {targetStrategy !== undefined ? (
@@ -119,7 +114,11 @@ class StrategyMapper extends Component<
   }
 
   render(): JSX.Element {
-    return <StrategyViewer blockAccessKey={this.blockAccessKey} />;
+    return (
+      <Provider store={FunctionBuilderDialogMagistrate.getStore()}>
+        <StrategyViewer blockAccessKey={this.blockAccessKey} />
+      </Provider>
+    );
   }
 }
 
