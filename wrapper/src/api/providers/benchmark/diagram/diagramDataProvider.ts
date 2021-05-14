@@ -10,4 +10,7 @@ export abstract class DiagramDataProvider {
     metric: MetricsEnum | SoftKPIsExperimentEnum | SoftKPIsAlgorithmEnum,
     experiment: DiagramExperimentItem
   ): number;
+  abstract getRange(
+    metric: MetricsEnum | SoftKPIsExperimentEnum | SoftKPIsAlgorithmEnum
+  ): [number, number] | undefined;
 }

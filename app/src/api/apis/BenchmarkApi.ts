@@ -15,6 +15,9 @@
 
  import * as runtime from '../runtime';
  import {
+     DiagramResponse,
+     DiagramResponseFromJSON,
+     DiagramResponseToJSON,
      ExperimentConfigItem,
      ExperimentConfigItemFromJSON,
      ExperimentConfigItemToJSON,
@@ -81,7 +84,7 @@
      /**
       * returns diagram data based on two metrics and multiple experiments
       */
-     async calculateDiagramDataRaw(requestParameters: CalculateDiagramDataRequest): Promise<runtime.ApiResponse<Array<object>>> {
+     async calculateDiagramDataRaw(requestParameters: CalculateDiagramDataRequest): Promise<runtime.ApiResponse<DiagramResponse>> {
          if (requestParameters.xAxis === null || requestParameters.xAxis === undefined) {
              throw new runtime.RequiredError('xAxis','Required parameter requestParameters.xAxis was null or undefined when calling calculateDiagramData.');
          }
@@ -116,13 +119,13 @@
              body: InlineObjectToJSON(requestParameters.diagram),
          });
  
-         return new runtime.JSONApiResponse<any>(response);
+         return new runtime.JSONApiResponse(response, (jsonValue) => DiagramResponseFromJSON(jsonValue));
      }
  
      /**
       * returns diagram data based on two metrics and multiple experiments
       */
-     async calculateDiagramData(requestParameters: CalculateDiagramDataRequest): Promise<Array<object>> {
+     async calculateDiagramData(requestParameters: CalculateDiagramDataRequest): Promise<DiagramResponse> {
          const response = await this.calculateDiagramDataRaw(requestParameters);
          return await response.value();
      }

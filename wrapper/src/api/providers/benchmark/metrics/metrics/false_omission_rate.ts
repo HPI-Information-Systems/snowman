@@ -2,7 +2,7 @@ import { BaseMetric } from '../base';
 
 export class FalseOmissionRate extends BaseMetric {
   name = 'false omission rate';
-  range: [number, number] = [0, 1];
+  static range: [number, number] = [0, 1];
   formula = '\\frac{fn}{fn+tn}';
   get value(): number {
     return (

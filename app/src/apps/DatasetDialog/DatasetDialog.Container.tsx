@@ -5,7 +5,6 @@ import {
   DatasetDialogStateProps,
 } from 'apps/DatasetDialog/DatasetDialogProps';
 import {
-  addNewTag,
   addOrUpdateDataset,
   changeDatasetCSVEscape,
   changeDatasetCSVIdColumn,
@@ -15,7 +14,7 @@ import {
   changeDatasetLength,
   changeDatasetName,
   changeDatasetType,
-  clickOnDatasetTag,
+  changeTags,
   setSelectedFiles,
 } from 'apps/DatasetDialog/store/DatasetDialogActions';
 import { DatasetDialogModel } from 'apps/DatasetDialog/types/DatasetDialogModel';
@@ -105,11 +104,8 @@ const mapDispatchToProps = (
       setSelectedFiles(convertFilesListToFilesArray(event.target.files))
     );
   },
-  clickOnATag(aTag: string): void {
-    dispatch(clickOnDatasetTag(aTag));
-  },
-  createTag(newTagValue: string): void {
-    dispatch(addNewTag(newTagValue));
+  changeTags(tags: string[]): void {
+    dispatch(changeTags(tags));
   },
   clickOnSubmit(): void {
     dispatch(addOrUpdateDataset(ownProps.entityId)).then();

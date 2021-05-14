@@ -5,10 +5,14 @@ import {
 } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyProps';
 import {
   loadCoordinates,
+  setColorMode,
   setXAxis,
   setYAxis,
 } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/store/KpiInvestigatorStrategyActions';
-import { KpiInvestigatorStrategyModel } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
+import {
+  KpiInvestigatorColorMode,
+  KpiInvestigatorStrategyModel,
+} from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
 import { getMyColor } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/utils/colorGenerator';
 import { ScatterChartDataset } from 'components/simple/ChartComponent/ScatterChart';
 import { connect } from 'react-redux';
@@ -19,19 +23,22 @@ const mapStateToProps = (
   state: KpiInvestigatorStrategyModel
 ): KpiInvestigatorStrategyStateProps => ({
   isValidConfig: state.isValidConfig,
-  datasets: state.coordinates.map(
-    (myCoordinates, index): ScatterChartDataset => ({
-      label: state.diagramTracks[index]?.name ?? index.toString(),
+  datasets: state.diagramTracks.map(
+    (diagramTrack, index): ScatterChartDataset => ({
+      label: diagramTrack.name,
       backgroundColor: getMyColor(index, 0.7),
       borderColor: getMyColor(index),
-      data: myCoordinates,
-      pointRadius: 6,
-      pointHoverRadius: 10,
-      borderWidth: 3,
+      data: diagramTrack.coordinates,
+      pointRadius: 3,
+      pointHoverRadius: 5,
+      borderWidth: 1,
     })
   ),
   xAxis: state.xAxis,
   yAxis: state.yAxis,
+  colorMode: state.colorMode,
+  definitionRange: state.definitionRange,
+  valueRange: state.valueRange,
 });
 
 const mapDispatchToProps = (
@@ -39,11 +46,15 @@ const mapDispatchToProps = (
 ): KpiInvestigatorStrategyDispatchProps => ({
   changeXAxis: (anOption: string): void => {
     dispatch(setXAxis(anOption as AllMetricsEnum));
-    dispatch(loadCoordinates()).then();
+    dispatch(loadCoordinates());
   },
   changeYAxis: (anOption: string): void => {
     dispatch(setYAxis(anOption as AllMetricsEnum));
-    dispatch(loadCoordinates()).then();
+    dispatch(loadCoordinates());
+  },
+  changeColorMode: (anOption: string): void => {
+    dispatch(setColorMode(anOption as KpiInvestigatorColorMode));
+    dispatch(loadCoordinates());
   },
 });
 

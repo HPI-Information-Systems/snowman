@@ -1,9 +1,19 @@
-import { BenchmarkApi } from 'api';
-import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
+import { BenchmarkApi, DiagramExperimentItem, DiagramResponse } from 'api';
 import { KpiInvestigatorStrategyActionTypes } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyActionTypes';
-import { KpiInvestigatorStrategyModel } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
+import {
+  KpiInvestigatorColorMode,
+  KpiInvestigatorStrategyModel,
+} from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import {
+  experimentEntityToExperimentConfigItem,
+  resolveExperimentEntity,
+  uniqueExperimentConfigKey,
+  uniqueExperimentEntityKey,
+} from 'apps/BenchmarkApp/utils/experimentEntity';
+import { MagicNotPossibleId } from 'structs/constants';
 import { AllMetricsEnum } from 'types/AllMetricsEnum';
+import { ExperimentEntity } from 'types/ExperimentEntity';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import {
@@ -20,12 +30,46 @@ export const updateConfig = (
     payload: benchmarkConfig,
   });
 
+export const groundTruthKey = (
+  groundTruth: ExperimentEntity | undefined
+): string =>
+  groundTruth !== undefined ? uniqueExperimentEntityKey(groundTruth) : '';
+
+export const coordinatesMapKey = (goldKey: string, expKey: string): string =>
+  `${goldKey}#${expKey}`;
+
+const buildCoordinatesMap = (
+  coordinates: [goldStandardKey: string, coordinates: DiagramResponse][]
+) =>
+  Object.fromEntries(
+    coordinates.flatMap(([goldStandardKey, coordinates]) =>
+      coordinates.coordinates.map((coordinates) => [
+        coordinatesMapKey(
+          goldStandardKey,
+          uniqueExperimentConfigKey({
+            experimentId: coordinates.experimentId ?? MagicNotPossibleId,
+            similarity:
+              coordinates.funcId !== undefined
+                ? {
+                    func: coordinates.funcId,
+                    threshold: coordinates.threshold ?? 0,
+                  }
+                : undefined,
+          })
+        ),
+        coordinates,
+      ])
+    )
+  );
+
 export const setCoordinates = (
-  allCoordinates: DiagramCoordinates[][]
+  allCoordinates: [goldStandardKey: string, coordinates: DiagramResponse][]
 ): easyPrimitiveActionReturn<KpiInvestigatorStrategyModel> =>
   easyPrimitiveAction<KpiInvestigatorStrategyModel>({
     type: KpiInvestigatorStrategyActionTypes.SET_COORDINATES,
-    payload: allCoordinates,
+    payload: buildCoordinatesMap(allCoordinates),
+    optionalPayload: allCoordinates[0][1].definitionRange,
+    optionalPayload2: allCoordinates[0][1].valueRange,
   });
 
 export const setXAxis = (
@@ -51,21 +95,54 @@ export const loadCoordinates = (): SnowmanThunkAction<
   dispatch: SnowmanDispatch<KpiInvestigatorStrategyModel>,
   getState: () => KpiInvestigatorStrategyModel
 ): Promise<void> => {
-  if (!getState().isValidConfig) return Promise.resolve();
+  const state = getState();
+  if (!state.isValidConfig) {
+    return Promise.resolve();
+  }
   return Promise.all(
-    getState().diagramTracks.map(
-      (anItem): Promise<DiagramCoordinates[]> =>
+    state.configuration.diagramTracks
+      .map((aTrack): [
+        groundTruthKey: string,
+        items: DiagramExperimentItem[]
+      ] => {
+        const groundTruthEntity = resolveExperimentEntity(
+          aTrack.groundTruth,
+          state.resources
+        );
+        const groundTruth =
+          groundTruthEntity !== undefined
+            ? experimentEntityToExperimentConfigItem(groundTruthEntity)
+            : undefined;
+        return [
+          groundTruthKey(groundTruthEntity),
+          aTrack.experiments
+            .map((entity) => resolveExperimentEntity(entity, state.resources))
+            .filter(
+              (
+                anEntity: ExperimentEntity | undefined
+              ): anEntity is ExperimentEntity => anEntity !== undefined
+            )
+            .map(
+              (anEntity): DiagramExperimentItem => ({
+                groundTruth,
+                experiment: experimentEntityToExperimentConfigItem(anEntity),
+              })
+            ),
+        ];
+      })
+      .filter(([, items]) => items.length > 0)
+      .map(([groundTruthKey, items]) =>
         RequestHandler(() =>
-          new BenchmarkApi()
-            .calculateDiagramData({
-              xAxis: getState().xAxis,
-              yAxis: getState().yAxis,
-              diagram: { multipleExperiments: anItem.items },
-            })
-            .then((coordinates) => coordinates as DiagramCoordinates[])
-        )
-    )
-  ).then((allCoordinates) => dispatch(setCoordinates(allCoordinates)));
+          new BenchmarkApi().calculateDiagramData({
+            xAxis: getState().xAxis,
+            yAxis: getState().yAxis,
+            diagram: {
+              multipleExperiments: items,
+            },
+          })
+        ).then((points): [string, DiagramResponse] => [groundTruthKey, points])
+      )
+  ).then((coordinates) => dispatch(setCoordinates(coordinates)));
 };
 
 export const loadStrategyData = (
@@ -74,5 +151,12 @@ export const loadStrategyData = (
 ): void => {
   dispatch(updateConfig(appStore));
   dispatch(loadCoordinates()).then();
-  // Todo: Load smth
 };
+
+export const setColorMode = (
+  mode: KpiInvestigatorColorMode
+): easyPrimitiveActionReturn<KpiInvestigatorStrategyModel> =>
+  easyPrimitiveAction<KpiInvestigatorStrategyModel>({
+    type: KpiInvestigatorStrategyActionTypes.SET_COLOR_MODE,
+    payload: mode,
+  });

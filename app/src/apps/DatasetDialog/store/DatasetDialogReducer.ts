@@ -8,7 +8,6 @@ import { intersection } from 'lodash';
 import { DatasetTypes } from 'types/DatasetTypes';
 import { SnowmanAction } from 'types/SnowmanAction';
 import { getTagsFromDatasets } from 'utils/tagFactory';
-import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: DatasetDialogModel = {
   availableTags: [],
@@ -100,19 +99,14 @@ const DatasetDialogReducer = (
         ...state,
         csvEscape: action.payload as string,
       };
-    case DatasetDialogActionTypes.CLICK_ON_DATASET_TAG:
+    case DatasetDialogActionTypes.CHANGE_TAGS:
       return {
         ...state,
-        selectedTags: toggleSelectionArrayMultipleSelect(
-          state.selectedTags,
-          action.payload as string
-        ),
-      };
-    case DatasetDialogActionTypes.ADD_DATASET_TAG:
-      return {
-        ...state,
-        availableTags: uniq([...state.availableTags, action.payload as string]),
-        selectedTags: uniq([...state.selectedTags, action.payload as string]),
+        availableTags: uniq([
+          ...state.availableTags,
+          ...(action.payload as string[]),
+        ]),
+        selectedTags: uniq(action.payload as string[]),
       };
     default:
       return state;

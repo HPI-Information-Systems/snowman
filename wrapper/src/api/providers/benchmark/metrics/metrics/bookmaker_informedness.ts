@@ -4,7 +4,7 @@ import { Specificity } from '../metrics/specificity';
 
 export class BookmakerInformedness extends BaseMetric {
   name = 'bookmaker informedness';
-  range: [number, number] = [0, 1];
+  static range: [number, number] = [0, 1];
   formula = 'true\\:positive\\:rate + true\\:negative\\:rate - 1';
   get value(): number {
     const truePositiveRate = new Recall(this.matrix).value;

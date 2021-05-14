@@ -48,7 +48,7 @@ const IntersectionStrategyReducer = (
       const configuration = IntersectionConfiguration.getValue(appStore);
       const experimentConfigs = uniqBy(
         [...configuration.experiments.flat(), configuration.groundTruth]
-          .map((config) => resolveExperimentEntity(config, appStore))
+          .map((config) => resolveExperimentEntity(config, appStore.resources))
           .filter(
             (
               entity: ExperimentEntity | undefined

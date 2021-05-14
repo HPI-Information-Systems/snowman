@@ -12,6 +12,8 @@ export interface GenericSubAppStateProps {
 export interface GenericSubAppOwnProps extends GenericInstanceOwnProps {
   appTitle: string;
   sideMenu?: FC<SideMenuProps>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sideMenuDisabledSelector?: (state: any) => boolean;
   usePageStruct?: boolean;
 }
 

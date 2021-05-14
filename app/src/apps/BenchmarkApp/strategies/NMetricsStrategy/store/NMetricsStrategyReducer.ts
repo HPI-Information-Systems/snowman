@@ -24,10 +24,10 @@ const NMetricsStrategyReducer = (
       const configuration = NMetricsConfiguration.getValue(appStore);
       const groundTruth = resolveExperimentEntity(
         configuration.groundTruth,
-        appStore
+        appStore.resources
       );
       const experiments = configuration.experiments
-        .map((config) => resolveExperimentEntity(config, appStore))
+        .map((config) => resolveExperimentEntity(config, appStore.resources))
         .filter(
           (entity: ExperimentEntity | undefined): entity is ExperimentEntity =>
             entity !== undefined

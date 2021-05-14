@@ -10,7 +10,9 @@ import {
   changeDataset,
   changeExperimentDescription,
   changeExperimentName,
+  changeExpertise,
   changeFileFormat,
+  changeHRAmount,
   changeSelectedFiles,
 } from 'apps/ExperimentDialog/store/ExperimentDialogActions';
 import { ExperimentDialogModel } from 'apps/ExperimentDialog/types/ExperimentDialogModel';
@@ -18,7 +20,11 @@ import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
-import { IonChangeEvent, IonSelectChangeEvent } from 'types/IonChangeEvent';
+import {
+  IonChangeEvent,
+  IonRangeChangeEvent,
+  IonSelectChangeEvent,
+} from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
 import { parseInputToNumberOrUndef } from 'utils/questionHelpers';
@@ -50,6 +56,8 @@ const mapStateToProps = (
   selectedDataset: state.selectedDataset?.toString() ?? '',
   algorithms: state.algorithms,
   selectedAlgorithm: state.selectedAlgorithm?.toString() ?? '',
+  expertise: state.expertise,
+  hrAmount: state.hrAmount,
 });
 
 const mapDispatchToProps = (
@@ -80,6 +88,10 @@ const mapDispatchToProps = (
     dispatch(
       changeSelectedFiles(convertFilesListToFilesArray(event.target.files))
     ),
+  changeExpertise: (event: IonRangeChangeEvent) =>
+    dispatch(changeExpertise(event.detail.value as number)),
+  changeHRAmount: (event: IonChangeEvent) =>
+    dispatch(changeHRAmount(parseFloat(event.detail.value as string))),
 });
 
 const ExperimentDialogContainer = connect(

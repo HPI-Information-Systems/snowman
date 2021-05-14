@@ -2,7 +2,7 @@ import { BaseMetric } from '../base';
 
 export class NegativePredictiveValue extends BaseMetric {
   name = 'negative predictive value';
-  range: [number, number] = [0, 1];
+  static range: [number, number] = [0, 1];
   formula = '\\frac{tn}{fp+tn}';
   get value(): number {
     return (

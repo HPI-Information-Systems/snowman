@@ -2,7 +2,7 @@ import { BaseMetric } from '../base';
 
 export class MatthewsCorrelationCoefficient extends BaseMetric {
   name = 'matthews correlation coeff.';
-  range: [number, number] = [0, 1];
+  static range: [number, number] = [0, 1];
   formula =
     '\\frac{tp \\cdot tn - fp \\cdot fn}{\\sqrt{(tp + fp) \\cdot (tp + fn) \\cdot (fp + tn) \\cdot (fn + tn)}}';
 

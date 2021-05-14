@@ -29,7 +29,7 @@ const getItem = <Cache extends ValueOf<ConfigurationStoreModel>>({
   let item = cache[serializedKey] as Define<ValueOf<Cache>>;
   if (!item) {
     item = {
-      cacheKey: key as Define<ValueOf<Cache>>['cacheKey'],
+      INTERNAL_cacheKey: key as Define<ValueOf<Cache>>['INTERNAL_cacheKey'],
       dependents: [] as Define<ValueOf<Cache>>['dependents'],
       targets: getCacheKeyAndFilter(key).createNew(state) as Define<
         ValueOf<Cache>
@@ -82,7 +82,9 @@ const ConfigurationStoreReducer = (
                 action,
                 state,
                 currentSelection: (filteredEntity.targets ??
-                  getCacheKeyAndFilter(filteredEntity.cacheKey).createNew(
+                  getCacheKeyAndFilter(
+                    filteredEntity.INTERNAL_cacheKey
+                  ).createNew(
                     state
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   )) as any,
@@ -105,7 +107,9 @@ const ConfigurationStoreReducer = (
               value: ConfigurationCacheItem<unknown> | undefined
             ): value is ConfigurationCacheItem<unknown> => value !== undefined
           )) {
-          const cacheKeyAndFilter = getCacheKeyAndFilter(item.cacheKey);
+          const cacheKeyAndFilter = getCacheKeyAndFilter(
+            item.INTERNAL_cacheKey
+          );
           if (cacheKeyAndFilter.resourcesUpdated) {
             item.targets = cacheKeyAndFilter.resourcesUpdated(
               state

@@ -22,6 +22,7 @@ export type PlotArgs = {
 };
 export type PlotResult = {
   threshold: number;
+  funcId: SimilarityThresholdFunctionId;
   x: number;
   y: number;
 }[];
@@ -37,6 +38,7 @@ export function plot({ X, Y, ...args }: PlotArgs): PlotResult {
   return plotSimilarityConfusionMatrix(args)
     .map((result) => ({
       threshold: result.threshold,
+      funcId: args.func,
       x: extractValue(result, X),
       y: extractValue(result, Y),
     }))

@@ -756,7 +756,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DiagramCoordinates"
+                $ref: "#/components/schemas/DiagramResponse"
+
         403:
           description: Forbidden
         404:
@@ -1151,20 +1152,20 @@ components:
         $ref: "#/components/schemas/DiagramExperimentItem"
       type: array
     DiagramCoordinates:
-      items:
         properties:
           x:
             type: number
           y:
             type: number
+          funcId:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
           experimentId:
             $ref: "#/components/schemas/ExperimentId"
           threshold:
             type: number
         required:
-          - x
-          - y
-      type: array
+          - "x"
+          - "y"
     softKPIsAlgorithmEnum:
       type: string
       enum:
@@ -1218,6 +1219,29 @@ components:
         - fowlkesMallowsIndex
         - markedness
         - matthewsCorrelationCoefficient
+
+    DiagramResponse:
+      properties:
+        coordinates:
+          items:
+            $ref: "#/components/schemas/DiagramCoordinates"
+          type: array
+        definitionRange:
+          type: array
+          items:
+            type: number
+          minItems: 2
+          maxItems: 2
+          example: [0, 1]
+        valueRange:
+          type: array
+          items:
+            type: number
+          minItems: 2
+          maxItems: 2
+          example: [0, 1]
+      required:
+        - coordinates
 
     #### GENERAL ####
     CSVFile:

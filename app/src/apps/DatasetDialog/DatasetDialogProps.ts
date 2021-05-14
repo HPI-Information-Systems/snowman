@@ -5,7 +5,7 @@ import { IonChangeEvent } from 'types/IonChangeEvent';
 
 export interface DatasetDialogDispatchProps {
   clickOnCancel(): void;
-  createTag(newTagValue: string): void;
+  changeTags(newTags: string[]): void;
   changeDatasetName(event: IonChangeEvent): void;
   changeDatasetDescription(event: IonChangeEvent): void;
   changeDatasetType(event: IonChangeEvent): void;
@@ -14,7 +14,6 @@ export interface DatasetDialogDispatchProps {
   changeCsvSeparator(event: IonChangeEvent): void;
   changeCsvQuote(event: IonChangeEvent): void;
   changeCsvEscape(event: IonChangeEvent): void;
-  clickOnATag(aTag: string): void;
   clickOnSubmit(): void;
   changeSelectedDatasetFiles(event: ChangeEvent<HTMLInputElement>): void;
 }

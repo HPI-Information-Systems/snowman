@@ -904,7 +904,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DiagramCoordinates'
+                $ref: '#/components/schemas/DiagramResponse'
           description: OK
         "403":
           description: Forbidden
@@ -1273,20 +1273,27 @@ components:
         $ref: '#/components/schemas/DiagramExperimentItem'
       type: array
     DiagramCoordinates:
-      items:
-        properties:
-          x:
-            type: number
-          y:
-            type: number
-          experimentId:
-            $ref: '#/components/schemas/ExperimentId'
-          threshold:
-            type: number
-        required:
-        - x
-        - "y"
-      type: array
+      example:
+        x: 0.8008281904610115
+        y: 6.027456183070403
+        experimentId: 1
+        threshold: 5.962133916683182
+        funcId: 1
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+        funcId:
+          type: integer
+        experimentId:
+          example: 1
+          type: integer
+        threshold:
+          type: number
+      required:
+      - x
+      - "y"
     softKPIsAlgorithmEnum:
       enum:
       - domainExpertise
@@ -1340,6 +1347,50 @@ components:
       - markedness
       - matthewsCorrelationCoefficient
       type: string
+    DiagramResponse:
+      example:
+        valueRange:
+        - 0
+        - 1
+        coordinates:
+        - x: 0.8008281904610115
+          y: 6.027456183070403
+          experimentId: 1
+          threshold: 5.962133916683182
+          funcId: 1
+        - x: 0.8008281904610115
+          y: 6.027456183070403
+          experimentId: 1
+          threshold: 5.962133916683182
+          funcId: 1
+        definitionRange:
+        - 0
+        - 1
+      properties:
+        coordinates:
+          items:
+            $ref: '#/components/schemas/DiagramCoordinates'
+          type: array
+        definitionRange:
+          example:
+          - 0
+          - 1
+          items:
+            type: number
+          maxItems: 2
+          minItems: 2
+          type: array
+        valueRange:
+          example:
+          - 0
+          - 1
+          items:
+            type: number
+          maxItems: 2
+          minItems: 2
+          type: array
+      required:
+      - coordinates
     CSVFile:
       format: binary
       type: string

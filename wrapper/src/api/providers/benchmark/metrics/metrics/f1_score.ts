@@ -2,7 +2,7 @@ import { BaseMetric } from '../base';
 
 export class F1Score extends BaseMetric {
   name = 'f1 score';
-  range: [number, number] = [0, 1];
+  static range: [number, number] = [0, 1];
   formula = '2 \\cdot \\frac{precision \\cdot recall}{precision+recall}';
   info =
     'The meaningfulness of the f1 score is debated in the research community.';

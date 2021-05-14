@@ -10,4 +10,6 @@ export interface ExperimentDialogModel {
   algorithms: Algorithm[];
   selectedDataset: number | undefined;
   selectedAlgorithm: number | undefined;
+  hrAmount: number | undefined;
+  expertise: number | undefined;
 }

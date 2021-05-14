@@ -2,7 +2,7 @@ import { BaseMetric } from '../base';
 
 export class Recall extends BaseMetric {
   name = 'recall';
-  range: [number, number] = [0, 1];
+  static range: [number, number] = [0, 1];
   formula = '\\frac{tp}{tp+fn}';
   get value(): number {
     return (

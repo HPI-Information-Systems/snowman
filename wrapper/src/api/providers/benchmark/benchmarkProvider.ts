@@ -1,7 +1,8 @@
 import {
   CalculateDiagramDataRequest,
-  DiagramCoordinate,
+  DiagramCoordinates,
   DiagramExperimentItem,
+  DiagramResponse,
   ExperimentConfigItem,
   ExperimentIntersectionCount,
   ExperimentIntersectionItem,
@@ -35,10 +36,17 @@ export class BenchmarkProvider {
     xAxis,
     yAxis,
     diagram,
-  }: CalculateDiagramDataRequest): Array<DiagramCoordinate> {
+  }: CalculateDiagramDataRequest): DiagramResponse {
     if (diagram === undefined) {
       throw new Error('No experiments to plot have been set!');
     }
+
+    const xGetter: DiagramDataProvider = getDiagramDataProvider(xAxis);
+    const yGetter: DiagramDataProvider = getDiagramDataProvider(yAxis);
+    const definitionRange: [number, number] | undefined = xGetter.getRange(
+      xAxis
+    );
+    const valueRange: [number, number] | undefined = yGetter.getRange(yAxis);
     if (
       isInEnum(MetricsEnum, xAxis) &&
       isInEnum(MetricsEnum, yAxis) &&
@@ -55,22 +63,33 @@ export class BenchmarkProvider {
       const func = diagram.similarityThresholds.func;
       if (!X || !Y)
         throw new Error(`At least one metric to be plotted does not exist!`);
-      return plot({ X, Y, datasetId, experimentId, groundTruth, steps, func });
+      const coordinates = plot({
+        X,
+        Y,
+        datasetId,
+        experimentId,
+        groundTruth,
+        steps,
+        func,
+      });
+      return { coordinates, definitionRange, valueRange };
     }
     if (!diagram.multipleExperiments)
       throw new Error('No experiments to plot have been set!');
 
-    const xGetter: DiagramDataProvider = getDiagramDataProvider(xAxis);
-    const yGetter: DiagramDataProvider = getDiagramDataProvider(yAxis);
-    return diagram.multipleExperiments
+    const coordinates = diagram.multipleExperiments
       .map((experiment: DiagramExperimentItem) => {
+        const x = xGetter.getData(xAxis, experiment);
+        const y = yGetter.getData(yAxis, experiment);
         return {
           experimentId: experiment.experiment.experimentId,
-          x: xGetter.getData(xAxis, experiment),
-          y: yGetter.getData(yAxis, experiment),
+          funcId: experiment.experiment.similarity?.func,
+          x,
+          y,
         };
       })
       .sort(({ x: x1 }, { x: x2 }) => x1 - x2);
+    return { coordinates, definitionRange, valueRange };
   }
   calculateExperimentIntersectionCount({
     intersection: experiments,
@@ -191,15 +210,25 @@ export class BenchmarkProvider {
       groundTruth: [groundTruthExperiment],
     }).confusionMatrix;
     return metrics
-      .map((Metric) => new Metric(matrix))
-      .map(({ value, formula, name, range, info, infoLink }) => {
+      .map((Metric) => {
+        const { value, formula, name, info, infoLink } = new Metric(matrix);
         return {
+          range: Metric.range,
           value,
           formula,
           name,
-          range,
           info,
           infoLink,
+        };
+      })
+      .map(({ value, formula, name, range, info, infoLink }) => {
+        return {
+          formula,
+          info,
+          infoLink,
+          name,
+          range,
+          value,
         };
       });
   }

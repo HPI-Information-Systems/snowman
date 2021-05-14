@@ -1,6 +1,5 @@
 import {
   IonButton,
-  IonChip,
   IonCol,
   IonGrid,
   IonIcon,
@@ -19,7 +18,7 @@ import {
 import { DatasetDialogProps } from 'apps/DatasetDialog/DatasetDialogProps';
 import styles from 'apps/DatasetDialog/DatasetDialogStyles.module.css';
 import FileInput from 'components/simple/FileInput/FileInput';
-import InputChip from 'components/stateful/InputChip/InputChip';
+import TextMultiSelect from 'components/simple/TextMultiSelect/TextMultiSelect';
 import {
   addCircleOutline,
   checkmarkCircleOutline,
@@ -54,8 +53,7 @@ const DatasetDialogView = ({
   selectedTags,
   datasetDescription,
   changeDatasetDescription,
-  clickOnATag,
-  createTag,
+  changeTags,
   clickOnSubmit,
 }: DatasetDialogProps): JSX.Element => (
   <>
@@ -177,23 +175,11 @@ const DatasetDialogView = ({
       </div>
     ) : null}
     <div className={style(styles.center, styles.tagView)}>
-      {tags.map(
-        (aTag: string): JSX.Element => (
-          <IonChip
-            color={selectedTags.includes(aTag) ? 'primary' : 'dark'}
-            outline={false}
-            key={aTag}
-            onClick={(): void => clickOnATag(aTag)}
-          >
-            <IonLabel>{aTag}</IonLabel>
-          </IonChip>
-        )
-      )}
-      <InputChip
-        label="Add domain"
-        placeholder="New domain's name"
-        instanceDescriptor="dataset-dialog"
-        submitValueCallback={createTag}
+      <TextMultiSelect
+        addText="Add domain"
+        suggestions={tags}
+        content={selectedTags}
+        onChange={changeTags}
       />
     </div>
     <div className={style(styles.center, styles.buttonRow)}>
