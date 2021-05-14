@@ -166,8 +166,8 @@ const DashboardStrategy = ({
             <IonCardContent>
               <p>
                 Investigate soft and hard KPIs of experiments grouped by either
-                dataset or matching solutions. Evaluation occurs with the help
-                of a variety of diagrams.
+                dataset or matching solution. Evaluation occurs with the help of
+                a variety of diagrams.
               </p>
             </IonCardContent>
             <IonCardContent>
