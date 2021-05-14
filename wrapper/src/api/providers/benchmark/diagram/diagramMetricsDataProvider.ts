@@ -25,4 +25,9 @@ export class DiagramMetricsDataProvider extends DiagramDataProvider {
     if (!mappedMetric) throw new Error(`The metric ${metric} does not exist!`);
     return new mappedMetric(matrix).value;
   }
+  getRange(metric: MetricsEnum): [number, number] {
+    const Metric = metricsMap.get(metric.toString());
+    if (!Metric) throw new Error(`The metric ${metric} does not exist!`);
+    return Metric.range;
+  }
 }

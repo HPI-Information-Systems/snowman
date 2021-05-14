@@ -18,6 +18,9 @@ export class DiagramExperimentSoftKPIsDataProvider extends DiagramDataProvider {
 
     return this.mapEnum(metric, experiment);
   }
+  getRange(metric: SoftKPIsExperimentEnum): [number, number] | undefined {
+    return softKPIExperimentRangeMap.get(metric);
+  }
 
   mapEnum(metric: SoftKPIsExperimentEnum, experiment: Experiment): number {
     const mappedMetric = softKPIExperimentMap.get(metric);
@@ -53,4 +56,16 @@ const softKPIExperimentMap: Map<
     SoftKPIsExperimentEnum.HrAmount,
     (experiment: Experiment) => experiment.softKPIs?.hrAmount ?? undefined,
   ],
+]);
+
+const softKPIExperimentRangeMap: Map<
+  SoftKPIsExperimentEnum,
+  [number, number] | undefined
+> = new Map([
+  [SoftKPIsExperimentEnum.Expertise, [0, 100]],
+  [SoftKPIsExperimentEnum.HrAmount, undefined],
+  [SoftKPIsExperimentEnum.ExpertiseWeightedEffort, undefined],
+  [SoftKPIsExperimentEnum.HrAmountWeightedEffort, undefined],
+  [SoftKPIsExperimentEnum.ManhattanDistanceBasedEffort, undefined],
+  [SoftKPIsExperimentEnum.MultiplyEffort, undefined],
 ]);

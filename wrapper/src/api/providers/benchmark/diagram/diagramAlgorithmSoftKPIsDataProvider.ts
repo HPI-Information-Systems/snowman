@@ -22,6 +22,9 @@ export class DiagramAlgorithmSoftKPIsDataProvider extends DiagramDataProvider {
 
     return this.mapEnum(metric, algorithm);
   }
+  getRange(metric: SoftKPIsAlgorithmEnum): [number, number] | undefined {
+    return softKPIAlgorithmRangeMap.get(metric);
+  }
 
   mapEnum(metric: SoftKPIsAlgorithmEnum, algorithm: Algorithm): number {
     const mappedMetric = softKPIAlgorithmMap.get(metric);
@@ -174,4 +177,32 @@ const softKPIAlgorithmMap: Map<
       )?.value;
     },
   ],
+]);
+
+const softKPIAlgorithmRangeMap: Map<
+  SoftKPIsAlgorithmEnum,
+  [number, number] | undefined
+> = new Map([
+  [SoftKPIsAlgorithmEnum.DomainExpertise, [0, 100]],
+  [SoftKPIsAlgorithmEnum.DomainHrAmount, undefined],
+  [SoftKPIsAlgorithmEnum.InstallationExpertise, [0, 100]],
+  [SoftKPIsAlgorithmEnum.InstallationHrAmount, undefined],
+  [SoftKPIsAlgorithmEnum.GeneralCosts, undefined],
+  [SoftKPIsAlgorithmEnum.MatchingSolutionExpertise, [0, 100]],
+  [SoftKPIsAlgorithmEnum.MatchingSolutionHrAmount, undefined],
+  [SoftKPIsAlgorithmEnum.DomainExpertiseWeightedEffort, undefined],
+  [SoftKPIsAlgorithmEnum.DomainHrAmountWeightedEffort, undefined],
+  [SoftKPIsAlgorithmEnum.DomainManhattanDistanceBasedEffort, undefined],
+  [SoftKPIsAlgorithmEnum.DomainMultiplyEffort, undefined],
+  [SoftKPIsAlgorithmEnum.MatchingSolutionExpertiseWeightedEffort, undefined],
+  [SoftKPIsAlgorithmEnum.MatchingSolutionHrAmountWeightedEffort, undefined],
+  [
+    SoftKPIsAlgorithmEnum.MatchingSolutionManhattanDistanceBasedEffort,
+    undefined,
+  ],
+  [SoftKPIsAlgorithmEnum.MatchingSolutionMultiplyEffort, undefined],
+  [SoftKPIsAlgorithmEnum.InstallationExpertiseWeightedEffort, undefined],
+  [SoftKPIsAlgorithmEnum.InstallationHrAmountWeightedEffort, undefined],
+  [SoftKPIsAlgorithmEnum.InstallationManhattanDistanceBasedEffort, undefined],
+  [SoftKPIsAlgorithmEnum.InstallationMultiplyEffort, undefined],
 ]);
