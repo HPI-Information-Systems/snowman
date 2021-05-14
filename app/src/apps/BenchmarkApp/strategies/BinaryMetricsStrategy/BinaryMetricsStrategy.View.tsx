@@ -19,9 +19,9 @@ import PaneButtonRow from 'components/simple/PaneButtonRow/PaneButtonRow';
 import StyledCarousel from 'components/simple/StyledCarousel/StyledCarousel';
 import { informationCircle } from 'ionicons/icons';
 import { renderToString } from 'katex';
-import React, { useEffect } from 'react';
-import ReactTooltip from 'react-tooltip';
+import React from 'react';
 import { formatLargeNumber } from 'utils/formatLargeNumber';
+import useTooltip from 'utils/useTooltipHook';
 
 const BinaryMetricsStrategyView = ({
   metrics,
@@ -34,12 +34,7 @@ const BinaryMetricsStrategyView = ({
   dataViewerTitle,
   isValidConfig,
 }: BinaryMetricsStrategyProps): JSX.Element => {
-  //useEffect(loadMetrics, [loadMetrics]);
-  //useEffect(preloadTuplesCounts, [preloadTuplesCounts]);
-  useEffect(() => {
-    // Triggered on every component update!
-    ReactTooltip.rebuild();
-  });
+  useTooltip();
 
   return (
     <>
@@ -63,7 +58,6 @@ const BinaryMetricsStrategyView = ({
                 formula,
                 range,
                 value,
-                info,
                 infoLink,
               }: Metric): JSX.Element => (
                 <div key={name}>
