@@ -33,6 +33,8 @@ const InputChipView = ({
           color="dark"
           className="ion-text-center"
           onClick={showInput}
+          tabIndex={0}
+          onKeyPress={(e) => (e.key === 'Enter' ? showInput() : null)}
         >
           <IonLabel>{label}</IonLabel>
           <IonIcon icon={addCircleOutline} />
@@ -54,6 +56,8 @@ const InputChipView = ({
               color="success"
               icon={checkmarkCircleOutline}
               onClick={submitInput}
+              tabIndex={0}
+              onKeyPress={(e) => (e.key === 'Enter' ? submitInput() : null)}
             />
           ) : (
             <IonIcon
@@ -61,6 +65,8 @@ const InputChipView = ({
               color="danger"
               icon={closeCircleOutline}
               onClick={hideInput}
+              tabIndex={0}
+              onKeyPress={(e) => (e.key === 'Enter' ? hideInput() : null)}
             />
           )}
         </IonChip>

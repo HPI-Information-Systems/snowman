@@ -15,6 +15,8 @@ const initialState: ExperimentDialogModel = {
   algorithms: [],
   selectedDataset: undefined,
   selectedAlgorithm: undefined,
+  expertise: undefined,
+  hrAmount: undefined,
 };
 
 const ExperimentDialogReducer = (
@@ -45,6 +47,8 @@ const ExperimentDialogReducer = (
         selectedAlgorithm: experiment.algorithmId,
         experimentName: experiment.name,
         experimentDescription: experiment.description ?? '',
+        expertise: experiment.softKPIs?.expertise,
+        hrAmount: experiment.softKPIs?.hrAmount,
       };
     }
     case ExperimentDialogActionTypes.CHANGE_EXPERIMENT_NAME:
@@ -76,6 +80,16 @@ const ExperimentDialogReducer = (
       return {
         ...state,
         selectedAlgorithm: action.payload as number | undefined,
+      };
+    case ExperimentDialogActionTypes.CHANGE_EXPERTISE:
+      return {
+        ...state,
+        expertise: action.payload as number | undefined,
+      };
+    case ExperimentDialogActionTypes.CHANGE_HR_AMOUNT:
+      return {
+        ...state,
+        hrAmount: action.payload as number | undefined,
       };
     default:
       return state;

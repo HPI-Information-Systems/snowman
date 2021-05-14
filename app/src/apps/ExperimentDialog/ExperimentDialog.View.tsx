@@ -7,6 +7,7 @@ import {
   IonLabel,
   IonList,
   IonNote,
+  IonRange,
   IonSelect,
   IonSelectOption,
   IonTextarea,
@@ -45,6 +46,10 @@ const ExperimentDialogView = ({
   algorithms,
   selectedAlgorithm,
   changeAlgorithm,
+  changeExpertise,
+  changeHRAmount,
+  expertise,
+  hrAmount,
 }: ExperimentDialogProps): JSX.Element => (
   <>
     <IonList>
@@ -106,6 +111,40 @@ const ExperimentDialogView = ({
           )}
         </IonSelect>
       </IonItem>
+
+      <IonItemDivider>
+        <IonLabel>Configuration Effort:</IonLabel>
+      </IonItemDivider>
+
+      <IonItem>
+        <IonLabel position="fixed">
+          Matching
+          <br /> Solution
+          <br /> Knowledge
+          <br /> Level:
+        </IonLabel>
+        <IonRange
+          min={0}
+          max={100}
+          value={expertise}
+          color="primary"
+          onIonChange={changeExpertise}
+        />
+      </IonItem>
+      <IonItem>
+        <IonLabel position="fixed">
+          Matching
+          <br /> Solution <br />
+          HR Amount:
+        </IonLabel>
+        <IonInput
+          type="number"
+          placeholder="0"
+          value={hrAmount}
+          onIonChange={changeHRAmount}
+        />
+      </IonItem>
+
       <IonItemDivider>
         <IonLabel>UPLOAD CONTENT</IonLabel>
       </IonItemDivider>
