@@ -1,9 +1,8 @@
-import { Algorithm, Metric } from 'api';
-import { MetricEntity } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/MetricEntity';
+import { Metric } from 'api';
+import { EnhancedAlgorithm } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/EnhancedAlgorithm';
 
 export interface DecisionMatrixStrategyModel {
   isValidConfig: boolean;
-  selectedAlgorithms: Algorithm[];
-  metricEntities: MetricEntity[];
-  metrics: Metric[][];
+  enhancedAlgorithms: EnhancedAlgorithm[];
+  averageMetrics: Metric[][];
 }
