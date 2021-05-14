@@ -58,18 +58,16 @@ export const loadMetrics = (): SnowmanThunkAction<
         ).then((metricsArray): Metric[] =>
           Object.values(
             groupBy(metricsArray.flat(1), (aMetric): string => aMetric.name)
+          ).map(
+            (anMetricArray): Metric => ({
+              ...anMetricArray[0],
+              value:
+                anMetricArray
+                  .map((aMetric): number => aMetric.value)
+                  .reduce((prev, cur: number): number => prev + cur, 0) /
+                anMetricArray.length,
+            })
           )
-            .filter((anMetricArray): boolean => anMetricArray.length > 0)
-            .map(
-              (anMetricArray): Metric => ({
-                ...anMetricArray[0],
-                value:
-                  anMetricArray
-                    .map((aMetric): number => aMetric.value)
-                    .reduce((prev, cur: number): number => prev + cur, 0) /
-                  anMetricArray.length,
-              })
-            )
         )
     )
   ).then((metrics) => dispatch(setMetrics(metrics)));

@@ -81,7 +81,7 @@ const DecisionMatrixStrategyView = ({
             )
             .map(
               (aMetric: Metric, idx1: number): JSX.Element => (
-                <tr key={'nmetrics-row-' + aMetric.name}>
+                <tr key={'nmetrics-row-metric-' + idx1}>
                   <td>
                     <span
                       data-tip={renderToString(aMetric.formula, {
@@ -95,7 +95,7 @@ const DecisionMatrixStrategyView = ({
                   </td>
                   {averageMetrics.map(
                     (metricsRow: Metric[], idx2: number): JSX.Element => (
-                      <td key={`matrix-view-ms-${idx2}-metric-${idx1}`}>
+                      <td key={`matrix-view-metric-${idx1}-algo-${idx2}`}>
                         <span
                           data-tip={`${
                             metricsRow[idx1]?.value?.toString() ??

@@ -56,7 +56,7 @@ const DecisionMatrixStrategyReducer = (
       );
       return {
         ...initialState,
-        isValidConfig: selectedAlgorithms.length > 0,
+        isValidConfig: enhancedAlgorithms.length > 0,
         enhancedAlgorithms: enhancedAlgorithms,
       };
     }
