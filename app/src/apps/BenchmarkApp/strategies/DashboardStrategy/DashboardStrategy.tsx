@@ -204,7 +204,7 @@ const DashboardStrategy = ({
             <IonCardContent>
               <p>
                 Discover changes in metrics with changing similarity to find the
-                sweet spot.
+                best threshold.
               </p>
             </IonCardContent>
             <IonCardContent>
@@ -240,7 +240,11 @@ const DashboardStrategy = ({
               </IonCardTitle>
             </IonCardHeader>
             <IonCardContent>
-              <p>Compare matching solutions based upon their KPIs.</p>
+              <p>
+                Compare matching solutions based upon their KPIs. The comparison
+                will include soft KPIs as specified as well as average binary
+                metrics.
+              </p>
             </IonCardContent>
             <IonCardContent>
               <IonText color="dark">
