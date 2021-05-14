@@ -13,8 +13,13 @@
   },
   "dependencies": {
     "@ionic/react": "^5.0.7",
+    "@types/react-beautiful-dnd": "^13.0.0",
+    "@types/react-table": "^7.0.29",
+    "@types/react-window": "^1.8.2",
+    "auto-bind": "^4.0.0",
     "chart.js": "^3.0.2",
     "d3": "^6.6.0",
+    "immer": "^8.0.1",
     "immutable": "^4.0.0-rc.12",
     "ionicons": "^5.4.0",
     "katex": "^0.12.0",

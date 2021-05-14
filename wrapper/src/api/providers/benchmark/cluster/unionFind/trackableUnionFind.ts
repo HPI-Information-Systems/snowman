@@ -1,6 +1,7 @@
+import { NestedArray } from 'snowman-library';
+
 import { getTmpArray } from '../../../../tools/array';
 import { flattenDeep } from '../../../../tools/flattenDeep';
-import { NestedArray } from '../../../../tools/types';
 import { ClusterID, MergesT, NodeLink } from '../types';
 import { Node } from './node';
 import { UnionFindBase } from './unionFindBase';

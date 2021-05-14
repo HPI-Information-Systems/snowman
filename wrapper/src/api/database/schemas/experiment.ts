@@ -1,5 +1,6 @@
+import { assertType } from 'snowman-library';
+
 import { ExperimentId } from '../../server/types';
-import { assertType } from '../../tools/types';
 import { escapeColumnNames } from '../tools/escapeColumnNames';
 import { Column, Columns, Schemas } from '../tools/types';
 
@@ -13,6 +14,7 @@ export const experimentSchemas = assertType<
       similarityScores: Column<'REAL'>[] = []
     ) => {
       const knownColumns = assertType<Columns>()({
+        // !ALL COLUMNS MUST BE DUPLICATED TO LIBRARY/CONSTANTS -> NonSimilarityThresholdColumns
         id1: {
           name: 'id1' as const,
           dataType: 'INTEGER',

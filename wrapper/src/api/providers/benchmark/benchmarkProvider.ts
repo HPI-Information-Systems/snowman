@@ -38,7 +38,7 @@ export class BenchmarkProvider {
     diagram,
   }: CalculateDiagramDataRequest): DiagramResponse {
     if (diagram === undefined) {
-      throw new Error('No experiments have been sent!');
+      throw new Error('No experiments to plot have been set!');
     }
 
     const xGetter: DiagramDataProvider = getDiagramDataProvider(xAxis);
@@ -74,7 +74,8 @@ export class BenchmarkProvider {
       });
       return { coordinates, definitionRange, valueRange };
     }
-    if (!diagram.multipleExperiments) throw new Error('S');
+    if (!diagram.multipleExperiments)
+      throw new Error('No experiments to plot have been set!');
 
     const coordinates = diagram.multipleExperiments
       .map((experiment: DiagramExperimentItem) => {
