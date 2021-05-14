@@ -14,7 +14,7 @@ import { ExperimentEntity } from 'types/ExperimentEntity';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: SimilarityDiagramStrategyModel = {
-  isValidConfig: true,
+  isValidConfig: false,
   diagramTracks: [],
   coordinates: [],
   experiments: [],
