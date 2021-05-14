@@ -5,7 +5,7 @@ export abstract class BaseMetric implements Metric {
   constructor(protected readonly matrix: ConfusionMatrix) {}
 
   abstract name: string;
-  abstract range: [number, number];
+  static range: [number, number];
   abstract formula: string;
   abstract value: number;
 

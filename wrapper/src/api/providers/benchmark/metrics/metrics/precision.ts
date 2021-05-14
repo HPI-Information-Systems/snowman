@@ -2,7 +2,7 @@ import { BaseMetric } from '../base';
 
 export class Precision extends BaseMetric {
   name = 'precision';
-  range: [number, number] = [0, 1];
+  static range: [number, number] = [0, 1];
   formula = '\\frac{tp}{tp+fp}';
   get value(): number {
     return (

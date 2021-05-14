@@ -4,7 +4,7 @@ import { Specificity } from '../metrics/specificity';
 
 export class BalancedAccuracy extends BaseMetric {
   name = 'balanced accuracy';
-  range: [number, number] = [0, 1];
+  static range: [number, number] = [0, 1];
   formula = '\\frac{true\\:positive\\:rate + true\\:negative\\:rate}{2}';
   get value(): number {
     const truePositiveRate = new Recall(this.matrix).value;

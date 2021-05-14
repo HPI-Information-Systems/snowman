@@ -4,7 +4,7 @@ import { Specificity } from './specificity';
 
 export class PrevalenceThreshold extends BaseMetric {
   name = 'prevalence threshold';
-  range: [number, number] = [0, 1];
+  static range: [number, number] = [0, 1];
   formula =
     '\\frac{\\sqrt{true\\:positive\\:rate \\cdot (1 - true\\:negative\\:rate)} + true\\:negative\\:rate - 1}{true\\:positive\\:rate + true\\:negative\\:rate - 1}';
   get value(): number {

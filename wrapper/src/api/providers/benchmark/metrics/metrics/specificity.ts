@@ -2,7 +2,7 @@ import { BaseMetric } from '../base';
 
 export class Specificity extends BaseMetric {
   name = 'specificity';
-  range: [number, number] = [0, 1];
+  static range: [number, number] = [0, 1];
   formula = '\\frac{tn}{fp+tn}';
   get value(): number {
     return (
