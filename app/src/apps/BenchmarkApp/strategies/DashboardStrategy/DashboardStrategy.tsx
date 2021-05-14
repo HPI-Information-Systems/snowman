@@ -15,6 +15,7 @@ import { DashboardStrategyProps } from 'apps/BenchmarkApp/strategies/DashboardSt
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import {
   analytics,
+  apps,
   barChart,
   calculator,
   colorFilter,
@@ -218,6 +219,40 @@ const DashboardStrategy = ({
               expand="full"
               fill="clear"
               onClick={(): void => openStrategy(StrategyIDs.SimilarityDiagram)}
+            >
+              Start Benchmark
+            </IonButton>
+          </IonCard>
+        </IonCol>
+        <IonCol size="4" sizeXl="3">
+          <IonCard>
+            <IonCardHeader>
+              <IonCardTitle>
+                KPI Decision Matrix
+                <span>
+                  <IonIcon
+                    className="ion-float-right"
+                    icon={apps}
+                    size="large"
+                    color="primarydark"
+                  />
+                </span>
+              </IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <p>Compare matching solutions based upon their KPIs.</p>
+            </IonCardContent>
+            <IonCardContent>
+              <IonText color="dark">
+                <p>
+                  <b>Requires:</b> at least a single matching solution
+                </p>
+              </IonText>
+            </IonCardContent>
+            <IonButton
+              expand="full"
+              fill="clear"
+              onClick={(): void => openStrategy(StrategyIDs.KpiDecisionMatrix)}
             >
               Start Benchmark
             </IonButton>
