@@ -22,7 +22,8 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
   {
     title: 'Installation Time',
     selector: (anEntity) =>
-      anEntity.softKPIs?.integrationEffort?.deploymentType?.join(', ') ?? '?',
+      (anEntity.softKPIs?.integrationEffort?.deploymentType?.join(', ') ??
+        '?') + ' h',
   },
   {
     title: 'Installation Effort',
@@ -31,8 +32,8 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
     title: 'Expertise',
     inset: true,
     selector: (anEntity) =>
-      anEntity.softKPIs?.integrationEffort?.installationEffort?.expertise?.toString() ??
-      '?',
+      (anEntity.softKPIs?.integrationEffort?.installationEffort?.expertise?.toString() ??
+        '?') + ' %',
   },
   {
     title: 'HR Amount',
@@ -51,8 +52,8 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
     title: 'Expertise',
     inset: true,
     selector: (anEntity) =>
-      anEntity.softKPIs?.configurationEffort?.matchingSolution?.expertise?.toString() ??
-      '?',
+      (anEntity.softKPIs?.configurationEffort?.matchingSolution?.expertise?.toString() ??
+        '?') + ' %',
   },
   {
     title: 'HR Amount',
@@ -68,8 +69,8 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
     title: 'Expertise',
     inset: true,
     selector: (anEntity) =>
-      anEntity.softKPIs?.configurationEffort?.domain?.expertise?.toString() ??
-      '?',
+      (anEntity.softKPIs?.configurationEffort?.domain?.expertise?.toString() ??
+        '?') + ' %',
   },
   {
     title: 'HR Amount',
@@ -99,5 +100,9 @@ export const DecisionSegments: DecisionSegmentEntity<any>[] = [
   {
     title: 'Continuous Effort',
     children: ContinuousEffort,
+  },
+  {
+    title: 'Average Metrics',
+    children: [],
   },
 ];
