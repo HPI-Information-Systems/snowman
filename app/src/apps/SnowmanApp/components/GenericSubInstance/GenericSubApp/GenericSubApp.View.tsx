@@ -1,6 +1,7 @@
-import { IonPage, IonSplitPane } from '@ionic/react';
+import { IonPage } from '@ionic/react';
 import { GenericSubAppProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubAppProps';
 import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
+import SmartSplitPane from 'apps/SnowmanApp/components/SmartSplitPane/SmartSplitPane';
 import { centralResourcesRefreshed } from 'apps/SnowmanApp/store/CentralResourcesGenericActions';
 import { isEqual } from 'lodash';
 import React, { Component, createElement } from 'react';
@@ -10,7 +11,10 @@ import { SnowmanAction } from 'types/SnowmanAction';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 
 class GenericSubAppView extends Component<GenericSubAppProps> {
-  static defaultProps = { usePageStruct: true };
+  static defaultProps = {
+    usePageStruct: true,
+    sideMenuDisabledSelector: (): boolean => false,
+  };
   store: Store<unknown, SnowmanAction>;
 
   constructor(props: GenericSubAppProps) {
@@ -47,10 +51,9 @@ class GenericSubAppView extends Component<GenericSubAppProps> {
         {this.props.activeApp === this.props.instanceId ? (
           <div style={{ position: 'relative', flexGrow: 1 }}>
             {this.props.sideMenu !== undefined ? (
-              <IonSplitPane
-                when="lg"
-                contentId="mainViewContentId"
-                className="split-pane-fixed"
+              <SmartSplitPane
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                disabledSelector={this.props.sideMenuDisabledSelector!}
               >
                 {createElement(this.props.sideMenu, {
                   contentId: 'mainViewContentId',
@@ -58,7 +61,7 @@ class GenericSubAppView extends Component<GenericSubAppProps> {
 
                 {/* Page Content */}
                 {this.renderPage()}
-              </IonSplitPane>
+              </SmartSplitPane>
             ) : (
               this.renderPage()
             )}
