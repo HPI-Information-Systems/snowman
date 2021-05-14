@@ -49,3 +49,7 @@ table.materialTable tbody td {
 table.materialTable thead th .clickableContent {
   cursor: pointer;
 }
+
+td .inset {
+  padding-left: 15px;
+}

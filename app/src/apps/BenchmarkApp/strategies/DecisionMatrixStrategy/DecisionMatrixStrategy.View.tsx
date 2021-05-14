@@ -1,16 +1,17 @@
 import { IonCard, IonText } from '@ionic/react';
-import { Algorithm } from 'api';
+import { DecisionMatrixStrategyProps } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyStyles.module.css';
 import { DecisionSegments } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/utils/DemoData';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import React from 'react';
 
-const MatchingSolutions: Algorithm[] = [];
-
-const DecisionMatrixStrategyView = (): JSX.Element => (
+const DecisionMatrixStrategyView = ({
+  isValidConfig,
+  selectedAlgorithms,
+}: DecisionMatrixStrategyProps): JSX.Element => (
   <>
     <ErroneousBackdrop
-      shouldShow={false}
+      shouldShow={!isValidConfig}
       message={
         'Please select at least a single matching solution and, optionally, an experiment each.'
       }
@@ -20,10 +21,10 @@ const DecisionMatrixStrategyView = (): JSX.Element => (
         <thead>
           <tr>
             <th>Categories</th>
-            {MatchingSolutions.map(
+            {selectedAlgorithms.map(
               (anAlgorithm): JSX.Element => (
                 <th key={`matrix-header-${anAlgorithm.id}`}>
-                  {anAlgorithm.name}
+                  <IonText color="primary">{anAlgorithm.name}</IonText>
                 </th>
               )
             )}
@@ -31,23 +32,31 @@ const DecisionMatrixStrategyView = (): JSX.Element => (
         </thead>
         <tbody>
           {DecisionSegments.map(
-            (aSegment): JSX.Element => (
-              <>
+            (aSegment, idx1): JSX.Element => (
+              <React.Fragment key={`matrix-segment-${idx1}`}>
                 <tr>
-                  <td>
-                    <IonText color="primarydark">{aSegment.title}</IonText>
+                  <td colSpan={selectedAlgorithms.length + 1}>
+                    <h4>
+                      <IonText color="primarydark">{aSegment.title}</IonText>
+                    </h4>
                   </td>
                 </tr>
                 {aSegment.children.map(
-                  (anEntity): JSX.Element => (
-                    <tr key={`matrix-row-initial-${anEntity.title}`}>
+                  (anEntity, idx2): JSX.Element => (
+                    <tr key={`matrix-${idx1}-row-initial-${idx2}`}>
                       <td>
-                        <b>{anEntity.title}</b>
+                        <b
+                          className={
+                            anEntity.inset === true ? styles.inset : undefined
+                          }
+                        >
+                          {anEntity.title}
+                        </b>
                       </td>
-                      {MatchingSolutions.map(
-                        (anAlgorithm): JSX.Element => (
+                      {selectedAlgorithms.map(
+                        (anAlgorithm, idx3): JSX.Element => (
                           <td
-                            key={`matrix-row-initial-${anEntity.title}-${anAlgorithm.id}`}
+                            key={`matrix-${idx1}-row-initial-${idx2}-${idx3}`}
                           >
                             {anEntity.selector
                               ? anEntity.selector(anAlgorithm)
@@ -58,7 +67,7 @@ const DecisionMatrixStrategyView = (): JSX.Element => (
                     </tr>
                   )
                 )}
-              </>
+              </React.Fragment>
             )
           )}
         </tbody>
