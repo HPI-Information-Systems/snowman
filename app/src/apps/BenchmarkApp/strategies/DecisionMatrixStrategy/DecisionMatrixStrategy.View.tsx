@@ -73,40 +73,45 @@ const DecisionMatrixStrategyView = ({
               </React.Fragment>
             )
           )}
-          {(averageMetrics[0] ?? []).map(
-            (aMetric: Metric, idx1: number): JSX.Element => (
-              <tr key={'nmetrics-row-' + aMetric.name}>
-                <td>
-                  <span
-                    data-tip={renderToString(aMetric.formula, {
-                      throwOnError: false,
-                      displayMode: true,
-                      output: 'html',
-                    })}
-                  >
-                    {aMetric.name}
-                  </span>
-                </td>
-                {averageMetrics.map(
-                  (metricsRow: Metric[], idx2: number): JSX.Element => (
-                    <td key={`matrix-view-ms-${idx2}-metric-${idx1}`}>
-                      <span
-                        data-tip={`${
-                          metricsRow[idx1]?.value?.toString() ??
-                          'divide by zero'
-                        } &isin; [${
-                          metricsRow[idx1]?.range?.toString() ?? '?'
-                        }]`}
-                      >
-                        {metricsRow[idx1]?.value?.toPrecision(8) ??
-                          'divide by zero'}
-                      </span>
-                    </td>
-                  )
-                )}
-              </tr>
+          {averageMetrics
+            .reduce(
+              (prevArr, curArr): Metric[] =>
+                prevArr.length > 0 ? prevArr : curArr,
+              []
             )
-          )}
+            .map(
+              (aMetric: Metric, idx1: number): JSX.Element => (
+                <tr key={'nmetrics-row-' + aMetric.name}>
+                  <td>
+                    <span
+                      data-tip={renderToString(aMetric.formula, {
+                        throwOnError: false,
+                        displayMode: true,
+                        output: 'html',
+                      })}
+                    >
+                      {aMetric.name}
+                    </span>
+                  </td>
+                  {averageMetrics.map(
+                    (metricsRow: Metric[], idx2: number): JSX.Element => (
+                      <td key={`matrix-view-ms-${idx2}-metric-${idx1}`}>
+                        <span
+                          data-tip={`${
+                            metricsRow[idx1]?.value?.toString() ??
+                            'divide by zero'
+                          } &isin; [${
+                            metricsRow[idx1]?.range?.toString() ?? '?'
+                          }]`}
+                        >
+                          {metricsRow[idx1]?.value?.toPrecision(8) ?? '?'}
+                        </span>
+                      </td>
+                    )
+                  )}
+                </tr>
+              )
+            )}
         </tbody>
       </table>
     </IonCard>
