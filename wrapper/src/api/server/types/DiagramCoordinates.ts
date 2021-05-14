@@ -12,7 +12,6 @@
  * Do not edit the class manually.
  */
 
- import { exists, mapValues } from '../runtime';
  /**
   * 
   * @export
@@ -44,39 +43,3 @@
       */
      threshold?: number;
  }
- 
- export function DiagramCoordinatesFromJSON(json: any): DiagramCoordinates {
-     return DiagramCoordinatesFromJSONTyped(json, false);
- }
- 
- export function DiagramCoordinatesFromJSONTyped(json: any, ignoreDiscriminator: boolean): DiagramCoordinates {
-     if ((json === undefined) || (json === null)) {
-         return json;
-     }
-     return {
-         
-         'x': json['x'],
-         'y': json['y'],
-         'experimentId': !exists(json, 'experimentId') ? undefined : json['experimentId'],
-         'threshold': !exists(json, 'threshold') ? undefined : json['threshold'],
-     };
- }
- 
- export function DiagramCoordinatesToJSON(value?: DiagramCoordinates | null): any {
-     if (value === undefined) {
-         return undefined;
-     }
-     if (value === null) {
-         return null;
-     }
-     return {
-         
-         'x': value.x,
-         'y': value.y,
-         'experimentId': value.experimentId,
-         'threshold': value.threshold,
-     };
- }
- 
- 
- 
