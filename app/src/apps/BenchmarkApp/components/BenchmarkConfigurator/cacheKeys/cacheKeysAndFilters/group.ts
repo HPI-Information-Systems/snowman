@@ -59,10 +59,7 @@ export const groupCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
     let first = true;
     for (const [, cacheKey] of resolveMultiSelectorAutoIncrements(...args)) {
       result.push(
-        ...getCacheKeyAndFilterUntyped(
-          cacheKey
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        )
+        ...getCacheKeyAndFilterUntyped(cacheKey)
           .getSelectorItems(state)
           .map(
             // eslint-disable-next-line no-loop-func

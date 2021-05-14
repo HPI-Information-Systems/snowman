@@ -74,5 +74,4 @@ export const loadStrategyData = (
 ): void => {
   dispatch(updateConfig(appStore));
   dispatch(loadCoordinates()).then();
-  // Todo: Load smth
 };

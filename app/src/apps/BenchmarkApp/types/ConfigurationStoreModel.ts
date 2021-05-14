@@ -6,7 +6,12 @@ export interface ConfigurationCacheItem<
   Key extends StoreCacheKey = StoreCacheKey
 > {
   targets: (Target | undefined)[];
-  cacheKey: Key;
+  /**
+   * ! WARNING - This may be a different key than the key used to get to this configuration
+   * This can happen when the corresponding cacheKeyAndFilter overwrites `prepareSerialization`
+   * ! DO NOT USE UNLESS STRICTLY NECESSARY
+   */
+  INTERNAL_cacheKey: Key;
   dependents: StoreCacheKey[];
 }
 

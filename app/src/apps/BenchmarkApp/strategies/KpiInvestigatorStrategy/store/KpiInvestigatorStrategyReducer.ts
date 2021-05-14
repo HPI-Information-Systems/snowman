@@ -2,11 +2,9 @@ import { DiagramExperimentItem, MetricsEnum } from 'api';
 import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
 import { KPIDiagramConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
 import { KpiInvestigatorStrategyActionTypes } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyActionTypes';
-import {
-  DiagramTrack,
-  KpiInvestigatorStrategyModel,
-} from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
+import { KpiInvestigatorStrategyModel } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { DiagramTrack } from 'apps/BenchmarkApp/types/DiagramTrack';
 import {
   experimentEntityToExperimentConfigItem,
   resolveExperimentEntity,
@@ -16,7 +14,7 @@ import { ExperimentEntity } from 'types/ExperimentEntity';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: KpiInvestigatorStrategyModel = {
-  isValidConfig: true,
+  isValidConfig: false,
   diagramTracks: [],
   coordinates: [],
   experiments: [],

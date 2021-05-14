@@ -3,7 +3,7 @@ import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
 import { DiagramTrack } from 'apps/BenchmarkApp/types/DiagramTrack';
 import { AllMetricsEnum } from 'types/AllMetricsEnum';
 
-export interface KpiInvestigatorStrategyModel {
+export interface SimilarityDiagramStrategyModel {
   isValidConfig: boolean;
   diagramTracks: DiagramTrack[];
   coordinates: DiagramCoordinates[][];

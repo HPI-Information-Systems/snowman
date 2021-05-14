@@ -4,6 +4,7 @@ import DashboardStrategy from 'apps/BenchmarkApp/strategies/DashboardStrategy/Da
 import IntersectionStrategy from 'apps/BenchmarkApp/strategies/IntersectionStrategy/IntersectionStrategy';
 import KpiInvestigatorStrategy from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategy';
 import NMetricsStrategy from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategy';
+import SimilarityDiagramStrategy from 'apps/BenchmarkApp/strategies/SimilarityDiagramStrategy/SimilarityDiagramStrategy';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import BackFab from 'components/simple/GenericFab/BackFab';
@@ -22,6 +23,7 @@ const BenchmarkAppView = ({
       <IntersectionStrategy />
       <BinaryMetricsStrategy />
       <KpiInvestigatorStrategy />
+      <SimilarityDiagramStrategy />
       {activeStrategy !== StrategyIDs.Dashboard ? (
         <BackFab clickOnFab={(): void => openStrategy(StrategyIDs.Dashboard)} />
       ) : (
