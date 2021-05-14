@@ -8,9 +8,8 @@ export class DiagramMetricsDataProvider extends DiagramDataProvider {
   getData(
     metric: MetricsEnum,
     diagramExperimentItem: DiagramExperimentItem
-  ): number {
-    if (!diagramExperimentItem.groundTruth)
-      throw new Error('A groundtruth is needed to receive hard metrics data');
+  ): number | null {
+    if (!diagramExperimentItem.groundTruth) return null;
     const datasetId = datasetFromExperimentIds([
       diagramExperimentItem.groundTruth.experimentId,
       diagramExperimentItem.experiment.experimentId,
@@ -22,7 +21,7 @@ export class DiagramMetricsDataProvider extends DiagramDataProvider {
     }).confusionMatrix;
 
     const mappedMetric = metricsMap.get(metric.toString());
-    if (!mappedMetric) throw new Error(`The metric ${metric} does not exist!`);
+    if (!mappedMetric) return null;
     return new mappedMetric(matrix).value;
   }
   getRange(metric: MetricsEnum): [number, number] {

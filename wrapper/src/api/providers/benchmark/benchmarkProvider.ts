@@ -1,3 +1,5 @@
+import { BehaviorSubject } from 'rxjs';
+
 import {
   CalculateDiagramDataRequest,
   DiagramCoordinates,
@@ -77,18 +79,22 @@ export class BenchmarkProvider {
     if (!diagram.multipleExperiments)
       throw new Error('No experiments to plot have been set!');
 
-    const coordinates = diagram.multipleExperiments
+    const coordinates = (diagram.multipleExperiments
       .map((experiment: DiagramExperimentItem) => {
         const x = xGetter.getData(xAxis, experiment);
         const y = yGetter.getData(yAxis, experiment);
         return {
           experimentId: experiment.experiment.experimentId,
           funcId: experiment.experiment.similarity?.func,
+          threshold: experiment.experiment.similarity?.threshold,
           x,
           y,
         };
       })
-      .sort(({ x: x1 }, { x: x2 }) => x1 - x2);
+      .filter(
+        ({ x, y }) =>
+          x !== null && y !== null && !Number.isNaN(x) && !Number.isNaN(y)
+      ) as Array<DiagramCoordinates>).sort(({ x: x1 }, { x: x2 }) => x1 - x2);
     return { coordinates, definitionRange, valueRange };
   }
   calculateExperimentIntersectionCount({

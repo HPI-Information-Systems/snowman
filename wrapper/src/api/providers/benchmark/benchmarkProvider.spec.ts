@@ -345,7 +345,7 @@ describe('test benchmark functions', () => {
               ],
             },
           })
-          .coordinates[0].x.toFixed(4),
+          .coordinates[0].x?.toFixed(4),
       });
     }
     expect(result).toEqual(

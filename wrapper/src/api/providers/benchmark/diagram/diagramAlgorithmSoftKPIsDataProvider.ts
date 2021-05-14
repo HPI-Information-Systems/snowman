@@ -11,7 +11,7 @@ export class DiagramAlgorithmSoftKPIsDataProvider extends DiagramDataProvider {
   getData(
     metric: SoftKPIsAlgorithmEnum,
     diagramExperimentItem: DiagramExperimentItem
-  ): number {
+  ): number | null {
     const algorithmProvider = new AlgorithmProvider();
     const experimentProvider = new ExperimentProvider();
     const algorithm = algorithmProvider.getAlgorithm(
@@ -26,12 +26,12 @@ export class DiagramAlgorithmSoftKPIsDataProvider extends DiagramDataProvider {
     return softKPIAlgorithmRangeMap.get(metric);
   }
 
-  mapEnum(metric: SoftKPIsAlgorithmEnum, algorithm: Algorithm): number {
+  mapEnum(metric: SoftKPIsAlgorithmEnum, algorithm: Algorithm): number | null {
     const mappedMetric = softKPIAlgorithmMap.get(metric);
     if (mappedMetric) {
       const metricValue = mappedMetric(algorithm);
       if (!metricValue) {
-        throw new Error(`The metric ${metric} does not exist!`);
+        return null;
       }
       return metricValue;
     }
