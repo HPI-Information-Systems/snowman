@@ -2,7 +2,7 @@ import { IonCard, IonText } from '@ionic/react';
 import { Metric } from 'api';
 import { DecisionMatrixStrategyProps } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyStyles.module.css';
-import { DecisionSegments } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/utils/DemoData';
+import { DecisionSegments } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/structs/DecisionSegments';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import { renderToString } from 'katex';
 import React, { useEffect } from 'react';
