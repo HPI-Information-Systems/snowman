@@ -52,7 +52,7 @@ const buildCoordinatesMap = (
               coordinates.funcId !== undefined
                 ? {
                     func: coordinates.funcId,
-                    threshold: coordinates.threshold ?? NaN,
+                    threshold: coordinates.threshold ?? 0,
                   }
                 : undefined,
           })

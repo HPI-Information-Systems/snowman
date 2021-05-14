@@ -20,6 +20,8 @@ const initialState: SimilarityDiagramStrategyModel = {
   experiments: [],
   yAxis: MetricsEnum.Precision,
   xAxis: MetricsEnum.Recall,
+  definitionRange: undefined,
+  valueRange: undefined,
 };
 
 const SimilarityDiagramStrategyReducer = (
@@ -87,6 +89,8 @@ const SimilarityDiagramStrategyReducer = (
       return {
         ...state,
         coordinates: action.payload as DiagramCoordinates[][],
+        definitionRange: action.optionalPayload as [number, number] | undefined,
+        valueRange: action.optionalPayload2 as [number, number] | undefined,
       };
     }
     case SimilarityDiagramStrategyActionTypes.SET_Y_AXIS: {

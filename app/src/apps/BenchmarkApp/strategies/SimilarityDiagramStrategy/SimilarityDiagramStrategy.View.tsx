@@ -6,13 +6,13 @@ import {
   IonLabel,
   IonRow,
 } from '@ionic/react';
+import { MetricsEnum } from 'api';
 import styles from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyStyles.module.css';
 import { SimilarityDiagramStrategyProps } from 'apps/BenchmarkApp/strategies/SimilarityDiagramStrategy/SimilarityDiagramStrategyProps';
 import { ScatterChart } from 'components/simple/ChartComponent/ScatterChart';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
 import React from 'react';
-import { AllMetricsObject } from 'types/AllMetricsEnum';
 
 const SimilarityDiagramStrategyView = ({
   isValidConfig,
@@ -21,10 +21,9 @@ const SimilarityDiagramStrategyView = ({
   datasets,
   changeYAxis,
   changeXAxis,
+  definitionRange,
+  valueRange,
 }: SimilarityDiagramStrategyProps): JSX.Element => {
-  const metrics = Object.values(AllMetricsObject).map(
-    (metric) => metric as string
-  );
   return (
     <>
       <ErroneousBackdrop
@@ -39,7 +38,7 @@ const SimilarityDiagramStrategyView = ({
             <IonItem>
               <IonLabel>Y Axis Metric:</IonLabel>
               <SelectableInput
-                allOptions={metrics}
+                allOptions={Object.values(MetricsEnum)}
                 currentOption={yAxis}
                 setOption={changeYAxis}
                 instanceDescriptor="SimilarityDiagramYAxis"
@@ -50,7 +49,7 @@ const SimilarityDiagramStrategyView = ({
             <IonItem>
               <IonLabel>X Axis Metric:</IonLabel>
               <SelectableInput
-                allOptions={metrics}
+                allOptions={Object.values(MetricsEnum)}
                 currentOption={xAxis}
                 setOption={changeXAxis}
                 instanceDescriptor="SimilarityDiagramXAxis"
@@ -68,6 +67,14 @@ const SimilarityDiagramStrategyView = ({
                   }}
                   options={{
                     animation: { duration: 0 },
+                    scales: {
+                      x: definitionRange
+                        ? { min: definitionRange[0], max: definitionRange[1] }
+                        : undefined,
+                      y: valueRange
+                        ? { min: valueRange[0], max: valueRange[1] }
+                        : undefined,
+                    },
                   }}
                 />
               </div>

@@ -33,6 +33,8 @@ const mapStateToProps = (
       showLine: true,
     })
   ),
+  valueRange: state.valueRange,
+  definitionRange: state.definitionRange,
 });
 
 const mapDispatchToProps = (

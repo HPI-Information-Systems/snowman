@@ -1,5 +1,4 @@
-import { BenchmarkApi } from 'api';
-import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
+import { BenchmarkApi, DiagramResponse } from 'api';
 import { SimilarityDiagramStrategyActionTypes } from 'apps/BenchmarkApp/strategies/SimilarityDiagramStrategy/types/SimilarityDiagramStrategyActionTypes';
 import { SimilarityDiagramStrategyModel } from 'apps/BenchmarkApp/strategies/SimilarityDiagramStrategy/types/SimilarityDiagramStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
@@ -22,11 +21,13 @@ export const updateConfig = (
   });
 
 export const setCoordinates = (
-  allCoordinates: DiagramCoordinates[][]
+  allCoordinates: DiagramResponse[]
 ): easyPrimitiveActionReturn<SimilarityDiagramStrategyModel> =>
   easyPrimitiveAction<SimilarityDiagramStrategyModel>({
     type: SimilarityDiagramStrategyActionTypes.SET_COORDINATES,
-    payload: allCoordinates,
+    payload: allCoordinates.map(({ coordinates }) => coordinates),
+    optionalPayload: allCoordinates[0].definitionRange,
+    optionalPayload2: allCoordinates[0].valueRange,
   });
 
 export const setYAxis = (
@@ -55,27 +56,24 @@ export const loadCoordinates = (): SnowmanThunkAction<
   if (!getState().isValidConfig) return Promise.resolve();
   return Promise.all(
     getState().diagramTracks.map(
-      (anItem): Promise<DiagramCoordinates[]> =>
+      (anItem): Promise<DiagramResponse> =>
         RequestHandler(() =>
-          new BenchmarkApi()
-            .calculateDiagramData({
-              yAxis: getState().yAxis,
-              xAxis: getState().xAxis,
-              diagram: {
-                similarityThresholds: {
-                  experimentId: anItem.items[0].experiment.experimentId,
-                  groundTruthId:
-                    anItem.items[0].groundTruth?.experimentId ??
-                    MagicNotPossibleId,
-                  steps: 100,
-                  func:
-                    anItem.items[0].experiment.similarity?.func ??
-                    MagicNotPossibleId,
-                },
+          new BenchmarkApi().calculateDiagramData({
+            yAxis: getState().yAxis,
+            xAxis: getState().xAxis,
+            diagram: {
+              similarityThresholds: {
+                experimentId: anItem.items[0].experiment.experimentId,
+                groundTruthId:
+                  anItem.items[0].groundTruth?.experimentId ??
+                  MagicNotPossibleId,
+                steps: 100,
+                func:
+                  anItem.items[0].experiment.similarity?.func ??
+                  MagicNotPossibleId,
               },
-            })
-            // TODO ranges
-            .then((coordinates) => coordinates.coordinates)
+            },
+          })
         )
     )
   ).then((allCoordinates) => dispatch(setCoordinates(allCoordinates)));

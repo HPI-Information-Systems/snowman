@@ -10,4 +10,6 @@ export interface SimilarityDiagramStrategyModel {
   experiments: Experiment[];
   yAxis: AllMetricsEnum;
   xAxis: AllMetricsEnum;
+  valueRange: [number, number] | undefined;
+  definitionRange: [number, number] | undefined;
 }

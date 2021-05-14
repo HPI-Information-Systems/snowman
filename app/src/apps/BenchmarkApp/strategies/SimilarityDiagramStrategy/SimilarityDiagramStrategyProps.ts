@@ -6,6 +6,8 @@ export interface SimilarityDiagramStrategyStateProps {
   datasets: ScatterChartDatasets;
   yAxis: AllMetricsEnum;
   xAxis: AllMetricsEnum;
+  valueRange: [number, number] | undefined;
+  definitionRange: [number, number] | undefined;
 }
 
 export interface SimilarityDiagramStrategyDispatchProps {
