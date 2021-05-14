@@ -8,6 +8,7 @@ import {
 } from '@ionic/react';
 import { KpiInvestigatorStrategyProps } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyStyles.module.css';
+import { KpiInvestigatorColorMode } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
 import { ScatterChart } from 'components/simple/ChartComponent/ScatterChart';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
@@ -24,6 +25,10 @@ const KpiInvestigatorStrategyView = ({
   changeXAxis,
   yAxis,
   changeYAxis,
+  changeColorMode,
+  colorMode,
+  definitionRange,
+  valueRange,
 }: KpiInvestigatorStrategyProps): JSX.Element => {
   const metrics = Object.values(AllMetricsObject)
     .filter((metric) => !OmitMetricsOnSoftKPIPage.has(metric))
@@ -38,7 +43,7 @@ const KpiInvestigatorStrategyView = ({
       />
       <IonGrid>
         <IonRow>
-          <IonCol size="6">
+          <IonCol size="4">
             <IonItem>
               <IonLabel>X Axis Metric:</IonLabel>
               <SelectableInput
@@ -49,7 +54,7 @@ const KpiInvestigatorStrategyView = ({
               />
             </IonItem>
           </IonCol>
-          <IonCol size="6">
+          <IonCol size="4">
             <IonItem>
               <IonLabel>Y Axis Metric:</IonLabel>
               <SelectableInput
@@ -57,6 +62,17 @@ const KpiInvestigatorStrategyView = ({
                 currentOption={yAxis}
                 setOption={changeYAxis}
                 instanceDescriptor="KpiInvestigatorYAxis"
+              />
+            </IonItem>
+          </IonCol>
+          <IonCol size="4">
+            <IonItem>
+              <IonLabel>Color By:</IonLabel>
+              <SelectableInput
+                allOptions={Object.values(KpiInvestigatorColorMode)}
+                currentOption={colorMode}
+                setOption={changeColorMode}
+                instanceDescriptor="KpiInvestigatorColorMode"
               />
             </IonItem>
           </IonCol>
@@ -70,7 +86,14 @@ const KpiInvestigatorStrategyView = ({
                     datasets: datasets,
                   }}
                   options={{
-                    scales: { x: { min: 0, max: 1 }, y: { min: 0, max: 1 } },
+                    scales: {
+                      x: definitionRange
+                        ? { min: definitionRange[0], max: definitionRange[1] }
+                        : undefined,
+                      y: valueRange
+                        ? { min: valueRange[0], max: valueRange[1] }
+                        : undefined,
+                    },
                     animation: { duration: 0 },
                   }}
                 />

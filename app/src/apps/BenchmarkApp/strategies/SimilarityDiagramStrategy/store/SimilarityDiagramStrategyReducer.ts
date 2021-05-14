@@ -35,14 +35,16 @@ const SimilarityDiagramStrategyReducer = (
         .flatMap((aTrack): DiagramTrack[] => {
           const groundTruthEntity = resolveExperimentEntity(
             aTrack.groundTruth,
-            appStore
+            appStore.resources
           );
           const groundTruth =
             groundTruthEntity !== undefined
               ? experimentEntityToExperimentConfigItem(groundTruthEntity)
               : undefined;
           return aTrack.experiments
-            .map((entity) => resolveExperimentEntity(entity, appStore))
+            .map((entity) =>
+              resolveExperimentEntity(entity, appStore.resources)
+            )
             .filter(
               (
                 anEntity: ExperimentEntity | undefined

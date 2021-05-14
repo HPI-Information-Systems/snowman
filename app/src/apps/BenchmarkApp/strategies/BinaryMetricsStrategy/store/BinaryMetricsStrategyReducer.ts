@@ -27,11 +27,11 @@ const BinaryMetricsStrategyReducer = (
       const configuration = BinaryMetricsConfiguration.getValue(appStore);
       const groundTruth = resolveExperimentEntity(
         configuration.groundTruth,
-        appStore
+        appStore.resources
       );
       const experiment = resolveExperimentEntity(
         configuration.experiment,
-        appStore
+        appStore.resources
       );
       const dataset = appStore.resources.datasets.find(
         (aDataset: Dataset): boolean => aDataset.id === configuration.dataset[0]

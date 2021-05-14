@@ -13,13 +13,13 @@ export function resolveExperimentEntity(
     threshold: number[];
     simFunction: number[];
   },
-  state: BenchmarkAppModel
+  resources: BenchmarkAppModel['resources']
 ): ExperimentEntity | undefined {
-  const resolvedExperiment = state.resources.experiments.find(
+  const resolvedExperiment = resources.experiments.find(
     (anExperiment: Experiment): boolean =>
       anExperiment.id === config.experiment[0]
   );
-  const resolvedSimilarityFunction = state.resources.simFunctions.find(
+  const resolvedSimilarityFunction = resources.simFunctions.find(
     (aSimFunction: SimilarityThresholdFunction): boolean =>
       aSimFunction.id === config.simFunction[0]
   );

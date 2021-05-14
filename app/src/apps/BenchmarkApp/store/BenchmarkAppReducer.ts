@@ -14,7 +14,7 @@ import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationSt
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { SnowmanAction } from 'types/SnowmanAction';
 
-const initialResourcesState: BenchmarkAppResourcesStore = {
+export const initialResourcesState: BenchmarkAppResourcesStore = {
   algorithms: [],
   datasets: [],
   experiments: [],
