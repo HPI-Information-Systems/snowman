@@ -1157,6 +1157,8 @@ components:
             type: number
           y:
             type: number
+          funcId:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
           experimentId:
             $ref: "#/components/schemas/ExperimentId"
           threshold:

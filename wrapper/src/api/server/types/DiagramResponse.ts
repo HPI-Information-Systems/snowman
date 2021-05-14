@@ -12,6 +12,10 @@
  * Do not edit the class manually.
  */
 
+ import {
+     DiagramCoordinates,
+ } from './';
+ 
  /**
   * 
   * @export
@@ -20,10 +24,10 @@
  export interface DiagramResponse {
      /**
       * 
-      * @type {Array<object>}
+      * @type {Array<DiagramCoordinates>}
       * @memberof DiagramResponse
       */
-     coordinates: Array<object>;
+     coordinates: Array<DiagramCoordinates>;
      /**
       * 
       * @type {Array<number>}

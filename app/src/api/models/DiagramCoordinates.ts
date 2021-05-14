@@ -36,6 +36,12 @@
       * @type {number}
       * @memberof DiagramCoordinates
       */
+     funcId?: number;
+     /**
+      * 
+      * @type {number}
+      * @memberof DiagramCoordinates
+      */
      experimentId?: number;
      /**
       * 
@@ -57,6 +63,7 @@
          
          'x': json['x'],
          'y': json['y'],
+         'funcId': !exists(json, 'funcId') ? undefined : json['funcId'],
          'experimentId': !exists(json, 'experimentId') ? undefined : json['experimentId'],
          'threshold': !exists(json, 'threshold') ? undefined : json['threshold'],
      };
@@ -73,6 +80,7 @@
          
          'x': value.x,
          'y': value.y,
+         'funcId': value.funcId,
          'experimentId': value.experimentId,
          'threshold': value.threshold,
      };

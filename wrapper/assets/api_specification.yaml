@@ -1277,12 +1277,15 @@ components:
         x: 0.8008281904610115
         y: 6.027456183070403
         experimentId: 1
-        threshold: 1.4658129805029452
+        threshold: 5.962133916683182
+        funcId: 1
       properties:
         x:
           type: number
         y:
           type: number
+        funcId:
+          type: integer
         experimentId:
           example: 1
           type: integer
@@ -1353,11 +1356,13 @@ components:
         - x: 0.8008281904610115
           y: 6.027456183070403
           experimentId: 1
-          threshold: 1.4658129805029452
+          threshold: 5.962133916683182
+          funcId: 1
         - x: 0.8008281904610115
           y: 6.027456183070403
           experimentId: 1
-          threshold: 1.4658129805029452
+          threshold: 5.962133916683182
+          funcId: 1
         definitionRange:
         - 0
         - 1

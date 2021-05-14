@@ -298,6 +298,7 @@ describe.each<SimilarityFunctionPlotTestCase>(testCases)(
             ({ threshold, ...matrix }) =>
               ({
                 threshold,
+                funcId,
                 x: threshold,
                 y: new Precision(matrix).value,
               } as PlotResult[number])

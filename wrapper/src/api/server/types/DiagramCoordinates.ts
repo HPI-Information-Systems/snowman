@@ -35,6 +35,12 @@
       * @type {number}
       * @memberof DiagramCoordinates
       */
+     funcId?: number;
+     /**
+      * 
+      * @type {number}
+      * @memberof DiagramCoordinates
+      */
      experimentId?: number;
      /**
       * 

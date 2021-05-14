@@ -82,6 +82,7 @@ export class BenchmarkProvider {
         const y = yGetter.getData(yAxis, experiment);
         return {
           experimentId: experiment.experiment.experimentId,
+          funcId: experiment.experiment.similarity?.func,
           x,
           y,
         };
