@@ -12,7 +12,7 @@ export type AllMetricsEnum =
 export const AllMetricsObject = {
   ...MetricsEnum,
   ...SoftKPIsAlgorithmEnum,
-  ...SoftKPIsAlgorithmEnum,
+  ...SoftKPIsExperimentEnum,
 };
 
 export const OmitMetricsOnSoftKPIPage = new Set<AllMetricsEnum>([

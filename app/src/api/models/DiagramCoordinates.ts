@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* tslint:disable */
+/* eslint-disable */
 /**
  *
  * The version of the OpenAPI document: 1.0.0

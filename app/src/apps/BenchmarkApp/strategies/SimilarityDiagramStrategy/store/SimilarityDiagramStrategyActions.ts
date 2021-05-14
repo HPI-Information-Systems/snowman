@@ -74,7 +74,8 @@ export const loadCoordinates = (): SnowmanThunkAction<
                 },
               },
             })
-            .then((coordinates) => coordinates as DiagramCoordinates[])
+            // TODO ranges
+            .then((coordinates) => coordinates.coordinates)
         )
     )
   ).then((allCoordinates) => dispatch(setCoordinates(allCoordinates)));
