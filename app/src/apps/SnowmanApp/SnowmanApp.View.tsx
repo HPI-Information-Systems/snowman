@@ -13,6 +13,8 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 /* Theme variables */
 import 'theme/variables.css';
+/* Include katex styling */
+import 'katex/dist/katex.min.css';
 /* Include toast styling */
 import 'react-toastify/dist/ReactToastify.css';
 /* Overwrite variables */
