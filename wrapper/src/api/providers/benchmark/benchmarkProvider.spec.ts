@@ -205,7 +205,11 @@ describe('test benchmark functions', () => {
           ],
         },
       })
-    ).toMatchObject([{ x: 11, y: 0.5 }]);
+    ).toMatchObject({
+      coordinates: [{ experimentId: 2, x: 11, y: 0.5 }],
+      definitionRange: undefined,
+      valueRange: [0, 1],
+    });
   });
   test('test softKPI-softKPI diagram calculation', () => {
     expect(
@@ -233,10 +237,14 @@ describe('test benchmark functions', () => {
           ],
         },
       })
-    ).toMatchObject([
-      { x: 11, y: 12 },
-      { x: 11, y: 12 },
-    ]);
+    ).toMatchObject({
+      coordinates: [
+        { experimentId: 2, x: 11, y: 12 },
+        { experimentId: 2, x: 11, y: 12 },
+      ],
+      definitionRange: undefined,
+      valueRange: [0, 100],
+    });
   });
   test('test metric-metric diagram calculation', () => {
     expect(
@@ -256,7 +264,11 @@ describe('test benchmark functions', () => {
           ],
         },
       })
-    ).toMatchObject([{ x: 0.5, y: 0.125 }]);
+    ).toMatchObject({
+      coordinates: [{ experimentId: 2, x: 0.5, y: 0.125 }],
+      definitionRange: [0, 1],
+      valueRange: [0, 1],
+    });
   });
   test('test metric-metric threshold diagram calculation', () => {
     const similarityThresholdProvider = new SimilarityThresholdsProvider();
@@ -284,10 +296,14 @@ describe('test benchmark functions', () => {
           },
         },
       })
-    ).toMatchObject([
-      { x: 0, y: 0.7, threshold: 0.7 },
-      { threshold: 0.5, x: 0.5, y: 0.5 },
-    ]);
+    ).toMatchObject({
+      coordinates: [
+        { threshold: 0.7, x: 0, y: 0.7 },
+        { threshold: 0.5, x: 0.5, y: 0.5 },
+      ],
+      definitionRange: [0, 1],
+      valueRange: [0, 1],
+    });
   });
   test('test if all enum values return value', () => {
     const diagramAxisValues = {
@@ -328,8 +344,8 @@ describe('test benchmark functions', () => {
                 },
               ],
             },
-          })[0]
-          .x.toFixed(4),
+          })
+          .coordinates[0].x.toFixed(4),
       });
     }
     expect(result).toEqual(
