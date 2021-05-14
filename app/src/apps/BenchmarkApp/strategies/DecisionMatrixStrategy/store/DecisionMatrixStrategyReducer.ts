@@ -30,7 +30,7 @@ const DecisionMatrixStrategyReducer = (
       const selectedAlgorithms = appStore.resources.algorithms.filter(
         (anAlgorithm): boolean => selectedAlgorithmIds.includes(anAlgorithm.id)
       );
-      if (selectedAlgorithms.length === 0) return initialState;
+      if (selectedAlgorithms.length === 0) return state;
       const selectedExperiments = matrixConfig.metrics.flatMap((aSegment) =>
         aSegment.experiments
           .map(
