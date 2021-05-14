@@ -32,7 +32,7 @@ const SimilarityDiagramStrategyReducer = (
       const configuration = KPIDiagramConfiguration.getValue(appStore);
       const diagramTracks: DiagramTrack[] = configuration.diagramTracks
         .filter((aTrack): boolean => aTrack.dataset[0] !== undefined)
-        .map((aTrack): DiagramTrack[] => {
+        .flatMap((aTrack): DiagramTrack[] => {
           const groundTruthEntity = resolveExperimentEntity(
             aTrack.groundTruth,
             appStore
@@ -72,7 +72,6 @@ const SimilarityDiagramStrategyReducer = (
               })
             );
         })
-        .flat()
         .filter((track) => track.items.length > 0);
       return {
         ...state,
