@@ -11,7 +11,7 @@ import styles from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInve
 import { SimilarityDiagramStrategyProps } from 'apps/BenchmarkApp/strategies/SimilarityDiagramStrategy/SimilarityDiagramStrategyProps';
 import { ScatterChart } from 'components/simple/ChartComponent/ScatterChart';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
-import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
+import SelectableInput from 'components/stateful/SelectableInputFactory/flavors/SelectableInput';
 import React from 'react';
 
 const SimilarityDiagramStrategyView = ({
@@ -39,9 +39,10 @@ const SimilarityDiagramStrategyView = ({
               <IonLabel>Y Axis Metric:</IonLabel>
               <SelectableInput
                 allOptions={Object.values(MetricsEnum)}
-                currentOption={yAxis}
-                setOption={changeYAxis}
+                selection={[yAxis]}
+                onChange={(selection) => changeYAxis(selection[0])}
                 instanceDescriptor="SimilarityDiagramYAxis"
+                allowMultiselect={false}
               />
             </IonItem>
           </IonCol>
@@ -50,9 +51,10 @@ const SimilarityDiagramStrategyView = ({
               <IonLabel>X Axis Metric:</IonLabel>
               <SelectableInput
                 allOptions={Object.values(MetricsEnum)}
-                currentOption={xAxis}
-                setOption={changeXAxis}
+                selection={[xAxis]}
+                onChange={(selection) => changeXAxis(selection[0])}
                 instanceDescriptor="SimilarityDiagramXAxis"
+                allowMultiselect={false}
               />
             </IonItem>
           </IonCol>

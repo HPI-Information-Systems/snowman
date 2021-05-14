@@ -1,4 +1,3 @@
-import { Algorithm, Dataset } from 'api';
 import { ExperimentsAppActionTypes } from 'apps/ExperimentsApp/types/ExperimentsAppActionTypes';
 import { ExperimentsAppModel } from 'apps/ExperimentsApp/types/ExperimentsAppModel';
 import { CentralResourcesGenericActionsTypes } from 'apps/SnowmanApp/types/CentralResourcesGenericActionsTypes';
@@ -22,27 +21,23 @@ const ExperimentsAppReducer = (
         ...state,
         selectedDatasets: intersection(
           state.selectedDatasets,
-          centralResources.datasets.map((aDataset: Dataset): string =>
-            aDataset.id.toString()
-          )
+          centralResources.datasets.map(({ id }) => id)
         ),
         selectedAlgorithms: intersection(
           state.selectedAlgorithms,
-          centralResources.algorithms.map((anAlgorithm: Algorithm): string =>
-            anAlgorithm.id.toString()
-          )
+          centralResources.algorithms.map(({ id }) => id)
         ),
       };
     }
     case ExperimentsAppActionTypes.CHANGE_SELECTED_DATASETS:
       return {
         ...state,
-        selectedDatasets: action.payload as string[],
+        selectedDatasets: action.payload as number[],
       };
     case ExperimentsAppActionTypes.CHANGE_SELECTED_ALGORITHMS:
       return {
         ...state,
-        selectedAlgorithms: action.payload as string[],
+        selectedAlgorithms: action.payload as number[],
       };
     default:
       return state;

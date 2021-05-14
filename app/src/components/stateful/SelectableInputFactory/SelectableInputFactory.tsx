@@ -1,17 +1,17 @@
-import { SelectableInputView } from 'components/stateful/SelectableInput/SelectableInput.View';
+import { SelectableInputView } from 'components/stateful/SelectableInputFactory/SelectableInputFactory.View';
 import {
   SelectableInputDispatchProps,
   SelectableInputOwnProps,
   SelectableInputStateProps,
-} from 'components/stateful/SelectableInput/SelectableInputProps';
+} from 'components/stateful/SelectableInputFactory/SelectableInputFactoryProps';
 import {
   closePopover,
   resetElement,
   setSearchString,
   showPopover,
-} from 'components/stateful/SelectableInput/store/SelectableInputActions';
-import { SelectableInputStoreMagistrate } from 'components/stateful/SelectableInput/store/SelectableInputStore';
-import { SelectableInputModel } from 'components/stateful/SelectableInput/types/SelectableInputModel';
+} from 'components/stateful/SelectableInputFactory/store/SelectableInputActions';
+import { SelectableInputStoreMagistrate } from 'components/stateful/SelectableInputFactory/store/SelectableInputStore';
+import { SelectableInputModel } from 'components/stateful/SelectableInputFactory/types/SelectableInputModel';
 import { connect } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -42,12 +42,18 @@ const mapDispatchToProps = (
   },
 });
 
-const SelectableInput = GenericStoreComponentFactory<
-  SelectableInputModel,
-  SelectableInputOwnProps
->(
-  SelectableInputStoreMagistrate,
-  connect(mapStateToProps, mapDispatchToProps)(SelectableInputView)
-);
-
-export default SelectableInput;
+function SelectableInputFactory<Content>(): (
+  props: SelectableInputOwnProps<Content>
+) => JSX.Element {
+  return GenericStoreComponentFactory<
+    SelectableInputModel,
+    SelectableInputOwnProps<Content>
+  >(
+    SelectableInputStoreMagistrate,
+    connect(
+      mapStateToProps,
+      mapDispatchToProps
+    )(SelectableInputView) as React.FC<SelectableInputOwnProps<Content>>
+  );
+}
+export default SelectableInputFactory;

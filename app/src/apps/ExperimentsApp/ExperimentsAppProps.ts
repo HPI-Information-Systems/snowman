@@ -1,9 +1,8 @@
 import { Algorithm, Dataset, Experiment } from 'api';
-import { IonSelectChangeEvent } from 'types/IonChangeEvent';
 
 export interface ExperimentsAppStateProps {
-  selectedAlgorithms: string[];
-  selectedDatasets: string[];
+  selectedAlgorithms: number[];
+  selectedDatasets: number[];
   currentExperiments: Experiment[];
 }
 
@@ -15,8 +14,8 @@ export interface ExperimentsAppOwnProps {
 
 export interface ExperimentsAppDispatchProps {
   addExperiment(): void;
-  changeSelectedDatasets(event: IonSelectChangeEvent): void;
-  changeSelectedAlgorithms(event: IonSelectChangeEvent): void;
+  changeSelectedDatasets(selection: number[]): void;
+  changeSelectedAlgorithms(selection: number[]): void;
 }
 
 export type ExperimentsAppProps = ExperimentsAppOwnProps &

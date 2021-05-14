@@ -16,7 +16,7 @@ import { Algorithm, Dataset } from 'api';
 import { ExperimentDialogProps } from 'apps/ExperimentDialog/ExperimentDialogProps';
 import styles from 'apps/ExperimentDialog/ExperimentDialogStyles.module.css';
 import FileInput from 'components/simple/FileInput/FileInput';
-import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
+import SelectableInput from 'components/stateful/SelectableInputFactory/flavors/SelectableInput';
 import {
   addCircleOutline,
   checkmarkCircleOutline,
@@ -154,9 +154,10 @@ const ExperimentDialogView = ({
           allOptions={$enum(experimentFileFormatEnum).map(
             (form) => form as string
           )}
-          currentOption={experimentFileFormat}
-          setOption={changeExperimentFileFormat}
+          selection={[experimentFileFormat]}
+          onChange={(selection) => changeExperimentFileFormat(selection[0])}
           instanceDescriptor="experimentDialog1"
+          allowMultiselect={false}
         />
       </IonItem>
       <IonItem>

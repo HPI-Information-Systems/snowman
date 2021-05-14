@@ -122,6 +122,7 @@
 /* Tooltip */
 .tooltip-fixed {
   max-width: 450px;
+  z-index: 100000000 !important;
 }
 
 /* Ionic Grid */

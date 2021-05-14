@@ -1,10 +1,15 @@
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { GenericStoreComponentProps } from 'utils/GenericStoreComponentFactory';
 
-export interface SelectableInputOwnProps extends GenericStoreComponentProps {
-  currentOption: string;
-  setOption(anOption: string): void;
-  allOptions: string[];
+export interface SelectableInputOwnProps<Content>
+  extends GenericStoreComponentProps {
+  selection: string[];
+  allOptions: Content[];
+  allowMultiselect: boolean;
+  onChange(newSelection: string[]): void;
+  getID?: (content: Content) => string;
+  renderChild?: (content: Content) => JSX.Element;
+  matches?: (content: Content, search: string) => boolean;
 }
 
 export interface SelectableInputStateProps {
@@ -20,6 +25,8 @@ export interface SelectableInputDispatchProps {
   resetElement(): void;
 }
 
-export type SelectableInputProps = SelectableInputStateProps &
+export type SelectableInputProps<
+  Content = unknown
+> = SelectableInputStateProps &
   SelectableInputDispatchProps &
-  SelectableInputOwnProps;
+  SelectableInputOwnProps<Content>;
