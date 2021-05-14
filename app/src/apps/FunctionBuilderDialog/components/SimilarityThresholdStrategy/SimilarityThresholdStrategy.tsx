@@ -21,7 +21,7 @@ const SimilarityThresholdStrategy = ({
     <IonChip outline>
       <IonSelect
         placeholder="?"
-        value={thresholdValue}
+        value={availableThresholdValues.length > 0 ? thresholdValue ?? '' : ''}
         onIonChange={(event: IonChangeEvent): void =>
           FunctionBuildingBlockMagistrate.setLeftValue(
             blockAccessKey,
