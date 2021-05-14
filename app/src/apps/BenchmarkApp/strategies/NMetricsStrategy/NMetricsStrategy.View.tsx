@@ -1,5 +1,3 @@
-import 'katex/dist/katex.min.css';
-
 import { IonCard, IonIcon, IonText } from '@ionic/react';
 import { Metric } from 'api';
 import { NMetricsStrategyProps } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyProps';

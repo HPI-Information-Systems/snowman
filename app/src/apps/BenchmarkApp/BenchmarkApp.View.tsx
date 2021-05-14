@@ -1,6 +1,7 @@
 import { BenchmarkAppProps } from 'apps/BenchmarkApp/BenchmarkAppProps';
 import BinaryMetricsStrategy from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/BinaryMetricsStrategy';
 import DashboardStrategy from 'apps/BenchmarkApp/strategies/DashboardStrategy/DashboardStrategy';
+import DecisionMatrixStrategy from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategy';
 import IntersectionStrategy from 'apps/BenchmarkApp/strategies/IntersectionStrategy/IntersectionStrategy';
 import KpiInvestigatorStrategy from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategy';
 import NMetricsStrategy from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategy';
@@ -24,6 +25,7 @@ const BenchmarkAppView = ({
       <BinaryMetricsStrategy />
       <KpiInvestigatorStrategy />
       <SimilarityDiagramStrategy />
+      <DecisionMatrixStrategy />
       {activeStrategy !== StrategyIDs.Dashboard ? (
         <BackFab clickOnFab={(): void => openStrategy(StrategyIDs.Dashboard)} />
       ) : (

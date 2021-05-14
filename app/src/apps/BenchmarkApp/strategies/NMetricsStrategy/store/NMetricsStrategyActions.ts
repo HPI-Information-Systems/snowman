@@ -10,6 +10,7 @@ import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
+import RequestHandler from 'utils/requestHandler';
 
 export const updateConfig = (
   appStore: BenchmarkAppModel
@@ -47,16 +48,18 @@ export const loadNMetrics = (): SnowmanThunkAction<
   dispatch(resetMetrics());
   Promise.all(
     getState().experiments.map((anEntity: ExperimentEntity) =>
-      new BenchmarkApi().getBinaryMetrics({
-        groundTruthSimilarityThresholdFunction:
-          groundTruth?.similarity?.func.id,
-        groundTruthSimilarityThreshold: groundTruth?.similarity?.threshold,
-        groundTruthExperimentId:
-          groundTruth?.experiment.id ?? MagicNotPossibleId,
-        predictedSimilarityThresholdFunction: anEntity.similarity?.func.id,
-        predictedSimilarityThreshold: anEntity.similarity?.threshold,
-        predictedExperimentId: anEntity.experiment?.id ?? MagicNotPossibleId,
-      })
+      RequestHandler(() =>
+        new BenchmarkApi().getBinaryMetrics({
+          groundTruthSimilarityThresholdFunction:
+            groundTruth?.similarity?.func.id,
+          groundTruthSimilarityThreshold: groundTruth?.similarity?.threshold,
+          groundTruthExperimentId:
+            groundTruth?.experiment.id ?? MagicNotPossibleId,
+          predictedSimilarityThresholdFunction: anEntity.similarity?.func.id,
+          predictedSimilarityThreshold: anEntity.similarity?.threshold,
+          predictedExperimentId: anEntity.experiment?.id ?? MagicNotPossibleId,
+        })
+      )
     )
   ).then((metrics: Metric[][]): void => {
     dispatch(setMetrics(metrics));

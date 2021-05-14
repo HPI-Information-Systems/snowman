@@ -1,5 +1,4 @@
 import 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/BinaryMetricsStrategyStyles.css';
-import 'katex/dist/katex.min.css';
 
 import {
   IonCard,

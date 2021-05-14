@@ -15,6 +15,7 @@ import { DashboardStrategyProps } from 'apps/BenchmarkApp/strategies/DashboardSt
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import {
   analytics,
+  apps,
   barChart,
   calculator,
   colorFilter,
@@ -165,8 +166,8 @@ const DashboardStrategy = ({
             <IonCardContent>
               <p>
                 Investigate soft and hard KPIs of experiments grouped by either
-                dataset or matching solutions. Evaluation occurs with the help
-                of a variety of diagrams.
+                dataset or matching solution. Evaluation occurs with the help of
+                a variety of diagrams.
               </p>
             </IonCardContent>
             <IonCardContent>
@@ -203,7 +204,7 @@ const DashboardStrategy = ({
             <IonCardContent>
               <p>
                 Discover changes in metrics with changing similarity to find the
-                sweet spot.
+                best threshold.
               </p>
             </IonCardContent>
             <IonCardContent>
@@ -218,6 +219,44 @@ const DashboardStrategy = ({
               expand="full"
               fill="clear"
               onClick={(): void => openStrategy(StrategyIDs.SimilarityDiagram)}
+            >
+              Start Benchmark
+            </IonButton>
+          </IonCard>
+        </IonCol>
+        <IonCol size="4" sizeXl="3">
+          <IonCard>
+            <IonCardHeader>
+              <IonCardTitle>
+                KPI Decision Matrix
+                <span>
+                  <IonIcon
+                    className="ion-float-right"
+                    icon={apps}
+                    size="large"
+                    color="primarydark"
+                  />
+                </span>
+              </IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <p>
+                Compare matching solutions based upon their KPIs. The comparison
+                will include soft KPIs as specified as well as average binary
+                metrics.
+              </p>
+            </IonCardContent>
+            <IonCardContent>
+              <IonText color="dark">
+                <p>
+                  <b>Requires:</b> at least a single matching solution
+                </p>
+              </IonText>
+            </IonCardContent>
+            <IonButton
+              expand="full"
+              fill="clear"
+              onClick={(): void => openStrategy(StrategyIDs.KpiDecisionMatrix)}
             >
               Start Benchmark
             </IonButton>

@@ -1,0 +1,55 @@
+table.materialTable {
+  display: table;
+  width: 100%;
+  max-width: 100%;
+  border: 0;
+}
+
+table.materialTable th,
+table.materialTable td {
+  padding: 1.6em;
+  border: inherit;
+  text-align: left;
+  vertical-align: top;
+}
+
+table.materialTable thead tr {
+  border-bottom: 1px solid var(--ion-color-medium-shade);
+}
+
+table.materialTable thead th {
+  color: var(--ion-color-dark);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+table.materialTable thead th .iconMiddlePadded {
+  padding-left: 5px;
+  vertical-align: middle;
+}
+
+table.materialTable tbody tr {
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+table.materialTable tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+@media (prefers-color-scheme: dark) {
+  table.materialTable tbody tr:hover {
+    background-color: #323232;
+  }
+}
+
+table.materialTable tbody td {
+  color: var(--ion-color-medium);
+}
+
+table.materialTable thead th .clickableContent {
+  cursor: pointer;
+}
+
+td .inset {
+  padding-left: 15px;
+}
