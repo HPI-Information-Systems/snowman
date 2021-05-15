@@ -1,3 +1,4 @@
+import { Metric } from 'api';
 import {
   DecisionRowAlgorithm,
   DecisionSegmentEntity,
@@ -27,6 +28,13 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
   },
   {
     title: 'Installation Effort',
+    selector: (anEntity) =>
+      (anEntity.installationEffort
+        ?.find(
+          (anEffort: Metric): boolean =>
+            anEffort.id === 'manhattanDistanceBasedEffort'
+        )
+        ?.value.toString() ?? '?') + ' EP',
   },
   {
     title: 'Expertise',
@@ -47,6 +55,13 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
 export const ContinuousEffort: DecisionRowAlgorithm[] = [
   {
     title: 'Matching Solution Effort',
+    selector: (anEntity) =>
+      (anEntity.matchingSolutionEffort
+        ?.find(
+          (anEffort: Metric): boolean =>
+            anEffort.id === 'manhattanDistanceBasedEffort'
+        )
+        ?.value.toString() ?? '?') + ' EP',
   },
   {
     title: 'Expertise',
@@ -64,6 +79,13 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
   },
   {
     title: 'Domain Effort',
+    selector: (anEntity) =>
+      (anEntity.domainEffort
+        ?.find(
+          (anEffort: Metric): boolean =>
+            anEffort.id === 'manhattanDistanceBasedEffort'
+        )
+        ?.value.toString() ?? '?') + ' EP',
   },
   {
     title: 'Expertise',

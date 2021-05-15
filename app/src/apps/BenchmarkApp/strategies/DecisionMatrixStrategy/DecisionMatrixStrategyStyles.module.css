@@ -7,7 +7,7 @@ table.materialTable {
 
 table.materialTable th,
 table.materialTable td {
-  padding: 1.6em;
+  padding: 1em 1.6em;
   border: inherit;
   text-align: left;
   vertical-align: top;
@@ -58,6 +58,7 @@ h4.section {
   overflow: hidden;
   color: var(--ion-color-primarydark);
   text-align: left;
+  margin: 0;
 }
 
 h4.section::after {
