@@ -16,7 +16,7 @@ const NMetricsStrategyView = ({
   metrics,
   experiments,
   inspectExperiment,
-  isValidSelection,
+  isValidConfig,
 }: NMetricsStrategyProps): JSX.Element => {
   useEffect(() => {
     // Triggered on every component update!
@@ -25,10 +25,10 @@ const NMetricsStrategyView = ({
   return (
     <PageStruct
       pageTitle={StrategyIDs.NaryMetrics}
-      enableScroll={isValidSelection}
+      enableScroll={isValidConfig}
     >
       <ErroneousBackdrop
-        shouldShow={!isValidSelection}
+        shouldShow={!isValidConfig}
         message={
           'Please select one gold standard and at least one other experiment ' +
           'from a single dataset!'
