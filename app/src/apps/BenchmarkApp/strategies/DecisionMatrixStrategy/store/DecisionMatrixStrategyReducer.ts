@@ -35,7 +35,10 @@ const DecisionMatrixStrategyReducer = (
         aSegment.experiments
           .map(
             (anExperiment): MetricEntityOptional => ({
-              experiment: resolveExperimentEntity(anExperiment, appStore),
+              experiment: resolveExperimentEntity(
+                anExperiment,
+                appStore.resources
+              ),
               groundTruthId: aSegment.groundTruth[0],
             })
           )
