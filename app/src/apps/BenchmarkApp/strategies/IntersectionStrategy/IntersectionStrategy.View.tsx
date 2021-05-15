@@ -61,7 +61,7 @@ const IntersectionStrategyView = ({
 
   return (
     <PageStruct
-      pageTitle={StrategyIDs.BinaryMetrics}
+      pageTitle={StrategyIDs.NaryIntersection}
       enableScroll={isValidConfig}
     >
       <ErroneousBackdrop

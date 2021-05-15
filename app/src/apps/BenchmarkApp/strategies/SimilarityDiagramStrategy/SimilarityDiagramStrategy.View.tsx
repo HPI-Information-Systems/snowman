@@ -28,7 +28,7 @@ const SimilarityDiagramStrategyView = ({
 }: SimilarityDiagramStrategyProps): JSX.Element => {
   return (
     <PageStruct
-      pageTitle={StrategyIDs.BinaryMetrics}
+      pageTitle={StrategyIDs.SimilarityDiagram}
       enableScroll={isValidConfig}
     >
       <ErroneousBackdrop

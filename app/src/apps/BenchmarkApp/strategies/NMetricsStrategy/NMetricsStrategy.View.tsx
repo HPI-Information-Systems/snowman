@@ -24,7 +24,7 @@ const NMetricsStrategyView = ({
   });
   return (
     <PageStruct
-      pageTitle={StrategyIDs.BinaryMetrics}
+      pageTitle={StrategyIDs.NaryMetrics}
       enableScroll={isValidSelection}
     >
       <ErroneousBackdrop

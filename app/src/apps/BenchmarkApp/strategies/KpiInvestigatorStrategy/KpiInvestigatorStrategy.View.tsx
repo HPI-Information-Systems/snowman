@@ -37,7 +37,7 @@ const KpiInvestigatorStrategyView = ({
     .map((metric) => metric as string);
   return (
     <PageStruct
-      pageTitle={StrategyIDs.BinaryMetrics}
+      pageTitle={StrategyIDs.KpiInvestigator}
       enableScroll={isValidConfig}
     >
       <ErroneousBackdrop

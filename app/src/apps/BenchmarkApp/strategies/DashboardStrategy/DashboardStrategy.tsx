@@ -32,7 +32,7 @@ const DashboardStrategy = ({
     strategyId={StrategyIDs.Dashboard}
     createStrategyStore={dummyStoreFactory()}
   >
-    <PageStruct pageTitle={StrategyIDs.BinaryMetrics} enableScroll={true}>
+    <PageStruct pageTitle={StrategyIDs.Dashboard} enableScroll={true}>
       <IonGrid>
         <IonRow>
           <IonCol size="4" sizeXl="3">

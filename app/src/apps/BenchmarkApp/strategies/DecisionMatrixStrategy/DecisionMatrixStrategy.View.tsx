@@ -23,7 +23,7 @@ const DecisionMatrixStrategyView = ({
   });
   return (
     <PageStruct
-      pageTitle={StrategyIDs.BinaryMetrics}
+      pageTitle={StrategyIDs.KpiDecisionMatrix}
       enableScroll={isValidConfig}
     >
       <ErroneousBackdrop
