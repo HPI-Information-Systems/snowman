@@ -11,7 +11,9 @@ import { IntersectionVennDiagramConfigStrategy } from 'apps/BenchmarkApp/strateg
 import IntersectionVennDiagram from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/IntersectionVennDiagram';
 import { IntersectionVennDiagramIntersectionStrategy } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionVennDiagram/strategies/intersection';
 import { IntersectionStrategyProps } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/IntersectionStrategyProps';
+import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { stringifyExperimentEntity } from 'apps/BenchmarkApp/utils/experimentEntity';
+import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import DataViewer from 'components/simple/DataViewer/DataViewer';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -58,7 +60,10 @@ const IntersectionStrategyView = ({
   );
 
   return (
-    <>
+    <PageStruct
+      pageTitle={StrategyIDs.BinaryMetrics}
+      enableScroll={isValidConfig}
+    >
       <ErroneousBackdrop
         shouldShow={!isValidConfig}
         message={
@@ -101,7 +106,7 @@ const IntersectionStrategyView = ({
           </IonCol>
         </IonRow>
       </IonGrid>
-    </>
+    </PageStruct>
   );
 };
 

@@ -11,7 +11,11 @@ import { PageStructProps } from 'apps/SnowmanApp/components/GenericSubInstance/G
 import styles from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStructStyles.module.css';
 import React from 'react';
 
-const PageStruct = ({ pageTitle, children }: PageStructProps): JSX.Element => (
+const PageStruct = ({
+  pageTitle,
+  children,
+  enableScroll = true,
+}: PageStructProps): JSX.Element => (
   <>
     <IonHeader>
       <IonToolbar color="primary">
@@ -24,7 +28,13 @@ const PageStruct = ({ pageTitle, children }: PageStructProps): JSX.Element => (
         </div>
       </IonToolbar>
     </IonHeader>
-    <IonContent className="ion-padding">{children}</IonContent>
+    <IonContent
+      className="ion-padding"
+      scrollX={enableScroll}
+      scrollY={enableScroll}
+    >
+      {children}
+    </IonContent>
   </>
 );
 

@@ -3,6 +3,8 @@ import { Metric } from 'api';
 import { DecisionMatrixStrategyProps } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyStyles.module.css';
 import { DecisionSegments } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/structs/DecisionSegments';
+import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
+import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import { create } from 'ionicons/icons';
 import { renderToString } from 'katex';
@@ -20,7 +22,10 @@ const DecisionMatrixStrategyView = ({
     ReactTooltip.rebuild();
   });
   return (
-    <>
+    <PageStruct
+      pageTitle={StrategyIDs.BinaryMetrics}
+      enableScroll={isValidConfig}
+    >
       <ErroneousBackdrop
         shouldShow={!isValidConfig}
         message={
@@ -140,7 +145,7 @@ const DecisionMatrixStrategyView = ({
           </tbody>
         </table>
       </IonCard>
-    </>
+    </PageStruct>
   );
 };
 

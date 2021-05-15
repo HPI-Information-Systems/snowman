@@ -2,7 +2,9 @@ import { IonCard, IonIcon, IonText } from '@ionic/react';
 import { Metric } from 'api';
 import { NMetricsStrategyProps } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyStyles.module.css';
+import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { uniqueExperimentEntityKey } from 'apps/BenchmarkApp/utils/experimentEntity';
+import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import { chevronForwardOutline } from 'ionicons/icons';
 import { renderToString } from 'katex';
@@ -21,7 +23,10 @@ const NMetricsStrategyView = ({
     ReactTooltip.rebuild();
   });
   return (
-    <>
+    <PageStruct
+      pageTitle={StrategyIDs.BinaryMetrics}
+      enableScroll={isValidSelection}
+    >
       <ErroneousBackdrop
         shouldShow={!isValidSelection}
         message={
@@ -108,7 +113,7 @@ const NMetricsStrategyView = ({
           </tbody>
         </table>
       </IonCard>
-    </>
+    </PageStruct>
   );
 };
 

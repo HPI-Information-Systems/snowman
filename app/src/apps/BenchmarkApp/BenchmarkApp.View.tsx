@@ -7,7 +7,6 @@ import KpiInvestigatorStrategy from 'apps/BenchmarkApp/strategies/KpiInvestigato
 import NMetricsStrategy from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategy';
 import SimilarityDiagramStrategy from 'apps/BenchmarkApp/strategies/SimilarityDiagramStrategy/SimilarityDiagramStrategy';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
-import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import BackFab from 'components/simple/GenericFab/BackFab';
 import React, { useEffect } from 'react';
 
@@ -18,7 +17,7 @@ const BenchmarkAppView = ({
 }: BenchmarkAppProps): JSX.Element => {
   useEffect(loadInitialState, [loadInitialState]);
   return (
-    <PageStruct pageTitle={activeStrategy}>
+    <>
       <DashboardStrategy openStrategy={openStrategy} />
       <NMetricsStrategy />
       <IntersectionStrategy />
@@ -31,7 +30,7 @@ const BenchmarkAppView = ({
       ) : (
         <div />
       )}
-    </PageStruct>
+    </>
   );
 };
 

@@ -9,6 +9,8 @@ import {
 import { MetricsEnum } from 'api';
 import styles from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyStyles.module.css';
 import { SimilarityDiagramStrategyProps } from 'apps/BenchmarkApp/strategies/SimilarityDiagramStrategy/SimilarityDiagramStrategyProps';
+import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
+import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import { ScatterChart } from 'components/simple/ChartComponent/ScatterChart';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
@@ -25,7 +27,10 @@ const SimilarityDiagramStrategyView = ({
   valueRange,
 }: SimilarityDiagramStrategyProps): JSX.Element => {
   return (
-    <>
+    <PageStruct
+      pageTitle={StrategyIDs.BinaryMetrics}
+      enableScroll={isValidConfig}
+    >
       <ErroneousBackdrop
         shouldShow={!isValidConfig}
         message={
@@ -82,7 +87,7 @@ const SimilarityDiagramStrategyView = ({
           </IonCol>
         </IonRow>
       </IonGrid>
-    </>
+    </PageStruct>
   );
 };
 

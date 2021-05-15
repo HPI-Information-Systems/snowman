@@ -12,6 +12,8 @@ import {
 } from '@ionic/react';
 import { Metric } from 'api';
 import { BinaryMetricsStrategyProps } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/BinaryMetricsStrategyProps';
+import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
+import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import DataViewer from 'components/simple/DataViewer/DataViewer';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import PaneButtonRow from 'components/simple/PaneButtonRow/PaneButtonRow';
@@ -33,15 +35,16 @@ const BinaryMetricsStrategyView = ({
   dataViewerTitle,
   isValidConfig,
 }: BinaryMetricsStrategyProps): JSX.Element => {
-  //useEffect(loadMetrics, [loadMetrics]);
-  //useEffect(preloadTuplesCounts, [preloadTuplesCounts]);
   useEffect(() => {
     // Triggered on every component update!
     ReactTooltip.rebuild();
   });
 
   return (
-    <>
+    <PageStruct
+      pageTitle={StrategyIDs.BinaryMetrics}
+      enableScroll={isValidConfig}
+    >
       <ErroneousBackdrop
         shouldShow={!isValidConfig}
         message={
@@ -172,7 +175,7 @@ const BinaryMetricsStrategyView = ({
           />
         </IonCardContent>
       </IonCard>
-    </>
+    </PageStruct>
   );
 };
 
