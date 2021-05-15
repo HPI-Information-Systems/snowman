@@ -19,7 +19,7 @@ In Q1 and Q2 of 2021, we aim to reach the following milestones:
 
 [x] **Milestone 1:** Ability to add/delete datasets, experiments and matching solutions; binary comparison and basic behavior analysis; executable on all major platform  
 [x] **Milestone 2:** Compare more than two experiments and create new experiments based on results; survey Soft KPIs, allow comparison based on KPIs  
-[ ] **Milestone 3:** Allow individual thresholds for experiments, extend Soft KPIs further and allow advanced evaluation of matching solutions
+[x] **Milestone 3:** Allow individual thresholds for experiments, extend Soft KPIs further and allow advanced evaluation of matching solutions
 
 The precise progress is tracked through Github issues and project boards. Please get in touch in case you want a special feature included :)
 
