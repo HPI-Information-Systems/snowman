@@ -2,6 +2,7 @@ import { GenericInstanceOwnProps } from 'apps/SnowmanApp/components/GenericSubIn
 import { SideMenuProps } from 'apps/SnowmanApp/components/GenericSubInstance/SideMenuProps';
 import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
 import { FC } from 'react';
+import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 import { ViewIDs } from 'types/ViewIDs';
 
 export interface GenericSubAppStateProps {
@@ -15,6 +16,8 @@ export interface GenericSubAppOwnProps extends GenericInstanceOwnProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sideMenuDisabledSelector?: (state: any) => boolean;
   usePageStruct?: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onCentralResourcesRefreshed?: () => SnowmanThunkAction<void, any>;
 }
 
 export type GenericSubAppProps = GenericSubAppOwnProps &

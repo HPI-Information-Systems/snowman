@@ -1,5 +1,6 @@
 import BenchmarkAppContainer from 'apps/BenchmarkApp/BenchmarkApp.Container';
 import BenchmarkConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/BenchmarkConfigurator';
+import { loadInitialState } from 'apps/BenchmarkApp/store/BenchmarkAppActions';
 import { BenchmarkAppStoreMagistrate } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
@@ -17,6 +18,7 @@ const BenchmarkApp = (): JSX.Element => (
       state.activeStrategy === StrategyIDs.Dashboard
     }
     usePageStruct={false}
+    onCentralResourcesRefreshed={loadInitialState}
   >
     <BenchmarkAppContainer />
   </GenericSubApp>
