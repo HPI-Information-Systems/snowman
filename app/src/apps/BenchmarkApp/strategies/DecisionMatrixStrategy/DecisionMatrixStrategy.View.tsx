@@ -6,7 +6,7 @@ import { DecisionSegments } from 'apps/BenchmarkApp/strategies/DecisionMatrixStr
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
-import { create } from 'ionicons/icons';
+import { chevronBack, chevronDown, create } from 'ionicons/icons';
 import { renderToString } from 'katex';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -16,6 +16,8 @@ const DecisionMatrixStrategyView = ({
   selectedAlgorithms,
   averageMetrics,
   editAlgorithm,
+  expandedEntities,
+  toggleExpansion,
 }: DecisionMatrixStrategyProps): JSX.Element => {
   useEffect(() => {
     // Triggered on every component update!
@@ -66,9 +68,17 @@ const DecisionMatrixStrategyView = ({
                       <h4 className={styles.section}>{aSegment.title}</h4>
                     </td>
                   </tr>
-                  {aSegment.children.map(
-                    (anEntity, idx2): JSX.Element => (
-                      <tr key={`matrix-${idx1}-row-initial-${idx2}`}>
+                  {aSegment.children.map((anEntity, idx2): JSX.Element | null =>
+                    anEntity.expandedBy === undefined ||
+                    expandedEntities.includes(anEntity.expandedBy) ? (
+                      <tr
+                        key={`matrix-${idx1}-row-initial-${idx2}`}
+                        onClick={() =>
+                          anEntity.doesExpand !== undefined
+                            ? toggleExpansion(anEntity.doesExpand)
+                            : void 0
+                        }
+                      >
                         <td>
                           <b
                             className={
@@ -76,6 +86,19 @@ const DecisionMatrixStrategyView = ({
                             }
                           >
                             {anEntity.title}
+                            {anEntity.doesExpand !== undefined ? (
+                              expandedEntities.includes(anEntity.doesExpand) ? (
+                                <IonIcon
+                                  icon={chevronDown}
+                                  className={styles.iconMiddlePadded}
+                                />
+                              ) : (
+                                <IonIcon
+                                  icon={chevronBack}
+                                  className={styles.iconMiddlePadded}
+                                />
+                              )
+                            ) : null}
                           </b>
                         </td>
                         {selectedAlgorithms.map(
@@ -90,7 +113,7 @@ const DecisionMatrixStrategyView = ({
                           )
                         )}
                       </tr>
-                    )
+                    ) : null
                   )}
                 </React.Fragment>
               )

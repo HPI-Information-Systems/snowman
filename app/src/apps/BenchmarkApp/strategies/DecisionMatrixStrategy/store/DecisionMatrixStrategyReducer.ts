@@ -3,6 +3,7 @@ import { DecisionMatrixConfiguration } from 'apps/BenchmarkApp/components/Benchm
 import { DecisionMatrixStrategyActionTypes } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/DecisionMatrixStrategyActionTypes';
 import { DecisionMatrixStrategyModel } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/DecisionMatrixStrategyModel';
 import { EnhancedAlgorithm } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/EnhancedAlgorithm';
+import { ExpansionTypes } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/ExpansionTypes';
 import {
   MetricEntity,
   MetricEntityOptional,
@@ -11,11 +12,13 @@ import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { resolveExperimentEntity } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { groupBy } from 'lodash';
 import { SnowmanAction } from 'types/SnowmanAction';
+import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: DecisionMatrixStrategyModel = {
   isValidConfig: false,
   averageMetrics: [],
   enhancedAlgorithms: [],
+  expandedEntities: [],
 };
 
 const DecisionMatrixStrategyReducer = (
@@ -69,6 +72,15 @@ const DecisionMatrixStrategyReducer = (
       return {
         ...state,
         averageMetrics: metrics,
+      };
+    }
+    case DecisionMatrixStrategyActionTypes.TOGGLE_EXPANSION: {
+      return {
+        ...state,
+        expandedEntities: toggleSelectionArrayMultipleSelect<ExpansionTypes>(
+          [...state.expandedEntities],
+          action.payload as ExpansionTypes
+        ),
       };
     }
     default:

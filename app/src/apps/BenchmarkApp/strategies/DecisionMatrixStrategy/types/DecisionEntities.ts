@@ -1,4 +1,5 @@
 import { Algorithm, Experiment } from 'api';
+import { ExpansionTypes } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/ExpansionTypes';
 
 export interface DecisionSegmentEntity<Type> {
   title: string;
@@ -8,6 +9,8 @@ export interface DecisionSegmentEntity<Type> {
 export interface DecisionEntities<Type> {
   title: string;
   selector?: (anEntity: Type) => string;
+  doesExpand?: ExpansionTypes;
+  expandedBy?: ExpansionTypes;
   inset?: boolean;
 }
 

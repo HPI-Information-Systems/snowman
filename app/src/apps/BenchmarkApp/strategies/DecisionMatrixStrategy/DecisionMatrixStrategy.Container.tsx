@@ -4,7 +4,9 @@ import {
   DecisionMatrixStrategyDispatchProps,
   DecisionMatrixStrategyStateProps,
 } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyProps';
+import { toggleExpansion } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/store/DecisionMatrixStrategyActions';
 import { DecisionMatrixStrategyModel } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/DecisionMatrixStrategyModel';
+import { ExpansionTypes } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/ExpansionTypes';
 import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -18,6 +20,7 @@ const mapStateToProps = (
     (anEAlgo): Algorithm => anEAlgo.algorithm
   ),
   averageMetrics: state.averageMetrics,
+  expandedEntities: state.expandedEntities,
 });
 
 const mapDispatchToProps = (
@@ -25,6 +28,9 @@ const mapDispatchToProps = (
 ): DecisionMatrixStrategyDispatchProps => ({
   editAlgorithm: (id: number) => {
     doOpenDialog(ViewIDs.AlgorithmDialog, id);
+  },
+  toggleExpansion: (aType: ExpansionTypes) => {
+    dispatch(toggleExpansion(aType));
   },
 });
 

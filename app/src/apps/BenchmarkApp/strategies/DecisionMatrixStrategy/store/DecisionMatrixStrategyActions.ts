@@ -1,6 +1,7 @@
 import { BenchmarkApi, Metric } from 'api';
 import { DecisionMatrixStrategyActionTypes } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/DecisionMatrixStrategyActionTypes';
 import { DecisionMatrixStrategyModel } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/DecisionMatrixStrategyModel';
+import { ExpansionTypes } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/ExpansionTypes';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { groupBy } from 'lodash';
 import { MagicNotPossibleId } from 'structs/constants';
@@ -18,6 +19,14 @@ export const updateConfig = (
   easyPrimitiveAction<DecisionMatrixStrategyModel>({
     type: DecisionMatrixStrategyActionTypes.UPDATE_CONFIG,
     payload: benchmarkConfig,
+  });
+
+export const toggleExpansion = (
+  aType: ExpansionTypes
+): easyPrimitiveActionReturn<DecisionMatrixStrategyModel> =>
+  easyPrimitiveAction<DecisionMatrixStrategyModel>({
+    type: DecisionMatrixStrategyActionTypes.TOGGLE_EXPANSION,
+    payload: aType,
   });
 
 export const setMetrics = (

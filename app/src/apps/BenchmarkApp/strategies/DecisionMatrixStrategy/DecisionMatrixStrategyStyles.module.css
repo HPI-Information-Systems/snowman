@@ -7,7 +7,7 @@ table.materialTable {
 
 table.materialTable th,
 table.materialTable td {
-  padding: 1em 1.6em;
+  padding: 1.2em 1.6em;
   border: inherit;
   text-align: left;
   vertical-align: top;
@@ -21,11 +21,6 @@ table.materialTable thead th {
   color: var(--ion-color-dark);
   font-weight: bold;
   text-transform: uppercase;
-}
-
-table.materialTable thead th .iconMiddlePadded {
-  padding-left: 5px;
-  vertical-align: middle;
 }
 
 table.materialTable tbody tr {
@@ -54,11 +49,16 @@ td .inset {
   padding-left: 15px;
 }
 
+.iconMiddlePadded {
+  padding-left: 5px;
+  vertical-align: middle;
+}
+
 h4.section {
+  margin: 0;
   overflow: hidden;
   color: var(--ion-color-primarydark);
   text-align: left;
-  margin: 0;
 }
 
 h4.section::after {

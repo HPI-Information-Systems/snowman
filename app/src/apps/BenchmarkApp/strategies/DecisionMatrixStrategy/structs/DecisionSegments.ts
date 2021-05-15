@@ -3,6 +3,7 @@ import {
   DecisionRowAlgorithm,
   DecisionSegmentEntity,
 } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/DecisionEntities';
+import { ExpansionTypes } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/ExpansionTypes';
 
 export const InitialEffort: DecisionRowAlgorithm[] = [
   {
@@ -35,6 +36,7 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
             anEffort.id === 'manhattanDistanceBasedEffort'
         )
         ?.value.toString() ?? '?') + ' EP',
+    doesExpand: ExpansionTypes.InstallationEffort,
   },
   {
     title: 'Expertise',
@@ -42,6 +44,7 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
     selector: (anEntity) =>
       (anEntity.softKPIs?.integrationEffort?.installationEffort?.expertise?.toString() ??
         '?') + ' %',
+    expandedBy: ExpansionTypes.InstallationEffort,
   },
   {
     title: 'HR Amount',
@@ -49,6 +52,7 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
     selector: (anEntity) =>
       anEntity.softKPIs?.integrationEffort?.installationEffort?.hrAmount?.toString() ??
       '?',
+    expandedBy: ExpansionTypes.InstallationEffort,
   },
 ];
 
@@ -62,6 +66,7 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
             anEffort.id === 'manhattanDistanceBasedEffort'
         )
         ?.value.toString() ?? '?') + ' EP',
+    doesExpand: ExpansionTypes.MatchingSolutionEffort,
   },
   {
     title: 'Expertise',
@@ -69,6 +74,7 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
     selector: (anEntity) =>
       (anEntity.softKPIs?.configurationEffort?.matchingSolution?.expertise?.toString() ??
         '?') + ' %',
+    expandedBy: ExpansionTypes.MatchingSolutionEffort,
   },
   {
     title: 'HR Amount',
@@ -76,6 +82,7 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
     selector: (anEntity) =>
       anEntity.softKPIs?.configurationEffort?.matchingSolution?.hrAmount?.toString() ??
       '?',
+    expandedBy: ExpansionTypes.MatchingSolutionEffort,
   },
   {
     title: 'Domain Effort',
@@ -86,6 +93,7 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
             anEffort.id === 'manhattanDistanceBasedEffort'
         )
         ?.value.toString() ?? '?') + ' EP',
+    doesExpand: ExpansionTypes.DomainEffort,
   },
   {
     title: 'Expertise',
@@ -93,6 +101,7 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
     selector: (anEntity) =>
       (anEntity.softKPIs?.configurationEffort?.domain?.expertise?.toString() ??
         '?') + ' %',
+    expandedBy: ExpansionTypes.DomainEffort,
   },
   {
     title: 'HR Amount',
@@ -100,6 +109,7 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
     selector: (anEntity) =>
       anEntity.softKPIs?.configurationEffort?.domain?.hrAmount?.toString() ??
       '?',
+    expandedBy: ExpansionTypes.DomainEffort,
   },
   {
     title: 'Interfaces',
