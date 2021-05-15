@@ -1,9 +1,10 @@
-import { IonCard, IonText } from '@ionic/react';
+import { IonCard, IonIcon, IonText } from '@ionic/react';
 import { Metric } from 'api';
 import { DecisionMatrixStrategyProps } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyStyles.module.css';
 import { DecisionSegments } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/structs/DecisionSegments';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
+import { create } from 'ionicons/icons';
 import { renderToString } from 'katex';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -12,6 +13,7 @@ const DecisionMatrixStrategyView = ({
   isValidConfig,
   selectedAlgorithms,
   averageMetrics,
+  editAlgorithm,
 }: DecisionMatrixStrategyProps): JSX.Element => {
   useEffect(() => {
     // Triggered on every component update!
@@ -33,7 +35,18 @@ const DecisionMatrixStrategyView = ({
               {selectedAlgorithms.map(
                 (anAlgorithm): JSX.Element => (
                   <th key={`matrix-header-${anAlgorithm.id}`}>
-                    <IonText color="primary">{anAlgorithm.name}</IonText>
+                    <IonText
+                      color="primary"
+                      onClick={(): void => editAlgorithm(anAlgorithm.id)}
+                      className={styles.clickableContent}
+                      data-tip="Edit this matching solution's properties."
+                    >
+                      {anAlgorithm.name}
+                      <IonIcon
+                        icon={create}
+                        className={styles.iconMiddlePadded}
+                      />
+                    </IonText>
                   </th>
                 )
               )}

@@ -6,4 +6,9 @@ export interface DecisionMatrixStrategyStateProps {
   averageMetrics: Metric[][];
 }
 
-export type DecisionMatrixStrategyProps = DecisionMatrixStrategyStateProps;
+export interface DecisionMatrixStrategyDispatchProps {
+  editAlgorithm: (id: number) => void;
+}
+
+export type DecisionMatrixStrategyProps = DecisionMatrixStrategyStateProps &
+  DecisionMatrixStrategyDispatchProps;
