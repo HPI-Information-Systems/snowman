@@ -58,9 +58,7 @@ const DecisionMatrixStrategyView = ({
                 <React.Fragment key={`matrix-segment-${idx1}`}>
                   <tr>
                     <td colSpan={selectedAlgorithms.length + 1}>
-                      <h4>
-                        <IonText color="primarydark">{aSegment.title}</IonText>
-                      </h4>
+                      <h4 className={styles.section}>{aSegment.title}</h4>
                     </td>
                   </tr>
                   {aSegment.children.map(
@@ -109,7 +107,7 @@ const DecisionMatrixStrategyView = ({
                           output: 'html',
                         })}
                       >
-                        {aMetric.name}
+                        <b>{aMetric.name}</b>
                       </span>
                     </td>
                     {averageMetrics.map(

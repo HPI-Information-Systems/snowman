@@ -73,7 +73,7 @@ const NMetricsStrategyView = ({
                         output: 'html',
                       })}
                     >
-                      {aMetric.name}
+                      <b>{aMetric.name}</b>
                     </span>
                   </td>
                   {metrics.map(
