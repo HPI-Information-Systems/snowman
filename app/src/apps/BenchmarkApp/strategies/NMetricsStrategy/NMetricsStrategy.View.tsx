@@ -11,6 +11,7 @@ import { renderToString } from 'katex';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
 import { formatLargeNumber } from 'utils/formatLargeNumber';
+import useTooltip from 'utils/useTooltipHook';
 
 const NMetricsStrategyView = ({
   metrics,
@@ -18,10 +19,8 @@ const NMetricsStrategyView = ({
   inspectExperiment,
   isValidConfig,
 }: NMetricsStrategyProps): JSX.Element => {
-  useEffect(() => {
-    // Triggered on every component update!
-    ReactTooltip.rebuild();
-  });
+  useTooltip();
+
   return (
     <PageStruct
       pageTitle={StrategyIDs.NaryMetrics}
