@@ -11,7 +11,7 @@ export class SchemaV8 extends SchemaVersion {
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.experiment.schema.name}
            ADD COLUMN
-              runtime INTEGER`
+              runtime REAL`
     );
   }
 }

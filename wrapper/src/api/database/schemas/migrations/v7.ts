@@ -11,49 +11,49 @@ export class SchemaV7 extends SchemaVersion {
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.experiment.schema.name}
            ADD COLUMN
-              hrAmount INTEGER`
+              hrAmount REAL`
     );
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.experiment.schema.name}
            ADD COLUMN
-               expertise INTEGER`
+               expertise REAL`
     );
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
            ADD COLUMN
-              installationExpertise INTEGER`
-    );
-
-    databaseBackend().exec(
-      `ALTER TABLE ${tables.meta.algorithm.schema.name}
-           ADD COLUMN
-              installationHrAmount INTEGER`
+              installationExpertise REAL`
     );
 
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
            ADD COLUMN
-              generalCosts INTEGER`
+              installationHrAmount REAL`
+    );
+
+    databaseBackend().exec(
+      `ALTER TABLE ${tables.meta.algorithm.schema.name}
+           ADD COLUMN
+              generalCosts REAL`
     );
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
            ADD COLUMN
-              matchingSolutionExpertise INTEGER`
+              matchingSolutionExpertise REAL`
     );
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
            ADD COLUMN
-              matchingSolutionHrAmount INTEGER`
+              matchingSolutionHrAmount REAL`
     );
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
            ADD COLUMN
-              domainExpertise INTEGER`
+              domainExpertise REAL`
     );
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
            ADD COLUMN
-              domainHrAmount INTEGER`
+              domainHrAmount REAL`
     );
     databaseBackend().exec(
       `ALTER TABLE ${tables.meta.algorithm.schema.name}
