@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    EffortParts,
+    EffortPartsFromJSON,
+    EffortPartsFromJSONTyped,
+    EffortPartsToJSON,
+} from './';
+
 /**
  * 
  * @export
@@ -21,16 +28,16 @@ import { exists, mapValues } from '../runtime';
 export interface ExperimentValuesSoftKPIs {
     /**
      * 
-     * @type {number}
+     * @type {EffortParts}
      * @memberof ExperimentValuesSoftKPIs
      */
-    timeToConfigure?: number;
+    effort?: EffortParts;
     /**
      * 
      * @type {number}
      * @memberof ExperimentValuesSoftKPIs
      */
-    expertiseLevel?: number;
+    runtime?: number;
 }
 
 export function ExperimentValuesSoftKPIsFromJSON(json: any): ExperimentValuesSoftKPIs {
@@ -43,8 +50,8 @@ export function ExperimentValuesSoftKPIsFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
-        'timeToConfigure': !exists(json, 'timeToConfigure') ? undefined : json['timeToConfigure'],
-        'expertiseLevel': !exists(json, 'expertiseLevel') ? undefined : json['expertiseLevel'],
+        'effort': !exists(json, 'effort') ? undefined : EffortPartsFromJSON(json['effort']),
+        'runtime': !exists(json, 'runtime') ? undefined : json['runtime'],
     };
 }
 
@@ -57,8 +64,8 @@ export function ExperimentValuesSoftKPIsToJSON(value?: ExperimentValuesSoftKPIs 
     }
     return {
         
-        'timeToConfigure': value.timeToConfigure,
-        'expertiseLevel': value.expertiseLevel,
+        'effort': EffortPartsToJSON(value.effort),
+        'runtime': value.runtime,
     };
 }
 

@@ -50,11 +50,17 @@ const softKPIExperimentMap: Map<
 > = new Map([
   [
     SoftKPIsExperimentEnum.Expertise,
-    (experiment: Experiment) => experiment.softKPIs?.expertise ?? undefined,
+    (experiment: Experiment) =>
+      experiment.softKPIs?.effort?.expertise ?? undefined,
   ],
   [
     SoftKPIsExperimentEnum.HrAmount,
-    (experiment: Experiment) => experiment.softKPIs?.hrAmount ?? undefined,
+    (experiment: Experiment) =>
+      experiment.softKPIs?.effort?.hrAmount ?? undefined,
+  ],
+  [
+    SoftKPIsExperimentEnum.Runtime,
+    (experiment: Experiment) => experiment.softKPIs?.runtime ?? undefined,
   ],
 ]);
 
@@ -68,4 +74,5 @@ const softKPIExperimentRangeMap: Map<
   [SoftKPIsExperimentEnum.HrAmountWeightedEffort, undefined],
   [SoftKPIsExperimentEnum.ManhattanDistanceBasedEffort, undefined],
   [SoftKPIsExperimentEnum.MultiplyEffort, undefined],
+  [SoftKPIsExperimentEnum.Runtime, [0, 100]],
 ]);

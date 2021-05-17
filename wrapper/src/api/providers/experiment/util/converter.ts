@@ -16,8 +16,9 @@ export class ExperimentConverter {
       name: apiExperiment.name,
       id: apiExperiment.id,
       numberOfUploadedRecords: apiExperiment.numberOfUploadedRecords ?? null,
-      hrAmount: apiExperiment.softKPIs?.hrAmount ?? null,
-      expertise: apiExperiment.softKPIs?.expertise ?? null,
+      hrAmount: apiExperiment.softKPIs?.effort?.hrAmount ?? null,
+      expertise: apiExperiment.softKPIs?.effort?.expertise ?? null,
+      runtime: apiExperiment.softKPIs?.runtime ?? null,
     };
   }
 
@@ -41,8 +42,11 @@ export class ExperimentConverter {
       numberOfUploadedRecords:
         storedExperiment.numberOfUploadedRecords ?? undefined,
       softKPIs: {
-        hrAmount: storedExperiment.hrAmount ?? undefined,
-        expertise: storedExperiment.expertise ?? undefined,
+        effort: {
+          hrAmount: storedExperiment.hrAmount ?? undefined,
+          expertise: storedExperiment.expertise ?? undefined,
+        },
+        runtime: storedExperiment.runtime ?? undefined,
       },
     };
   }

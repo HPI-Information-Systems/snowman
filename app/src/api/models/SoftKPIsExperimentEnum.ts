@@ -17,13 +17,14 @@
  * @export
  * @enum {string}
  */
-export enum SoftKPIsExperimentEnum {
+ export enum SoftKPIsExperimentEnum {
     Expertise = 'expertise',
     HrAmount = 'hrAmount',
     ManhattanDistanceBasedEffort = 'manhattanDistanceBasedEffort',
     HrAmountWeightedEffort = 'hrAmountWeightedEffort',
     MultiplyEffort = 'multiplyEffort',
-    ExpertiseWeightedEffort = 'expertiseWeightedEffort'
+    ExpertiseWeightedEffort = 'expertiseWeightedEffort',
+    Runtime = 'runtime'
 }
 
 export function SoftKPIsExperimentEnumFromJSON(json: any): SoftKPIsExperimentEnum {

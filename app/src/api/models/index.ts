@@ -1,3 +1,5 @@
+import { fromPairs } from 'lodash';
+
 export * from './Algorithm';
 export * from './AlgorithmAllOf';
 export * from './AlgorithmValues';
@@ -20,6 +22,7 @@ export * from './ExperimentIntersectionItem';
 export * from './ExperimentIntersectionItemAllOf';
 export * from './ExperimentSimilarityConfig';
 export * from './ExperimentValues';
+export * from './ExperimentValuesSoftKPIs';
 export * from './FileResponse';
 export * from './InlineObject';
 export * from './Metric';

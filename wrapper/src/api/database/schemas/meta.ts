@@ -167,6 +167,10 @@ export const metaSchemas = assertType<
           name: 'expertise' as const,
           dataType: 'INTEGER',
         },
+        runtime: {
+          name: 'runtime' as const,
+          dataType: 'INTEGER',
+        },
       },
     },
     similarityfunction: {

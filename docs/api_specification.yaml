@@ -916,7 +916,12 @@ components:
         algorithmId:
           $ref: "#/components/schemas/AlgorithmId"
         softKPIs:
-          $ref: "#/components/schemas/EffortParts"
+          type: object
+          properties:
+            effort:
+              $ref: "#/components/schemas/EffortParts"
+            runtime:
+              type: integer
     Experiment:
       allOf:
         - type: object
@@ -1197,6 +1202,7 @@ components:
         - hrAmountWeightedEffort
         - multiplyEffort
         - expertiseWeightedEffort
+        - runtime
     MetricsEnum:
       type: string
       enum:
