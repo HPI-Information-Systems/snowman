@@ -6,7 +6,14 @@ import {
   MultiplyEffort,
 } from './';
 
-export function calculateEffort(expertise: number, hrAmount: number): Metric[] {
+export function calculateEffort(
+  expertise: number | null | undefined,
+  hrAmount: number | null | undefined
+): Metric[] | undefined {
+  if (typeof expertise !== 'number' || typeof hrAmount !== 'number') {
+    return undefined;
+  }
+
   const efforts = [
     ManhattanDistance,
     ExpertiseWeightedEffort,

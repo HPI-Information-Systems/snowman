@@ -1,6 +1,6 @@
 import { tableSchemas } from '../../../database/schemas';
 import { ColumnValues } from '../../../database/tools/types';
-import { Experiment, Metric } from '../../../server/types';
+import { Experiment } from '../../../server/types';
 import { calculateEffort } from '../../algorithm/util/effortPoints/calculateEffort';
 
 type StoredExperiment = ColumnValues<
@@ -25,18 +25,14 @@ export class ExperimentConverter {
   storedExperimentToApiExperiment(
     storedExperiment: StoredExperiment
   ): Experiment {
-    let effort: Metric[] | undefined;
-    if (storedExperiment.expertise && storedExperiment.hrAmount) {
-      effort = calculateEffort(
-        storedExperiment.expertise,
-        storedExperiment.hrAmount
-      );
-    }
     return {
       algorithmId: storedExperiment.algorithm,
       datasetId: storedExperiment.dataset,
       description: storedExperiment.description ?? undefined,
-      effort: effort,
+      effort: calculateEffort(
+        storedExperiment.expertise,
+        storedExperiment.hrAmount
+      ),
       id: storedExperiment.id,
       name: storedExperiment.name,
       numberOfUploadedRecords:
