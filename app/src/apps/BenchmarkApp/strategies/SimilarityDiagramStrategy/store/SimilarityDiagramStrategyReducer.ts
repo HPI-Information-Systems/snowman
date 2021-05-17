@@ -56,13 +56,10 @@ const SimilarityDiagramStrategyReducer = (
                 anEntity.similarity.func !== undefined
             )
             .map(
-              (anEntity, index): DiagramTrack => ({
+              (anEntity): DiagramTrack => ({
                 name:
-                  'Track ' +
-                  (index + 1).toString() +
-                  ' (' +
                   anEntity.experiment.name +
-                  ', ' +
+                  ' (' +
                   (anEntity.similarity?.func.name ?? '?') +
                   ')',
                 items: [
