@@ -1,5 +1,7 @@
+import { IonButton, IonIcon } from '@ionic/react';
 import styles from 'apps/AboutApp/AboutAppStyles.module.css';
 import GenericSubApp from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubApp';
+import { logoGithub } from 'ionicons/icons';
 import React from 'react';
 import style from 'theme/style';
 import { ViewIDs } from 'types/ViewIDs';
@@ -15,10 +17,11 @@ const AboutApp = (): JSX.Element => (
       <img src="./logo192.png" alt="Snowman Logo" />
       <h1>Welcome to Snowman Benchmark!</h1>
       <p>
-        Start by selecting a dataset to work with on the left of this page.
-        <br />
-        You will be guided through the process necessary to create your first
-        analysis!
+        Comparing data matching algorithms is still an unsolved topic in both
+        industry and research. With snowman, developers and researchers are be
+        able to compare the performance of different data matching solutions or
+        improve new algorithms. Besides traditional metrics, the tool also
+        considers economic aspects like Soft KPIs.
       </p>
       <p>
         This app is open-source and community-driven.
@@ -26,6 +29,17 @@ const AboutApp = (): JSX.Element => (
         Contributions of all kinds are welcome - feel free to fork us on Github!
         :)
       </p>
+      <IonButton
+        onClick={(): void => {
+          window.open(
+            'https://github.com/HPI-Information-Systems/snowman',
+            '_blank'
+          );
+        }}
+      >
+        <IonIcon icon={logoGithub} slot="start" />
+        Snowman @ Github
+      </IonButton>
     </div>
   </GenericSubApp>
 );

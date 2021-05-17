@@ -4,7 +4,13 @@ import { arrowBack } from 'ionicons/icons';
 import React from 'react';
 
 const BackFab = ({ clickOnFab }: GenericFabProps): JSX.Element => (
-  <IonFab vertical="bottom" horizontal="start" edge={false} slot="fixed">
+  <IonFab
+    vertical="bottom"
+    horizontal="start"
+    edge={false}
+    slot="fixed"
+    className={'doNotPrint'}
+  >
     <IonFabButton onClick={clickOnFab}>
       <IonIcon icon={arrowBack} />
     </IonFabButton>

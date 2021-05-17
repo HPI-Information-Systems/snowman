@@ -18,7 +18,7 @@ import React from 'react';
 const BenchmarkConfigurator = ({
   contentId,
 }: BenchmarkConfiguratorProps): JSX.Element => (
-  <IonMenu contentId={contentId} type="push">
+  <IonMenu contentId={contentId} type="push" className={'doNotPrint'}>
     <IonHeader>
       <IonToolbar color="primary">
         <IonTitle>Configurator</IonTitle>
