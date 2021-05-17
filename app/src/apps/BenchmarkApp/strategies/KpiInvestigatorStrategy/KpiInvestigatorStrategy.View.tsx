@@ -6,12 +6,16 @@ import {
   IonLabel,
   IonRow,
 } from '@ionic/react';
+import { DiagramCoordinates } from 'api';
 import { KpiInvestigatorStrategyProps } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyStyles.module.css';
 import { KpiInvestigatorColorMode } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
-import { ScatterChart } from 'components/simple/ChartComponent/ScatterChart';
+import {
+  ScatterChart,
+  ScatterTooltipItem,
+} from 'components/simple/ChartComponent/ScatterChart';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
 import React from 'react';
@@ -100,6 +104,20 @@ const KpiInvestigatorStrategyView = ({
                         : undefined,
                     },
                     animation: { duration: 0 },
+                    plugins: {
+                      tooltip: {
+                        callbacks: {
+                          beforeLabel: (anItem: ScatterTooltipItem): string => {
+                            console.log(anItem);
+                            return (
+                              'Experiment ' +
+                                (anItem.raw as DiagramCoordinates).experimentId?.toString() ??
+                              '?'
+                            );
+                          },
+                        },
+                      },
+                    },
                   }}
                 />
               </div>
