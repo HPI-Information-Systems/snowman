@@ -140,3 +140,9 @@
 .col-5px-padding {
   --ion-grid-column-padding: 5px;
 }
+
+@media print {
+  .doNotPrint {
+    display: none;
+  }
+}
