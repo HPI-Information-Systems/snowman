@@ -18,9 +18,13 @@ const AboutApp = (): JSX.Element => (
       <h1>Welcome to Snowman Benchmark!</h1>
       <p>
         Comparing data matching algorithms is still an unsolved topic in both
-        industry and research. With snowman, developers and researchers are be
+        <br />
+        industry and research. With snowman, developers and researchers are
+        <br />
         able to compare the performance of different data matching solutions or
+        <br />
         improve new algorithms. Besides traditional metrics, the tool also
+        <br />
         considers economic aspects like Soft KPIs.
       </p>
       <p>
