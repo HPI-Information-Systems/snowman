@@ -63,30 +63,22 @@ export const SelectableInputView = function <Content>({
                   button
                   key={'selectable-option-' + getID(anOption)}
                   onClick={(): void => toggleOption(getID(anOption))}
+                  className={styles.selectItem}
                 >
-                  <div
-                    style={{
-                      width: '1.2rem',
-                      height: '1.3rem',
-                      fontSize: '1.3rem',
-                    }}
-                  >
-                    <IonIcon
-                      icon={
-                        selection.includes(getID(anOption))
-                          ? allowMultiselect
-                            ? checkmarkCircle
-                            : radioButtonOnOutline
-                          : radioButtonOffOutline
-                      }
-                      color={
-                        selection.includes(getID(anOption))
-                          ? 'primary'
-                          : 'medium'
-                      }
-                      size="medium"
-                    />
-                  </div>
+                  <IonIcon
+                    icon={
+                      selection.includes(getID(anOption))
+                        ? allowMultiselect
+                          ? checkmarkCircle
+                          : radioButtonOnOutline
+                        : radioButtonOffOutline
+                    }
+                    color={
+                      selection.includes(getID(anOption)) ? 'primary' : 'medium'
+                    }
+                    size="medium"
+                    slot="start"
+                  />
                   {renderChild(anOption)}
                 </IonItem>
               ) : null

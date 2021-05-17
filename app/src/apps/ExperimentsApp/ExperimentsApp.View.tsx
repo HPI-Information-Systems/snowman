@@ -31,25 +31,25 @@ const ExperimentsAppView = ({
     <>
       <IonGrid>
         <IonRow>
-          <IonCol>
+          <IonCol size="12" sizeLg="6">
             <IonItem>
               <IonLabel>Filter by datasets</IonLabel>
               <DatasetSelectableInput
                 selection={selectedDatasets}
                 onChange={changeSelectedDatasets}
                 allOptions={datasets}
-                allowMultiselect={true}
+                allowMultiselect={false}
               />
             </IonItem>
           </IonCol>
-          <IonCol>
+          <IonCol size="12" sizeLg="6">
             <IonItem>
               <IonLabel>Filter by matching solutions</IonLabel>
               <AlgorithmSelectableInput
                 selection={selectedAlgorithms}
                 onChange={changeSelectedAlgorithms}
                 allOptions={algorithms}
-                allowMultiselect={true}
+                allowMultiselect={false}
               />
               {algorithms.map(
                 (anAlgorithm: Algorithm): JSX.Element => (
@@ -88,6 +88,9 @@ const ExperimentsAppView = ({
           ))}
         </IonRow>
       </IonGrid>
+      {currentExperiments.length === 0 ? (
+        <IonText color="medium">No experiments found!</IonText>
+      ) : undefined}
       <AddFab clickOnFab={addExperiment} />
     </>
   );

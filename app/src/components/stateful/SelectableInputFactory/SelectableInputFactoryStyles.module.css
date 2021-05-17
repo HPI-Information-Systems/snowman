@@ -6,3 +6,9 @@
   max-height: 220px;
   overflow-y: scroll;
 }
+
+.selectItem::part(native) {
+  --inline-padding-end: 0;
+  font-size: 1.3rem;
+  padding-left: 0;  
+}
