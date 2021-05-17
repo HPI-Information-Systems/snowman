@@ -8,8 +8,7 @@ import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSub
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import { chevronForwardOutline } from 'ionicons/icons';
 import { renderToString } from 'katex';
-import React, { useEffect } from 'react';
-import ReactTooltip from 'react-tooltip';
+import React from 'react';
 import { formatLargeNumber } from 'utils/formatLargeNumber';
 import useTooltip from 'utils/useTooltipHook';
 
