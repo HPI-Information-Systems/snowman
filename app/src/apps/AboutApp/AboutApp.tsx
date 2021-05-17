@@ -17,10 +17,11 @@ const AboutApp = (): JSX.Element => (
       <img src="./logo192.png" alt="Snowman Logo" />
       <h1>Welcome to Snowman Benchmark!</h1>
       <p>
-        Start by selecting a dataset to work with on the left of this page.
-        <br />
-        You will be guided through the process necessary to create your first
-        analysis!
+        Comparing data matching algorithms is still an unsolved topic in both
+        industry and research. With snowman, developers and researchers are be
+        able to compare the performance of different data matching solutions or
+        improve new algorithms. Besides traditional metrics, the tool also
+        considers economic aspects like Soft KPIs.
       </p>
       <p>
         This app is open-source and community-driven.
