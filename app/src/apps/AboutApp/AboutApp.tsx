@@ -1,5 +1,7 @@
+import { IonButton, IonIcon } from '@ionic/react';
 import styles from 'apps/AboutApp/AboutAppStyles.module.css';
 import GenericSubApp from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubApp';
+import { logoGithub } from 'ionicons/icons';
 import React from 'react';
 import style from 'theme/style';
 import { ViewIDs } from 'types/ViewIDs';
@@ -26,6 +28,17 @@ const AboutApp = (): JSX.Element => (
         Contributions of all kinds are welcome - feel free to fork us on Github!
         :)
       </p>
+      <IonButton
+        onClick={(): void => {
+          window.open(
+            'https://github.com/HPI-Information-Systems/snowman',
+            '_blank'
+          );
+        }}
+      >
+        <IonIcon icon={logoGithub} slot="start" />
+        Snowman @ Github
+      </IonButton>
     </div>
   </GenericSubApp>
 );
