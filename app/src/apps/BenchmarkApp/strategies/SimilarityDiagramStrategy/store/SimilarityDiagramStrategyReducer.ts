@@ -6,8 +6,8 @@ import { SimilarityDiagramStrategyModel } from 'apps/BenchmarkApp/strategies/Sim
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { DiagramTrack } from 'apps/BenchmarkApp/types/DiagramTrack';
 import {
+  experimentEntityFromConfig,
   experimentEntityToExperimentConfigItem,
-  resolveExperimentEntity,
 } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { AllMetricsEnum } from 'types/AllMetricsEnum';
 import { ExperimentEntity } from 'types/ExperimentEntity';
@@ -35,7 +35,7 @@ const SimilarityDiagramStrategyReducer = (
       const diagramTracks: DiagramTrack[] = configuration.diagramTracks
         .filter((aTrack): boolean => aTrack.dataset[0] !== undefined)
         .flatMap((aTrack): DiagramTrack[] => {
-          const groundTruthEntity = resolveExperimentEntity(
+          const groundTruthEntity = experimentEntityFromConfig(
             aTrack.groundTruth,
             appStore.resources
           );
@@ -45,7 +45,7 @@ const SimilarityDiagramStrategyReducer = (
               : undefined;
           return aTrack.experiments
             .map((entity) =>
-              resolveExperimentEntity(entity, appStore.resources)
+              experimentEntityFromConfig(entity, appStore.resources)
             )
             .filter(
               (

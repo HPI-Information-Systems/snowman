@@ -6,10 +6,10 @@ import {
   IonLabel,
   IonRow,
 } from '@ionic/react';
-import { DiagramCoordinates } from 'api';
 import { KpiInvestigatorStrategyProps } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyStyles.module.css';
 import { KpiInvestigatorColorMode } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
+import { DiagramCoordinates } from 'apps/BenchmarkApp/types/DiagramCoordinates';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import {
@@ -107,14 +107,9 @@ const KpiInvestigatorStrategyView = ({
                     plugins: {
                       tooltip: {
                         callbacks: {
-                          beforeLabel: (anItem: ScatterTooltipItem): string => {
-                            console.log(anItem);
-                            return (
-                              'Experiment ' +
-                                (anItem.raw as DiagramCoordinates).experimentId?.toString() ??
-                              '?'
-                            );
-                          },
+                          beforeLabel: (anItem: ScatterTooltipItem): string =>
+                            (anItem.raw as DiagramCoordinates).tooltip ??
+                            anItem.formattedValue,
                         },
                       },
                     },
