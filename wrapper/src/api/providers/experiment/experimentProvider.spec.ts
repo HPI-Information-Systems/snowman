@@ -82,7 +82,10 @@ describe('ExperimentProvider', () => {
           description: 'No dataset file',
           name: 'No dataset file',
           softKPIs: {
-            hrAmount: 3,
+            effort: {
+              hrAmount: 3,
+            },
+            runtime: 5,
           },
         },
       },
@@ -93,7 +96,9 @@ describe('ExperimentProvider', () => {
           description: 'Dataset file',
           name: 'Dataset file',
           softKPIs: {
-            expertise: 3,
+            effort: {
+              expertise: 3,
+            },
           },
         },
       },
@@ -142,8 +147,10 @@ describe('ExperimentProvider', () => {
       description: 'Another one',
       name: 'Another Name',
       softKPIs: {
-        hrAmount: 5,
-        expertise: 7,
+        effort: {
+          hrAmount: 5,
+          expertise: 7,
+        },
       },
     };
     const id = provider.addExperiment(addedExperiment);
@@ -173,8 +180,10 @@ describe('ExperimentProvider', () => {
       description: ' A new description',
       name: 'A neeew name',
       softKPIs: {
-        hrAmount: 5,
-        expertise: 7,
+        effort: {
+          hrAmount: 5,
+          expertise: 7,
+        },
       },
     };
     provider.setExperiment(addedExperimentIds[0], updatedExperiment);

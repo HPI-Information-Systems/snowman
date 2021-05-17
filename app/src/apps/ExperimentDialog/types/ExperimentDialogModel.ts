@@ -12,4 +12,5 @@ export interface ExperimentDialogModel {
   selectedAlgorithm: number | undefined;
   hrAmount: number | undefined;
   expertise: number | undefined;
+  runtime: number | undefined;
 }

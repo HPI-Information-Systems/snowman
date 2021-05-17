@@ -720,24 +720,24 @@ paths:
       description: returns diagram data based on two metrics and multiple experiments
       operationId: calculateDiagramData
       parameters:
-      - name: xAxis
-        in: query
-        schema:
-          anyOf:
-            - $ref: "#/components/schemas/softKPIsAlgorithmEnum"
-            - $ref: "#/components/schemas/MetricsEnum"
-            - $ref: "#/components/schemas/softKPIsExperimentEnum"
-        required: true
-        description: metric to be visualised on the x-axis of the diagram
-      - name: yAxis
-        in: query
-        schema:
-          anyOf:
-            - $ref: "#/components/schemas/softKPIsAlgorithmEnum"
-            - $ref: "#/components/schemas/MetricsEnum"
-            - $ref: "#/components/schemas/softKPIsExperimentEnum"
-        description: metric to be visualised on the y-axis of the diagram
-        required: true
+        - name: xAxis
+          in: query
+          schema:
+            anyOf:
+              - $ref: "#/components/schemas/softKPIsAlgorithmEnum"
+              - $ref: "#/components/schemas/MetricsEnum"
+              - $ref: "#/components/schemas/softKPIsExperimentEnum"
+          required: true
+          description: metric to be visualised on the x-axis of the diagram
+        - name: yAxis
+          in: query
+          schema:
+            anyOf:
+              - $ref: "#/components/schemas/softKPIsAlgorithmEnum"
+              - $ref: "#/components/schemas/MetricsEnum"
+              - $ref: "#/components/schemas/softKPIsExperimentEnum"
+          description: metric to be visualised on the y-axis of the diagram
+          required: true
       x-codegen-request-body-name: diagram
       requestBody:
         content:
@@ -796,7 +796,7 @@ components:
             integrationEffort:
               properties:
                 installationEffort:
-                   $ref: "#/components/schemas/EffortParts"
+                  $ref: "#/components/schemas/EffortParts"
                 deploymentType:
                   items:
                     type: string
@@ -813,7 +813,7 @@ components:
                     example: "merging"
                   type: array
                 generalCosts:
-                  type: integer
+                  type: number
               type: object
             configurationEffort:
               properties:
@@ -916,7 +916,12 @@ components:
         algorithmId:
           $ref: "#/components/schemas/AlgorithmId"
         softKPIs:
-          $ref: "#/components/schemas/EffortParts"
+          type: object
+          properties:
+            effort:
+              $ref: "#/components/schemas/EffortParts"
+            runtime:
+              type: number
     Experiment:
       allOf:
         - type: object
@@ -1119,9 +1124,9 @@ components:
     EffortParts:
       properties:
         expertise:
-          type: integer
+          type: number
         hrAmount:
-          type: integer
+          type: number
       type: object
     ExperimentSimilarityConfig:
       properties:
@@ -1152,20 +1157,20 @@ components:
         $ref: "#/components/schemas/DiagramExperimentItem"
       type: array
     DiagramCoordinates:
-        properties:
-          x:
-            type: number
-          y:
-            type: number
-          funcId:
-            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
-          experimentId:
-            $ref: "#/components/schemas/ExperimentId"
-          threshold:
-            type: number
-        required:
-          - "x"
-          - "y"
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+        funcId:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+        experimentId:
+          $ref: "#/components/schemas/ExperimentId"
+        threshold:
+          type: number
+      required:
+        - "x"
+        - "y"
     softKPIsAlgorithmEnum:
       type: string
       enum:
@@ -1197,6 +1202,7 @@ components:
         - hrAmountWeightedEffort
         - multiplyEffort
         - expertiseWeightedEffort
+        - runtime
     MetricsEnum:
       type: string
       enum:

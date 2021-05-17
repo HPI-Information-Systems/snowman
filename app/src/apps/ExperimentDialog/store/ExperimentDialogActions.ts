@@ -67,6 +67,14 @@ export const changeDataset = (
     payload: aDatasetId,
   });
 
+export const changeRuntime = (
+  aRuntime: number | undefined
+): easyPrimitiveActionReturn<ExperimentDialogModel> =>
+  easyPrimitiveAction<ExperimentDialogModel>({
+    type: ExperimentDialogActionTypes.CHANGE_RUNTIME,
+    payload: aRuntime,
+  });
+
 export const changeAlgorithm = (
   aDatasetId: number | undefined
 ): easyPrimitiveActionReturn<ExperimentDialogModel> =>
@@ -153,8 +161,11 @@ const getExperimentValues = (
   name: state.experimentName,
   description: state.experimentDescription,
   softKPIs: {
-    expertise: removeNaN(state.expertise),
-    hrAmount: removeNaN(state.hrAmount),
+    effort: {
+      expertise: removeNaN(state.expertise),
+      hrAmount: removeNaN(state.hrAmount),
+    },
+    runtime: removeNaN(state.runtime),
   },
 });
 

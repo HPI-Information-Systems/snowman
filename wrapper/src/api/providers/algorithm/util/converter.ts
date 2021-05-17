@@ -1,8 +1,9 @@
 import { tableSchemas } from '../../../database/schemas';
 import { ColumnValues } from '../../../database/tools/types';
-import { Algorithm, Metric } from '../../../server/types';
+import { Algorithm } from '../../../server/types';
 import { calculateEffort } from './effortPoints/calculateEffort';
-type StoredAlgorithm = ColumnValues<
+
+export type StoredAlgorithm = ColumnValues<
   typeof tableSchemas['meta']['algorithm']['columns']
 >;
 
@@ -37,34 +38,22 @@ export class AlgorithmConverter {
     };
   }
   storedToApi(stored: StoredAlgorithm): Algorithm {
-    let domainEffort: Metric[] | undefined;
-    let matchingSolutionEffort: Metric[] | undefined;
-    let installationEffort: Metric[] | undefined;
-    if (stored.domainExpertise && stored.domainHrAmount) {
-      domainEffort = calculateEffort(
-        stored.domainExpertise,
-        stored.domainHrAmount
-      );
-    }
-    if (stored.matchingSolutionExpertise && stored.matchingSolutionHrAmount) {
-      matchingSolutionEffort = calculateEffort(
-        stored.matchingSolutionExpertise,
-        stored.matchingSolutionHrAmount
-      );
-    }
-    if (stored.installationExpertise && stored.installationHrAmount) {
-      installationEffort = calculateEffort(
-        stored.installationExpertise,
-        stored.installationHrAmount
-      );
-    }
     return {
       id: stored.id,
       name: stored.name,
       description: stored.description ?? undefined,
-      matchingSolutionEffort,
-      domainEffort,
-      installationEffort,
+      matchingSolutionEffort: calculateEffort(
+        stored.matchingSolutionExpertise,
+        stored.matchingSolutionHrAmount
+      ),
+      domainEffort: calculateEffort(
+        stored.domainExpertise,
+        stored.domainHrAmount
+      ),
+      installationEffort: calculateEffort(
+        stored.installationExpertise,
+        stored.installationHrAmount
+      ),
       softKPIs: {
         integrationEffort: {
           installationEffort: {

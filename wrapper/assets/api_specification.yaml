@@ -1021,8 +1021,10 @@ components:
     ExperimentValues:
       example:
         softKPIs:
-          expertise: 0
-          hrAmount: 6
+          runtime: 0
+          effort:
+            expertise: 0
+            hrAmount: 6
         name: Experiment1
         description: This is an experiment using a fancy algorithm
         datasetId: 1
@@ -1042,7 +1044,7 @@ components:
           example: 1
           type: integer
         softKPIs:
-          $ref: '#/components/schemas/EffortParts'
+          $ref: '#/components/schemas/ExperimentValues_softKPIs'
       required:
       - algorithmId
       - datasetId
@@ -1238,9 +1240,9 @@ components:
         hrAmount: 6
       properties:
         expertise:
-          type: integer
+          type: number
         hrAmount:
-          type: integer
+          type: number
       type: object
     ExperimentSimilarityConfig:
       properties:
@@ -1324,6 +1326,7 @@ components:
       - hrAmountWeightedEffort
       - multiplyEffort
       - expertiseWeightedEffort
+      - runtime
       type: string
     MetricsEnum:
       enum:
@@ -1488,7 +1491,7 @@ components:
             type: string
           type: array
         generalCosts:
-          type: integer
+          type: number
       type: object
     AlgorithmValues_softKPIs_configurationEffort:
       example:
@@ -1585,6 +1588,18 @@ components:
           type: integer
       required:
       - id
+      type: object
+    ExperimentValues_softKPIs:
+      example:
+        runtime: 0
+        effort:
+          expertise: 0
+          hrAmount: 6
+      properties:
+        effort:
+          $ref: '#/components/schemas/EffortParts'
+        runtime:
+          type: number
       type: object
     Experiment_allOf:
       properties:
