@@ -9,7 +9,7 @@ import {
   MetricEntityOptional,
 } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/MetricEntity';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { resolveExperimentEntity } from 'apps/BenchmarkApp/utils/experimentEntity';
+import { experimentEntityFromConfig } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { groupBy } from 'lodash';
 import { SnowmanAction } from 'types/SnowmanAction';
 import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
@@ -38,7 +38,7 @@ const DecisionMatrixStrategyReducer = (
         aSegment.experiments
           .map(
             (anExperiment): MetricEntityOptional => ({
-              experiment: resolveExperimentEntity(
+              experiment: experimentEntityFromConfig(
                 anExperiment,
                 appStore.resources
               ),

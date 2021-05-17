@@ -1,13 +1,24 @@
-import { BenchmarkApi, DiagramExperimentItem, DiagramResponse } from 'api';
+import {
+  BenchmarkApi,
+  DiagramCoordinates as RawDiagramCoordinates,
+  DiagramExperimentItem,
+  DiagramResponse,
+} from 'api';
 import { KpiInvestigatorStrategyActionTypes } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyActionTypes';
 import {
   KpiInvestigatorColorMode,
   KpiInvestigatorStrategyModel,
 } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
-import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import {
+  BenchmarkAppModel,
+  BenchmarkAppResourcesModel,
+} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { DiagramCoordinates } from 'apps/BenchmarkApp/types/DiagramCoordinates';
+import {
+  experimentEntityFromConfig,
   experimentEntityToExperimentConfigItem,
   resolveExperimentEntity,
+  stringifyExperimentEntity,
   uniqueExperimentConfigKey,
   uniqueExperimentEntityKey,
 } from 'apps/BenchmarkApp/utils/experimentEntity';
@@ -38,9 +49,16 @@ export const groundTruthKey = (
 export const coordinatesMapKey = (goldKey: string, expKey: string): string =>
   `${goldKey}#${expKey}`;
 
+const tooltipForRawCoordinates = (
+  coordinates: RawDiagramCoordinates,
+  resources: BenchmarkAppResourcesModel
+): string =>
+  stringifyExperimentEntity(resolveExperimentEntity(coordinates, resources));
+
 const buildCoordinatesMap = (
-  coordinates: [goldStandardKey: string, coordinates: DiagramResponse][]
-) =>
+  coordinates: [goldStandardKey: string, coordinates: DiagramResponse][],
+  resources: BenchmarkAppResourcesModel
+): Record<string, DiagramCoordinates> =>
   Object.fromEntries(
     coordinates.flatMap(([goldStandardKey, coordinates]) =>
       coordinates.coordinates.map((coordinates) => [
@@ -57,17 +75,21 @@ const buildCoordinatesMap = (
                 : undefined,
           })
         ),
-        coordinates,
+        {
+          ...coordinates,
+          tooltip: tooltipForRawCoordinates(coordinates, resources),
+        } as DiagramCoordinates,
       ])
     )
   );
 
-export const setCoordinates = (
-  allCoordinates: [goldStandardKey: string, coordinates: DiagramResponse][]
+const setCoordinates = (
+  allCoordinates: [goldStandardKey: string, coordinates: DiagramResponse][],
+  resources: BenchmarkAppResourcesModel
 ): easyPrimitiveActionReturn<KpiInvestigatorStrategyModel> =>
   easyPrimitiveAction<KpiInvestigatorStrategyModel>({
     type: KpiInvestigatorStrategyActionTypes.SET_COORDINATES,
-    payload: buildCoordinatesMap(allCoordinates),
+    payload: buildCoordinatesMap(allCoordinates, resources),
     optionalPayload: allCoordinates[0][1].definitionRange,
     optionalPayload2: allCoordinates[0][1].valueRange,
   });
@@ -105,7 +127,7 @@ export const loadCoordinates = (): SnowmanThunkAction<
         groundTruthKey: string,
         items: DiagramExperimentItem[]
       ] => {
-        const groundTruthEntity = resolveExperimentEntity(
+        const groundTruthEntity = experimentEntityFromConfig(
           aTrack.groundTruth,
           state.resources
         );
@@ -116,7 +138,9 @@ export const loadCoordinates = (): SnowmanThunkAction<
         return [
           groundTruthKey(groundTruthEntity),
           aTrack.experiments
-            .map((entity) => resolveExperimentEntity(entity, state.resources))
+            .map((entity) =>
+              experimentEntityFromConfig(entity, state.resources)
+            )
             .filter(
               (
                 anEntity: ExperimentEntity | undefined
@@ -134,15 +158,17 @@ export const loadCoordinates = (): SnowmanThunkAction<
       .map(([groundTruthKey, items]) =>
         RequestHandler(() =>
           new BenchmarkApi().calculateDiagramData({
-            xAxis: getState().xAxis,
-            yAxis: getState().yAxis,
+            xAxis: state.xAxis,
+            yAxis: state.yAxis,
             diagram: {
               multipleExperiments: items,
             },
           })
         ).then((points): [string, DiagramResponse] => [groundTruthKey, points])
       )
-  ).then((coordinates) => dispatch(setCoordinates(coordinates)));
+  ).then((coordinates) =>
+    dispatch(setCoordinates(coordinates, state.resources))
+  );
 };
 
 export const loadStrategyData = (
