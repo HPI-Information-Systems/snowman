@@ -7,7 +7,7 @@ import KpiInvestigatorStrategy from 'apps/BenchmarkApp/strategies/KpiInvestigato
 import NMetricsStrategy from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategy';
 import SimilarityDiagramStrategy from 'apps/BenchmarkApp/strategies/SimilarityDiagramStrategy/SimilarityDiagramStrategy';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
-import BackFab from 'components/simple/GenericFab/BackFab';
+import HomeFab from 'components/simple/GenericFab/HomeFab';
 import React, { useEffect } from 'react';
 
 const BenchmarkAppView = ({
@@ -26,7 +26,7 @@ const BenchmarkAppView = ({
       <SimilarityDiagramStrategy />
       <DecisionMatrixStrategy />
       {activeStrategy !== StrategyIDs.Dashboard ? (
-        <BackFab clickOnFab={(): void => openStrategy(StrategyIDs.Dashboard)} />
+        <HomeFab clickOnFab={(): void => openStrategy(StrategyIDs.Dashboard)} />
       ) : (
         <div />
       )}
