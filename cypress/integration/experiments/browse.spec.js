@@ -1,15 +1,15 @@
 /// <reference types="cypress" />
 
-context('Browse algorithms', () => {
+context('Browse experiments', () => {
   beforeEach(() => {
-    cy.visitAlgorithmsPage();
+    cy.visitExperimentsPage();
   });
 
   it('includes page toolbar', () => {
-    cy.isAlgorithmsPage();
+    cy.isExperimentsPage();
   });
 
-  it('contains default matching solution', () => {
+  it('contains default experiment', () => {
     cy.get('#mainViewContentId ion-row').children().should('have.length.at.least', 1);
   });
 

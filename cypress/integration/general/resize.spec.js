@@ -4,11 +4,8 @@ const resizeToWait = 300;
 
 function isResizedToValidRootPage() {
   cy.get(
-    '#mainViewContentId > .header-md > .toolbar-title-default > .title-default'
-  ).should('include.text', 'Home Page');
-  cy.get('#mainViewContentId h1').should('include.text', 'Snowman Benchmark');
-  cy.get('#mainViewContentId h1').should('include.text', 'Snowman Benchmark');
-  cy.getNextFab().should('exist').should('not.have.attr', 'disabled');
+      '#mainViewContentId > .header-md > .toolbar-title-default > .title-default'
+  ).should('be.visible');
 }
 
 function isMenuPaneVisible(target) {
@@ -22,6 +19,7 @@ function isMenuButtonVisible(target) {
 context('Resize root page', () => {
   beforeEach(() => {
     cy.visitRootPage();
+    cy.get('ion-card > ion-button').first().contains('Start Benchmark').click();
   });
 
   it('handles fullHD screens', () => {

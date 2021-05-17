@@ -16,12 +16,4 @@ context('Browse datasets', () => {
   it('has add fab', () => {
     cy.getAddFab().should('exist');
   })
-
-  it('has next fab', () => {
-    cy.getNextFab().should('exist');
-  })
-
-  it('has default disabled next fab', () => {
-    cy.getNextFab().should('have.attr', 'aria-disabled');
-  })
 });

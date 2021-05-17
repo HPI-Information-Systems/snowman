@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 
-context('Add new algorithm', () => {
+context('Add new experiment', () => {
   beforeEach(() => {
-    cy.visitAlgorithmsPage();
+    cy.visitExperimentsPage();
     cy.getAddFab().click();
   });
 
