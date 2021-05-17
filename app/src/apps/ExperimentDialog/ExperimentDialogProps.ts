@@ -19,6 +19,7 @@ export interface ExperimentDialogDispatchProps {
   changeAlgorithm(event: IonSelectChangeEvent): void;
   changeExpertise(event: IonRangeChangeEvent): void;
   changeHRAmount(event: IonChangeEvent): void;
+  changeRuntime(event: IonChangeEvent): void;
 }
 
 export interface ExperimentDialogStateProps {
@@ -34,6 +35,7 @@ export interface ExperimentDialogStateProps {
   selectedAlgorithm: string | undefined;
   expertise: number | undefined;
   hrAmount: number | undefined;
+  runtime: number | undefined;
 }
 
 export type ExperimentDialogOwnProps = DialogProps;

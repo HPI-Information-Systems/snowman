@@ -1,5 +1,3 @@
-import { fromPairs } from 'lodash';
-
 export * from './Algorithm';
 export * from './AlgorithmAllOf';
 export * from './AlgorithmValues';
