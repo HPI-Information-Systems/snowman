@@ -3,13 +3,10 @@ import {
   BenchmarkAppDispatchProps,
   BenchmarkAppStateProps,
 } from 'apps/BenchmarkApp/BenchmarkAppProps';
-import { openStrategy } from 'apps/BenchmarkApp/store/BenchmarkAppActions';
 import {
-  getAlgorithms,
-  getDatasets,
-  getExperiments,
-  getSimFunctions,
-} from 'apps/BenchmarkApp/store/BenchmarkAppThunkActions';
+  loadInitialState,
+  openStrategy,
+} from 'apps/BenchmarkApp/store/BenchmarkAppActions';
 import {
   BenchmarkAppDispatch,
   BenchmarkAppModel,
@@ -25,10 +22,7 @@ const mapDispatchToProps = (
   dispatch: BenchmarkAppDispatch
 ): BenchmarkAppDispatchProps => ({
   loadInitialState: () => {
-    dispatch(getAlgorithms()).then();
-    dispatch(getDatasets()).then();
-    dispatch(getExperiments()).then();
-    dispatch(getSimFunctions()).then();
+    dispatch(loadInitialState());
   },
   openStrategy(id: StrategyIDs) {
     dispatch(openStrategy(id));

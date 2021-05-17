@@ -13,6 +13,7 @@ import {
   changeExpertise,
   changeFileFormat,
   changeHRAmount,
+  changeRuntime,
   changeSelectedFiles,
 } from 'apps/ExperimentDialog/store/ExperimentDialogActions';
 import { ExperimentDialogModel } from 'apps/ExperimentDialog/types/ExperimentDialogModel';
@@ -58,6 +59,7 @@ const mapStateToProps = (
   selectedAlgorithm: state.selectedAlgorithm?.toString() ?? '',
   expertise: state.expertise,
   hrAmount: state.hrAmount,
+  runtime: state.runtime,
 });
 
 const mapDispatchToProps = (
@@ -92,6 +94,8 @@ const mapDispatchToProps = (
     dispatch(changeExpertise(event.detail.value as number)),
   changeHRAmount: (event: IonChangeEvent) =>
     dispatch(changeHRAmount(parseFloat(event.detail.value as string))),
+  changeRuntime: (event: IonChangeEvent) =>
+    dispatch(changeRuntime(parseFloat(event.detail.value as string))),
 });
 
 const ExperimentDialogContainer = connect(

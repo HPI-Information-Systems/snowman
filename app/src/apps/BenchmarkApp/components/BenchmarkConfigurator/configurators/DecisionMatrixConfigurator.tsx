@@ -42,7 +42,7 @@ export const DecisionMatrixConfiguration = buildConfigurator({
                 position: 2,
                 heading: '(Optional) Select Similarity Function and Threshold',
               },
-              simThreshold: {
+              threshold: {
                 configuration: StoreCacheKeyBaseEnum.similarityThreshold,
                 position: 3,
               },

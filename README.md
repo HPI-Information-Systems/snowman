@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/V2-256.png" />
+  <img alt="logo" src="docs/assets/V2-256.png" />
 </p>
 <h1 align="center">Snowman</h1>
 
@@ -9,7 +9,7 @@ Comparing data matching algorithms is still an unsolved topic in both industry a
 With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms.
 Besides traditional metrics, the tool will also consider economic aspects like Soft KPIs.
 
-![Intersection Page](docs/assets/intersection-page.png "Intersection Page")
+![Benchmark Dashboard](docs/assets/benchmark-dashboard.png "Benchmark Dashboard")
 
 _This tool is developed as part of a bachelor's project in collaboration with SAP SE._
 
@@ -19,7 +19,7 @@ In Q1 and Q2 of 2021, we aim to reach the following milestones:
 
 [x] **Milestone 1:** Ability to add/delete datasets, experiments and matching solutions; binary comparison and basic behavior analysis; executable on all major platform  
 [x] **Milestone 2:** Compare more than two experiments and create new experiments based on results; survey Soft KPIs, allow comparison based on KPIs  
-[ ] **Milestone 3:** Allow individual thresholds for experiments, extend Soft KPIs further and allow advanced evaluation of matching solutions
+[x] **Milestone 3:** Allow individual thresholds for experiments, extend Soft KPIs further and allow advanced evaluation of matching solutions
 
 The precise progress is tracked through Github issues and project boards. Please get in touch in case you want a special feature included :)
 

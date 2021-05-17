@@ -1,5 +1,4 @@
 import 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/BinaryMetricsStrategyStyles.css';
-import 'katex/dist/katex.min.css';
 
 import {
   IonCard,
@@ -13,6 +12,8 @@ import {
 } from '@ionic/react';
 import { Metric } from 'api';
 import { BinaryMetricsStrategyProps } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/BinaryMetricsStrategyProps';
+import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
+import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import DataViewer from 'components/simple/DataViewer/DataViewer';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import PaneButtonRow from 'components/simple/PaneButtonRow/PaneButtonRow';
@@ -37,7 +38,10 @@ const BinaryMetricsStrategyView = ({
   useTooltip();
 
   return (
-    <>
+    <PageStruct
+      pageTitle={StrategyIDs.BinaryMetrics}
+      enableScroll={isValidConfig}
+    >
       <ErroneousBackdrop
         shouldShow={!isValidConfig}
         message={
@@ -167,7 +171,7 @@ const BinaryMetricsStrategyView = ({
           />
         </IonCardContent>
       </IonCard>
-    </>
+    </PageStruct>
   );
 };
 

@@ -5,7 +5,7 @@ export interface NMetricsStrategyStateProps {
   metrics: Metric[][];
   experiments: ExperimentEntity[];
   goldStandard: Experiment | undefined;
-  isValidSelection: boolean;
+  isValidConfig: boolean;
 }
 
 export interface NMetricsStrategyDispatchProps {

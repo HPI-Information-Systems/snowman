@@ -20,6 +20,7 @@ export * from './ExperimentIntersectionItem';
 export * from './ExperimentIntersectionItemAllOf';
 export * from './ExperimentSimilarityConfig';
 export * from './ExperimentValues';
+export * from './ExperimentValuesSoftKPIs';
 export * from './FileResponse';
 export * from './InlineObject';
 export * from './Metric';

@@ -107,8 +107,11 @@ beforeAll(async () => {
           description: 'Dataset file',
           name: 'Dataset file',
           softKPIs: {
-            hrAmount: 12,
-            expertise: 67,
+            effort: {
+              hrAmount: 12,
+              expertise: 67,
+            },
+            runtime: 10,
           },
         },
         file: [
@@ -130,8 +133,11 @@ beforeAll(async () => {
           description: 'No dataset file',
           name: 'No dataset file',
           softKPIs: {
-            expertise: 11,
-            hrAmount: 11,
+            effort: {
+              expertise: 11,
+              hrAmount: 11,
+            },
+            runtime: 10,
           },
         },
         file: [
@@ -320,6 +326,7 @@ describe('test benchmark functions', () => {
           | MetricsEnum) === MetricsEnum.Similarity
       )
         continue;
+      console.log(value);
       result.push({
         name: value,
         value: benchmarkProvider
@@ -345,7 +352,7 @@ describe('test benchmark functions', () => {
               ],
             },
           })
-          .coordinates[0].x.toFixed(4),
+          .coordinates[0].x?.toFixed(4),
       });
     }
     expect(result).toEqual(
@@ -365,6 +372,7 @@ describe('test benchmark functions', () => {
         { name: 'matchingSolutionHrAmountWeightedEffort', value: '2643.1759' },
         { name: 'matchingSolutionMultiplyEffort', value: '120.0000' },
         { name: 'matchingSolutionExpertiseWeightedEffort', value: '11.2750' },
+        { name: 'runtime', value: '10.0000' },
         { name: 'generalCosts', value: '10.0000' },
         { name: 'installationExpertise', value: '30.0000' },
         { name: 'installationHrAmount', value: '10.0000' },

@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -14,10 +14,10 @@
 
 import { exists, mapValues } from '../runtime';
 import {
-    EffortParts,
-    EffortPartsFromJSON,
-    EffortPartsFromJSONTyped,
-    EffortPartsToJSON,
+    ExperimentValuesSoftKPIs,
+    ExperimentValuesSoftKPIsFromJSON,
+    ExperimentValuesSoftKPIsFromJSONTyped,
+    ExperimentValuesSoftKPIsToJSON,
 } from './';
 
 /**
@@ -52,10 +52,10 @@ export interface ExperimentValues {
     algorithmId: number;
     /**
      * 
-     * @type {EffortParts}
+     * @type {ExperimentValuesSoftKPIs}
      * @memberof ExperimentValues
      */
-    softKPIs?: EffortParts;
+    softKPIs?: ExperimentValuesSoftKPIs;
 }
 
 export function ExperimentValuesFromJSON(json: any): ExperimentValues {
@@ -72,7 +72,7 @@ export function ExperimentValuesFromJSONTyped(json: any, ignoreDiscriminator: bo
         'description': !exists(json, 'description') ? undefined : json['description'],
         'datasetId': json['datasetId'],
         'algorithmId': json['algorithmId'],
-        'softKPIs': !exists(json, 'softKPIs') ? undefined : EffortPartsFromJSON(json['softKPIs']),
+        'softKPIs': !exists(json, 'softKPIs') ? undefined : ExperimentValuesSoftKPIsFromJSON(json['softKPIs']),
     };
 }
 
@@ -89,7 +89,7 @@ export function ExperimentValuesToJSON(value?: ExperimentValues | null): any {
         'description': value.description,
         'datasetId': value.datasetId,
         'algorithmId': value.algorithmId,
-        'softKPIs': EffortPartsToJSON(value.softKPIs),
+        'softKPIs': ExperimentValuesSoftKPIsToJSON(value.softKPIs),
     };
 }
 

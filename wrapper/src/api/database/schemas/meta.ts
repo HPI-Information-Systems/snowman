@@ -29,11 +29,11 @@ export const metaSchemas = assertType<
         },
         installationExpertise: {
           name: 'installationExpertise' as const,
-          dataType: 'INTEGER',
+          dataType: 'REAL',
         },
         installationHrAmount: {
           name: 'installationHrAmount' as const,
-          dataType: 'INTEGER',
+          dataType: 'REAL',
         },
         deploymentType: {
           name: 'deploymentType' as const,
@@ -49,23 +49,23 @@ export const metaSchemas = assertType<
         },
         generalCosts: {
           name: 'generalCosts' as const,
-          dataType: 'INTEGER',
+          dataType: 'REAL',
         },
         matchingSolutionExpertise: {
           name: 'matchingSolutionExpertise' as const,
-          dataType: 'INTEGER',
+          dataType: 'REAL',
         },
         matchingSolutionHrAmount: {
           name: 'matchingSolutionHrAmount' as const,
-          dataType: 'INTEGER',
+          dataType: 'REAL',
         },
         domainExpertise: {
           name: 'domainExpertise' as const,
-          dataType: 'INTEGER',
+          dataType: 'REAL',
         },
         domainHrAmount: {
           name: 'domainHrAmount' as const,
-          dataType: 'INTEGER',
+          dataType: 'REAL',
         },
         interfaces: {
           name: 'interfaces' as const,
@@ -161,11 +161,15 @@ export const metaSchemas = assertType<
         },
         hrAmount: {
           name: 'hrAmount' as const,
-          dataType: 'INTEGER',
+          dataType: 'REAL',
         },
         expertise: {
           name: 'expertise' as const,
-          dataType: 'INTEGER',
+          dataType: 'REAL',
+        },
+        runtime: {
+          name: 'runtime' as const,
+          dataType: 'REAL',
         },
       },
     },

@@ -28,28 +28,30 @@ import { $enum } from 'ts-enum-util';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 
 const ExperimentDialogView = ({
-  isAddDialog,
-  clickOnCancel,
-  experimentName,
-  experimentDescription,
-  experimentFileFormat,
-  changeExperimentDescription,
-  changeExperimentName,
-  changeExperimentFileFormat,
-  clickOnSubmit,
-  isValidForm,
-  selectedFiles,
-  changeSelectedFiles,
-  datasets,
-  selectedDataset,
-  changeDataset,
   algorithms,
-  selectedAlgorithm,
   changeAlgorithm,
+  changeDataset,
+  changeExperimentDescription,
+  changeExperimentFileFormat,
+  changeExperimentName,
   changeExpertise,
   changeHRAmount,
+  changeRuntime,
+  changeSelectedFiles,
+  clickOnCancel,
+  clickOnSubmit,
+  datasets,
+  experimentDescription,
+  experimentFileFormat,
+  experimentName,
   expertise,
   hrAmount,
+  isAddDialog,
+  isValidForm,
+  runtime,
+  selectedAlgorithm,
+  selectedDataset,
+  selectedFiles,
 }: ExperimentDialogProps): JSX.Element => (
   <>
     <IonList>
@@ -113,7 +115,7 @@ const ExperimentDialogView = ({
       </IonItem>
 
       <IonItemDivider>
-        <IonLabel>Configuration Effort:</IonLabel>
+        <IonLabel>CONFIGURATION EFFORT:</IonLabel>
       </IonItemDivider>
 
       <IonItem>
@@ -142,6 +144,20 @@ const ExperimentDialogView = ({
           placeholder="0"
           value={hrAmount}
           onIonChange={changeHRAmount}
+        />
+      </IonItem>
+
+      <IonItemDivider>
+        <IonLabel>OTHER KPIS:</IonLabel>
+      </IonItemDivider>
+
+      <IonItem>
+        <IonLabel position="fixed">Runtime </IonLabel>
+        <IonInput
+          type="number"
+          placeholder="0"
+          value={runtime}
+          onIonChange={changeRuntime}
         />
       </IonItem>
 

@@ -10,7 +10,7 @@ export class DiagramExperimentSoftKPIsDataProvider extends DiagramDataProvider {
   getData(
     metric: SoftKPIsExperimentEnum,
     diagramExperimentItem: DiagramExperimentItem
-  ): number {
+  ): number | null {
     const experimentProvider = new ExperimentProvider();
     const experiment = experimentProvider.getExperiment(
       diagramExperimentItem.experiment.experimentId
@@ -22,12 +22,15 @@ export class DiagramExperimentSoftKPIsDataProvider extends DiagramDataProvider {
     return softKPIExperimentRangeMap.get(metric);
   }
 
-  mapEnum(metric: SoftKPIsExperimentEnum, experiment: Experiment): number {
+  mapEnum(
+    metric: SoftKPIsExperimentEnum,
+    experiment: Experiment
+  ): number | null {
     const mappedMetric = softKPIExperimentMap.get(metric);
     if (mappedMetric) {
       const metricValue = mappedMetric(experiment);
       if (!metricValue) {
-        throw new Error(`The metric ${metric} does not exist!`);
+        return null;
       }
       return metricValue;
     }
@@ -36,10 +39,7 @@ export class DiagramExperimentSoftKPIsDataProvider extends DiagramDataProvider {
       ({ id }) => (id as SoftKPIsExperimentEnum) === metric
     )?.value;
 
-    if (!effort)
-      throw new Error(
-        `Either HR-Amount or Expertise is missing for experiment ${experiment.id} so that effort cannot be calculated`
-      );
+    if (!effort) return null;
     return effort;
   }
 }
@@ -50,11 +50,17 @@ const softKPIExperimentMap: Map<
 > = new Map([
   [
     SoftKPIsExperimentEnum.Expertise,
-    (experiment: Experiment) => experiment.softKPIs?.expertise ?? undefined,
+    (experiment: Experiment) =>
+      experiment.softKPIs?.effort?.expertise ?? undefined,
   ],
   [
     SoftKPIsExperimentEnum.HrAmount,
-    (experiment: Experiment) => experiment.softKPIs?.hrAmount ?? undefined,
+    (experiment: Experiment) =>
+      experiment.softKPIs?.effort?.hrAmount ?? undefined,
+  ],
+  [
+    SoftKPIsExperimentEnum.Runtime,
+    (experiment: Experiment) => experiment.softKPIs?.runtime ?? undefined,
   ],
 ]);
 
@@ -68,4 +74,5 @@ const softKPIExperimentRangeMap: Map<
   [SoftKPIsExperimentEnum.HrAmountWeightedEffort, undefined],
   [SoftKPIsExperimentEnum.ManhattanDistanceBasedEffort, undefined],
   [SoftKPIsExperimentEnum.MultiplyEffort, undefined],
+  [SoftKPIsExperimentEnum.Runtime, [0, 100]],
 ]);

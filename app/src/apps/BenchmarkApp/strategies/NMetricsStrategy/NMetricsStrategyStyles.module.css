@@ -7,7 +7,7 @@ table.materialTable {
 
 table.materialTable th,
 table.materialTable td {
-  padding: 1.6em;
+  padding: 1.2em 1.6em;
   border: inherit;
   text-align: left;
   vertical-align: top;

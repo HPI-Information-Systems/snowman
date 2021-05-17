@@ -1,10 +1,10 @@
-import 'katex/dist/katex.min.css';
-
 import { IonCard, IonIcon, IonText } from '@ionic/react';
 import { Metric } from 'api';
 import { NMetricsStrategyProps } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyStyles.module.css';
+import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { uniqueExperimentEntityKey } from 'apps/BenchmarkApp/utils/experimentEntity';
+import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import { chevronForwardOutline } from 'ionicons/icons';
 import { renderToString } from 'katex';
@@ -16,16 +16,19 @@ const NMetricsStrategyView = ({
   metrics,
   experiments,
   inspectExperiment,
-  isValidSelection,
+  isValidConfig,
 }: NMetricsStrategyProps): JSX.Element => {
   useEffect(() => {
     // Triggered on every component update!
     ReactTooltip.rebuild();
   });
   return (
-    <>
+    <PageStruct
+      pageTitle={StrategyIDs.NaryMetrics}
+      enableScroll={isValidConfig}
+    >
       <ErroneousBackdrop
-        shouldShow={!isValidSelection}
+        shouldShow={!isValidConfig}
         message={
           'Please select one gold standard and at least one other experiment ' +
           'from a single dataset!'
@@ -75,7 +78,7 @@ const NMetricsStrategyView = ({
                         output: 'html',
                       })}
                     >
-                      {aMetric.name}
+                      <b>{aMetric.name}</b>
                     </span>
                   </td>
                   {metrics.map(
@@ -110,7 +113,7 @@ const NMetricsStrategyView = ({
           </tbody>
         </table>
       </IonCard>
-    </>
+    </PageStruct>
   );
 };
 

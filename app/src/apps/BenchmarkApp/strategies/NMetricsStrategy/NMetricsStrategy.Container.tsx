@@ -29,7 +29,7 @@ const mapStateToProps = (
     metrics: state.metrics,
     experiments: state.experiments,
     goldStandard: state.groundTruth?.experiment,
-    isValidSelection: state.isValidConfig,
+    isValidConfig: state.isValidConfig,
   };
 };
 

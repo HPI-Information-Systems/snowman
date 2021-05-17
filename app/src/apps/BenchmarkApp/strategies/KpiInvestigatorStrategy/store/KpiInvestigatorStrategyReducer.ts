@@ -1,4 +1,3 @@
-import { MetricsEnum } from 'api';
 import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
 import { KPIDiagramConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
 import { initialResourcesState } from 'apps/BenchmarkApp/store/BenchmarkAppReducer';
@@ -29,8 +28,8 @@ const initialState: KpiInvestigatorStrategyModel = {
   coordinates: {},
   valueRange: undefined,
   definitionRange: undefined,
-  xAxis: AllMetricsObject.MultiplyEffort,
-  yAxis: MetricsEnum.F1Score,
+  xAxis: AllMetricsObject.Accuracy,
+  yAxis: AllMetricsObject.F1Score,
   colorMode: KpiInvestigatorColorMode.BY_MATCHING_SOLUTION,
   configuration: {
     diagramTracks: [],

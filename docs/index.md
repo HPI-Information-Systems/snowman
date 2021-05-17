@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/V2-256.png" />
+  <img alt="logo" src="assets/V2-256.png" />
 </p>
 <h1 align="center">Welcome to Snowman</h1>
 
