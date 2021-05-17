@@ -63,7 +63,6 @@ export const SelectableInputView = function <Content>({
                   button
                   key={'selectable-option-' + getID(anOption)}
                   onClick={(): void => toggleOption(getID(anOption))}
-                  className={styles.selectItem}
                 >
                   <IonIcon
                     icon={
@@ -76,7 +75,7 @@ export const SelectableInputView = function <Content>({
                     color={
                       selection.includes(getID(anOption)) ? 'primary' : 'medium'
                     }
-                    size="medium"
+                    className={styles.selectItemIcon}
                     slot="start"
                   />
                   {renderChild(anOption)}
