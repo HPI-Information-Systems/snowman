@@ -46,6 +46,7 @@ const NMetricsStrategyView = ({
                       color="primary"
                       className={styles.clickableContent}
                       onClick={(): void => inspectExperiment(anExperiment)}
+                      data-for="tooltip"
                       data-tip="Open BinaryMetrics Viewer for experiment."
                     >
                       {anExperiment.experiment.name +
@@ -72,6 +73,7 @@ const NMetricsStrategyView = ({
                 <tr key={'nmetrics-row-' + aMetric.name}>
                   <td>
                     <span
+                      data-for="tooltipAllowHtml"
                       data-tip={renderToString(aMetric.formula, {
                         throwOnError: false,
                         displayMode: true,
@@ -92,6 +94,7 @@ const NMetricsStrategyView = ({
                         )}-metric-${index}`}
                       >
                         <span
+                          data-for="tooltipAllowHtml"
                           data-tip={`${
                             metricsOfAnExperiment[index]?.value?.toString() ??
                             'divide by zero'

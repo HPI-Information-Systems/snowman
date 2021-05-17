@@ -20,6 +20,7 @@ const ExperimentStrategy = ({ item }: EntityItemProps): JSX.Element => {
       className={styles.lessPaddingLeft}
       onMouseOver={() => setOpen(false)}
       onMouseOut={() => setOpen(true)}
+      data-for="tooltip"
       data-tip={`${item.description}
 
 Dataset: ${getDatasetNameFromId(

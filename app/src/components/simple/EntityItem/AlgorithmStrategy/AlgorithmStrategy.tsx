@@ -16,6 +16,7 @@ const AlgorithmStrategy = ({ item }: EntityItemProps): JSX.Element => {
       color="clear"
       lines="none"
       className={styles.lessPaddingLeft}
+      data-for="tooltip"
       data-tip={item.description}
     >
       <IonButton

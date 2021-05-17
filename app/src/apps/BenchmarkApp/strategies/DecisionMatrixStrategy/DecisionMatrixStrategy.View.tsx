@@ -46,6 +46,7 @@ const DecisionMatrixStrategyView = ({
                       color="primary"
                       onClick={(): void => editAlgorithm(anAlgorithm.id)}
                       className={styles.clickableContent}
+                      data-for="tooltip"
                       data-tip="Edit this matching solution's properties."
                     >
                       {anAlgorithm.name}
@@ -129,6 +130,7 @@ const DecisionMatrixStrategyView = ({
                   <tr key={'nmetrics-row-metric-' + metricId}>
                     <td>
                       <span
+                        data-for="tooltip"
                         data-tip={renderToString(aMetric.formula, {
                           throwOnError: false,
                           displayMode: true,
@@ -147,6 +149,7 @@ const DecisionMatrixStrategyView = ({
                           key={`matrix-view-metric-${metricId}-algo-${index}`}
                         >
                           <span
+                            data-for="tooltip"
                             data-tip={`${
                               algorithmMetrics[metricId]?.value?.toString() ??
                               '?'

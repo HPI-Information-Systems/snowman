@@ -54,6 +54,7 @@ const MultiSelectorView = ({
               className={styles.pointer}
               icon={closeCircleOutline}
               color={id !== MULTI_SELECTOR_START ? 'danger' : 'light'}
+              data-for="tooltip"
               data-tip={
                 id === MULTI_SELECTOR_START
                   ? 'This item cannot be removed'

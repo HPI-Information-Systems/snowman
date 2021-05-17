@@ -50,7 +50,10 @@ const BinaryMetricsStrategyView = ({
         }
       />
       <IonText color="primary">
-        <h3 data-tip="Binary metrics are calculated based upon the count of false positives, false negatives, true negatives and true positives.">
+        <h3
+          data-for="tooltip"
+          data-tip="Binary metrics are calculated based upon the count of false positives, false negatives, true negatives and true positives."
+        >
           Binary Metrics
         </h3>
       </IonText>
@@ -70,6 +73,7 @@ const BinaryMetricsStrategyView = ({
                       <IonCardTitle
                         className="metric-number"
                         color="primary"
+                        data-for="tooltipAllowHtml"
                         data-tip={`${
                           value?.toString() ?? 'divide by zero'
                         } &isin; [${range?.toString() ?? '?'}]`}
@@ -78,6 +82,7 @@ const BinaryMetricsStrategyView = ({
                       </IonCardTitle>
                       <IonCardSubtitle
                         className="metric-name"
+                        data-for="tooltipAllowHtml"
                         data-tip={renderToString(formula, {
                           throwOnError: false,
                           displayMode: true,
