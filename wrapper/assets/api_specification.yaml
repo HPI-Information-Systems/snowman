@@ -1240,9 +1240,9 @@ components:
         hrAmount: 6
       properties:
         expertise:
-          type: integer
+          type: number
         hrAmount:
-          type: integer
+          type: number
       type: object
     ExperimentSimilarityConfig:
       properties:
@@ -1491,7 +1491,7 @@ components:
             type: string
           type: array
         generalCosts:
-          type: integer
+          type: number
       type: object
     AlgorithmValues_softKPIs_configurationEffort:
       example:
@@ -1599,7 +1599,7 @@ components:
         effort:
           $ref: '#/components/schemas/EffortParts'
         runtime:
-          type: integer
+          type: number
       type: object
     Experiment_allOf:
       properties:
