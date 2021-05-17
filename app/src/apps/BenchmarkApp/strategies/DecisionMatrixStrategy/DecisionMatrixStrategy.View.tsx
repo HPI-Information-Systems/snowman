@@ -31,7 +31,7 @@ const DecisionMatrixStrategyView = ({
       <ErroneousBackdrop
         shouldShow={!isValidConfig}
         message={
-          'Please select at least a single matching solution and, optionally, an experiment each.'
+          'Please select at least a single matching solution and, optionally, experiments for each.'
         }
       />
       <IonCard>
