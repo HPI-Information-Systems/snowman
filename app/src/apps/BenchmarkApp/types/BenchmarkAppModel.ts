@@ -10,12 +10,12 @@ import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
 
 export interface BenchmarkAppModel {
-  resources: BenchmarkAppResourcesStore;
+  resources: BenchmarkAppResourcesModel;
   activeStrategy: StrategyIDs;
   config: ConfigurationStoreModel;
 }
 
-export interface BenchmarkAppResourcesStore {
+export interface BenchmarkAppResourcesModel {
   algorithms: Algorithm[];
   datasets: Dataset[];
   experiments: Experiment[];

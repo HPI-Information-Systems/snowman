@@ -39,7 +39,7 @@ const IntersectionDroppable = ({
           <IonChip
             outline={false}
             key={uniqueExperimentEntityKey(anExperiment)}
-            style={{ maxWidth: 'calc(100% - 0.6rem)' }}
+            style={{ height: 50, maxWidth: 'calc(100% - 0.6rem)' }}
           >
             <ExperimentConfigItem
               {...experimentEntityToExperimentConfigItem(anExperiment)}

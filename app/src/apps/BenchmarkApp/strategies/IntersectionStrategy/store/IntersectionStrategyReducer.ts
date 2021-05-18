@@ -5,7 +5,7 @@ import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/Intersec
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import {
   experimentEntitiesEqual,
-  resolveExperimentEntity,
+  experimentEntityFromConfig,
   uniqueExperimentEntityKey,
 } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { difference, nth, uniqBy } from 'lodash';
@@ -48,7 +48,9 @@ const IntersectionStrategyReducer = (
       const configuration = IntersectionConfiguration.getValue(appStore);
       const experimentConfigs = uniqBy(
         [...configuration.experiments.flat(), configuration.groundTruth]
-          .map((config) => resolveExperimentEntity(config, appStore.resources))
+          .map((config) =>
+            experimentEntityFromConfig(config, appStore.resources)
+          )
           .filter(
             (
               entity: ExperimentEntity | undefined

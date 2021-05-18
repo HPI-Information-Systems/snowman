@@ -6,8 +6,8 @@
 #### [![General](https://github.com/HPI-Information-Systems/snowman/actions/workflows/general.yml/badge.svg)](https://github.com/HPI-Information-Systems/snowman/actions/workflows/general.yml) [![Documentation](https://github.com/HPI-Information-Systems/snowman/actions/workflows/docs.yml/badge.svg)](https://github.com/HPI-Information-Systems/snowman/actions/workflows/docs.yml) [![Release](https://github.com/HPI-Information-Systems/snowman/actions/workflows/package.yml/badge.svg)](https://github.com/HPI-Information-Systems/snowman/actions/workflows/package.yml)
 
 Comparing data matching algorithms is still an unsolved topic in both industry and research.
-With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms.
-Besides traditional metrics, the tool will also consider economic aspects like Soft KPIs.
+With snowman, developers and researchers are able to compare the performance of different data matching solutions or improve new algorithms.
+Besides traditional metrics, the tool also considers economic aspects like Soft KPIs.
 
 ![Benchmark Dashboard](docs/assets/benchmark-dashboard.png "Benchmark Dashboard")
 

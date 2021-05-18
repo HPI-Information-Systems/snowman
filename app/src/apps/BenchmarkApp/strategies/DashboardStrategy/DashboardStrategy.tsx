@@ -33,8 +33,134 @@ const DashboardStrategy = ({
     createStrategyStore={dummyStoreFactory()}
   >
     <PageStruct pageTitle={StrategyIDs.Dashboard} enableScroll={true}>
+      <IonText color="primary">
+        <h3>Data Stewards</h3>
+      </IonText>
       <IonGrid>
         <IonRow>
+          <IonCol size="4" sizeXl="3">
+            <IonCard>
+              <IonCardHeader>
+                <IonCardTitle>
+                  KPI Investigator
+                  <span>
+                    <IonIcon
+                      className="ion-float-right"
+                      icon={barChart}
+                      size="large"
+                      color="primarydark"
+                    />
+                  </span>
+                </IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent>
+                <p>
+                  Investigate soft and hard KPIs of experiments grouped by
+                  either dataset or matching solution. Evaluation occurs with
+                  the help of a variety of diagrams.
+                </p>
+              </IonCardContent>
+              <IonCardContent>
+                <IonText color="dark">
+                  <p>
+                    <b>Requires:</b> multiple experiments from any dataset
+                  </p>
+                </IonText>
+              </IonCardContent>
+              <IonButton
+                expand="full"
+                fill="clear"
+                onClick={(): void => openStrategy(StrategyIDs.KpiInvestigator)}
+              >
+                Start Benchmark
+              </IonButton>
+            </IonCard>
+          </IonCol>
+          <IonCol size="4" sizeXl="3">
+            <IonCard>
+              <IonCardHeader>
+                <IonCardTitle>
+                  KPI Decision Matrix
+                  <span>
+                    <IonIcon
+                      className="ion-float-right"
+                      icon={apps}
+                      size="large"
+                      color="primarydark"
+                    />
+                  </span>
+                </IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent>
+                <p>
+                  Compare matching solutions based upon their KPIs. The
+                  comparison will include soft KPIs as specified as well as
+                  average binary metrics.
+                </p>
+              </IonCardContent>
+              <IonCardContent>
+                <IonText color="dark">
+                  <p>
+                    <b>Requires:</b> at least a single matching solution
+                  </p>
+                </IonText>
+              </IonCardContent>
+              <IonButton
+                expand="full"
+                fill="clear"
+                onClick={(): void =>
+                  openStrategy(StrategyIDs.KpiDecisionMatrix)
+                }
+              >
+                Start Benchmark
+              </IonButton>
+            </IonCard>
+          </IonCol>
+        </IonRow>
+      </IonGrid>
+      <IonText color="primary">
+        <h3>Developers</h3>
+      </IonText>
+      <IonGrid>
+        <IonRow>
+          <IonCol size="4" sizeXl="3">
+            <IonCard>
+              <IonCardHeader>
+                <IonCardTitle>
+                  Binary Metrics View
+                  <span>
+                    <IonIcon
+                      className="ion-float-right"
+                      icon={pauseCircle}
+                      size="large"
+                      color="primarydark"
+                    />
+                  </span>
+                </IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent>
+                <p>
+                  Summary view to compare a single experiment against a ground
+                  truth. You can view metrics as well as investigate tuples.
+                </p>
+              </IonCardContent>
+              <IonCardContent>
+                <IonText color="dark">
+                  <p>
+                    <b>Requires:</b> exactly two experiments from the same
+                    dataset
+                  </p>
+                </IonText>
+              </IonCardContent>
+              <IonButton
+                expand="full"
+                fill="clear"
+                onClick={(): void => openStrategy(StrategyIDs.BinaryMetrics)}
+              >
+                Start Benchmark
+              </IonButton>
+            </IonCard>
+          </IonCol>
           <IonCol size="4" sizeXl="3">
             <IonCard>
               <IonCardHeader>
@@ -117,82 +243,6 @@ const DashboardStrategy = ({
             <IonCard>
               <IonCardHeader>
                 <IonCardTitle>
-                  Binary Metrics View
-                  <span>
-                    <IonIcon
-                      className="ion-float-right"
-                      icon={pauseCircle}
-                      size="large"
-                      color="primarydark"
-                    />
-                  </span>
-                </IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent>
-                <p>
-                  Summary view to compare a single experiment against a ground
-                  truth. You can view metrics as well as investigate tuples.
-                </p>
-              </IonCardContent>
-              <IonCardContent>
-                <IonText color="dark">
-                  <p>
-                    <b>Requires:</b> exactly two experiments from the same
-                    dataset
-                  </p>
-                </IonText>
-              </IonCardContent>
-              <IonButton
-                expand="full"
-                fill="clear"
-                onClick={(): void => openStrategy(StrategyIDs.BinaryMetrics)}
-              >
-                Start Benchmark
-              </IonButton>
-            </IonCard>
-          </IonCol>
-          <IonCol size="4" sizeXl="3">
-            <IonCard>
-              <IonCardHeader>
-                <IonCardTitle>
-                  KPI Investigator
-                  <span>
-                    <IonIcon
-                      className="ion-float-right"
-                      icon={barChart}
-                      size="large"
-                      color="primarydark"
-                    />
-                  </span>
-                </IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent>
-                <p>
-                  Investigate soft and hard KPIs of experiments grouped by
-                  either dataset or matching solution. Evaluation occurs with
-                  the help of a variety of diagrams.
-                </p>
-              </IonCardContent>
-              <IonCardContent>
-                <IonText color="dark">
-                  <p>
-                    <b>Requires:</b> multiple experiments from any dataset
-                  </p>
-                </IonText>
-              </IonCardContent>
-              <IonButton
-                expand="full"
-                fill="clear"
-                onClick={(): void => openStrategy(StrategyIDs.KpiInvestigator)}
-              >
-                Start Benchmark
-              </IonButton>
-            </IonCard>
-          </IonCol>
-          <IonCol size="4" sizeXl="3">
-            <IonCard>
-              <IonCardHeader>
-                <IonCardTitle>
                   Similarity Diagrams
                   <span>
                     <IonIcon
@@ -223,46 +273,6 @@ const DashboardStrategy = ({
                 fill="clear"
                 onClick={(): void =>
                   openStrategy(StrategyIDs.SimilarityDiagram)
-                }
-              >
-                Start Benchmark
-              </IonButton>
-            </IonCard>
-          </IonCol>
-          <IonCol size="4" sizeXl="3">
-            <IonCard>
-              <IonCardHeader>
-                <IonCardTitle>
-                  KPI Decision Matrix
-                  <span>
-                    <IonIcon
-                      className="ion-float-right"
-                      icon={apps}
-                      size="large"
-                      color="primarydark"
-                    />
-                  </span>
-                </IonCardTitle>
-              </IonCardHeader>
-              <IonCardContent>
-                <p>
-                  Compare matching solutions based upon their KPIs. The
-                  comparison will include soft KPIs as specified as well as
-                  average binary metrics.
-                </p>
-              </IonCardContent>
-              <IonCardContent>
-                <IonText color="dark">
-                  <p>
-                    <b>Requires:</b> at least a single matching solution
-                  </p>
-                </IonText>
-              </IonCardContent>
-              <IonButton
-                expand="full"
-                fill="clear"
-                onClick={(): void =>
-                  openStrategy(StrategyIDs.KpiDecisionMatrix)
                 }
               >
                 Start Benchmark

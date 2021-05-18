@@ -11,10 +11,13 @@ import {
 } from '@ionic/react';
 import styles from 'apps/AlgorithmDialog/AlgorithmDialog.module.css';
 import { AlgorithmDialogProps } from 'apps/AlgorithmDialog/AlgorithmDialogProps';
+import { AlgorithmSegmentTypeEnum } from 'apps/AlgorithmDialog/types/AlgorithmSegmentTypeEnum';
 import TextMultiSelect from 'components/simple/TextMultiSelect/TextMultiSelect';
 import {
   addCircleOutline,
   checkmarkCircleOutline,
+  chevronDown,
+  chevronUp,
   closeCircleOutline,
 } from 'ionicons/icons';
 import React from 'react';
@@ -57,6 +60,8 @@ const AlgorithmDialogView = ({
   configurationMatchingSolutionEffortHRAmount,
   integrationInstallationEffortExpertise,
   integrationInstallationEffortHRAmount,
+  expandedSegments,
+  toggleSegmentExpansion,
 }: AlgorithmDialogProps): JSX.Element => (
   <>
     <IonList>
@@ -79,170 +84,245 @@ const AlgorithmDialogView = ({
         />
       </IonItem>
 
-      <IonItemDivider>
+      <IonItemDivider
+        onClick={() =>
+          toggleSegmentExpansion(AlgorithmSegmentTypeEnum.INTEGRATION_EFFORT)
+        }
+      >
+        <IonIcon
+          icon={
+            expandedSegments.includes(
+              AlgorithmSegmentTypeEnum.INTEGRATION_EFFORT
+            )
+              ? chevronUp
+              : chevronDown
+          }
+          slot="end"
+        />
         <IonLabel>INTEGRATION EFFORT</IonLabel>
       </IonItemDivider>
-      <IonItem>
-        <IonLabel position="fixed">
-          Installation <br /> Knowledge
-          <br /> Level:
-        </IonLabel>
-        <IonRange
-          min={0}
-          max={100}
-          value={integrationInstallationEffortExpertise}
-          color="primary"
-          onIonChange={changeIntegrationInstallationEffortExpertise}
+      {expandedSegments.includes(
+        AlgorithmSegmentTypeEnum.INTEGRATION_EFFORT
+      ) ? (
+        <>
+          <IonItem>
+            <IonLabel position="fixed">
+              Installation <br /> Knowledge
+              <br /> Level %:
+            </IonLabel>
+            <IonRange
+              min={0}
+              max={100}
+              value={integrationInstallationEffortExpertise}
+              color="primary"
+              onIonChange={changeIntegrationInstallationEffortExpertise}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="fixed">
+              Installation
+              <br /> HR Amount:
+            </IonLabel>
+            <IonInput
+              type="number"
+              min="0"
+              placeholder="0"
+              value={integrationInstallationEffortHRAmount}
+              onIonChange={changeIntegrationInstallationEffortHRAmount}
+            />
+            <span className={styles.inputUnit}>man-hr</span>
+          </IonItem>
+        </>
+      ) : null}
+
+      <IonItemDivider
+        onClick={() =>
+          toggleSegmentExpansion(AlgorithmSegmentTypeEnum.CONFIGURATION_EFFORT)
+        }
+      >
+        <IonIcon
+          icon={
+            expandedSegments.includes(
+              AlgorithmSegmentTypeEnum.CONFIGURATION_EFFORT
+            )
+              ? chevronUp
+              : chevronDown
+          }
+          slot="end"
         />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">
-          Installation
-          <br /> HR Amount:
-        </IonLabel>
-        <IonInput
-          type="number"
-          min="0"
-          placeholder="0"
-          value={integrationInstallationEffortHRAmount}
-          onIonChange={changeIntegrationInstallationEffortHRAmount}
-        />
-      </IonItem>
-      <IonItemDivider>
         <IonLabel>CONFIGURATION EFFORT</IonLabel>
       </IonItemDivider>
+      {expandedSegments.includes(
+        AlgorithmSegmentTypeEnum.CONFIGURATION_EFFORT
+      ) ? (
+        <>
+          <IonItem>
+            <IonLabel position="fixed">
+              Matching
+              <br /> Solution
+              <br /> Knowledge
+              <br /> Level %:
+            </IonLabel>
+            <IonRange
+              min={0}
+              max={100}
+              value={configurationMatchingSolutionEffortExpertise}
+              color="primary"
+              onIonChange={changeConfigurationMatchingSolutionEffortExpertise}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="fixed">
+              Matching
+              <br /> Solution <br />
+              HR Amount:
+            </IonLabel>
+            <IonInput
+              type="number"
+              placeholder="0"
+              value={configurationMatchingSolutionEffortHRAmount}
+              onIonChange={changeConfigurationMatchingSolutionEffortHRAmount}
+            />
+            <span className={styles.inputUnit}>man-hr</span>
+          </IonItem>
 
-      <IonItem>
-        <IonLabel position="fixed">
-          Matching
-          <br /> Solution
-          <br /> Knowledge
-          <br /> Level:
-        </IonLabel>
-        <IonRange
-          min={0}
-          max={100}
-          value={configurationMatchingSolutionEffortExpertise}
-          color="primary"
-          onIonChange={changeConfigurationMatchingSolutionEffortExpertise}
-        />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">
-          Matching
-          <br /> Solution <br />
-          HR Amount:
-        </IonLabel>
-        <IonInput
-          type="number"
-          placeholder="0"
-          value={configurationMatchingSolutionEffortHRAmount}
-          onIonChange={changeConfigurationMatchingSolutionEffortHRAmount}
-        />
-      </IonItem>
+          <IonItem>
+            <IonLabel position="fixed">
+              Domain
+              <br /> Knowledge
+              <br /> Level %:
+            </IonLabel>
+            <IonRange
+              min={0}
+              max={100}
+              value={configurationDomainEffortExpertise}
+              color="primary"
+              onIonChange={changeConfigurationDomainEffortExpertise}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="fixed">
+              Domain <br />
+              HR Amount:
+            </IonLabel>
+            <IonInput
+              type="number"
+              min="0"
+              placeholder="0"
+              value={configurationDomainEffortHRAmount}
+              onIonChange={changeConfigurationDomainEffortHRAmount}
+            />
+            <span className={styles.inputUnit}>man-hr</span>
+          </IonItem>
+        </>
+      ) : null}
 
-      <IonItem>
-        <IonLabel position="fixed">
-          Domain
-          <br /> Knowledge
-          <br /> Level:
-        </IonLabel>
-        <IonRange
-          min={0}
-          max={100}
-          value={configurationDomainEffortExpertise}
-          color="primary"
-          onIonChange={changeConfigurationDomainEffortExpertise}
+      <IonItemDivider
+        onClick={() =>
+          toggleSegmentExpansion(AlgorithmSegmentTypeEnum.ENVIRONMENT_KPIS)
+        }
+      >
+        <IonIcon
+          icon={
+            expandedSegments.includes(AlgorithmSegmentTypeEnum.ENVIRONMENT_KPIS)
+              ? chevronUp
+              : chevronDown
+          }
+          slot="end"
         />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">
-          Domain <br />
-          HR Amount:
-        </IonLabel>
-        <IonInput
-          type="number"
-          min="0"
-          placeholder="0"
-          value={configurationDomainEffortHRAmount}
-          onIonChange={changeConfigurationDomainEffortHRAmount}
-        />
-      </IonItem>
-
-      <IonItemDivider>
-        <IonLabel>ENVIRONMENT</IonLabel>
+        <IonLabel>ENVIRONMENT KPIs</IonLabel>
       </IonItemDivider>
-      <IonItem>
-        <IonLabel position="fixed">
-          Provided <br />
-          Interfaces:
-        </IonLabel>
-        <TextMultiSelect
-          content={configurationInterfaces}
-          onChange={changeConfigurationInterfaces}
-          suggestions={availableConfigurationInterfaces}
-        />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">
-          Supported
-          <br /> OSs:
-        </IonLabel>
-        <TextMultiSelect
-          content={configurationSupportedOSs}
-          onChange={changeConfigurationSupportedOSs}
-          suggestions={availableConfigurationSupportedOSs}
-        />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">
-          Deployment <br />
-          Type:
-        </IonLabel>
-        <TextMultiSelect
-          content={integrationDeploymentType}
-          onChange={changeIntegrationDeploymentType}
-          suggestions={availableIntegrationDeploymentTypes}
-        />
-      </IonItem>
+      {expandedSegments.includes(AlgorithmSegmentTypeEnum.ENVIRONMENT_KPIS) ? (
+        <>
+          <IonItem>
+            <IonLabel position="fixed">
+              Provided <br />
+              Interfaces:
+            </IonLabel>
+            <TextMultiSelect
+              content={configurationInterfaces}
+              onChange={changeConfigurationInterfaces}
+              suggestions={availableConfigurationInterfaces}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="fixed">
+              Supported
+              <br /> OSs:
+            </IonLabel>
+            <TextMultiSelect
+              content={configurationSupportedOSs}
+              onChange={changeConfigurationSupportedOSs}
+              suggestions={availableConfigurationSupportedOSs}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="fixed">
+              Deployment <br />
+              Type:
+            </IonLabel>
+            <TextMultiSelect
+              content={integrationDeploymentType}
+              onChange={changeIntegrationDeploymentType}
+              suggestions={availableIntegrationDeploymentTypes}
+            />
+          </IonItem>
+        </>
+      ) : null}
 
-      <IonItemDivider>
+      <IonItemDivider
+        onClick={() =>
+          toggleSegmentExpansion(AlgorithmSegmentTypeEnum.OTHER_KPIS)
+        }
+      >
+        <IonIcon
+          icon={
+            expandedSegments.includes(AlgorithmSegmentTypeEnum.OTHER_KPIS)
+              ? chevronUp
+              : chevronDown
+          }
+          slot="end"
+        />
         <IonLabel>OTHER KPIs</IonLabel>
       </IonItemDivider>
-
-      <IonItem>
-        <IonLabel position="fixed">
-          Matching
-          <br /> Solution
-          <br /> Type:
-        </IonLabel>
-        <TextMultiSelect
-          content={integrationSolutionType}
-          onChange={changeIntegrationSolutionType}
-          suggestions={availableIntegrationSolutionTypes}
-        />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">Use Cases:</IonLabel>
-        <TextMultiSelect
-          content={integrationUseCase}
-          onChange={changeIntegrationUseCase}
-          suggestions={availableIntegrationUseCases}
-        />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">
-          General <br />
-          Costs:
-        </IonLabel>
-        <IonInput
-          value={integrationGeneralCosts}
-          onIonChange={changeIntegrationGeneralCosts}
-          placeholder="0"
-          type="number"
-          step="1"
-        />
-      </IonItem>
+      {expandedSegments.includes(AlgorithmSegmentTypeEnum.OTHER_KPIS) ? (
+        <>
+          <IonItem>
+            <IonLabel position="fixed">
+              Matching
+              <br /> Solution
+              <br /> Type:
+            </IonLabel>
+            <TextMultiSelect
+              content={integrationSolutionType}
+              onChange={changeIntegrationSolutionType}
+              suggestions={availableIntegrationSolutionTypes}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="fixed">Use Cases:</IonLabel>
+            <TextMultiSelect
+              content={integrationUseCase}
+              onChange={changeIntegrationUseCase}
+              suggestions={availableIntegrationUseCases}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="fixed">
+              General <br />
+              Costs:
+            </IonLabel>
+            <IonInput
+              value={integrationGeneralCosts}
+              onIonChange={changeIntegrationGeneralCosts}
+              placeholder="0"
+              type="number"
+              step="1"
+            />
+            <span className={styles.inputUnit}>€</span>
+          </IonItem>
+        </>
+      ) : null}
     </IonList>
     <div className={style(styles.center, styles.buttonRow)}>
       <IonButton

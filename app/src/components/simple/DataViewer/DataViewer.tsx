@@ -1,3 +1,4 @@
+import { FileResponse } from 'api';
 import { openStandaloneDataViewerWindow } from 'components/simple/DataViewer/DataViewer.helpers';
 import { DataViewerProps } from 'components/simple/DataViewer/DataViewerProps';
 import Table from 'components/simple/DataViewer/Table/Table';
@@ -11,7 +12,24 @@ const wrapLoadTuples = (
   start: number,
   stop: number
 ) => {
-  return RequestHandler(() => loadTuples(start, stop));
+  return RequestHandler(() =>
+    loadTuples(start, stop).then(
+      (aResult: FileResponse): FileResponse => ({
+        ...aResult,
+        header: aResult.header.map((aColumn, index): string => {
+          if (aColumn.length > 0) {
+            return aColumn;
+          } else {
+            let currentColumn = `<empty ${index}>`;
+            while (aResult.header.includes(currentColumn)) {
+              currentColumn += ' ';
+            }
+            return currentColumn;
+          }
+        }),
+      })
+    )
+  );
 };
 
 const DataViewer = ({

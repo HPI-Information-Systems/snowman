@@ -1,6 +1,6 @@
-import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
 import { KPIDiagramConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { DiagramCoordinates } from 'apps/BenchmarkApp/types/DiagramCoordinates';
 import { AllMetricsEnum } from 'types/AllMetricsEnum';
 
 export enum KpiInvestigatorColorMode {

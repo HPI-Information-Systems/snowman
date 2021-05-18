@@ -5,6 +5,9 @@ import {
 } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/DecisionEntities';
 import { ExpansionTypes } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/ExpansionTypes';
 
+const TooltipEffortPointsManhattanDistance =
+  'Effort points (EP) are calculated based upon the unweighted Manhattan distance of both base values.';
+
 export const InitialEffort: DecisionRowAlgorithm[] = [
   {
     title: 'Matching Solution Type',
@@ -19,13 +22,13 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
   {
     title: 'General Costs',
     selector: (anEntity) =>
-      anEntity.softKPIs?.integrationEffort?.generalCosts?.toString() ?? '?',
+      (anEntity.softKPIs?.integrationEffort?.generalCosts?.toString() ?? '?') +
+      ' €',
   },
   {
-    title: 'Installation Time',
+    title: 'Deployment Type',
     selector: (anEntity) =>
-      (anEntity.softKPIs?.integrationEffort?.deploymentType?.join(', ') ??
-        '?') + ' h',
+      anEntity.softKPIs?.integrationEffort?.deploymentType?.join(', ') ?? '?',
   },
   {
     title: 'Installation Effort',
@@ -37,6 +40,7 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
         )
         ?.value.toString() ?? '?') + ' EP',
     doesExpand: ExpansionTypes.InstallationEffort,
+    tooltip: TooltipEffortPointsManhattanDistance,
   },
   {
     title: 'Expertise',
@@ -50,8 +54,8 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
     title: 'HR Amount',
     inset: true,
     selector: (anEntity) =>
-      anEntity.softKPIs?.integrationEffort?.installationEffort?.hrAmount?.toString() ??
-      '?',
+      (anEntity.softKPIs?.integrationEffort?.installationEffort?.hrAmount?.toString() ??
+        '?') + ' man-hr',
     expandedBy: ExpansionTypes.InstallationEffort,
   },
 ];
@@ -67,6 +71,7 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
         )
         ?.value.toString() ?? '?') + ' EP',
     doesExpand: ExpansionTypes.MatchingSolutionEffort,
+    tooltip: TooltipEffortPointsManhattanDistance,
   },
   {
     title: 'Expertise',
@@ -80,8 +85,8 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
     title: 'HR Amount',
     inset: true,
     selector: (anEntity) =>
-      anEntity.softKPIs?.configurationEffort?.matchingSolution?.hrAmount?.toString() ??
-      '?',
+      (anEntity.softKPIs?.configurationEffort?.matchingSolution?.hrAmount?.toString() ??
+        '?') + ' man-hr',
     expandedBy: ExpansionTypes.MatchingSolutionEffort,
   },
   {
@@ -94,6 +99,7 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
         )
         ?.value.toString() ?? '?') + ' EP',
     doesExpand: ExpansionTypes.DomainEffort,
+    tooltip: TooltipEffortPointsManhattanDistance,
   },
   {
     title: 'Expertise',
@@ -107,8 +113,8 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
     title: 'HR Amount',
     inset: true,
     selector: (anEntity) =>
-      anEntity.softKPIs?.configurationEffort?.domain?.hrAmount?.toString() ??
-      '?',
+      (anEntity.softKPIs?.configurationEffort?.domain?.hrAmount?.toString() ??
+        '?') + ' man-hr',
     expandedBy: ExpansionTypes.DomainEffort,
   },
   {
@@ -134,7 +140,7 @@ export const DecisionSegments: DecisionSegmentEntity<any>[] = [
     children: ContinuousEffort,
   },
   {
-    title: 'Average Metrics',
+    title: 'Macro Average Metrics',
     children: [],
   },
 ];
