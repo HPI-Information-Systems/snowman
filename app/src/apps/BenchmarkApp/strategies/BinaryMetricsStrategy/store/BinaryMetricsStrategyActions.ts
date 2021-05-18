@@ -11,7 +11,6 @@ import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryM
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { experimentEntityToExperimentConfigItem } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { MagicNotPossibleId } from 'structs/constants';
-import { SUCCESS_LOAD_BINARY_METRICS } from 'structs/statusMessages';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
@@ -39,23 +38,21 @@ export const loadMetrics = (): SnowmanThunkAction<
   dispatch(resetMetrics());
   if (getState().isValidConfig)
     dispatch(() =>
-      RequestHandler<Metric[]>(
-        () =>
-          new BenchmarkApi().getBinaryMetrics({
-            groundTruthSimilarityThresholdFunction: getState().groundTruth
-              ?.similarity?.func.id,
-            groundTruthSimilarityThreshold: getState().groundTruth?.similarity
-              ?.threshold,
-            groundTruthExperimentId:
-              getState().groundTruth?.experiment.id ?? MagicNotPossibleId,
-            predictedSimilarityThresholdFunction: getState().experiment
-              ?.similarity?.func.id,
-            predictedSimilarityThreshold: getState().experiment?.similarity
-              ?.threshold,
-            predictedExperimentId:
-              getState().experiment?.experiment.id ?? MagicNotPossibleId,
-          }),
-        SUCCESS_LOAD_BINARY_METRICS
+      RequestHandler<Metric[]>(() =>
+        new BenchmarkApi().getBinaryMetrics({
+          groundTruthSimilarityThresholdFunction: getState().groundTruth
+            ?.similarity?.func.id,
+          groundTruthSimilarityThreshold: getState().groundTruth?.similarity
+            ?.threshold,
+          groundTruthExperimentId:
+            getState().groundTruth?.experiment.id ?? MagicNotPossibleId,
+          predictedSimilarityThresholdFunction: getState().experiment
+            ?.similarity?.func.id,
+          predictedSimilarityThreshold: getState().experiment?.similarity
+            ?.threshold,
+          predictedExperimentId:
+            getState().experiment?.experiment.id ?? MagicNotPossibleId,
+        })
       )
     ).then((response: Metric[]) => dispatch(setAllMetrics(response)));
 };
