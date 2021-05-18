@@ -14,6 +14,8 @@ import { ViewIDs } from 'types/ViewIDs';
 import GenericStoreComponentFactory from 'utils/GenericStoreComponentFactory';
 import { sanitize } from 'utils/sanitizeHtml';
 
+// ATTENTION: Sanitize tooltip content to prevent code injection!!!
+
 type MapStateToProps = (
   state: SnowmanAppModel,
   ownProps: EntityItemOwnProps
