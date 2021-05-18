@@ -7,21 +7,17 @@ import {
 import { ExperimentDialogActionTypes } from 'apps/ExperimentDialog/types/ExperimentDialogActionTypes';
 import { ExperimentDialogModel } from 'apps/ExperimentDialog/types/ExperimentDialogModel';
 import { ExperimentSegmentTypeEnum } from 'apps/ExperimentDialog/types/ExperimentSegmentTypeEnum';
-import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
-import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { MagicNotPossibleId } from 'structs/constants';
 import {
   SUCCESS_TO_CREATE_NEW_EXPERIMENT,
   SUCCESS_TO_UPDATE_EXPERIMENT,
-  SUCCESS_TO_UPLOAD_EXPERIMENT_FILE,
 } from 'structs/statusMessages';
 import { EntityId } from 'types/EntityId';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
-import { ToastType } from 'types/ToastTypes';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
@@ -187,52 +183,36 @@ const getExperimentFileValues = (
   format: state.experimentFileFormat,
 });
 
-const createExperiment = (
-  showSuccess = true
-): SnowmanThunkAction<Promise<number>, ExperimentDialogModel> => async (
+const createExperiment = (): SnowmanThunkAction<
+  Promise<number>,
+  ExperimentDialogModel
+> => async (
   _: unknown,
   getState: () => ExperimentDialogModel
-): Promise<number> => {
-  return RequestHandler<number>(
-    (): Promise<number> =>
-      new ExperimentsApi().addExperiment({
-        experiment: getExperimentValues(getState()),
-      }),
-    showSuccess ? SUCCESS_TO_CREATE_NEW_EXPERIMENT : undefined,
-    true
-  );
-};
+): Promise<number> =>
+  new ExperimentsApi().addExperiment({
+    experiment: getExperimentValues(getState()),
+  });
 
 const setExperiment = (
-  id: number,
-  showSuccess = true
+  id: number
 ): SnowmanThunkAction<Promise<void>, ExperimentDialogModel> => async (
   _: unknown,
   getState: () => ExperimentDialogModel
 ): Promise<void> =>
-  RequestHandler<void>(
-    (): Promise<void> =>
-      new ExperimentsApi().setExperiment({
-        experimentId: id,
-        experiment: getExperimentValues(getState()),
-      }),
-    showSuccess ? SUCCESS_TO_UPDATE_EXPERIMENT : undefined,
-    true
-  );
+  new ExperimentsApi().setExperiment({
+    experimentId: id,
+    experiment: getExperimentValues(getState()),
+  });
 
 const uploadExperimentFile = (
-  id: number,
-  showSuccess = false
+  id: number
 ): SnowmanThunkAction<Promise<void>, ExperimentDialogModel> => async (
   _: unknown,
   getState: () => ExperimentDialogModel
 ): Promise<void> =>
-  RequestHandler<void>(
-    (): Promise<void> =>
-      new ExperimentsApi().setExperimentFile(
-        getExperimentFileValues(getState(), id)
-      ),
-    showSuccess ? SUCCESS_TO_UPLOAD_EXPERIMENT_FILE : undefined
+  new ExperimentsApi().setExperimentFile(
+    getExperimentFileValues(getState(), id)
   );
 
 const addExperiment = (): SnowmanThunkAction<
@@ -241,22 +221,23 @@ const addExperiment = (): SnowmanThunkAction<
 > => async (
   dispatch: SnowmanDispatch<ExperimentDialogModel>
 ): Promise<void> => {
-  return dispatch(createExperiment(false))
-    .then((id) =>
-      dispatch(uploadExperimentFile(id, false)).catch((error) =>
-        RequestHandler(() =>
-          new ExperimentsApi().deleteExperiment({ experimentId: id })
-        ).then(() => Promise.reject(error))
-      )
-    )
-    .then(() => dispatch(resetDialog()))
-    .then(() =>
-      SnowmanAppDispatch(
-        showToast(SUCCESS_TO_CREATE_NEW_EXPERIMENT, ToastType.Success)
-      )
-    )
-    .finally((): void => {
+  return RequestHandler(
+    () =>
+      dispatch(createExperiment()).then((id) =>
+        dispatch(uploadExperimentFile(id)).catch((error) =>
+          RequestHandler(() =>
+            new ExperimentsApi().deleteExperiment({ experimentId: id })
+          ).then(() => Promise.reject(error))
+        )
+      ),
+    SUCCESS_TO_CREATE_NEW_EXPERIMENT,
+    true
+  )
+    .then(() => {
+      dispatch(resetDialog());
       doCloseDialog();
+    })
+    .finally((): void => {
       doRefreshCentralResources();
     });
 };
@@ -266,10 +247,16 @@ const updateExperiment = (
 ): SnowmanThunkAction<Promise<void>, ExperimentDialogModel> => async (
   dispatch: SnowmanDispatch<ExperimentDialogModel>
 ): Promise<void> => {
-  return dispatch(setExperiment(id, true))
-    .then(() => dispatch(resetDialog()))
-    .finally((): void => {
+  return RequestHandler(
+    () => dispatch(setExperiment(id)),
+    SUCCESS_TO_UPDATE_EXPERIMENT,
+    true
+  )
+    .then(() => {
+      dispatch(resetDialog());
       doCloseDialog();
+    })
+    .finally((): void => {
       doRefreshCentralResources();
     });
 };
