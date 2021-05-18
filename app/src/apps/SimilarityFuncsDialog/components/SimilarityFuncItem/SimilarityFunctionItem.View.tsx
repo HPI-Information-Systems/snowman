@@ -15,7 +15,7 @@ const SimilarityFunctionItemView = ({
       icon={analytics}
       slot="start"
       className={styles.iconStart}
-      color="primary"
+      color="primarydark"
     />
     <IonLabel>{similarityFunction.name}</IonLabel>
     <IonButton onClick={openEditFunctionBuilder} color="primary">
