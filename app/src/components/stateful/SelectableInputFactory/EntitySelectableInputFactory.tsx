@@ -36,11 +36,10 @@ const EntitySelectableInputFactory = function <
       }
       {...props}
       getID={({ id }) => `${id}`}
-      matches={({ name, description }, search) =>
-        fuzzyStringIncludes(name, search) ||
-        (description ? fuzzyStringIncludes(description, search) : false)
-      }
-      renderChild={(entity) => <EntityItem itemType={itemType} item={entity} />}
+      matches={({ name }, search) => fuzzyStringIncludes(name, search)}
+      renderChild={(entity) => (
+        <EntityItem itemType={itemType} itemId={entity.id} />
+      )}
       instanceDescriptor={`EntitySelectableInput-${itemType}`}
     />
   );
