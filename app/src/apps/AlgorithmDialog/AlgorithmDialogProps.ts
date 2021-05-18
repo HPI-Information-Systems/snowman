@@ -1,3 +1,4 @@
+import { SegmentTypeEnum } from 'apps/AlgorithmDialog/types/SegmentTypeEnum';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import { IonChangeEvent, IonRangeChangeEvent } from 'types/IonChangeEvent';
 
@@ -21,6 +22,7 @@ export interface AlgorithmDialogStateProps {
   availableConfigurationInterfaces: string[];
   configurationSupportedOSs: string[];
   availableConfigurationSupportedOSs: string[];
+  expandedSegments: SegmentTypeEnum[];
 }
 
 export interface AlgorithmDialogDispatchProps {
@@ -46,6 +48,7 @@ export interface AlgorithmDialogDispatchProps {
   changeConfigurationInterfaces(event: string[]): void;
   changeConfigurationSupportedOSs(event: string[]): void;
   clickOnSubmit(): void;
+  toggleSegmentExpansion(aSegment: SegmentTypeEnum): void;
 }
 
 export type AlgorithmDialogOwnProps = DialogProps;

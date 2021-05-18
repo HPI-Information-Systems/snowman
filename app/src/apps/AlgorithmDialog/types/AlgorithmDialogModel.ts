@@ -1,3 +1,5 @@
+import { SegmentTypeEnum } from 'apps/AlgorithmDialog/types/SegmentTypeEnum';
+
 export interface AlgorithmDialogModel {
   algorithmName: string;
   algorithmDescription: string;
@@ -18,4 +20,5 @@ export interface AlgorithmDialogModel {
   availableConfigurationInterfaces: string[];
   configurationSupportedOSs: string[];
   availableConfigurationSupportedOSs: string[];
+  expandedSegments: SegmentTypeEnum[];
 }

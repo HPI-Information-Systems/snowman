@@ -1,9 +1,11 @@
 import { AlgorithmDialogActionTypes } from 'apps/AlgorithmDialog/types/AlgorithmDialogActionTypes';
 import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
+import { SegmentTypeEnum } from 'apps/AlgorithmDialog/types/SegmentTypeEnum';
 import { CentralResourcesGenericActionsTypes } from 'apps/SnowmanApp/types/CentralResourcesGenericActionsTypes';
 import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
 import { uniq } from 'lodash';
 import { SnowmanAction } from 'types/SnowmanAction';
+import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: AlgorithmDialogModel = {
   algorithmName: '',
@@ -29,6 +31,7 @@ const initialState: AlgorithmDialogModel = {
   configurationMatchingSolutionEffortHRAmount: undefined,
   integrationInstallationEffortExpertise: undefined,
   integrationInstallationEffortHRAmount: undefined,
+  expandedSegments: [],
 };
 
 const AlgorithmDialogReducer = (
@@ -158,6 +161,14 @@ const AlgorithmDialogReducer = (
         availableIntegrationSolutionTypes:
           state.availableIntegrationSolutionTypes,
         availableIntegrationUseCases: state.availableIntegrationUseCases,
+      };
+    case AlgorithmDialogActionTypes.TOGGLE_SEGMENT_EXPANSION:
+      return {
+        ...state,
+        expandedSegments: toggleSelectionArrayMultipleSelect(
+          state.expandedSegments,
+          action.payload as SegmentTypeEnum
+        ),
       };
     default:
       return state;
