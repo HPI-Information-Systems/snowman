@@ -1,9 +1,15 @@
-import {
-  EntityItemType,
-  EntityItemTypes,
-} from 'components/simple/EntityItem/EntityItemType';
+import { EntityItemType } from 'components/simple/EntityItem/EntityItemType';
+import { GenericStoreComponentProps } from 'utils/GenericStoreComponentFactory';
 
-export interface EntityItemProps {
+export interface EntityItemOwnProps extends GenericStoreComponentProps {
   itemType: EntityItemType;
-  item: EntityItemTypes;
+  itemId: number;
 }
+
+export interface EntityItemStateProps {
+  openItem: () => void;
+  tooltip: string;
+  name: string;
+}
+
+export type EntityItemProps = EntityItemOwnProps & EntityItemStateProps;

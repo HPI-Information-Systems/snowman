@@ -34,30 +34,28 @@ import {
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
 
-const getExperimentId = (): number =>
+const getExperimentIdFromStack = (): number =>
   nth(
     SnowmanAppMagistrate.getStore().getState().RenderLogicStore.dialogStack,
     1
   )?.entityId ?? MagicNotPossibleId;
 
 const createSimilarityThresholdFunction = (): SnowmanThunkAction<
-  void,
+  Promise<void>,
   FunctionBuilderDialogModel
 > => (
   _: SnowmanDispatch<FunctionBuilderDialogModel>,
   getState: () => FunctionBuilderDialogModel
-): void => {
-  RequestHandler<void>(
-    (): Promise<void> =>
-      new SimilarityThresholdsApi()
-        .addSimilarityThresholdFunction({
-          similarityThresholdFunction: {
-            name: getState().functionName,
-            experimentId: getExperimentId(),
-            definition: getState().functionBuildingStack.getFunctionDefinition(),
-          },
-        })
-        .then(() => doRefreshCentralResources()),
+): Promise<void> =>
+  RequestHandler<number>(
+    (): Promise<number> =>
+      new SimilarityThresholdsApi().addSimilarityThresholdFunction({
+        similarityThresholdFunction: {
+          name: getState().functionName,
+          experimentId: getState().experimentId,
+          definition: getState().functionBuildingStack.getFunctionDefinition(),
+        },
+      }),
     SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION,
     true
   )
@@ -65,49 +63,52 @@ const createSimilarityThresholdFunction = (): SnowmanThunkAction<
     .catch(() => {
       return;
     });
-};
 
 const updateSimilarityThresholdFunction = (
   functionId: number
-): SnowmanThunkAction<void, FunctionBuilderDialogModel> => (
+): SnowmanThunkAction<Promise<void>, FunctionBuilderDialogModel> => (
   _: SnowmanDispatch<FunctionBuilderDialogModel>,
   getState: () => FunctionBuilderDialogModel
-): void => {
+): Promise<void> =>
   RequestHandler<void>(
     (): Promise<void> =>
-      new SimilarityThresholdsApi()
-        .setSimilarityThresholdFunction({
-          functionId: functionId,
-          similarityThresholdFunction: {
-            name: getState().functionName,
-            definition: getState().functionBuildingStack.getFunctionDefinition(),
-            experimentId: getExperimentId(),
-          },
-        })
-        .then((): Promise<void> => doRefreshCentralResources()),
+      new SimilarityThresholdsApi().setSimilarityThresholdFunction({
+        functionId: functionId,
+        similarityThresholdFunction: {
+          name: getState().functionName,
+          definition: getState().functionBuildingStack.getFunctionDefinition(),
+          experimentId: getState().experimentId,
+        },
+      }),
     SUCCESS_TO_UPDATE_SIMILARITY_THRESHOLD_FUNCTION,
     true
   ).then((): void => doCloseDialog());
-};
 
 export const createOrUpdateSimilarityThresholdFunction = (
   functionId: EntityId
-): SnowmanThunkAction<void, FunctionBuilderDialogModel> => (
+): SnowmanThunkAction<void, FunctionBuilderDialogModel> => async (
   dispatch: SnowmanDispatch<FunctionBuilderDialogModel>
-): void => {
-  if (functionId === null) return dispatch(createSimilarityThresholdFunction());
-  return dispatch(updateSimilarityThresholdFunction(functionId));
+): Promise<void> => {
+  if (functionId === null) {
+    await dispatch(createSimilarityThresholdFunction());
+  } else {
+    await dispatch(updateSimilarityThresholdFunction(functionId));
+  }
+  await doRefreshCentralResources();
 };
 
 const loadExperimentColumns = (): SnowmanThunkAction<
   Promise<void>,
   FunctionBuilderDialogModel
-> => (dispatch: SnowmanDispatch<FunctionBuilderDialogModel>): Promise<void> =>
+> => (
+  dispatch: SnowmanDispatch<FunctionBuilderDialogModel>,
+  getState: () => FunctionBuilderDialogModel
+): Promise<void> =>
   RequestHandler<void>(
     (): Promise<void> =>
       new ExperimentsApi()
         .getExperimentFile({
-          experimentId: getExperimentId(),
+          experimentId: getState().experimentId,
           // an arbitrary number so that not all records will be loaded
           limit: 0,
         })
@@ -135,18 +136,28 @@ const prepareUpdateDialog = (
         .then((similarityFunction: SimilarityThresholdFunction): [
           FunctionBuildingBlock,
           number[],
-          string
+          SimilarityThresholdFunction
         ] => [
           ...FunctionBuildingBlock.getFBBFromAPISimilarityFunction(
             similarityFunction
           ),
-          similarityFunction.name,
+          similarityFunction,
         ])
         .then(
-          (anUpdateInfo: [FunctionBuildingBlock, number[], string]): void => {
+          (
+            anUpdateInfo: [
+              FunctionBuildingBlock,
+              number[],
+              SimilarityThresholdFunction
+            ]
+          ): void => {
             dispatch({
               type: FunctionBuilderDialogActionTypes.CHANGE_FUNCTION_NAME,
-              payload: anUpdateInfo[2],
+              payload: anUpdateInfo[2].name,
+            });
+            dispatch({
+              type: FunctionBuilderDialogActionTypes.CHANGE_EXPERIMENT_ID,
+              payload: anUpdateInfo[2].experimentId,
             });
             dispatch({
               type:
@@ -162,12 +173,19 @@ const prepareUpdateDialog = (
         )
   );
 
-export const loadInitialState = (
+export const loadInitialState = async (
   dispatch: SnowmanDispatch<FunctionBuilderDialogModel>,
   entityId: EntityId
-): void => {
+): Promise<void> => {
   dispatch(resetDialog());
-  if (entityId !== null) dispatch(prepareUpdateDialog(entityId)).then();
+  if (entityId !== null) {
+    await dispatch(prepareUpdateDialog(entityId)).then();
+  } else {
+    dispatch({
+      type: FunctionBuilderDialogActionTypes.CHANGE_EXPERIMENT_ID,
+      payload: getExperimentIdFromStack(),
+    });
+  }
   dispatch(loadExperimentColumns()).then();
 };
 

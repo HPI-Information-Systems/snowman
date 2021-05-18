@@ -1,14 +1,13 @@
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
-import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/types';
-import { SearchableEntity } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/types/SearchableEntity';
-import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import {
-  analytics,
-  fileTrayFull,
-  flask,
-  gitCommit,
-  hardwareChip,
-} from 'ionicons/icons';
+  MakeStoreCacheKeyAndFilter,
+  SearchableEntity,
+} from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/types';
+import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
+import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
+import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
+import { EntityItemType } from 'components/simple/EntityItem/EntityItemType';
+import { ToastType } from 'types/ToastTypes';
 
 export const filterCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.filter,
@@ -31,20 +30,24 @@ export const filterCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
         return [];
     }
   },
-  icon: (targetCache) => {
+  itemType: (key, targetCache) => {
     switch (targetCache) {
       case 'algorithms':
-        return hardwareChip;
+        return EntityItemType.MATCHING_SOLUTION;
       case 'datasets':
-        return fileTrayFull;
+        return EntityItemType.DATASET;
       case 'experiments':
-        return flask;
+        return EntityItemType.EXPERIMENT;
       case 'simFunctions':
-        return analytics;
-      case 'simThresholds':
-        return gitCommit;
+        return EntityItemType.SIM_FUNC;
       default:
-        return '';
+        SnowmanAppDispatch(
+          showToast(
+            `The target cache ${targetCache} does not belong to an entity.`,
+            ToastType.Error
+          )
+        );
+        return EntityItemType.DATASET;
     }
   },
 });

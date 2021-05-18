@@ -1,23 +1,27 @@
 import { IonButton, IonIcon, IonItem, IonLabel } from '@ionic/react';
-import { Algorithm } from 'api';
-import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { EntityItemProps } from 'components/simple/EntityItem/EntityItemProps';
 import styles from 'components/simple/EntityItem/EntityItemStyles.module.css';
-import { hardwareChip, openOutline } from 'ionicons/icons';
+import { entityItemIcon } from 'components/simple/EntityItem/EntityItemType';
+import { openOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
-import { ViewIDs } from 'types/ViewIDs';
 import useTooltip from 'utils/useTooltipHook';
 
-const AlgorithmStrategy = ({ item }: EntityItemProps): JSX.Element => {
+const EntityItemView = ({
+  name,
+  openItem,
+  tooltip,
+  itemType,
+}: EntityItemProps): JSX.Element => {
   useTooltip();
   const [open, setOpen] = useState(true);
+
   return (
     <IonItem
       color="clear"
       lines="none"
-      className={styles.lessPaddingLeft}
+      className={styles.lessPadding}
       data-for="tooltip"
-      data-tip={item.description}
+      data-tip={tooltip}
     >
       <IonButton
         onMouseOver={() => setOpen(false)}
@@ -25,22 +29,20 @@ const AlgorithmStrategy = ({ item }: EntityItemProps): JSX.Element => {
         className={styles.noPadding}
         fill="clear"
         onClick={(e) => {
-          doOpenDialog(ViewIDs.AlgorithmDialog, item.id);
+          openItem();
           e.preventDefault();
           e.stopPropagation();
         }}
       >
         <IonIcon
-          icon={open ? hardwareChip : openOutline}
+          icon={open ? entityItemIcon[itemType] : openOutline}
           color="primarydark"
           size="small"
         />
       </IonButton>
-      <IonLabel className={styles.paddingLeft}>
-        {(item as Algorithm).name}
-      </IonLabel>
+      <IonLabel className={styles.paddingLeft}>{name}</IonLabel>
     </IonItem>
   );
 };
 
-export default AlgorithmStrategy;
+export default EntityItemView;

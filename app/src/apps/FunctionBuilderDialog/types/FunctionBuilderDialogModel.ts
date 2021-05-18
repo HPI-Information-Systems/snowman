@@ -5,4 +5,5 @@ export interface FunctionBuilderDialogModel {
   reservedAccessKeys: number[];
   functionName: string;
   experimentColumns: string[];
+  experimentId: number;
 }

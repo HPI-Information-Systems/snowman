@@ -1,5 +1,6 @@
 import EntityItem from 'components/simple/EntityItem/EntityItem';
 import {
+  entityItemIcon,
   EntityItemType,
   EntityItemTypes,
   EntityOfEntityItemType,
@@ -12,6 +13,7 @@ import { GenericStoreComponentProps } from 'utils/GenericStoreComponentFactory';
 export interface EntitySelectableInputOwnProps<
   EntityType extends EntityItemType
 > extends GenericStoreComponentProps {
+  children?: JSX.Element | JSX.Element[];
   selection: number[];
   allOptions: EntityOfEntityItemType<EntityType>[];
   allowMultiselect: boolean;
@@ -30,17 +32,17 @@ const EntitySelectableInputFactory = function <
     ...props
   }: EntitySelectableInputOwnProps<EntityType>) => (
     <RawEntitySelectableInput
+      emptyIcon={entityItemIcon[itemType]}
       selection={selection.map((id) => `${id}`)}
       onChange={(newSelection) =>
         onChange(newSelection.map((id) => parseInt(id)))
       }
       {...props}
       getID={({ id }) => `${id}`}
-      matches={({ name, description }, search) =>
-        fuzzyStringIncludes(name, search) ||
-        (description ? fuzzyStringIncludes(description, search) : false)
-      }
-      renderChild={(entity) => <EntityItem itemType={itemType} item={entity} />}
+      matches={({ name }, search) => fuzzyStringIncludes(name, search)}
+      renderChild={(entity) => (
+        <EntityItem itemType={itemType} itemId={entity.id} />
+      )}
       instanceDescriptor={`EntitySelectableInput-${itemType}`}
     />
   );

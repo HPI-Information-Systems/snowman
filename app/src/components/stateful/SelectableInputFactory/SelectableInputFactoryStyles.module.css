@@ -1,5 +1,6 @@
 .selectablePopover {
-  --max-height: 350px;
+  --width: 25rem;
+  --max-width: 80vw;
 }
 
 .selectablePopoverList {
@@ -14,4 +15,12 @@
 .selectItemIcon {
   margin-right: 0.5rem;
   font-size: 1.3rem;
+}
+
+.emptyIcon {
+  padding-right: 0.5rem;
+  padding-left: 0.1rem;
+  font-size: 1.15rem;
+  line-height: 1rem;
+  vertical-align: top;
 }

@@ -4,13 +4,18 @@ import {
   ModelOfCache,
   StoreCacheKey,
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
-import { SearchableEntity } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/types/SearchableEntity';
-import { SelectorItem } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupProps';
+import {
+  EntitySelectorItem,
+  SelectorItem,
+} from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupProps';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { getItemsUntyped } from 'apps/BenchmarkApp/utils/configurationItemGetter';
+import { EntityItemType } from 'components/simple/EntityItem/EntityItemType';
 import { NestedArray } from 'snowman-library';
 import { SnowmanAction } from 'types/SnowmanAction';
+
+export type SearchableEntity = { id: number; name: string };
 
 type FilterEvent<ConfigurationModel> = {
   state: BenchmarkAppModel;
@@ -55,7 +60,6 @@ type MakeStoreCacheKeyAndFilterArgs<
     cacheKey: StoreCacheKey<KeyBase, Args>,
     ...args: Args
   ) => SelectorItem[];
-  icon?: (...args: Args) => string;
   prepareSerialization?: (
     cacheKey: StoreCacheKey<KeyBase, Args>
   ) => StoreCacheKey;
@@ -63,6 +67,10 @@ type MakeStoreCacheKeyAndFilterArgs<
     state: BenchmarkAppModel,
     dependsOn: StoreCacheKey[]
   ) => (ModelOfCache<TargetCache> | undefined)[];
+  itemType?: (
+    cacheKey: StoreCacheKey<KeyBase, Args>,
+    ...args: Args
+  ) => EntityItemType;
 };
 
 type GetStoreCacheKeyAndFilter<
@@ -89,7 +97,6 @@ type GetStoreCacheKeyAndFilter<
     viewFilters: () => StoreCacheKey[];
   };
   getValue: (state: BenchmarkAppModel) => ResultT;
-  icon?: () => string;
   getSelectorItems: (state: BenchmarkAppModel) => SelectorItem[];
   prepareSerialization: () => StoreCacheKey;
   resourcesUpdated:
@@ -98,6 +105,7 @@ type GetStoreCacheKeyAndFilter<
   createNew: (
     state: BenchmarkAppModel
   ) => (ModelOfCache<TargetCache> | undefined)[];
+  itemType?: () => EntityItemType;
 };
 
 export const MakeStoreCacheKeyAndFilter = <
@@ -112,10 +120,10 @@ export const MakeStoreCacheKeyAndFilter = <
   filter,
   getEntities,
   getValue,
-  icon,
   selectorItems,
   prepareSerialization,
   createNew,
+  itemType,
 }: MakeStoreCacheKeyAndFilterArgs<
   KeyBase,
   Args,
@@ -138,23 +146,20 @@ export const MakeStoreCacheKeyAndFilter = <
       if (selectorItems) {
         return selectorItems(state, cacheKey, ...args);
       } else {
-        const entities = result.getEntities(state);
-        const s1 = (result.getValue(state) as unknown) as number[];
-        const s2 = s1
-          .map((id) => entities.find((e) => id === e.id))
-          .filter(
-            (entity: Entity | undefined): entity is Entity =>
-              entity !== undefined
+        if (result.itemType) {
+          const selectedIds = (result.getValue(state) as unknown) as number[];
+          return selectedIds.map(
+            (itemId) =>
+              ({
+                itemId,
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                itemType: result.itemType!(),
+                indent: 0,
+              } as EntitySelectorItem)
           );
-        const s3 = s2.map(
-          (entity) =>
-            ({
-              icon: result.icon ? result.icon() : '',
-              title: entity.name,
-              indent: 0,
-            } as SelectorItem)
-        );
-        return s3;
+        } else {
+          return [];
+        }
       }
     },
     getValue: (state) =>
@@ -185,7 +190,6 @@ export const MakeStoreCacheKeyAndFilter = <
           },
         }
       : {}),
-    icon: icon ? () => icon(...args) : undefined,
     resourcesUpdated: getEntities
       ? (state) => {
           const selection = result.getValue(state);
@@ -210,6 +214,7 @@ export const MakeStoreCacheKeyAndFilter = <
     createNew: createNew
       ? (state) => createNew(state, result.filter?.dependsOn() ?? [])
       : () => [],
+    itemType: itemType ? () => itemType(cacheKey, ...args) : undefined,
   };
   return result;
 };

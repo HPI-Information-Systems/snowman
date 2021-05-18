@@ -6,6 +6,7 @@ import {
   IonPopover,
   IonSearchbar,
 } from '@ionic/react';
+import { EmptyPlaceholder } from 'components/simple/EmptyPlaceholder/EmptyPlaceholder';
 import { SelectableInputProps } from 'components/stateful/SelectableInputFactory/SelectableInputFactoryProps';
 import styles from 'components/stateful/SelectableInputFactory/SelectableInputFactoryStyles.module.css';
 import {
@@ -14,10 +15,11 @@ import {
   radioButtonOffOutline,
   radioButtonOnOutline,
 } from 'ionicons/icons';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { fuzzyStringIncludes } from 'utils/fuzzyStringIncludes';
 
 export const SelectableInputView = function <Content>({
+  children,
   selection,
   allOptions,
   onChange,
@@ -29,6 +31,7 @@ export const SelectableInputView = function <Content>({
   closePopover,
   resetElement,
   allowMultiselect,
+  emptyIcon,
   getID = (content) => (content as unknown) as string,
   renderChild = (content) => <IonLabel>{getID(content)}</IonLabel>,
   matches = (content, search) => fuzzyStringIncludes(getID(content), search),
@@ -46,6 +49,10 @@ export const SelectableInputView = function <Content>({
     },
     [allowMultiselect, selection, onChange]
   );
+  const matchedOptions = useMemo(
+    () => allOptions.filter((anOption) => matches(anOption, searchString)),
+    [allOptions, matches, searchString]
+  );
   return (
     <>
       <IonPopover
@@ -56,9 +63,10 @@ export const SelectableInputView = function <Content>({
       >
         <IonList inset={false} lines="none">
           <IonSearchbar value={searchString} onIonChange={changeSearchString} />
+          {children}
           <div className={styles.selectablePopoverList}>
-            {allOptions.map((anOption: Content) =>
-              matches(anOption, searchString) ? (
+            {matchedOptions.length > 0 ? (
+              matchedOptions.map((anOption: Content) => (
                 <IonItem
                   button
                   key={'selectable-option-' + getID(anOption)}
@@ -80,7 +88,11 @@ export const SelectableInputView = function <Content>({
                   />
                   {renderChild(anOption)}
                 </IonItem>
-              ) : null
+              ))
+            ) : (
+              <IonItem>
+                <i>Nothing here! Try a different filter</i>
+              </IonItem>
             )}
           </div>
         </IonList>
@@ -102,7 +114,17 @@ export const SelectableInputView = function <Content>({
                 <div key={getID(content)}>{renderChild(content)}</div>
               ))
           ) : (
-            <i>nothing selected</i>
+            <>
+              {emptyIcon ? (
+                <IonIcon
+                  icon={emptyIcon}
+                  color="primarydark"
+                  size="md"
+                  className={styles.emptyIcon}
+                />
+              ) : null}
+              <EmptyPlaceholder />
+            </>
           )}
         </IonLabel>
         <IonIcon

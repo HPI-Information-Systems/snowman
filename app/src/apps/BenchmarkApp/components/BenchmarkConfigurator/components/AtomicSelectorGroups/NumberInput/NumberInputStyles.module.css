@@ -7,10 +7,6 @@
   width: 100%;
 }
 
-.itemNoSafePad::part(native) {
-  padding-left: 0;
-}
-
 .itemNoEndPad {
   --inner-padding-end: 0;
 }

@@ -1,5 +1,6 @@
-.lessPaddingLeft {
+.lessPadding {
   --padding-start: 0;
+  --inner-padding-end: 0.2rem;
 }
 
 .paddingLeft {
