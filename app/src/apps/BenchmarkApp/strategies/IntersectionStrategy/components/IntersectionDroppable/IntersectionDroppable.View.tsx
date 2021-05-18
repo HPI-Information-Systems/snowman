@@ -47,6 +47,7 @@ const IntersectionDroppableView = ({
             }
             outline={false}
             key={uniqueExperimentEntityKey(anExperiment)}
+            style={{ height: 50 }}
           >
             <IonLabel>{stringifyExperimentEntity(anExperiment)}</IonLabel>
           </IonChip>
