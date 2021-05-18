@@ -1,7 +1,7 @@
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
-import { AtomicSelectorGroupOwnProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
+import { AtomicSelectorGroupProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
 
-export type MultiSelectorOwnProps = AtomicSelectorGroupOwnProps<StoreCacheKeyBaseEnum.multiSelect>;
+export type MultiSelectorOwnProps = AtomicSelectorGroupProps<StoreCacheKeyBaseEnum.multiSelect>;
 
 export interface MultiSelectorStateProps {
   ids: number[];

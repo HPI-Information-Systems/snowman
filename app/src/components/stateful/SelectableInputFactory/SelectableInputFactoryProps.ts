@@ -10,6 +10,8 @@ export interface SelectableInputOwnProps<Content>
   getID?: (content: Content) => string;
   renderChild?: (content: Content) => JSX.Element;
   matches?: (content: Content, search: string) => boolean;
+  children?: JSX.Element | JSX.Element[];
+  emptyIcon?: string;
 }
 
 export interface SelectableInputStateProps {

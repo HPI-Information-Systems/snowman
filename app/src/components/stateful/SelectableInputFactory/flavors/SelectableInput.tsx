@@ -2,6 +2,7 @@ import SelectableInputFactory from 'components/stateful/SelectableInputFactory/S
 import { GenericStoreComponentProps } from 'utils/GenericStoreComponentFactory';
 
 export interface SelectableInputOwnProps extends GenericStoreComponentProps {
+  children?: JSX.Element | JSX.Element[];
   selection: string[];
   allOptions: string[];
   allowMultiselect: boolean;

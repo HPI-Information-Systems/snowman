@@ -1,7 +1,7 @@
-import { AtomicSelectorGroupOwnProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
+import { AtomicSelectorGroupProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 
-export type NumberInputOwnProps = AtomicSelectorGroupOwnProps;
+export type NumberInputOwnProps = AtomicSelectorGroupProps;
 
 export interface NumberInputStateProps {
   value: number | undefined;

@@ -1,15 +1,16 @@
 import { IonButton, IonIcon, IonItem, IonLabel } from '@ionic/react';
 import { EntityItemProps } from 'components/simple/EntityItem/EntityItemProps';
 import styles from 'components/simple/EntityItem/EntityItemStyles.module.css';
+import { entityItemIcon } from 'components/simple/EntityItem/EntityItemType';
 import { openOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
 import useTooltip from 'utils/useTooltipHook';
 
 const EntityItemView = ({
-  icon,
   name,
   openItem,
   tooltip,
+  itemType,
 }: EntityItemProps): JSX.Element => {
   useTooltip();
   const [open, setOpen] = useState(true);
@@ -34,7 +35,7 @@ const EntityItemView = ({
         }}
       >
         <IonIcon
-          icon={open ? icon : openOutline}
+          icon={open ? entityItemIcon[itemType] : openOutline}
           color="primarydark"
           size="small"
         />

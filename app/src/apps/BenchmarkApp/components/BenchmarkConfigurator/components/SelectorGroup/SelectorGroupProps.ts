@@ -1,9 +1,16 @@
+import { EntityItemOwnProps } from 'components/simple/EntityItem/EntityItemProps';
 import React from 'react';
-export type SelectorItem = {
+
+export type BasicSelectorItem = {
+  title: string;
   icon: string;
-  title?: string;
-  indent?: number;
 };
+
+export type EntitySelectorItem = EntityItemOwnProps;
+
+export type SelectorItem = {
+  indent?: number;
+} & (BasicSelectorItem | EntitySelectorItem);
 
 export interface SelectorGroupOwnProps {
   onClick: (event: React.MouseEvent) => void;

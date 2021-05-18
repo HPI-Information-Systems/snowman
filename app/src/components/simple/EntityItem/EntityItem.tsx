@@ -7,7 +7,6 @@ import {
   EntityItemStateProps,
 } from 'components/simple/EntityItem/EntityItemProps';
 import { EntityItemType } from 'components/simple/EntityItem/EntityItemType';
-import { analytics, fileTrayFull, flask, hardwareChip } from 'ionicons/icons';
 import { connect } from 'react-redux';
 import { assertType } from 'snowman-library';
 import { ViewIDs } from 'types/ViewIDs';
@@ -32,7 +31,6 @@ const mapStateToPropsOfEntityItem = assertType<
       ({ id }) => id === experiment?.algorithmId
     );
     return {
-      icon: flask,
       openItem: () => doOpenDialog(ViewIDs.ExperimentDialog, ownProps.itemId),
       name: experiment?.name ?? '',
       tooltip: experiment
@@ -50,7 +48,6 @@ const mapStateToPropsOfEntityItem = assertType<
       ({ id }) => id === ownProps.itemId
     );
     return {
-      icon: fileTrayFull,
       openItem: () => doOpenDialog(ViewIDs.DatasetDialog, ownProps.itemId),
       name: dataset?.name ?? '',
       tooltip: dataset?.description ?? '',
@@ -62,7 +59,6 @@ const mapStateToPropsOfEntityItem = assertType<
       ({ id }) => id === ownProps.itemId
     );
     return {
-      icon: hardwareChip,
       openItem: () => doOpenDialog(ViewIDs.AlgorithmDialog, ownProps.itemId),
       name: algorithm?.name ?? '',
       tooltip: algorithm?.description ?? '',
@@ -78,7 +74,6 @@ const mapStateToPropsOfEntityItem = assertType<
     );
 
     return {
-      icon: analytics,
       openItem: () =>
         doOpenDialog(ViewIDs.FunctionBuilderDialog, ownProps.itemId),
       name: func?.name ?? '',

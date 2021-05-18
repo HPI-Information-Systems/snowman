@@ -9,7 +9,7 @@ import {
 } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/filter';
 import { serializeCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/serializeCacheKey';
 import { DatasetConfigurationModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
-import { flask } from 'ionicons/icons';
+import { EntityItemType } from 'components/simple/EntityItem/EntityItemType';
 import { GoldStandardId } from 'snowman-library';
 
 export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
@@ -52,7 +52,7 @@ export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
       );
     },
   },
-  icon: () => flask,
+  itemType: () => EntityItemType.EXPERIMENT,
   createNew: (state, dependsOn) => {
     const datasets =
       state.config.datasets[serializeCacheKey(dependsOn[0])]?.targets ?? [];

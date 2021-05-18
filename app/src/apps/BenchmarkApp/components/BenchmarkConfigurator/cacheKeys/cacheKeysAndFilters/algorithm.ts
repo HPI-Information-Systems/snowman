@@ -1,7 +1,7 @@
 import { Algorithm } from 'api';
 import { StoreCacheKeyBaseEnum } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/baseKeys';
 import { MakeStoreCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/types';
-import { hardwareChip } from 'ionicons/icons';
+import { EntityItemType } from 'components/simple/EntityItem/EntityItemType';
 
 export const algorithmCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   StoreCacheKeyBaseEnum.algorithm,
@@ -12,5 +12,5 @@ export const algorithmCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   keyBase: StoreCacheKeyBaseEnum.algorithm,
   targetCache: () => 'algorithms',
   getEntities: (state) => state.resources.algorithms,
-  icon: () => hardwareChip,
+  itemType: () => EntityItemType.MATCHING_SOLUTION,
 });

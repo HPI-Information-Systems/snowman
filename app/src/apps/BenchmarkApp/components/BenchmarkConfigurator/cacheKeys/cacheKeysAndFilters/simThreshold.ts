@@ -14,7 +14,6 @@ export const simThresholdCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.similarityThreshold,
   targetCache: () => 'simThresholds',
-  icon: () => icon,
   selectorItems: (state, cacheKey, ..._) =>
     (getCacheKeyAndFilterUntyped(cacheKey).getValue(state) as number[])
       .map((title) => `${title}`)

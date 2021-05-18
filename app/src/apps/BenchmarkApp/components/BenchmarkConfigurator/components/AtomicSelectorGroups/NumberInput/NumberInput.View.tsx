@@ -15,13 +15,7 @@ const NumberInputGroupView = ({
       styles.itemNoBorder
     )}
   >
-    <IonItem
-      className={style(
-        styles.fullWidth,
-        styles.itemNoSafePad,
-        styles.itemResetEndPad
-      )}
-    >
+    <IonItem className={style(styles.fullWidth, styles.itemResetEndPad)}>
       <IonIcon
         icon={gitCommit}
         color={'primarydark'}
