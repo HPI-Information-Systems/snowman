@@ -130,7 +130,7 @@ const DecisionMatrixStrategyView = ({
                   <tr key={'nmetrics-row-metric-' + metricId}>
                     <td>
                       <span
-                        data-for="tooltip"
+                        data-for="tooltipAllowHtml"
                         data-tip={renderToString(aMetric.formula, {
                           throwOnError: false,
                           displayMode: true,
@@ -149,7 +149,7 @@ const DecisionMatrixStrategyView = ({
                           key={`matrix-view-metric-${metricId}-algo-${index}`}
                         >
                           <span
-                            data-for="tooltip"
+                            data-for="tooltipAllowHtml"
                             data-tip={`${
                               algorithmMetrics[metricId]?.value?.toString() ??
                               '?'
