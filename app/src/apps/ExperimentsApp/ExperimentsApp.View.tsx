@@ -32,7 +32,7 @@ const ExperimentsAppView = ({
         <IonRow>
           <IonCol size="12" sizeLg="6">
             <IonItem>
-              <IonLabel>Filter by datasets</IonLabel>
+              <IonLabel slot="start">Filter by datasets</IonLabel>
               <DatasetSelectableInput
                 selection={selectedDatasets}
                 onChange={changeSelectedDatasets}
@@ -43,7 +43,7 @@ const ExperimentsAppView = ({
           </IonCol>
           <IonCol size="12" sizeLg="6">
             <IonItem>
-              <IonLabel>Filter by matching solutions</IonLabel>
+              <IonLabel slot="start">Filter by matching solutions</IonLabel>
               <AlgorithmSelectableInput
                 selection={selectedAlgorithms}
                 onChange={changeSelectedAlgorithms}

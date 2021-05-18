@@ -85,7 +85,11 @@ export const SelectableInputView = function <Content>({
           </div>
         </IonList>
       </IonPopover>
-      <IonItem onClick={(e) => showPopover((e as unknown) as Event)}>
+      <IonItem
+        onClick={(e) => showPopover((e as unknown) as Event)}
+        className={styles.openPopoverItem}
+        button
+      >
         <IonLabel>
           {selection.length > 0 ? (
             selection
@@ -95,7 +99,9 @@ export const SelectableInputView = function <Content>({
                   content !== undefined
               )
               .map((content) => (
-                <IonItem key={getID(content)}>{renderChild(content)}</IonItem>
+                <IonItem color="clear" lines="none" key={getID(content)}>
+                  {renderChild(content)}
+                </IonItem>
               ))
           ) : (
             <i>nothing selected</i>
