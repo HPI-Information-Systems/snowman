@@ -1,28 +1,26 @@
-import { IonCard, IonIcon, IonText } from '@ionic/react';
+import { IonCard, IonIcon } from '@ionic/react';
 import { Metric } from 'api';
 import { DecisionMatrixStrategyProps } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyStyles.module.css';
 import { DecisionSegments } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/structs/DecisionSegments';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
+import EntityItem from 'components/simple/EntityItem/EntityItem';
+import { EntityItemType } from 'components/simple/EntityItem/EntityItemType';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
-import { chevronBack, chevronDown, create } from 'ionicons/icons';
+import { chevronDown, chevronUp } from 'ionicons/icons';
 import { renderToString } from 'katex';
-import React, { useEffect } from 'react';
-import ReactTooltip from 'react-tooltip';
+import React from 'react';
+import useTooltip from 'utils/useTooltipHook';
 
 const DecisionMatrixStrategyView = ({
   isValidConfig,
   selectedAlgorithms,
   averageMetrics,
-  editAlgorithm,
   expandedEntities,
   toggleExpansion,
 }: DecisionMatrixStrategyProps): JSX.Element => {
-  useEffect(() => {
-    // Triggered on every component update!
-    ReactTooltip.rebuild();
-  });
+  useTooltip();
   return (
     <PageStruct
       pageTitle={StrategyIDs.KpiDecisionMatrix}
@@ -41,19 +39,14 @@ const DecisionMatrixStrategyView = ({
               <th>Categories</th>
               {selectedAlgorithms.map(
                 (anAlgorithm): JSX.Element => (
-                  <th key={`matrix-header-${anAlgorithm.id}`}>
-                    <IonText
-                      color="primary"
-                      onClick={(): void => editAlgorithm(anAlgorithm.id)}
-                      className={styles.clickableContent}
-                      data-tip="Edit this matching solution's properties."
-                    >
-                      {anAlgorithm.name}
-                      <IonIcon
-                        icon={create}
-                        className={styles.iconMiddlePadded}
-                      />
-                    </IonText>
+                  <th
+                    key={`matrix-header-${anAlgorithm.id}`}
+                    style={{ padding: 0 }}
+                  >
+                    <EntityItem
+                      itemType={EntityItemType.MATCHING_SOLUTION}
+                      itemId={anAlgorithm.id}
+                    />
                   </th>
                 )
               )}
@@ -89,12 +82,12 @@ const DecisionMatrixStrategyView = ({
                             {anEntity.doesExpand !== undefined ? (
                               expandedEntities.includes(anEntity.doesExpand) ? (
                                 <IonIcon
-                                  icon={chevronDown}
+                                  icon={chevronUp}
                                   className={styles.iconMiddlePadded}
                                 />
                               ) : (
                                 <IonIcon
-                                  icon={chevronBack}
+                                  icon={chevronDown}
                                   className={styles.iconMiddlePadded}
                                 />
                               )
@@ -105,6 +98,8 @@ const DecisionMatrixStrategyView = ({
                           (anAlgorithm, idx3): JSX.Element => (
                             <td
                               key={`matrix-${idx1}-row-initial-${idx2}-${idx3}`}
+                              data-tip={anEntity.tooltip}
+                              data-for="tooltip"
                             >
                               {anEntity.selector
                                 ? anEntity.selector(anAlgorithm)
@@ -129,6 +124,7 @@ const DecisionMatrixStrategyView = ({
                   <tr key={'nmetrics-row-metric-' + metricId}>
                     <td>
                       <span
+                        data-for="tooltipAllowHtml"
                         data-tip={renderToString(aMetric.formula, {
                           throwOnError: false,
                           displayMode: true,
@@ -147,6 +143,7 @@ const DecisionMatrixStrategyView = ({
                           key={`matrix-view-metric-${metricId}-algo-${index}`}
                         >
                           <span
+                            data-for="tooltipAllowHtml"
                             data-tip={`${
                               algorithmMetrics[metricId]?.value?.toString() ??
                               '?'

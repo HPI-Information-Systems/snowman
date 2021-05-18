@@ -4,8 +4,8 @@ import {
   SimilarityFuncItemOwnProps,
 } from 'apps/SimilarityFuncsDialog/components/SimilarityFuncItem/SimilarityFuncItemProps';
 import SimilarityFunctionItemView from 'apps/SimilarityFuncsDialog/components/SimilarityFuncItem/SimilarityFunctionItem.View';
-import { deleteSimilarityThresholdFunction } from 'apps/SimilarityFuncsDialog/store/SimilarityFuncsDialogActions';
 import { SimilarityFuncsDialogModel } from 'apps/SimilarityFuncsDialog/types/SimilarityFuncsDilaogModel';
+import { doDeleteSimFunction } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -19,9 +19,7 @@ const mapDispatchToProps = (
     doOpenDialog(ViewIDs.FunctionBuilderDialog, ownProps.similarityFunction.id);
   },
   deleteFunction() {
-    dispatch(
-      deleteSimilarityThresholdFunction(ownProps.similarityFunction.id)
-    ).then();
+    doDeleteSimFunction(ownProps.similarityFunction.id).then();
   },
   previewSimilarityFunction() {
     doOpenDialog(

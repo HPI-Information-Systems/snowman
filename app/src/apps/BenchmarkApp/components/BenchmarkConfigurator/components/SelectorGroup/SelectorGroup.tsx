@@ -1,13 +1,11 @@
-import { IonIcon, IonItem, IonList, IonText } from '@ionic/react';
+import { IonIcon, IonItem, IonList } from '@ionic/react';
 import { SelectorGroupProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupProps';
 import styles from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorGroup/SelectorGroupStyles.module.css';
+import { EmptyPlaceholder } from 'components/simple/EmptyPlaceholder/EmptyPlaceholder';
+import EntityItem from 'components/simple/EntityItem/EntityItem';
 import { ellipsisVerticalCircle } from 'ionicons/icons';
 import React from 'react';
 import style from 'theme/style';
-
-const EmptyPlaceholder = (): JSX.Element => (
-  <IonText color="medium">{'<None>'}</IonText>
-);
 
 const SelectorGroup = ({ onClick, items }: SelectorGroupProps): JSX.Element => (
   <IonItem button onClick={onClick} className={style(styles.fullWidth)}>
@@ -23,26 +21,33 @@ const SelectorGroup = ({ onClick, items }: SelectorGroupProps): JSX.Element => (
           <EmptyPlaceholder />
         </IonItem>
       ) : null}
-      {items.map(({ icon, indent, title }, index) => (
-        <IonItem
+      {items.map((item, index) => (
+        <div
           key={index}
-          className={style(
-            styles.smallItem,
-            styles.itemNoBorder,
-            styles.oneLine
-          )}
           style={{
-            marginLeft: 8 * (indent ?? 0),
+            marginLeft: 8 * (item.indent ?? 0),
           }}
         >
-          <IonIcon
-            icon={icon}
-            color="primarydark"
-            className={styles.smallItemIcon}
-            slot="start"
-          />
-          {title ?? <EmptyPlaceholder />}
-        </IonItem>
+          {'itemId' in item ? (
+            <EntityItem {...item} />
+          ) : (
+            <IonItem
+              className={style(
+                styles.smallItem,
+                styles.itemNoBorder,
+                styles.oneLine
+              )}
+            >
+              <IonIcon
+                icon={item.icon}
+                color="primarydark"
+                className={styles.smallItemIcon}
+                slot="start"
+              />
+              {item.title ?? <EmptyPlaceholder />}
+            </IonItem>
+          )}
+        </div>
       ))}
     </IonList>
     <IonIcon icon={ellipsisVerticalCircle} color="medium" slot="end" />

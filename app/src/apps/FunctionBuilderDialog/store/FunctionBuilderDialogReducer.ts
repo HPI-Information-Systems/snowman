@@ -10,6 +10,7 @@ import {
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import UndefinedStrategy from 'apps/FunctionBuilderDialog/types/UndefinedStrategy';
 import { produce } from 'immer';
+import { MagicNotPossibleId } from 'structs/constants';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const getInitialState: () => FunctionBuilderDialogModel = (): FunctionBuilderDialogModel => ({
@@ -23,6 +24,7 @@ const getInitialState: () => FunctionBuilderDialogModel = (): FunctionBuilderDia
     null,
     null
   ),
+  experimentId: MagicNotPossibleId,
 });
 
 const FunctionBuilderDialogReducer = (
@@ -46,6 +48,11 @@ const FunctionBuilderDialogReducer = (
       return {
         ...state,
         functionName: action.payload as string,
+      };
+    case FunctionBuilderDialogActionTypes.CHANGE_EXPERIMENT_ID:
+      return {
+        ...state,
+        experimentId: action.payload as number,
       };
     case FunctionBuilderDialogActionTypes.LOAD_EXPERIMENT_COLUMNS:
       return {

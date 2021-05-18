@@ -53,7 +53,7 @@ const DatasetsAppView = ({
         </IonRow>
       </IonGrid>
       {datasets.length === 0 ? (
-        <IonText color="medium">No matching elements found!</IonText>
+        <IonText color="medium">No datasets found!</IonText>
       ) : undefined}
       <AddFab clickOnFab={addDataset} />
     </>

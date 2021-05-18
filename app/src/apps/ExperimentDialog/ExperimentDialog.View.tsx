@@ -8,18 +8,20 @@ import {
   IonList,
   IonNote,
   IonRange,
-  IonSelect,
-  IonSelectOption,
   IonTextarea,
 } from '@ionic/react';
-import { Algorithm, Dataset } from 'api';
 import { ExperimentDialogProps } from 'apps/ExperimentDialog/ExperimentDialogProps';
 import styles from 'apps/ExperimentDialog/ExperimentDialogStyles.module.css';
+import { ExperimentSegmentTypeEnum } from 'apps/ExperimentDialog/types/ExperimentSegmentTypeEnum';
 import FileInput from 'components/simple/FileInput/FileInput';
-import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
+import AlgorithmSelectableInput from 'components/stateful/SelectableInputFactory/flavors/AlgorithmSelectableInput';
+import DatasetSelectableInput from 'components/stateful/SelectableInputFactory/flavors/DatasetSelectableInput';
+import SelectableInput from 'components/stateful/SelectableInputFactory/flavors/SelectableInput';
 import {
   addCircleOutline,
   checkmarkCircleOutline,
+  chevronDown,
+  chevronUp,
   closeCircleOutline,
 } from 'ionicons/icons';
 import React from 'react';
@@ -52,6 +54,8 @@ const ExperimentDialogView = ({
   selectedAlgorithm,
   selectedDataset,
   selectedFiles,
+  expandedSegments,
+  toggleSegmentExpansion,
 }: ExperimentDialogProps): JSX.Element => (
   <>
     <IonList>
@@ -75,91 +79,112 @@ const ExperimentDialogView = ({
       </IonItem>
       <IonItem>
         <IonLabel position="fixed">Dataset:</IonLabel>
-        <IonSelect
-          value={selectedDataset}
-          onIonChange={changeDataset}
-          placeholder="Select one"
-          multiple={false}
-        >
-          {datasets.map(
-            (aDataset: Dataset): JSX.Element => (
-              <IonSelectOption
-                key={`filter_datasets_${aDataset.id}`}
-                value={aDataset.id.toString()}
-              >
-                {aDataset.name}
-              </IonSelectOption>
-            )
-          )}
-        </IonSelect>
+        <DatasetSelectableInput
+          allOptions={datasets}
+          allowMultiselect={false}
+          onChange={(selection) => changeDataset(selection[0])}
+          selection={
+            typeof selectedDataset === 'number' ? [selectedDataset] : []
+          }
+        />
       </IonItem>
       <IonItem>
-        <IonLabel position="fixed">M.Solution:</IonLabel>
-        <IonSelect
-          value={selectedAlgorithm}
-          onIonChange={changeAlgorithm}
-          placeholder="Select one"
-          multiple={false}
-        >
-          {algorithms.map(
-            (anAlgorithm: Algorithm): JSX.Element => (
-              <IonSelectOption
-                key={`filter_algorithms_${anAlgorithm.id}`}
-                value={anAlgorithm.id.toString()}
-              >
-                {anAlgorithm.name}
-              </IonSelectOption>
-            )
-          )}
-        </IonSelect>
+        <IonLabel position="fixed">
+          Matching <br />
+          Solution:
+        </IonLabel>
+        <AlgorithmSelectableInput
+          allOptions={algorithms}
+          allowMultiselect={false}
+          onChange={(selection) => changeAlgorithm(selection[0])}
+          selection={
+            typeof selectedAlgorithm === 'number' ? [selectedAlgorithm] : []
+          }
+        />
       </IonItem>
 
-      <IonItemDivider>
+      <IonItemDivider
+        onClick={() =>
+          toggleSegmentExpansion(ExperimentSegmentTypeEnum.CONFIGURATION_EFFORT)
+        }
+      >
+        <IonIcon
+          icon={
+            expandedSegments.includes(
+              ExperimentSegmentTypeEnum.CONFIGURATION_EFFORT
+            )
+              ? chevronUp
+              : chevronDown
+          }
+          slot="end"
+        />
         <IonLabel>CONFIGURATION EFFORT:</IonLabel>
       </IonItemDivider>
+      {expandedSegments.includes(
+        ExperimentSegmentTypeEnum.CONFIGURATION_EFFORT
+      ) ? (
+        <>
+          <IonItem>
+            <IonLabel position="fixed">
+              Matching
+              <br /> Solution
+              <br /> Knowledge
+              <br /> Level %:
+            </IonLabel>
+            <IonRange
+              min={0}
+              max={100}
+              value={expertise}
+              color="primary"
+              onIonChange={changeExpertise}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="fixed">
+              Matching
+              <br /> Solution <br />
+              HR Amount:
+            </IonLabel>
+            <IonInput
+              type="number"
+              placeholder="0"
+              value={hrAmount}
+              onIonChange={changeHRAmount}
+            />
+            <span className={styles.inputUnit}>man-hr</span>
+          </IonItem>
+        </>
+      ) : null}
 
-      <IonItem>
-        <IonLabel position="fixed">
-          Matching
-          <br /> Solution
-          <br /> Knowledge
-          <br /> Level:
-        </IonLabel>
-        <IonRange
-          min={0}
-          max={100}
-          value={expertise}
-          color="primary"
-          onIonChange={changeExpertise}
+      <IonItemDivider
+        onClick={() =>
+          toggleSegmentExpansion(ExperimentSegmentTypeEnum.OTHER_KPIS)
+        }
+      >
+        <IonIcon
+          icon={
+            expandedSegments.includes(ExperimentSegmentTypeEnum.OTHER_KPIS)
+              ? chevronUp
+              : chevronDown
+          }
+          slot="end"
         />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">
-          Matching
-          <br /> Solution <br />
-          HR Amount:
-        </IonLabel>
-        <IonInput
-          type="number"
-          placeholder="0"
-          value={hrAmount}
-          onIonChange={changeHRAmount}
-        />
-      </IonItem>
-
-      <IonItemDivider>
         <IonLabel>OTHER KPIS:</IonLabel>
       </IonItemDivider>
-
-      <IonItem>
-        <IonLabel position="fixed">Runtime </IonLabel>
-        <IonInput
-          type="number"
-          placeholder="0"
-          value={runtime}
-          onIonChange={changeRuntime}
-        />
-      </IonItem>
+      {expandedSegments.includes(ExperimentSegmentTypeEnum.OTHER_KPIS) ? (
+        <>
+          <IonItem>
+            <IonLabel position="fixed">Runtime: </IonLabel>
+            <IonInput
+              type="number"
+              placeholder="0"
+              value={runtime}
+              onIonChange={changeRuntime}
+            />
+            <span className={styles.inputUnit}>hr</span>
+          </IonItem>
+        </>
+      ) : null}
 
       <IonItemDivider>
         <IonLabel>UPLOAD CONTENT</IonLabel>
@@ -170,9 +195,10 @@ const ExperimentDialogView = ({
           allOptions={$enum(experimentFileFormatEnum).map(
             (form) => form as string
           )}
-          currentOption={experimentFileFormat}
-          setOption={changeExperimentFileFormat}
+          selection={[experimentFileFormat]}
+          onChange={(selection) => changeExperimentFileFormat(selection[0])}
           instanceDescriptor="experimentDialog1"
+          allowMultiselect={false}
         />
       </IonItem>
       <IonItem>

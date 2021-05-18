@@ -1,6 +1,7 @@
 import { Algorithm, AlgorithmApi, AlgorithmValues } from 'api';
 import { AlgorithmDialogActionTypes } from 'apps/AlgorithmDialog/types/AlgorithmDialogActionTypes';
 import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
+import { AlgorithmSegmentTypeEnum } from 'apps/AlgorithmDialog/types/AlgorithmSegmentTypeEnum';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { MagicNotPossibleId } from 'structs/constants';
@@ -17,6 +18,14 @@ import {
 } from 'utils/easyActionsFactory';
 import { removeNaN } from 'utils/removeNaN';
 import RequestHandler from 'utils/requestHandler';
+
+export const toggleSegmentExpansion = (
+  aSegment: AlgorithmSegmentTypeEnum
+): easyPrimitiveActionReturn<AlgorithmDialogModel> =>
+  easyPrimitiveAction<AlgorithmDialogModel>({
+    type: AlgorithmDialogActionTypes.TOGGLE_SEGMENT_EXPANSION,
+    payload: aSegment,
+  });
 
 export const changeAlgorithmName = (
   aName: string

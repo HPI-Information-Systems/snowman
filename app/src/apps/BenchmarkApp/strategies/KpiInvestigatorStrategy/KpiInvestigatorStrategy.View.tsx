@@ -17,7 +17,7 @@ import {
   ScatterTooltipItem,
 } from 'components/simple/ChartComponent/ScatterChart';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
-import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
+import SelectableInput from 'components/stateful/SelectableInputFactory/flavors/SelectableInput';
 import React from 'react';
 import {
   AllMetricsObject,
@@ -57,9 +57,10 @@ const KpiInvestigatorStrategyView = ({
               <IonLabel>X Axis Metric:</IonLabel>
               <SelectableInput
                 allOptions={metrics}
-                currentOption={xAxis}
-                setOption={changeXAxis}
+                selection={[xAxis]}
+                onChange={(selection) => changeXAxis(selection[0])}
                 instanceDescriptor="KpiInvestigatorXAxis"
+                allowMultiselect={false}
               />
             </IonItem>
           </IonCol>
@@ -68,20 +69,22 @@ const KpiInvestigatorStrategyView = ({
               <IonLabel>Y Axis Metric:</IonLabel>
               <SelectableInput
                 allOptions={metrics}
-                currentOption={yAxis}
-                setOption={changeYAxis}
+                selection={[yAxis]}
+                onChange={(selection) => changeYAxis(selection[0])}
                 instanceDescriptor="KpiInvestigatorYAxis"
+                allowMultiselect={false}
               />
             </IonItem>
           </IonCol>
           <IonCol size="4">
             <IonItem>
-              <IonLabel>Color By:</IonLabel>
+              <IonLabel>Group By:</IonLabel>
               <SelectableInput
                 allOptions={Object.values(KpiInvestigatorColorMode)}
-                currentOption={colorMode}
-                setOption={changeColorMode}
+                selection={[colorMode]}
+                onChange={(selection) => changeColorMode(selection[0])}
                 instanceDescriptor="KpiInvestigatorColorMode"
+                allowMultiselect={false}
               />
             </IonItem>
           </IonCol>

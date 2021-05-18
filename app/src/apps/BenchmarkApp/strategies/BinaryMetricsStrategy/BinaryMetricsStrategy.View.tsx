@@ -20,9 +20,9 @@ import PaneButtonRow from 'components/simple/PaneButtonRow/PaneButtonRow';
 import StyledCarousel from 'components/simple/StyledCarousel/StyledCarousel';
 import { informationCircle } from 'ionicons/icons';
 import { renderToString } from 'katex';
-import React, { useEffect } from 'react';
-import ReactTooltip from 'react-tooltip';
+import React from 'react';
 import { formatLargeNumber } from 'utils/formatLargeNumber';
+import useTooltip from 'utils/useTooltipHook';
 
 const BinaryMetricsStrategyView = ({
   metrics,
@@ -35,10 +35,7 @@ const BinaryMetricsStrategyView = ({
   dataViewerTitle,
   isValidConfig,
 }: BinaryMetricsStrategyProps): JSX.Element => {
-  useEffect(() => {
-    // Triggered on every component update!
-    ReactTooltip.rebuild();
-  });
+  useTooltip();
 
   return (
     <PageStruct
@@ -53,7 +50,10 @@ const BinaryMetricsStrategyView = ({
         }
       />
       <IonText color="primary">
-        <h3 data-tip="Binary metrics are calculated based upon the count of false positives, false negatives, true negatives and true positives.">
+        <h3
+          data-for="tooltip"
+          data-tip="Binary metrics are calculated based upon the count of false positives, false negatives, true negatives and true positives."
+        >
           Binary Metrics
         </h3>
       </IonText>
@@ -65,7 +65,6 @@ const BinaryMetricsStrategyView = ({
                 formula,
                 range,
                 value,
-                info,
                 infoLink,
               }: Metric): JSX.Element => (
                 <div key={name}>
@@ -74,6 +73,7 @@ const BinaryMetricsStrategyView = ({
                       <IonCardTitle
                         className="metric-number"
                         color="primary"
+                        data-for="tooltipAllowHtml"
                         data-tip={`${
                           value?.toString() ?? 'divide by zero'
                         } &isin; [${range?.toString() ?? '?'}]`}
@@ -82,6 +82,7 @@ const BinaryMetricsStrategyView = ({
                       </IonCardTitle>
                       <IonCardSubtitle
                         className="metric-name"
+                        data-for="tooltipAllowHtml"
                         data-tip={renderToString(formula, {
                           throwOnError: false,
                           displayMode: true,

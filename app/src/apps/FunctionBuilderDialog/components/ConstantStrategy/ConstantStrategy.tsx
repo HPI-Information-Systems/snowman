@@ -6,7 +6,7 @@ import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/Fun
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
-import { parseInputToNumberOrUndef } from 'utils/questionHelpers';
+import { parseIntRemoveNaN } from 'utils/questionHelpers';
 
 const ConstantStrategy = ({
   blockAccessKey,
@@ -25,7 +25,7 @@ const ConstantStrategy = ({
         onIonChange={(event: IonChangeEvent): void =>
           FunctionBuildingBlockMagistrate.setLeftValue(
             blockAccessKey,
-            parseInputToNumberOrUndef(event.detail.value) ?? null
+            parseIntRemoveNaN(event.detail.value) ?? null
           )
         }
       />

@@ -1,4 +1,4 @@
-import { IonCol, IonGrid, IonRow } from '@ionic/react';
+import { IonCol, IonGrid, IonRow, IonText } from '@ionic/react';
 import { Algorithm } from 'api';
 import { AlgorithmsAppProps } from 'apps/AlgorithmsApp/AlgorithmsAppProps';
 import AlgorithmCard from 'apps/AlgorithmsApp/components/AlgorithmCard/AlgorithmCard';
@@ -10,6 +10,9 @@ const AlgorithmsAppView = ({
   addAlgorithm,
 }: AlgorithmsAppProps): JSX.Element => (
   <>
+    <IonText color="primary">
+      <h3>Matching Solutions</h3>
+    </IonText>
     <IonGrid>
       <IonRow>
         {algorithms.map((anAlgorithm: Algorithm) => (
@@ -19,6 +22,9 @@ const AlgorithmsAppView = ({
         ))}
       </IonRow>
     </IonGrid>
+    {algorithms.length === 0 ? (
+      <IonText color="medium">No matching solutions found!</IonText>
+    ) : undefined}
     <AddFab clickOnFab={addAlgorithm} />
   </>
 );

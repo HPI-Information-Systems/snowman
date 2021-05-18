@@ -6,7 +6,7 @@ import {
 } from 'utils/easyActionsFactory';
 
 export const changeSelectedDatasets = (
-  datasetIds: string[]
+  datasetIds: number[]
 ): easyPrimitiveActionReturn<ExperimentsAppModel> =>
   easyPrimitiveAction<ExperimentsAppModel>({
     type: ExperimentsAppActionTypes.CHANGE_SELECTED_DATASETS,
@@ -14,7 +14,7 @@ export const changeSelectedDatasets = (
   });
 
 export const changeSelectedAlgorithms = (
-  algorithmIds: string[]
+  algorithmIds: number[]
 ): easyPrimitiveActionReturn<ExperimentsAppModel> =>
   easyPrimitiveAction<ExperimentsAppModel>({
     type: ExperimentsAppActionTypes.CHANGE_SELECTED_ALGORITHMS,

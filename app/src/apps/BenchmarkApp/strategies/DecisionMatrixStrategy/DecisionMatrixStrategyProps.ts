@@ -9,7 +9,6 @@ export interface DecisionMatrixStrategyStateProps {
 }
 
 export interface DecisionMatrixStrategyDispatchProps {
-  editAlgorithm: (id: number) => void;
   toggleExpansion: (aType: ExpansionTypes) => void;
 }
 

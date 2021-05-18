@@ -15,7 +15,6 @@ import {
 } from 'apps/ExperimentsApp/types/ExperimentsAppModel';
 import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
-import { IonSelectChangeEvent } from 'types/IonChangeEvent';
 import { ViewIDs } from 'types/ViewIDs';
 
 const mapStateToProps = (
@@ -26,9 +25,9 @@ const mapStateToProps = (
   selectedDatasets: state.selectedDatasets,
   currentExperiments: ownProps.experiments.filter(
     (anExperiment: Experiment): boolean =>
-      (state.selectedAlgorithms.includes(anExperiment.algorithmId.toString()) ||
+      (state.selectedAlgorithms.includes(anExperiment.algorithmId) ||
         state.selectedAlgorithms.length === 0) &&
-      (state.selectedDatasets.includes(anExperiment.datasetId.toString()) ||
+      (state.selectedDatasets.includes(anExperiment.datasetId) ||
         state.selectedDatasets.length === 0)
   ),
 });
@@ -36,11 +35,11 @@ const mapStateToProps = (
 const mapDispatchToProps = (
   dispatch: ExperimentsAppDispatch
 ): ExperimentsAppDispatchProps => ({
-  changeSelectedDatasets(event: IonSelectChangeEvent) {
-    dispatch(changeSelectedDatasets(event.detail.value));
+  changeSelectedDatasets(selection) {
+    dispatch(changeSelectedDatasets(selection));
   },
-  changeSelectedAlgorithms(event: IonSelectChangeEvent) {
-    dispatch(changeSelectedAlgorithms(event.detail.value));
+  changeSelectedAlgorithms(selection) {
+    dispatch(changeSelectedAlgorithms(selection));
   },
   addExperiment() {
     doOpenDialog(ViewIDs.ExperimentDialog);

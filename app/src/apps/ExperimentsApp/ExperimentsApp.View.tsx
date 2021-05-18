@@ -1,17 +1,18 @@
 import {
   IonCol,
   IonGrid,
+  IonIcon,
   IonItem,
-  IonLabel,
   IonRow,
-  IonSelect,
-  IonSelectOption,
   IonText,
 } from '@ionic/react';
-import { Algorithm, Dataset, Experiment } from 'api';
+import { Experiment } from 'api';
 import ExperimentCard from 'apps/ExperimentsApp/components/ExperimentCard/ExperimentCard';
 import { ExperimentsAppProps } from 'apps/ExperimentsApp/ExperimentsAppProps';
 import AddFab from 'components/simple/GenericFab/AddFab';
+import AlgorithmSelectableInput from 'components/stateful/SelectableInputFactory/flavors/AlgorithmSelectableInput';
+import DatasetSelectableInput from 'components/stateful/SelectableInputFactory/flavors/DatasetSelectableInput';
+import { filter } from 'ionicons/icons';
 import React from 'react';
 import { getAlgorithmNameFromId } from 'utils/algorithmHelpers';
 import { getDatasetNameFromId } from 'utils/datasetHelper';
@@ -30,48 +31,26 @@ const ExperimentsAppView = ({
     <>
       <IonGrid>
         <IonRow>
-          <IonCol>
+          <IonCol size="12" sizeLg="6">
             <IonItem>
-              <IonLabel>Filter by datasets</IonLabel>
-              <IonSelect
-                value={selectedDatasets}
-                placeholder="Select multiple"
-                onIonChange={changeSelectedDatasets}
-                multiple={true}
-              >
-                {datasets.map(
-                  (aDataset: Dataset): JSX.Element => (
-                    <IonSelectOption
-                      key={`filter_datasets_${aDataset.id}`}
-                      value={aDataset.id.toString()}
-                    >
-                      {aDataset.name}
-                    </IonSelectOption>
-                  )
-                )}
-              </IonSelect>
+              <IonIcon icon={filter} slot="start" size="small" />
+              <DatasetSelectableInput
+                selection={selectedDatasets}
+                onChange={changeSelectedDatasets}
+                allOptions={datasets}
+                allowMultiselect={false}
+              />
             </IonItem>
           </IonCol>
-          <IonCol>
+          <IonCol size="12" sizeLg="6">
             <IonItem>
-              <IonLabel>Filter by matching solutions</IonLabel>
-              <IonSelect
-                value={selectedAlgorithms}
-                placeholder="Select multiple"
-                onIonChange={changeSelectedAlgorithms}
-                multiple={true}
-              >
-                {algorithms.map(
-                  (anAlgorithm: Algorithm): JSX.Element => (
-                    <IonSelectOption
-                      key={`filter_algorithms_${anAlgorithm.id}`}
-                      value={anAlgorithm.id.toString()}
-                    >
-                      {anAlgorithm.name}
-                    </IonSelectOption>
-                  )
-                )}
-              </IonSelect>
+              <IonIcon icon={filter} slot="start" size="small" />
+              <AlgorithmSelectableInput
+                selection={selectedAlgorithms}
+                onChange={changeSelectedAlgorithms}
+                allOptions={algorithms}
+                allowMultiselect={false}
+              />
             </IonItem>
           </IonCol>
         </IonRow>
@@ -99,6 +78,9 @@ const ExperimentsAppView = ({
           ))}
         </IonRow>
       </IonGrid>
+      {currentExperiments.length === 0 ? (
+        <IonText color="medium">No experiments found!</IonText>
+      ) : undefined}
       <AddFab clickOnFab={addExperiment} />
     </>
   );

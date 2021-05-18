@@ -66,7 +66,18 @@ const SnowmanAppView = ({
       <PreviewDialog />
       <SimilarityFuncsDialog />
       <FunctionBuilderDialog />
-      <ReactTooltip className="tooltip-fixed" html={true} place={'bottom'} />
+      <ReactTooltip
+        className="tooltip-fixed"
+        id="tooltip"
+        html={false}
+        place={'bottom'}
+      />
+      <ReactTooltip
+        className="tooltip-fixed"
+        id="tooltipAllowHtml"
+        html={true}
+        place={'bottom'}
+      />
       <BlockingLoading />
       <ToastContainer
         autoClose={5000}

@@ -5,6 +5,8 @@ import {
   DatasetsApi,
   Experiment,
   ExperimentsApi,
+  SimilarityThresholdFunction,
+  SimilarityThresholdsApi,
 } from 'api';
 import { CentralResourcesActionTypes } from 'apps/SnowmanApp/types/CentralResourcesActionTypes';
 import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
@@ -12,6 +14,7 @@ import {
   SUCCESS_TO_DELETE_ALGORITHM,
   SUCCESS_TO_DELETE_DATASET,
   SUCCESS_TO_DELETE_EXPERIMENT,
+  SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION,
 } from 'structs/statusMessages';
 import { SnowmanAction } from 'types/SnowmanAction';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -26,6 +29,7 @@ export const refreshCentralResources = (): SnowmanThunkAction<
     dispatch(getAlgorithms()).then(),
     dispatch(getDatasets()).then(),
     dispatch(getExperiments()).then(),
+    dispatch(getSimFunctions()).then(),
   ]).then();
 
 export const getAlgorithms = (): SnowmanThunkAction<
@@ -79,6 +83,23 @@ export const getExperiments = (): SnowmanThunkAction<
       .then()
   );
 
+export const getSimFunctions = (): SnowmanThunkAction<
+  Promise<void>,
+  SnowmanAppModel
+> => async (dispatch: SnowmanDispatch<SnowmanAppModel>): Promise<void> =>
+  RequestHandler<void>(() =>
+    new SimilarityThresholdsApi()
+      .getSimilarityThresholdFunctions()
+      .then(
+        (functions: SimilarityThresholdFunction[]): SnowmanAction =>
+          dispatch({
+            type: CentralResourcesActionTypes.STORE_SIMFUNCTIONS,
+            payload: functions,
+          })
+      )
+      .then()
+  );
+
 export const deleteAlgorithm = (
   id: number
 ): SnowmanThunkAction<Promise<void>, SnowmanAppModel> => async (
@@ -116,4 +137,17 @@ export const deleteExperiment = (
         .deleteExperiment({ experimentId: id })
         .then((): Promise<void> => dispatch(refreshCentralResources())),
     SUCCESS_TO_DELETE_EXPERIMENT
+  );
+
+export const deleteSimFunction = (
+  id: number
+): SnowmanThunkAction<Promise<void>, SnowmanAppModel> => async (
+  dispatch: SnowmanDispatch<SnowmanAppModel>
+): Promise<void> =>
+  RequestHandler<void>(
+    () =>
+      new SimilarityThresholdsApi()
+        .deleteSimilarityThresholdFunction({ functionId: id })
+        .then((): Promise<void> => dispatch(refreshCentralResources())),
+    SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION
   );

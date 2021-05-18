@@ -1,13 +1,12 @@
 import { IonList } from '@ionic/react';
 import { getCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
 import { StoreCacheKey } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/types';
-import { AtomicSelectorGroupProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/AtomicSelectorGroupProps';
+import { EntityInputProps } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/EntityInput/EntityInput.props';
 import ConfiguratorItem from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/ConfiguratorItem/ConfiguratorItem';
-import SearchableList from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SearchableList/SearchableList';
-import SelectorPopoverGroup from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/SelectorPopoverGroup/SelectorPopoverGroup';
 import { BenchmarkAppStoreMagistrate } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
 import { useInstanceDescriptor } from 'apps/BenchmarkApp/utils/useInstanceDescriptor';
-import React from 'react';
+import EntitySelectableInputFactory from 'components/stateful/SelectableInputFactory/EntitySelectableInputFactory';
+import React, { useMemo } from 'react';
 import { Provider } from 'react-redux';
 
 const EntityInputView = ({
@@ -15,45 +14,37 @@ const EntityInputView = ({
   selectedEntities,
   updateSelection,
   allowMultiple,
-  icon,
   cacheKey,
-}: AtomicSelectorGroupProps): JSX.Element => {
+  itemType,
+}: EntityInputProps): JSX.Element => {
   const viewFilters = (getCacheKeyAndFilter(cacheKey).filter?.viewFilters() ??
     []) as StoreCacheKey[];
+  const instanceDescriptor = useInstanceDescriptor();
+  const SelectableInput = useMemo(
+    () => EntitySelectableInputFactory(itemType),
+    [itemType]
+  );
   return (
-    <SelectorPopoverGroup
-      instanceDescriptor={useInstanceDescriptor()}
-      items={
-        selectedEntities.length > 0
-          ? selectedEntities.map((entity) => ({
-              icon,
-              title: entity.name ?? '',
-            }))
-          : [{ icon }]
-      }
+    <SelectableInput
+      selection={selectedEntities.map(({ id }) => id)}
+      allOptions={entities}
+      allowMultiselect={allowMultiple ?? true}
+      onChange={updateSelection}
+      instanceDescriptor={instanceDescriptor}
     >
-      <SearchableList
-        instanceDescriptor={useInstanceDescriptor()}
-        entities={entities}
-        icon={icon}
-        selectedEntities={selectedEntities.map(({ id }) => id)}
-        updateSelection={updateSelection}
-        allowMultiple={allowMultiple}
-      >
-        {viewFilters.length > 0 ? (
-          <Provider store={BenchmarkAppStoreMagistrate.getStore()}>
-            <IonList>
-              <ConfiguratorItem
-                title="Filter"
-                configurators={viewFilters.map((key) => [key, true])}
-              />
-            </IonList>
-          </Provider>
-        ) : (
-          <></>
-        )}
-      </SearchableList>
-    </SelectorPopoverGroup>
+      {viewFilters.length > 0 ? (
+        <Provider store={BenchmarkAppStoreMagistrate.getStore()}>
+          <IonList>
+            <ConfiguratorItem
+              title="Filter"
+              configurators={viewFilters.map((key) => [key, true])}
+            />
+          </IonList>
+        </Provider>
+      ) : (
+        <></>
+      )}
+    </SelectableInput>
   );
 };
 export default EntityInputView;

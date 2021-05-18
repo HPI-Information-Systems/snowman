@@ -20,8 +20,10 @@ import {
   changeIntegrationInstallationEffortHRAmount,
   changeIntegrationSolutionType,
   changeIntegrationUseCase,
+  toggleSegmentExpansion,
 } from 'apps/AlgorithmDialog/store/AlgorithmDialogActions';
 import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
+import { AlgorithmSegmentTypeEnum } from 'apps/AlgorithmDialog/types/AlgorithmSegmentTypeEnum';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
 import { IonChangeEvent, IonRangeChangeEvent } from 'types/IonChangeEvent';
@@ -112,6 +114,9 @@ const mapDispatchToProps = (
   },
   clickOnSubmit(): void {
     dispatch(addOrUpdateAlgorithm(ownProps.entityId)).then();
+  },
+  toggleSegmentExpansion(aSegment: AlgorithmSegmentTypeEnum) {
+    dispatch(toggleSegmentExpansion(aSegment));
   },
 });
 
