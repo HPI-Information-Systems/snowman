@@ -99,9 +99,7 @@ export const SelectableInputView = function <Content>({
                   content !== undefined
               )
               .map((content) => (
-                <IonItem color="clear" lines="none" key={getID(content)}>
-                  {renderChild(content)}
-                </IonItem>
+                <div key={getID(content)}>{renderChild(content)}</div>
               ))
           ) : (
             <i>nothing selected</i>

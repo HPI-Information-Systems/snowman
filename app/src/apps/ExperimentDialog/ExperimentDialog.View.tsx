@@ -8,14 +8,13 @@ import {
   IonList,
   IonNote,
   IonRange,
-  IonSelect,
-  IonSelectOption,
   IonTextarea,
 } from '@ionic/react';
-import { Algorithm, Dataset } from 'api';
 import { ExperimentDialogProps } from 'apps/ExperimentDialog/ExperimentDialogProps';
 import styles from 'apps/ExperimentDialog/ExperimentDialogStyles.module.css';
 import FileInput from 'components/simple/FileInput/FileInput';
+import AlgorithmSelectableInput from 'components/stateful/SelectableInputFactory/flavors/AlgorithmSelectableInput';
+import DatasetSelectableInput from 'components/stateful/SelectableInputFactory/flavors/DatasetSelectableInput';
 import SelectableInput from 'components/stateful/SelectableInputFactory/flavors/SelectableInput';
 import {
   addCircleOutline,
@@ -75,43 +74,28 @@ const ExperimentDialogView = ({
       </IonItem>
       <IonItem>
         <IonLabel position="fixed">Dataset:</IonLabel>
-        <IonSelect
-          value={selectedDataset}
-          onIonChange={changeDataset}
-          placeholder="Select one"
-          multiple={false}
-        >
-          {datasets.map(
-            (aDataset: Dataset): JSX.Element => (
-              <IonSelectOption
-                key={`filter_datasets_${aDataset.id}`}
-                value={aDataset.id.toString()}
-              >
-                {aDataset.name}
-              </IonSelectOption>
-            )
-          )}
-        </IonSelect>
+        <DatasetSelectableInput
+          allOptions={datasets}
+          allowMultiselect={false}
+          onChange={(selection) => changeDataset(selection[0])}
+          selection={
+            typeof selectedDataset === 'number' ? [selectedDataset] : []
+          }
+        />
       </IonItem>
       <IonItem>
-        <IonLabel position="fixed">M.Solution:</IonLabel>
-        <IonSelect
-          value={selectedAlgorithm}
-          onIonChange={changeAlgorithm}
-          placeholder="Select one"
-          multiple={false}
-        >
-          {algorithms.map(
-            (anAlgorithm: Algorithm): JSX.Element => (
-              <IonSelectOption
-                key={`filter_algorithms_${anAlgorithm.id}`}
-                value={anAlgorithm.id.toString()}
-              >
-                {anAlgorithm.name}
-              </IonSelectOption>
-            )
-          )}
-        </IonSelect>
+        <IonLabel position="fixed">
+          Matching <br />
+          Solution:
+        </IonLabel>
+        <AlgorithmSelectableInput
+          allOptions={algorithms}
+          allowMultiselect={false}
+          onChange={(selection) => changeAlgorithm(selection[0])}
+          selection={
+            typeof selectedAlgorithm === 'number' ? [selectedAlgorithm] : []
+          }
+        />
       </IonItem>
 
       <IonItemDivider>

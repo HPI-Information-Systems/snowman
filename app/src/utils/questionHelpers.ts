@@ -1,8 +1,11 @@
-export const parseInputToNumberOrUndef = (
-  inputValue: string | undefined | null
+import { Primitive } from 'snowman-library';
+import { removeNaN } from 'utils/removeNaN';
+
+export const parseIntRemoveNaN = (
+  inputValue: Primitive | null
 ): number | undefined => {
-  if (inputValue === undefined) return undefined;
-  if (inputValue === null) return undefined;
-  const parsed = parseInt(inputValue);
-  return isNaN(parsed) ? undefined : parsed;
+  if (typeof inputValue === 'string') {
+    inputValue = parseInt(inputValue);
+  }
+  return typeof inputValue === 'number' ? removeNaN(inputValue) : undefined;
 };

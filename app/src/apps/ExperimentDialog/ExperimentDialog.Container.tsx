@@ -21,14 +21,9 @@ import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
-import {
-  IonChangeEvent,
-  IonRangeChangeEvent,
-  IonSelectChangeEvent,
-} from 'types/IonChangeEvent';
+import { IonChangeEvent, IonRangeChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { convertFilesListToFilesArray } from 'utils/filesConverter';
-import { parseInputToNumberOrUndef } from 'utils/questionHelpers';
 
 const isValidExperimentDialog = (
   state: ExperimentDialogModel,
@@ -54,9 +49,9 @@ const mapStateToProps = (
   selectedFiles: state.selectedFiles,
   experimentFileFormat: state.experimentFileFormat,
   datasets: state.datasets,
-  selectedDataset: state.selectedDataset?.toString() ?? '',
+  selectedDataset: state.selectedDataset,
   algorithms: state.algorithms,
-  selectedAlgorithm: state.selectedAlgorithm?.toString() ?? '',
+  selectedAlgorithm: state.selectedAlgorithm,
   expertise: state.expertise,
   hrAmount: state.hrAmount,
   runtime: state.runtime,
@@ -73,15 +68,11 @@ const mapDispatchToProps = (
     dispatch(changeExperimentDescription(event.detail.value as string)),
   changeExperimentFileFormat: (anOption: string): void =>
     dispatch(changeFileFormat(anOption as experimentFileFormatEnum)),
-  changeDataset(event: IonSelectChangeEvent) {
-    dispatch(
-      changeDataset(parseInputToNumberOrUndef(event.detail.value as string))
-    );
+  changeDataset(dataset: number | undefined) {
+    dispatch(changeDataset(dataset));
   },
-  changeAlgorithm(event: IonSelectChangeEvent) {
-    dispatch(
-      changeAlgorithm(parseInputToNumberOrUndef(event.detail.value as string))
-    );
+  changeAlgorithm(algorithm: number | undefined) {
+    dispatch(changeAlgorithm(algorithm));
   },
   clickOnSubmit: (): void => {
     dispatch(addOrUpdateExperiment(ownProps.entityId)).then();

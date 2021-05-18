@@ -9,6 +9,7 @@ import {
 import { Experiment } from 'api';
 import ExperimentCard from 'apps/ExperimentsApp/components/ExperimentCard/ExperimentCard';
 import { ExperimentsAppProps } from 'apps/ExperimentsApp/ExperimentsAppProps';
+import styles from 'apps/ExperimentsApp/ExperimentsAppStyles.module.css';
 import AddFab from 'components/simple/GenericFab/AddFab';
 import AlgorithmSelectableInput from 'components/stateful/SelectableInputFactory/flavors/AlgorithmSelectableInput';
 import DatasetSelectableInput from 'components/stateful/SelectableInputFactory/flavors/DatasetSelectableInput';
@@ -32,7 +33,9 @@ const ExperimentsAppView = ({
         <IonRow>
           <IonCol size="12" sizeLg="6">
             <IonItem>
-              <IonLabel slot="start">Filter by datasets</IonLabel>
+              <IonLabel position="fixed" className={styles.filterLabel}>
+                Filter by <br /> Dataset
+              </IonLabel>
               <DatasetSelectableInput
                 selection={selectedDatasets}
                 onChange={changeSelectedDatasets}
@@ -43,7 +46,10 @@ const ExperimentsAppView = ({
           </IonCol>
           <IonCol size="12" sizeLg="6">
             <IonItem>
-              <IonLabel slot="start">Filter by matching solutions</IonLabel>
+              <IonLabel position="fixed" className={styles.filterLabel}>
+                Filter by <br /> Matching <br />
+                Solution
+              </IonLabel>
               <AlgorithmSelectableInput
                 selection={selectedAlgorithms}
                 onChange={changeSelectedAlgorithms}
