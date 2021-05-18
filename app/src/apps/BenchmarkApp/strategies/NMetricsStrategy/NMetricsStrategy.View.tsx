@@ -1,4 +1,4 @@
-import { IonCard, IonText } from '@ionic/react';
+import { IonCard } from '@ionic/react';
 import { Metric } from 'api';
 import { NMetricsStrategyProps } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyStyles.module.css';
@@ -44,18 +44,9 @@ const NMetricsStrategyView = ({
               {experiments.map(
                 (anExperiment): JSX.Element => (
                   <th key={uniqueExperimentEntityKey(anExperiment)}>
-                    <IonText
-                      className={styles.clickableContent}
-                      onClick={(): void => inspectExperiment(anExperiment)}
-                      data-for="tooltip"
-                      data-tip="Open BinaryMetrics Viewer for experiment."
-                    >
-                      <ExperimentConfigItem
-                        {...experimentEntityToExperimentConfigItem(
-                          anExperiment
-                        )}
-                      />
-                    </IonText>
+                    <ExperimentConfigItem
+                      {...experimentEntityToExperimentConfigItem(anExperiment)}
+                    />
                   </th>
                 )
               )}
