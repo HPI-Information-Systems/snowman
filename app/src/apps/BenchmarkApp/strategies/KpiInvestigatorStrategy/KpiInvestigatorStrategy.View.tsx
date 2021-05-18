@@ -76,7 +76,7 @@ const KpiInvestigatorStrategyView = ({
           </IonCol>
           <IonCol size="4">
             <IonItem>
-              <IonLabel>Color By:</IonLabel>
+              <IonLabel>Group By:</IonLabel>
               <SelectableInput
                 allOptions={Object.values(KpiInvestigatorColorMode)}
                 currentOption={colorMode}
