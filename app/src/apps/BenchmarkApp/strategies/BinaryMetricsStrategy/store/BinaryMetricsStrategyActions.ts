@@ -194,7 +194,6 @@ export const loadBinaryMetricsTuplesCounts = (): SnowmanThunkAction<
         experiments: getExperimentsComparisonTuple(getState()),
       })
       .then((counts) => dispatch(setAllCounts(counts)))
-      .then()
   );
 };
 
