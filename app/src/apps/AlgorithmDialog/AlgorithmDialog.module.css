@@ -24,3 +24,7 @@
 .inputAlignRight {
   text-align: right;
 }
+
+.inputUnit {
+  margin-left: -30px;
+}

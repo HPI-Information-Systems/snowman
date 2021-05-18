@@ -6,12 +6,15 @@ import {
   IonLabel,
   IonRow,
 } from '@ionic/react';
-import { MetricsEnum } from 'api';
+import { DiagramCoordinates, MetricsEnum } from 'api';
 import styles from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/KpiInvestigatorStrategyStyles.module.css';
 import { SimilarityDiagramStrategyProps } from 'apps/BenchmarkApp/strategies/SimilarityDiagramStrategy/SimilarityDiagramStrategyProps';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
-import { ScatterChart } from 'components/simple/ChartComponent/ScatterChart';
+import {
+  ScatterChart,
+  ScatterTooltipItem,
+} from 'components/simple/ChartComponent/ScatterChart';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import SelectableInput from 'components/stateful/SelectableInputFactory/flavors/SelectableInput';
 import React from 'react';
@@ -81,6 +84,21 @@ const SimilarityDiagramStrategyView = ({
                       y: valueRange
                         ? { min: valueRange[0], max: valueRange[1] }
                         : undefined,
+                    },
+                    plugins: {
+                      tooltip: {
+                        callbacks: {
+                          beforeLabel: (anItem: ScatterTooltipItem): string => {
+                            const threshold = (anItem.raw as DiagramCoordinates)
+                              .threshold;
+                            if (typeof threshold === 'number') {
+                              return `Threshold: ${threshold.toPrecision(3)}`;
+                            } else {
+                              return anItem.formattedValue;
+                            }
+                          },
+                        },
+                      },
                     },
                   }}
                 />

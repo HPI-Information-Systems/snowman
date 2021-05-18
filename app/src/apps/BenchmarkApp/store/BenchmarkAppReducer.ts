@@ -8,13 +8,13 @@ import ConfigurationStoreReducer from 'apps/BenchmarkApp/store/ConfigurationStor
 import { BenchmarkAppActionsTypes } from 'apps/BenchmarkApp/types/BenchmarkAppActionsTypes';
 import {
   BenchmarkAppModel,
-  BenchmarkAppResourcesStore,
+  BenchmarkAppResourcesModel,
 } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ConfigurationStoreModel } from 'apps/BenchmarkApp/types/ConfigurationStoreModel';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import { SnowmanAction } from 'types/SnowmanAction';
 
-export const initialResourcesState: BenchmarkAppResourcesStore = {
+export const initialResourcesState: BenchmarkAppResourcesModel = {
   algorithms: [],
   datasets: [],
   experiments: [],

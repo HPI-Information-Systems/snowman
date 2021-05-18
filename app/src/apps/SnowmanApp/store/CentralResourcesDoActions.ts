@@ -2,6 +2,7 @@ import {
   deleteAlgorithm,
   deleteDataset,
   deleteExperiment,
+  deleteSimFunction,
   refreshCentralResources,
 } from 'apps/SnowmanApp/store/CentralResourcesActions';
 import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
@@ -17,3 +18,6 @@ export const doDeleteDataset = (id: number): Promise<void> =>
 
 export const doDeleteExperiment = (id: number): Promise<void> =>
   SnowmanAppDispatch(deleteExperiment(id));
+
+export const doDeleteSimFunction = (id: number): Promise<void> =>
+  SnowmanAppDispatch(deleteSimFunction(id));

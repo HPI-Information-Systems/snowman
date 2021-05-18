@@ -3,7 +3,7 @@ import { BinaryMetricsConfiguration } from 'apps/BenchmarkApp/components/Benchma
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
 import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { resolveExperimentEntity } from 'apps/BenchmarkApp/utils/experimentEntity';
+import { experimentEntityFromConfig } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { SnowmanAction } from 'types/SnowmanAction';
 
@@ -25,11 +25,11 @@ const BinaryMetricsStrategyReducer = (
     case BinaryMetricsStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
       const configuration = BinaryMetricsConfiguration.getValue(appStore);
-      const groundTruth = resolveExperimentEntity(
+      const groundTruth = experimentEntityFromConfig(
         configuration.groundTruth,
         appStore.resources
       );
-      const experiment = resolveExperimentEntity(
+      const experiment = experimentEntityFromConfig(
         configuration.experiment,
         appStore.resources
       );

@@ -1,10 +1,12 @@
 import { Experiment } from 'api';
 import { ExperimentDialogActionTypes } from 'apps/ExperimentDialog/types/ExperimentDialogActionTypes';
 import { ExperimentDialogModel } from 'apps/ExperimentDialog/types/ExperimentDialogModel';
+import { ExperimentSegmentTypeEnum } from 'apps/ExperimentDialog/types/ExperimentSegmentTypeEnum';
 import { CentralResourcesGenericActionsTypes } from 'apps/SnowmanApp/types/CentralResourcesGenericActionsTypes';
 import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 import { SnowmanAction } from 'types/SnowmanAction';
+import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
 const initialState: ExperimentDialogModel = {
   experimentName: '',
@@ -18,6 +20,7 @@ const initialState: ExperimentDialogModel = {
   expertise: undefined,
   hrAmount: undefined,
   runtime: undefined,
+  expandedSegments: [],
 };
 
 const ExperimentDialogReducer = (
@@ -97,6 +100,14 @@ const ExperimentDialogReducer = (
       return {
         ...state,
         hrAmount: action.payload as number | undefined,
+      };
+    case ExperimentDialogActionTypes.TOGGLE_SEGMENT_EXPANSION:
+      return {
+        ...state,
+        expandedSegments: toggleSelectionArrayMultipleSelect(
+          state.expandedSegments,
+          action.payload as ExperimentSegmentTypeEnum
+        ),
       };
     default:
       return state;

@@ -1,4 +1,3 @@
-import { DiagramCoordinates } from 'api/models/DiagramCoordinates';
 import { KPIDiagramConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
 import { initialResourcesState } from 'apps/BenchmarkApp/store/BenchmarkAppReducer';
 import {
@@ -12,8 +11,9 @@ import {
   KpiInvestigatorStrategyModel,
 } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { DiagramCoordinates } from 'apps/BenchmarkApp/types/DiagramCoordinates';
 import {
-  resolveExperimentEntity,
+  experimentEntityFromConfig,
   uniqueExperimentEntityKey,
 } from 'apps/BenchmarkApp/utils/experimentEntity';
 import produce from 'immer';
@@ -28,7 +28,7 @@ const initialState: KpiInvestigatorStrategyModel = {
   coordinates: {},
   valueRange: undefined,
   definitionRange: undefined,
-  xAxis: AllMetricsObject.Accuracy,
+  xAxis: AllMetricsObject.MultiplyEffort,
   yAxis: AllMetricsObject.F1Score,
   colorMode: KpiInvestigatorColorMode.BY_MATCHING_SOLUTION,
   configuration: {
@@ -42,10 +42,15 @@ const extractEntities = ({
   resources,
 }: KpiInvestigatorStrategyModel): [goldKey: string, exp: ExperimentEntity][] =>
   configuration.diagramTracks.flatMap((aTrack) => {
-    const goldEntity = resolveExperimentEntity(aTrack.groundTruth, resources);
+    const goldEntity = experimentEntityFromConfig(
+      aTrack.groundTruth,
+      resources
+    );
     const goldKey = groundTruthKey(goldEntity);
     return aTrack.experiments
-      .map((anExperiment) => resolveExperimentEntity(anExperiment, resources))
+      .map((anExperiment) =>
+        experimentEntityFromConfig(anExperiment, resources)
+      )
       .filter(
         (
           anEntity: ExperimentEntity | undefined

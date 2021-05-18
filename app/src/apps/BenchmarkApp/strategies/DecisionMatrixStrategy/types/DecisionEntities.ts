@@ -12,6 +12,7 @@ export interface DecisionEntities<Type> {
   doesExpand?: ExpansionTypes;
   expandedBy?: ExpansionTypes;
   inset?: boolean;
+  tooltip?: string;
 }
 
 export type DecisionRowAlgorithm = DecisionEntities<Algorithm>;

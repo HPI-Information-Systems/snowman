@@ -141,3 +141,23 @@
 .col-5px-padding {
   --ion-grid-column-padding: 5px;
 }
+
+@media print {
+  .doNotPrint {
+    display: none;
+  }
+}
+
+/* Prevent arrows on number inputs */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}

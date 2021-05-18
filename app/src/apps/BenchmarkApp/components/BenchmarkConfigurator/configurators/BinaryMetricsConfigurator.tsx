@@ -37,7 +37,7 @@ export const BinaryMetricsConfiguration = buildConfigurator([
           experiment: {
             configuration: StoreCacheKeyBaseEnum.experiment,
             position: 1,
-            heading: 'Select Ground Truth Experiment',
+            heading: 'Select Experiment',
           },
           simFunction: {
             configuration: StoreCacheKeyBaseEnum.similarityFunction,

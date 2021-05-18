@@ -14,6 +14,7 @@ import {
   SUCCESS_TO_DELETE_ALGORITHM,
   SUCCESS_TO_DELETE_DATASET,
   SUCCESS_TO_DELETE_EXPERIMENT,
+  SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION,
 } from 'structs/statusMessages';
 import { SnowmanAction } from 'types/SnowmanAction';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -136,4 +137,17 @@ export const deleteExperiment = (
         .deleteExperiment({ experimentId: id })
         .then((): Promise<void> => dispatch(refreshCentralResources())),
     SUCCESS_TO_DELETE_EXPERIMENT
+  );
+
+export const deleteSimFunction = (
+  id: number
+): SnowmanThunkAction<Promise<void>, SnowmanAppModel> => async (
+  dispatch: SnowmanDispatch<SnowmanAppModel>
+): Promise<void> =>
+  RequestHandler<void>(
+    () =>
+      new SimilarityThresholdsApi()
+        .deleteSimilarityThresholdFunction({ functionId: id })
+        .then((): Promise<void> => dispatch(refreshCentralResources())),
+    SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION
   );

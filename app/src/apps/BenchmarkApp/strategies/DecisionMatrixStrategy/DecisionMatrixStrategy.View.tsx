@@ -8,7 +8,7 @@ import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSub
 import EntityItem from 'components/simple/EntityItem/EntityItem';
 import { EntityItemType } from 'components/simple/EntityItem/EntityItemType';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
-import { chevronBack, chevronDown } from 'ionicons/icons';
+import { chevronDown, chevronUp } from 'ionicons/icons';
 import { renderToString } from 'katex';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -33,7 +33,7 @@ const DecisionMatrixStrategyView = ({
       <ErroneousBackdrop
         shouldShow={!isValidConfig}
         message={
-          'Please select at least a single matching solution and, optionally, an experiment each.'
+          'Please select at least a single matching solution and, optionally, experiments for each.'
         }
       />
       <IonCard>
@@ -86,12 +86,12 @@ const DecisionMatrixStrategyView = ({
                             {anEntity.doesExpand !== undefined ? (
                               expandedEntities.includes(anEntity.doesExpand) ? (
                                 <IonIcon
-                                  icon={chevronDown}
+                                  icon={chevronUp}
                                   className={styles.iconMiddlePadded}
                                 />
                               ) : (
                                 <IonIcon
-                                  icon={chevronBack}
+                                  icon={chevronDown}
                                   className={styles.iconMiddlePadded}
                                 />
                               )
@@ -102,6 +102,7 @@ const DecisionMatrixStrategyView = ({
                           (anAlgorithm, idx3): JSX.Element => (
                             <td
                               key={`matrix-${idx1}-row-initial-${idx2}-${idx3}`}
+                              data-tip={anEntity.tooltip}
                             >
                               {anEntity.selector
                                 ? anEntity.selector(anAlgorithm)

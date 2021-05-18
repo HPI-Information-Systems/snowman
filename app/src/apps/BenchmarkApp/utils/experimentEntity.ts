@@ -3,25 +3,31 @@ import {
   ExperimentConfigItem,
   SimilarityThresholdFunction,
 } from 'api';
-import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import {
+  BenchmarkAppModel,
+  BenchmarkAppResourcesModel,
+} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { ExperimentEntity } from 'types/ExperimentEntity';
 import { formatLargeNumber } from 'utils/formatLargeNumber';
 
 export function resolveExperimentEntity(
-  config: {
-    experiment: number[];
-    threshold: number[];
-    simFunction: number[];
+  {
+    experimentId,
+    funcId,
+    threshold,
+  }: {
+    experimentId?: number;
+    funcId?: number;
+    threshold?: number;
   },
-  resources: BenchmarkAppModel['resources']
+  resources: BenchmarkAppResourcesModel
 ): ExperimentEntity | undefined {
   const resolvedExperiment = resources.experiments.find(
-    (anExperiment: Experiment): boolean =>
-      anExperiment.id === config.experiment[0]
+    (anExperiment: Experiment): boolean => anExperiment.id === experimentId
   );
   const resolvedSimilarityFunction = resources.simFunctions.find(
     (aSimFunction: SimilarityThresholdFunction): boolean =>
-      aSimFunction.id === config.simFunction[0]
+      aSimFunction.id === funcId
   );
   if (resolvedExperiment !== undefined) {
     if (resolvedSimilarityFunction !== undefined) {
@@ -29,7 +35,7 @@ export function resolveExperimentEntity(
         experiment: resolvedExperiment,
         similarity: {
           func: resolvedSimilarityFunction,
-          threshold: config.threshold[0] ?? 0,
+          threshold: threshold ?? 0,
         },
       };
     } else {
@@ -40,6 +46,28 @@ export function resolveExperimentEntity(
   } else {
     return undefined;
   }
+}
+
+export function experimentEntityFromConfig(
+  {
+    experiment,
+    threshold,
+    simFunction,
+  }: {
+    experiment: number[];
+    threshold: number[];
+    simFunction: number[];
+  },
+  resources: BenchmarkAppModel['resources']
+): ExperimentEntity | undefined {
+  return resolveExperimentEntity(
+    {
+      experimentId: experiment[0],
+      threshold: threshold[0],
+      funcId: simFunction[0],
+    },
+    resources
+  );
 }
 
 export function experimentEntitiesEqual(
@@ -82,18 +110,15 @@ export function experimentEntityToExperimentConfigItem(
   }
 }
 
-export function stringifyExperimentEntity({
-  experiment,
-  similarity,
-}: ExperimentEntity): string {
-  return (
-    experiment.name +
-    (similarity
-      ? ` (${similarity.func.name} = ${formatLargeNumber(
-          similarity.threshold
-        )})`
-      : '')
-  );
+export function stringifyExperimentEntity(entity?: ExperimentEntity): string {
+  return entity
+    ? entity.experiment.name +
+        (entity.similarity
+          ? ` (${entity.similarity.func.name} = ${formatLargeNumber(
+              entity.similarity.threshold
+            )})`
+          : '')
+    : '';
 }
 
 export function uniqueExperimentEntityKey(entity: ExperimentEntity): string {

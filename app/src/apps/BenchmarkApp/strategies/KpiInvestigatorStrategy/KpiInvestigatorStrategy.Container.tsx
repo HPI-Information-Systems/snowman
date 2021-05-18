@@ -15,6 +15,7 @@ import {
 } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
 import { getMyColor } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/utils/colorGenerator';
 import { ScatterChartDataset } from 'components/simple/ChartComponent/ScatterChart';
+import { sortBy } from 'lodash';
 import { connect } from 'react-redux';
 import { AllMetricsEnum } from 'types/AllMetricsEnum';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
@@ -28,10 +29,11 @@ const mapStateToProps = (
       label: diagramTrack.name,
       backgroundColor: getMyColor(index, 0.7),
       borderColor: getMyColor(index),
-      data: diagramTrack.coordinates,
-      pointRadius: 3,
-      pointHoverRadius: 5,
+      data: sortBy(diagramTrack.coordinates.slice(), ({ x }) => x),
+      pointRadius: 4,
+      pointHoverRadius: 6,
       borderWidth: 1,
+      showLine: true,
     })
   ),
   xAxis: state.xAxis,

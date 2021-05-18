@@ -3,7 +3,7 @@ import { NMetricsConfiguration } from 'apps/BenchmarkApp/components/BenchmarkCon
 import { NMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyActionTypes';
 import { NMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/types/NMetricsStrategyModel';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
-import { resolveExperimentEntity } from 'apps/BenchmarkApp/utils/experimentEntity';
+import { experimentEntityFromConfig } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { ExperimentEntity } from 'types/ExperimentEntity';
 import { SnowmanAction } from 'types/SnowmanAction';
 
@@ -22,12 +22,12 @@ const NMetricsStrategyReducer = (
     case NMetricsStrategyActionTypes.UPDATE_CONFIG: {
       const appStore = action.payload as BenchmarkAppModel;
       const configuration = NMetricsConfiguration.getValue(appStore);
-      const groundTruth = resolveExperimentEntity(
+      const groundTruth = experimentEntityFromConfig(
         configuration.groundTruth,
         appStore.resources
       );
       const experiments = configuration.experiments
-        .map((config) => resolveExperimentEntity(config, appStore.resources))
+        .map((config) => experimentEntityFromConfig(config, appStore.resources))
         .filter(
           (entity: ExperimentEntity | undefined): entity is ExperimentEntity =>
             entity !== undefined

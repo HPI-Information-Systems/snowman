@@ -85,6 +85,7 @@ class GenericDialogView extends Component<GenericDialogProps> {
               {this.props.children({
                 entityId: this.props.entityId,
                 isAddDialog: this.props.isAddDialog,
+                centralResources: this.props.centralResources,
               })}
             </div>
           </div>
