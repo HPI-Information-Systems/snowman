@@ -121,6 +121,7 @@
 
 /* Tooltip */
 .tooltip-fixed {
+  z-index: 100000000 !important;
   max-width: 450px;
 }
 

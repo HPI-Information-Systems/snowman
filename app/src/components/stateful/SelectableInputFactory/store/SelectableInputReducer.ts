@@ -1,5 +1,5 @@
-import { SelectableInputActionTypes } from 'components/stateful/SelectableInput/types/SelectableInputActionTypes';
-import { SelectableInputModel } from 'components/stateful/SelectableInput/types/SelectableInputModel';
+import { SelectableInputActionTypes } from 'components/stateful/SelectableInputFactory/types/SelectableInputActionTypes';
+import { SelectableInputModel } from 'components/stateful/SelectableInputFactory/types/SelectableInputModel';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: SelectableInputModel = {

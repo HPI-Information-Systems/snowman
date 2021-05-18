@@ -8,9 +8,9 @@ import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSub
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import { chevronForwardOutline } from 'ionicons/icons';
 import { renderToString } from 'katex';
-import React, { useEffect } from 'react';
-import ReactTooltip from 'react-tooltip';
+import React from 'react';
 import { formatLargeNumber } from 'utils/formatLargeNumber';
+import useTooltip from 'utils/useTooltipHook';
 
 const NMetricsStrategyView = ({
   metrics,
@@ -18,10 +18,8 @@ const NMetricsStrategyView = ({
   inspectExperiment,
   isValidConfig,
 }: NMetricsStrategyProps): JSX.Element => {
-  useEffect(() => {
-    // Triggered on every component update!
-    ReactTooltip.rebuild();
-  });
+  useTooltip();
+
   return (
     <PageStruct
       pageTitle={StrategyIDs.NaryMetrics}
@@ -46,6 +44,7 @@ const NMetricsStrategyView = ({
                       color="primary"
                       className={styles.clickableContent}
                       onClick={(): void => inspectExperiment(anExperiment)}
+                      data-for="tooltip"
                       data-tip="Open BinaryMetrics Viewer for experiment."
                     >
                       {anExperiment.experiment.name +
@@ -72,6 +71,7 @@ const NMetricsStrategyView = ({
                 <tr key={'nmetrics-row-' + aMetric.name}>
                   <td>
                     <span
+                      data-for="tooltipAllowHtml"
                       data-tip={renderToString(aMetric.formula, {
                         throwOnError: false,
                         displayMode: true,
@@ -92,6 +92,7 @@ const NMetricsStrategyView = ({
                         )}-metric-${index}`}
                       >
                         <span
+                          data-for="tooltipAllowHtml"
                           data-tip={`${
                             metricsOfAnExperiment[index]?.value?.toString() ??
                             'divide by zero'

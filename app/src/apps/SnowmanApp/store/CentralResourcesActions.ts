@@ -5,6 +5,8 @@ import {
   DatasetsApi,
   Experiment,
   ExperimentsApi,
+  SimilarityThresholdFunction,
+  SimilarityThresholdsApi,
 } from 'api';
 import { CentralResourcesActionTypes } from 'apps/SnowmanApp/types/CentralResourcesActionTypes';
 import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
@@ -26,6 +28,7 @@ export const refreshCentralResources = (): SnowmanThunkAction<
     dispatch(getAlgorithms()).then(),
     dispatch(getDatasets()).then(),
     dispatch(getExperiments()).then(),
+    dispatch(getSimFunctions()).then(),
   ]).then();
 
 export const getAlgorithms = (): SnowmanThunkAction<
@@ -74,6 +77,23 @@ export const getExperiments = (): SnowmanThunkAction<
           dispatch({
             type: CentralResourcesActionTypes.STORE_EXPERIMENTS,
             payload: experiments,
+          })
+      )
+      .then()
+  );
+
+export const getSimFunctions = (): SnowmanThunkAction<
+  Promise<void>,
+  SnowmanAppModel
+> => async (dispatch: SnowmanDispatch<SnowmanAppModel>): Promise<void> =>
+  RequestHandler<void>(() =>
+    new SimilarityThresholdsApi()
+      .getSimilarityThresholdFunctions()
+      .then(
+        (functions: SimilarityThresholdFunction[]): SnowmanAction =>
+          dispatch({
+            type: CentralResourcesActionTypes.STORE_SIMFUNCTIONS,
+            payload: functions,
           })
       )
       .then()

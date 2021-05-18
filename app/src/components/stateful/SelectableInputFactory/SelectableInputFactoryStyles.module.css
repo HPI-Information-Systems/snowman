@@ -6,3 +6,12 @@
   max-height: 220px;
   overflow-y: scroll;
 }
+
+.openPopoverItem {
+  width: 100%;
+}
+
+.selectItemIcon {
+  margin-right: 0.5rem;
+  font-size: 1.3rem;
+}
