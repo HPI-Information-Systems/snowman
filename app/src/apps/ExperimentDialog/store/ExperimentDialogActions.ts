@@ -6,6 +6,7 @@ import {
 } from 'api';
 import { ExperimentDialogActionTypes } from 'apps/ExperimentDialog/types/ExperimentDialogActionTypes';
 import { ExperimentDialogModel } from 'apps/ExperimentDialog/types/ExperimentDialogModel';
+import { ExperimentSegmentTypeEnum } from 'apps/ExperimentDialog/types/ExperimentSegmentTypeEnum';
 import { showToast } from 'apps/SnowmanApp/store/ActionLogicActions';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
@@ -33,6 +34,14 @@ export const resetDialog = (): easyPrimitiveActionReturn<ExperimentDialogModel> 
     type: ExperimentDialogActionTypes.RESET_DIALOG,
     // payload is not used
     payload: false,
+  });
+
+export const toggleSegmentExpansion = (
+  aSegment: ExperimentSegmentTypeEnum
+): easyPrimitiveActionReturn<ExperimentDialogModel> =>
+  easyPrimitiveAction<ExperimentDialogModel>({
+    type: ExperimentDialogActionTypes.TOGGLE_SEGMENT_EXPANSION,
+    payload: aSegment,
   });
 
 export const changeExperimentName = (

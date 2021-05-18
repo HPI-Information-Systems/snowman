@@ -1,4 +1,5 @@
 import { Algorithm, Dataset } from 'api';
+import { ExperimentSegmentTypeEnum } from 'apps/ExperimentDialog/types/ExperimentSegmentTypeEnum';
 import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/DialogProps';
 import { ChangeEvent } from 'react';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
@@ -20,6 +21,7 @@ export interface ExperimentDialogDispatchProps {
   changeExpertise(event: IonRangeChangeEvent): void;
   changeHRAmount(event: IonChangeEvent): void;
   changeRuntime(event: IonChangeEvent): void;
+  toggleSegmentExpansion(aSegment: ExperimentSegmentTypeEnum): void;
 }
 
 export interface ExperimentDialogStateProps {
@@ -36,6 +38,7 @@ export interface ExperimentDialogStateProps {
   expertise: number | undefined;
   hrAmount: number | undefined;
   runtime: number | undefined;
+  expandedSegments: ExperimentSegmentTypeEnum[];
 }
 
 export type ExperimentDialogOwnProps = DialogProps;

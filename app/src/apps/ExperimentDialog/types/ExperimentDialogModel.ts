@@ -1,4 +1,5 @@
 import { Algorithm, Dataset } from 'api';
+import { ExperimentSegmentTypeEnum } from 'apps/ExperimentDialog/types/ExperimentSegmentTypeEnum';
 import experimentFileFormatEnum from 'types/ExperimentFileFormats';
 
 export interface ExperimentDialogModel {
@@ -13,4 +14,5 @@ export interface ExperimentDialogModel {
   hrAmount: number | undefined;
   expertise: number | undefined;
   runtime: number | undefined;
+  expandedSegments: ExperimentSegmentTypeEnum[];
 }

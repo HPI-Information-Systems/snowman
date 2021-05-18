@@ -15,11 +15,14 @@ import {
 import { Algorithm, Dataset } from 'api';
 import { ExperimentDialogProps } from 'apps/ExperimentDialog/ExperimentDialogProps';
 import styles from 'apps/ExperimentDialog/ExperimentDialogStyles.module.css';
+import { ExperimentSegmentTypeEnum } from 'apps/ExperimentDialog/types/ExperimentSegmentTypeEnum';
 import FileInput from 'components/simple/FileInput/FileInput';
 import SelectableInput from 'components/stateful/SelectableInput/SelectableInput';
 import {
   addCircleOutline,
   checkmarkCircleOutline,
+  chevronDown,
+  chevronUp,
   closeCircleOutline,
 } from 'ionicons/icons';
 import React from 'react';
@@ -52,6 +55,8 @@ const ExperimentDialogView = ({
   selectedAlgorithm,
   selectedDataset,
   selectedFiles,
+  expandedSegments,
+  toggleSegmentExpansion,
 }: ExperimentDialogProps): JSX.Element => (
   <>
     <IonList>
@@ -114,54 +119,88 @@ const ExperimentDialogView = ({
         </IonSelect>
       </IonItem>
 
-      <IonItemDivider>
+      <IonItemDivider
+        onClick={() =>
+          toggleSegmentExpansion(ExperimentSegmentTypeEnum.CONFIGURATION_EFFORT)
+        }
+      >
+        <IonIcon
+          icon={
+            expandedSegments.includes(
+              ExperimentSegmentTypeEnum.CONFIGURATION_EFFORT
+            )
+              ? chevronUp
+              : chevronDown
+          }
+          slot="end"
+        />
         <IonLabel>CONFIGURATION EFFORT:</IonLabel>
       </IonItemDivider>
+      {expandedSegments.includes(
+        ExperimentSegmentTypeEnum.CONFIGURATION_EFFORT
+      ) ? (
+        <>
+          <IonItem>
+            <IonLabel position="fixed">
+              Matching
+              <br /> Solution
+              <br /> Knowledge
+              <br /> Level %:
+            </IonLabel>
+            <IonRange
+              min={0}
+              max={100}
+              value={expertise}
+              color="primary"
+              onIonChange={changeExpertise}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="fixed">
+              Matching
+              <br /> Solution <br />
+              HR Amount:
+            </IonLabel>
+            <IonInput
+              type="number"
+              placeholder="0"
+              value={hrAmount}
+              onIonChange={changeHRAmount}
+            />
+            <span className={styles.inputUnit}>man-hr</span>
+          </IonItem>
+        </>
+      ) : null}
 
-      <IonItem>
-        <IonLabel position="fixed">
-          Matching
-          <br /> Solution
-          <br /> Knowledge
-          <br /> Level %:
-        </IonLabel>
-        <IonRange
-          min={0}
-          max={100}
-          value={expertise}
-          color="primary"
-          onIonChange={changeExpertise}
+      <IonItemDivider
+        onClick={() =>
+          toggleSegmentExpansion(ExperimentSegmentTypeEnum.OTHER_KPIS)
+        }
+      >
+        <IonIcon
+          icon={
+            expandedSegments.includes(ExperimentSegmentTypeEnum.OTHER_KPIS)
+              ? chevronUp
+              : chevronDown
+          }
+          slot="end"
         />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">
-          Matching
-          <br /> Solution <br />
-          HR Amount:
-        </IonLabel>
-        <IonInput
-          type="number"
-          placeholder="0"
-          value={hrAmount}
-          onIonChange={changeHRAmount}
-        />
-        <span className={styles.inputUnit}>man-hr</span>
-      </IonItem>
-
-      <IonItemDivider>
         <IonLabel>OTHER KPIS:</IonLabel>
       </IonItemDivider>
-
-      <IonItem>
-        <IonLabel position="fixed">Runtime: </IonLabel>
-        <IonInput
-          type="number"
-          placeholder="0"
-          value={runtime}
-          onIonChange={changeRuntime}
-        />
-        <span className={styles.inputUnit}>hr</span>
-      </IonItem>
+      {expandedSegments.includes(ExperimentSegmentTypeEnum.OTHER_KPIS) ? (
+        <>
+          <IonItem>
+            <IonLabel position="fixed">Runtime: </IonLabel>
+            <IonInput
+              type="number"
+              placeholder="0"
+              value={runtime}
+              onIonChange={changeRuntime}
+            />
+            <span className={styles.inputUnit}>hr</span>
+          </IonItem>
+        </>
+      ) : null}
 
       <IonItemDivider>
         <IonLabel>UPLOAD CONTENT</IonLabel>

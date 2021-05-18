@@ -15,8 +15,10 @@ import {
   changeHRAmount,
   changeRuntime,
   changeSelectedFiles,
+  toggleSegmentExpansion,
 } from 'apps/ExperimentDialog/store/ExperimentDialogActions';
 import { ExperimentDialogModel } from 'apps/ExperimentDialog/types/ExperimentDialogModel';
+import { ExperimentSegmentTypeEnum } from 'apps/ExperimentDialog/types/ExperimentSegmentTypeEnum';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { ChangeEvent } from 'react';
 import { connect } from 'react-redux';
@@ -60,6 +62,7 @@ const mapStateToProps = (
   expertise: state.expertise,
   hrAmount: state.hrAmount,
   runtime: state.runtime,
+  expandedSegments: state.expandedSegments,
 });
 
 const mapDispatchToProps = (
@@ -96,6 +99,9 @@ const mapDispatchToProps = (
     dispatch(changeHRAmount(parseFloat(event.detail.value as string))),
   changeRuntime: (event: IonChangeEvent) =>
     dispatch(changeRuntime(parseFloat(event.detail.value as string))),
+  toggleSegmentExpansion(aSegment: ExperimentSegmentTypeEnum) {
+    dispatch(toggleSegmentExpansion(aSegment));
+  },
 });
 
 const ExperimentDialogContainer = connect(
