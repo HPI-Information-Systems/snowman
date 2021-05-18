@@ -248,7 +248,10 @@ const updateDataset = (
     SUCCESS_TO_UPDATE_DATASET,
     true
   )
-    .then(() => dispatch(resetDialog()))
+    .then(() => {
+      dispatch(resetDialog());
+      doCloseDialog();
+    })
     .finally(() => {
       doRefreshCentralResources();
     });
