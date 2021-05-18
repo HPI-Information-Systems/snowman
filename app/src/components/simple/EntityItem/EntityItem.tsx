@@ -38,13 +38,13 @@ const mapStateToPropsOfEntityItem = assertType<
       openItem: () => doOpenDialog(ViewIDs.ExperimentDialog, ownProps.itemId),
       name: experiment?.name ?? '',
       tooltip: experiment
-        ? `<b><u>${sanitize(experiment.name)}</u></b>` +
-          '<br />' +
+        ? `<b><i>${sanitize(experiment.name)}</i></b>` +
+          '<p />' +
           sanitize(experiment.description) +
           '<p />' +
-          `Dataset: ${sanitize(dataset?.name) ?? '?'}` +
+          `<b>Dataset:</b> ${sanitize(dataset?.name) ?? '?'}` +
           '<br />' +
-          `Algorithm: ${sanitize(algorithm?.name) ?? '?'}`
+          `<b>Algorithm:</b> ${sanitize(algorithm?.name) ?? '?'}`
         : '',
     };
   },
@@ -57,8 +57,8 @@ const mapStateToPropsOfEntityItem = assertType<
       openItem: () => doOpenDialog(ViewIDs.DatasetDialog, ownProps.itemId),
       name: dataset?.name ?? '',
       tooltip: dataset
-        ? `<b><u>${sanitize(dataset.name)}</u></b>` +
-          '<br />' +
+        ? `<b><i>${sanitize(dataset.name)}</i></b>` +
+          '<p />' +
           sanitize(dataset.description)
         : '',
     };
@@ -72,8 +72,8 @@ const mapStateToPropsOfEntityItem = assertType<
       openItem: () => doOpenDialog(ViewIDs.AlgorithmDialog, ownProps.itemId),
       name: algorithm?.name ?? '',
       tooltip: algorithm
-        ? `<b><u>${sanitize(algorithm.name)}</u></b>` +
-          '<br />' +
+        ? `<b><i>${sanitize(algorithm.name)}</i></b>` +
+          '<p />' +
           sanitize(algorithm.description)
         : '',
     };
@@ -92,9 +92,9 @@ const mapStateToPropsOfEntityItem = assertType<
         doOpenDialog(ViewIDs.FunctionBuilderDialog, ownProps.itemId),
       name: func?.name ?? '',
       tooltip: func
-        ? `<b><u>${sanitize(func.name)}</u></b>` +
+        ? `<b><i>${sanitize(func.name)}</i></b>` +
           '<p />' +
-          `Experiment: ${sanitize(experiment?.name) ?? '?'}`
+          `<b>Experiment:</b> ${sanitize(experiment?.name) ?? '?'}`
         : '',
     };
   },
