@@ -6,7 +6,7 @@ import { DecisionSegments } from 'apps/BenchmarkApp/strategies/DecisionMatrixStr
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
-import { chevronBack, chevronDown, create } from 'ionicons/icons';
+import { chevronDown, chevronForward, create } from 'ionicons/icons';
 import { renderToString } from 'katex';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -94,7 +94,7 @@ const DecisionMatrixStrategyView = ({
                                 />
                               ) : (
                                 <IonIcon
-                                  icon={chevronBack}
+                                  icon={chevronForward}
                                   className={styles.iconMiddlePadded}
                                 />
                               )
