@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 import styles from 'apps/AlgorithmDialog/AlgorithmDialog.module.css';
 import { AlgorithmDialogProps } from 'apps/AlgorithmDialog/AlgorithmDialogProps';
-import { SegmentTypeEnum } from 'apps/AlgorithmDialog/types/SegmentTypeEnum';
+import { AlgorithmSegmentTypeEnum } from 'apps/AlgorithmDialog/types/AlgorithmSegmentTypeEnum';
 import TextMultiSelect from 'components/simple/TextMultiSelect/TextMultiSelect';
 import {
   addCircleOutline,
@@ -86,12 +86,14 @@ const AlgorithmDialogView = ({
 
       <IonItemDivider
         onClick={() =>
-          toggleSegmentExpansion(SegmentTypeEnum.INTEGRATION_EFFORT)
+          toggleSegmentExpansion(AlgorithmSegmentTypeEnum.INTEGRATION_EFFORT)
         }
       >
         <IonIcon
           icon={
-            expandedSegments.includes(SegmentTypeEnum.INTEGRATION_EFFORT)
+            expandedSegments.includes(
+              AlgorithmSegmentTypeEnum.INTEGRATION_EFFORT
+            )
               ? chevronUp
               : chevronDown
           }
@@ -99,7 +101,9 @@ const AlgorithmDialogView = ({
         />
         <IonLabel>INTEGRATION EFFORT</IonLabel>
       </IonItemDivider>
-      {expandedSegments.includes(SegmentTypeEnum.INTEGRATION_EFFORT) ? (
+      {expandedSegments.includes(
+        AlgorithmSegmentTypeEnum.INTEGRATION_EFFORT
+      ) ? (
         <>
           <IonItem>
             <IonLabel position="fixed">
@@ -133,12 +137,14 @@ const AlgorithmDialogView = ({
 
       <IonItemDivider
         onClick={() =>
-          toggleSegmentExpansion(SegmentTypeEnum.CONFIGURATION_EFFORT)
+          toggleSegmentExpansion(AlgorithmSegmentTypeEnum.CONFIGURATION_EFFORT)
         }
       >
         <IonIcon
           icon={
-            expandedSegments.includes(SegmentTypeEnum.CONFIGURATION_EFFORT)
+            expandedSegments.includes(
+              AlgorithmSegmentTypeEnum.CONFIGURATION_EFFORT
+            )
               ? chevronUp
               : chevronDown
           }
@@ -146,7 +152,9 @@ const AlgorithmDialogView = ({
         />
         <IonLabel>CONFIGURATION EFFORT</IonLabel>
       </IonItemDivider>
-      {expandedSegments.includes(SegmentTypeEnum.CONFIGURATION_EFFORT) ? (
+      {expandedSegments.includes(
+        AlgorithmSegmentTypeEnum.CONFIGURATION_EFFORT
+      ) ? (
         <>
           <IonItem>
             <IonLabel position="fixed">
@@ -210,11 +218,13 @@ const AlgorithmDialogView = ({
       ) : null}
 
       <IonItemDivider
-        onClick={() => toggleSegmentExpansion(SegmentTypeEnum.ENVIRONMENT_KPIS)}
+        onClick={() =>
+          toggleSegmentExpansion(AlgorithmSegmentTypeEnum.ENVIRONMENT_KPIS)
+        }
       >
         <IonIcon
           icon={
-            expandedSegments.includes(SegmentTypeEnum.ENVIRONMENT_KPIS)
+            expandedSegments.includes(AlgorithmSegmentTypeEnum.ENVIRONMENT_KPIS)
               ? chevronUp
               : chevronDown
           }
@@ -222,7 +232,7 @@ const AlgorithmDialogView = ({
         />
         <IonLabel>ENVIRONMENT KPIs</IonLabel>
       </IonItemDivider>
-      {expandedSegments.includes(SegmentTypeEnum.ENVIRONMENT_KPIS) ? (
+      {expandedSegments.includes(AlgorithmSegmentTypeEnum.ENVIRONMENT_KPIS) ? (
         <>
           <IonItem>
             <IonLabel position="fixed">
@@ -261,11 +271,13 @@ const AlgorithmDialogView = ({
       ) : null}
 
       <IonItemDivider
-        onClick={() => toggleSegmentExpansion(SegmentTypeEnum.OTHER_KPIS)}
+        onClick={() =>
+          toggleSegmentExpansion(AlgorithmSegmentTypeEnum.OTHER_KPIS)
+        }
       >
         <IonIcon
           icon={
-            expandedSegments.includes(SegmentTypeEnum.OTHER_KPIS)
+            expandedSegments.includes(AlgorithmSegmentTypeEnum.OTHER_KPIS)
               ? chevronUp
               : chevronDown
           }
@@ -273,7 +285,7 @@ const AlgorithmDialogView = ({
         />
         <IonLabel>OTHER KPIs</IonLabel>
       </IonItemDivider>
-      {expandedSegments.includes(SegmentTypeEnum.OTHER_KPIS) ? (
+      {expandedSegments.includes(AlgorithmSegmentTypeEnum.OTHER_KPIS) ? (
         <>
           <IonItem>
             <IonLabel position="fixed">

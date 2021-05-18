@@ -1,6 +1,6 @@
 import { AlgorithmDialogActionTypes } from 'apps/AlgorithmDialog/types/AlgorithmDialogActionTypes';
 import { AlgorithmDialogModel } from 'apps/AlgorithmDialog/types/AlgorithmDialogModel';
-import { SegmentTypeEnum } from 'apps/AlgorithmDialog/types/SegmentTypeEnum';
+import { AlgorithmSegmentTypeEnum } from 'apps/AlgorithmDialog/types/AlgorithmSegmentTypeEnum';
 import { CentralResourcesGenericActionsTypes } from 'apps/SnowmanApp/types/CentralResourcesGenericActionsTypes';
 import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
 import { uniq } from 'lodash';
@@ -167,7 +167,7 @@ const AlgorithmDialogReducer = (
         ...state,
         expandedSegments: toggleSelectionArrayMultipleSelect(
           state.expandedSegments,
-          action.payload as SegmentTypeEnum
+          action.payload as AlgorithmSegmentTypeEnum
         ),
       };
     default:
