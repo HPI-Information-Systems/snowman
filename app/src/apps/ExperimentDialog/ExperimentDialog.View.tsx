@@ -123,7 +123,7 @@ const ExperimentDialogView = ({
           Matching
           <br /> Solution
           <br /> Knowledge
-          <br /> Level:
+          <br /> Level %:
         </IonLabel>
         <IonRange
           min={0}
@@ -145,6 +145,7 @@ const ExperimentDialogView = ({
           value={hrAmount}
           onIonChange={changeHRAmount}
         />
+        <span className={styles.inputUnit}>man-hr</span>
       </IonItem>
 
       <IonItemDivider>
@@ -152,13 +153,14 @@ const ExperimentDialogView = ({
       </IonItemDivider>
 
       <IonItem>
-        <IonLabel position="fixed">Runtime </IonLabel>
+        <IonLabel position="fixed">Runtime: </IonLabel>
         <IonInput
           type="number"
           placeholder="0"
           value={runtime}
           onIonChange={changeRuntime}
         />
+        <span className={styles.inputUnit}>hr</span>
       </IonItem>
 
       <IonItemDivider>

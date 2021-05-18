@@ -22,7 +22,8 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
   {
     title: 'General Costs',
     selector: (anEntity) =>
-      anEntity.softKPIs?.integrationEffort?.generalCosts?.toString() ?? '?',
+      (anEntity.softKPIs?.integrationEffort?.generalCosts?.toString() ?? '?') +
+      ' €',
   },
   {
     title: 'Deployment Type',
@@ -53,8 +54,8 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
     title: 'HR Amount',
     inset: true,
     selector: (anEntity) =>
-      anEntity.softKPIs?.integrationEffort?.installationEffort?.hrAmount?.toString() ??
-      '?',
+      (anEntity.softKPIs?.integrationEffort?.installationEffort?.hrAmount?.toString() ??
+        '?') + ' man-hr',
     expandedBy: ExpansionTypes.InstallationEffort,
   },
 ];
@@ -84,8 +85,8 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
     title: 'HR Amount',
     inset: true,
     selector: (anEntity) =>
-      anEntity.softKPIs?.configurationEffort?.matchingSolution?.hrAmount?.toString() ??
-      '?',
+      (anEntity.softKPIs?.configurationEffort?.matchingSolution?.hrAmount?.toString() ??
+        '?') + ' man-hr',
     expandedBy: ExpansionTypes.MatchingSolutionEffort,
   },
   {
@@ -112,8 +113,8 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
     title: 'HR Amount',
     inset: true,
     selector: (anEntity) =>
-      anEntity.softKPIs?.configurationEffort?.domain?.hrAmount?.toString() ??
-      '?',
+      (anEntity.softKPIs?.configurationEffort?.domain?.hrAmount?.toString() ??
+        '?') + ' man-hr',
     expandedBy: ExpansionTypes.DomainEffort,
   },
   {

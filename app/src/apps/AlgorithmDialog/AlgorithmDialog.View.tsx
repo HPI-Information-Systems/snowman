@@ -85,7 +85,7 @@ const AlgorithmDialogView = ({
       <IonItem>
         <IonLabel position="fixed">
           Installation <br /> Knowledge
-          <br /> Level:
+          <br /> Level %:
         </IonLabel>
         <IonRange
           min={0}
@@ -107,6 +107,7 @@ const AlgorithmDialogView = ({
           value={integrationInstallationEffortHRAmount}
           onIonChange={changeIntegrationInstallationEffortHRAmount}
         />
+        <span className={styles.inputUnit}>man-hr</span>
       </IonItem>
       <IonItemDivider>
         <IonLabel>CONFIGURATION EFFORT</IonLabel>
@@ -117,7 +118,7 @@ const AlgorithmDialogView = ({
           Matching
           <br /> Solution
           <br /> Knowledge
-          <br /> Level:
+          <br /> Level %:
         </IonLabel>
         <IonRange
           min={0}
@@ -139,13 +140,14 @@ const AlgorithmDialogView = ({
           value={configurationMatchingSolutionEffortHRAmount}
           onIonChange={changeConfigurationMatchingSolutionEffortHRAmount}
         />
+        <span className={styles.inputUnit}>man-hr</span>
       </IonItem>
 
       <IonItem>
         <IonLabel position="fixed">
           Domain
           <br /> Knowledge
-          <br /> Level:
+          <br /> Level %:
         </IonLabel>
         <IonRange
           min={0}
@@ -167,6 +169,7 @@ const AlgorithmDialogView = ({
           value={configurationDomainEffortHRAmount}
           onIonChange={changeConfigurationDomainEffortHRAmount}
         />
+        <span className={styles.inputUnit}>man-hr</span>
       </IonItem>
 
       <IonItemDivider>
@@ -242,6 +245,7 @@ const AlgorithmDialogView = ({
           type="number"
           step="1"
         />
+        <span className={styles.inputUnit}>€</span>
       </IonItem>
     </IonList>
     <div className={style(styles.center, styles.buttonRow)}>
