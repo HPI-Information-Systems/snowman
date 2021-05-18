@@ -1,6 +1,7 @@
 import SimilarityFuncsDialogView from 'apps/SimilarityFuncsDialog/SimilarityFuncsDialog.View';
 import {
   SimilarityFuncsDialogDispatchProps,
+  SimilarityFuncsDialogOwnProps,
   SimilarityFuncsDialogStateProps,
 } from 'apps/SimilarityFuncsDialog/SimilarityFuncsDialogProps';
 import { changeSearchString } from 'apps/SimilarityFuncsDialog/store/SimilarityFuncsDialogActions';
@@ -12,10 +13,13 @@ import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { ViewIDs } from 'types/ViewIDs';
 
 const mapStateToProps = (
-  state: SimilarityFuncsDialogModel
+  state: SimilarityFuncsDialogModel,
+  ownProps: SimilarityFuncsDialogOwnProps
 ): SimilarityFuncsDialogStateProps => ({
   searchString: state.searchString,
-  similarityThresholdFuncs: state.similarityFuncs,
+  similarityThresholdFuncs: ownProps.centralResources.simFunctions.filter(
+    (aFunction): boolean => aFunction.experimentId === ownProps.entityId
+  ),
 });
 
 const mapDispatchToProps = (
