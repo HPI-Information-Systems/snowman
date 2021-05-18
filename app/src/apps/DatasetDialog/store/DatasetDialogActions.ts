@@ -212,9 +212,9 @@ const addDataset = (): SnowmanThunkAction<
       dispatch(createDataset()).then((id) => {
         return getState().datasetType === DatasetTypes.full
           ? dispatch(uploadDatasetFile(id)).catch((error) =>
-              RequestHandler(() =>
-                new DatasetsApi().deleteDataset({ datasetId: id })
-              ).finally(() => Promise.reject(error))
+              new DatasetsApi()
+                .deleteDataset({ datasetId: id })
+                .finally(() => Promise.reject(error))
             )
           : Promise.resolve();
       }),

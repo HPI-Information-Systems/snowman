@@ -225,9 +225,9 @@ const addExperiment = (): SnowmanThunkAction<
     () =>
       dispatch(createExperiment()).then((id) =>
         dispatch(uploadExperimentFile(id)).catch((error) =>
-          RequestHandler(() =>
-            new ExperimentsApi().deleteExperiment({ experimentId: id })
-          ).then(() => Promise.reject(error))
+          new ExperimentsApi()
+            .deleteExperiment({ experimentId: id })
+            .finally(() => Promise.reject(error))
         )
       ),
     SUCCESS_TO_CREATE_NEW_EXPERIMENT,
