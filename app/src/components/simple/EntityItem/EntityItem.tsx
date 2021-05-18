@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { assertType } from 'snowman-library';
 import { ViewIDs } from 'types/ViewIDs';
 import GenericStoreComponentFactory from 'utils/GenericStoreComponentFactory';
+import { sanitize } from 'utils/sanitizeHtml';
 
 type MapStateToProps = (
   state: SnowmanAppModel,
@@ -35,13 +36,13 @@ const mapStateToPropsOfEntityItem = assertType<
       openItem: () => doOpenDialog(ViewIDs.ExperimentDialog, ownProps.itemId),
       name: experiment?.name ?? '',
       tooltip: experiment
-        ? experiment.name +
-          '\n' +
-          experiment.description +
-          '\n\n' +
-          `Dataset: ${dataset?.name ?? '?'}` +
-          '\n' +
-          `Algorithm: ${algorithm?.name ?? '?'}`
+        ? `<b><u>${sanitize(experiment.name)}</u></b>` +
+          '<br />' +
+          sanitize(experiment.description) +
+          '<p />' +
+          `Dataset: ${sanitize(dataset?.name) ?? '?'}` +
+          '<br />' +
+          `Algorithm: ${sanitize(algorithm?.name) ?? '?'}`
         : '',
     };
   },
@@ -53,7 +54,11 @@ const mapStateToPropsOfEntityItem = assertType<
     return {
       openItem: () => doOpenDialog(ViewIDs.DatasetDialog, ownProps.itemId),
       name: dataset?.name ?? '',
-      tooltip: dataset ? dataset.name + '\n' + dataset.description : '',
+      tooltip: dataset
+        ? `<b><u>${sanitize(dataset.name)}</u></b>` +
+          '<br />' +
+          sanitize(dataset.description)
+        : '',
     };
   },
 
@@ -64,7 +69,11 @@ const mapStateToPropsOfEntityItem = assertType<
     return {
       openItem: () => doOpenDialog(ViewIDs.AlgorithmDialog, ownProps.itemId),
       name: algorithm?.name ?? '',
-      tooltip: algorithm ? algorithm.name + '\n' + algorithm.description : '',
+      tooltip: algorithm
+        ? `<b><u>${sanitize(algorithm.name)}</u></b>` +
+          '<br />' +
+          sanitize(algorithm.description)
+        : '',
     };
   },
 
@@ -81,7 +90,9 @@ const mapStateToPropsOfEntityItem = assertType<
         doOpenDialog(ViewIDs.FunctionBuilderDialog, ownProps.itemId),
       name: func?.name ?? '',
       tooltip: func
-        ? func.name + '\n' + `Experiment: ${experiment?.name ?? '?'}`
+        ? `<b><u>${sanitize(func.name)}</u></b>` +
+          '<p />' +
+          `Experiment: ${sanitize(experiment?.name) ?? '?'}`
         : '',
     };
   },
