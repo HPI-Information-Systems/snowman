@@ -140,7 +140,7 @@ export const DecisionSegments: DecisionSegmentEntity<any>[] = [
     children: ContinuousEffort,
   },
   {
-    title: 'Average Metrics',
+    title: 'Macro Average Metrics',
     children: [],
   },
 ];
