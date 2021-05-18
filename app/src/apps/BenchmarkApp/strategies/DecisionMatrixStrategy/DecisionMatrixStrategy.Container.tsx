@@ -7,10 +7,8 @@ import {
 import { toggleExpansion } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/store/DecisionMatrixStrategyActions';
 import { DecisionMatrixStrategyModel } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/DecisionMatrixStrategyModel';
 import { ExpansionTypes } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/ExpansionTypes';
-import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
-import { ViewIDs } from 'types/ViewIDs';
 
 const mapStateToProps = (
   state: DecisionMatrixStrategyModel
@@ -26,9 +24,6 @@ const mapStateToProps = (
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch<DecisionMatrixStrategyModel>
 ): DecisionMatrixStrategyDispatchProps => ({
-  editAlgorithm: (id: number) => {
-    doOpenDialog(ViewIDs.AlgorithmDialog, id);
-  },
   toggleExpansion: (aType: ExpansionTypes) => {
     dispatch(toggleExpansion(aType));
   },

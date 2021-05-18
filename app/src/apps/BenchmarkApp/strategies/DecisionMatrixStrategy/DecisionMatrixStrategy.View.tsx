@@ -10,21 +10,17 @@ import { EntityItemType } from 'components/simple/EntityItem/EntityItemType';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import { chevronDown, chevronUp } from 'ionicons/icons';
 import { renderToString } from 'katex';
-import React, { useEffect } from 'react';
-import ReactTooltip from 'react-tooltip';
+import React from 'react';
+import useTooltip from 'utils/useTooltipHook';
 
 const DecisionMatrixStrategyView = ({
   isValidConfig,
   selectedAlgorithms,
   averageMetrics,
-  editAlgorithm,
   expandedEntities,
   toggleExpansion,
 }: DecisionMatrixStrategyProps): JSX.Element => {
-  useEffect(() => {
-    // Triggered on every component update!
-    ReactTooltip.rebuild();
-  });
+  useTooltip();
   return (
     <PageStruct
       pageTitle={StrategyIDs.KpiDecisionMatrix}
