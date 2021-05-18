@@ -1,15 +1,17 @@
-import { IonCard, IonIcon, IonText } from '@ionic/react';
+import { IonCard, IonText } from '@ionic/react';
 import { Metric } from 'api';
 import { NMetricsStrategyProps } from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMetricsStrategyStyles.module.css';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
-import { uniqueExperimentEntityKey } from 'apps/BenchmarkApp/utils/experimentEntity';
+import {
+  experimentEntityToExperimentConfigItem,
+  uniqueExperimentEntityKey,
+} from 'apps/BenchmarkApp/utils/experimentEntity';
 import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
-import { chevronForwardOutline } from 'ionicons/icons';
+import ExperimentConfigItem from 'components/simple/ExperimentConfigItem/ExperimentConfigItem';
 import { renderToString } from 'katex';
 import React from 'react';
-import { formatLargeNumber } from 'utils/formatLargeNumber';
 import useTooltip from 'utils/useTooltipHook';
 
 const NMetricsStrategyView = ({
@@ -36,28 +38,22 @@ const NMetricsStrategyView = ({
         <table className={styles.materialTable}>
           <thead>
             <tr>
-              <th>Metric Name</th>
+              <th style={{ paddingTop: '2rem', fontSize: '1rem' }}>
+                Metric Name
+              </th>
               {experiments.map(
                 (anExperiment): JSX.Element => (
                   <th key={uniqueExperimentEntityKey(anExperiment)}>
                     <IonText
-                      color="primary"
                       className={styles.clickableContent}
                       onClick={(): void => inspectExperiment(anExperiment)}
                       data-for="tooltip"
                       data-tip="Open BinaryMetrics Viewer for experiment."
                     >
-                      {anExperiment.experiment.name +
-                        (anExperiment.similarity
-                          ? ` (${
-                              anExperiment.similarity.func.name
-                            } = ${formatLargeNumber(
-                              anExperiment.similarity.threshold
-                            )})`
-                          : '')}
-                      <IonIcon
-                        icon={chevronForwardOutline}
-                        className={styles.iconMiddlePadded}
+                      <ExperimentConfigItem
+                        {...experimentEntityToExperimentConfigItem(
+                          anExperiment
+                        )}
                       />
                     </IonText>
                   </th>
