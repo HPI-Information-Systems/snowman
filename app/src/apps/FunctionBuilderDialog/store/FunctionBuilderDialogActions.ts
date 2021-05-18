@@ -15,6 +15,7 @@ import {
   LeftRightCellContent,
   MidCellContent,
 } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { max, nth } from 'lodash';
@@ -46,15 +47,17 @@ const createSimilarityThresholdFunction = (): SnowmanThunkAction<
   _: SnowmanDispatch<FunctionBuilderDialogModel>,
   getState: () => FunctionBuilderDialogModel
 ): void => {
-  RequestHandler<number>(
-    (): Promise<number> =>
-      new SimilarityThresholdsApi().addSimilarityThresholdFunction({
-        similarityThresholdFunction: {
-          name: getState().functionName,
-          experimentId: getExperimentId(),
-          definition: getState().functionBuildingStack.getFunctionDefinition(),
-        },
-      }),
+  RequestHandler<void>(
+    (): Promise<void> =>
+      new SimilarityThresholdsApi()
+        .addSimilarityThresholdFunction({
+          similarityThresholdFunction: {
+            name: getState().functionName,
+            experimentId: getExperimentId(),
+            definition: getState().functionBuildingStack.getFunctionDefinition(),
+          },
+        })
+        .then(() => doRefreshCentralResources()),
     SUCCESS_TO_CREATE_NEW_SIMILARITY_THRESHOLD_FUNCTION,
     true
   )
@@ -72,14 +75,16 @@ const updateSimilarityThresholdFunction = (
 ): void => {
   RequestHandler<void>(
     (): Promise<void> =>
-      new SimilarityThresholdsApi().setSimilarityThresholdFunction({
-        functionId: functionId,
-        similarityThresholdFunction: {
-          name: getState().functionName,
-          definition: getState().functionBuildingStack.getFunctionDefinition(),
-          experimentId: getExperimentId(),
-        },
-      }),
+      new SimilarityThresholdsApi()
+        .setSimilarityThresholdFunction({
+          functionId: functionId,
+          similarityThresholdFunction: {
+            name: getState().functionName,
+            definition: getState().functionBuildingStack.getFunctionDefinition(),
+            experimentId: getExperimentId(),
+          },
+        })
+        .then((): Promise<void> => doRefreshCentralResources()),
     SUCCESS_TO_UPDATE_SIMILARITY_THRESHOLD_FUNCTION,
     true
   ).then((): void => doCloseDialog());
