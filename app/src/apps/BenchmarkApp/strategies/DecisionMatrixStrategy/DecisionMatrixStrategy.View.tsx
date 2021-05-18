@@ -1,12 +1,14 @@
-import { IonCard, IonIcon, IonText } from '@ionic/react';
+import { IonCard, IonIcon } from '@ionic/react';
 import { Metric } from 'api';
 import { DecisionMatrixStrategyProps } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyProps';
 import styles from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/DecisionMatrixStrategyStyles.module.css';
 import { DecisionSegments } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/structs/DecisionSegments';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/PageStruct/PageStruct';
+import EntityItem from 'components/simple/EntityItem/EntityItem';
+import { EntityItemType } from 'components/simple/EntityItem/EntityItemType';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
-import { chevronBack, chevronDown, create } from 'ionicons/icons';
+import { chevronBack, chevronDown } from 'ionicons/icons';
 import { renderToString } from 'katex';
 import React, { useEffect } from 'react';
 import ReactTooltip from 'react-tooltip';
@@ -41,20 +43,14 @@ const DecisionMatrixStrategyView = ({
               <th>Categories</th>
               {selectedAlgorithms.map(
                 (anAlgorithm): JSX.Element => (
-                  <th key={`matrix-header-${anAlgorithm.id}`}>
-                    <IonText
-                      color="primary"
-                      onClick={(): void => editAlgorithm(anAlgorithm.id)}
-                      className={styles.clickableContent}
-                      data-for="tooltip"
-                      data-tip="Edit this matching solution's properties."
-                    >
-                      {anAlgorithm.name}
-                      <IonIcon
-                        icon={create}
-                        className={styles.iconMiddlePadded}
-                      />
-                    </IonText>
+                  <th
+                    key={`matrix-header-${anAlgorithm.id}`}
+                    style={{ padding: 0 }}
+                  >
+                    <EntityItem
+                      itemType={EntityItemType.MATCHING_SOLUTION}
+                      itemId={anAlgorithm.id}
+                    />
                   </th>
                 )
               )}
