@@ -1,18 +1,18 @@
 import {
   IonCol,
   IonGrid,
+  IonIcon,
   IonItem,
-  IonLabel,
   IonRow,
   IonText,
 } from '@ionic/react';
 import { Experiment } from 'api';
 import ExperimentCard from 'apps/ExperimentsApp/components/ExperimentCard/ExperimentCard';
 import { ExperimentsAppProps } from 'apps/ExperimentsApp/ExperimentsAppProps';
-import styles from 'apps/ExperimentsApp/ExperimentsAppStyles.module.css';
 import AddFab from 'components/simple/GenericFab/AddFab';
 import AlgorithmSelectableInput from 'components/stateful/SelectableInputFactory/flavors/AlgorithmSelectableInput';
 import DatasetSelectableInput from 'components/stateful/SelectableInputFactory/flavors/DatasetSelectableInput';
+import { filter } from 'ionicons/icons';
 import React from 'react';
 import { getAlgorithmNameFromId } from 'utils/algorithmHelpers';
 import { getDatasetNameFromId } from 'utils/datasetHelper';
@@ -33,9 +33,7 @@ const ExperimentsAppView = ({
         <IonRow>
           <IonCol size="12" sizeLg="6">
             <IonItem>
-              <IonLabel position="fixed" className={styles.filterLabel}>
-                Filter by <br /> Dataset
-              </IonLabel>
+              <IonIcon icon={filter} slot="start" size="small" />
               <DatasetSelectableInput
                 selection={selectedDatasets}
                 onChange={changeSelectedDatasets}
@@ -46,10 +44,7 @@ const ExperimentsAppView = ({
           </IonCol>
           <IonCol size="12" sizeLg="6">
             <IonItem>
-              <IonLabel position="fixed" className={styles.filterLabel}>
-                Filter by <br /> Matching <br />
-                Solution
-              </IonLabel>
+              <IonIcon icon={filter} slot="start" size="small" />
               <AlgorithmSelectableInput
                 selection={selectedAlgorithms}
                 onChange={changeSelectedAlgorithms}
