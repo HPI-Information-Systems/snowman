@@ -1,6 +1,7 @@
 import { Algorithm, Dataset, Experiment } from 'api';
 import { CentralResourcesActionTypes } from 'apps/SnowmanApp/types/CentralResourcesActionTypes';
 import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
+import { sortBy } from 'lodash';
 import { SnowmanAction } from 'types/SnowmanAction';
 
 const initialState: CentralResourcesModel = {
@@ -17,18 +18,27 @@ const CentralResourcesReducer = (
     case CentralResourcesActionTypes.STORE_ALGORITHMS:
       return {
         ...state,
-        algorithms: action.payload as Algorithm[],
+        algorithms: sortBy((action.payload as Algorithm[]).slice(), [
+          (anAlgorithm) => anAlgorithm.id,
+        ]),
       };
     case CentralResourcesActionTypes.STORE_DATASETS:
       return {
         ...state,
-        datasets: action.payload as Dataset[],
+        datasets: sortBy((action.payload as Dataset[]).slice(), [
+          (aDataset) => aDataset.id * -1,
+        ]),
       };
     case CentralResourcesActionTypes.STORE_EXPERIMENTS:
       return {
         ...state,
-        experiments: action.payload as Experiment[],
+        experiments: sortBy((action.payload as Experiment[]).slice(), [
+          (anExperiment) => anExperiment.datasetId * -1,
+          (anExperiment) => anExperiment.algorithmId * -1,
+          (anExperiment) => anExperiment.id,
+        ]),
       };
+    // Todo: sort simFunctions
     default:
       return state;
   }
