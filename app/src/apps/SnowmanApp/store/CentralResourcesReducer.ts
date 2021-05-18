@@ -1,4 +1,9 @@
-import { Algorithm, Dataset, Experiment } from 'api';
+import {
+  Algorithm,
+  Dataset,
+  Experiment,
+  SimilarityThresholdFunction,
+} from 'api';
 import { CentralResourcesActionTypes } from 'apps/SnowmanApp/types/CentralResourcesActionTypes';
 import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
 import { SnowmanAction } from 'types/SnowmanAction';
@@ -7,6 +12,7 @@ const initialState: CentralResourcesModel = {
   algorithms: [],
   datasets: [],
   experiments: [],
+  simFunctions: [],
 };
 
 const CentralResourcesReducer = (
@@ -28,6 +34,11 @@ const CentralResourcesReducer = (
       return {
         ...state,
         experiments: action.payload as Experiment[],
+      };
+    case CentralResourcesActionTypes.STORE_SIMFUNCTIONS:
+      return {
+        ...state,
+        simFunctions: action.payload as SimilarityThresholdFunction[],
       };
     default:
       return state;
