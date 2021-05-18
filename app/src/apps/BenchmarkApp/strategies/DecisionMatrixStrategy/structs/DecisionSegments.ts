@@ -5,6 +5,9 @@ import {
 } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/DecisionEntities';
 import { ExpansionTypes } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/ExpansionTypes';
 
+const TooltipEffortPointsManhattanDistance =
+  'Effort points (EP) are calculated based upon the unweighted Manhattan distance of both base values.';
+
 export const InitialEffort: DecisionRowAlgorithm[] = [
   {
     title: 'Matching Solution Type',
@@ -36,6 +39,7 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
         )
         ?.value.toString() ?? '?') + ' EP',
     doesExpand: ExpansionTypes.InstallationEffort,
+    tooltip: TooltipEffortPointsManhattanDistance,
   },
   {
     title: 'Expertise',
@@ -66,6 +70,7 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
         )
         ?.value.toString() ?? '?') + ' EP',
     doesExpand: ExpansionTypes.MatchingSolutionEffort,
+    tooltip: TooltipEffortPointsManhattanDistance,
   },
   {
     title: 'Expertise',
@@ -93,6 +98,7 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
         )
         ?.value.toString() ?? '?') + ' EP',
     doesExpand: ExpansionTypes.DomainEffort,
+    tooltip: TooltipEffortPointsManhattanDistance,
   },
   {
     title: 'Expertise',

@@ -105,6 +105,7 @@ const DecisionMatrixStrategyView = ({
                           (anAlgorithm, idx3): JSX.Element => (
                             <td
                               key={`matrix-${idx1}-row-initial-${idx2}-${idx3}`}
+                              data-tip={anEntity.tooltip}
                             >
                               {anEntity.selector
                                 ? anEntity.selector(anAlgorithm)
