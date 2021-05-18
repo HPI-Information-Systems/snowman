@@ -1,6 +1,7 @@
 import { SimilarityThresholdFunction, SimilarityThresholdsApi } from 'api';
 import { SimilarityFuncsDialogActionTypes } from 'apps/SimilarityFuncsDialog/types/SimilarityFuncsDialogActionTypes';
 import { SimilarityFuncsDialogModel } from 'apps/SimilarityFuncsDialog/types/SimilarityFuncsDilaogModel';
+import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { head } from 'lodash';
 import { MagicNotPossibleId } from 'structs/constants';
@@ -81,7 +82,10 @@ export const deleteSimilarityThresholdFunction = (
         functionId: functionId,
       }),
     SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION
-  ).then(
-    (): Promise<void> => dispatch(getSimilarityThresholdFunctions(experimentId))
-  );
+  )
+    .then(
+      (): Promise<void> =>
+        dispatch(getSimilarityThresholdFunctions(experimentId))
+    )
+    .then(() => doRefreshCentralResources());
 };

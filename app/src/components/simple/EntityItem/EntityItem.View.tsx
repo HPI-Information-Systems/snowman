@@ -19,7 +19,7 @@ const EntityItemView = ({
     <IonItem
       color="clear"
       lines="none"
-      className={styles.lessPaddingLeft}
+      className={styles.lessPadding}
       data-for="tooltip"
       data-tip={tooltip}
     >

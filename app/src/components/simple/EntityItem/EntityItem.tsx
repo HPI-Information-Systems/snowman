@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-concat */
 import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { SnowmanAppMagistrate } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { SnowmanAppModel } from 'apps/SnowmanApp/types/SnowmanAppModel';
@@ -34,7 +35,9 @@ const mapStateToPropsOfEntityItem = assertType<
       openItem: () => doOpenDialog(ViewIDs.ExperimentDialog, ownProps.itemId),
       name: experiment?.name ?? '',
       tooltip: experiment
-        ? experiment.description +
+        ? experiment.name +
+          '\n' +
+          experiment.description +
           '\n\n' +
           `Dataset: ${dataset?.name ?? '?'}` +
           '\n' +
@@ -50,7 +53,7 @@ const mapStateToPropsOfEntityItem = assertType<
     return {
       openItem: () => doOpenDialog(ViewIDs.DatasetDialog, ownProps.itemId),
       name: dataset?.name ?? '',
-      tooltip: dataset?.description ?? '',
+      tooltip: dataset ? dataset.name + '\n' + dataset.description : '',
     };
   },
 
@@ -61,7 +64,7 @@ const mapStateToPropsOfEntityItem = assertType<
     return {
       openItem: () => doOpenDialog(ViewIDs.AlgorithmDialog, ownProps.itemId),
       name: algorithm?.name ?? '',
-      tooltip: algorithm?.description ?? '',
+      tooltip: algorithm ? algorithm.name + '\n' + algorithm.description : '',
     };
   },
 
@@ -77,7 +80,9 @@ const mapStateToPropsOfEntityItem = assertType<
       openItem: () =>
         doOpenDialog(ViewIDs.FunctionBuilderDialog, ownProps.itemId),
       name: func?.name ?? '',
-      tooltip: func ? `Experiment: ${experiment?.name ?? '?'}` : '',
+      tooltip: func
+        ? func.name + '\n' + `Experiment: ${experiment?.name ?? '?'}`
+        : '',
     };
   },
 });
