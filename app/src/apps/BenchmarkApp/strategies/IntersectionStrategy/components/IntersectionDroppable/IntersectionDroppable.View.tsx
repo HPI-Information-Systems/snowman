@@ -1,8 +1,6 @@
 import { IonChip, IonCol, IonGrid, IonLabel, IonRow } from '@ionic/react';
 import { IntersectionDroppableProps } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/components/IntersectionDroppable/IntersectionDroppableProps';
 import {
-  experimentConfigItemsEqual,
-  experimentEntityToExperimentConfigItem,
   stringifyExperimentEntity,
   uniqueExperimentEntityKey,
 } from 'apps/BenchmarkApp/utils/experimentEntity';
@@ -50,18 +48,7 @@ const IntersectionDroppableView = ({
             outline={false}
             key={uniqueExperimentEntityKey(anExperiment)}
           >
-            <IonLabel>
-              {stringifyExperimentEntity(anExperiment)} (
-              {
-                (pairCounts.find(([entity]) =>
-                  experimentConfigItemsEqual(
-                    entity,
-                    experimentEntityToExperimentConfigItem(anExperiment)
-                  )
-                ) ?? [undefined, 'unknown'])[1]
-              }
-              )
-            </IonLabel>
+            <IonLabel>{stringifyExperimentEntity(anExperiment)}</IonLabel>
           </IonChip>
         </IonCol>
       </IonRow>
