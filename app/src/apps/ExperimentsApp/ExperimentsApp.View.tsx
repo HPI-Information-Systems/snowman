@@ -4,10 +4,9 @@ import {
   IonItem,
   IonLabel,
   IonRow,
-  IonSelectOption,
   IonText,
 } from '@ionic/react';
-import { Algorithm, Experiment } from 'api';
+import { Experiment } from 'api';
 import ExperimentCard from 'apps/ExperimentsApp/components/ExperimentCard/ExperimentCard';
 import { ExperimentsAppProps } from 'apps/ExperimentsApp/ExperimentsAppProps';
 import AddFab from 'components/simple/GenericFab/AddFab';
@@ -51,16 +50,6 @@ const ExperimentsAppView = ({
                 allOptions={algorithms}
                 allowMultiselect={false}
               />
-              {algorithms.map(
-                (anAlgorithm: Algorithm): JSX.Element => (
-                  <IonSelectOption
-                    key={`filter_algorithms_${anAlgorithm.id}`}
-                    value={anAlgorithm.id.toString()}
-                  >
-                    {anAlgorithm.name}
-                  </IonSelectOption>
-                )
-              )}
             </IonItem>
           </IonCol>
         </IonRow>
