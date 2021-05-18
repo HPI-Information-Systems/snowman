@@ -22,10 +22,9 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
       anEntity.softKPIs?.integrationEffort?.generalCosts?.toString() ?? '?',
   },
   {
-    title: 'Installation Time',
+    title: 'Deployment Type',
     selector: (anEntity) =>
-      (anEntity.softKPIs?.integrationEffort?.deploymentType?.join(', ') ??
-        '?') + ' h',
+      anEntity.softKPIs?.integrationEffort?.deploymentType?.join(', ') ?? '?',
   },
   {
     title: 'Installation Effort',
