@@ -14,15 +14,27 @@ class GenericBenchmarkStrategyView extends Component<GenericBenchmarkStrategyPro
     this.store = props.createStrategyStore();
   }
 
+  componentDidMount(): void {
+    if (
+      this.props.loadStrategyData &&
+      this.props.activeStrategy === this.props.strategyId
+    ) {
+      this.props.loadStrategyData(this.store.dispatch, this.props.appStore);
+    }
+  }
+
   componentDidUpdate(prevProps: Readonly<GenericBenchmarkStrategyProps>): void {
-    if (this.props.loadStrategyData) {
-      if (
-        (prevProps.activeStrategy !== this.props.strategyId &&
-          this.props.activeStrategy === this.props.strategyId) ||
-        (this.props.activeStrategy === this.props.strategyId &&
-          !isEqual(prevProps.appStore, this.props.appStore))
-      ) {
-        // If (strategy became active just now) or (is active and has properties updated)
+    if (
+      this.props.loadStrategyData &&
+      this.props.activeStrategy === this.props.strategyId
+    ) {
+      const strategyJustBecameActive =
+        prevProps.activeStrategy !== this.props.strategyId;
+      const propertiesUpdated = !isEqual(
+        prevProps.appStore,
+        this.props.appStore
+      );
+      if (strategyJustBecameActive || propertiesUpdated) {
         this.props.loadStrategyData(this.store.dispatch, this.props.appStore);
       }
     }
