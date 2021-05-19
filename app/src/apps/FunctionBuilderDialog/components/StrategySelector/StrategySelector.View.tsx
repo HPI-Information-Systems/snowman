@@ -1,5 +1,6 @@
 import { IonChip, IonSelect, IonSelectOption } from '@ionic/react';
 import { SimilarityThresholdFunctionDefinitionTypeEnum } from 'api';
+import { StrategyDisplayNames } from 'apps/FunctionBuilderDialog/components/StrategySelector/StrategyDisplayNames';
 import { StrategySelectorProps } from 'apps/FunctionBuilderDialog/components/StrategySelector/StrategySelectorProps';
 import { FunctionBuildingBlockType } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
 import React from 'react';
@@ -20,13 +21,8 @@ const StrategySelectorView = ({
       >
         {Object.keys(SimilarityThresholdFunctionDefinitionTypeEnum)
           .sort()
-          // Rename SimilarityThreshold
-          .map((aValue) =>
-            aValue ===
-            SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold
-              ? 'DatasetColumn'
-              : aValue
-          )
+          // Rename enum values
+          .map((aValue) => StrategyDisplayNames[aValue])
           .map(
             (anOperatorType: string): JSX.Element => (
               <IonSelectOption value={anOperatorType} key={anOperatorType}>
