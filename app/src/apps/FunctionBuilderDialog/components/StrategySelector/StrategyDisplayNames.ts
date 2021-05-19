@@ -4,7 +4,7 @@ export const StrategyDisplayNames: Record<
   string,
   SimilarityThresholdFunctionDefinitionTypeEnum
 > = {
-  'Dataset Column':
+  'Similarity Column':
     SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
   'Binary Operator': SimilarityThresholdFunctionDefinitionTypeEnum.Operator,
   'Unary Operator': SimilarityThresholdFunctionDefinitionTypeEnum.UnaryOperator,
