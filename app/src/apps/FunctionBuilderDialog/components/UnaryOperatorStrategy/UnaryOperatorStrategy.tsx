@@ -33,6 +33,7 @@ const UnaryOperatorStrategy = ({
               selection[0] ?? null
             )
           }
+          instanceDescriptor={`UnaryOperatorStrategy-${blockAccessKey}`}
         />
         (
       </IonChip>
