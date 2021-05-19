@@ -13,7 +13,6 @@ import {
   IonRow,
   IonTextarea,
 } from '@ionic/react';
-import { useInstanceDescriptor } from 'apps/BenchmarkApp/utils/useInstanceDescriptor';
 import { DatasetDialogProps } from 'apps/DatasetDialog/DatasetDialogProps';
 import styles from 'apps/DatasetDialog/DatasetDialogStyles.module.css';
 import FileInput from 'components/simple/FileInput/FileInput';
@@ -79,7 +78,7 @@ const DatasetDialogView = ({
         <IonItem>
           <IonLabel position="fixed">Contents:</IonLabel>
           <SelectableInput
-            instanceDescriptor={useInstanceDescriptor()}
+            instanceDescriptor={'DatasetDialogView-DatasetType'}
             allOptions={Object.values(DatasetTypes)}
             allowMultiselect={false}
             onChange={(selection) => changeDatasetType(selection[0])}
@@ -175,6 +174,7 @@ const DatasetDialogView = ({
         suggestions={tags}
         content={selectedTags}
         onChange={changeTags}
+        instanceDescriptor="DatasetDialogView-DomainSelector"
       />
     </div>
     <div className={style(styles.center, styles.buttonRow)}>

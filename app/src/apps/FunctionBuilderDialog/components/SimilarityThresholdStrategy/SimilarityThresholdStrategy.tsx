@@ -1,5 +1,4 @@
 import { IonChip } from '@ionic/react';
-import { useInstanceDescriptor } from 'apps/BenchmarkApp/utils/useInstanceDescriptor';
 import { StrategyMapperForwardProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
 import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
 import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogModel';
@@ -21,7 +20,7 @@ const SimilarityThresholdStrategy = ({
   return (
     <IonChip outline>
       <SelectableInput
-        instanceDescriptor={useInstanceDescriptor()}
+        instanceDescriptor={`SimilarityThresholdStrategy-${blockAccessKey}`}
         allOptions={availableThresholdValues}
         selection={typeof thresholdValue === 'string' ? [thresholdValue] : []}
         allowMultiselect={false}

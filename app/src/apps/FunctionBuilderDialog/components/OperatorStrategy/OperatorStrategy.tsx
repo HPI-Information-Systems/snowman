@@ -1,6 +1,5 @@
 import { IonChip } from '@ionic/react';
 import { SimilarityThresholdFunctionOperatorOperatorEnum } from 'api';
-import { useInstanceDescriptor } from 'apps/BenchmarkApp/utils/useInstanceDescriptor';
 import styles from 'apps/FunctionBuilderDialog/components/OperatorStrategy/OperatorStrategyStyles.module.css';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
 import { StrategyMapperForwardProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
@@ -44,7 +43,7 @@ const OperatorStrategy = ({
           allOptions={Object.values(
             SimilarityThresholdFunctionOperatorOperatorEnum
           )}
-          instanceDescriptor={useInstanceDescriptor()}
+          instanceDescriptor={`OperatorStrategy-${blockAccessKey}`}
         />
       </IonChip>
       <div className={styles.container}>
