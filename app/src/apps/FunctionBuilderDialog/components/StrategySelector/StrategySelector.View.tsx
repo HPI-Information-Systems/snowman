@@ -21,12 +21,10 @@ const StrategySelectorView = ({
       >
         {Object.keys(SimilarityThresholdFunctionDefinitionTypeEnum)
           .sort()
-          // Rename enum values
-          .map((aValue) => StrategyDisplayNames[aValue])
           .map(
             (anOperatorType: string): JSX.Element => (
               <IonSelectOption value={anOperatorType} key={anOperatorType}>
-                {anOperatorType}
+                {StrategyDisplayNames[anOperatorType]}
               </IonSelectOption>
             )
           )}
