@@ -24,7 +24,7 @@ const StrategySelectorView = ({
           .map(
             (anOperatorType: string): JSX.Element => (
               <IonSelectOption value={anOperatorType} key={anOperatorType}>
-                {StrategyDisplayNames[anOperatorType]}
+                {StrategyDisplayNames[anOperatorType] ?? anOperatorType}
               </IonSelectOption>
             )
           )}
