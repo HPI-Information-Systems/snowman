@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as proc from 'child_process';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import path from 'path';
 import { argv } from 'process';
 import { URL } from 'url';
@@ -89,6 +89,16 @@ function createWindow() {
   showLauncherPage();
 }
 
+function loadURL(url: string) {
+  mainWindow.loadURL(url);
+  mainWindow.webContents.on('new-window', (e, loadedUrl) => {
+    if (new URL(loadedUrl).host !== new URL(url).host) {
+      e.preventDefault();
+      shell.openExternal(loadedUrl);
+    }
+  });
+}
+
 ipcMain.on('open_benchmark', (_: unknown, url: string) => {
   if (!initOccured) {
     if (url === 'init_local()') {
@@ -97,7 +107,7 @@ ipcMain.on('open_benchmark', (_: unknown, url: string) => {
         port: 8123,
         path: '/api',
       }).then(() => {
-        mainWindow.loadURL('http://localhost:8123');
+        loadURL('http://localhost:8123');
       });
     } else {
       url = baseURL(url);
@@ -107,7 +117,7 @@ ipcMain.on('open_benchmark', (_: unknown, url: string) => {
           .get(url + '/api/identify')
           .then((response) => {
             if (response.status === 200 && response.data === identifyResponse) {
-              mainWindow.loadURL(url);
+              loadURL(url);
             } else {
               show404Page();
             }
