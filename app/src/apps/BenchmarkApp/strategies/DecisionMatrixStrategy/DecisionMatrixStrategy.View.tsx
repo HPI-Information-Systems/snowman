@@ -44,7 +44,7 @@ const DecisionMatrixStrategyView = ({
                     style={{ padding: 0 }}
                   >
                     <EntityItem
-                      itemType={EntityItemType.MATCHING_SOLUTION}
+                      itemType={EntityItemType.ALGORITHM}
                       itemId={anAlgorithm.id}
                     />
                   </th>

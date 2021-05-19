@@ -12,5 +12,5 @@ export const algorithmCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   keyBase: StoreCacheKeyBaseEnum.algorithm,
   targetCache: () => 'algorithms',
   getEntities: (state) => state.resources.algorithms,
-  itemType: () => EntityItemType.MATCHING_SOLUTION,
+  itemType: () => EntityItemType.ALGORITHM,
 });

@@ -33,7 +33,7 @@ export const filterCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   itemType: (key, targetCache) => {
     switch (targetCache) {
       case 'algorithms':
-        return EntityItemType.MATCHING_SOLUTION;
+        return EntityItemType.ALGORITHM;
       case 'datasets':
         return EntityItemType.DATASET;
       case 'experiments':
