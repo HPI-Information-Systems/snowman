@@ -44,7 +44,7 @@ const SimilarityDiagramStrategyView = ({
         <IonRow>
           <IonCol size="6">
             <IonItem>
-              <IonLabel>Y Axis Metric:</IonLabel>
+              <IonLabel position="fixed">Y Axis Metric:</IonLabel>
               <SelectableInput
                 allOptions={Object.values(MetricsEnum)}
                 selection={[yAxis]}
@@ -56,7 +56,7 @@ const SimilarityDiagramStrategyView = ({
           </IonCol>
           <IonCol size="6">
             <IonItem>
-              <IonLabel>X Axis Metric:</IonLabel>
+              <IonLabel position="fixed">X Axis Metric:</IonLabel>
               <SelectableInput
                 allOptions={Object.values(MetricsEnum)}
                 selection={[xAxis]}

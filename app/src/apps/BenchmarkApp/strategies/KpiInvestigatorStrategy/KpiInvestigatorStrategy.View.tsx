@@ -54,7 +54,7 @@ const KpiInvestigatorStrategyView = ({
         <IonRow>
           <IonCol size="4">
             <IonItem>
-              <IonLabel>X Axis Metric:</IonLabel>
+              <IonLabel position="fixed">X Axis Metric:</IonLabel>
               <SelectableInput
                 allOptions={metrics}
                 selection={[xAxis]}
@@ -66,7 +66,7 @@ const KpiInvestigatorStrategyView = ({
           </IonCol>
           <IonCol size="4">
             <IonItem>
-              <IonLabel>Y Axis Metric:</IonLabel>
+              <IonLabel position="fixed">Y Axis Metric:</IonLabel>
               <SelectableInput
                 allOptions={metrics}
                 selection={[yAxis]}
@@ -78,7 +78,7 @@ const KpiInvestigatorStrategyView = ({
           </IonCol>
           <IonCol size="4">
             <IonItem>
-              <IonLabel>Group By:</IonLabel>
+              <IonLabel position="fixed">Group By:</IonLabel>
               <SelectableInput
                 allOptions={Object.values(KpiInvestigatorColorMode)}
                 selection={[colorMode]}
