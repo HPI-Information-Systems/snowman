@@ -1,10 +1,12 @@
 import { SimilarityThresholdFunctionDefinitionTypeEnum } from 'api';
 
-export const StrategyDisplayNames: Record<string, string> = {
-  [SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold]:
-    'Dataset Column',
-  [SimilarityThresholdFunctionDefinitionTypeEnum.Operator]: 'Binary Operator',
-  [SimilarityThresholdFunctionDefinitionTypeEnum.UnaryOperator]:
-    'Unary Operator',
-  [SimilarityThresholdFunctionDefinitionTypeEnum.Constant]: 'Constant',
+export const StrategyDisplayNames: Record<
+  string,
+  SimilarityThresholdFunctionDefinitionTypeEnum
+> = {
+  'Dataset Column':
+    SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+  'Binary Operator': SimilarityThresholdFunctionDefinitionTypeEnum.Operator,
+  'Unary Operator': SimilarityThresholdFunctionDefinitionTypeEnum.UnaryOperator,
+  Constant: SimilarityThresholdFunctionDefinitionTypeEnum.Constant,
 };

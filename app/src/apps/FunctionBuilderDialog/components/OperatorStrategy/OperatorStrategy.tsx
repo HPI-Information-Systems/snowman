@@ -1,14 +1,15 @@
-import { IonChip, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonChip } from '@ionic/react';
 import { SimilarityThresholdFunctionOperatorOperatorEnum } from 'api';
+import { useInstanceDescriptor } from 'apps/BenchmarkApp/utils/useInstanceDescriptor';
 import styles from 'apps/FunctionBuilderDialog/components/OperatorStrategy/OperatorStrategyStyles.module.css';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
 import { StrategyMapperForwardProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
 import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
 import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogModel';
 import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import SelectableInput from 'components/stateful/SelectableInputFactory/flavors/SelectableInput';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { IonChangeEvent } from 'types/IonChangeEvent';
 
 const OperatorStrategy = ({
   blockAccessKey,
@@ -28,30 +29,23 @@ const OperatorStrategy = ({
         />
       </div>
       <IonChip className={styles.chip}>
-        <IonSelect
-          placeholder="?"
-          value={operator}
-          onIonChange={(event: IonChangeEvent): void =>
-            FunctionBuildingBlockMagistrate.setMidValue(
-              blockAccessKey,
-              event.detail
-                .value as SimilarityThresholdFunctionOperatorOperatorEnum
-            )
-          }
-        >
-          {Object.values(SimilarityThresholdFunctionOperatorOperatorEnum).map(
-            (anOperator: string): JSX.Element => (
-              <IonSelectOption
-                key={anOperator}
-                value={
-                  anOperator as SimilarityThresholdFunctionOperatorOperatorEnum
-                }
-              >
-                {anOperator}
-              </IonSelectOption>
-            )
+        <SelectableInput
+          selection={typeof operator === 'string' ? [operator] : []}
+          onChange={(selection) => {
+            const operator = selection[0];
+            if (operator !== undefined) {
+              FunctionBuildingBlockMagistrate.setMidValue(
+                blockAccessKey,
+                operator as SimilarityThresholdFunctionOperatorOperatorEnum
+              );
+            }
+          }}
+          allowMultiselect={false}
+          allOptions={Object.values(
+            SimilarityThresholdFunctionOperatorOperatorEnum
           )}
-        </IonSelect>
+          instanceDescriptor={useInstanceDescriptor()}
+        />
       </IonChip>
       <div className={styles.container}>
         <StrategyMapper

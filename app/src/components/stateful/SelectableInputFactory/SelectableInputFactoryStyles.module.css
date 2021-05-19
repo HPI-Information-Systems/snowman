@@ -10,6 +10,7 @@
 
 .openPopoverItem {
   width: 100%;
+  --background: transparent !important;
 }
 
 .selectItemIcon {

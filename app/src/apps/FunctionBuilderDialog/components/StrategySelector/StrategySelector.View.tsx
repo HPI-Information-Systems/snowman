@@ -1,36 +1,30 @@
-import { IonChip, IonSelect, IonSelectOption } from '@ionic/react';
-import { SimilarityThresholdFunctionDefinitionTypeEnum } from 'api';
+import { IonChip } from '@ionic/react';
+import { useInstanceDescriptor } from 'apps/BenchmarkApp/utils/useInstanceDescriptor';
 import { StrategyDisplayNames } from 'apps/FunctionBuilderDialog/components/StrategySelector/StrategyDisplayNames';
 import { StrategySelectorProps } from 'apps/FunctionBuilderDialog/components/StrategySelector/StrategySelectorProps';
-import { FunctionBuildingBlockType } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import SelectableInput from 'components/stateful/SelectableInputFactory/flavors/SelectableInput';
 import React from 'react';
-import { IonChangeEvent } from 'types/IonChangeEvent';
 
 const StrategySelectorView = ({
   chosenStrategyType,
   setStrategyType,
 }: StrategySelectorProps): JSX.Element => (
-  <>
-    <IonChip color="danger">
-      <IonSelect
-        value={chosenStrategyType}
-        onIonChange={(event: IonChangeEvent): void =>
-          setStrategyType(event.detail.value as FunctionBuildingBlockType)
+  <IonChip color="danger">
+    <SelectableInput
+      selection={
+        typeof chosenStrategyType === 'string' ? [chosenStrategyType] : []
+      }
+      allOptions={Object.keys(StrategyDisplayNames)}
+      allowMultiselect={false}
+      onChange={(selection) => {
+        const functionBuildingBlockType = selection[0];
+        if (functionBuildingBlockType !== undefined) {
+          setStrategyType(StrategyDisplayNames[functionBuildingBlockType]);
         }
-        placeholder="?"
-      >
-        {Object.keys(SimilarityThresholdFunctionDefinitionTypeEnum)
-          .sort()
-          .map(
-            (anOperatorType: string): JSX.Element => (
-              <IonSelectOption value={anOperatorType} key={anOperatorType}>
-                {StrategyDisplayNames[anOperatorType] ?? anOperatorType}
-              </IonSelectOption>
-            )
-          )}
-      </IonSelect>
-    </IonChip>
-  </>
+      }}
+      instanceDescriptor={useInstanceDescriptor()}
+    />
+  </IonChip>
 );
 
 export default StrategySelectorView;
