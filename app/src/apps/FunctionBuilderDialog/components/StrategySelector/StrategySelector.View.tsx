@@ -20,6 +20,13 @@ const StrategySelectorView = ({
       >
         {Object.keys(SimilarityThresholdFunctionDefinitionTypeEnum)
           .sort()
+          // Rename SimilarityThreshold
+          .map((aValue) =>
+            aValue ===
+            SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold
+              ? 'DatasetColumn'
+              : aValue
+          )
           .map(
             (anOperatorType: string): JSX.Element => (
               <IonSelectOption value={anOperatorType} key={anOperatorType}>
