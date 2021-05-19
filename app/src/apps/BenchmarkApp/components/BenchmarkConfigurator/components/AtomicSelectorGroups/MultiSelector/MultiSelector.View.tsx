@@ -7,9 +7,9 @@ import { MultiSelectorProps } from 'apps/BenchmarkApp/components/BenchmarkConfig
 import styles from 'apps/BenchmarkApp/components/BenchmarkConfigurator/components/AtomicSelectorGroups/MultiSelector/MultiSelectorStyles.module.css';
 import { createCacheKey } from 'apps/BenchmarkApp/store/ConfigurationStore/MultiSelectorActions';
 import { addCircle, closeCircleOutline } from 'ionicons/icons';
-import React, { useEffect } from 'react';
-import ReactTooltip from 'react-tooltip';
+import React from 'react';
 import style from 'theme/style';
+import useTooltip from 'utils/useTooltipHook';
 
 const MultiSelectorView = ({
   ids,
@@ -17,10 +17,7 @@ const MultiSelectorView = ({
   remove,
   cacheKey,
 }: MultiSelectorProps): JSX.Element => {
-  useEffect(() => {
-    // Triggered on every component update!
-    ReactTooltip.rebuild();
-  });
+  useTooltip();
   return (
     <IonItem
       className={style(
