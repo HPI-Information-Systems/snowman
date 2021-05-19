@@ -1,4 +1,5 @@
 import { getCacheKeyAndFilter } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys';
+import { SearchableEntity } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/cacheKeysAndFilters/types';
 import {
   EntityInputDispatchProps,
   EntityInputOwnProps,
@@ -20,7 +21,10 @@ const mapStateToProps = (
   ownProps: EntityInputOwnProps
 ): EntityInputStateProps<EntityItemType> => {
   const cacheKeyAndFilter = getCacheKeyAndFilter(ownProps.cacheKey);
-  const filterEntities = cacheKeyAndFilter.filter?.filterAvailableEntities;
+  const filterEntities = cacheKeyAndFilter.filter?.filterAvailableEntities as (
+    state: BenchmarkAppModel,
+    availableEntities: Record<number, SearchableEntity>
+  ) => SearchableEntity[];
   let availableEntities = cacheKeyAndFilter.getEntities(state);
   if (filterEntities) {
     availableEntities = filterEntities(state, availableEntities);
@@ -31,10 +35,10 @@ const mapStateToProps = (
       : [getSingleItem(ownProps.cacheKey, state)]
   );
   return {
-    selectedEntities: availableEntities.filter((anEntity): boolean =>
-      selectedIds.has(anEntity.id)
-    ),
-    entities: availableEntities,
+    selectedEntities: Object.values(
+      availableEntities
+    ).filter((anEntity): boolean => selectedIds.has(anEntity.id)),
+    entities: Object.values(availableEntities),
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     itemType: cacheKeyAndFilter.itemType!(),
   };

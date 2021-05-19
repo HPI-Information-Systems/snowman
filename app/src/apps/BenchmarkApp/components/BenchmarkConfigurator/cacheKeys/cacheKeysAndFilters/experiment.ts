@@ -19,7 +19,7 @@ export const experimentCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.experiment,
   targetCache: () => 'experiments',
-  getEntities: (state) => state.resources.experiments,
+  getEntities: (state) => state.resources.experimentsMap,
   filter: {
     dependsOn: (dataset) => [datasetCacheKeyAndFilter(dataset).cacheKey],
     viewFilters: () => [filterCacheKeyAndFilter('algorithms').cacheKey],
@@ -33,7 +33,8 @@ export const experimentCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
           )[])[0],
         ],
         entityToFilteredEntity: (experimentId) =>
-          resolveEntity(experimentId, state.resources.experiments)?.datasetId,
+          resolveEntity(experimentId, state.resources.experimentsMap)
+            ?.datasetId,
       });
     },
     filterAvailableEntities: (state, experiments, dependsOn, viewFilters) => {
@@ -42,7 +43,7 @@ export const experimentCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
       const algorithmFilter =
         state.config.algorithms[serializeCacheKey(viewFilters[0])]?.targets ??
         [];
-      return experiments.filter(
+      return Object.values(experiments).filter(
         ({ datasetId, algorithmId }) =>
           datasetFilter === datasetId &&
           (algorithmFilter.length === 0 ||

@@ -1,12 +1,7 @@
-import {
-  Experiment,
-  ExperimentConfigItem,
-  SimilarityThresholdFunction,
-} from 'api';
-import {
-  BenchmarkAppModel,
-  BenchmarkAppResourcesModel,
-} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { ExperimentConfigItem } from 'api';
+import { resolveEntity } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/filter';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
 import { ExperimentEntity } from 'types/ExperimentEntity';
 import { formatLargeNumber } from 'utils/formatLargeNumber';
 
@@ -20,14 +15,15 @@ export function resolveExperimentEntity(
     funcId?: number;
     threshold?: number;
   },
-  resources: BenchmarkAppResourcesModel
+  resources: CentralResourcesModel
 ): ExperimentEntity | undefined {
-  const resolvedExperiment = resources.experiments.find(
-    (anExperiment: Experiment): boolean => anExperiment.id === experimentId
+  const resolvedExperiment = resolveEntity(
+    experimentId,
+    resources.experimentsMap
   );
-  const resolvedSimilarityFunction = resources.simFunctions.find(
-    (aSimFunction: SimilarityThresholdFunction): boolean =>
-      aSimFunction.id === funcId
+  const resolvedSimilarityFunction = resolveEntity(
+    funcId,
+    resources.simFunctionsMap
   );
   if (resolvedExperiment !== undefined) {
     if (resolvedSimilarityFunction !== undefined) {

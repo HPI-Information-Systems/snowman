@@ -1,7 +1,6 @@
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 
 export interface BenchmarkAppDispatchProps {
-  loadInitialState: () => void;
   openStrategy(id: StrategyIDs): void;
 }
 

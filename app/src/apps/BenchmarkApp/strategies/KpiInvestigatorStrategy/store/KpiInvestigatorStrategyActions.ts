@@ -9,10 +9,7 @@ import {
   KpiInvestigatorColorMode,
   KpiInvestigatorStrategyModel,
 } from 'apps/BenchmarkApp/strategies/KpiInvestigatorStrategy/types/KpiInvestigatorStrategyModel';
-import {
-  BenchmarkAppModel,
-  BenchmarkAppResourcesModel,
-} from 'apps/BenchmarkApp/types/BenchmarkAppModel';
+import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { DiagramCoordinates } from 'apps/BenchmarkApp/types/DiagramCoordinates';
 import {
   experimentEntityFromConfig,
@@ -22,6 +19,7 @@ import {
   uniqueExperimentConfigKey,
   uniqueExperimentEntityKey,
 } from 'apps/BenchmarkApp/utils/experimentEntity';
+import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
 import { MagicNotPossibleId } from 'structs/constants';
 import { AllMetricsEnum } from 'types/AllMetricsEnum';
 import { ExperimentEntity } from 'types/ExperimentEntity';
@@ -51,13 +49,13 @@ export const coordinatesMapKey = (goldKey: string, expKey: string): string =>
 
 const tooltipForRawCoordinates = (
   coordinates: RawDiagramCoordinates,
-  resources: BenchmarkAppResourcesModel
+  resources: CentralResourcesModel
 ): string =>
   stringifyExperimentEntity(resolveExperimentEntity(coordinates, resources));
 
 const buildCoordinatesMap = (
   coordinates: [goldStandardKey: string, coordinates: DiagramResponse][],
-  resources: BenchmarkAppResourcesModel
+  resources: CentralResourcesModel
 ): Record<string, DiagramCoordinates> =>
   Object.fromEntries(
     coordinates.flatMap(([goldStandardKey, coordinates]) =>
@@ -85,7 +83,7 @@ const buildCoordinatesMap = (
 
 const setCoordinates = (
   allCoordinates: [goldStandardKey: string, coordinates: DiagramResponse][],
-  resources: BenchmarkAppResourcesModel
+  resources: CentralResourcesModel
 ): easyPrimitiveActionReturn<KpiInvestigatorStrategyModel> =>
   easyPrimitiveAction<KpiInvestigatorStrategyModel>({
     type: KpiInvestigatorStrategyActionTypes.SET_COORDINATES,

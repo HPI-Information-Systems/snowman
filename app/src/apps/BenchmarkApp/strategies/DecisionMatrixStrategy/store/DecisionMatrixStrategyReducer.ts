@@ -10,7 +10,7 @@ import {
 } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrategy/types/MetricEntity';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { experimentEntityFromConfig } from 'apps/BenchmarkApp/utils/experimentEntity';
-import { groupBy } from 'lodash';
+import { groupBy, intersection } from 'lodash';
 import { SnowmanAction } from 'types/SnowmanAction';
 import { toggleSelectionArrayMultipleSelect } from 'utils/toggleSelectionArray';
 
@@ -30,9 +30,10 @@ const DecisionMatrixStrategyReducer = (
       const appStore = action.payload as BenchmarkAppModel;
       const matrixConfig = DecisionMatrixConfiguration.getValue(appStore);
       const selectedAlgorithmIds = matrixConfig.algorithms.flat();
-      const selectedAlgorithms = appStore.resources.algorithms.filter(
-        (anAlgorithm): boolean => selectedAlgorithmIds.includes(anAlgorithm.id)
-      );
+      const selectedAlgorithms = intersection(
+        selectedAlgorithmIds,
+        appStore.resources.algorithms.map(({ id }) => id)
+      ).map((id) => appStore.resources.algorithmsMap[id]);
       if (selectedAlgorithms.length === 0) return state;
       const selectedExperiments = matrixConfig.metrics.flatMap((aSegment) =>
         aSegment.experiments

@@ -23,8 +23,7 @@ export const filterBy = <EntityModel, FilterByModel>({
     )
     .map(([entity]) => entity);
 
-export const resolveEntity = <Entity extends { id: number }>(
+export const resolveEntity = <Entity>(
   id: number | undefined,
-  entities: Entity[]
-): Entity | undefined =>
-  id !== undefined ? entities.find((entity) => entity.id === id) : undefined;
+  entities: Record<number, Entity>
+): Entity | undefined => (id !== undefined ? entities[id] : undefined);

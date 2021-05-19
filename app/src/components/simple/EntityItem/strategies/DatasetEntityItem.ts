@@ -6,9 +6,7 @@ import { sanitize } from 'utils/sanitizeHtml';
 
 export const DatasetEntityItem = assertType<GenericEntityItem>()(
   (state, ownProps) => {
-    const dataset = state.CentralResourcesStore.datasets.find(
-      ({ id }) => id === ownProps.itemId
-    );
+    const dataset = state.CentralResourcesStore.datasetsMap[ownProps.itemId];
     return {
       openItem: () => doOpenDialog(ViewIDs.DatasetDialog, ownProps.itemId),
       name: dataset?.name ?? '',

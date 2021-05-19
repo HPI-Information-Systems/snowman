@@ -11,6 +11,6 @@ export const datasetCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.dataset,
   targetCache: () => 'datasets',
-  getEntities: (state) => state.resources.datasets,
+  getEntities: (state) => state.resources.datasetsMap,
   itemType: () => EntityItemType.DATASET,
 });

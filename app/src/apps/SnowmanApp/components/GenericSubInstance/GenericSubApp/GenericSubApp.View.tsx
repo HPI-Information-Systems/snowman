@@ -26,7 +26,7 @@ class GenericSubAppView extends Component<GenericSubAppProps> {
     if (!isEqual(prevProps.centralResources, this.props.centralResources)) {
       if (this.props.onCentralResourcesRefreshed !== undefined) {
         (this.store.dispatch as SnowmanDispatch<unknown>)(
-          this.props.onCentralResourcesRefreshed()
+          this.props.onCentralResourcesRefreshed(this.props.centralResources)
         );
       }
       centralResourcesRefreshed(

@@ -1,3 +1,4 @@
+import { resolveEntity } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/filter';
 import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { GenericEntityItem } from 'components/simple/EntityItem/strategies/GenericEntityItem';
 import { assertType } from 'snowman-library';
@@ -6,14 +7,15 @@ import { sanitize } from 'utils/sanitizeHtml';
 
 export const ExperimentEntityItem = assertType<GenericEntityItem>()(
   (state, ownProps) => {
-    const experiment = state.CentralResourcesStore.experiments.find(
-      ({ id }) => id === ownProps.itemId
+    const experiment =
+      state.CentralResourcesStore.experimentsMap[ownProps.itemId];
+    const dataset = resolveEntity(
+      experiment?.datasetId,
+      state.CentralResourcesStore.datasetsMap
     );
-    const dataset = state.CentralResourcesStore.datasets.find(
-      ({ id }) => id === experiment?.datasetId
-    );
-    const algorithm = state.CentralResourcesStore.algorithms.find(
-      ({ id }) => id === experiment?.algorithmId
+    const algorithm = resolveEntity(
+      experiment?.algorithmId,
+      state.CentralResourcesStore.algorithmsMap
     );
     return {
       openItem: () => doOpenDialog(ViewIDs.ExperimentDialog, ownProps.itemId),

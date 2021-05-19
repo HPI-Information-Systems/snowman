@@ -1,5 +1,4 @@
 import { KPIDiagramConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/SoftKPIDiagramConfigurator';
-import { initialResourcesState } from 'apps/BenchmarkApp/store/BenchmarkAppReducer';
 import {
   coordinatesMapKey,
   groundTruthKey,
@@ -16,6 +15,7 @@ import {
   experimentEntityFromConfig,
   uniqueExperimentEntityKey,
 } from 'apps/BenchmarkApp/utils/experimentEntity';
+import { initialResourcesState } from 'apps/SnowmanApp/store/CentralResourcesReducer';
 import produce from 'immer';
 import { groupBy } from 'lodash';
 import { AllMetricsEnum, AllMetricsObject } from 'types/AllMetricsEnum';
@@ -73,16 +73,12 @@ const getDiagramTracks = (
     case KpiInvestigatorColorMode.BY_DATASET:
       groupEntitiesBy = ([gold]) => gold;
       trackName = (entities) =>
-        state.resources.datasets.find(
-          ({ id }) => id === entities[0].experiment.datasetId
-        )?.name;
+        state.resources.datasetsMap[entities[0].experiment.datasetId]?.name;
       break;
     case KpiInvestigatorColorMode.BY_MATCHING_SOLUTION:
       groupEntitiesBy = ([, entity]) => `${entity.experiment.algorithmId}`;
       trackName = (entities) =>
-        state.resources.algorithms.find(
-          ({ id }) => id === entities[0].experiment.algorithmId
-        )?.name;
+        state.resources.algorithmsMap[entities[0].experiment.algorithmId]?.name;
       break;
   }
   const entities = extractEntities(state);

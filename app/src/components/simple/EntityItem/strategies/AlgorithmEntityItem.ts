@@ -6,9 +6,8 @@ import { sanitize } from 'utils/sanitizeHtml';
 
 export const AlgorithmEntityItem = assertType<GenericEntityItem>()(
   (state, ownProps) => {
-    const algorithm = state.CentralResourcesStore.algorithms.find(
-      ({ id }) => id === ownProps.itemId
-    );
+    const algorithm =
+      state.CentralResourcesStore.algorithmsMap[ownProps.itemId];
     return {
       openItem: () => doOpenDialog(ViewIDs.AlgorithmDialog, ownProps.itemId),
       name: algorithm?.name ?? '',

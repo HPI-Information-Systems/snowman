@@ -14,13 +14,10 @@ import AlgorithmSelectableInput from 'components/stateful/SelectableInputFactory
 import DatasetSelectableInput from 'components/stateful/SelectableInputFactory/flavors/DatasetSelectableInput';
 import { filter } from 'ionicons/icons';
 import React from 'react';
-import { getAlgorithmNameFromId } from 'utils/algorithmHelpers';
-import { getDatasetNameFromId } from 'utils/datasetHelper';
 
 const ExperimentsAppView = ({
-  algorithms,
   selectedAlgorithms,
-  datasets,
+  resources,
   selectedDatasets,
   currentExperiments,
   changeSelectedDatasets,
@@ -37,7 +34,7 @@ const ExperimentsAppView = ({
               <DatasetSelectableInput
                 selection={selectedDatasets}
                 onChange={changeSelectedDatasets}
-                allOptions={datasets}
+                allOptions={resources.datasets}
                 allowMultiselect={false}
               />
             </IonItem>
@@ -48,7 +45,7 @@ const ExperimentsAppView = ({
               <AlgorithmSelectableInput
                 selection={selectedAlgorithms}
                 onChange={changeSelectedAlgorithms}
-                allOptions={algorithms}
+                allOptions={resources.algorithms}
                 allowMultiselect={false}
               />
             </IonItem>
@@ -65,14 +62,12 @@ const ExperimentsAppView = ({
               <ExperimentCard
                 key={`experimentCard-${anExperiment.id}`}
                 experiment={anExperiment}
-                algorithmName={getAlgorithmNameFromId(
-                  anExperiment.algorithmId,
-                  algorithms
-                )}
-                datasetName={getDatasetNameFromId(
-                  anExperiment.datasetId,
-                  datasets
-                )}
+                algorithmName={
+                  resources.algorithmsMap[anExperiment.algorithmId]?.name
+                }
+                datasetName={
+                  resources.datasetsMap[anExperiment.datasetId]?.name
+                }
               />
             </IonCol>
           ))}

@@ -8,14 +8,12 @@ import NMetricsStrategy from 'apps/BenchmarkApp/strategies/NMetricsStrategy/NMet
 import SimilarityDiagramStrategy from 'apps/BenchmarkApp/strategies/SimilarityDiagramStrategy/SimilarityDiagramStrategy';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import HomeFab from 'components/simple/GenericFab/HomeFab';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const BenchmarkAppView = ({
-  loadInitialState,
   activeStrategy,
   openStrategy,
 }: BenchmarkAppProps): JSX.Element => {
-  useEffect(loadInitialState, [loadInitialState]);
   return (
     <>
       <DashboardStrategy openStrategy={openStrategy} />

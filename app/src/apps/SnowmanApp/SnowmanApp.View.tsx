@@ -42,9 +42,7 @@ import ReactTooltip from 'react-tooltip';
 
 const SnowmanAppView = ({
   refreshCentralResources,
-  algorithms,
-  datasets,
-  experiments,
+  resources,
 }: SnowmanAppProps): JSX.Element => {
   useEffect(refreshCentralResources, [refreshCentralResources]);
   return (
@@ -53,13 +51,9 @@ const SnowmanAppView = ({
       <AboutApp />
       <DataViewerApp />
       <BenchmarkApp />
-      <AlgorithmsApp algorithms={algorithms} />
-      <DatasetsApp datasets={datasets} />
-      <ExperimentsApp
-        datasets={datasets}
-        algorithms={algorithms}
-        experiments={experiments}
-      />
+      <AlgorithmsApp algorithms={resources.algorithms} />
+      <DatasetsApp datasets={resources.datasets} />
+      <ExperimentsApp resources={resources} />
       <AlgorithmDialog />
       <DatasetDialog />
       <ExperimentDialog />

@@ -23,7 +23,7 @@ const mapStateToProps = (
 ): ExperimentsAppStateProps => ({
   selectedAlgorithms: state.selectedAlgorithms,
   selectedDatasets: state.selectedDatasets,
-  currentExperiments: ownProps.experiments.filter(
+  currentExperiments: ownProps.resources.experiments.filter(
     (anExperiment: Experiment): boolean =>
       (state.selectedAlgorithms.includes(anExperiment.algorithmId) ||
         state.selectedAlgorithms.length === 0) &&

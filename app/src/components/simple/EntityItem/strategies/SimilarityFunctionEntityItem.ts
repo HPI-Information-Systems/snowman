@@ -1,3 +1,4 @@
+import { resolveEntity } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/cacheKeys/filter';
 import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { GenericEntityItem } from 'components/simple/EntityItem/strategies/GenericEntityItem';
 import { assertType } from 'snowman-library';
@@ -6,11 +7,10 @@ import { sanitize } from 'utils/sanitizeHtml';
 
 export const SimilarityFunctionEntityItem = assertType<GenericEntityItem>()(
   (state, ownProps) => {
-    const func = state.CentralResourcesStore.simFunctions.find(
-      ({ id }) => id === ownProps.itemId
-    );
-    const experiment = state.CentralResourcesStore.experiments.find(
-      ({ id }) => func?.experimentId === id
+    const func = state.CentralResourcesStore.simFunctionsMap[ownProps.itemId];
+    const experiment = resolveEntity(
+      func?.experimentId,
+      state.CentralResourcesStore.experimentsMap
     );
 
     return {

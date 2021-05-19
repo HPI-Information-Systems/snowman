@@ -1,7 +1,7 @@
 import BenchmarkAppContainer from 'apps/BenchmarkApp/BenchmarkApp.Container';
 import BenchmarkConfigurator from 'apps/BenchmarkApp/components/BenchmarkConfigurator/BenchmarkConfigurator';
-import { loadInitialState } from 'apps/BenchmarkApp/store/BenchmarkAppActions';
 import { BenchmarkAppStoreMagistrate } from 'apps/BenchmarkApp/store/BenchmarkAppStoreFactory';
+import { setResources } from 'apps/BenchmarkApp/store/BenchmarkAppThunkActions';
 import { BenchmarkAppModel } from 'apps/BenchmarkApp/types/BenchmarkAppModel';
 import { StrategyIDs } from 'apps/BenchmarkApp/types/StrategyIDs';
 import GenericSubApp from 'apps/SnowmanApp/components/GenericSubInstance/GenericSubApp/GenericSubApp';
@@ -18,7 +18,7 @@ const BenchmarkApp = (): JSX.Element => (
       state.activeStrategy === StrategyIDs.Dashboard
     }
     usePageStruct={false}
-    onCentralResourcesRefreshed={loadInitialState}
+    onCentralResourcesRefreshed={setResources}
   >
     <BenchmarkAppContainer />
   </GenericSubApp>
