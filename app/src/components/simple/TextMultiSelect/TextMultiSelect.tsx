@@ -1,5 +1,4 @@
 import { IonChip, IonLabel } from '@ionic/react';
-import { useInstanceDescriptor } from 'apps/BenchmarkApp/utils/useInstanceDescriptor';
 import { TextMultiSelectProps } from 'components/simple/TextMultiSelect/TextMultiSelectProps';
 import InputChip from 'components/stateful/InputChip/InputChip';
 import { sortedUniq, uniq } from 'lodash';
@@ -9,6 +8,7 @@ const TextMultiSelect = ({
   content,
   suggestions,
   onChange,
+  instanceDescriptor,
   addText = 'Add item',
 }: TextMultiSelectProps): JSX.Element => {
   const [allTexts, setAllTexts] = useState<string[]>([]);
@@ -46,7 +46,7 @@ const TextMultiSelect = ({
       <InputChip
         label={addText}
         placeholder={addText}
-        instanceDescriptor={useInstanceDescriptor()}
+        instanceDescriptor={instanceDescriptor}
         submitValueCallback={(newText) => onChange(uniq([...content, newText]))}
       />
     </div>

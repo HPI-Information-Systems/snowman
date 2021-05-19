@@ -3,10 +3,7 @@ import {
   BenchmarkAppDispatchProps,
   BenchmarkAppStateProps,
 } from 'apps/BenchmarkApp/BenchmarkAppProps';
-import {
-  loadInitialState,
-  openStrategy,
-} from 'apps/BenchmarkApp/store/BenchmarkAppActions';
+import { openStrategy } from 'apps/BenchmarkApp/store/BenchmarkAppActions';
 import {
   BenchmarkAppDispatch,
   BenchmarkAppModel,
@@ -21,9 +18,6 @@ const mapStateToProps = (state: BenchmarkAppModel): BenchmarkAppStateProps => ({
 const mapDispatchToProps = (
   dispatch: BenchmarkAppDispatch
 ): BenchmarkAppDispatchProps => ({
-  loadInitialState: () => {
-    dispatch(loadInitialState());
-  },
   openStrategy(id: StrategyIDs) {
     dispatch(openStrategy(id));
   },

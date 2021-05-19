@@ -20,7 +20,7 @@ export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.groundTruth,
   targetCache: () => 'experiments',
-  getEntities: (state) => state.resources.experiments,
+  getEntities: (state) => state.resources.experimentsMap,
   filter: {
     dependsOn: (dataset) => [datasetCacheKeyAndFilter(dataset).cacheKey],
     viewFilters: () => [filterCacheKeyAndFilter('algorithms').cacheKey],
@@ -34,7 +34,8 @@ export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
           )[])[0],
         ],
         entityToFilteredEntity: (experimentId) =>
-          resolveEntity(experimentId, state.resources.experiments)?.datasetId,
+          resolveEntity(experimentId, state.resources.experimentsMap)
+            ?.datasetId,
       });
       return newSelection.length === 0 ? createNew() : newSelection;
     },
@@ -44,7 +45,7 @@ export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
       const algorithmFilter =
         state.config.algorithms[serializeCacheKey(viewFilters[0])]?.targets ??
         [];
-      return experiments.filter(
+      return Object.values(experiments).filter(
         ({ datasetId, algorithmId }) =>
           datasetFilter === datasetId &&
           (algorithmFilter.length === 0 ||
@@ -54,11 +55,12 @@ export const groundTruthCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   },
   itemType: () => EntityItemType.EXPERIMENT,
   createNew: (state, dependsOn) => {
-    const datasets =
-      state.config.datasets[serializeCacheKey(dependsOn[0])]?.targets ?? [];
+    const datasets = new Set(
+      state.config.datasets[serializeCacheKey(dependsOn[0])]?.targets ?? []
+    );
     const goldStandards = state.resources.experiments.filter(
       ({ datasetId, algorithmId }) =>
-        algorithmId === GoldStandardId && datasets.includes(datasetId)
+        algorithmId === GoldStandardId && datasets.has(datasetId)
     );
     return goldStandards.length === 0 ? [] : [goldStandards[0].id];
   },

@@ -19,21 +19,21 @@ export const filterCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
   getEntities: (state, targetCache) => {
     switch (targetCache) {
       case 'algorithms':
-        return state.resources.algorithms;
+        return state.resources.algorithmsMap;
       case 'datasets':
-        return state.resources.datasets;
+        return state.resources.datasetsMap;
       case 'experiments':
-        return state.resources.experiments;
+        return state.resources.experimentsMap;
       case 'simFunctions':
-        return state.resources.simFunctions;
+        return state.resources.simFunctionsMap;
       default:
-        return [];
+        return {};
     }
   },
   itemType: (key, targetCache) => {
     switch (targetCache) {
       case 'algorithms':
-        return EntityItemType.MATCHING_SOLUTION;
+        return EntityItemType.ALGORITHM;
       case 'datasets':
         return EntityItemType.DATASET;
       case 'experiments':

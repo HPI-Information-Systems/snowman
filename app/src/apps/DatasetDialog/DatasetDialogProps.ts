@@ -8,7 +8,7 @@ export interface DatasetDialogDispatchProps {
   changeTags(newTags: string[]): void;
   changeDatasetName(event: IonChangeEvent): void;
   changeDatasetDescription(event: IonChangeEvent): void;
-  changeDatasetType(event: IonChangeEvent): void;
+  changeDatasetType(type: string | undefined): void;
   changeDatasetLength(event: IonChangeEvent): void;
   changeCsvIdColumn(event: IonChangeEvent): void;
   changeCsvSeparator(event: IonChangeEvent): void;

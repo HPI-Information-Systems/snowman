@@ -86,6 +86,7 @@ const ExperimentDialogView = ({
           selection={
             typeof selectedDataset === 'number' ? [selectedDataset] : []
           }
+          instanceDescriptor="ExperimentDialog-DatasetSelect"
         />
       </IonItem>
       <IonItem>
@@ -100,6 +101,7 @@ const ExperimentDialogView = ({
           selection={
             typeof selectedAlgorithm === 'number' ? [selectedAlgorithm] : []
           }
+          instanceDescriptor={'ExperimentDialog-AlgorithmSelect'}
         />
       </IonItem>
 

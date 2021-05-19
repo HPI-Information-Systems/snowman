@@ -8,7 +8,7 @@ import { analytics, fileTrayFull, flask, hardwareChip } from 'ionicons/icons';
 import { assertType } from 'snowman-library';
 
 export enum EntityItemType {
-  MATCHING_SOLUTION,
+  ALGORITHM,
   EXPERIMENT,
   DATASET,
   SIM_FUNC,
@@ -22,7 +22,7 @@ export type EntityItemTypes =
 
 export type EntityOfEntityItemType<
   ItemType extends EntityItemType
-> = ItemType extends EntityItemType.MATCHING_SOLUTION
+> = ItemType extends EntityItemType.ALGORITHM
   ? Algorithm
   : ItemType extends EntityItemType.EXPERIMENT
   ? Experiment
@@ -35,6 +35,6 @@ export type EntityOfEntityItemType<
 export const entityItemIcon = assertType<Record<EntityItemType, string>>()({
   [EntityItemType.EXPERIMENT]: flask,
   [EntityItemType.DATASET]: fileTrayFull,
-  [EntityItemType.MATCHING_SOLUTION]: hardwareChip,
+  [EntityItemType.ALGORITHM]: hardwareChip,
   [EntityItemType.SIM_FUNC]: analytics,
 });

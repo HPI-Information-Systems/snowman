@@ -1,9 +1,7 @@
-import { Algorithm, Dataset, Experiment } from 'api';
+import { CentralResourcesModel } from 'apps/SnowmanApp/types/CentralResourcesModel';
 
 export interface SnowmanAppStateProps {
-  algorithms: Algorithm[];
-  datasets: Dataset[];
-  experiments: Experiment[];
+  resources: CentralResourcesModel;
 }
 
 export interface SnowmanAppDispatchProps {

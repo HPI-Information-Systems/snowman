@@ -1,5 +1,3 @@
-import { BehaviorSubject } from 'rxjs';
-
 import {
   CalculateDiagramDataRequest,
   DiagramCoordinates,

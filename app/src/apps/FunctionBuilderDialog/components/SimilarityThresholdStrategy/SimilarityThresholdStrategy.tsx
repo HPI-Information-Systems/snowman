@@ -1,10 +1,10 @@
-import { IonChip, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonChip } from '@ionic/react';
 import { StrategyMapperForwardProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
 import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
 import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogModel';
+import SelectableInput from 'components/stateful/SelectableInputFactory/flavors/SelectableInput';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { IonChangeEvent } from 'types/IonChangeEvent';
 
 const SimilarityThresholdStrategy = ({
   blockAccessKey,
@@ -19,24 +19,18 @@ const SimilarityThresholdStrategy = ({
   );
   return (
     <IonChip outline>
-      <IonSelect
-        placeholder="?"
-        value={availableThresholdValues.length > 0 ? thresholdValue ?? '' : ''}
-        onIonChange={(event: IonChangeEvent): void =>
+      <SelectableInput
+        instanceDescriptor={`SimilarityThresholdStrategy-${blockAccessKey}`}
+        allOptions={availableThresholdValues}
+        selection={typeof thresholdValue === 'string' ? [thresholdValue] : []}
+        allowMultiselect={false}
+        onChange={(selection) =>
           FunctionBuildingBlockMagistrate.setLeftValue(
             blockAccessKey,
-            event.detail.value ?? null
+            selection[0] ?? null
           )
         }
-      >
-        {availableThresholdValues.map(
-          (aValue: string): JSX.Element => (
-            <IonSelectOption value={aValue} key={aValue}>
-              {aValue}
-            </IonSelectOption>
-          )
-        )}
-      </IonSelect>
+      />
     </IonChip>
   );
 };

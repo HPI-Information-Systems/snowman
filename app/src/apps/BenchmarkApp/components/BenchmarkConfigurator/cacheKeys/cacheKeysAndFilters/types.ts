@@ -32,7 +32,10 @@ type MakeStoreCacheKeyAndFilterArgs<
 > = {
   keyBase: KeyBase;
   targetCache: (...args: Args) => TargetCache;
-  getEntities?: (state: BenchmarkAppModel, ...args: Args) => Entity[];
+  getEntities?: (
+    state: BenchmarkAppModel,
+    ...args: Args
+  ) => Record<number, Entity>;
   getValue?: (
     state: BenchmarkAppModel,
     cacheKey: StoreCacheKey<KeyBase, Args>,
@@ -48,7 +51,7 @@ type MakeStoreCacheKeyAndFilterArgs<
     ) => (ModelOfCache<TargetCache> | undefined)[];
     filterAvailableEntities: (
       state: BenchmarkAppModel,
-      entities: Entity[],
+      entities: Record<number, Entity>,
       dependsOn: StoreCacheKey[],
       viewFilters: StoreCacheKey[],
       cacheKey: StoreCacheKey<KeyBase, Args>,
@@ -84,7 +87,7 @@ type GetStoreCacheKeyAndFilter<
 ) => {
   cacheKey: StoreCacheKey<KeyBase, Args>;
   targetCache: TargetCache;
-  getEntities: (state: BenchmarkAppModel) => Entity[];
+  getEntities: (state: BenchmarkAppModel) => Record<number, Entity>;
   filter?: {
     dependsOn: () => StoreCacheKey[];
     filter: (
@@ -92,7 +95,7 @@ type GetStoreCacheKeyAndFilter<
     ) => (ModelOfCache<TargetCache> | undefined)[];
     filterAvailableEntities: (
       state: BenchmarkAppModel,
-      entities: any[]
+      entities: Record<number, Entity>
     ) => Entity[];
     viewFilters: () => StoreCacheKey[];
   };
@@ -141,7 +144,7 @@ export const MakeStoreCacheKeyAndFilter = <
     targetCache: targetCache(...args),
     prepareSerialization: () =>
       prepareSerialization ? prepareSerialization(cacheKey) : cacheKey,
-    getEntities: (state) => (getEntities ?? (() => []))(state, ...args),
+    getEntities: (state) => (getEntities ?? (() => ({})))(state, ...args),
     getSelectorItems: (state) => {
       if (selectorItems) {
         return selectorItems(state, cacheKey, ...args);
@@ -201,7 +204,7 @@ export const MakeStoreCacheKeyAndFilter = <
           ) {
             const entities = result.getEntities(state);
             return (selection.filter(
-              (item) => entities.find(({ id }) => id === item) !== undefined
+              (item) => entities[item] !== undefined
             ) as unknown) as (ModelOfCache<TargetCache> | undefined)[];
           } else {
             return (selection as unknown) as (

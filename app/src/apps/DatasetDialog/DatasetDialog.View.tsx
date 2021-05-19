@@ -11,14 +11,13 @@ import {
   IonList,
   IonNote,
   IonRow,
-  IonSelect,
-  IonSelectOption,
   IonTextarea,
 } from '@ionic/react';
 import { DatasetDialogProps } from 'apps/DatasetDialog/DatasetDialogProps';
 import styles from 'apps/DatasetDialog/DatasetDialogStyles.module.css';
 import FileInput from 'components/simple/FileInput/FileInput';
 import TextMultiSelect from 'components/simple/TextMultiSelect/TextMultiSelect';
+import SelectableInput from 'components/stateful/SelectableInputFactory/flavors/SelectableInput';
 import {
   addCircleOutline,
   checkmarkCircleOutline,
@@ -26,7 +25,6 @@ import {
 } from 'ionicons/icons';
 import React from 'react';
 import style from 'theme/style';
-import { $enum } from 'ts-enum-util';
 import { DatasetTypes } from 'types/DatasetTypes';
 
 const DatasetDialogView = ({
@@ -79,17 +77,13 @@ const DatasetDialogView = ({
         </IonItem>
         <IonItem>
           <IonLabel position="fixed">Contents:</IonLabel>
-          <IonSelect
-            multiple={false}
-            value={datasetType}
-            onIonChange={changeDatasetType}
-          >
-            {$enum(DatasetTypes).map((kind, key) => (
-              <IonSelectOption key={'type-option-' + key} value={kind}>
-                {kind}
-              </IonSelectOption>
-            ))}
-          </IonSelect>
+          <SelectableInput
+            instanceDescriptor={'DatasetDialogView-DatasetType'}
+            allOptions={Object.values(DatasetTypes)}
+            allowMultiselect={false}
+            onChange={(selection) => changeDatasetType(selection[0])}
+            selection={datasetType !== undefined ? [datasetType] : []}
+          />
         </IonItem>
       </IonItemGroup>
       {datasetType === DatasetTypes.skeleton ? (
@@ -180,6 +174,7 @@ const DatasetDialogView = ({
         suggestions={tags}
         content={selectedTags}
         onChange={changeTags}
+        instanceDescriptor="DatasetDialogView-DomainSelector"
       />
     </div>
     <div className={style(styles.center, styles.buttonRow)}>

@@ -243,6 +243,7 @@ const AlgorithmDialogView = ({
               content={configurationInterfaces}
               onChange={changeConfigurationInterfaces}
               suggestions={availableConfigurationInterfaces}
+              instanceDescriptor="AlgorithmDialog-ConfigurationInterfaces"
             />
           </IonItem>
           <IonItem>
@@ -254,6 +255,7 @@ const AlgorithmDialogView = ({
               content={configurationSupportedOSs}
               onChange={changeConfigurationSupportedOSs}
               suggestions={availableConfigurationSupportedOSs}
+              instanceDescriptor="AlgorithmDialog-ConfigurationSupportedOSs"
             />
           </IonItem>
           <IonItem>
@@ -265,6 +267,7 @@ const AlgorithmDialogView = ({
               content={integrationDeploymentType}
               onChange={changeIntegrationDeploymentType}
               suggestions={availableIntegrationDeploymentTypes}
+              instanceDescriptor="AlgorithmDialog-IntegrationDeploymentType"
             />
           </IonItem>
         </>
@@ -297,6 +300,7 @@ const AlgorithmDialogView = ({
               content={integrationSolutionType}
               onChange={changeIntegrationSolutionType}
               suggestions={availableIntegrationSolutionTypes}
+              instanceDescriptor="AlgorithmDialog-IntegrationSolutionType"
             />
           </IonItem>
           <IonItem>
@@ -305,6 +309,7 @@ const AlgorithmDialogView = ({
               content={integrationUseCase}
               onChange={changeIntegrationUseCase}
               suggestions={availableIntegrationUseCases}
+              instanceDescriptor="AlgorithmDialog-IntegrationUseCase"
             />
           </IonItem>
           <IonItem>

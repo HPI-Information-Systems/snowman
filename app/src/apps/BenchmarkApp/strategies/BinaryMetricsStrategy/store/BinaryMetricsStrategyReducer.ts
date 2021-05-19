@@ -1,4 +1,4 @@
-import { Dataset, ExperimentIntersectionCount, Metric } from 'api';
+import { ExperimentIntersectionCount, Metric } from 'api';
 import { BinaryMetricsConfiguration } from 'apps/BenchmarkApp/components/BenchmarkConfigurator/configurators/BinaryMetricsConfigurator';
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
 import { BinaryMetricsStrategyModel } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyModel';
@@ -33,9 +33,7 @@ const BinaryMetricsStrategyReducer = (
         configuration.experiment,
         appStore.resources
       );
-      const dataset = appStore.resources.datasets.find(
-        (aDataset: Dataset): boolean => aDataset.id === configuration.dataset[0]
-      );
+      const dataset = appStore.resources.datasetsMap[configuration.dataset[0]];
       if (
         groundTruth === undefined ||
         experiment === undefined ||

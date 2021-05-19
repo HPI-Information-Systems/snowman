@@ -1,4 +1,4 @@
-import { IonChip, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonChip } from '@ionic/react';
 import { SimilarityThresholdFunctionUnaryOperatorOperatorEnum } from 'api';
 import StrategyMapper from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapper';
 import { StrategyMapperForwardProps } from 'apps/FunctionBuilderDialog/components/StrategyMapper/StrategyMapperProps';
@@ -6,9 +6,9 @@ import styles from 'apps/FunctionBuilderDialog/components/UnaryOperatorStrategy/
 import { FunctionBuildingBlockMagistrate } from 'apps/FunctionBuilderDialog/store/FunctionBuilderDialogActions';
 import { FunctionBuilderDialogModel } from 'apps/FunctionBuilderDialog/types/FunctionBuilderDialogModel';
 import { CellDescriptor } from 'apps/FunctionBuilderDialog/types/FunctionBuildingBlock';
+import SelectableInput from 'components/stateful/SelectableInputFactory/flavors/SelectableInput';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { IonChangeEvent } from 'types/IonChangeEvent';
 
 const UnaryOperatorStrategy = ({
   blockAccessKey,
@@ -21,26 +21,19 @@ const UnaryOperatorStrategy = ({
   return (
     <>
       <IonChip className={styles.chip}>
-        <IonSelect
-          value={operator}
-          onIonChange={(event: IonChangeEvent): void =>
+        <SelectableInput
+          selection={typeof operator === 'string' ? [operator] : []}
+          allOptions={Object.values(
+            SimilarityThresholdFunctionUnaryOperatorOperatorEnum
+          )}
+          allowMultiselect={false}
+          onChange={(selection) =>
             FunctionBuildingBlockMagistrate.setLeftValue(
               blockAccessKey,
-              (event.detail.value as string) ?? null
+              selection[0] ?? null
             )
           }
-          placeholder="?"
-        >
-          {Object.values(
-            SimilarityThresholdFunctionUnaryOperatorOperatorEnum
-          ).map(
-            (anOperator: string): JSX.Element => (
-              <IonSelectOption value={anOperator} key={anOperator}>
-                {anOperator}
-              </IonSelectOption>
-            )
-          )}
-        </IonSelect>
+        />
         (
       </IonChip>
       <StrategyMapper

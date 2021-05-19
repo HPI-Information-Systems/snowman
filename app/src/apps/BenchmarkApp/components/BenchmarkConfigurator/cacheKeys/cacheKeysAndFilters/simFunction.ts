@@ -20,7 +20,7 @@ export const simFuntionCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
 >({
   keyBase: StoreCacheKeyBaseEnum.similarityFunction,
   targetCache: () => 'simFunctions',
-  getEntities: (state, ..._) => state.resources.simFunctions,
+  getEntities: (state, ..._) => state.resources.simFunctionsMap,
   filter: {
     dependsOn: (dataset, experiment?) =>
       experiment === undefined
@@ -37,7 +37,7 @@ export const simFuntionCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
           )[])[0],
         ],
         entityToFilteredEntity: (simFunctionId) =>
-          resolveEntity(simFunctionId, state.resources.simFunctions)
+          resolveEntity(simFunctionId, state.resources.simFunctionsMap)
             ?.experimentId,
       });
     },
@@ -49,7 +49,7 @@ export const simFuntionCacheKeyAndFilter = MakeStoreCacheKeyAndFilter<
       _,
       ..._2
     ) => {
-      return funcs.filter(
+      return Object.values(funcs).filter(
         ({ experimentId }) =>
           state.config.experiments[serializeCacheKey(dependsOn[0])]
             ?.targets[0] === experimentId

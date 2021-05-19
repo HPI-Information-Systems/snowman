@@ -38,12 +38,14 @@ const NMetricsStrategyView = ({
         <table className={styles.materialTable}>
           <thead>
             <tr>
-              <th style={{ paddingTop: '2rem', fontSize: '1rem' }}>
-                Metric Name
-              </th>
+              <th className={styles.metricsHeader}>Metric Name</th>
               {experiments.map(
                 (anExperiment): JSX.Element => (
-                  <th key={uniqueExperimentEntityKey(anExperiment)}>
+                  <th
+                    key={uniqueExperimentEntityKey(anExperiment)}
+                    onClick={() => inspectExperiment(anExperiment)}
+                    className={styles.headingExperiment}
+                  >
                     <ExperimentConfigItem
                       {...experimentEntityToExperimentConfigItem(anExperiment)}
                     />

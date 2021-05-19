@@ -101,6 +101,7 @@ export const SelectableInputView = function <Content>({
         onClick={(e) => showPopover((e as unknown) as Event)}
         className={styles.openPopoverItem}
         button
+        lines="none"
       >
         <IonLabel>
           {selection.length > 0 ? (

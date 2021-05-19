@@ -93,10 +93,7 @@ const ConfigurationStoreReducer = (
           }
         }
       });
-    case BenchmarkAppActionsTypes.SET_ALGORITHMS:
-    case BenchmarkAppActionsTypes.SET_DATASETS:
-    case BenchmarkAppActionsTypes.SET_EXPERIMENTS:
-    case BenchmarkAppActionsTypes.SET_SIM_FUNCTIONS:
+    case BenchmarkAppActionsTypes.SET_RESOURCES:
       return produce(state, (state: BenchmarkAppModel) => {
         for (const item of (Object.values(
           state.config

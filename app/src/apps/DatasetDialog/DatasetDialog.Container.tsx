@@ -79,8 +79,10 @@ const mapDispatchToProps = (
   changeDatasetDescription(event: IonChangeEvent): void {
     dispatch(changeDatasetDescription(event.detail.value as string));
   },
-  changeDatasetType(event: IonChangeEvent): void {
-    dispatch(changeDatasetType(event.detail.value as DatasetTypes));
+  changeDatasetType(datasetType): void {
+    if (datasetType !== undefined) {
+      dispatch(changeDatasetType(datasetType as DatasetTypes));
+    }
   },
   changeDatasetLength(event: IonChangeEvent): void {
     dispatch(

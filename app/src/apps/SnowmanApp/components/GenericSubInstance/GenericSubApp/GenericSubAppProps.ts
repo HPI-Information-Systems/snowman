@@ -16,8 +16,10 @@ export interface GenericSubAppOwnProps extends GenericInstanceOwnProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sideMenuDisabledSelector?: (state: any) => boolean;
   usePageStruct?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onCentralResourcesRefreshed?: () => SnowmanThunkAction<void, any>;
+  onCentralResourcesRefreshed?: (
+    resources: CentralResourcesModel
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ) => SnowmanThunkAction<void, any>;
 }
 
 export type GenericSubAppProps = GenericSubAppOwnProps &

@@ -1,7 +1,3 @@
-export const SUCCESS_TO_ADD_NEW_EXPERIMENT =
-  'Successfully added a new experiment!';
-export const SUCCESS_TO_UPLOAD_EXPERIMENT_FILE =
-  'Successfully uploaded the experiment file!';
 export const SUCCESS_TO_CREATE_NEW_EXPERIMENT =
   'Successfully created a new experiment!';
 export const SUCCESS_TO_ADD_NEW_ALGORITHM =
@@ -10,13 +6,8 @@ export const UNKNOWN_ERROR =
   'An unknown error occurred! Please try again later or open an issue on Github.';
 export const SUCCESS_TO_CREATE_NEW_DATASET =
   'Successfully created a new dataset!';
-export const SUCCESS_TO_UPLOAD_DATASET_FILE =
-  'Successfully uploaded the dataset file!';
 export const SUCCESS_TO_DELETE_ALGORITHM =
   'Successfully deleted the matching solution!';
-export const SUCCESS_LOAD_BINARY_METRICS =
-  'Successfully loaded binary metrics!';
-export const SUCCESS_LOAD_NARY_METRICS = 'Successfully loaded n-nary metrics!';
 export const SUCCESS_TO_UPDATE_ALGORITHM =
   'Successfully updated the matching solution!';
 export const SUCCESS_TO_UPDATE_DATASET = 'Successfully updated the dataset!';
