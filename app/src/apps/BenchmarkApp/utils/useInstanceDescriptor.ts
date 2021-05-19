@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 let instanceDescriptor = 0;
 const generateNextInstanceDescriptor = (): string => {
-  return `DatasetSelectorGroupViewPopover${instanceDescriptor++}`;
+  return `InstanceDescriptor-${instanceDescriptor++}`;
 };
 
 export const useInstanceDescriptor = (): string => {

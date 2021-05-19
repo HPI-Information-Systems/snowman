@@ -29,6 +29,7 @@ const EntitySelectableInputFactory = function <
   const EntitySelectableInput = ({
     selection,
     onChange,
+    instanceDescriptor,
     ...props
   }: EntitySelectableInputOwnProps<EntityType>) => (
     <RawEntitySelectableInput
@@ -43,7 +44,7 @@ const EntitySelectableInputFactory = function <
       renderChild={(entity) => (
         <EntityItem itemType={itemType} itemId={entity.id} />
       )}
-      instanceDescriptor={`EntitySelectableInput-${itemType}`}
+      instanceDescriptor={instanceDescriptor}
     />
   );
   return EntitySelectableInput;
