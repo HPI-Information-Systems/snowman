@@ -49,3 +49,12 @@ table.materialTable tbody td {
 table.materialTable thead th .clickableContent {
   cursor: pointer;
 }
+
+.headingExperiment:hover {
+  cursor: pointer;
+}
+
+.metricsHeader {
+  padding-top: 2rem !important;
+  font-size: 1rem;
+}
