@@ -36,6 +36,7 @@ const ExperimentsAppView = ({
                 onChange={changeSelectedDatasets}
                 allOptions={resources.datasets}
                 allowMultiselect={false}
+                instanceDescriptor="ExperimentsApp-DatasetSelector"
               />
             </IonItem>
           </IonCol>
@@ -47,6 +48,7 @@ const ExperimentsAppView = ({
                 onChange={changeSelectedAlgorithms}
                 allOptions={resources.algorithms}
                 allowMultiselect={false}
+                instanceDescriptor="ExperimentApp-AlgorithmSelect"
               />
             </IonItem>
           </IonCol>
