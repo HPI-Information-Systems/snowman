@@ -4,6 +4,7 @@ import styles from 'components/simple/EntityItem/EntityItemStyles.module.css';
 import { entityItemIcon } from 'components/simple/EntityItem/EntityItemType';
 import { openOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
+import ReactTooltip from 'react-tooltip';
 import useTooltip from 'utils/useTooltipHook';
 
 const EntityItemView = ({
@@ -30,6 +31,7 @@ const EntityItemView = ({
         fill="clear"
         onClick={(e) => {
           openItem();
+          ReactTooltip.hide();
           e.preventDefault();
           e.stopPropagation();
         }}
