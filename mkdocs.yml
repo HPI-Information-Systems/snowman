@@ -7,7 +7,9 @@ nav:
       - Getting Started: basic_usage/getting_started.md
       - Concepts and Terminology: basic_usage/concepts.md
       - Matching solutions: basic_usage/matching_solutions.md
-      - Workflow: basic_usage/workflow.md
+      - Workflow:
+        - Comparing matching solutions: basic_usage/workflow/comparing_matchingsolutions.md
+        - Evaluating experiments: basic_usage/workflow/evaluate_experiments.md
       - Datasets: basic_usage/datasets.md
       - Experiments: basic_usage/experiments.md
       - Benchmark: basic_usage/benchmark.md
