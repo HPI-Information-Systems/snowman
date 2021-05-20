@@ -24,26 +24,34 @@ const EntityItemView = ({
       data-for="tooltipAllowHtml"
       data-tip={tooltip}
     >
-      <IonButton
-        onMouseOver={() => (openItem !== undefined ? setOpen(false) : void 0)}
-        onMouseOut={() => setOpen(true)}
-        className={styles.noPadding}
-        fill="clear"
-        onClick={(e) => {
-          if (openItem !== undefined) {
+      {openItem !== undefined ? (
+        <IonButton
+          onMouseOver={() => setOpen(false)}
+          onMouseOut={() => setOpen(true)}
+          className={styles.noPadding}
+          fill="clear"
+          onClick={(e) => {
             openItem();
             ReactTooltip.hide();
             e.preventDefault();
             e.stopPropagation();
-          }
-        }}
-      >
-        <IonIcon
-          icon={open ? entityItemIcon[itemType] : openOutline}
-          color="primarydark"
-          size="small"
-        />
-      </IonButton>
+          }}
+        >
+          <IonIcon
+            icon={open ? entityItemIcon[itemType] : openOutline}
+            color="primarydark"
+            size="small"
+          />
+        </IonButton>
+      ) : (
+        <IonButton fill="clear" className={styles.noPadding} disabled>
+          <IonIcon
+            icon={entityItemIcon[itemType]}
+            color="primarydark"
+            size="small"
+          />
+        </IonButton>
+      )}
       <IonLabel className={styles.paddingLeft}>{name}</IonLabel>
     </IonItem>
   );
