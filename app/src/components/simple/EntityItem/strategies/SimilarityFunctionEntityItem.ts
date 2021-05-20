@@ -12,9 +12,6 @@ export const SimilarityFunctionEntityItem = assertType<GenericEntityItem>()(
     );
 
     return {
-      // Todo: Find a proper solution
-      openItem: () =>
-        console.log('Investigate sim function: ', ownProps.itemId),
       name: func?.name ?? '',
       tooltip: func
         ? `<b><i>${sanitize(func.name)}</i></b>` +

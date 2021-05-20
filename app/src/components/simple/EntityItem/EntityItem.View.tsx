@@ -25,15 +25,17 @@ const EntityItemView = ({
       data-tip={tooltip}
     >
       <IonButton
-        onMouseOver={() => setOpen(false)}
+        onMouseOver={() => (openItem !== undefined ? setOpen(false) : void 0)}
         onMouseOut={() => setOpen(true)}
         className={styles.noPadding}
         fill="clear"
         onClick={(e) => {
-          openItem();
-          ReactTooltip.hide();
-          e.preventDefault();
-          e.stopPropagation();
+          if (openItem !== undefined) {
+            openItem();
+            ReactTooltip.hide();
+            e.preventDefault();
+            e.stopPropagation();
+          }
         }}
       >
         <IonIcon
