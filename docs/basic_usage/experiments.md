@@ -54,9 +54,9 @@ as split character, `"` as quote character and `'` as escape character.
 The importer expects the csv to have the columns `p1` and `p2`. They should store the ids of the respective
 dataset tuples.
 
-The csv optionally can have a column named "prediction" which contains a `1` in case the pair was detected as duplicate -
+The csv optionally can have a column named `prediction` which contains a `1` in case the pair was detected as duplicate -
 `0` otherwise. If this column is not present we assume that all listed tuples have been detected as duplicates
-(think: we automatically insert a column "prediction" and fill it with the value `1` everywhere).
+(think: we automatically insert a column `prediction` and fill it with the value `1` everywhere).
 
 Following this, more columns may be specified with arbitrary content. See the following example:
 

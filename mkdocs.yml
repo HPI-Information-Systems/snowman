@@ -9,10 +9,10 @@ nav:
       - Datasets: basic_usage/datasets.md
       - Matching solutions: basic_usage/matching_solutions.md
       - Experiments: basic_usage/experiments.md
-      - Workflow:
+      - Configuring Analyses: basic_usage/configuring_analyses.md
+      - Workflows:
           - Comparing matching solutions: basic_usage/workflow/comparing_matchingsolutions.md
           - Evaluating experiments: basic_usage/workflow/evaluate_experiments.md
-      - Benchmark: basic_usage/benchmark.md
   - Advanced setups:
       - Remote instances: advanced_setups/remote_instances.md
       - Connect your code: advanced_setups/code_connection.md

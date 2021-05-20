@@ -16,7 +16,7 @@ By using this setup we avoid version conflicts as a client will always use the f
 
 As a client, you will receive the URL (=address) of the Snowman instance you
 should connect to. When opening Snowman app, make sure to *not* start a local
-instance but selecting "REMOTE INSTANCE" and entering the provided address.
+instance but selecting *REMOTE INSTANCE* and entering the provided address.
 
 ## Provider perspective
 
