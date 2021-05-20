@@ -213,7 +213,7 @@ describe('Similarity Threshold Provider', () => {
     ).toBe(initialLength + addedFunctions.length);
     expect(
       new Set(providers.similarityThresholds.getSimilarityThresholdFunctions())
-    ).toContain(new Set(addedFunctions));
+    ).toEqual(expect.arrayContaining(addedFunctions));
   });
 
   test('add adds functions (and get gets functions)', () => {
