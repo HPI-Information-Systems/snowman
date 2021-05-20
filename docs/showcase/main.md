@@ -14,7 +14,7 @@ When selecting a specfic matching solution data stewards have to take into accou
 Snowman provides an overview matrix with the most important kpis which helps to make a decision.
 
 First of all you have to create a new matching solution:
-![Screenshot1](../assets/add-matching-solution.png "Add matching solution")
+![Screenshot1](../assets/add-algorithm-with-values.png "Add matching solution")
 
 Then click on the tab "Benchmark" and select the action "KPI Decision Matrix".
 ![Screenshot2](../assets/benchmark-actions.png "Benchmark")

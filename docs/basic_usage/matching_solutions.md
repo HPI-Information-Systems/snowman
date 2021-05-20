@@ -1,25 +1,19 @@
 # Matching Solutions
 
-As a first step, a new user should register matching solutions with the tool, since it is compulsory for an experiment
-to be associated with a matching solution.
+After reading this document you will know how to add your matching solution to Snowman. Further you will know what you can do with matching solutions in the tool.
 
-## Add a solution
+## Adding a matching solution
 
-1. Open page "Matching solutions" from the sidebar on the left.
+1. Open the tab *Matching Solutions*.
+   - ![Matching Solutions tab](../assets/algorithms-tab.png "Matching Solutions tab")
+2. Click on the *+* button in the lower left corner of the screen.
+   - ![Add Matching Solution](../assets/add-algorithm.png "Add Matching Solution")
+3. Specify a short name and optionally a comprehensive description.
+4. Optionally, open the other sections to fill in more details about the matching solution.
+   - ![Add Matching Solution with values](../assets/add-algorithm-with-values.png "Add Matching Solution with values")
+5. Click on *Add*
 
-2. Add a new solution with the "+" button in the lower left corner of the screen.
+## Deleting a matching solution
 
-3. Specify a short name (without spaces if possible) and a comprehensive description.
-
-## Delete a solution
-
-If a solution was created by accident or is not required anymore, you can delete it. Keep in mind that you'll have to
-**delete all associated experiments first!**
-
-## Example
-
-Imagine you are running the Magellan data matching tool (open-source). It allows you to configure several aspects of how
-it operates and thereby a lot of customization is possible.
-
-For this use case, you'd only create one matching solution "Magellan" within the tool (use a general description, e.g. ML-based open-source approach). For each configuration, you can
-afterwards create a new experiment containing information on the configuration within its description.
+If a solution was created by accident or is not required anymore, you can delete it.
+To prevent accidential deletes, all experiments of the matching solution must be deleted first.

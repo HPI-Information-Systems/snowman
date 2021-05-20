@@ -1,43 +1,48 @@
 # Experiments
 
-A dataset can consist of multiple experiments. An experiment is thereby considered as a single run of a matching
-solution which produces an output set. To ease the workflow, experiments have to be labeled with the matching
-solution that was used. The description can contain additional information on how this exact result was achived - e.g.
-a list of configuration parameters, or the time spent labeling data.
+At the end of this page you will know how to add experiments to Snowman. Additionally you will know what you can do with experiments once they are in the tool.
 
-![Screenshot2](../assets/experiments-overview.png "Experiment selector")
+## Adding an experiment
 
-## Add an experiment
+1. Open the *Experiments* tab.
+   - ![Experiments tab](../assets/experiments-tab.png "Experiments Tab")
+2. Click on the *+* button in the lower left corner of the screen.
+   - ![Add Experiment](../assets/add-experiment.png "Add Experiment")
+3. Specify a short name and optionally a comprehensive description.
+4. Choose the dataset which this experiment deduplicates and the matching solution which created this experiment.
+5. Optionally, open the *Configuration Effort* and *Other KPIs* sections and fill in details.
+   - *Matching Solution Knowledge Level* measures how much you know about the matching solution.
+   - *Matching Solution HR Amount* measures how long you spent configuring the matching solution to produce this experiment.
+6. Select a file containing the output of the matching solution and [choose the correct import format](#import-formats).
+   - ![Add Experiment with values](../assets/add-experiment-with-values.png "Add Experiment with values")
+7. Click on *Add*.
+   - this process can take several minutes depending on the size of the experiment.
 
-1. Select a dataset.
-2. Open page "Experiments" from the sidebar on the left.
-3. Add a new experiment with the "+" button in the lower left corner of the screen.
-4. Specify a short and concise name, as well as a detailed description.
-5. Select a file containing the result set and choose the correct import format. _(see below)_
-6. Click on "Add experiment" - this process may take several minutes to complete as indexes have to be created!
+## Previewing an experiment
 
-## Edit an experiment
+You can preview the experiment by clicking on the telescope button on the bottom of the dataset card to make sure that the experiment was added successfully.
 
-After the initial experiment creation, you can still change some attributes of the dataset.
+![Preview Experiment](../assets/preview-experiment.png "Preview Experiment")
 
-**Attention:** To prevent inconsistencies, it is not possible to replace an experiment's record pairs once created!
+## Editing an experiment
 
-## Preview an experiment
+After the initial experiment creation, you can still change some attributes of the dataset. To open the experiment editor, click the leftmost button on the experiment card.
 
-Once records were uploaded, you can preview the records in the internal Snowman format.
+## Deleting an experiment
 
-## Selecting experiments
+To delete an experiment click the rightmost button on the experiment card.
 
-With the newest Snowman release, a new drag'n'drop UI was introduced.  
-Simply drag experiments either to the selected goldstandards or the selected experiments column. Depending on what you
-selected, the different benchmarking options will become (un)available. See section "Benchmarking" for details.
+## Specifying a similarity function
+
+To specify the similarity function for an experiment, click on the second button from the left on the experiment card.
+Now you can select the column which contains the similarity score.
 
 ## Import formats
 
-To ease the import process, Snowman understands several file formats out of the box. Those include:
+!!! info
+    The tool only accepts source files in **csv** format at the moment - so in case your source file is a Microsoft Excel file, you'll first have to export it to csv!
 
-**Attention:** The tool only accepts source files in **csv** format at the moment - so in case your source file is a Microsoft Excel file,
-you'll first have to export it to csv!
+To ease the import process, Snowman supports several file formats out of the box. Those include:
 
 ### Pilot
 

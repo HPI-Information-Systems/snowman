@@ -6,10 +6,10 @@ nav:
   - Basic usage:
       - Getting Started: basic_usage/getting_started.md
       - Concepts and Terminology: basic_usage/concepts.md
-      - Matching solutions: basic_usage/matching_solutions.md
-      - Workflow: basic_usage/workflow.md
       - Datasets: basic_usage/datasets.md
+      - Matching solutions: basic_usage/matching_solutions.md
       - Experiments: basic_usage/experiments.md
+      - Workflow: basic_usage/workflow.md
       - Benchmark: basic_usage/benchmark.md
   - Advanced setups:
       - Remote instances: advanced_setups/remote_instances.md
