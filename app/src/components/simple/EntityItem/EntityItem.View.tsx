@@ -5,6 +5,7 @@ import { entityItemIcon } from 'components/simple/EntityItem/EntityItemType';
 import { openOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
 import ReactTooltip from 'react-tooltip';
+import style from 'theme/style';
 import useTooltip from 'utils/useTooltipHook';
 
 const EntityItemView = ({
@@ -24,24 +25,38 @@ const EntityItemView = ({
       data-for="tooltipAllowHtml"
       data-tip={tooltip}
     >
-      <IonButton
-        onMouseOver={() => setOpen(false)}
-        onMouseOut={() => setOpen(true)}
-        className={styles.noPadding}
-        fill="clear"
-        onClick={(e) => {
-          openItem();
-          ReactTooltip.hide();
-          e.preventDefault();
-          e.stopPropagation();
-        }}
-      >
-        <IonIcon
-          icon={open ? entityItemIcon[itemType] : openOutline}
-          color="primarydark"
-          size="small"
-        />
-      </IonButton>
+      {openItem !== undefined ? (
+        <IonButton
+          onMouseOver={() => setOpen(false)}
+          onMouseOut={() => setOpen(true)}
+          className={styles.noPadding}
+          fill="clear"
+          onClick={(e) => {
+            openItem();
+            ReactTooltip.hide();
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+        >
+          <IonIcon
+            icon={open ? entityItemIcon[itemType] : openOutline}
+            color="primarydark"
+            size="small"
+          />
+        </IonButton>
+      ) : (
+        <IonButton
+          fill="clear"
+          className={style(styles.noPadding, styles.noOpacity)}
+          disabled
+        >
+          <IonIcon
+            icon={entityItemIcon[itemType]}
+            color="primarydark"
+            size="small"
+          />
+        </IonButton>
+      )}
       <IonLabel className={styles.paddingLeft}>{name}</IonLabel>
     </IonItem>
   );
