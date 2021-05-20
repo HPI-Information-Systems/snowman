@@ -9,7 +9,9 @@ nav:
       - Datasets: basic_usage/datasets.md
       - Matching solutions: basic_usage/matching_solutions.md
       - Experiments: basic_usage/experiments.md
-      - Workflow: basic_usage/workflow.md
+      - Workflow:
+          - Comparing matching solutions: basic_usage/workflow/comparing_matchingsolutions.md
+          - Evaluating experiments: basic_usage/workflow/evaluate_experiments.md
       - Benchmark: basic_usage/benchmark.md
   - Advanced setups:
       - Remote instances: advanced_setups/remote_instances.md
