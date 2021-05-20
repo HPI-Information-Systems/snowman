@@ -4,20 +4,22 @@
 <h1 align="center">Welcome to Snowman</h1>
 
 Have you ever gotten a newsletter twice? Probably - finding duplicates in data is a pretty difficult problem. Many
-different algorithms exist with different approaches and tradeoffs. However, not only finding duplicates is difficult
-but also finding a deduplication algorithm for a dataset or even just comparing two different deduplication solutions.
+different matching solutions exist with different approaches and tradeoffs. However, not only finding duplicates is difficult
+but also finding a deduplication solution for a dataset or even just comparing two different deduplication solutions.
 With our benchmark, we aim to solve exactly this challenge.
 
-_This tool is developed as part of a bachelor's project in collaboration with SAP SE._
+_Snowman is developed as part of a bachelor's project in collaboration with SAP SE._
 
-## Basic usage
+## Usage
 
-If you want to use our benchmark as a normal user, please consult the section `Basic usage` for details.
+If you want to use our benchmark, please consult the section `Basic usage` for details.
 
-## Development setup
+To use Snowman from your code or create a shared instance of Snowman, please go to the section `Advanced setups`.
 
-If you intend to contribute to our project, please take a look at the `Development setup` section. It includes some
-basic information how to get started.
+## Contributing
+
+If you intend to contribute to our project, please take a look at the `Development` section.
+It includes information on how to get started.
 
 ## Licenses
 

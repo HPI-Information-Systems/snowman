@@ -4,19 +4,20 @@ nav:
   - Home: index.md
   - Showcase: showcase/main.md
   - Basic usage:
-    - Introduction: basic_usage/introduction.md
-    - Matching solutions: basic_usage/matching_solutions.md
-    - Workflow: basic_usage/workflow.md
-    - Datasets: basic_usage/datasets.md
-    - Experiments: basic_usage/experiments.md
-    - Benchmark: basic_usage/benchmark.md
+      - Getting Started: basic_usage/getting_started.md
+      - Concepts and Terminology: basic_usage/concepts.md
+      - Matching solutions: basic_usage/matching_solutions.md
+      - Workflow: basic_usage/workflow.md
+      - Datasets: basic_usage/datasets.md
+      - Experiments: basic_usage/experiments.md
+      - Benchmark: basic_usage/benchmark.md
   - Advanced setups:
-    - Remote instances: advanced_setups/remote_instances.md
-    - Connect your code: advanced_setups/code_connection.md
+      - Remote instances: advanced_setups/remote_instances.md
+      - Connect your code: advanced_setups/code_connection.md
   - Development:
-    - Setup: dev_setup/introduction.md
-    - Contributing: dev_setup/contrib-knowledge.md
-    - REST API: ./swagger
+      - Setup: dev_setup/introduction.md
+      - Contributing: dev_setup/contrib-knowledge.md
+      - REST API: ./swagger
   - SIGMOD2021: sigmod2021.md
 
 extra_css:
