@@ -38,7 +38,7 @@ To upgrade Snowman to the latest version, first delete the folder with the old v
 Afterwards, simply follow the steps in [Setup](#setup) again.
 Necessary migration steps will automatically be applied to the stored data.
 
-## Next Steps
+## Next Step
 
 You now should have a working version of Snowman.
 As a next step we suggest for you to get familiar with the key concepts and terminology used throughout Snowman.
