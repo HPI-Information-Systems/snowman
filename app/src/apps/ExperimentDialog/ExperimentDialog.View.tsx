@@ -6,6 +6,7 @@ import {
   IonItemDivider,
   IonLabel,
   IonList,
+  IonNote,
   IonRange,
   IonTextarea,
 } from '@ionic/react';
@@ -186,33 +187,37 @@ const ExperimentDialogView = ({
           </IonItem>
         </>
       ) : null}
-      {isAddDialog ? (
-        <>
-          <IonItemDivider>
-            <IonLabel>UPLOAD CONTENT</IonLabel>
-          </IonItemDivider>
-          <IonItem>
-            <IonLabel position="fixed">File Format:</IonLabel>
-            <SelectableInput
-              allOptions={$enum(experimentFileFormatEnum).map(
-                (form) => form as string
-              )}
-              selection={[experimentFileFormat]}
-              onChange={(selection) => changeExperimentFileFormat(selection[0])}
-              instanceDescriptor="experimentDialog1"
-              allowMultiselect={false}
-            />
-          </IonItem>
-          <IonItem>
-            <IonLabel position="fixed">Source File:</IonLabel>
-            <FileInput
-              selectedFiles={selectedFiles}
-              onChange={changeSelectedFiles}
-              allowMultiple={false}
-              disabled={!isAddDialog}
-            />
-          </IonItem>
-        </>
+
+      <IonItemDivider>
+        <IonLabel>UPLOAD CONTENT</IonLabel>
+      </IonItemDivider>
+      <IonItem>
+        <IonLabel position="fixed">File Format:</IonLabel>
+        <SelectableInput
+          allOptions={$enum(experimentFileFormatEnum).map(
+            (form) => form as string
+          )}
+          selection={[experimentFileFormat]}
+          onChange={(selection) => changeExperimentFileFormat(selection[0])}
+          instanceDescriptor="experimentDialog1"
+          allowMultiselect={false}
+        />
+      </IonItem>
+      <IonItem>
+        <IonLabel position="fixed">Source File:</IonLabel>
+        <FileInput
+          selectedFiles={selectedFiles}
+          onChange={changeSelectedFiles}
+          allowMultiple={false}
+          disabled={!isAddDialog}
+        />
+      </IonItem>
+      {!isAddDialog ? (
+        <div className={styles.center}>
+          <IonNote color="medium">
+            Note: This option is disabled for experiment updates.
+          </IonNote>
+        </div>
       ) : null}
     </IonList>
     <div className={style(styles.center, styles.buttonRow)}>

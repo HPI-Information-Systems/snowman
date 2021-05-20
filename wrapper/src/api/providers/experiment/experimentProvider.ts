@@ -1,14 +1,8 @@
-import { NonSimilarityThresholdColumns } from 'snowman-library';
 import { Readable } from 'stream';
 
 import { databaseBackend, tables } from '../../database';
-import {
-  Experiment,
-  ExperimentId,
-  ExperimentValues,
-  FileResponse,
-  SimilarityThresholdFunctionDefinitionTypeEnum,
-} from '../../server/types';
+import { ExperimentValues, FileResponse } from '../../server/types';
+import { Experiment, ExperimentId } from '../../server/types';
 import {
   GetExperimentFileRequest,
   SetExperimentFileFormatEnum,
@@ -143,31 +137,8 @@ export class ExperimentProvider {
         storedExperiment.numberOfUploadedRecords = numberOfUploadedRecords;
         tables.meta.experiment.upsert([storedExperiment]);
       }
-
-      this.spawnSimilarityFunctionsForEachColumn(id);
-
       BenchmarkCache.invalidateExperiment(id);
     }, id);
-  }
-
-  private spawnSimilarityFunctionsForEachColumn(id: ExperimentId): void {
-    const columns = rawGetter(id)
-      .get(0, 0)
-      .header.filter((column) => !NonSimilarityThresholdColumns.has(column));
-
-    columns.forEach((aColumn: string) => {
-      providers.similarityThresholds.addSimilarityThresholdFunction({
-        similarityThresholdFunction: {
-          name: aColumn,
-          experimentId: id,
-          definition: {
-            type:
-              SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
-            similarityThreshold: aColumn,
-          },
-        },
-      });
-    });
   }
 
   private deleteExperimentFileNoChecks(id: ExperimentId): void {

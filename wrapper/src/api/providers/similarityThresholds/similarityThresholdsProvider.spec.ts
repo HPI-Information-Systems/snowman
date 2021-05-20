@@ -204,19 +204,19 @@ describe('Similarity Threshold Provider', () => {
   });
 
   test('list lists functions', () => {
-    const initialLength = providers.similarityThresholds.getSimilarityThresholdFunctions()
-      .length;
-    addFunctions(addedFunctions);
-
     expect(
       providers.similarityThresholds.getSimilarityThresholdFunctions().length
-    ).toBe(initialLength + addedFunctions.length);
-    expect(
-      providers.similarityThresholds.getSimilarityThresholdFunctions()
-    ).toEqual(expect.arrayContaining(addedFunctions));
+    ).toBe(0);
+    addFunctions(addedFunctions);
+    expect(new Set(addedFunctions)).toEqual(
+      new Set(providers.similarityThresholds.getSimilarityThresholdFunctions())
+    );
   });
 
   test('add adds functions (and get gets functions)', () => {
+    expect(
+      providers.similarityThresholds.getSimilarityThresholdFunctions().length
+    ).toBe(0);
     const [functionId] = addFunctions([addedFunctions[1]]);
     expect(
       providers.similarityThresholds.getSimilarityThresholdFunction({
