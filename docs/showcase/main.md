@@ -44,10 +44,10 @@ You can intersect multiple experiments of the same or different matching solutio
 In this example all pairs are displayed which belong to the goldstandard but not to hpi-run2. You could now investigate why hpi-run2 does not classify those pairs as duplicates and improve the matching solution accordingly.
 
 Furthermore it is possible to evaluate the experiments based on metrics like precision or recall:
-![Screenshot6](../assets/benchmark-nintersections.png "Benchmarking: n-Intersections")
+![Screenshot6](../assets/benchmark-nmetrics.png "Benchmarking: n-Intersections")
 
 If you want to investigate the behavior of one experiment more detailed you are able to explore the false positives, true positives, false negatives, and true negatives:
-![Screenshot7](../assets/benchmark-binaryMetrics.png "Benchmarking: Binary Metrics")
+![Screenshot7](../assets/benchmark-binary-metrics.png "Benchmarking: Binary Metrics")
 
 If your matching solution outputs a relevance score or similarity values next to the matching decision, Snowman can be used to find the best threshold for your use case.
 **Note that only pairs outputted by the matching solution are considered. Snowman does not calculate similarities or relevance scores itself.**
