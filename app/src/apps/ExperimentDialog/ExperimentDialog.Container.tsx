@@ -58,6 +58,8 @@ const mapStateToProps = (
   hrAmount: state.hrAmount,
   runtime: state.runtime,
   expandedSegments: state.expandedSegments,
+  allColumns: state.allColumns,
+  similarityColumn: state.similarityColumn,
 });
 
 const mapDispatchToProps = (

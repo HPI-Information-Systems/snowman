@@ -2,6 +2,7 @@ import {
   Experiment,
   ExperimentsApi,
   ExperimentValues,
+  FileResponse,
   SetExperimentFileRequest,
 } from 'api';
 import { ExperimentDialogActionTypes } from 'apps/ExperimentDialog/types/ExperimentDialogActionTypes';
@@ -9,6 +10,7 @@ import { ExperimentDialogModel } from 'apps/ExperimentDialog/types/ExperimentDia
 import { ExperimentSegmentTypeEnum } from 'apps/ExperimentDialog/types/ExperimentSegmentTypeEnum';
 import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
 import { doCloseDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
+import { NonSimilarityThresholdColumns } from 'snowman-library';
 import { MagicNotPossibleId } from 'structs/constants';
 import {
   SUCCESS_TO_CREATE_NEW_EXPERIMENT,
@@ -120,6 +122,14 @@ export const prefillDialog = (
     payload: anExperiment,
   });
 
+export const setAllColumns = (
+  allColumns: string[]
+): easyPrimitiveActionReturn<ExperimentDialogModel> =>
+  easyPrimitiveAction<ExperimentDialogModel>({
+    type: ExperimentDialogActionTypes.SET_ALL_COLUMNS,
+    payload: allColumns,
+  });
+
 export const onDialogClose = (
   dispatch: SnowmanDispatch<ExperimentDialogModel>,
   entityId: EntityId,
@@ -137,13 +147,29 @@ export const prepareUpdateDialog = (
 ): Promise<void> =>
   RequestHandler<void>(
     (): Promise<void> =>
-      new ExperimentsApi()
-        .getExperiment({
-          experimentId: entityId ?? MagicNotPossibleId,
-        })
-        .then((theExperiment: Experiment): void => {
-          dispatch(prefillDialog(theExperiment));
-        }),
+      Promise.all([
+        new ExperimentsApi()
+          .getExperiment({
+            experimentId: entityId ?? MagicNotPossibleId,
+          })
+          .then((theExperiment: Experiment): void => {
+            dispatch(prefillDialog(theExperiment));
+          }),
+        new ExperimentsApi()
+          .getExperimentFile({
+            experimentId: entityId ?? MagicNotPossibleId,
+            limit: 0,
+          })
+          .then((file: FileResponse): void => {
+            dispatch(
+              setAllColumns(
+                file.header.filter(
+                  (column) => !NonSimilarityThresholdColumns.has(column)
+                )
+              )
+            );
+          }),
+      ]).then(),
     undefined,
     true
   );

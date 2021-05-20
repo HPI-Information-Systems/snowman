@@ -6,7 +6,6 @@ import {
   IonItemDivider,
   IonLabel,
   IonList,
-  IonNote,
   IonRange,
   IonTextarea,
 } from '@ionic/react';
@@ -56,6 +55,8 @@ const ExperimentDialogView = ({
   selectedFiles,
   expandedSegments,
   toggleSegmentExpansion,
+  allColumns,
+  similarityColumn,
 }: ExperimentDialogProps): JSX.Element => (
   <>
     <IonList>
@@ -188,37 +189,52 @@ const ExperimentDialogView = ({
         </>
       ) : null}
 
-      <IonItemDivider>
-        <IonLabel>UPLOAD CONTENT</IonLabel>
-      </IonItemDivider>
-      <IonItem>
-        <IonLabel position="fixed">File Format:</IonLabel>
-        <SelectableInput
-          allOptions={$enum(experimentFileFormatEnum).map(
-            (form) => form as string
-          )}
-          selection={[experimentFileFormat]}
-          onChange={(selection) => changeExperimentFileFormat(selection[0])}
-          instanceDescriptor="experimentDialog1"
-          allowMultiselect={false}
-        />
-      </IonItem>
-      <IonItem>
-        <IonLabel position="fixed">Source File:</IonLabel>
-        <FileInput
-          selectedFiles={selectedFiles}
-          onChange={changeSelectedFiles}
-          allowMultiple={false}
-          disabled={!isAddDialog}
-        />
-      </IonItem>
-      {!isAddDialog ? (
-        <div className={styles.center}>
-          <IonNote color="medium">
-            Note: This option is disabled for experiment updates.
-          </IonNote>
-        </div>
-      ) : null}
+      {isAddDialog ? (
+        <>
+          <IonItemDivider>
+            <IonLabel>UPLOAD CONTENT</IonLabel>
+          </IonItemDivider>
+          <IonItem>
+            <IonLabel position="fixed">File Format:</IonLabel>
+            <SelectableInput
+              allOptions={$enum(experimentFileFormatEnum).map(
+                (form) => form as string
+              )}
+              selection={[experimentFileFormat]}
+              onChange={(selection) => changeExperimentFileFormat(selection[0])}
+              instanceDescriptor="experimentDialogFileFormat1"
+              allowMultiselect={false}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="fixed">Source File:</IonLabel>
+            <FileInput
+              selectedFiles={selectedFiles}
+              onChange={changeSelectedFiles}
+              allowMultiple={false}
+              disabled={!isAddDialog}
+            />
+          </IonItem>
+        </>
+      ) : (
+        <>
+          <IonItemDivider>
+            <IonLabel>SIMILARITY COLUMN:</IonLabel>
+          </IonItemDivider>
+          <IonItem>
+            <IonLabel position="fixed">Column:</IonLabel>
+            <SelectableInput
+              allOptions={allColumns}
+              selection={
+                similarityColumn !== undefined ? [similarityColumn] : []
+              }
+              onChange={(selection) => console.log('Column ', selection[0])}
+              instanceDescriptor="experimentDialogSimilarities1"
+              allowMultiselect={false}
+            />
+          </IonItem>
+        </>
+      )}
     </IonList>
     <div className={style(styles.center, styles.buttonRow)}>
       <IonButton

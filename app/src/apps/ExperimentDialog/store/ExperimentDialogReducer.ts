@@ -21,6 +21,8 @@ const initialState: ExperimentDialogModel = {
   hrAmount: undefined,
   runtime: undefined,
   expandedSegments: [],
+  allColumns: [],
+  similarityColumn: undefined,
 };
 
 const ExperimentDialogReducer = (
@@ -108,6 +110,11 @@ const ExperimentDialogReducer = (
           state.expandedSegments,
           action.payload as ExperimentSegmentTypeEnum
         ),
+      };
+    case ExperimentDialogActionTypes.SET_ALL_COLUMNS:
+      return {
+        ...state,
+        allColumns: action.payload as string[],
       };
     default:
       return state;

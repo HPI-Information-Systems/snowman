@@ -15,4 +15,6 @@ export interface ExperimentDialogModel {
   expertise: number | undefined;
   runtime: number | undefined;
   expandedSegments: ExperimentSegmentTypeEnum[];
+  allColumns: string[];
+  similarityColumn: string | undefined;
 }

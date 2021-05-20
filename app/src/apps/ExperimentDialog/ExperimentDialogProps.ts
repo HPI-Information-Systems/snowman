@@ -35,6 +35,8 @@ export interface ExperimentDialogStateProps {
   hrAmount: number | undefined;
   runtime: number | undefined;
   expandedSegments: ExperimentSegmentTypeEnum[];
+  allColumns: string[];
+  similarityColumn: string | undefined;
 }
 
 export type ExperimentDialogOwnProps = DialogProps;
