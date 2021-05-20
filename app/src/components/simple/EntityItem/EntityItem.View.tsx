@@ -5,6 +5,7 @@ import { entityItemIcon } from 'components/simple/EntityItem/EntityItemType';
 import { openOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
 import ReactTooltip from 'react-tooltip';
+import style from 'theme/style';
 import useTooltip from 'utils/useTooltipHook';
 
 const EntityItemView = ({
@@ -44,7 +45,11 @@ const EntityItemView = ({
           />
         </IonButton>
       ) : (
-        <IonButton fill="clear" className={styles.noPadding} disabled>
+        <IonButton
+          fill="clear"
+          className={style(styles.noPadding, styles.noOpacity)}
+          disabled
+        >
           <IonIcon
             icon={entityItemIcon[itemType]}
             color="primarydark"
