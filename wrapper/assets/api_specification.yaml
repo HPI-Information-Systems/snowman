@@ -2,14 +2,14 @@ openapi: 3.0.0
 info:
   contact:
     email: snowman@groups.sap.com
-    url: https://github.com
+    url: https://github.com/HPI-Information-Systems/snowman
   description: |
-    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms.
+    _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms.
   license:
     name: LICENSE (MIT)
-    url: https://github.com
+    url: https://github.com/HPI-Information-Systems/snowman/blob/main/LICENSE
   title: Snowman API
-  version: 1.0.0
+  version: 3.0.0
 servers:
 - url: '{protocol}://{server}/api/v1'
   variables:
@@ -27,6 +27,8 @@ tags:
   name: Datasets
 - description: Operations about experiments
   name: Experiments
+- description: Operations about similarity thresholds of experiments
+  name: Similarity Thresholds
 - description: Operations about comparing multiple experiments
   name: Benchmark
 paths:
@@ -53,7 +55,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AlgorithmValues'
-        description: Algorithm object which will be stored
         required: true
       responses:
         "201":
@@ -67,13 +68,13 @@ paths:
       summary: Creates a new algorithm
       tags:
       - Algorithm
+      x-codegen-request-body-name: algorithm
       x-eov-operation-handler: controllers/AlgorithmController
   /algorithms/{algorithmId}:
     delete:
       operationId: deleteAlgorithm
       parameters:
-      - description: The id of an algorithm
-        explode: false
+      - explode: false
         in: path
         name: algorithmId
         required: true
@@ -90,8 +91,7 @@ paths:
     get:
       operationId: getAlgorithm
       parameters:
-      - description: The id of an algorithm
-        explode: false
+      - explode: false
         in: path
         name: algorithmId
         required: true
@@ -114,8 +114,7 @@ paths:
     put:
       operationId: setAlgorithm
       parameters:
-      - description: The id of an algorithm
-        explode: false
+      - explode: false
         in: path
         name: algorithmId
         required: true
@@ -127,7 +126,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/AlgorithmValues'
-        description: updated Algorithm object
         required: true
       responses:
         "204":
@@ -137,6 +135,7 @@ paths:
       summary: Updates or creates an algorithm
       tags:
       - Algorithm
+      x-codegen-request-body-name: algorithm
       x-eov-operation-handler: controllers/AlgorithmController
   /datasets:
     get:
@@ -161,7 +160,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DatasetValues'
-        description: Metainformation of a dataset
         required: true
       responses:
         "201":
@@ -175,13 +173,13 @@ paths:
       summary: Creates a new dataset with metainformation
       tags:
       - Datasets
+      x-codegen-request-body-name: dataset
       x-eov-operation-handler: controllers/DatasetsController
   /datasets/{datasetId}:
     delete:
       operationId: deleteDataset
       parameters:
-      - description: The id of a dataset
-        explode: false
+      - explode: false
         in: path
         name: datasetId
         required: true
@@ -198,8 +196,7 @@ paths:
     get:
       operationId: getDataset
       parameters:
-      - description: The id of a dataset
-        explode: false
+      - explode: false
         in: path
         name: datasetId
         required: true
@@ -222,8 +219,7 @@ paths:
     put:
       operationId: setDataset
       parameters:
-      - description: The id of a dataset
-        explode: false
+      - explode: false
         in: path
         name: datasetId
         required: true
@@ -235,7 +231,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/DatasetValues'
-        description: updated Dataset object
         required: true
       responses:
         "204":
@@ -245,13 +240,13 @@ paths:
       summary: Updates or creates a dataset
       tags:
       - Datasets
+      x-codegen-request-body-name: dataset
       x-eov-operation-handler: controllers/DatasetsController
   /datasets/{datasetId}/file:
     delete:
       operationId: deleteDatasetFile
       parameters:
-      - description: The id of a dataset file
-        explode: false
+      - explode: false
         in: path
         name: datasetId
         required: true
@@ -270,8 +265,7 @@ paths:
         amount of rows. To only return the column names, pass startAt=0 and limit=0.
       operationId: getDatasetFile
       parameters:
-      - description: The id of a dataset file
-        explode: false
+      - explode: false
         in: path
         name: datasetId
         required: true
@@ -286,22 +280,22 @@ paths:
           default: 0
           type: integer
         style: form
-      - explode: true
+      - description: -1 returns all remaining records
+        explode: true
         in: query
         name: limit
         required: false
         schema:
           default: -1
-          description: -1 returns all remaining records
           type: integer
         style: form
-      - explode: true
+      - description: startAt and limit can be used without specifying sortBy (guarantees
+          same order of records even if not specified)
+        explode: true
         in: query
         name: sortBy
         required: false
         schema:
-          description: guarantees same order of records even if not specified (startAt,
-            limit can be used without specifying sortBy)
           example: first_name
           type: string
         style: form
@@ -321,8 +315,7 @@ paths:
     put:
       operationId: setDatasetFile
       parameters:
-      - description: The id of a dataset file
-        explode: false
+      - explode: false
         in: path
         name: datasetId
         required: true
@@ -338,8 +331,7 @@ paths:
           example: id
           type: string
         style: form
-      - description: The quote symbol used in the dataset
-        explode: true
+      - explode: true
         in: query
         name: quote
         required: true
@@ -347,8 +339,7 @@ paths:
           example: '"'
           type: string
         style: form
-      - description: The escape symbol used in the dataset
-        explode: true
+      - explode: true
         in: query
         name: escape
         required: true
@@ -356,8 +347,7 @@ paths:
           example: ''''
           type: string
         style: form
-      - description: The separator symbol used in the dataset
-        explode: true
+      - explode: true
         in: query
         name: separator
         required: true
@@ -370,7 +360,6 @@ paths:
           text/csv:
             schema:
               $ref: '#/components/schemas/CSVFile'
-        description: updated csv object
         required: true
       responses:
         "204":
@@ -380,6 +369,7 @@ paths:
       summary: Updates or creates a dataset file
       tags:
       - Datasets
+      x-codegen-request-body-name: file
       x-eov-operation-handler: controllers/DatasetsController
   /experiments:
     get:
@@ -404,7 +394,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ExperimentValues'
-        description: ExperimentObject which will be stored
         required: true
       responses:
         "201":
@@ -418,13 +407,13 @@ paths:
       summary: Creates a new Experiment
       tags:
       - Experiments
+      x-codegen-request-body-name: experiment
       x-eov-operation-handler: controllers/ExperimentsController
   /experiments/{experimentId}:
     delete:
       operationId: deleteExperiment
       parameters:
-      - description: The id of an experiment
-        explode: false
+      - explode: false
         in: path
         name: experimentId
         required: true
@@ -441,8 +430,7 @@ paths:
     get:
       operationId: getExperiment
       parameters:
-      - description: The id of an experiment
-        explode: false
+      - explode: false
         in: path
         name: experimentId
         required: true
@@ -465,8 +453,7 @@ paths:
     put:
       operationId: setExperiment
       parameters:
-      - description: The id of an experiment
-        explode: false
+      - explode: false
         in: path
         name: experimentId
         required: true
@@ -478,7 +465,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/ExperimentValues'
-        description: updated Experiment object
         required: true
       responses:
         "204":
@@ -488,19 +474,35 @@ paths:
       summary: Updates or creates an Experiment
       tags:
       - Experiments
+      x-codegen-request-body-name: experiment
       x-eov-operation-handler: controllers/ExperimentsController
   /experiments/{experimentId}/file:
     get:
       operationId: getExperimentFile
       parameters:
-      - description: The id of an experiment
-        explode: false
+      - explode: false
         in: path
         name: experimentId
         required: true
         schema:
           $ref: '#/components/schemas/ExperimentId'
         style: simple
+      - description: only use in combination with similarityThreshold
+        explode: true
+        in: query
+        name: similarityThresholdFunction
+        required: false
+        schema:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionId'
+        style: form
+      - description: only use in combination with similarityThresholdFunction
+        explode: true
+        in: query
+        name: similarityThreshold
+        required: false
+        schema:
+          type: number
+        style: form
       - explode: true
         in: query
         name: startAt
@@ -509,22 +511,22 @@ paths:
           default: 0
           type: integer
         style: form
-      - explode: true
+      - description: -1 returns all remaining records
+        explode: true
         in: query
         name: limit
         required: false
         schema:
           default: -1
-          description: -1 returns all remaining records
           type: integer
         style: form
-      - explode: true
+      - description: startAt and limit can be used without specifying sortBy (guarantees
+          same order of records even if not specified)
+        explode: true
         in: query
         name: sortBy
         required: false
         schema:
-          description: guarantees same order of records even if not specified (startAt,
-            limit can be used without specifying sortBy)
           example: first_name
           type: string
         style: form
@@ -544,15 +546,30 @@ paths:
     put:
       operationId: setExperimentFile
       parameters:
-      - description: The id of an experiment
-        explode: false
+      - explode: false
         in: path
         name: experimentId
         required: true
         schema:
           $ref: '#/components/schemas/ExperimentId'
         style: simple
-      - description: the format of the experiment file
+      - description: only use in combination with similarityThreshold
+        explode: true
+        in: query
+        name: similarityThresholdFunction
+        required: false
+        schema:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionId'
+        style: form
+      - description: only use in combination with similarityThresholdFunction
+        explode: true
+        in: query
+        name: similarityThreshold
+        required: false
+        schema:
+          type: number
+        style: form
+      - description: 'Documentation on the formats can be found here: https://hpi-information-systems.github.io/snowman/basic_usage/experiments/#import-formats'
         explode: true
         in: query
         name: format
@@ -572,76 +589,185 @@ paths:
           text/csv:
             schema:
               $ref: '#/components/schemas/CSVFile'
-        description: updated experiment file
         required: true
       responses:
         "204":
           description: No Content
         "400":
           description: Bad Request
-      summary: Creates an experiment file
+      summary: Creates an experiment file (cannot overwrite existing)
       tags:
       - Experiments
+      x-codegen-request-body-name: file
       x-eov-operation-handler: controllers/ExperimentsController
-  /benchmark/{experimentId1}/{experimentId2}/metrics:
+  /similarity-threshold-functions:
+    get:
+      operationId: getSimilarityThresholdFunctions
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SimilarityThresholdFunction'
+                type: array
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get all similarity threshold functions
+      tags:
+      - Similarity Thresholds
+      x-eov-operation-handler: controllers/SimilarityThresholdsController
+    post:
+      operationId: addSimilarityThresholdFunction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimilarityThresholdFunctionValues'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimilarityThresholdFunctionId'
+          description: Created
+        "400":
+          description: Bad Request
+      summary: Creates a new similarity threshold function
+      tags:
+      - Similarity Thresholds
+      x-codegen-request-body-name: similarityThresholdFunction
+      x-eov-operation-handler: controllers/SimilarityThresholdsController
+  /similarity-threshold-functions/{functionId}:
+    delete:
+      operationId: deleteSimilarityThresholdFunction
+      parameters:
+      - explode: false
+        in: path
+        name: functionId
+        required: true
+        schema:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionId'
+        style: simple
+      responses:
+        "204":
+          description: No Content
+      summary: Deletes a similarity threshold function
+      tags:
+      - Similarity Thresholds
+      x-eov-operation-handler: controllers/SimilarityThresholdsController
+    get:
+      operationId: getSimilarityThresholdFunction
+      parameters:
+      - explode: false
+        in: path
+        name: functionId
+        required: true
+        schema:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionId'
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SimilarityThresholdFunction'
+          description: OK
+        "404":
+          description: Not Found
+      summary: Get a similarity threshold function
+      tags:
+      - Similarity Thresholds
+      x-eov-operation-handler: controllers/SimilarityThresholdsController
+    put:
+      operationId: setSimilarityThresholdFunction
+      parameters:
+      - explode: false
+        in: path
+        name: functionId
+        required: true
+        schema:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionId'
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimilarityThresholdFunctionValues'
+        required: true
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+      summary: Updates or creates a similarity threshold function
+      tags:
+      - Similarity Thresholds
+      x-codegen-request-body-name: similarityThresholdFunction
+      x-eov-operation-handler: controllers/SimilarityThresholdsController
+  /benchmark/metrics:
     get:
       operationId: getBinaryMetrics
       parameters:
-      - description: The id of the groundTruth
-        explode: false
-        in: path
-        name: experimentId1
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
-      - description: The id of the predicted Experiment
-        explode: false
-        in: path
-        name: experimentId2
-        required: true
-        schema:
-          $ref: '#/components/schemas/ExperimentId'
-        style: simple
       - explode: true
         in: query
-        name: similarityThreshold_experiment1
+        name: groundTruthExperimentId
+        required: true
+        schema:
+          $ref: '#/components/schemas/ExperimentId'
+        style: form
+      - description: only use in combination with groundTruthSimilarityThreshold
+        explode: true
+        in: query
+        name: groundTruthSimilarityThresholdFunction
+        required: false
+        schema:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionId'
+        style: form
+      - description: only use in combination with groundTruthSimilarityThresholdFunction
+        explode: true
+        in: query
+        name: groundTruthSimilarityThreshold
         required: false
         schema:
           type: number
         style: form
       - explode: true
         in: query
-        name: similarityAttribute_experiment1
+        name: predictedExperimentId
+        required: true
+        schema:
+          $ref: '#/components/schemas/ExperimentId'
+        style: form
+      - description: only use in combination with predictedSimilarityThreshold
+        explode: true
+        in: query
+        name: predictedSimilarityThresholdFunction
         required: false
         schema:
-          type: string
+          $ref: '#/components/schemas/SimilarityThresholdFunctionId'
         style: form
-      - explode: true
+      - description: only use in combination with predictedSimilarityThresholdFunction
+        explode: true
         in: query
-        name: similarityThreshold_experiment2
+        name: predictedSimilarityThreshold
         required: false
         schema:
           type: number
-        style: form
-      - explode: true
-        in: query
-        name: similarityAttribute_experiment2
-        required: false
-        schema:
-          type: string
         style: form
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Metrics'
+                items:
+                  $ref: '#/components/schemas/Metric'
+                type: array
           description: OK
-        "403":
-          description: Forbidden
         "404":
-          description: Experiments not found
+          description: Not Found
       summary: Compares two experiments and returns binary metrics
       tags:
       - Benchmark
@@ -658,7 +784,8 @@ paths:
           default: 0
           type: integer
         style: form
-      - explode: true
+      - description: -1 returns all remaining records
+        explode: true
         in: query
         name: limit
         required: false
@@ -667,7 +794,7 @@ paths:
           type: integer
         style: form
       requestBody:
-        $ref: '#/components/requestBodies/ExperimentIntersectionConfiguration'
+        $ref: '#/components/requestBodies/ExperimentIntersection'
       responses:
         "200":
           content:
@@ -675,20 +802,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/FileResponse'
           description: OK
-        "403":
-          description: Forbidden
         "404":
-          description: Experiments not found
+          description: Not Found
       summary: intersects multiple experiments and returns the resulting records.
         This can be used to calculate the confusion-matrix.
       tags:
       - Benchmark
+      x-codegen-request-body-name: intersection
       x-eov-operation-handler: controllers/BenchmarkController
   /benchmark/experiment-intersection/count:
     post:
       operationId: calculateExperimentIntersectionCount
       requestBody:
-        $ref: '#/components/requestBodies/ExperimentIntersectionConfiguration'
+        $ref: '#/components/requestBodies/ExperimentIntersection'
       responses:
         "200":
           content:
@@ -696,47 +822,111 @@ paths:
               schema:
                 $ref: '#/components/schemas/ExperimentIntersectionCount'
           description: OK
-        "403":
-          description: Forbidden
         "404":
-          description: Experiments not found
-      summary: intersects multiple experiments and returns the counts of the number
-        of records. This can be used to calculate the confusion-matrix
+          description: Not Found
+      summary: Intersects multiple experiments and returns the count of pairs and
+        the count of rows. This can be used to calculate the confusion-matrix.
       tags:
       - Benchmark
+      x-codegen-request-body-name: intersection
       x-eov-operation-handler: controllers/BenchmarkController
-  /benchmark/experiment-intersection/pair-counts:
+  /benchmark/experiment-intersection/counts:
     post:
-      description: returns the count of pairs of all possible intersections of the
-        given experiments
-      operationId: calculateExperimentIntersectionPairCounts
+      description: Returns the pair and row counts of all possible intersections of
+        the given experiments.
+      operationId: calculateExperimentIntersectionCounts
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExperimentIntersectionPairCountsConfiguration'
+              items:
+                $ref: '#/components/schemas/ExperimentConfigItem'
+              type: array
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ExperimentIntersectionPairCounts'
+                items:
+                  $ref: '#/components/schemas/ExperimentIntersectionCount'
+                type: array
+          description: OK
+        "404":
+          description: Not Found
+      tags:
+      - Benchmark
+      x-codegen-request-body-name: experiments
+      x-eov-operation-handler: controllers/BenchmarkController
+  /benchmark/diagram:
+    post:
+      description: returns diagram data based on two metrics and multiple experiments
+      operationId: calculateDiagramData
+      parameters:
+      - description: metric to be visualised on the x-axis of the diagram
+        explode: true
+        in: query
+        name: xAxis
+        required: true
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/softKPIsAlgorithmEnum'
+          - $ref: '#/components/schemas/MetricsEnum'
+          - $ref: '#/components/schemas/softKPIsExperimentEnum'
+        style: form
+      - description: metric to be visualised on the y-axis of the diagram
+        explode: true
+        in: query
+        name: yAxis
+        required: true
+        schema:
+          anyOf:
+          - $ref: '#/components/schemas/softKPIsAlgorithmEnum'
+          - $ref: '#/components/schemas/MetricsEnum'
+          - $ref: '#/components/schemas/softKPIsExperimentEnum'
+        style: form
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object'
+        content:
+          application/json:
+            schema:
+              properties:
+                multipleExperiments:
+                  items:
+                    $ref: '#/components/schemas/DiagramExperimentItem'
+                  type: array
+                similarityThresholds:
+                  $ref: '#/components/schemas/ExperimentSimilarityConfig'
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiagramResponse'
           description: OK
         "403":
           description: Forbidden
         "404":
-          description: Experiments not found
+          description: Experiments or metrics not found
       tags:
       - Benchmark
+      x-codegen-request-body-name: diagram
       x-eov-operation-handler: controllers/BenchmarkController
 components:
   requestBodies:
-    ExperimentIntersectionConfiguration:
+    ExperimentIntersection:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ExperimentIntersectionConfiguration'
+            $ref: '#/components/schemas/ExperimentIntersection'
+      required: true
+    inline_object:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object'
       required: true
   schemas:
     AlgorithmId:
@@ -744,6 +934,34 @@ components:
       type: integer
     AlgorithmValues:
       example:
+        softKPIs:
+          integrationEffort:
+            installationEffort:
+              expertise: 0
+              hrAmount: 6
+            deploymentType:
+            - cloud
+            - cloud
+            useCase:
+            - merging
+            - merging
+            generalCosts: 1
+            solutionType:
+            - rulebased
+            - rulebased
+          configurationEffort:
+            interfaces:
+            - GUI
+            - GUI
+            matchingSolution:
+              expertise: 0
+              hrAmount: 6
+            domain:
+              expertise: 0
+              hrAmount: 6
+            supportedOSs:
+            - Windows
+            - Windows
         name: Magellan
         description: This is an open source python library
       properties:
@@ -754,6 +972,8 @@ components:
         description:
           example: This is an open source python library
           type: string
+        softKPIs:
+          $ref: '#/components/schemas/AlgorithmValues_softKPIs'
       required:
       - name
       type: object
@@ -800,6 +1020,11 @@ components:
       type: integer
     ExperimentValues:
       example:
+        softKPIs:
+          runtime: 0
+          effort:
+            expertise: 0
+            hrAmount: 6
         name: Experiment1
         description: This is an experiment using a fancy algorithm
         datasetId: 1
@@ -818,6 +1043,8 @@ components:
         algorithmId:
           example: 1
           type: integer
+        softKPIs:
+          $ref: '#/components/schemas/ExperimentValues_softKPIs'
       required:
       - algorithmId
       - datasetId
@@ -827,6 +1054,97 @@ components:
       allOf:
       - $ref: '#/components/schemas/Experiment_allOf'
       - $ref: '#/components/schemas/ExperimentValues'
+    SimilarityThresholdFunctionId:
+      type: integer
+    SimilarityThreshold:
+      type: string
+    SimilarityThresholdFunctionConstant:
+      type: number
+    SimilarityThresholdFunctionOperator:
+      properties:
+        left:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionDefinition'
+        right:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionDefinition'
+        operator:
+          enum:
+          - ADD
+          - SUBTRACT
+          - MULTIPLY
+          - DIVIDE
+          - POWER
+          - POW
+          - ATAN2
+          - LOG
+          - MOD
+          type: string
+      required:
+      - left
+      - operator
+      - right
+      type: object
+    SimilarityThresholdFunctionUnaryOperator:
+      properties:
+        func:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionDefinition'
+        operator:
+          enum:
+          - ACOS
+          - ACOSH
+          - ASIN
+          - ASINH
+          - ATAN
+          - ATANH
+          - CEIL
+          - CEILING
+          - COS
+          - COSH
+          - DEGREES
+          - EXP
+          - FLOOR
+          - LN
+          - LOG
+          - LOG10
+          - LOG2
+          - RADIANS
+          - SIN
+          - SINH
+          - SQRT
+          - TAN
+          - TANH
+          - TRUNC
+          type: string
+      required:
+      - func
+      - operator
+      type: object
+    SimilarityThresholdFunctionDefinition:
+      properties:
+        type:
+          enum:
+          - SimilarityThreshold
+          - Operator
+          - Constant
+          - UnaryOperator
+          type: string
+        similarityThreshold:
+          type: string
+        operator:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionOperator'
+        constant:
+          type: number
+        unaryOperator:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionUnaryOperator'
+      required:
+      - type
+      type: object
+    SimilarityThresholdFunctionValues:
+      allOf:
+      - $ref: '#/components/schemas/SimilarityThresholdFunctionValues_allOf'
+    SimilarityThresholdFunction:
+      allOf:
+      - $ref: '#/components/schemas/SimilarityThresholdFunction_allOf'
+      - $ref: '#/components/schemas/SimilarityThresholdFunctionValues'
     Metric:
       example:
         name: precision
@@ -834,12 +1152,15 @@ components:
         range:
         - 0
         - 1
+        id: id
         value: 0.75
         info: The meaningfulness of the f1 score is debated in the research community.
         infoLink: https://link.springer.com/article/10.1007/s11222-017-9746-6
       properties:
         name:
           example: precision
+          type: string
+        id:
           type: string
         formula:
           example: \frac{truePositives}{truePositives + falsePositives}
@@ -865,17 +1186,217 @@ components:
       required:
       - formula
       - name
-      - range
       - value
       type: object
-    Metrics:
+    ExperimentConfigItem:
+      example:
+        similarity:
+          func: 0
+          threshold: 6.027456183070403
+        experimentId: 1
+      properties:
+        experimentId:
+          example: 1
+          type: integer
+        similarity:
+          $ref: '#/components/schemas/ExperimentConfigItem_similarity'
+      required:
+      - experimentId
+      type: object
+    ExperimentIntersectionItem:
+      allOf:
+      - $ref: '#/components/schemas/ExperimentConfigItem'
+      - $ref: '#/components/schemas/ExperimentIntersectionItem_allOf'
+    ExperimentIntersection:
       items:
-        $ref: '#/components/schemas/Metric'
+        $ref: '#/components/schemas/ExperimentIntersectionItem'
       type: array
-    ExperimentIntersectionConfiguration:
+    ExperimentIntersectionCount:
+      example:
+        experiments:
+        - null
+        - null
+        numberRows: 5
+        numberPairs: 10
+      properties:
+        numberRows:
+          example: 5
+          type: integer
+        numberPairs:
+          example: 10
+          type: integer
+        experiments:
+          items:
+            $ref: '#/components/schemas/ExperimentIntersectionItem'
+          type: array
+      required:
+      - experiments
+      - numberPairs
+      - numberRows
+      type: object
+    EffortParts:
+      example:
+        expertise: 0
+        hrAmount: 6
+      properties:
+        expertise:
+          type: number
+        hrAmount:
+          type: number
+      type: object
+    ExperimentSimilarityConfig:
+      properties:
+        experimentId:
+          example: 1
+          type: integer
+        groundTruthId:
+          example: 1
+          type: integer
+        steps:
+          type: integer
+        func:
+          type: integer
+      required:
+      - experimentId
+      - func
+      - groundTruthId
+      - steps
+    DiagramExperimentItem:
+      properties:
+        experiment:
+          $ref: '#/components/schemas/ExperimentConfigItem'
+        groundTruth:
+          $ref: '#/components/schemas/ExperimentConfigItem'
+      required:
+      - experiment
+      type: object
+    DiagramExperiments:
       items:
-        $ref: '#/components/schemas/ExperimentIntersectionRequestExperiments'
+        $ref: '#/components/schemas/DiagramExperimentItem'
       type: array
+    DiagramCoordinates:
+      example:
+        x: 0.8008281904610115
+        y: 6.027456183070403
+        experimentId: 1
+        threshold: 5.962133916683182
+        funcId: 1
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+        funcId:
+          type: integer
+        experimentId:
+          example: 1
+          type: integer
+        threshold:
+          type: number
+      required:
+      - x
+      - "y"
+    softKPIsAlgorithmEnum:
+      enum:
+      - domainExpertise
+      - domainHrAmount
+      - domainManhattanDistanceBasedEffort
+      - domainHrAmountWeightedEffort
+      - domainMultiplyEffort
+      - domainExpertiseWeightedEffort
+      - matchingSolutionExpertise
+      - matchingSolutionHrAmount
+      - matchingSolutionManhattanDistanceBasedEffort
+      - matchingSolutionHrAmountWeightedEffort
+      - matchingSolutionMultiplyEffort
+      - matchingSolutionExpertiseWeightedEffort
+      - generalCosts
+      - installationExpertise
+      - installationHrAmount
+      - installationManhattanDistanceBasedEffort
+      - installationHrAmountWeightedEffort
+      - installationMultiplyEffort
+      - installationExpertiseWeightedEffort
+      type: string
+    softKPIsExperimentEnum:
+      enum:
+      - expertise
+      - hrAmount
+      - manhattanDistanceBasedEffort
+      - hrAmountWeightedEffort
+      - multiplyEffort
+      - expertiseWeightedEffort
+      - runtime
+      type: string
+    MetricsEnum:
+      enum:
+      - similarity
+      - falseDiscoveryRate
+      - falseNegativeRate
+      - falseOmissionRate
+      - falsePositiveRate
+      - negativePredictiveValue
+      - precision
+      - prevalenceThreshold
+      - recall
+      - specificity
+      - threatScore
+      - accuracy
+      - balancedAccuracy
+      - bookmakerInformedness
+      - fStarScore
+      - f1Score
+      - fowlkesMallowsIndex
+      - markedness
+      - matthewsCorrelationCoefficient
+      type: string
+    DiagramResponse:
+      example:
+        valueRange:
+        - 0
+        - 1
+        coordinates:
+        - x: 0.8008281904610115
+          y: 6.027456183070403
+          experimentId: 1
+          threshold: 5.962133916683182
+          funcId: 1
+        - x: 0.8008281904610115
+          y: 6.027456183070403
+          experimentId: 1
+          threshold: 5.962133916683182
+          funcId: 1
+        definitionRange:
+        - 0
+        - 1
+      properties:
+        coordinates:
+          items:
+            $ref: '#/components/schemas/DiagramCoordinates'
+          type: array
+        definitionRange:
+          example:
+          - 0
+          - 1
+          items:
+            type: number
+          maxItems: 2
+          minItems: 2
+          type: array
+        valueRange:
+          example:
+          - 0
+          - 1
+          items:
+            type: number
+          maxItems: 2
+          minItems: 2
+          type: array
+      required:
+      - coordinates
+    CSVFile:
+      format: binary
+      type: string
     FileResponse:
       example:
         data:
@@ -927,116 +1448,133 @@ components:
       - data
       - header
       type: object
-    ExperimentIntersectionCount:
-      example:
-        numberRows: 37
-        numberPairs: 10
+    inline_object:
       properties:
-        numberRows:
-          example: 37
-          type: integer
-        numberPairs:
-          example: 10
-          type: integer
-      required:
-      - numberPairs
-      - numberRows
-      type: object
-    ExperimentIntersectionPairCountsConfiguration:
-      items:
-        $ref: '#/components/schemas/ExperimentIntersectionPairCountsRequestExperiments'
-      type: array
-    ExperimentIntersectionPairCounts:
-      items:
-        $ref: '#/components/schemas/ExperimentIntersectionPairCountsItem'
-      type: array
-    ExperimentIntersectionPairCountsExperiments:
-      example:
-        predictedCondition: true
-        experimentId: 1
-      properties:
-        experimentId:
-          example: 1
-          type: integer
-        predictedCondition:
-          type: boolean
-      required:
-      - experimentId
-      - predictedCondition
-      type: object
-    ExperimentIntersectionPairCountsRequestExperiments:
-      example:
-        similarityAttribute: name_name_levenshtein
-        experimentId: 1
-        similarityScore: 0.9
-      properties:
-        experimentId:
-          example: 1
-          type: integer
-        similarityAttribute:
-          example: name_name_levenshtein
-          type: string
-        similarityScore:
-          example: 0.9
-          type: number
-      required:
-      - experimentId
-      type: object
-    ExperimentIntersectionRequestExperiments:
-      example:
-        predictedCondition: true
-        similarityAttribute: name_name_levenshtein
-        experimentId: 1
-        similarityScore: 0.9
-      properties:
-        experimentId:
-          example: 1
-          type: integer
-        predictedCondition:
-          type: boolean
-        similarityAttribute:
-          example: name_name_levenshtein
-          type: string
-        similarityScore:
-          example: 0.9
-          type: number
-      required:
-      - experimentId
-      - predictedCondition
-      type: object
-    ExperimentIntersectionPairCountsItem:
-      example:
-        experiments:
-        - predictedCondition: true
-          experimentId: 1
-        - predictedCondition: true
-          experimentId: 1
-        numberRows: 0
-        numberPairs: 0
-      properties:
-        experiments:
+        multipleExperiments:
           items:
-            $ref: '#/components/schemas/ExperimentIntersectionPairCountsExperiments'
+            $ref: '#/components/schemas/DiagramExperimentItem'
           type: array
-        numberPairs:
-          minimum: 0
-          type: integer
-        numberRows:
-          minimum: 0
-          type: integer
-      required:
-      - experiments
-      - numberPairs
-      - numberRows
+        similarityThresholds:
+          $ref: '#/components/schemas/ExperimentSimilarityConfig'
       type: object
-    CSVFile:
-      format: binary
-      type: string
+    AlgorithmValues_softKPIs_integrationEffort:
+      example:
+        installationEffort:
+          expertise: 0
+          hrAmount: 6
+        deploymentType:
+        - cloud
+        - cloud
+        useCase:
+        - merging
+        - merging
+        generalCosts: 1
+        solutionType:
+        - rulebased
+        - rulebased
+      properties:
+        installationEffort:
+          $ref: '#/components/schemas/EffortParts'
+        deploymentType:
+          items:
+            example: cloud
+            type: string
+          type: array
+        solutionType:
+          items:
+            example: rulebased
+            type: string
+          type: array
+        useCase:
+          items:
+            example: merging
+            type: string
+          type: array
+        generalCosts:
+          type: number
+      type: object
+    AlgorithmValues_softKPIs_configurationEffort:
+      example:
+        interfaces:
+        - GUI
+        - GUI
+        matchingSolution:
+          expertise: 0
+          hrAmount: 6
+        domain:
+          expertise: 0
+          hrAmount: 6
+        supportedOSs:
+        - Windows
+        - Windows
+      properties:
+        matchingSolution:
+          $ref: '#/components/schemas/EffortParts'
+        domain:
+          $ref: '#/components/schemas/EffortParts'
+        interfaces:
+          items:
+            example: GUI
+            type: string
+          type: array
+        supportedOSs:
+          items:
+            example: Windows
+            type: string
+          type: array
+      type: object
+    AlgorithmValues_softKPIs:
+      example:
+        integrationEffort:
+          installationEffort:
+            expertise: 0
+            hrAmount: 6
+          deploymentType:
+          - cloud
+          - cloud
+          useCase:
+          - merging
+          - merging
+          generalCosts: 1
+          solutionType:
+          - rulebased
+          - rulebased
+        configurationEffort:
+          interfaces:
+          - GUI
+          - GUI
+          matchingSolution:
+            expertise: 0
+            hrAmount: 6
+          domain:
+            expertise: 0
+            hrAmount: 6
+          supportedOSs:
+          - Windows
+          - Windows
+      properties:
+        integrationEffort:
+          $ref: '#/components/schemas/AlgorithmValues_softKPIs_integrationEffort'
+        configurationEffort:
+          $ref: '#/components/schemas/AlgorithmValues_softKPIs_configurationEffort'
+      type: object
     Algorithm_allOf:
       properties:
         id:
           example: 1
           type: integer
+        matchingSolutionEffort:
+          items:
+            $ref: '#/components/schemas/Metric'
+          type: array
+        domainEffort:
+          items:
+            $ref: '#/components/schemas/Metric'
+          type: array
+        installationEffort:
+          items:
+            $ref: '#/components/schemas/Metric'
+          type: array
       required:
       - id
       type: object
@@ -1051,6 +1589,18 @@ components:
       required:
       - id
       type: object
+    ExperimentValues_softKPIs:
+      example:
+        runtime: 0
+        effort:
+          expertise: 0
+          hrAmount: 6
+      properties:
+        effort:
+          $ref: '#/components/schemas/EffortParts'
+        runtime:
+          type: number
+      type: object
     Experiment_allOf:
       properties:
         id:
@@ -1059,6 +1609,50 @@ components:
         numberOfUploadedRecords:
           example: 2005
           type: integer
+        effort:
+          items:
+            $ref: '#/components/schemas/Metric'
+          type: array
       required:
       - id
+      type: object
+    SimilarityThresholdFunctionValues_allOf:
+      properties:
+        name:
+          type: string
+        experimentId:
+          example: 1
+          type: integer
+        definition:
+          $ref: '#/components/schemas/SimilarityThresholdFunctionDefinition'
+      required:
+      - definition
+      - experimentId
+      - name
+    SimilarityThresholdFunction_allOf:
+      properties:
+        id:
+          type: integer
+      required:
+      - id
+      type: object
+    ExperimentConfigItem_similarity:
+      example:
+        func: 0
+        threshold: 6.027456183070403
+      properties:
+        func:
+          type: integer
+        threshold:
+          type: number
+      required:
+      - func
+      - threshold
+      type: object
+    ExperimentIntersectionItem_allOf:
+      properties:
+        predictedCondition:
+          type: boolean
+      required:
+      - predictedCondition
       type: object

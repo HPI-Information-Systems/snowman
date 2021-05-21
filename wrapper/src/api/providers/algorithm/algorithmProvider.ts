@@ -1,5 +1,6 @@
-import { tables } from '../../database';
+import { databaseBackend, tables } from '../../database';
 import { Algorithm, AlgorithmId, AlgorithmValues } from '../../server/types';
+import { providers } from '..';
 import { AlgorithmConverter } from './util/converter';
 
 export class AlgorithmProvider {
@@ -16,6 +17,32 @@ export class AlgorithmProvider {
       {
         name: algorithm.name,
         description: algorithm.description,
+        installationExpertise:
+          algorithm.softKPIs?.integrationEffort?.installationEffort?.expertise,
+        installationHrAmount:
+          algorithm.softKPIs?.integrationEffort?.installationEffort?.hrAmount,
+        deploymentType: JSON.stringify(
+          algorithm.softKPIs?.integrationEffort?.deploymentType
+        ),
+        solutionType: JSON.stringify(
+          algorithm.softKPIs?.integrationEffort?.solutionType
+        ),
+        useCase: JSON.stringify(algorithm.softKPIs?.integrationEffort?.useCase),
+        generalCosts: algorithm.softKPIs?.integrationEffort?.generalCosts,
+        matchingSolutionExpertise:
+          algorithm.softKPIs?.configurationEffort?.matchingSolution?.expertise,
+        matchingSolutionHrAmount:
+          algorithm.softKPIs?.configurationEffort?.matchingSolution?.hrAmount,
+        domainExpertise:
+          algorithm.softKPIs?.configurationEffort?.domain?.expertise,
+        domainHrAmount:
+          algorithm.softKPIs?.configurationEffort?.domain?.hrAmount,
+        interfaces: JSON.stringify(
+          algorithm.softKPIs?.configurationEffort?.interfaces
+        ),
+        supportedOSs: JSON.stringify(
+          algorithm.softKPIs?.configurationEffort?.supportedOSs
+        ),
       },
     ])[0];
   }
@@ -34,25 +61,18 @@ export class AlgorithmProvider {
     ]);
   }
 
-  private algorithmUsages(id: AlgorithmId) {
-    return tables.meta.experiment.all({ algorithm: id });
-  }
-
-  private throwIfAlgorithmIsUsed(id: AlgorithmId) {
-    const usages = this.algorithmUsages(id);
-    if (usages.length > 0) {
-      const algorithm = this.getAlgorithm(id);
-      const experiments = usages
-        .map(({ id, name }) => `${name} (${id})`)
-        .join(', ');
-      throw new Error(
-        `The matching solution ${algorithm.name} (${algorithm.id}) is used by the experiments ${experiments}.`
-      );
-    }
-  }
-
   deleteAlgorithm(id: AlgorithmId): void {
-    this.throwIfAlgorithmIsUsed(id);
-    tables.meta.algorithm.delete({ id });
+    return databaseBackend().transaction(() => {
+      this.deleteExperimentsOfAlgorithm(id);
+      tables.meta.algorithm.delete({ id });
+    })();
+  }
+
+  private deleteExperimentsOfAlgorithm(id: AlgorithmId) {
+    for (const { id: experimentId } of tables.meta.experiment.all({
+      algorithm: id,
+    })) {
+      providers.experiment.deleteExperiment(experimentId);
+    }
   }
 }

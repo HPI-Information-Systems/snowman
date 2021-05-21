@@ -1,0 +1,20 @@
+.smallItemIcon {
+  margin-right: 8px !important;
+  font-size: medium;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.itemNoEndPad {
+  --inner-padding-end: 0;
+}
+
+.itemResetEndPad {
+  --inner-padding-end: 16px;
+}
+
+.itemNoBorder {
+  --border-style: none;
+}

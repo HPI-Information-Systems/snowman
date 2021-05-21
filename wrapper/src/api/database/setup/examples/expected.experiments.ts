@@ -1,4 +1,4 @@
-import { ExperimentConverter } from '../../../providers/experiment/experimentProvider/util/converter';
+import { ExperimentConverter } from '../../../providers/experiment/util/converter';
 import { Experiment } from '../../../server/types';
 import { idSorter } from '../../tools/idSorter';
 import { ExampleExperiments, exampleExperiments } from './experiments';

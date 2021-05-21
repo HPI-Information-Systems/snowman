@@ -3,11 +3,12 @@ import {
   AlgorithmValues,
   DatasetValues,
   ExperimentValues,
+  SetExperimentFileFormatEnum,
 } from '../../server/types';
 import { fileToReadable } from '../../tools/test/filtToReadable';
 import { AlgorithmProvider } from '../algorithm/algorithmProvider';
 import { DatasetProvider } from '../dataset/datasetProvider';
-import { ExperimentProvider } from './experimentProvider/experimentProvider';
+import { ExperimentProvider } from './experimentProvider';
 
 describe('ExperimentProvider', () => {
   let provider: ExperimentProvider;
@@ -80,6 +81,12 @@ describe('ExperimentProvider', () => {
           datasetId: addedDatasetIds[0],
           description: 'No dataset file',
           name: 'No dataset file',
+          softKPIs: {
+            effort: {
+              hrAmount: 3,
+            },
+            runtime: 5,
+          },
         },
       },
       {
@@ -88,6 +95,11 @@ describe('ExperimentProvider', () => {
           datasetId: addedDatasetIds[1],
           description: 'Dataset file',
           name: 'Dataset file',
+          softKPIs: {
+            effort: {
+              expertise: 3,
+            },
+          },
         },
       },
     ];
@@ -98,7 +110,7 @@ describe('ExperimentProvider', () => {
       if (experiment.file) {
         await provider.setExperimentFile(
           id,
-          'pilot',
+          SetExperimentFileFormatEnum.Pilot,
           fileToReadable(experiment.file)
         );
       }
@@ -134,6 +146,12 @@ describe('ExperimentProvider', () => {
       datasetId: addedDatasetIds[0],
       description: 'Another one',
       name: 'Another Name',
+      softKPIs: {
+        effort: {
+          hrAmount: 5,
+          expertise: 7,
+        },
+      },
     };
     const id = provider.addExperiment(addedExperiment);
     expect(provider.getExperiment(id)).toMatchObject({
@@ -161,11 +179,39 @@ describe('ExperimentProvider', () => {
       datasetId: addedDatasetIds[0],
       description: ' A new description',
       name: 'A neeew name',
+      softKPIs: {
+        effort: {
+          hrAmount: 5,
+          expertise: 7,
+        },
+      },
     };
     provider.setExperiment(addedExperimentIds[0], updatedExperiment);
     expect(provider.getExperiment(addedExperimentIds[0])).toMatchObject({
       ...updatedExperiment,
       id: addedExperimentIds[0],
+      effort: [
+        {
+          value: 12,
+          formula: '\\sum_{i}|a_i - b_i|',
+          name: 'manhattan distance-based effort',
+        },
+        {
+          value: 5.362540906271082,
+          formula: '$$e^{\\frac_{expertise}{100}} * HR-Amount$$',
+          name: 'expertise weighted effort',
+        },
+        {
+          value: 10.388921137180361,
+          formula: '$$e^{HR-Amount} * \\frac_{expertise}{100}$$',
+          name: 'HR-amount weighted effort',
+        },
+        {
+          value: 35,
+          formula: '$$expertise level * HR-Amount$$',
+          name: 'simple multiplied effort',
+        },
+      ],
       numberOfUploadedRecords: addedExperiments[0].numberOfUploadedRecords,
     });
   });
@@ -188,7 +234,7 @@ describe('ExperimentProvider', () => {
     ];
     await provider.setExperimentFile(
       addedExperimentIds[0],
-      'pilot',
+      SetExperimentFileFormatEnum.Pilot,
       fileToReadable(file)
     );
     expect(tables.experiment.experiment(addedExperimentIds[0]).exists()).toBe(
@@ -204,12 +250,12 @@ describe('ExperimentProvider', () => {
     await expect(() =>
       provider.setExperimentFile(
         addedExperimentIds[1],
-        'pilot',
+        SetExperimentFileFormatEnum.Pilot,
         fileToReadable(file)
       )
     ).rejects.toThrowError();
     expect(() =>
-      provider.getExperimentFile(addedExperimentIds[1])
+      provider.getExperimentFile({ experimentId: addedExperimentIds[1] })
     ).toThrowError();
   });
 });

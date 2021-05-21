@@ -1,0 +1,30 @@
+.center {
+  text-align: center;
+}
+
+.buttonHugh {
+  width: 160px;
+}
+
+.tagView {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.buttonPadding {
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.buttonRow {
+  padding-top: 25px;
+  padding-bottom: 15px;
+}
+
+.inputAlignRight {
+  text-align: right;
+}
+
+.inputUnit {
+  margin-left: -30px;
+}

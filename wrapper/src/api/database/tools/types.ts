@@ -2,7 +2,8 @@ import type {
   MakeOptional,
   NonUndefinedKeys,
   UndefinedKeys,
-} from '../../tools/types';
+} from 'snowman-library';
+
 import type { schemas } from '../schemas';
 
 export type DataTypes = 'NULL' | 'INTEGER' | 'REAL' | 'TEXT' | 'BLOB';

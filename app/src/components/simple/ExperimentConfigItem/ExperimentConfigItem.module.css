@@ -1,0 +1,5 @@
+.equals {
+  font-size: 1.09rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

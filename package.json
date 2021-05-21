@@ -2,7 +2,7 @@
   "name": "snowman",
   "author": "Snowman Team",
   "description": "Compare data matching algorithms with each other",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "license": "MIT",
   "repository": "https://github.com/HPI-Information-Systems/snowman",
   "scripts": {
@@ -12,7 +12,7 @@
     "eslint": "eslint --ext .ts,.tsx .",
     "csslint": "stylelint \"./app/src/**/*.css\"",
     "test": "cypress run",
-    "test-ci": "start-server-and-test start-test-stack http://localhost:8123 test",
+    "test-ci": "WAIT_ON_TIMEOUT=600000 start-server-and-test start-test-stack http://localhost:8123 test",
     "start-test-stack": "npm run release-app && npm run start-api --prefix ./wrapper",
     "release-app": "npm run build --prefix ./app && cpx -C \"./app/build/**/*\" ./wrapper/app/",
     "release": "npm run release-app && npm run release --prefix ./wrapper"
@@ -22,8 +22,6 @@
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "cpx": "^1.5.0",
-    "cypress": "^6.7.1",
-    "electron-rebuild": "^2.3.5",
     "eslint": "^7.15.0",
     "eslint-config-prettier": "^7.0.0",
     "eslint-config-react": "^1.1.7",
@@ -33,6 +31,7 @@
     "npm-license-crawler": "^0.2.1",
     "prettier": "^2.2.1",
     "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
     "start-server-and-test": "^1.12.0",
     "stylelint": "^13.8.0",
@@ -52,7 +51,7 @@
       "last 1 safari version"
     ]
   },
-  "dependencies": {
-    "react-dom": "^17.0.1"
+  "optionalDependencies": {
+    "cypress": "^6.7.1"
   }
 }

@@ -11,6 +11,6 @@ context('Add new algorithm', () => {
   });
 
   it('contains correct heading', () => {
-    cy.getActiveModal().find('h1.center').should('include.text', 'Add');
+    cy.getActiveModal().find('.toolbar-title-default > .title-default').should('include.text', 'Add');
   });
 });

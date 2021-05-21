@@ -13,6 +13,13 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import {
+    ExperimentValuesSoftKPIs,
+    ExperimentValuesSoftKPIsFromJSON,
+    ExperimentValuesSoftKPIsFromJSONTyped,
+    ExperimentValuesSoftKPIsToJSON,
+} from './';
+
 /**
  * 
  * @export
@@ -43,6 +50,12 @@ export interface ExperimentValues {
      * @memberof ExperimentValues
      */
     algorithmId: number;
+    /**
+     * 
+     * @type {ExperimentValuesSoftKPIs}
+     * @memberof ExperimentValues
+     */
+    softKPIs?: ExperimentValuesSoftKPIs;
 }
 
 export function ExperimentValuesFromJSON(json: any): ExperimentValues {
@@ -59,6 +72,7 @@ export function ExperimentValuesFromJSONTyped(json: any, ignoreDiscriminator: bo
         'description': !exists(json, 'description') ? undefined : json['description'],
         'datasetId': json['datasetId'],
         'algorithmId': json['algorithmId'],
+        'softKPIs': !exists(json, 'softKPIs') ? undefined : ExperimentValuesSoftKPIsFromJSON(json['softKPIs']),
     };
 }
 
@@ -75,6 +89,7 @@ export function ExperimentValuesToJSON(value?: ExperimentValues | null): any {
         'description': value.description,
         'datasetId': value.datasetId,
         'algorithmId': value.algorithmId,
+        'softKPIs': ExperimentValuesSoftKPIsToJSON(value.softKPIs),
     };
 }
 

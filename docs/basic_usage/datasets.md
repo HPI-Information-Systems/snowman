@@ -1,23 +1,40 @@
 # Datasets
 
-Each workflow occurs upon a single dataset. As a first step, you'll have to specify a dataset.
+At the end of this tutorial you will know why and how to add your datasets to Snowman. Additionally you will know what you can do with datasets once they are in the tool.
 
-![Screenshot1](../assets/datasets-overview.png "Dataset selector")
+## Adding a dataset
 
-## Add a dataset
+To add and analyse an experiment inside Snowman, you first have to add the dataset which should be deduplicated.
 
-1. Open page "Datasets" from the sidebar on the left.
-2. Add a new dataset with the "+" button in the lower left corner of the screen.
-3. Specify a short identifying name and a comprehensive description.
-4. If you do not want to upload the complete dataset, select "Skeleton only" as contents and specify the total amount of tuples by hand. This is important to be able to still calculate metrics.
-5. If you want to upload the dataset, select "Full upload" as contents, specify the csv parameters and select a file to upload.
-6. Click on "Add dataset" - this process may take several minutes to complete as indexes have to be created!
+1. Open the *Datasets* tab.
+   - ![Datasets Tab](../assets/datasets-tab.png)
+2. Click on the *+* button in the lower left corner of the screen.
+   - ![Add Dataset](../assets/add-dataset.png)
+3. Give the dataset a short name and optionally a comprehensive description. You can also add tags to the dataset at the bottom of the dialog.
+4. Select a CSV file containing the dataset and specify the CSV parameters.
+   - The ID column contains a unique alphanumeric identifier for every record.
+   - ![Add Dataset with values](../assets/add-dataset-with-values.png)
+5. If you do not have access to the dataset records, select *Record count only* as contents and specify the total amount of records in the dataset.
+6. Click on *Add* to add the dataset to Snowman.
+   - this process can take several minutes depending on the size of the dataset.
+7. You should now see your dataset in the Datasets tab
+   - ![Datasets Tab after upload](../assets/datasets-tab-after-upload.png)
 
-## Edit a dataset
+## Previewing a dataset
 
-After the initial dataset creation, you can still change some attributes of the dataset. Additionally, you are able to
-replace the uploaded file's content.
+You can preview the dataset by clicking on the telescope button on the bottom of the dataset card to make sure that the dataset was added successfully.
 
-## Preview a dataset
+- ![Preview Dataset](../assets/preview-dataset.png)
 
-Once records were uploaded, you can preview the records in the internal Snowman format.
+!!! info
+    **Pro Tip:** Click on the button in the top right corner of any table (which appears when the mouse is over the table) to open the table in a new window.
+
+- ![Preview Dataset large](../assets/preview-dataset-large.png)
+
+## Editing a dataset
+
+After the initial dataset creation, you can still change some attributes of the dataset. To open the dataset editor, click the leftmost button on the dataset card.
+
+## Deleting a dataset
+
+To delete a dataset click the rightmost button on the dataset card. **Be aware that all experiments belonging to this dataset will automatically be deleted.**

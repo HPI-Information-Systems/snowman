@@ -4,7 +4,7 @@ Cypress.Commands.add('visitRootPage', () => {
 
 Cypress.Commands.add('visitAlgorithmsPage', () => {
   cy.visitRootPage();
-  cy.get('.list-md').contains('Matching Solutions').click();
+  cy.get('ion-buttons > ion-button').contains('Matching Solutions').click();
 })
 Cypress.Commands.add('isAlgorithmsPage', () => {
   cy.get(
@@ -14,10 +14,20 @@ Cypress.Commands.add('isAlgorithmsPage', () => {
 
 Cypress.Commands.add('visitDatasetsPage', () => {
   cy.visitRootPage();
-  cy.get('.list-md').contains('Datasets').click();
+  cy.get('ion-buttons > ion-button').contains('Datasets').click();
 })
 Cypress.Commands.add('isDatasetsPage', () => {
   cy.get(
     '#mainViewContentId > .header-md > .toolbar-title-default > .title-default'
-  ).should('include.text', 'Dataset Selector');
+  ).should('include.text', 'Datasets');
+})
+
+Cypress.Commands.add('visitExperimentsPage', () => {
+  cy.visitRootPage();
+  cy.get('ion-buttons > ion-button').contains('Experiments').click();
+})
+Cypress.Commands.add('isExperimentsPage', () => {
+  cy.get(
+      '#mainViewContentId > .header-md > .toolbar-title-default > .title-default'
+  ).should('include.text', 'Experiments');
 })

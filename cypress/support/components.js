@@ -1,5 +1,5 @@
 Cypress.Commands.add('getActiveModal', () =>
-  cy.get('div.ion-page > div.modal-content')
+  cy.get('div.modal-wrapper > div.ion-page > div')
 )
 
 Cypress.Commands.add('getAddFab', () =>

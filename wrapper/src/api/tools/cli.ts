@@ -8,6 +8,7 @@ interface CommandLineArguments extends dashdash.Results {
   port: number;
   headless: boolean;
   help: boolean;
+  limitMemory: number;
 }
 
 export const STORAGE_DIRECTORY_CLI_FLAG = 'storageDirectory';
@@ -64,6 +65,13 @@ export const cliOptions: dashdash.OptionWithoutAliases[] = [
     type: 'bool',
     default: (false as unknown) as string,
     help: 'Shows this help message.',
+  },
+  {
+    name: 'limitMemory',
+    type: 'number',
+    default: (Number.POSITIVE_INFINITY as unknown) as string,
+    help:
+      'If present, limit the amount of memory (RAM). The allocated memory grows linear with this number. Incrementing the amount by one will increase the maximum amount of memory by a few bytes to a few hundred bytes.',
   },
 ];
 

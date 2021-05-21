@@ -4,6 +4,17 @@ import * as service from '../services/BenchmarkService';
 import { Request } from '../types/util';
 import { Controller } from './Controller';
 
+export async function calculateDiagramData(
+  request: Request,
+  response: Response
+): Promise<void> {
+  await Controller.handleRequest(
+    request,
+    response,
+    service.calculateDiagramData
+  );
+}
+
 export async function calculateExperimentIntersectionCount(
   request: Request,
   response: Response
@@ -26,14 +37,14 @@ export async function calculateExperimentIntersectionRecords(
   );
 }
 
-export async function calculateExperimentIntersectionPairCounts(
+export async function calculateExperimentIntersectionCounts(
   request: Request,
   response: Response
 ): Promise<void> {
   await Controller.handleRequest(
     request,
     response,
-    service.calculateExperimentIntersectionPairCounts
+    service.calculateExperimentIntersectionCounts
   );
 }
 

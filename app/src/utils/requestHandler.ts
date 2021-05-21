@@ -4,8 +4,8 @@ import {
   showLoading,
   showToast,
   unregisterOngoingRequest,
-} from 'store/actions/GlobalIndicatorActions';
-import { SnowmanDispatch } from 'store/messages';
+} from 'apps/SnowmanApp/store/ActionLogicActions';
+import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { UNKNOWN_ERROR } from 'structs/statusMessages';
 import { ToastType } from 'types/ToastTypes';
 
@@ -15,6 +15,8 @@ export const unwrapError = async (error: unknown): Promise<string> => {
     return (await error.text()) ?? UNKNOWN_ERROR;
   } else if (typeof error === 'string') {
     return error;
+  } else if (error instanceof Error) {
+    return `${error.name}: ${error.message}`;
   } else {
     return UNKNOWN_ERROR;
   }
@@ -22,29 +24,30 @@ export const unwrapError = async (error: unknown): Promise<string> => {
 
 const RequestHandler = async <T = void>(
   wrapped: () => Promise<T>,
-  dispatch: SnowmanDispatch,
   successMessage?: string,
   shouldShowLoadingBlocker?: boolean
 ): Promise<T> => {
-  if (shouldShowLoadingBlocker) dispatch(showLoading());
-  dispatch(registerOngoingRequest());
-  return wrapped()
+  if (shouldShowLoadingBlocker) SnowmanAppDispatch(showLoading());
+  SnowmanAppDispatch(registerOngoingRequest());
+  return (async () => wrapped())()
     .then(
       (wrappedReturn: T): T => {
         if (successMessage !== undefined)
-          dispatch(showToast(successMessage, ToastType.Success));
+          SnowmanAppDispatch(showToast(successMessage, ToastType.Success));
         return wrappedReturn;
       }
     )
     .catch(
       async (error: unknown): Promise<never> => {
-        dispatch(showToast(await unwrapError(error), ToastType.Error));
+        SnowmanAppDispatch(
+          showToast(await unwrapError(error), ToastType.Error)
+        );
         throw Error;
       }
     )
     .finally((): void => {
-      dispatch(unregisterOngoingRequest());
-      if (shouldShowLoadingBlocker) dispatch(hideLoading());
+      SnowmanAppDispatch(unregisterOngoingRequest());
+      if (shouldShowLoadingBlocker) SnowmanAppDispatch(hideLoading());
     });
 };
 

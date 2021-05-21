@@ -14,7 +14,7 @@ The benchmark is split into three separate packages:
 2. install a C++ compiler and add it to your PATH
    - the easiest way to accomplish this on Windows is installing the [VisualStudio BuildTools for C++](https://visualstudio.microsoft.com/de/downloads/) (+ reboot)
 3. install [Python3](https://www.python.org/) for your distribution
-4. Run `npm install` in `./`, `./app` and `./wrapper`
+4. run `npm install` in `./`, `./app` and `./wrapper`
 
 Python3 and C++ are required to build the native extensions for sqlite3.
 
@@ -29,7 +29,7 @@ If you want to start the electron wrapper:
 
 - run `npm run release-app` in `./` to build and copy the app to `./wrapper`
 - run `npm run erebuild` in `./wrapper` to recompile the dependencies to the NodeJS version of electron
-- run `npm run start` in `./wrapper` to
+- run `npm run start` in `./wrapper` to start backend and frontend inside electron
 - run `npm run rebuild` in `./wrapper` to recompile the dependencies back to the global NodeJS version
 
 ### VSCode
@@ -45,10 +45,12 @@ Run the `Start Stack` compound to start frontend and backend and open Chrome. Yo
 
 - run `npm run lint` or `npm run lint-fix` in `./` to lint the project
 - run `npm run test` in `./` (integration tests), `./app` (frontend tests) and `./wrapper` (backend tests) to test the project
+  - the integration tests require a running instance of the backend and the frontend
+  - use `npm run test-ci` to automatically start frontend and backend before running the integration tests
 
 ## Backend API
 
-The backend API can also be reached directly. Have a look at our [REST API specification](../swagger/index.html) for details.
+The backend API can also be reached directly. Have a look at our [REST API specification](../openapi) for details.
 
 ## Command Line Arguments
 
@@ -65,7 +67,9 @@ The backend supports the following command line arguments:
   - default: `8123`
 - `--headless`: If present, does not show the UI but starts the API directly.
   - default: not present
-
+- `--limitMemory 100000000`: If present, limit the amount of memory (RAM). The allocated memory grows linear with this number. Incrementing the amount by one will increase the maximum amount of memory by a few bytes to a few hundred bytes.
+  - default: not present
+  
 Those arguments can be passed to
 
 - `npm run start` and `npm run start-api` in `./wrapper` (*do not forget to use `--` to separate the `npm` command and the arguments*)

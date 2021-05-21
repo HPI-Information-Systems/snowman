@@ -1,4 +1,4 @@
-import { DatasetConverter } from '../../../providers/dataset/datasetProvider/util/converter';
+import { DatasetConverter } from '../../../providers/dataset/util/converter';
 import { Dataset } from '../../../server/types';
 import { idSorter } from '../../tools/idSorter';
 import { ExampleDatasets, exampleDatasets } from './datasets';

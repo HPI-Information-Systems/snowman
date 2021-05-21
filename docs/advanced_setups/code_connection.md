@@ -1,6 +1,6 @@
-# Connect your code
+# Connect your Code
 
-To more easily pipe results from your code into Snowman, you can make use of its [REST API](../swagger/index.html).
+To more easily pipe results from your code into Snowman, you can make use of its [REST API](../openapi).
 The following guide will outline the necessary steps and give you a brief introduction.
 
 ## Snowman API
@@ -8,16 +8,17 @@ The following guide will outline the necessary steps and give you a brief introd
 Whenever a local Snowman instance is running, the API is listening at `http://localhost:8123/api` (can be [configured via command line arguments](../dev_setup/introduction.md#command-line-arguments)).
 This interface is also used by the Snowman frontend.
 
-**Be advised: We have not yet implemented any security features or authorization.**
-That means every process with access to the host is able to access the API.
-Progress is tracked in issue [#107](https://github.com/HPI-Information-Systems/snowman/issues/107).
+!!! warning
+    **Be advised: We have not yet implemented any security features or authorization.**
+    That means every process with access to the host is able to access the API.
+    Progress is tracked in issue [#107](https://github.com/HPI-Information-Systems/snowman/issues/107).
 
 You can upload results in two steps:
 
 1. Create a new experiment.
 2. Upload data to it.
 
-## Use case
+## Use Case
 
 In this example, we want to export our results from a python script running a ML matching solution. Consider the following code:
 
@@ -51,7 +52,7 @@ the API is able to understand - in this case, the [`pilot`](/basic_usage/experim
 
 It remains to upload the csv data.
 
-## Upload results
+## Upload Results
 
 As outlined above, this procedure consists of two steps.
 

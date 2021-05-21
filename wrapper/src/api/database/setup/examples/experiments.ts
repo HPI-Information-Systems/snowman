@@ -1,18 +1,21 @@
 import path from 'path';
+import { assertType } from 'snowman-library';
 
 import { DATABASE_SETUP_DIR } from '../../../config';
-import { getProviders } from '../../../providers';
+import { providers } from '../../../providers';
 import {
-  ExperimentFileFormat,
   ExperimentId,
   ExperimentValues,
+  SetExperimentFileFormatEnum,
 } from '../../../server/types';
 import { readFile } from '../../../tools/readFile';
-import { assertType } from '../../../tools/types';
 import { exampleAlgorithms } from './algorithms';
 import { exampleDatasets } from './datasets';
 
-const EXAMPLE_EXPERIMENT_DIR = path.join(DATABASE_SETUP_DIR, 'experiments');
+export const EXAMPLE_EXPERIMENT_DIR = path.join(
+  DATABASE_SETUP_DIR,
+  'experiments'
+);
 
 export type ExampleExperiments = {
   [key: string]: {
@@ -20,7 +23,7 @@ export type ExampleExperiments = {
     id: ExperimentId;
     file?: {
       path: string;
-      format: ExperimentFileFormat;
+      format: SetExperimentFileFormatEnum;
       numberOfPairs: number;
     };
   };
@@ -29,7 +32,7 @@ export type ExampleExperiments = {
 export async function loadExampleExperiments(
   experiments: ExampleExperiments
 ): Promise<void> {
-  const experimentProvider = getProviders().experiment;
+  const experimentProvider = providers.experiment;
   for (const { id, meta, file } of Object.values(experiments)) {
     experimentProvider.setExperiment(id, meta);
     if (file) {
@@ -53,7 +56,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -1,
     file: {
-      format: 'pilot',
+      format: SetExperimentFileFormatEnum.Pilot,
       path: path.join(
         EXAMPLE_EXPERIMENT_DIR,
         'hpi_restaurants_goldstandard.csv'
@@ -70,7 +73,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -2,
     file: {
-      format: 'pilot',
+      format: SetExperimentFileFormatEnum.Pilot,
       path: path.join(EXAMPLE_EXPERIMENT_DIR, 'hpi_restaurants_examplerun.csv'),
       numberOfPairs: 100,
     },
@@ -85,7 +88,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -3,
     file: {
-      format: 'sigmod2021',
+      format: SetExperimentFileFormatEnum.Sigmod2021,
       path: path.join(
         EXAMPLE_EXPERIMENT_DIR,
         'sigmod_notebooktoy_goldstandard.csv'
@@ -103,7 +106,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -4,
     file: {
-      format: 'sigmod2021',
+      format: SetExperimentFileFormatEnum.Sigmod2021,
       path: path.join(
         EXAMPLE_EXPERIMENT_DIR,
         'sigmod_notebook_goldstandard.csv'
@@ -121,7 +124,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -5,
     file: {
-      format: 'pilot',
+      format: SetExperimentFileFormatEnum.Pilot,
       path: path.join(
         EXAMPLE_EXPERIMENT_DIR,
         'magellan_songs_goldstandard.csv'
@@ -139,7 +142,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -6,
     file: {
-      format: 'pilot',
+      format: SetExperimentFileFormatEnum.Pilot,
       path: path.join(EXAMPLE_EXPERIMENT_DIR, 'freedb_cds_goldstandard.csv'),
       numberOfPairs: 300,
     },
@@ -153,7 +156,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -7,
     file: {
-      format: 'pilot',
+      format: SetExperimentFileFormatEnum.Pilot,
       path: path.join(EXAMPLE_EXPERIMENT_DIR, 'freedb_cds_examplerun.csv'),
       numberOfPairs: 124,
     },
@@ -168,7 +171,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -8,
     file: {
-      format: 'pilot',
+      format: SetExperimentFileFormatEnum.Pilot,
       path: path.join(EXAMPLE_EXPERIMENT_DIR, 'hpi_cora_goldstandard.csv'),
       numberOfPairs: 64578,
     },
@@ -182,7 +185,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -9,
     file: {
-      format: 'pilot',
+      format: SetExperimentFileFormatEnum.Pilot,
       path: path.join(EXAMPLE_EXPERIMENT_DIR, 'hpi_cora_examplerun.csv'),
       numberOfPairs: 767,
     },
@@ -197,7 +200,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -10,
     file: {
-      format: 'sigmod2021',
+      format: SetExperimentFileFormatEnum.Sigmod2021,
       path: path.join(
         EXAMPLE_EXPERIMENT_DIR,
         'sigmod_notebooklarge_goldstandard.csv'
@@ -215,7 +218,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     id: -11,
     file: {
-      format: 'sigmod2021',
+      format: SetExperimentFileFormatEnum.Sigmod2021,
       path: path.join(
         EXAMPLE_EXPERIMENT_DIR,
         'sigmod_altosight_goldstandard.csv'

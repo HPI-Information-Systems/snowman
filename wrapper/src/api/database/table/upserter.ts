@@ -1,6 +1,4 @@
-import { Statement } from 'better-sqlite3';
-
-import { Cache } from '../../tools/cache';
+import { BasicCache } from '../../tools/cache';
 import { databaseBackend } from '../setup/backend';
 import type {
   BasicDataType,
@@ -11,8 +9,8 @@ import type {
 import type { Table } from './table';
 
 export class TableUpserter<Schema extends TableSchema> {
-  protected readonly statementCache = new Cache((columns: string[]) =>
-    this.createInsertStatement(columns)
+  protected readonly statementCache = new BasicCache((statement: string) =>
+    databaseBackend().prepare<BasicDataType[]>(statement)
   );
   protected readonly cachedRows: (() => InsertColumnValues<
     Schema['columns']
@@ -21,15 +19,15 @@ export class TableUpserter<Schema extends TableSchema> {
   constructor(protected readonly table: Table<Schema>) {}
 
   upsert(rows: InsertColumnValues<Schema['columns']>[]): number[] {
-    const insertedRowIds: number[] = [];
-    databaseBackend().transaction(() => {
+    return databaseBackend().transaction(() => {
+      const insertedRowIds: number[] = [];
       for (const row of rows) {
         const columns = Object.keys(row)
           .filter((column) => column !== undefined)
           .sort() as (string & keyof typeof row)[];
         insertedRowIds.push(
           +this.statementCache
-            .get(columns)
+            .get(this.createInsertStatement(columns))
             .run(
               ...(columns.map(
                 (column) => row[column] ?? null
@@ -37,8 +35,8 @@ export class TableUpserter<Schema extends TableSchema> {
             ).lastInsertRowid
         );
       }
+      return insertedRowIds;
     })();
-    return insertedRowIds;
   }
 
   batchUpsert(
@@ -57,18 +55,16 @@ export class TableUpserter<Schema extends TableSchema> {
   }
 
   flushBatchUpsert(): number[] {
-    let rowIds: number[];
-    databaseBackend().transaction(() => {
-      rowIds = this.upsert(this.cachedRows.map((rowGetter) => rowGetter()));
+    return databaseBackend().transaction(() => {
+      const rowIds = this.upsert(
+        this.cachedRows.map((rowGetter) => rowGetter())
+      );
+      this.cachedRows.length = 0;
+      return rowIds;
     })();
-    this.cachedRows.length = 0;
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return rowIds!;
   }
 
-  private createInsertStatement(
-    columns: string[]
-  ): Statement<BasicDataType<DataTypes>[]> {
+  private createInsertStatement(columns: string[]): string {
     let insertStatement = `INSERT OR REPLACE INTO ${this.table}`;
     if (columns.length === 0) {
       insertStatement += ` DEFAULT VALUES`;
@@ -76,6 +72,6 @@ export class TableUpserter<Schema extends TableSchema> {
       insertStatement += `(${columns.map((column) => '"' + column + '"')})
                    VALUES (${columns.map(() => '?')})`;
     }
-    return databaseBackend().prepare<BasicDataType[]>(insertStatement);
+    return insertStatement;
   }
 }

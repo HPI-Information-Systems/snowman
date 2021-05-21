@@ -2,7 +2,7 @@
 /* eslint-disable */
 /**
  * Snowman API
- * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research.  With snowman, developers and researchers will be able to compare the performance of different data matching  solutions or improve new algorithms. 
+ * _This document describes the REST API of the snowman data matching benchmark tool._ Comparing data matching algorithms is still an unsolved topic in both industry and research. With snowman, developers and researchers will be able to compare the performance of different data matching solutions or improve new algorithms. 
  *
  * The version of the OpenAPI document: 1.0.0
  * Contact: snowman@groups.sap.com
@@ -27,7 +27,7 @@ import {
 } from '../models';
 
 export interface AddExperimentRequest {
-    experimentValues: ExperimentValues;
+    experiment: ExperimentValues;
 }
 
 export interface DeleteExperimentRequest {
@@ -40,6 +40,8 @@ export interface GetExperimentRequest {
 
 export interface GetExperimentFileRequest {
     experimentId: number;
+    similarityThresholdFunction?: number;
+    similarityThreshold?: number;
     startAt?: number;
     limit?: number;
     sortBy?: string;
@@ -47,13 +49,15 @@ export interface GetExperimentFileRequest {
 
 export interface SetExperimentRequest {
     experimentId: number;
-    experimentValues: ExperimentValues;
+    experiment: ExperimentValues;
 }
 
 export interface SetExperimentFileRequest {
     experimentId: number;
     format: SetExperimentFileFormatEnum;
-    body: Blob;
+    file: Blob;
+    similarityThresholdFunction?: number;
+    similarityThreshold?: number;
 }
 
 /**
@@ -65,8 +69,8 @@ export class ExperimentsApi extends runtime.BaseAPI {
      * Creates a new Experiment
      */
     async addExperimentRaw(requestParameters: AddExperimentRequest): Promise<runtime.ApiResponse<number>> {
-        if (requestParameters.experimentValues === null || requestParameters.experimentValues === undefined) {
-            throw new runtime.RequiredError('experimentValues','Required parameter requestParameters.experimentValues was null or undefined when calling addExperiment.');
+        if (requestParameters.experiment === null || requestParameters.experiment === undefined) {
+            throw new runtime.RequiredError('experiment','Required parameter requestParameters.experiment was null or undefined when calling addExperiment.');
         }
 
         const queryParameters: any = {};
@@ -80,7 +84,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: ExperimentValuesToJSON(requestParameters.experimentValues),
+            body: ExperimentValuesToJSON(requestParameters.experiment),
         });
 
         return new runtime.TextApiResponse(response) as any;
@@ -163,6 +167,14 @@ export class ExperimentsApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.similarityThresholdFunction !== undefined) {
+            queryParameters['similarityThresholdFunction'] = requestParameters.similarityThresholdFunction;
+        }
+
+        if (requestParameters.similarityThreshold !== undefined) {
+            queryParameters['similarityThreshold'] = requestParameters.similarityThreshold;
+        }
+
         if (requestParameters.startAt !== undefined) {
             queryParameters['startAt'] = requestParameters.startAt;
         }
@@ -229,8 +241,8 @@ export class ExperimentsApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('experimentId','Required parameter requestParameters.experimentId was null or undefined when calling setExperiment.');
         }
 
-        if (requestParameters.experimentValues === null || requestParameters.experimentValues === undefined) {
-            throw new runtime.RequiredError('experimentValues','Required parameter requestParameters.experimentValues was null or undefined when calling setExperiment.');
+        if (requestParameters.experiment === null || requestParameters.experiment === undefined) {
+            throw new runtime.RequiredError('experiment','Required parameter requestParameters.experiment was null or undefined when calling setExperiment.');
         }
 
         const queryParameters: any = {};
@@ -244,7 +256,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: ExperimentValuesToJSON(requestParameters.experimentValues),
+            body: ExperimentValuesToJSON(requestParameters.experiment),
         });
 
         return new runtime.VoidApiResponse(response);
@@ -258,7 +270,7 @@ export class ExperimentsApi extends runtime.BaseAPI {
     }
 
     /**
-     * Creates an experiment file
+     * Creates an experiment file (cannot overwrite existing)
      */
     async setExperimentFileRaw(requestParameters: SetExperimentFileRequest): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.experimentId === null || requestParameters.experimentId === undefined) {
@@ -269,11 +281,19 @@ export class ExperimentsApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('format','Required parameter requestParameters.format was null or undefined when calling setExperimentFile.');
         }
 
-        if (requestParameters.body === null || requestParameters.body === undefined) {
-            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling setExperimentFile.');
+        if (requestParameters.file === null || requestParameters.file === undefined) {
+            throw new runtime.RequiredError('file','Required parameter requestParameters.file was null or undefined when calling setExperimentFile.');
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.similarityThresholdFunction !== undefined) {
+            queryParameters['similarityThresholdFunction'] = requestParameters.similarityThresholdFunction;
+        }
+
+        if (requestParameters.similarityThreshold !== undefined) {
+            queryParameters['similarityThreshold'] = requestParameters.similarityThreshold;
+        }
 
         if (requestParameters.format !== undefined) {
             queryParameters['format'] = requestParameters.format;
@@ -288,14 +308,14 @@ export class ExperimentsApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters.body as any,
+            body: requestParameters.file as any,
         });
 
         return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * Creates an experiment file
+     * Creates an experiment file (cannot overwrite existing)
      */
     async setExperimentFile(requestParameters: SetExperimentFileRequest): Promise<void> {
         await this.setExperimentFileRaw(requestParameters);

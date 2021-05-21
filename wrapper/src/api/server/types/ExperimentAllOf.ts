@@ -12,6 +12,10 @@
  * Do not edit the class manually.
  */
 
+import {
+    Metric,
+} from './';
+
 /**
  * 
  * @export
@@ -30,4 +34,10 @@ export interface ExperimentAllOf {
      * @memberof ExperimentAllOf
      */
     numberOfUploadedRecords?: number;
+    /**
+     * 
+     * @type {Array<Metric>}
+     * @memberof ExperimentAllOf
+     */
+    effort?: Array<Metric>;
 }

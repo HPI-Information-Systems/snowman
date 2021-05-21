@@ -22,6 +22,14 @@ import {
     ExperimentValuesFromJSON,
     ExperimentValuesFromJSONTyped,
     ExperimentValuesToJSON,
+    ExperimentValuesSoftKPIs,
+    ExperimentValuesSoftKPIsFromJSON,
+    ExperimentValuesSoftKPIsFromJSONTyped,
+    ExperimentValuesSoftKPIsToJSON,
+    Metric,
+    MetricFromJSON,
+    MetricFromJSONTyped,
+    MetricToJSON,
 } from './';
 
 /**
@@ -42,6 +50,12 @@ export interface Experiment {
      * @memberof Experiment
      */
     numberOfUploadedRecords?: number;
+    /**
+     * 
+     * @type {Array<Metric>}
+     * @memberof Experiment
+     */
+    effort?: Array<Metric>;
     /**
      * 
      * @type {string}
@@ -66,6 +80,12 @@ export interface Experiment {
      * @memberof Experiment
      */
     algorithmId: number;
+    /**
+     * 
+     * @type {ExperimentValuesSoftKPIs}
+     * @memberof Experiment
+     */
+    softKPIs?: ExperimentValuesSoftKPIs;
 }
 
 export function ExperimentFromJSON(json: any): Experiment {
@@ -80,10 +100,12 @@ export function ExperimentFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         
         'id': json['id'],
         'numberOfUploadedRecords': !exists(json, 'numberOfUploadedRecords') ? undefined : json['numberOfUploadedRecords'],
+        'effort': !exists(json, 'effort') ? undefined : ((json['effort'] as Array<any>).map(MetricFromJSON)),
         'name': json['name'],
         'description': !exists(json, 'description') ? undefined : json['description'],
         'datasetId': json['datasetId'],
         'algorithmId': json['algorithmId'],
+        'softKPIs': !exists(json, 'softKPIs') ? undefined : ExperimentValuesSoftKPIsFromJSON(json['softKPIs']),
     };
 }
 
@@ -98,10 +120,12 @@ export function ExperimentToJSON(value?: Experiment | null): any {
         
         'id': value.id,
         'numberOfUploadedRecords': value.numberOfUploadedRecords,
+        'effort': value.effort === undefined ? undefined : ((value.effort as Array<any>).map(MetricToJSON)),
         'name': value.name,
         'description': value.description,
         'datasetId': value.datasetId,
         'algorithmId': value.algorithmId,
+        'softKPIs': ExperimentValuesSoftKPIsToJSON(value.softKPIs),
     };
 }
 
