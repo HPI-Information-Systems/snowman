@@ -1,4 +1,4 @@
-import { experimentCustomColumnPrefix } from '../../../database/schemas';
+import { similarityCustomColumnPrefix } from '../../../database/schemas';
 import {
   SimilarityThresholdFunctionDefinition,
   SimilarityThresholdFunctionDefinitionTypeEnum,
@@ -75,7 +75,7 @@ function expressionToThreshold(
   return {
     type: SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
     similarityThreshold: expression.substring(
-      1 + experimentCustomColumnPrefix.length,
+      1 + similarityCustomColumnPrefix.length,
       expression.length - 1
     ),
   };

@@ -5,16 +5,16 @@ At the end of this page you will know how to add experiments to Snowman. Additio
 ## Adding an experiment
 
 1. Open the *Experiments* tab.
-   - ![Experiments tab](../assets/experiments-tab.png "Experiments Tab")
+   - ![Experiments tab](../assets/experiments-tab.png)
 2. Click on the *+* button in the lower left corner of the screen.
-   - ![Add Experiment](../assets/add-experiment.png "Add Experiment")
+   - ![Add Experiment](../assets/add-experiment.png)
 3. Specify a short name and optionally a comprehensive description.
-4. Choose the dataset which this experiment deduplicates and the matching solution which created this experiment.
+4. Choose the [dataset](datasets.md#adding-a-dataset) which this experiment deduplicates and the [matching solution](matching_solutions.md#adding-a-matching-solution) which created this experiment.
 5. Optionally, open the *Configuration Effort* and *Other KPIs* sections and fill in details.
    - *Matching Solution Knowledge Level* measures how much you know about the matching solution.
-   - *Matching Solution HR Amount* measures how long you spent configuring the matching solution to produce this experiment.
+   - *Matching Solution HR Amount* measures how much time you spent configuring the matching solution to produce this experiment.
 6. Select a file containing the output of the matching solution and [choose the correct import format](#import-formats).
-   - ![Add Experiment with values](../assets/add-experiment-with-values.png "Add Experiment with values")
+   - ![Add Experiment with values](../assets/add-experiment-with-values.png)
 7. Click on *Add*.
    - this process can take several minutes depending on the size of the experiment.
 
@@ -22,7 +22,7 @@ At the end of this page you will know how to add experiments to Snowman. Additio
 
 You can preview the experiment by clicking on the telescope button on the bottom of the dataset card to make sure that the experiment was added successfully.
 
-![Preview Experiment](../assets/preview-experiment.png "Preview Experiment")
+![Preview Experiment](../assets/preview-experiment.png)
 
 ## Editing an experiment
 
@@ -32,15 +32,10 @@ After the initial experiment creation, you can still change some attributes of t
 
 To delete an experiment click the rightmost button on the experiment card.
 
-## Specifying a similarity function
-
-To specify the similarity function for an experiment, click on the second button from the left on the experiment card.
-Now you can select the column which contains the similarity score.
-
 ## Import formats
 
 !!! info
-    The tool only accepts source files in **csv** format at the moment - so in case your source file is a Microsoft Excel file, you'll first have to export it to csv!
+    The tool only accepts source files in **csv** format at the moment - so in case your source file is a Microsoft Excel file, you'll first have to export it to csv! _(Additionally, make sure that your file is UTF-8 encoded.)_
 
 To ease the import process, Snowman supports several file formats out of the box. Those include:
 
@@ -58,7 +53,7 @@ The csv optionally can have a column named `prediction` which contains a `1` in 
 `0` otherwise. If this column is not present we assume that all listed tuples have been detected as duplicates
 (think: we automatically insert a column `prediction` and fill it with the value `1` everywhere).
 
-Following this, more columns may be specified with arbitrary content. See the following example:
+Following this, more columns may be specified which contain similarity scores (numbers). See the following example:
 
 ```csv
 p1,p2,prediction,feat1,feat2,feat3,sum

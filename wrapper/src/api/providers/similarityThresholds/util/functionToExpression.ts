@@ -1,4 +1,4 @@
-import { experimentCustomColumnPrefix } from '../../../database/schemas';
+import { similarityCustomColumnPrefix } from '../../../database/schemas';
 import { escapeColumnName } from '../../../database/tools/escapeColumnNames';
 import { Columns } from '../../../database/tools/types';
 import {
@@ -12,7 +12,7 @@ function thresholdToExpression(
   columns: Columns
 ): string {
   if (threshold) {
-    const column = escapeColumnName(threshold, experimentCustomColumnPrefix);
+    const column = escapeColumnName(threshold, similarityCustomColumnPrefix);
     if (column in columns) {
       return `/*THRESHOLD*/"${column}"`;
     } else {

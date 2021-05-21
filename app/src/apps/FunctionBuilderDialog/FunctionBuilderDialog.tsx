@@ -8,7 +8,6 @@ import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/Gener
 import GenericDialog from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialog';
 import React from 'react';
 import { EntityId } from 'types/EntityId';
-import { ViewIDs } from 'types/ViewIDs';
 
 const FunctionBuilderDialog = (): JSX.Element => (
   <GenericDialog
@@ -17,7 +16,7 @@ const FunctionBuilderDialog = (): JSX.Element => (
         ? `Edit Existing Function (ID: ${entityId})`
         : 'Create New Similarity Function'
     }
-    instanceId={ViewIDs.FunctionBuilderDialog}
+    instanceId={-1}
     createSubAppStore={FunctionBuilderDialogMagistrate.getStore}
     onDialogOpen={loadInitialState}
     onDialogClose={cleanUp}

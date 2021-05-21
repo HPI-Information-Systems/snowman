@@ -41,4 +41,4 @@ Necessary migration steps will automatically be applied to the stored data.
 ## Next Step
 
 You now should have a working version of Snowman.
-As a next step we suggest for you to get familiar with the key concepts and terminology used throughout Snowman.
+As a next step we suggest for you to get familiar with the [key concepts and terminology](concepts.md) used throughout Snowman.

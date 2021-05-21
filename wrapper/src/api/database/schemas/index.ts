@@ -3,7 +3,12 @@ import { experimentSchemas } from './experiment';
 import { metaSchemas } from './meta';
 
 export { datasetCustomColumnPrefix, datasetSchemas } from './dataset';
-export { experimentCustomColumnPrefix, experimentSchemas } from './experiment';
+export {
+  experimentSchemas,
+  isSimilarityColumn,
+  removeSimilarityCustomColumnPrefix,
+  similarityCustomColumnPrefix,
+} from './experiment';
 export { metaSchemas } from './meta';
 
 export const tableSchemas = {

@@ -16,7 +16,7 @@ const mapDispatchToProps = (
   ownProps: SimilarityFuncItemOwnProps
 ): SimilarityFuncItemDispatchProps => ({
   openEditFunctionBuilder() {
-    doOpenDialog(ViewIDs.FunctionBuilderDialog, ownProps.similarityFunction.id);
+    doOpenDialog(-1, ownProps.similarityFunction.id);
   },
   deleteFunction() {
     doDeleteSimFunction(ownProps.similarityFunction.id).then();
