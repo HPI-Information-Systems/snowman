@@ -14,7 +14,7 @@ import {
 } from '@ionic/react';
 import { ExperimentCardProps } from 'apps/ExperimentsApp/components/ExperimentCard/ExperimentCardProps';
 import styles from 'apps/ExperimentsApp/components/ExperimentCard/ExperimentCardStyles.module.css';
-import { analytics, create, telescope, trash } from 'ionicons/icons';
+import { create, telescope, trash } from 'ionicons/icons';
 import React from 'react';
 
 const ExperimentCardView = ({
@@ -24,7 +24,6 @@ const ExperimentCardView = ({
   experiment,
   editExperiment,
   deleteExperiment,
-  editSimilarityFunctions,
   previewExperiment,
 }: ExperimentCardProps): JSX.Element => (
   <IonCard button={false}>
@@ -55,7 +54,7 @@ const ExperimentCardView = ({
         </IonCol>
       </IonRow>
       <IonRow>
-        <IonCol size="3" className="ion-text-left">
+        <IonCol size="4" className="ion-text-left">
           <IonButton
             size="small"
             fill="clear"
@@ -65,17 +64,7 @@ const ExperimentCardView = ({
             <IonIcon slot="icon-only" icon={create} />
           </IonButton>
         </IonCol>
-        <IonCol size="3" className="ion-text-left">
-          <IonButton
-            size="small"
-            fill="clear"
-            color="primarydark"
-            onClick={editSimilarityFunctions}
-          >
-            <IonIcon slot="icon-only" icon={analytics} />
-          </IonButton>
-        </IonCol>
-        <IonCol size="3" className="ion-text-center">
+        <IonCol size="4" className="ion-text-center">
           {couldPreview ? (
             <IonButton
               size="small"
@@ -87,7 +76,7 @@ const ExperimentCardView = ({
             </IonButton>
           ) : null}
         </IonCol>
-        <IonCol size="3" className="ion-text-right">
+        <IonCol size="4" className="ion-text-right">
           <IonButton
             size="small"
             fill="clear"

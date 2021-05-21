@@ -7,7 +7,7 @@ export interface EntityItemOwnProps extends GenericStoreComponentProps {
 }
 
 export interface EntityItemStateProps {
-  openItem: () => void;
+  openItem?: () => void;
   tooltip: string;
   name: string;
 }

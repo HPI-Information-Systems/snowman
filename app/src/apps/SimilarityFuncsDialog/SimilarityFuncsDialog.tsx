@@ -5,7 +5,6 @@ import { DialogProps } from 'apps/SnowmanApp/components/GenericSubInstance/Gener
 import GenericDialog from 'apps/SnowmanApp/components/GenericSubInstance/GenericDialog/GenericDialog';
 import React from 'react';
 import { EntityId } from 'types/EntityId';
-import { ViewIDs } from 'types/ViewIDs';
 
 const SimilarityFuncsDialog = (): JSX.Element => (
   <GenericDialog
@@ -15,7 +14,7 @@ const SimilarityFuncsDialog = (): JSX.Element => (
         : // it will never happen that we open the dialog without an entity id
           'Unknown'
     }
-    instanceId={ViewIDs.SimilarityFuncsDialog}
+    instanceId={-2}
     createSubAppStore={SimilarityFuncsDialogMagistrate.getStore}
     onDialogOpen={loadInitialState}
   >

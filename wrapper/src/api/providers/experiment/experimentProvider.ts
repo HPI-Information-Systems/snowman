@@ -1,8 +1,17 @@
 import { Readable } from 'stream';
 
 import { databaseBackend, tables } from '../../database';
-import { ExperimentValues, FileResponse } from '../../server/types';
-import { Experiment, ExperimentId } from '../../server/types';
+import {
+  isSimilarityColumn,
+  removeSimilarityCustomColumnPrefix,
+} from '../../database/schemas';
+import {
+  Experiment,
+  ExperimentId,
+  ExperimentValues,
+  FileResponse,
+  SimilarityThresholdFunctionDefinitionTypeEnum,
+} from '../../server/types';
 import {
   GetExperimentFileRequest,
   SetExperimentFileFormatEnum,
@@ -137,8 +146,33 @@ export class ExperimentProvider {
         storedExperiment.numberOfUploadedRecords = numberOfUploadedRecords;
         tables.meta.experiment.upsert([storedExperiment]);
       }
+
+      this.addSimilarityFunctionsForEachColumn(id);
+
       BenchmarkCache.invalidateExperiment(id);
     }, id);
+  }
+
+  private addSimilarityFunctionsForEachColumn(id: ExperimentId): void {
+    const columnNames = Object.values(
+      tables.experiment.experiment(id).schema.columns
+    )
+      .filter(({ name }) => isSimilarityColumn(name))
+      .map(({ name }) => removeSimilarityCustomColumnPrefix(name));
+
+    columnNames.forEach((columnName: string) => {
+      providers.similarityThresholds.addSimilarityThresholdFunction({
+        similarityThresholdFunction: {
+          name: columnName,
+          experimentId: id,
+          definition: {
+            type:
+              SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+            similarityThreshold: columnName,
+          },
+        },
+      });
+    });
   }
 
   private deleteExperimentFileNoChecks(id: ExperimentId): void {

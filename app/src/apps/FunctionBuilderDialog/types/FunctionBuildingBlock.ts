@@ -6,8 +6,8 @@ import {
   SimilarityThresholdFunctionUnaryOperatorOperatorEnum,
 } from 'api';
 import { UpdatePrepareInformation } from 'apps/FunctionBuilderDialog/types/UpdatePrepareInformation';
+import KeyMagistrate from 'apps/FunctionBuilderDialog/utils/keyMagistrate';
 import autoBind from 'auto-bind';
-import KeyMagistrate from 'utils/keyMagistrate';
 
 export type FunctionBuildingBlockType = SimilarityThresholdFunctionDefinitionTypeEnum | null;
 

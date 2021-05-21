@@ -1,5 +1,5 @@
 import { databaseBackend, Table } from '../../../database';
-import { experimentCustomColumnPrefix } from '../../../database/schemas';
+import { similarityCustomColumnPrefix } from '../../../database/schemas';
 import { AdvancedFilterT } from '../../../database/table/getter';
 import { Column, TableSchema } from '../../../database/tools/types';
 import { ExperimentId, FileResponse } from '../../../server/types';
@@ -30,8 +30,8 @@ export class ExperimentFileGetter<Schema extends TableSchema> {
   get(startAt?: number, limit?: number, sortBy?: string): FileResponse {
     return databaseBackend().transaction(() => ({
       header: this.columns.map((column) =>
-        column.startsWith(experimentCustomColumnPrefix)
-          ? column.substring(experimentCustomColumnPrefix.length)
+        column.startsWith(similarityCustomColumnPrefix)
+          ? column.substring(similarityCustomColumnPrefix.length)
           : column
       ),
       data: this.strategy.table
@@ -60,10 +60,10 @@ export class ExperimentFileGetter<Schema extends TableSchema> {
       if (sortBy in this.strategy.table.schema.columns) {
         return [[sortBy, 'ASC']];
       } else if (
-        experimentCustomColumnPrefix + sortBy in
+        similarityCustomColumnPrefix + sortBy in
         this.strategy.table.schema.columns
       ) {
-        return [[experimentCustomColumnPrefix + sortBy, 'ASC']];
+        return [[similarityCustomColumnPrefix + sortBy, 'ASC']];
       } else {
         throw new Error(
           `Cannot sort by ${sortBy} as this column does not exist.`
