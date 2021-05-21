@@ -5,7 +5,7 @@ import {
 } from '../../../server/types';
 import { SetupOptions } from '../../setup';
 import { tables } from '../../tables';
-import { isSimilarityColumn, removeExperimentCustomColumnPrefix } from '..';
+import { isSimilarityColumn, removeSimilarityCustomColumnPrefix } from '..';
 import { SchemaVersion } from './schemaVersion';
 import { SchemaV8 } from './v8';
 
@@ -23,7 +23,7 @@ export class SchemaV9 extends SchemaVersion {
       tables.experiment.experiment(id).schema.columns
     )
       .filter(({ name }) => isSimilarityColumn(name))
-      .map(({ name }) => removeExperimentCustomColumnPrefix(name));
+      .map(({ name }) => removeSimilarityCustomColumnPrefix(name));
 
     similarityColumnNames.forEach((similarityColumnName: string) => {
       providers.similarityThresholds.addSimilarityThresholdFunction({

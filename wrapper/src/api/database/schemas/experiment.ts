@@ -7,7 +7,7 @@ import { Column, Columns, Schemas } from '../tools/types';
 export const similarityCustomColumnPrefix = 'experiment_';
 export const isSimilarityColumn = (columnName: string): boolean =>
   columnName.startsWith(similarityCustomColumnPrefix);
-export const removeExperimentCustomColumnPrefix = (
+export const removeSimilarityCustomColumnPrefix = (
   columnName: string
 ): string => {
   if (isSimilarityColumn(columnName)) {

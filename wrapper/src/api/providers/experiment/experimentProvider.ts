@@ -3,7 +3,7 @@ import { Readable } from 'stream';
 import { databaseBackend, tables } from '../../database';
 import {
   isSimilarityColumn,
-  removeExperimentCustomColumnPrefix,
+  removeSimilarityCustomColumnPrefix,
 } from '../../database/schemas';
 import {
   Experiment,
@@ -158,7 +158,7 @@ export class ExperimentProvider {
       tables.experiment.experiment(id).schema.columns
     )
       .filter(({ name }) => isSimilarityColumn(name))
-      .map(({ name }) => removeExperimentCustomColumnPrefix(name));
+      .map(({ name }) => removeSimilarityCustomColumnPrefix(name));
 
     columnNames.forEach((columnName: string) => {
       providers.similarityThresholds.addSimilarityThresholdFunction({

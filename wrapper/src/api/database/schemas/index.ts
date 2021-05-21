@@ -6,7 +6,7 @@ export { datasetCustomColumnPrefix, datasetSchemas } from './dataset';
 export {
   experimentSchemas,
   isSimilarityColumn,
-  removeExperimentCustomColumnPrefix,
+  removeSimilarityCustomColumnPrefix,
   similarityCustomColumnPrefix,
 } from './experiment';
 export { metaSchemas } from './meta';
