@@ -5,6 +5,16 @@ import { escapeColumnNames } from '../tools/escapeColumnNames';
 import { Column, Columns, Schemas } from '../tools/types';
 
 export const experimentCustomColumnPrefix = 'experiment_';
+export const isSimilarityColumn = (columnName: string): boolean =>
+  columnName.startsWith(experimentCustomColumnPrefix);
+export const removeExperimentCustomColumnPrefix = (
+  columnName: string
+): string => {
+  if (columnName.indexOf(experimentCustomColumnPrefix) === 0) {
+    return columnName.slice(experimentCustomColumnPrefix.length);
+  }
+  return columnName;
+};
 export const experimentSchemas = assertType<
   Schemas<'experiment', ['experiment', 'similarityThresholdFunction']>
 >()({
@@ -14,7 +24,6 @@ export const experimentSchemas = assertType<
       similarityScores: Column<'REAL'>[] = []
     ) => {
       const knownColumns = assertType<Columns>()({
-        // !ALL COLUMNS MUST BE DUPLICATED TO LIBRARY/CONSTANTS -> NonSimilarityThresholdColumns
         id1: {
           name: 'id1' as const,
           dataType: 'INTEGER',

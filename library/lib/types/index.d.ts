@@ -29,7 +29,5 @@ export declare type InstantiableAbstractClass<T> = (new (...args: any) => {
     [x: string]: any;
 }) & T;
 export declare type AbstractConstructorParameters<T> = ConstructorParameters<InstantiableAbstractClass<T>>;
-
 export declare type Define<T> = Exclude<T, null | undefined>;
-
 export declare type RemoveFirst<Array extends any[]> = Array extends [any, ...infer U] ? U : Array;
