@@ -130,7 +130,7 @@ const AlgorithmDialogView = ({
               value={integrationInstallationEffortHRAmount}
               onIonChange={changeIntegrationInstallationEffortHRAmount}
             />
-            <span className={styles.inputUnit}>man-hr</span>
+            <span className={styles.inputUnit}>man-h</span>
           </IonItem>
         </>
       ) : null}
@@ -183,7 +183,7 @@ const AlgorithmDialogView = ({
               value={configurationMatchingSolutionEffortHRAmount}
               onIonChange={changeConfigurationMatchingSolutionEffortHRAmount}
             />
-            <span className={styles.inputUnit}>man-hr</span>
+            <span className={styles.inputUnit}>man-h</span>
           </IonItem>
 
           <IonItem>
@@ -212,7 +212,7 @@ const AlgorithmDialogView = ({
               value={configurationDomainEffortHRAmount}
               onIonChange={changeConfigurationDomainEffortHRAmount}
             />
-            <span className={styles.inputUnit}>man-hr</span>
+            <span className={styles.inputUnit}>man-h</span>
           </IonItem>
         </>
       ) : null}

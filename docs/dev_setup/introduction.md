@@ -14,7 +14,7 @@ The benchmark is split into three separate packages:
 2. install a C++ compiler and add it to your PATH
    - the easiest way to accomplish this on Windows is installing the [VisualStudio BuildTools for C++](https://visualstudio.microsoft.com/de/downloads/) (+ reboot)
 3. install [Python3](https://www.python.org/) for your distribution
-4. Run `npm install` in `./`, `./app` and `./wrapper`
+4. run `npm install` in `./`, `./app` and `./wrapper`
 
 Python3 and C++ are required to build the native extensions for sqlite3.
 
@@ -45,10 +45,12 @@ Run the `Start Stack` compound to start frontend and backend and open Chrome. Yo
 
 - run `npm run lint` or `npm run lint-fix` in `./` to lint the project
 - run `npm run test` in `./` (integration tests), `./app` (frontend tests) and `./wrapper` (backend tests) to test the project
+  - the integration tests require a running instance of the backend and the frontend
+  - use `npm run test-ci` to automatically start frontend and backend before running the integration tests
 
 ## Backend API
 
-The backend API can also be reached directly. Have a look at our [REST API specification](../swagger/index.html) for details.
+The backend API can also be reached directly. Have a look at our [REST API specification](../openapi) for details.
 
 ## Command Line Arguments
 

@@ -1,43 +1,43 @@
 # Experiments
 
-A dataset can consist of multiple experiments. An experiment is thereby considered as a single run of a matching
-solution which produces an output set. To ease the workflow, experiments have to be labeled with the matching
-solution that was used. The description can contain additional information on how this exact result was achived - e.g.
-a list of configuration parameters, or the time spent labeling data.
+At the end of this page you will know how to add experiments to Snowman. Additionally you will know what you can do with experiments once they are in the tool.
 
-![Screenshot2](../assets/experiments-overview.png "Experiment selector")
+## Adding an experiment
 
-## Add an experiment
+1. Open the *Experiments* tab.
+   - ![Experiments tab](../assets/experiments-tab.png)
+2. Click on the *+* button in the lower left corner of the screen.
+   - ![Add Experiment](../assets/add-experiment.png)
+3. Specify a short name and optionally a comprehensive description.
+4. Choose the [dataset](datasets.md#adding-a-dataset) which this experiment deduplicates and the [matching solution](matching_solutions.md#adding-a-matching-solution) which created this experiment.
+5. Optionally, open the *Configuration Effort* and *Other KPIs* sections and fill in details.
+   - *Matching Solution Knowledge Level* measures how much you know about the matching solution.
+   - *Matching Solution HR Amount* measures how much time you spent configuring the matching solution to produce this experiment.
+6. Select a file containing the output of the matching solution and [choose the correct import format](#import-formats).
+   - ![Add Experiment with values](../assets/add-experiment-with-values.png)
+7. Click on *Add*.
+   - this process can take several minutes depending on the size of the experiment.
 
-1. Select a dataset.
-2. Open page "Experiments" from the sidebar on the left.
-3. Add a new experiment with the "+" button in the lower left corner of the screen.
-4. Specify a short and concise name, as well as a detailed description.
-5. Select a file containing the result set and choose the correct import format. _(see below)_
-6. Click on "Add experiment" - this process may take several minutes to complete as indexes have to be created!
+## Previewing an experiment
 
-## Edit an experiment
+You can preview the experiment by clicking on the telescope button on the bottom of the dataset card to make sure that the experiment was added successfully.
 
-After the initial experiment creation, you can still change some attributes of the dataset.
+![Preview Experiment](../assets/preview-experiment.png)
 
-**Attention:** To prevent inconsistencies, it is not possible to replace an experiment's record pairs once created!
+## Editing an experiment
 
-## Preview an experiment
+After the initial experiment creation, you can still change some attributes of the dataset. To open the experiment editor, click the leftmost button on the experiment card.
 
-Once records were uploaded, you can preview the records in the internal Snowman format.
+## Deleting an experiment
 
-## Selecting experiments
-
-With the newest Snowman release, a new drag'n'drop UI was introduced.  
-Simply drag experiments either to the selected goldstandards or the selected experiments column. Depending on what you
-selected, the different benchmarking options will become (un)available. See section "Benchmarking" for details.
+To delete an experiment click the rightmost button on the experiment card.
 
 ## Import formats
 
-To ease the import process, Snowman understands several file formats out of the box. Those include:
+!!! info
+    The tool only accepts source files in **csv** format at the moment - so in case your source file is a Microsoft Excel file, you'll first have to export it to csv! _(Additionally, make sure that your file is UTF-8 encoded.)_
 
-**Attention:** The tool only accepts source files in **csv** format at the moment - so in case your source file is a Microsoft Excel file,
-you'll first have to export it to csv!
+To ease the import process, Snowman supports several file formats out of the box. Those include:
 
 ### Pilot
 
@@ -49,11 +49,11 @@ as split character, `"` as quote character and `'` as escape character.
 The importer expects the csv to have the columns `p1` and `p2`. They should store the ids of the respective
 dataset tuples.
 
-The csv optionally can have a column named "prediction" which contains a `1` in case the pair was detected as duplicate -
+The csv optionally can have a column named `prediction` which contains a `1` in case the pair was detected as duplicate -
 `0` otherwise. If this column is not present we assume that all listed tuples have been detected as duplicates
-(think: we automatically insert a column "prediction" and fill it with the value `1` everywhere).
+(think: we automatically insert a column `prediction` and fill it with the value `1` everywhere).
 
-Following this, more columns may be specified with arbitrary content. See the following example:
+Following this, more columns may be specified which contain similarity scores (numbers). See the following example:
 
 ```csv
 p1,p2,prediction,feat1,feat2,feat3,sum

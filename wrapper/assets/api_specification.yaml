@@ -9,7 +9,7 @@ info:
     name: LICENSE (MIT)
     url: https://github.com/HPI-Information-Systems/snowman/blob/main/LICENSE
   title: Snowman API
-  version: 1.0.0
+  version: 3.0.0
 servers:
 - url: '{protocol}://{server}/api/v1'
   variables:

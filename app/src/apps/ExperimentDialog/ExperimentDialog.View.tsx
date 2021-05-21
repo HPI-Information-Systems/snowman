@@ -152,7 +152,7 @@ const ExperimentDialogView = ({
               value={hrAmount}
               onIonChange={changeHRAmount}
             />
-            <span className={styles.inputUnit}>man-hr</span>
+            <span className={styles.inputUnit}>man-h</span>
           </IonItem>
         </>
       ) : null}
@@ -182,7 +182,7 @@ const ExperimentDialogView = ({
               value={runtime}
               onIonChange={changeRuntime}
             />
-            <span className={styles.inputUnit}>hr</span>
+            <span className={styles.inputUnit}>h</span>
           </IonItem>
         </>
       ) : null}
