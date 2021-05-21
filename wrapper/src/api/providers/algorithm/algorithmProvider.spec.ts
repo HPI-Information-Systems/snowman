@@ -229,7 +229,7 @@ describe('AlgorithmProvider', () => {
     ).toEqual(-1);
   });
 
-  test('delete throws if algorithm is used', () => {
+  test('delete does not throw if algorithm is used', () => {
     const experimentProvider = new ExperimentProvider();
     const datasetProvider = new DatasetProvider();
     const datasetId = datasetProvider.addDataset({
@@ -244,6 +244,6 @@ describe('AlgorithmProvider', () => {
       description: 'Experiment Description',
       name: 'Experiment Name',
     });
-    expect(() => provider.deleteAlgorithm(addedAlgorithmids[0])).toThrow();
+    expect(() => provider.deleteAlgorithm(addedAlgorithmids[0])).toReturn();
   });
 });
