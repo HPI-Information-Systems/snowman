@@ -2,7 +2,6 @@ site_name: Snowman
 
 nav:
   - Home: index.md
-  - Showcase: showcase/main.md
   - Basic usage:
       - Getting Started: basic_usage/getting_started.md
       - Concepts and Terminology: basic_usage/concepts.md
@@ -11,11 +10,19 @@ nav:
       - Experiments: basic_usage/experiments.md
       - Configuring Analyses: basic_usage/configuring_analyses.md
       - Workflows:
-          - Comparing matching solutions: basic_usage/workflow/comparing_matchingsolutions.md
-          - Evaluating experiments: basic_usage/workflow/evaluate_experiments.md
+          - Comparing Matching Solutions: basic_usage/workflow/comparing_matching_solutions.md
+          - Improving Matching Solutions: basic_usage/workflow/improving_matching_solutions.md
+      - Analyses:
+          - Overview: basic_usage/analyses/overview.md
+          - Binary Metrics View: basic_usage/analyses/binary_metrics_view.md
+          - KPI Decision Matrix: basic_usage/analyses/kpi_decision_matrix.md
+          - KPI Investigator: basic_usage/analyses/kpi_investigator.md
+          - N-Intersection Viewer: basic_usage/analyses/n_intersection_viewer.md
+          - N-Metrics Table: basic_usage/analyses/n_metrics_table.md
+          - Similarity Diagrams: basic_usage/analyses/similarity_diagrams.md
   - Advanced setups:
-      - Remote instances: advanced_setups/remote_instances.md
-      - Connect your code: advanced_setups/code_connection.md
+      - Remote Instances: advanced_setups/remote_instances.md
+      - Connect your Code: advanced_setups/code_connection.md
   - Development:
       - Setup: dev_setup/introduction.md
       - Contributing: dev_setup/contrib-knowledge.md
@@ -30,8 +37,8 @@ repo_name: snowman (GitHub)
 
 theme:
   name: material
-  logo: assets/V2-128.png
-  favicon: assets/V2-64.png
+  logo: assets/logo/V2-128.png
+  favicon: assets/logo/V2-64.png
 
 plugins:
   - search

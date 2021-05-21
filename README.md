@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="logo" src="docs/assets/V2-256.png" />
+  <img alt="logo" src="docs/assets/logo/V2-256.png" />
 </p>
 <h1 align="center">Snowman</h1>
 
@@ -9,7 +9,7 @@ Comparing data matching algorithms is still an unsolved topic in both industry a
 With snowman, developers and researchers are able to compare the performance of different data matching solutions or improve new algorithms.
 Besides traditional metrics, the tool also considers economic aspects like Soft KPIs.
 
-![Benchmark Dashboard](docs/assets/benchmark-dashboard.png "Benchmark Dashboard")
+![Benchmark Dashboard](docs/assets/dashboard.png)
 
 _This tool is developed as part of a bachelor's project in collaboration with SAP SE._
 

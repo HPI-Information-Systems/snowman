@@ -1,4 +1,4 @@
-# Connect your code
+# Connect your Code
 
 To more easily pipe results from your code into Snowman, you can make use of its [REST API](../swagger/index.html).
 The following guide will outline the necessary steps and give you a brief introduction.
@@ -17,7 +17,7 @@ You can upload results in two steps:
 1. Create a new experiment.
 2. Upload data to it.
 
-## Use case
+## Use Case
 
 In this example, we want to export our results from a python script running a ML matching solution. Consider the following code:
 
@@ -51,7 +51,7 @@ the API is able to understand - in this case, the [`pilot`](/basic_usage/experim
 
 It remains to upload the csv data.
 
-## Upload results
+## Upload Results
 
 As outlined above, this procedure consists of two steps.
 

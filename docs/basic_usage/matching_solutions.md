@@ -5,12 +5,12 @@ After reading this document you will know how to add your matching solution to S
 ## Adding a matching solution
 
 1. Open the tab *Matching Solutions*.
-   - ![Matching Solutions tab](../assets/algorithms-tab.png "Matching Solutions tab")
+   - ![Matching Solutions tab](../assets/algorithms-tab.png)
 2. Click on the *+* button in the lower left corner of the screen.
-   - ![Add Matching Solution](../assets/add-algorithm.png "Add Matching Solution")
+   - ![Add Matching Solution](../assets/add-algorithm.png)
 3. Specify a short name and optionally a comprehensive description.
 4. Optionally, open the other sections to fill in more details about the matching solution.
-   - ![Add Matching Solution with values](../assets/add-algorithm-with-values.png "Add Matching Solution with values")
+   - ![Add Matching Solution with values](../assets/add-algorithm-with-values.png)
 5. Click on *Add*
 
 ## Deleting a matching solution

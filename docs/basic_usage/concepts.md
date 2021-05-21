@@ -24,7 +24,7 @@ it operates and thereby a lot of customization is possible.
 For this use case, you would only create one matching solution *Magellan* within the tool.
 For each configuration, you can afterwards create a new experiment containing information on the configuration within its description.
 
-Have a look at the sections `Datasets`, `Matching solutions` and `Experiments` for information on how to manage them in Snowman.
+Have a look at the pages [Datasets](datasets.md), [Matching solutions](matching_solutions.md), and [Experiments](experiments.md) for information on how to manage them in Snowman.
 
 ### Special Entities
 
@@ -45,4 +45,4 @@ Now a *similarity threshold* can be used to declare all pairs with a similarity 
 ## Next Steps
 
 You should now have an understanding of the terminoloy and key concepts used in Snowman.
-As a next step, have a look at what you can do with Snowman.
+As a next step, have a look at [how you can configure Snowman](configuring_analyses.md) to get the most out of the analyses we provide.
