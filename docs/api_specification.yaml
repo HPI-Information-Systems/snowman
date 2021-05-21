@@ -6,7 +6,7 @@ info:
     Comparing data matching algorithms is still an unsolved topic in both industry and research.
     With snowman, developers and researchers will be able to compare the performance of different data matching
     solutions or improve new algorithms.
-  version: 1.0.0
+  version: 3.0.0
   title: Snowman API
   contact:
     email: snowman@groups.sap.com

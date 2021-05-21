@@ -26,7 +26,7 @@ nav:
   - Development:
       - Setup: dev_setup/introduction.md
       - Contributing: dev_setup/contrib-knowledge.md
-      - REST API: ./swagger
+      - REST API: ./openapi
   - SIGMOD2021: sigmod2021.md
 
 extra_css:

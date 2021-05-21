@@ -1,6 +1,6 @@
 # Connect your Code
 
-To more easily pipe results from your code into Snowman, you can make use of its [REST API](../swagger/index.html).
+To more easily pipe results from your code into Snowman, you can make use of its [REST API](../openapi).
 The following guide will outline the necessary steps and give you a brief introduction.
 
 ## Snowman API

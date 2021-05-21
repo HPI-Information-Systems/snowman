@@ -50,7 +50,7 @@ Run the `Start Stack` compound to start frontend and backend and open Chrome. Yo
 
 ## Backend API
 
-The backend API can also be reached directly. Have a look at our [REST API specification](../swagger/index.html) for details.
+The backend API can also be reached directly. Have a look at our [REST API specification](../openapi) for details.
 
 ## Command Line Arguments
 
