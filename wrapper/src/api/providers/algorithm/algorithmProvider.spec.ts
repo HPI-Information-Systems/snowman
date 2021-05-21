@@ -244,6 +244,6 @@ describe('AlgorithmProvider', () => {
       description: 'Experiment Description',
       name: 'Experiment Name',
     });
-    expect(() => provider.deleteAlgorithm(addedAlgorithmids[0])).toReturn();
+    expect(() => provider.deleteAlgorithm(addedAlgorithmids[0])).not.toThrow();
   });
 });
