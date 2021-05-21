@@ -4,14 +4,14 @@ import { ExperimentId } from '../../server/types';
 import { escapeColumnNames } from '../tools/escapeColumnNames';
 import { Column, Columns, Schemas } from '../tools/types';
 
-export const experimentCustomColumnPrefix = 'experiment_';
+export const similarityCustomColumnPrefix = 'experiment_';
 export const isSimilarityColumn = (columnName: string): boolean =>
-  columnName.startsWith(experimentCustomColumnPrefix);
+  columnName.startsWith(similarityCustomColumnPrefix);
 export const removeExperimentCustomColumnPrefix = (
   columnName: string
 ): string => {
-  if (columnName.indexOf(experimentCustomColumnPrefix) === 0) {
-    return columnName.slice(experimentCustomColumnPrefix.length);
+  if (isSimilarityColumn(columnName)) {
+    return columnName.slice(similarityCustomColumnPrefix.length);
   }
   return columnName;
 };
@@ -49,7 +49,7 @@ export const experimentSchemas = assertType<
       });
       const columns = {
         ...knownColumns,
-        ...escapeColumnNames(similarityScores, experimentCustomColumnPrefix),
+        ...escapeColumnNames(similarityScores, similarityCustomColumnPrefix),
       } as Columns & typeof knownColumns;
       return {
         schema: 'experiment',

@@ -19,21 +19,21 @@ export class SchemaV9 extends SchemaVersion {
   }
 
   private addSimilarityFunctionsForEachColumn(id: ExperimentId): void {
-    const columnNames = Object.values(
+    const similarityColumnNames = Object.values(
       tables.experiment.experiment(id).schema.columns
     )
       .filter(({ name }) => isSimilarityColumn(name))
       .map(({ name }) => removeExperimentCustomColumnPrefix(name));
 
-    columnNames.forEach((columnName: string) => {
+    similarityColumnNames.forEach((similarityColumnName: string) => {
       providers.similarityThresholds.addSimilarityThresholdFunction({
         similarityThresholdFunction: {
-          name: columnName,
+          name: similarityColumnName,
           experimentId: id,
           definition: {
             type:
               SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
-            similarityThreshold: columnName,
+            similarityThreshold: similarityColumnName,
           },
         },
       });
