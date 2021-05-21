@@ -1,7 +1,10 @@
-import { NonSimilarityThresholdColumns } from 'snowman-library';
 import { Readable } from 'stream';
 
 import { databaseBackend, tables } from '../../database';
+import {
+  isSimilarityColumn,
+  removeExperimentCustomColumnPrefix,
+} from '../../database/schemas';
 import {
   Experiment,
   ExperimentId,
@@ -144,26 +147,28 @@ export class ExperimentProvider {
         tables.meta.experiment.upsert([storedExperiment]);
       }
 
-      this.spawnSimilarityFunctionsForEachColumn(id);
+      this.addSimilarityFunctionsForEachColumn(id);
 
       BenchmarkCache.invalidateExperiment(id);
     }, id);
   }
 
-  private spawnSimilarityFunctionsForEachColumn(id: ExperimentId): void {
-    const columns = rawGetter(id)
-      .get(0, 0)
-      .header.filter((column) => !NonSimilarityThresholdColumns.has(column));
+  private addSimilarityFunctionsForEachColumn(id: ExperimentId): void {
+    const columnNames = Object.values(
+      tables.experiment.experiment(id).schema.columns
+    )
+      .filter(({ name }) => isSimilarityColumn(name))
+      .map(({ name }) => removeExperimentCustomColumnPrefix(name));
 
-    columns.forEach((aColumn: string) => {
+    columnNames.forEach((columnName: string) => {
       providers.similarityThresholds.addSimilarityThresholdFunction({
         similarityThresholdFunction: {
-          name: aColumn,
+          name: columnName,
           experimentId: id,
           definition: {
             type:
               SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
-            similarityThreshold: aColumn,
+            similarityThreshold: columnName,
           },
         },
       });

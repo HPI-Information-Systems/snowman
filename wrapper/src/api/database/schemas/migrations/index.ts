@@ -1,3 +1,3 @@
-import { SchemaV8 } from './v8';
+import { SchemaV9 } from './v9';
 
-export const latest = new SchemaV8();
+export const latest = new SchemaV9();
