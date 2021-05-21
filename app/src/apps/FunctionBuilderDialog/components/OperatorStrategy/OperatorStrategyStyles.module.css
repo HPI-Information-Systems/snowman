@@ -1,0 +1,9 @@
+.chip {
+  --background: var(--ion-color-primarydark);
+  --color: var(--ion-color-primarydark-contrast);
+}
+
+.container {
+  width: 100%;
+  padding-left: 30px;
+}
