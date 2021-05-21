@@ -10,7 +10,6 @@ import { doOpenDialog } from 'apps/SnowmanApp/store/RenderLogicDoActions';
 import { connect } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
-import { ViewIDs } from 'types/ViewIDs';
 
 const mapStateToProps = (
   state: SimilarityFuncsDialogModel,
@@ -29,7 +28,7 @@ const mapDispatchToProps = (
     dispatch(changeSearchString(event.detail.value ?? ''));
   },
   openAddFunctionBuilder() {
-    doOpenDialog(ViewIDs.FunctionBuilderDialog);
+    doOpenDialog(-1);
   },
 });
 
