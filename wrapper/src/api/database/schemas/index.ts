@@ -4,10 +4,10 @@ import { metaSchemas } from './meta';
 
 export { datasetCustomColumnPrefix, datasetSchemas } from './dataset';
 export {
-  experimentCustomColumnPrefix,
   experimentSchemas,
   isSimilarityColumn,
-  removeExperimentCustomColumnPrefix,
+  removeSimilarityCustomColumnPrefix,
+  similarityCustomColumnPrefix,
 } from './experiment';
 export { metaSchemas } from './meta';
 

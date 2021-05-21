@@ -3,7 +3,7 @@ import { Readable } from 'stream';
 import { INSERT_BATCH_SIZE } from '../../../config';
 import { Table, tables } from '../../../database';
 import {
-  experimentCustomColumnPrefix,
+  similarityCustomColumnPrefix,
   tableSchemas,
 } from '../../../database/schemas';
 import { escapeColumnName } from '../../../database/tools/escapeColumnNames';
@@ -121,7 +121,7 @@ export abstract class ExperimentInserter {
         : 0,
       ...Object.fromEntries(
         Object.entries(similarityScores).map(([score, value]) => [
-          escapeColumnName(score, experimentCustomColumnPrefix),
+          escapeColumnName(score, similarityCustomColumnPrefix),
           value,
         ])
       ),
