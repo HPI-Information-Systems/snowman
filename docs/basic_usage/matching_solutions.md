@@ -15,5 +15,4 @@ After reading this document you will know how to add your matching solution to S
 
 ## Deleting a matching solution
 
-If a solution was created by accident or is not required anymore, you can delete it.
-To prevent accidential deletes, all experiments of the matching solution must be deleted first.
+If a solution was created by accident or is not required anymore, you can delete it by clicking on the rightmost button of the matching solution card. **Be aware that all experiments belonging to this matching solution will automatically be deleted.**
