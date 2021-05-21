@@ -35,7 +35,7 @@ To delete an experiment click the rightmost button on the experiment card.
 ## Import formats
 
 !!! info
-    The tool only accepts source files in **csv** format at the moment - so in case your source file is a Microsoft Excel file, you'll first have to export it to csv!
+    The tool only accepts source files in **csv** format at the moment - so in case your source file is a Microsoft Excel file, you'll first have to export it to csv! _(Additionally, make sure that your file is UTF-8 encoded.)_
 
 To ease the import process, Snowman supports several file formats out of the box. Those include:
 

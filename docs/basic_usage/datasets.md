@@ -27,7 +27,7 @@ You can preview the dataset by clicking on the telescope button on the bottom of
 - ![Preview Dataset](../assets/preview-dataset.png)
 
 !!! info
-    Pro tip: Click on the button in the top right corner of any table (which appears when the mouse is over the table) to open the table in a new window.
+    **Pro Tip:** Click on the button in the top right corner of any table (which appears when the mouse is over the table) to open the table in a new window.
 
 - ![Preview Dataset large](../assets/preview-dataset-large.png)
 

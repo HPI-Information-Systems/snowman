@@ -1,6 +1,6 @@
 # Comparing Matching Solutions
 
-Comparing matching solutions and selecting the best one for a specfifc use case is a difficult task. Many different factors influence the decision. Mainly they can be grouped by the following:
+Comparing matching solutions and selecting the best one for a specific use case is a difficult task. Many different factors influence the decision. Mainly they can be grouped by the following:
 
 1. **The general performance** of a matching solution, measured with metrics, such as *precision* or *recall*
 2. **The effort to configure a matching solution**, measured with metrics, such as the *time to configure* or *total cost of ownership*

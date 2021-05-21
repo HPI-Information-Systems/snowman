@@ -10,8 +10,8 @@ nav:
       - Experiments: basic_usage/experiments.md
       - Configuring Analyses: basic_usage/configuring_analyses.md
       - Workflows:
-          - Comparing Matching Solutions: basic_usage/workflow/comparing_matching_solutions.md
-          - Improving Matching Solutions: basic_usage/workflow/improving_matching_solutions.md
+          - Comparing Matching Solutions: basic_usage/workflows/comparing_matching_solutions.md
+          - Improving Matching Solutions: basic_usage/workflows/improving_matching_solutions.md
       - Analyses:
           - Overview: basic_usage/analyses/overview.md
           - Binary Metrics View: basic_usage/analyses/binary_metrics_view.md

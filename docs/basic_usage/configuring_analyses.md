@@ -25,7 +25,7 @@ If the configuration for the analysis is not complete, a warning will be shown c
 ![Invalid Configuration](../assets/invalid-configuration.png)
 
 !!! info
-    Pro tip: Every entity can be opened and edited by clicking on it's icon.
+    **Pro Tip:** Every entity can be opened and edited by clicking on it's icon.
 
 ## Next Step
 
