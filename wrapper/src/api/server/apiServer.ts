@@ -25,8 +25,11 @@ export class APIServer {
     this.app.use(express.urlencoded({ extended: false }));
     this.app.use(cookieParser());
 
-    this.app.get('/openapi', (_req: express.Request, res: express.Response) =>
-      res.sendFile(OPENAPI_YAML_PATH)
+    this.app.get(
+      // Compatibility with rest.sh - https://rest.sh/#/openapi
+      ['/openapi', '/api/openapi', '/openapi.yaml', '/api/openapi.yaml'],
+      (_req: express.Request, res: express.Response) =>
+        res.sendFile(OPENAPI_YAML_PATH)
     );
     this.app.get('/api', (_req: express.Request, res: express.Response) => {
       res.status(200).send('Snowman API');
