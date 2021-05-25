@@ -23,6 +23,7 @@ nav:
   - Advanced setups:
       - Remote Instances: advanced_setups/remote_instances.md
       - Connect your Code: advanced_setups/code_connection.md
+      - Using via CLI: advanced_setups/restish-cli.md
   - Development:
       - Setup: dev_setup/introduction.md
       - Contributing: dev_setup/contrib-knowledge.md
