@@ -246,16 +246,17 @@ paths:
             example: first_name
           description: startAt and limit can be used without specifying sortBy (guarantees same order of records even if not specified)
           required: false
+        - in: query
+          name: format
+          schema:
+            $ref: "#/components/schemas/FileResponseFormat"
+          required: false
       summary: Gets a dataset file by id
       description: Always returns one row with column names followed by the requested amount of rows. To only return the column names, pass startAt=0 and limit=0.
       operationId: getDatasetFile
       responses:
         200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FileResponse"
+          $ref: "#/components/responses/FileResponse"
         404:
           description: Not Found
 
@@ -446,13 +447,14 @@ paths:
             example: first_name
           description: startAt and limit can be used without specifying sortBy (guarantees same order of records even if not specified)
           required: false
+        - in: query
+          name: format
+          schema:
+            $ref: "#/components/schemas/FileResponseFormat"
+          required: false
       responses:
         200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FileResponse"
+          $ref: "#/components/responses/FileResponse"
         404:
           description: Not Found
 
@@ -653,16 +655,17 @@ paths:
             type: integer
             default: -1
           description: -1 returns all remaining records
+        - in: query
+          name: format
+          schema:
+            $ref: "#/components/schemas/FileResponseFormat"
+          required: false
       x-codegen-request-body-name: intersection
       requestBody:
         $ref: "#/components/requestBodies/ExperimentIntersection"
       responses:
         200:
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FileResponse"
+          $ref: "#/components/responses/FileResponse"
         404:
           description: Not Found
 
@@ -772,7 +775,17 @@ components:
           schema:
             $ref: "#/components/schemas/ExperimentIntersection"
       required: true
-
+  responses:
+    FileResponse:
+      description: OK
+      content:
+        text/csv:
+          schema:
+            type: string
+            format: binary
+        application/json:
+          schema:
+            $ref: "#/components/schemas/JSONFileResponse"
   schemas:
     #### ALGORITHM ####
     AlgorithmId:
@@ -1254,7 +1267,12 @@ components:
       type: string
       format: binary
 
-    FileResponse:
+    FileResponseFormat:
+      type: string
+      enum: [json, csv]
+      default: json
+
+    JSONFileResponse:
       type: object
       properties:
         header:

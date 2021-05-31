@@ -3,7 +3,8 @@ import {
   CalculateExperimentIntersectionRecordsRequest,
   ExperimentConfigItem,
   ExperimentIntersectionCount,
-  FileResponse,
+  FileResponseFormat,
+  JSONFileResponse,
   Metric,
 } from 'api';
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
@@ -18,6 +19,7 @@ import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
+import { fileRequest } from 'utils/fileRequest';
 import RequestHandler from 'utils/requestHandler';
 
 export const updateConfig = (
@@ -130,17 +132,18 @@ const loadTuples = (
   intersection: LoadTuplesRequestBody,
   startAt: number,
   stopAt: number
-): Promise<FileResponse> =>
-  new BenchmarkApi().calculateExperimentIntersectionRecords({
+): Promise<JSONFileResponse> =>
+  fileRequest(BenchmarkApi, 'calculateExperimentIntersectionRecords', {
     intersection,
     startAt,
     limit: stopAt - startAt,
+    format: FileResponseFormat.Json,
   });
 
 export const loadTruePositives = (state: BinaryMetricsStrategyModel) => (
   startIndex: number,
   stopIndex: number
-): Promise<FileResponse> =>
+): Promise<JSONFileResponse> =>
   loadTuples(
     getRequestBodyForTruePositives(...getExperimentsComparisonTuple(state)),
     startIndex,
@@ -150,7 +153,7 @@ export const loadTruePositives = (state: BinaryMetricsStrategyModel) => (
 export const loadFalsePositives = (state: BinaryMetricsStrategyModel) => (
   startIndex: number,
   stopIndex: number
-): Promise<FileResponse> =>
+): Promise<JSONFileResponse> =>
   loadTuples(
     getRequestBodyForFalsePositives(...getExperimentsComparisonTuple(state)),
     startIndex,
@@ -160,7 +163,7 @@ export const loadFalsePositives = (state: BinaryMetricsStrategyModel) => (
 export const loadFalseNegatives = (state: BinaryMetricsStrategyModel) => (
   startIndex: number,
   stopIndex: number
-): Promise<FileResponse> =>
+): Promise<JSONFileResponse> =>
   loadTuples(
     getRequestBodyForFalseNegatives(...getExperimentsComparisonTuple(state)),
     startIndex,
@@ -170,7 +173,7 @@ export const loadFalseNegatives = (state: BinaryMetricsStrategyModel) => (
 export const loadTrueNegatives = (state: BinaryMetricsStrategyModel) => (
   startIndex: number,
   stopIndex: number
-): Promise<FileResponse> =>
+): Promise<JSONFileResponse> =>
   loadTuples(
     getRequestBodyForTrueNegatives(...getExperimentsComparisonTuple(state)),
     startIndex,

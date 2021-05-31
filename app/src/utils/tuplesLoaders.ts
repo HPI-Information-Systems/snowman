@@ -1,5 +1,11 @@
-import { DatasetsApi, ExperimentsApi, FileResponse } from 'api';
+import {
+  DatasetsApi,
+  ExperimentsApi,
+  FileResponseFormat,
+  JSONFileResponse,
+} from 'api';
 import { TuplesLoader } from 'types/TuplesLoader';
+import { fileRequest } from 'utils/fileRequest';
 
 //! Cache loaders to not trigger a rerender
 
@@ -8,10 +14,11 @@ export const datasetTuplesLoader = (datasetId: number): TuplesLoader => {
   let tuplesLoader = datasetTuplesLoaders.get(datasetId);
   if (!tuplesLoader) {
     tuplesLoader = (startAt: number, stop: number) =>
-      new DatasetsApi().getDatasetFile({
+      fileRequest(DatasetsApi, 'getDatasetFile', {
         datasetId: datasetId,
         startAt,
         limit: stop - startAt,
+        format: FileResponseFormat.Json,
       });
     datasetTuplesLoaders.set(datasetId, tuplesLoader);
   }
@@ -23,10 +30,11 @@ export const experimentTuplesLoader = (experimentId: number): TuplesLoader => {
   let tuplesLoader = experimentTuplesLoaders.get(experimentId);
   if (!tuplesLoader) {
     tuplesLoader = (startAt, stop) =>
-      new ExperimentsApi().getExperimentFile({
+      fileRequest(ExperimentsApi, 'getExperimentFile', {
         experimentId: experimentId,
         startAt,
         limit: stop - startAt,
+        format: FileResponseFormat.Json,
       });
     experimentTuplesLoaders.set(experimentId, tuplesLoader);
   }
@@ -41,17 +49,18 @@ export const simFunctionTuplesLoader = (
   let tuplesLoader = simFunctionTuplesLoaders.get(simFuncId);
   if (!tuplesLoader) {
     tuplesLoader = (startAt, stop) =>
-      new ExperimentsApi().getExperimentFile({
+      fileRequest(ExperimentsApi, 'getExperimentFile', {
         experimentId,
         startAt,
         limit: stop - startAt,
         similarityThresholdFunction: simFuncId,
         similarityThreshold: Number.MIN_SAFE_INTEGER,
+        format: FileResponseFormat.Json,
       });
     simFunctionTuplesLoaders.set(simFuncId, tuplesLoader);
   }
   return tuplesLoader;
 };
 
-export const dummyTuplesLoader = (): Promise<FileResponse> =>
+export const dummyTuplesLoader = (): Promise<JSONFileResponse> =>
   Promise.resolve({ data: [], header: [] });

@@ -4,6 +4,7 @@ import {
   ExperimentConfigItem,
   ExperimentIntersectionCount,
   ExperimentIntersectionItem,
+  FileResponseFormat,
 } from 'api';
 import { IntersectionStrategyActionTypes } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyActionTypes';
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
@@ -24,6 +25,7 @@ import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
+import { fileRequest } from 'utils/fileRequest';
 import RequestHandler from 'utils/requestHandler';
 import { datasetTuplesLoader } from 'utils/tuplesLoaders';
 
@@ -171,10 +173,11 @@ export const intersectionTuplesLoader = (
     let tuplesLoader = intersectionTuplesLoaders.get(serializedConfig);
     if (!tuplesLoader) {
       tuplesLoader = (startAt, stop) =>
-        new BenchmarkApi().calculateExperimentIntersectionRecords({
+        fileRequest(BenchmarkApi, 'calculateExperimentIntersectionRecords', {
           startAt,
           limit: stop - startAt,
           intersection: sortedConfig,
+          format: FileResponseFormat.Json,
         });
       intersectionTuplesLoaders.set(serializedConfig, tuplesLoader);
     }
