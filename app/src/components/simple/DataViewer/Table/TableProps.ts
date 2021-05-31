@@ -30,11 +30,6 @@ export type TableHeaderOwnProps = {
   setColumnOrder: (
     updater: string[] | ((columnOrder: string[]) => string[])
   ) => void;
-  openDataViewerWindow: () => void;
 };
 
-export type TableHeaderDispatchProps = {
-  performOpenDataViewerWindow: () => void;
-};
-
-export type TableHeaderProps = TableHeaderOwnProps & TableHeaderDispatchProps;
+export type TableHeaderProps = TableHeaderOwnProps;

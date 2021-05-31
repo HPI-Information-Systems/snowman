@@ -1,9 +1,7 @@
 import 'components/simple/DataViewer/Table/TableHeaderStyles.css';
 
-import { IonButton, IonIcon } from '@ionic/react';
 import ScrollSync from 'components/simple/DataViewer/Table/ScrollSync/ScrollSync';
 import { TableHeaderProps } from 'components/simple/DataViewer/Table/TableProps';
-import { open } from 'ionicons/icons';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { scrollbarWidth } from 'utils/scrollbarWidth';
 
@@ -13,7 +11,6 @@ export default function TableHeaderView({
   headerGroups,
   setColumnOrder,
   visibleColumns,
-  performOpenDataViewerWindow,
 }: TableHeaderProps): JSX.Element {
   const draggedColumn = useRef<string>();
   const setDragTimeout = useRef<number>();
@@ -85,17 +82,6 @@ export default function TableHeaderView({
           </div>
         ))}
       </ScrollSync>
-      <IonButton
-        size="small"
-        color="light"
-        onClick={performOpenDataViewerWindow}
-        style={{
-          height: `calc(${tableHeaderHeight} - 4px)`,
-        }}
-        className="open-data-viewer"
-      >
-        <IonIcon slot="icon-only" icon={open} />
-      </IonButton>
       {headerGroups.map((headerGroup) => (
         // eslint-disable-next-line react/jsx-key
         <div
