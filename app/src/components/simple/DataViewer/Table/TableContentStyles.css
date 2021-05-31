@@ -7,11 +7,11 @@
 
 .table-overlay-container {
   position: absolute;
-  bottom: 20px;
+  z-index: 40;
   right: 20px;
+  bottom: 20px;
   transition: opacity 0.2s;
   opacity: 0.35;
-  z-index: 40;
 }
 
 .table-overlay-container:hover {

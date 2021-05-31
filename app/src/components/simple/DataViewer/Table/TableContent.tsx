@@ -24,6 +24,7 @@ export default function TableContent({
   width,
   resetTable,
   openDataViewerWindow,
+  downloadDataViewerContent,
 }: TableContentProps): JSX.Element {
   const columns = useMemo<Column<string[]>[]>(
     () => new Proxy(rawColumns, {}),
@@ -69,7 +70,7 @@ export default function TableContent({
           className="table-overlay-button"
           size="small"
           color="light"
-          onClick={() => console.log('download me pls!')}
+          onClick={downloadDataViewerContent}
         >
           <IonIcon slot="icon-only" icon={download} />
         </IonButton>

@@ -23,3 +23,4 @@ export const SUCCESS_TO_UPDATE_SIMILARITY_THRESHOLD_FUNCTION =
   'Successfully updated similarity threshold function';
 export const SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION =
   'Successfully deleted similarity threshold function';
+export const SUCCESS_TO_DOWNLOAD_CSV = 'Successfully downloaded as csv file';

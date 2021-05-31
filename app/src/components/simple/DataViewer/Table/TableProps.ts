@@ -9,6 +9,7 @@ export type TableProps = {
   rowsChanged: unknown;
   columnsChanged: unknown;
   openDataViewerWindow: () => void;
+  downloadDataViewerContent: () => void;
 };
 
 export type TableContentProps = {
@@ -18,6 +19,7 @@ export type TableContentProps = {
   width: number;
   resetTable: MutableRefObject<boolean>;
   openDataViewerWindow: () => void;
+  downloadDataViewerContent: () => void;
 };
 
 export type TableBodyProps = {

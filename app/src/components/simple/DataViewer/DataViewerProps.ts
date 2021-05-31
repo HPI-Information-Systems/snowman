@@ -3,6 +3,7 @@ import { TuplesLoader } from 'types/TuplesLoader';
 export interface DataViewerOwnPropsNoTuplesLoader {
   tuplesCount: number;
   title: string;
+  fileName?: string;
   BATCH_SIZE?: number;
 }
 
