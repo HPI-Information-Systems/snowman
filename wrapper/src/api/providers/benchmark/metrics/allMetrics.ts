@@ -22,27 +22,33 @@ import {
 } from '.';
 import { BaseMetric } from './base';
 
-export const metrics = [
-  Accuracy,
+const metricsWithoutTrueNegatives = [
   Precision,
   Recall,
   F1Score,
   FStarScore,
-
-  FalsePositiveRate,
   FalseNegativeRate,
   FalseDiscoveryRate,
+  FowlkesMallowsIndex,
+  ThreatScore,
+];
+
+const metricsWithTrueNegatives = [
+  Accuracy,
+  FalsePositiveRate,
   FalseOmissionRate,
   NegativePredictiveValue,
   Specificity,
-
   BalancedAccuracy,
   BookmakerInformedness,
-  FowlkesMallowsIndex,
   Markedness,
   MatthewsCorrelationCoefficient,
   PrevalenceThreshold,
-  ThreatScore,
+];
+
+export const metrics = [
+  ...metricsWithoutTrueNegatives,
+  ...metricsWithTrueNegatives,
 ];
 
 export const metricsMap = new Map(
