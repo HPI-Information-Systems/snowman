@@ -2,7 +2,7 @@ import { databaseBackend, Table } from '../../../database';
 import { similarityCustomColumnPrefix } from '../../../database/schemas';
 import { AdvancedFilterT } from '../../../database/table/getter';
 import { Column, TableSchema } from '../../../database/tools/types';
-import { ExperimentId, FileResponse } from '../../../server/types';
+import { ExperimentId, JSONFileResponse } from '../../../server/types';
 import { datasetFromExperimentIds } from '../../benchmark/datasetFromExperiments';
 import { DatasetIDMapper } from '../../dataset/util/idMapper';
 
@@ -27,7 +27,7 @@ export class ExperimentFileGetter<Schema extends TableSchema> {
     this.idMapper = new DatasetIDMapper(datasetFromExperimentIds([id]).id);
   }
 
-  get(startAt?: number, limit?: number, sortBy?: string): FileResponse {
+  get(startAt?: number, limit?: number, sortBy?: string): JSONFileResponse {
     return databaseBackend().transaction(() => ({
       header: this.columns.map((column) =>
         column.startsWith(similarityCustomColumnPrefix)

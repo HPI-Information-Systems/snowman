@@ -1,5 +1,5 @@
 import { tables } from '../../../database';
-import { DatasetId, FileResponse } from '../../../server/types';
+import { DatasetId, JSONFileResponse } from '../../../server/types';
 import { NodeID } from '../cluster/types';
 import { idClustersToRecordClustersNoTable } from './noTable';
 import { idClustersToRecordClustersWithTable } from './withTable';
@@ -7,7 +7,7 @@ import { idClustersToRecordClustersWithTable } from './withTable';
 export function idClustersToRecordClusters(
   idClusters: (NodeID | undefined)[],
   datasetId: DatasetId
-): FileResponse {
+): JSONFileResponse {
   const table = tables.dataset.dataset(datasetId);
   if (table.exists()) {
     table.loadSchemaFromDatabase();

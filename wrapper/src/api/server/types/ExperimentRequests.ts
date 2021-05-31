@@ -1,4 +1,5 @@
 import { ExperimentValues } from './ExperimentValues';
+import { FileResponseFormat } from './FileResponseFormat';
 
 export interface AddExperimentRequest {
   experiment: ExperimentValues;
@@ -19,6 +20,7 @@ export interface GetExperimentFileRequest {
   startAt?: number;
   limit?: number;
   sortBy?: string;
+  format?: FileResponseFormat;
 }
 
 export interface SetExperimentRequest {

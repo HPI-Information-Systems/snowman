@@ -3,7 +3,7 @@ import {
   datasetCustomColumnPrefix,
   tableSchemas,
 } from '../../../database/schemas';
-import { DatasetId, FileResponse } from '../../../server/types';
+import { DatasetId, JSONFileResponse } from '../../../server/types';
 
 type DatasetSchema = ReturnType<typeof tableSchemas['dataset']['dataset']>;
 
@@ -25,7 +25,7 @@ export class DatasetFileGetter {
     this.sortedColumn = this.getSortedColumn(sortBy);
   }
 
-  get(): FileResponse {
+  get(): JSONFileResponse {
     return {
       header: this.customColumns.map((column) =>
         column.substring(datasetCustomColumnPrefix.length)

@@ -6,7 +6,7 @@ import {
   ExperimentConfigItem,
   ExperimentIntersectionCount,
   ExperimentIntersectionItem,
-  FileResponse,
+  JSONFileResponse,
   MetricsEnum,
 } from '../../server/types';
 import { Metric } from '../../server/types';
@@ -189,7 +189,7 @@ export class BenchmarkProvider {
     intersection: ExperimentIntersectionItem[];
     startAt?: number;
     limit?: number;
-  }): FileResponse {
+  }): JSONFileResponse {
     const intersection = this.intersection(experiments);
     return idClustersToRecordClusters(
       intersection.rows(startAt, limit),

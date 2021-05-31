@@ -9,7 +9,7 @@ import {
   Experiment,
   ExperimentId,
   ExperimentValues,
-  FileResponse,
+  JSONFileResponse,
   SimilarityThresholdFunctionDefinitionTypeEnum,
 } from '../../server/types';
 import {
@@ -98,7 +98,7 @@ export class ExperimentProvider {
     sortBy,
     similarityThreshold,
     similarityThresholdFunction,
-  }: GetExperimentFileRequest): FileResponse {
+  }: GetExperimentFileRequest): JSONFileResponse {
     const similarity = getSimilarity(
       similarityThreshold,
       similarityThresholdFunction

@@ -1,11 +1,11 @@
-import { FileResponse } from '../../../../server/types';
+import { JSONFileResponse } from '../../../../server/types';
 import { compareArrays } from '../../../../tools/comparators';
 
 /**
  * Sorts file responses which
  * !have exactly one column called "id"
  */
-export function sortTestFileResponse(file: FileResponse): FileResponse {
+export function sortTestFileResponse(file: JSONFileResponse): JSONFileResponse {
   const groups: number[][] = [];
   let nextGroup: number[] = [];
   for (const row of file.data) {

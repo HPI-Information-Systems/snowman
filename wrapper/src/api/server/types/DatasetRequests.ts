@@ -1,4 +1,5 @@
 import { DatasetValues } from './DatasetValues';
+import { FileResponseFormat } from './FileResponseFormat';
 
 export interface AddDatasetRequest {
   dataset: DatasetValues;
@@ -21,6 +22,7 @@ export interface GetDatasetFileRequest {
   startAt?: number;
   limit?: number;
   sortBy?: string;
+  format?: FileResponseFormat;
 }
 
 export interface SetDatasetRequest {
