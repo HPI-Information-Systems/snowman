@@ -13,6 +13,7 @@ import { DataViewerOwnProps } from 'components/simple/DataViewer/DataViewerProps
 import { saveAs } from 'file-saver';
 import {
   COULD_NOT_OPEN_CHILD_WINDOW_ERROR,
+  ERROR_TOO_LARGE_DOWNLOAD_CSV,
   SUCCESS_TO_DOWNLOAD_CSV,
   WARNING_LARGE_DOWNLOAD_CSV,
 } from 'structs/statusMessages';
@@ -90,10 +91,20 @@ export const downloadDataViewerContent = (
   tuplesCount?: number
 ): void => {
   console.log('Attempting to download', tuplesCount);
-  if (tuplesCount !== undefined && tuplesCount > 2000000) {
-    SnowmanAppDispatch(
-      showToast(WARNING_LARGE_DOWNLOAD_CSV, ToastType.Warning)
-    );
+  if (tuplesCount !== undefined) {
+    if (tuplesCount > 6000000) {
+      SnowmanAppDispatch(
+        showToast(ERROR_TOO_LARGE_DOWNLOAD_CSV, ToastType.Error)
+      );
+      // Abort since the download will take probably crash
+      return;
+    }
+    if (tuplesCount > 2000000) {
+      SnowmanAppDispatch(
+        showToast(WARNING_LARGE_DOWNLOAD_CSV, ToastType.Warning)
+      );
+      // Continue with a warning that the download will be slow
+    }
   }
   RequestHandler(
     () => loadTuples(0, Number.MAX_SAFE_INTEGER, FileResponseFormat.Csv),

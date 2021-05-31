@@ -26,4 +26,7 @@ export const SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION =
 export const SUCCESS_TO_DOWNLOAD_CSV = 'Successfully downloaded as csv file';
 
 export const WARNING_LARGE_DOWNLOAD_CSV =
-  'Warning: A lot of rows are selected! The download may crash Snowman! (Please wait up to 10 minutes.)';
+  'Warning: A lot of rows are selected. The download may crash Snowman! (Please wait up to 10 minutes.)';
+
+export const ERROR_TOO_LARGE_DOWNLOAD_CSV =
+  'Too many rows selected to download as CSV! Use a more restrictive selector.';
