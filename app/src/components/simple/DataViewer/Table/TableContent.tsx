@@ -71,6 +71,7 @@ export default function TableContent({
           size="small"
           color="light"
           onClick={downloadDataViewerContent}
+          title="Download contents as CSV"
         >
           <IonIcon slot="icon-only" icon={download} />
         </IonButton>
@@ -79,6 +80,7 @@ export default function TableContent({
           size="small"
           color="light"
           onClick={openDataViewerWindow}
+          title="Open in separate window"
         >
           <IonIcon slot="icon-only" icon={open} />
         </IonButton>
