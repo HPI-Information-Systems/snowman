@@ -6,7 +6,7 @@ import {
   JSONFileResponseFromJSON,
 } from 'api';
 
-type ApiClass = new (configuration?: Configuration) => any;
+export type ApiClass = new (configuration?: Configuration) => any;
 
 type FileRequest = (
   params: {
@@ -14,21 +14,23 @@ type FileRequest = (
   } & any
 ) => Promise<Blob>;
 
-type FileRequestKeys<Api extends ApiClass> = {
+export type FileRequestKeys<Api extends ApiClass> = {
   [key in keyof InstanceType<Api>]: InstanceType<Api>[key] extends FileRequest
     ? key
     : never;
 }[keyof InstanceType<Api>];
 
-type FileRequestParameters<
+export type FileRequestParameters<
   Api extends ApiClass,
   RequestKey extends FileRequestKeys<Api>,
   Format extends FileResponseFormat
 > = Parameters<InstanceType<Api>[RequestKey]>[0] & { format: Format };
 
-type FileResponse<Format> = Format extends FileResponseFormat.Csv
-  ? Promise<Blob>
-  : Promise<JSONFileResponse>;
+export type FileResponsePromise<Format> = Promise<FileResponse<Format>>;
+
+export type FileResponse<Format> = Format extends FileResponseFormat.Csv
+  ? Blob
+  : JSONFileResponse;
 
 export const fileRequest = <
   Api extends ApiClass,
@@ -38,11 +40,11 @@ export const fileRequest = <
   api: Api,
   requestKey: RequestKey,
   params: FileRequestParameters<Api, RequestKey, Format>
-): FileResponse<Format> =>
+): FileResponsePromise<Format> =>
   new api()
     [requestKey](params)
     .then((blob: Blob) =>
       params.format === FileResponseFormat.Csv
         ? blob
         : blob.text().then((text) => JSONFileResponseFromJSON(JSON.parse(text)))
-    ) as FileResponse<Format>;
+    ) as FileResponsePromise<Format>;

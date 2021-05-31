@@ -1,4 +1,4 @@
-import { JSONFileResponse } from 'api';
+import { FileResponseFormat, JSONFileResponse } from 'api';
 import { openStandaloneDataViewerWindow } from 'components/simple/DataViewer/DataViewer.helpers';
 import { DataViewerProps } from 'components/simple/DataViewer/DataViewerProps';
 import Table from 'components/simple/DataViewer/Table/Table';
@@ -13,7 +13,7 @@ const wrapLoadTuples = (
   stop: number
 ) => {
   return RequestHandler(() =>
-    loadTuples(start, stop).then(
+    loadTuples(start, stop, FileResponseFormat.Json).then(
       (aResult: JSONFileResponse): JSONFileResponse => ({
         ...aResult,
         header: aResult.header.map((aColumn, index): string => {

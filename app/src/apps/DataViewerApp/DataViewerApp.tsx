@@ -34,7 +34,9 @@ const DataViewerApp = (): JSX.Element => {
     (...params) =>
       new Promise((resolve, reject) => {
         pendingLoadTuples.current.set(nextLoadTuplesId.current, {
-          resolve,
+          resolve: resolve as (
+            response: Await<ReturnType<TuplesLoader>>
+          ) => void,
           reject,
         });
         postActionToHost({
