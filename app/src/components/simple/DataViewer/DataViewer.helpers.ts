@@ -92,7 +92,6 @@ export const downloadDataViewerContent = (
     SUCCESS_TO_DOWNLOAD_CSV,
     true
   ).then((blob) => {
-    // Todo: Properly implement this in the backend!
     blob = blob.slice(0, blob.size, 'text/csv');
     console.log('Download', fileName, blob.type);
     saveAs(blob, fileName + '.csv');
