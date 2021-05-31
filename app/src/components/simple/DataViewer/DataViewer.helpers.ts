@@ -12,7 +12,7 @@ import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
 import { DataViewerOwnProps } from 'components/simple/DataViewer/DataViewerProps';
 import { saveAs } from 'file-saver';
 import {
-  COULD_NOT_OPEN_CHILD_WINDOW_ERROR,
+  ERROR_COULD_NOT_OPEN_CHILD_WINDOW,
   ERROR_TOO_LARGE_DOWNLOAD_CSV,
   SUCCESS_TO_DOWNLOAD_CSV,
   WARNING_LARGE_DOWNLOAD_CSV,
@@ -36,7 +36,7 @@ const openViewInNewWindow = (viewId: ViewIDs): Window | null => {
   );
   if (!targetWindow) {
     SnowmanAppDispatch(
-      showToast(COULD_NOT_OPEN_CHILD_WINDOW_ERROR, ToastType.Error)
+      showToast(ERROR_COULD_NOT_OPEN_CHILD_WINDOW, ToastType.Error)
     );
   }
   return targetWindow;
@@ -80,7 +80,7 @@ export const openStandaloneDataViewerWindow = ({
     );
   } else {
     SnowmanAppDispatch(
-      showToast(COULD_NOT_OPEN_CHILD_WINDOW_ERROR, ToastType.Error)
+      showToast(ERROR_COULD_NOT_OPEN_CHILD_WINDOW, ToastType.Error)
     );
   }
 };
