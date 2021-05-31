@@ -24,7 +24,7 @@ type FileRequestParameters<
   Api extends ApiClass,
   RequestKey extends FileRequestKeys<Api>,
   Format extends FileResponseFormat
-> = Parameters<InstanceType<Api>[RequestKey]> & [{ format: Format }];
+> = Parameters<InstanceType<Api>[RequestKey]>[0] & { format: Format };
 
 type FileResponse<Format> = Format extends FileResponseFormat.Csv
   ? Promise<Blob>
@@ -37,12 +37,12 @@ export const fileRequest = <
 >(
   api: Api,
   requestKey: RequestKey,
-  ...params: FileRequestParameters<Api, RequestKey, Format>
+  params: FileRequestParameters<Api, RequestKey, Format>
 ): FileResponse<Format> =>
   new api()
-    [requestKey](...params)
+    [requestKey](params)
     .then((blob: Blob) =>
-      params[0].format === FileResponseFormat.Csv
+      params.format === FileResponseFormat.Csv
         ? blob
         : blob.text().then((text) => JSONFileResponseFromJSON(JSON.parse(text)))
     ) as FileResponse<Format>;
