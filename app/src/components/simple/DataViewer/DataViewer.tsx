@@ -141,7 +141,8 @@ const DataViewer = ({
           downloadDataViewerContent={() =>
             downloadDataViewerContent(
               loadTuples,
-              cleanFileName(fileName ?? title)
+              cleanFileName(fileName ?? title),
+              tuplesCount
             )
           }
         />

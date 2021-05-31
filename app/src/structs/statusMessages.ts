@@ -24,3 +24,6 @@ export const SUCCESS_TO_UPDATE_SIMILARITY_THRESHOLD_FUNCTION =
 export const SUCCESS_TO_DELETE_SIMILARITY_THRESHOLD_FUNCTION =
   'Successfully deleted similarity threshold function';
 export const SUCCESS_TO_DOWNLOAD_CSV = 'Successfully downloaded as csv file';
+
+export const WARNING_LARGE_DOWNLOAD_CSV =
+  'Warning: A lot of rows are selected! The download may crash Snowman! (Please wait up to 10 minutes.)';
