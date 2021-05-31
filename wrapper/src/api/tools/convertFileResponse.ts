@@ -1,10 +1,11 @@
-import stringify from 'csv-stringify/lib/sync';
+import stringify from 'csv-stringify';
+import { Readable } from 'stream';
 
 import { FileResponseFormat, JSONFileResponse } from '../server/types';
 
 export type FileResponse<
   Format extends FileResponseFormat = FileResponseFormat
-> = Format extends FileResponseFormat.Csv ? string : JSONFileResponse;
+> = Format extends FileResponseFormat.Csv ? Readable : JSONFileResponse;
 
 const toFileResponseFormat: {
   [Format in FileResponseFormat]: (
