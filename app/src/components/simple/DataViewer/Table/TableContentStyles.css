@@ -4,3 +4,20 @@
   height: 100%;
   padding-left: 8px;
 }
+
+.table-overlay-container {
+  position: absolute;
+  z-index: 40;
+  right: 20px;
+  bottom: 20px;
+  transition: opacity 0.2s;
+  opacity: 0.35;
+}
+
+.table-overlay-container:hover {
+  opacity: 1;
+}
+
+.table-overlay-button {
+  height: 2.5rem;
+}

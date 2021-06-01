@@ -30,3 +30,9 @@ export function reduceLength<T>(array: T[], reduceBy: number): T[] {
   }
   return array;
 }
+
+export function extend<T>(array: T[], extendBy: T[]): void {
+  for (const element of extendBy) {
+    array.push(element);
+  }
+}

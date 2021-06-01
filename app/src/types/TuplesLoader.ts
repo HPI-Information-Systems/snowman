@@ -1,5 +1,10 @@
-import { FileResponse } from 'api';
+import { FileResponseFormat } from 'api';
+import { FileResponsePromise } from 'utils/fileRequest';
 
 export interface TuplesLoader {
-  (startIndex: number, stopIndex: number): Promise<FileResponse>;
+  <Format extends FileResponseFormat>(
+    startIndex: number,
+    stopIndex: number,
+    format: Format
+  ): FileResponsePromise<Format>;
 }

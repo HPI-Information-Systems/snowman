@@ -1,3 +1,4 @@
+import { extend } from '../../../../../tools/array';
 import { LazyProperty } from '../../../../../tools/lazyProperty';
 import { SubclusterCache } from '../../../cache';
 import { IntersectionCache } from '../../../cache/flavors/intersectionCache';
@@ -118,7 +119,7 @@ export class CalculateRowsManyExcludes extends CalculateRowsFlavor {
             this.skipRemains,
             this.skipRemains + this.limit
           );
-          this.rows.push(...addedRows);
+          extend(this.rows, addedRows);
           numberRows += addedRows.length;
           this.limit -= addedRows.length;
           this.skipRemains = 0;

@@ -12,9 +12,4 @@ export interface IntersectionStrategyStateProps {
   ignored: ExperimentEntity[];
 }
 
-export interface IntersectionStrategyDispatchProps {
-  loadCounts(): void;
-}
-
-export type IntersectionStrategyProps = IntersectionStrategyStateProps &
-  IntersectionStrategyDispatchProps;
+export type IntersectionStrategyProps = IntersectionStrategyStateProps;

@@ -1,6 +1,7 @@
 import {
   ExperimentsApi,
-  FileResponse,
+  FileResponseFormat,
+  JSONFileResponse,
   SimilarityThresholdFunction,
   SimilarityThresholdsApi,
 } from 'api';
@@ -31,6 +32,7 @@ import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
+import { fileRequest } from 'utils/fileRequest';
 import RequestHandler from 'utils/requestHandler';
 
 const getExperimentIdFromStack = (): number =>
@@ -105,19 +107,17 @@ const loadExperimentColumns = (): SnowmanThunkAction<
 ): Promise<void> =>
   RequestHandler<void>(
     (): Promise<void> =>
-      new ExperimentsApi()
-        .getExperimentFile({
-          experimentId: getState().experimentId,
-          // an arbitrary number so that not all records will be loaded
-          limit: 0,
-        })
-        .then((file: FileResponse): void => {
-          dispatch({
-            type: FunctionBuilderDialogActionTypes.LOAD_EXPERIMENT_COLUMNS,
-            //! Snowman Library does not contain the necessary filter anymore.
-            payload: file.header.filter((column) => false),
-          });
-        })
+      fileRequest(ExperimentsApi, 'getExperimentFile', {
+        experimentId: getState().experimentId,
+        limit: 0,
+        format: FileResponseFormat.Json,
+      }).then((file: JSONFileResponse): void => {
+        dispatch({
+          type: FunctionBuilderDialogActionTypes.LOAD_EXPERIMENT_COLUMNS,
+          //! Snowman Library does not contain the necessary filter anymore.
+          payload: file.header.filter((column) => false),
+        });
+      })
   );
 
 const prepareUpdateDialog = (

@@ -1,9 +1,6 @@
 import { ExperimentIntersectionItem } from 'api';
 import IntersectionStrategyView from 'apps/BenchmarkApp/strategies/IntersectionStrategy/IntersectionStrategy.View';
-import {
-  IntersectionStrategyDispatchProps,
-  IntersectionStrategyStateProps,
-} from 'apps/BenchmarkApp/strategies/IntersectionStrategy/IntersectionStrategyProps';
+import { IntersectionStrategyStateProps } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/IntersectionStrategyProps';
 import {
   countsMatchConfiguration,
   getCountsForIntersection,
@@ -13,7 +10,6 @@ import {
 import { IntersectionStrategyModel } from 'apps/BenchmarkApp/strategies/IntersectionStrategy/types/IntersectionStrategyModel';
 import { experimentEntityToExperimentConfigItem } from 'apps/BenchmarkApp/utils/experimentEntity';
 import { connect } from 'react-redux';
-import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { dummyTuplesLoader } from 'utils/tuplesLoaders';
 
 const mapStateToProps = ({
@@ -54,19 +50,8 @@ const mapStateToProps = ({
   };
 };
 
-const mapDispatchToProps = (
-  dispatch: SnowmanDispatch<IntersectionStrategyModel>
-): IntersectionStrategyDispatchProps => {
-  return {
-    loadCounts() {
-      console.log('do we need this?');
-    },
-  };
-};
-
-const IntersectionStrategyContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IntersectionStrategyView);
+const IntersectionStrategyContainer = connect(mapStateToProps)(
+  IntersectionStrategyView
+);
 
 export default IntersectionStrategyContainer;

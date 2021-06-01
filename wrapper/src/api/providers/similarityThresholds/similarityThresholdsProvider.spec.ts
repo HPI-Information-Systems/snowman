@@ -3,7 +3,7 @@ import {
   AlgorithmId,
   DatasetId,
   ExperimentId,
-  FileResponse,
+  JSONFileResponse,
   SetExperimentFileFormatEnum,
   SimilarityThresholdFunction,
   SimilarityThresholdFunctionDefinitionTypeEnum,
@@ -300,7 +300,7 @@ describe('Similarity Threshold Provider', () => {
     ).toBe(0);
   });
 
-  function fileResponseToFile(fileResponse: FileResponse): string[][] {
+  function fileResponseToFile(fileResponse: JSONFileResponse): string[][] {
     return [fileResponse.header, ...fileResponse.data].map((vals) =>
       vals.map((val) => val.toString())
     );

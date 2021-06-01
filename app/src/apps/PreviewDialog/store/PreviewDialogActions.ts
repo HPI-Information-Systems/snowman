@@ -110,7 +110,7 @@ export const onDialogOpen = (
   entityId: EntityId,
   entityType?: EntityType
 ): void => {
-  console.log(entityId, entityType);
+  //console.log(entityId, entityType);
   if (entityType === PreviewDialogTypes.DATASET && entityId !== null) {
     dispatch(loadAndStoreDataset(entityId)).then();
   } else if (

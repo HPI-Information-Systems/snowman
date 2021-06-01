@@ -25,7 +25,7 @@ import {
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
-import { datasetTuplesLoader } from 'utils/tuplesLoaders';
+import { createTuplesLoader, datasetTuplesLoader } from 'utils/tuplesLoaders';
 
 export const updateConfig = (
   appStore: BenchmarkAppModel
@@ -170,12 +170,11 @@ export const intersectionTuplesLoader = (
     const serializedConfig = serializeIntersection(sortedConfig);
     let tuplesLoader = intersectionTuplesLoaders.get(serializedConfig);
     if (!tuplesLoader) {
-      tuplesLoader = (startAt, stop) =>
-        new BenchmarkApi().calculateExperimentIntersectionRecords({
-          startAt,
-          limit: stop - startAt,
-          intersection: sortedConfig,
-        });
+      tuplesLoader = createTuplesLoader(
+        BenchmarkApi,
+        'calculateExperimentIntersectionRecords',
+        { intersection: sortedConfig }
+      );
       intersectionTuplesLoaders.set(serializedConfig, tuplesLoader);
     }
     return tuplesLoader;

@@ -1,11 +1,14 @@
 import { providers } from '../../providers';
 import {
+  convertFileResponse,
+  FileResponse,
+} from '../../tools/convertFileResponse';
+import {
   AddDatasetRequest,
   Dataset,
   DatasetId,
   DeleteDatasetFileRequest,
   DeleteDatasetRequest,
-  FileResponse,
   GetDatasetFileRequest,
   GetDatasetRequest,
   Request,
@@ -51,9 +54,14 @@ export async function getDatasetFile({
   startAt,
   limit,
   sortBy,
+  format,
 }: GetDatasetFileRequest): Promise<SuccessResponse<FileResponse>> {
   return Service.response(
-    () => provider().getDatasetFile(datasetId, startAt, limit, sortBy),
+    () =>
+      convertFileResponse(
+        provider().getDatasetFile(datasetId, startAt, limit, sortBy),
+        format
+      ),
     200,
     404
   );

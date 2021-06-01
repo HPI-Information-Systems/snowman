@@ -4,7 +4,7 @@ import {
   tableSchemas,
 } from '../../../database/schemas';
 import { Column } from '../../../database/tools/types';
-import { DatasetId, FileResponse } from '../../../server/types';
+import { DatasetId, JSONFileResponse } from '../../../server/types';
 import { DatasetIDMapper } from '../../dataset/util/idMapper';
 import { NodeID } from '../cluster/types';
 
@@ -14,7 +14,7 @@ export function idClustersToRecordClustersWithTable(
   idClusters: (NodeID | undefined)[],
   table: Table<DatasetSchema>,
   datasetId: DatasetId
-): FileResponse {
+): JSONFileResponse {
   return databaseBackend().transaction(() =>
     new IdClustersToRecordClusters(
       idClusters,
@@ -39,7 +39,7 @@ class IdClustersToRecordClusters {
     this.columnNames = this.columns.map((column) => column.name);
   }
 
-  run(): FileResponse {
+  run(): JSONFileResponse {
     return {
       header: this.getHeader(),
       data: this.getRecordClusters(),
@@ -52,7 +52,7 @@ class IdClustersToRecordClusters {
     );
   }
 
-  protected getRecordClusters(): FileResponse['data'] {
+  protected getRecordClusters(): JSONFileResponse['data'] {
     return this.idClusters.map((id) =>
       id === undefined ? [] : this.getRecord(id)
     );

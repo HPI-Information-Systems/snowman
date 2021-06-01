@@ -5,7 +5,7 @@ import {
   Dataset,
   DatasetId,
   DatasetValues,
-  FileResponse,
+  JSONFileResponse,
 } from '../../server/types';
 import { BenchmarkCache } from '../benchmark/cache';
 import { DatasetDeleter } from './deleter';
@@ -74,7 +74,7 @@ export class DatasetProvider {
     startAt?: number,
     limit?: number,
     sortBy?: string
-  ): FileResponse {
+  ): JSONFileResponse {
     this.checks.throwIfNoDatasetFileUploaded(id);
     return new DatasetFileGetter(id, startAt, limit, sortBy).get();
   }

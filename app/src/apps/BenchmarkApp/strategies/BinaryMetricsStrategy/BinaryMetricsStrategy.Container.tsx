@@ -16,7 +16,10 @@ import { connect } from 'react-redux';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { TuplesLoader } from 'types/TuplesLoader';
-import { intersectionDescription } from 'utils/intersectionDescription';
+import {
+  intersectionDescription,
+  intersectionFileName,
+} from 'utils/intersectionHelpers';
 import { numberOfDistinctPairs } from 'utils/numberOfDistinctPairs';
 import { dummyTuplesLoader } from 'utils/tuplesLoaders';
 
@@ -101,71 +104,90 @@ const getTuplesLoaderByTuplesCategory = (
   }
 };
 
+const executeStateAsIntersectionToString = (
+  state: BinaryMetricsStrategyModel,
+  toStringFunction: (props: {
+    ignored?: string[];
+    included?: string[];
+    excluded?: string[];
+    pairCount?: number;
+  }) => string
+) =>
+  state.experiment !== undefined && state.groundTruth !== undefined
+    ? toStringFunction(
+        state.selectedDataView === MetricsTuplesCategories.truePositives
+          ? {
+              included: [
+                state.experiment.experiment.name,
+                state.groundTruth.experiment.name,
+              ],
+            }
+          : state.selectedDataView === MetricsTuplesCategories.falsePositives
+          ? {
+              included: [state.experiment.experiment.name],
+              excluded: [state.groundTruth.experiment.name],
+            }
+          : state.selectedDataView === MetricsTuplesCategories.falseNegatives
+          ? {
+              excluded: [state.experiment.experiment.name],
+              included: [state.groundTruth.experiment.name],
+            }
+          : {
+              excluded: [
+                state.experiment.experiment.name,
+                state.groundTruth.experiment.name,
+              ],
+            }
+      )
+    : 'unknown';
+
 const mapStateToProps = (
   state: BinaryMetricsStrategyModel
-): BinaryMetricsStrategyStateProps => ({
-  metrics: state.metrics,
-  metricsTuplesCategories: [
-    MetricsTuplesCategories.truePositives,
-    MetricsTuplesCategories.falsePositives,
-    MetricsTuplesCategories.falseNegatives,
-    MetricsTuplesCategories.trueNegatives,
-  ],
-  selectedMetricsTuplesCategory: state.selectedDataView,
-  rowCount: getRowCountByTuplesCategory(state, state.selectedDataView),
-  tuplesLoader:
-    state.experiment !== undefined && state.groundTruth !== undefined
-      ? getTuplesLoaderByTuplesCategory(state, state.selectedDataView)
-      : dummyTuplesLoader,
-  confusionMatrix: {
-    totalCount: numberOfDistinctPairs(state.dataset?.numberOfRecords ?? 0),
-    falseNegatives: getPairCountByTuplesCategory(
+): BinaryMetricsStrategyStateProps => {
+  return {
+    metrics: state.metrics,
+    metricsTuplesCategories: [
+      MetricsTuplesCategories.truePositives,
+      MetricsTuplesCategories.falsePositives,
+      MetricsTuplesCategories.falseNegatives,
+      MetricsTuplesCategories.trueNegatives,
+    ],
+    selectedMetricsTuplesCategory: state.selectedDataView,
+    rowCount: getRowCountByTuplesCategory(state, state.selectedDataView),
+    tuplesLoader:
+      state.experiment !== undefined && state.groundTruth !== undefined
+        ? getTuplesLoaderByTuplesCategory(state, state.selectedDataView)
+        : dummyTuplesLoader,
+    confusionMatrix: {
+      totalCount: numberOfDistinctPairs(state.dataset?.numberOfRecords ?? 0),
+      falseNegatives: getPairCountByTuplesCategory(
+        state,
+        MetricsTuplesCategories.falseNegatives
+      ),
+      falsePositives: getPairCountByTuplesCategory(
+        state,
+        MetricsTuplesCategories.falsePositives
+      ),
+      trueNegatives: getPairCountByTuplesCategory(
+        state,
+        MetricsTuplesCategories.trueNegatives
+      ),
+      truePositives: getPairCountByTuplesCategory(
+        state,
+        MetricsTuplesCategories.truePositives
+      ),
+    },
+    dataViewerTitle: executeStateAsIntersectionToString(
       state,
-      MetricsTuplesCategories.falseNegatives
+      intersectionDescription
     ),
-    falsePositives: getPairCountByTuplesCategory(
+    dataViewerFileName: executeStateAsIntersectionToString(
       state,
-      MetricsTuplesCategories.falsePositives
+      intersectionFileName
     ),
-    trueNegatives: getPairCountByTuplesCategory(
-      state,
-      MetricsTuplesCategories.trueNegatives
-    ),
-    truePositives: getPairCountByTuplesCategory(
-      state,
-      MetricsTuplesCategories.truePositives
-    ),
-  },
-  dataViewerTitle:
-    state.experiment !== undefined && state.groundTruth !== undefined
-      ? intersectionDescription(
-          state.selectedDataView === MetricsTuplesCategories.truePositives
-            ? {
-                included: [
-                  state.experiment.experiment.name,
-                  state.groundTruth.experiment.name,
-                ],
-              }
-            : state.selectedDataView === MetricsTuplesCategories.falsePositives
-            ? {
-                included: [state.experiment.experiment.name],
-                excluded: [state.groundTruth.experiment.name],
-              }
-            : state.selectedDataView === MetricsTuplesCategories.falseNegatives
-            ? {
-                excluded: [state.experiment.experiment.name],
-                included: [state.groundTruth.experiment.name],
-              }
-            : {
-                excluded: [
-                  state.experiment.experiment.name,
-                  state.groundTruth.experiment.name,
-                ],
-              }
-        )
-      : 'unknown',
-  isValidConfig: state.isValidConfig,
-});
+    isValidConfig: state.isValidConfig,
+  };
+};
 
 const mapDispatchToProps = (
   dispatch: SnowmanDispatch<BinaryMetricsStrategyModel>
