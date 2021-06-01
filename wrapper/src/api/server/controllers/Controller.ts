@@ -22,6 +22,7 @@ export class Controller {
     }
     response.status(payload.code || 200);
     if (
+      typeof responsePayload === 'object' &&
       'pipe' in responsePayload &&
       typeof responsePayload.pipe === 'function'
     ) {
