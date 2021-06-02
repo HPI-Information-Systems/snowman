@@ -1,3 +1,4 @@
+import { extend } from '../../tools/array';
 import { BasicCache } from '../../tools/cache';
 import { databaseBackend } from '../setup/backend';
 import type {
@@ -43,7 +44,7 @@ export class TableUpserter<Schema extends TableSchema> {
     rows: (() => InsertColumnValues<Schema['columns']>)[],
     commitAfterBatchSize?: number
   ): number[] {
-    this.cachedRows.push(...rows);
+    extend(this.cachedRows, rows);
     if (
       typeof commitAfterBatchSize === 'number' &&
       this.cachedRows.length >= commitAfterBatchSize

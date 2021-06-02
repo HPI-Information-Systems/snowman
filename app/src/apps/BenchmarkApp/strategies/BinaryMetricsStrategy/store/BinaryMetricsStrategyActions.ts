@@ -3,7 +3,6 @@ import {
   CalculateExperimentIntersectionRecordsRequest,
   ExperimentConfigItem,
   ExperimentIntersectionCount,
-  FileResponse,
   Metric,
 } from 'api';
 import { BinaryMetricsStrategyActionTypes } from 'apps/BenchmarkApp/strategies/BinaryMetricsStrategy/types/BinaryMetricsStrategyActionTypes';
@@ -14,11 +13,13 @@ import { MagicNotPossibleId } from 'structs/constants';
 import { MetricsTuplesCategories } from 'types/MetricsTuplesCategories';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
 import { SnowmanThunkAction } from 'types/SnowmanThunkAction';
+import { TuplesLoader } from 'types/TuplesLoader';
 import {
   easyPrimitiveAction,
   easyPrimitiveActionReturn,
 } from 'utils/easyActionsFactory';
 import RequestHandler from 'utils/requestHandler';
+import { createTuplesLoader } from 'utils/tuplesLoaders';
 
 export const updateConfig = (
   benchmarkConfig: BenchmarkAppModel
@@ -126,55 +127,39 @@ const getExperimentsComparisonTuple = (
     : experimentEntityToExperimentConfigItem(state.experiment),
 ];
 
-const loadTuples = (
-  intersection: LoadTuplesRequestBody,
-  startAt: number,
-  stopAt: number
-): Promise<FileResponse> =>
-  new BenchmarkApi().calculateExperimentIntersectionRecords({
+const createBinaryMetricsTuplesLoader = (
+  intersection: LoadTuplesRequestBody
+): TuplesLoader =>
+  createTuplesLoader(BenchmarkApi, 'calculateExperimentIntersectionRecords', {
     intersection,
-    startAt,
-    limit: stopAt - startAt,
   });
 
-export const loadTruePositives = (state: BinaryMetricsStrategyModel) => (
-  startIndex: number,
-  stopIndex: number
-): Promise<FileResponse> =>
-  loadTuples(
-    getRequestBodyForTruePositives(...getExperimentsComparisonTuple(state)),
-    startIndex,
-    stopIndex
+export const loadTruePositives = (
+  state: BinaryMetricsStrategyModel
+): TuplesLoader =>
+  createBinaryMetricsTuplesLoader(
+    getRequestBodyForTruePositives(...getExperimentsComparisonTuple(state))
   );
 
-export const loadFalsePositives = (state: BinaryMetricsStrategyModel) => (
-  startIndex: number,
-  stopIndex: number
-): Promise<FileResponse> =>
-  loadTuples(
-    getRequestBodyForFalsePositives(...getExperimentsComparisonTuple(state)),
-    startIndex,
-    stopIndex
+export const loadFalsePositives = (
+  state: BinaryMetricsStrategyModel
+): TuplesLoader =>
+  createBinaryMetricsTuplesLoader(
+    getRequestBodyForFalsePositives(...getExperimentsComparisonTuple(state))
   );
 
-export const loadFalseNegatives = (state: BinaryMetricsStrategyModel) => (
-  startIndex: number,
-  stopIndex: number
-): Promise<FileResponse> =>
-  loadTuples(
-    getRequestBodyForFalseNegatives(...getExperimentsComparisonTuple(state)),
-    startIndex,
-    stopIndex
+export const loadFalseNegatives = (
+  state: BinaryMetricsStrategyModel
+): TuplesLoader =>
+  createBinaryMetricsTuplesLoader(
+    getRequestBodyForFalseNegatives(...getExperimentsComparisonTuple(state))
   );
 
-export const loadTrueNegatives = (state: BinaryMetricsStrategyModel) => (
-  startIndex: number,
-  stopIndex: number
-): Promise<FileResponse> =>
-  loadTuples(
-    getRequestBodyForTrueNegatives(...getExperimentsComparisonTuple(state)),
-    startIndex,
-    stopIndex
+export const loadTrueNegatives = (
+  state: BinaryMetricsStrategyModel
+): TuplesLoader =>
+  createBinaryMetricsTuplesLoader(
+    getRequestBodyForTrueNegatives(...getExperimentsComparisonTuple(state))
   );
 
 export const loadBinaryMetricsTuplesCounts = (): SnowmanThunkAction<

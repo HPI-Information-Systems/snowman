@@ -1,10 +1,13 @@
 import { providers } from '../../providers';
 import {
+  convertFileResponse,
+  FileResponse,
+} from '../../tools/convertFileResponse';
+import {
   AddExperimentRequest,
   DeleteExperimentRequest,
   Experiment,
   ExperimentId,
-  FileResponse,
   GetExperimentFileRequest,
   GetExperimentRequest,
   Request,
@@ -62,7 +65,11 @@ export async function getExperimentFile(
   request: GetExperimentFileRequest
 ): Promise<SuccessResponse<FileResponse>> {
   return Service.response(
-    () => provider().getExperimentFile(request),
+    () =>
+      convertFileResponse(
+        provider().getExperimentFile(request),
+        request.format
+      ),
     200,
     404
   );

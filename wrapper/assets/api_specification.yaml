@@ -299,12 +299,23 @@ paths:
           example: first_name
           type: string
         style: form
+      - explode: true
+        in: query
+        name: format
+        required: false
+        schema:
+          $ref: '#/components/schemas/FileResponseFormat'
+        style: form
       responses:
         "200":
           content:
+            text/csv:
+              schema:
+                format: binary
+                type: string
             application/json:
               schema:
-                $ref: '#/components/schemas/FileResponse'
+                $ref: '#/components/schemas/JSONFileResponse'
           description: OK
         "404":
           description: Not Found
@@ -530,12 +541,23 @@ paths:
           example: first_name
           type: string
         style: form
+      - explode: true
+        in: query
+        name: format
+        required: false
+        schema:
+          $ref: '#/components/schemas/FileResponseFormat'
+        style: form
       responses:
         "200":
           content:
+            text/csv:
+              schema:
+                format: binary
+                type: string
             application/json:
               schema:
-                $ref: '#/components/schemas/FileResponse'
+                $ref: '#/components/schemas/JSONFileResponse'
           description: OK
         "404":
           description: Not Found
@@ -793,14 +815,25 @@ paths:
           default: -1
           type: integer
         style: form
+      - explode: true
+        in: query
+        name: format
+        required: false
+        schema:
+          $ref: '#/components/schemas/FileResponseFormat'
+        style: form
       requestBody:
         $ref: '#/components/requestBodies/ExperimentIntersection'
       responses:
         "200":
           content:
+            text/csv:
+              schema:
+                format: binary
+                type: string
             application/json:
               schema:
-                $ref: '#/components/schemas/FileResponse'
+                $ref: '#/components/schemas/JSONFileResponse'
           description: OK
         "404":
           description: Not Found
@@ -928,6 +961,17 @@ components:
           schema:
             $ref: '#/components/schemas/inline_object'
       required: true
+  responses:
+    FileResponse:
+      content:
+        text/csv:
+          schema:
+            format: binary
+            type: string
+        application/json:
+          schema:
+            $ref: '#/components/schemas/JSONFileResponse'
+      description: OK
   schemas:
     AlgorithmId:
       example: 1
@@ -937,15 +981,15 @@ components:
         softKPIs:
           integrationEffort:
             installationEffort:
-              expertise: 0
-              hrAmount: 6
+              expertise: 0.8008281904610115
+              hrAmount: 6.027456183070403
             deploymentType:
             - cloud
             - cloud
             useCase:
             - merging
             - merging
-            generalCosts: 1
+            generalCosts: 1.4658129805029452
             solutionType:
             - rulebased
             - rulebased
@@ -954,11 +998,11 @@ components:
             - GUI
             - GUI
             matchingSolution:
-              expertise: 0
-              hrAmount: 6
+              expertise: 0.8008281904610115
+              hrAmount: 6.027456183070403
             domain:
-              expertise: 0
-              hrAmount: 6
+              expertise: 0.8008281904610115
+              hrAmount: 6.027456183070403
             supportedOSs:
             - Windows
             - Windows
@@ -1021,10 +1065,10 @@ components:
     ExperimentValues:
       example:
         softKPIs:
-          runtime: 0
+          runtime: 0.8008281904610115
           effort:
-            expertise: 0
-            hrAmount: 6
+            expertise: 0.8008281904610115
+            hrAmount: 6.027456183070403
         name: Experiment1
         description: This is an experiment using a fancy algorithm
         datasetId: 1
@@ -1236,8 +1280,8 @@ components:
       type: object
     EffortParts:
       example:
-        expertise: 0
-        hrAmount: 6
+        expertise: 0.8008281904610115
+        hrAmount: 6.027456183070403
       properties:
         expertise:
           type: number
@@ -1397,23 +1441,13 @@ components:
     CSVFile:
       format: binary
       type: string
-    FileResponse:
-      example:
-        data:
-        - - "1"
-          - test value 1
-          - test value 2
-        - - "2"
-          - test value 1
-          - test value 2
-        - []
-        - - "3"
-          - other
-          - group
-        header:
-        - id
-        - testColumn1
-        - testColumn2
+    FileResponseFormat:
+      default: json
+      enum:
+      - json
+      - csv
+      type: string
+    JSONFileResponse:
       properties:
         header:
           example:
@@ -1460,15 +1494,15 @@ components:
     AlgorithmValues_softKPIs_integrationEffort:
       example:
         installationEffort:
-          expertise: 0
-          hrAmount: 6
+          expertise: 0.8008281904610115
+          hrAmount: 6.027456183070403
         deploymentType:
         - cloud
         - cloud
         useCase:
         - merging
         - merging
-        generalCosts: 1
+        generalCosts: 1.4658129805029452
         solutionType:
         - rulebased
         - rulebased
@@ -1499,11 +1533,11 @@ components:
         - GUI
         - GUI
         matchingSolution:
-          expertise: 0
-          hrAmount: 6
+          expertise: 0.8008281904610115
+          hrAmount: 6.027456183070403
         domain:
-          expertise: 0
-          hrAmount: 6
+          expertise: 0.8008281904610115
+          hrAmount: 6.027456183070403
         supportedOSs:
         - Windows
         - Windows
@@ -1527,15 +1561,15 @@ components:
       example:
         integrationEffort:
           installationEffort:
-            expertise: 0
-            hrAmount: 6
+            expertise: 0.8008281904610115
+            hrAmount: 6.027456183070403
           deploymentType:
           - cloud
           - cloud
           useCase:
           - merging
           - merging
-          generalCosts: 1
+          generalCosts: 1.4658129805029452
           solutionType:
           - rulebased
           - rulebased
@@ -1544,11 +1578,11 @@ components:
           - GUI
           - GUI
           matchingSolution:
-            expertise: 0
-            hrAmount: 6
+            expertise: 0.8008281904610115
+            hrAmount: 6.027456183070403
           domain:
-            expertise: 0
-            hrAmount: 6
+            expertise: 0.8008281904610115
+            hrAmount: 6.027456183070403
           supportedOSs:
           - Windows
           - Windows
@@ -1591,10 +1625,10 @@ components:
       type: object
     ExperimentValues_softKPIs:
       example:
-        runtime: 0
+        runtime: 0.8008281904610115
         effort:
-          expertise: 0
-          hrAmount: 6
+          expertise: 0.8008281904610115
+          hrAmount: 6.027456183070403
       properties:
         effort:
           $ref: '#/components/schemas/EffortParts'

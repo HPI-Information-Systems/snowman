@@ -17,7 +17,10 @@ import PageStruct from 'apps/SnowmanApp/components/GenericSubInstance/GenericSub
 import DataViewer from 'components/simple/DataViewer/DataViewer';
 import ErroneousBackdrop from 'components/simple/ErroneousBackdrop/ErroneousBackdrop';
 import React, { useEffect, useMemo, useState } from 'react';
-import { intersectionDescription } from 'utils/intersectionDescription';
+import {
+  intersectionDescription,
+  intersectionFileName,
+} from 'utils/intersectionHelpers';
 
 const IntersectionStrategyView = ({
   loadTuples,
@@ -26,13 +29,8 @@ const IntersectionStrategyView = ({
   included,
   excluded,
   ignored,
-  loadCounts,
   isValidConfig,
 }: IntersectionStrategyProps): JSX.Element => {
-  useEffect(() => {
-    loadCounts();
-  }, [loadCounts]);
-
   const [
     strategy,
     setStrategy,
@@ -57,6 +55,15 @@ const IntersectionStrategyView = ({
         pairCount,
       }),
     [excluded, included, pairCount]
+  );
+
+  const intersectionFileNameString = useMemo(
+    () =>
+      intersectionFileName({
+        excluded: excluded.map(stringifyExperimentEntity),
+        included: included.map(stringifyExperimentEntity),
+      }),
+    [excluded, included]
   );
 
   return (
@@ -100,6 +107,7 @@ const IntersectionStrategyView = ({
                   loadTuples={loadTuples}
                   tuplesCount={tuplesCount}
                   title={intersectionDescriptionString}
+                  fileName={intersectionFileNameString}
                 />
               </IonCardContent>
             </IonCard>

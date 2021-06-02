@@ -10,7 +10,7 @@ import { getSingleItem } from 'apps/BenchmarkApp/utils/configurationItemGetter';
 import { connect } from 'react-redux';
 import { IonChangeEvent } from 'types/IonChangeEvent';
 import { SnowmanDispatch } from 'types/SnowmanDispatch';
-import { parseIntRemoveNaN } from 'utils/questionHelpers';
+import { parseFloatRemoveNaN } from 'utils/questionHelpers';
 
 const mapStateToProps = (
   state: BenchmarkAppModel,
@@ -24,7 +24,7 @@ const mapDispatchToProps = (
   ownProps: NumberInputOwnProps
 ): NumberInputDispatchProps => ({
   setValue: (event: IonChangeEvent): void => {
-    const input = parseIntRemoveNaN(event.detail.value);
+    const input = parseFloatRemoveNaN(event.detail.value);
     dispatch(
       updateSelection({
         aCacheKey: ownProps.cacheKey,

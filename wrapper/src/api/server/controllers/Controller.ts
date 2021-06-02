@@ -14,12 +14,22 @@ export class Controller {
      * payload will be an object consisting of a code and a payload. If not customized
      * send 200 and the payload as received in this method.
      */
-    let responsePayload =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let responsePayload: any =
       payload.payload !== undefined ? payload.payload : payload;
     if (typeof responsePayload === 'number') {
       responsePayload = responsePayload.toString();
     }
-    response.status(payload.code || 200).send(responsePayload);
+    response.status(payload.code || 200);
+    if (
+      typeof responsePayload === 'object' &&
+      'pipe' in responsePayload &&
+      typeof responsePayload.pipe === 'function'
+    ) {
+      responsePayload.pipe(response);
+    } else {
+      response.send(responsePayload);
+    }
   }
 
   static sendError(

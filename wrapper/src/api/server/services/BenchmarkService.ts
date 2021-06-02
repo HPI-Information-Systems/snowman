@@ -1,4 +1,8 @@
 import { providers } from '../../providers';
+import {
+  convertFileResponse,
+  FileResponse,
+} from '../../tools/convertFileResponse';
 import { getSimilarity } from '../../tools/getSimilarity';
 import {
   CalculateDiagramDataRequest,
@@ -6,7 +10,6 @@ import {
   CalculateExperimentIntersectionCountsRequest,
   CalculateExperimentIntersectionRecordsRequest,
   ExperimentIntersectionCount,
-  FileResponse,
   GetBinaryMetricsRequest,
   Metric,
 } from '../types';
@@ -53,16 +56,20 @@ export async function calculateExperimentIntersectionRecords({
   intersection,
   startAt,
   limit,
+  format,
 }: CalculateExperimentIntersectionRecordsRequest): Promise<
   SuccessResponse<FileResponse>
 > {
   return Service.response(
     () =>
-      provider().calculateExperimentIntersectionRecords({
-        intersection,
-        startAt,
-        limit,
-      }),
+      convertFileResponse(
+        provider().calculateExperimentIntersectionRecords({
+          intersection,
+          startAt,
+          limit,
+        }),
+        format
+      ),
     200,
     404
   );

@@ -33,6 +33,7 @@ const BinaryMetricsStrategyView = ({
   tuplesLoader,
   confusionMatrix,
   dataViewerTitle,
+  dataViewerFileName,
   isValidConfig,
 }: BinaryMetricsStrategyProps): JSX.Element => {
   useTooltip();
@@ -173,6 +174,7 @@ const BinaryMetricsStrategyView = ({
             tuplesCount={rowCount}
             loadTuples={tuplesLoader}
             title={dataViewerTitle}
+            fileName={dataViewerFileName}
           />
         </IonCardContent>
       </IonCard>

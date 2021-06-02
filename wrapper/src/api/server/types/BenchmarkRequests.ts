@@ -6,6 +6,7 @@ import {
   SoftKPIsAlgorithmEnum,
   SoftKPIsExperimentEnum,
 } from '.';
+import { FileResponseFormat } from './FileResponseFormat';
 
 export interface CalculateDiagramDataRequest {
   xAxis: SoftKPIsAlgorithmEnum | MetricsEnum | SoftKPIsExperimentEnum;
@@ -25,6 +26,7 @@ export interface CalculateExperimentIntersectionRecordsRequest {
   intersection: Array<ExperimentIntersectionItem>;
   startAt?: number;
   limit?: number;
+  format?: FileResponseFormat;
 }
 
 export interface GetBinaryMetricsRequest {

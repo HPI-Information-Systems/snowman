@@ -9,6 +9,7 @@ export type TableProps = {
   rowsChanged: unknown;
   columnsChanged: unknown;
   openDataViewerWindow: () => void;
+  downloadDataViewerContent: () => void;
 };
 
 export type TableContentProps = {
@@ -18,6 +19,7 @@ export type TableContentProps = {
   width: number;
   resetTable: MutableRefObject<boolean>;
   openDataViewerWindow: () => void;
+  downloadDataViewerContent: () => void;
 };
 
 export type TableBodyProps = {
@@ -30,11 +32,6 @@ export type TableHeaderOwnProps = {
   setColumnOrder: (
     updater: string[] | ((columnOrder: string[]) => string[])
   ) => void;
-  openDataViewerWindow: () => void;
 };
 
-export type TableHeaderDispatchProps = {
-  performOpenDataViewerWindow: () => void;
-};
-
-export type TableHeaderProps = TableHeaderOwnProps & TableHeaderDispatchProps;
+export type TableHeaderProps = TableHeaderOwnProps;

@@ -12,7 +12,7 @@ import {
 } from 'components/simple/VennDiagram/venn/types/types';
 import { VennDiagramConfig } from 'components/simple/VennDiagram/VennDiagramProps';
 import { ExperimentEntity } from 'types/ExperimentEntity';
-import { intersectionDescription } from 'utils/intersectionDescription';
+import { intersectionDescription } from 'utils/intersectionHelpers';
 
 type PartialVennDiagramConfig = {
   [x: string]: VennDiagramSet | VennDiagramIntersection;

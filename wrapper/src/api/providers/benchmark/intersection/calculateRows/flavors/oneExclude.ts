@@ -1,3 +1,4 @@
+import { extend } from '../../../../../tools/array';
 import { SubclusterCache } from '../../../cache';
 import { IntersectionCache } from '../../../cache/flavors/intersectionCache';
 import { Cluster, ClusterID } from '../../../cluster/types';
@@ -95,7 +96,7 @@ export class CalculateRowsOneExclude extends CalculateRowsFlavor {
           this.skipRemains,
           this.skipRemains + this.limit
         );
-        this.rows.push(...addedRows);
+        extend(this.rows, addedRows);
         this.limit -= addedRows.length;
         this.skipRemains = 0;
         if (this.limit === 0) {

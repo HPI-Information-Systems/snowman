@@ -1,5 +1,9 @@
-import { FileResponse } from 'api';
-import { openStandaloneDataViewerWindow } from 'components/simple/DataViewer/DataViewer.helpers';
+import { FileResponseFormat, JSONFileResponse } from 'api';
+import {
+  cleanFileName,
+  downloadDataViewerContent,
+  openStandaloneDataViewerWindow,
+} from 'components/simple/DataViewer/DataViewer.helpers';
 import { DataViewerProps } from 'components/simple/DataViewer/DataViewerProps';
 import Table from 'components/simple/DataViewer/Table/Table';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -13,8 +17,8 @@ const wrapLoadTuples = (
   stop: number
 ) => {
   return RequestHandler(() =>
-    loadTuples(start, stop).then(
-      (aResult: FileResponse): FileResponse => ({
+    loadTuples(start, stop, FileResponseFormat.Json).then(
+      (aResult: JSONFileResponse): JSONFileResponse => ({
         ...aResult,
         header: aResult.header.map((aColumn, index): string => {
           if (aColumn.length > 0) {
@@ -37,6 +41,7 @@ const DataViewer = ({
   loadTuples,
   BATCH_SIZE = 500,
   title,
+  fileName,
 }: DataViewerProps): JSX.Element => {
   const mounted = useRef(true);
   const requestedRowCount = useRef(0);
@@ -132,6 +137,13 @@ const DataViewer = ({
               BATCH_SIZE,
               title,
             })
+          }
+          downloadDataViewerContent={() =>
+            downloadDataViewerContent(
+              loadTuples,
+              cleanFileName(fileName ?? title),
+              tuplesCount
+            )
           }
         />
       )}

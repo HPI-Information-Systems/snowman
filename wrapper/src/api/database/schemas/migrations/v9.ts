@@ -25,18 +25,20 @@ export class SchemaV9 extends SchemaVersion {
       .filter(({ name }) => isSimilarityColumn(name))
       .map(({ name }) => removeSimilarityCustomColumnPrefix(name));
 
-    similarityColumnNames.forEach((similarityColumnName: string) => {
-      providers.similarityThresholds.addSimilarityThresholdFunction({
-        similarityThresholdFunction: {
-          name: similarityColumnName,
-          experimentId: id,
-          definition: {
-            type:
-              SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
-            similarityThreshold: similarityColumnName,
+    similarityColumnNames
+      .filter((columnName: string) => columnName.length > 0)
+      .forEach((similarityColumnName: string) => {
+        providers.similarityThresholds.addSimilarityThresholdFunction({
+          similarityThresholdFunction: {
+            name: similarityColumnName,
+            experimentId: id,
+            definition: {
+              type:
+                SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+              similarityThreshold: similarityColumnName,
+            },
           },
-        },
+        });
       });
-    });
   }
 }

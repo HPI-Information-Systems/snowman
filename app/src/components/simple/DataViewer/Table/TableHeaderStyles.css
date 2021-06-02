@@ -68,15 +68,3 @@
   flex: 1 1 0 !important;
   width: unset !important;
 }
-
-.table-root .table-header .open-data-viewer {
-  position: absolute;
-  top: 0;
-  right: 0;
-  transition: opacity 0.2s;
-  opacity: 0;
-}
-
-.table-root:hover .table-header .open-data-viewer {
-  opacity: 1;
-}

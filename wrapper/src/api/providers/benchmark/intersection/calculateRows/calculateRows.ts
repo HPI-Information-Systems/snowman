@@ -1,5 +1,6 @@
 import binarySearch from 'binary-search';
 
+import { extend } from '../../../../tools/array';
 import { compareNumbers } from '../../../../tools/comparators';
 import { LazyProperty } from '../../../../tools/lazyProperty';
 import {
@@ -51,14 +52,14 @@ export class CalculateRows {
     if (clusterId > 0) {
       startAt -= this.accumulatedRowCounts[clusterId - 1];
     }
-    const resultRows = [];
+    const resultRows: (NodeID | undefined)[] = [];
     while (this.hasCluster(clusterId) && limit > 0) {
       const [skipped, rows] = this.calculateRows.value.at(
         clusterId,
         startAt,
         limit
       );
-      resultRows.push(...rows);
+      extend(resultRows, rows);
       startAt -= skipped;
       limit -= rows.length;
       if (this.isUnknownCluster(clusterId) && limit > 0) {

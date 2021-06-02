@@ -6,19 +6,19 @@ import {
   unregisterOngoingRequest,
 } from 'apps/SnowmanApp/store/ActionLogicActions';
 import { SnowmanAppDispatch } from 'apps/SnowmanApp/store/SnowmanAppStore';
-import { UNKNOWN_ERROR } from 'structs/statusMessages';
+import { ERROR_UNKNOWN } from 'structs/statusMessages';
 import { ToastType } from 'types/ToastTypes';
 
 export const unwrapError = async (error: unknown): Promise<string> => {
   if (error instanceof Response) {
     // If error occurred with HTTP
-    return (await error.text()) ?? UNKNOWN_ERROR;
+    return (await error.text()) ?? ERROR_UNKNOWN;
   } else if (typeof error === 'string') {
     return error;
   } else if (error instanceof Error) {
     return `${error.name}: ${error.message}`;
   } else {
-    return UNKNOWN_ERROR;
+    return ERROR_UNKNOWN;
   }
 };
 

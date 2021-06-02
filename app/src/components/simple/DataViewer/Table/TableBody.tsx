@@ -1,5 +1,5 @@
 import { TableContext } from 'components/simple/DataViewer/Table/TableContext';
-import { tableHeaderHeight } from 'components/simple/DataViewer/Table/TableHeader.View';
+import { tableHeaderHeight } from 'components/simple/DataViewer/Table/TableHeader';
 import { TableBodyProps } from 'components/simple/DataViewer/Table/TableProps';
 import TableRow from 'components/simple/DataViewer/Table/TableRow';
 import React, { useContext } from 'react';

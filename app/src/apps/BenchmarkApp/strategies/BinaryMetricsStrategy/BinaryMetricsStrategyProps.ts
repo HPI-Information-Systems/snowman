@@ -15,6 +15,7 @@ export interface BinaryMetricsStrategyStateProps {
   tuplesLoader: TuplesLoader;
   confusionMatrix: ConfusionMatrix;
   dataViewerTitle: string;
+  dataViewerFileName: string;
   isValidConfig: boolean;
 }
 

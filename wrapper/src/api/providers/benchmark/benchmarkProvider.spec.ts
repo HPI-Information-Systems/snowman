@@ -326,7 +326,6 @@ describe('test benchmark functions', () => {
           | MetricsEnum) === MetricsEnum.Similarity
       )
         continue;
-      console.log(value);
       result.push({
         name: value,
         value: benchmarkProvider
