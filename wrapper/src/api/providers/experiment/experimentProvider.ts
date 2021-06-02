@@ -160,19 +160,21 @@ export class ExperimentProvider {
       .filter(({ name }) => isSimilarityColumn(name))
       .map(({ name }) => removeSimilarityCustomColumnPrefix(name));
 
-    columnNames.forEach((columnName: string) => {
-      providers.similarityThresholds.addSimilarityThresholdFunction({
-        similarityThresholdFunction: {
-          name: columnName,
-          experimentId: id,
-          definition: {
-            type:
-              SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
-            similarityThreshold: columnName,
+    columnNames
+      .filter((columnName: string) => columnName.length > 0)
+      .forEach((columnName: string) => {
+        providers.similarityThresholds.addSimilarityThresholdFunction({
+          similarityThresholdFunction: {
+            name: columnName,
+            experimentId: id,
+            definition: {
+              type:
+                SimilarityThresholdFunctionDefinitionTypeEnum.SimilarityThreshold,
+              similarityThreshold: columnName,
+            },
           },
-        },
+        });
       });
-    });
   }
 
   private deleteExperimentFileNoChecks(id: ExperimentId): void {
