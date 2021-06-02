@@ -2,7 +2,7 @@
   "name": "snowman",
   "author": "Snowman Team",
   "description": "Compare data matching algorithms with each other",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "license": "MIT",
   "repository": "https://github.com/HPI-Information-Systems/snowman",
   "scripts": {
