@@ -22,7 +22,7 @@ export abstract class BasicBenchmarkCache<
     if (!intersection) {
       intersection = this.createAndCache(baseConfig, key);
     } else {
-      intersection.access(config);
+      intersection.access(this.mapBaseConfigToCustomConfig(baseConfig));
     }
     return intersection;
   }
