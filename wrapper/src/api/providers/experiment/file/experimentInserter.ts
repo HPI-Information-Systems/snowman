@@ -124,7 +124,6 @@ export abstract class ExperimentInserter {
   ): NullableColumnValues<ExperimentSchema['columns']> {
     const id1 = this.idMapper.map(id1String, this.datasetNumberOfRecords);
     const id2 = this.idMapper.map(id2String, this.datasetNumberOfRecords);
-    // hier überschreibt er
     const isDuplicateAndLinksUnlinkedNodes =
       detectedAsDuplicate && !this.unionFind.nodesAreLinked(id1, id2);
     if (isDuplicateAndLinksUnlinkedNodes) {
