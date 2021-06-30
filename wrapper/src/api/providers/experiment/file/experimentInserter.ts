@@ -27,6 +27,7 @@ export abstract class ExperimentInserter {
   private table: ExperimentTable | undefined = undefined;
   private numberOfUploadedRecords = 0;
   private unionFind: UnionFind;
+  private seenIdPairs = new Set<string>();
 
   constructor(
     protected readonly experimentId: ExperimentId,
@@ -62,19 +63,35 @@ export abstract class ExperimentInserter {
   ): void {
     this.numberOfUploadedRecords++;
     [id1, id2] = [id1, id2].sort();
-    const table = this.getOrCreateTable(similarityScores);
-    table.batchUpsert(
-      [
-        () =>
-          this.rowToInsertParameters(
-            id1,
-            id2,
-            detectedAsDuplicate,
-            similarityScores
-          ),
-      ],
-      INSERT_BATCH_SIZE
-    );
+    if (this.isValidPair(id1, id2)) {
+      const table = this.getOrCreateTable(similarityScores);
+      table.batchUpsert(
+        [
+          () =>
+            this.rowToInsertParameters(
+              id1,
+              id2,
+              detectedAsDuplicate,
+              similarityScores
+            ),
+        ],
+        INSERT_BATCH_SIZE
+      );
+    }
+  }
+
+  private isValidPair(id1: string, id2: string) {
+    if (id1 === id2) {
+      return false;
+    }
+
+    const idPair = encodeURIComponent(id1) + '/' + id2;
+    if (this.seenIdPairs.has(idPair)) {
+      return false;
+    }
+
+    this.seenIdPairs.add(idPair);
+    return true;
   }
 
   private getOrCreateTable(similarityScores: {

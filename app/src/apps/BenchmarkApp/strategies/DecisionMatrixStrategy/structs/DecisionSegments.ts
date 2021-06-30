@@ -8,27 +8,12 @@ import { ExpansionTypes } from 'apps/BenchmarkApp/strategies/DecisionMatrixStrat
 const TooltipEffortPointsManhattanDistance =
   'Effort points (EP) are calculated based upon the unweighted Manhattan distance of both base values.';
 
-export const InitialEffort: DecisionRowAlgorithm[] = [
-  {
-    title: 'Matching Solution Type',
-    selector: (anEntity) =>
-      anEntity.softKPIs?.integrationEffort?.solutionType?.join(', ') ?? '?',
-  },
-  {
-    title: 'Use Case',
-    selector: (anEntity) =>
-      anEntity.softKPIs?.integrationEffort?.useCase?.join(', ') ?? '?',
-  },
+export const IntegrationExpenditures: DecisionRowAlgorithm[] = [
   {
     title: 'General Costs',
     selector: (anEntity) =>
       (anEntity.softKPIs?.integrationEffort?.generalCosts?.toString() ?? '?') +
       ' €',
-  },
-  {
-    title: 'Deployment Type',
-    selector: (anEntity) =>
-      anEntity.softKPIs?.integrationEffort?.deploymentType?.join(', ') ?? '?',
   },
   {
     title: 'Installation Effort',
@@ -60,7 +45,7 @@ export const InitialEffort: DecisionRowAlgorithm[] = [
   },
 ];
 
-export const ContinuousEffort: DecisionRowAlgorithm[] = [
+export const ConfigurationExpenditures: DecisionRowAlgorithm[] = [
   {
     title: 'Matching Solution Effort',
     selector: (anEntity) =>
@@ -117,6 +102,24 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
         '?') + ' man-hr',
     expandedBy: ExpansionTypes.DomainEffort,
   },
+];
+
+const CategoricalSoftKPIs: DecisionRowAlgorithm[] = [
+  {
+    title: 'Matching Solution Type',
+    selector: (anEntity) =>
+      anEntity.softKPIs?.integrationEffort?.solutionType?.join(', ') ?? '?',
+  },
+  {
+    title: 'Use Case',
+    selector: (anEntity) =>
+      anEntity.softKPIs?.integrationEffort?.useCase?.join(', ') ?? '?',
+  },
+  {
+    title: 'Deployment Type',
+    selector: (anEntity) =>
+      anEntity.softKPIs?.integrationEffort?.deploymentType?.join(', ') ?? '?',
+  },
   {
     title: 'Interfaces',
     selector: (anEntity) =>
@@ -132,12 +135,16 @@ export const ContinuousEffort: DecisionRowAlgorithm[] = [
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const DecisionSegments: DecisionSegmentEntity<any>[] = [
   {
-    title: 'Initial Effort',
-    children: InitialEffort,
+    title: 'Integration Expenditures',
+    children: IntegrationExpenditures,
   },
   {
-    title: 'Continuous Effort',
-    children: ContinuousEffort,
+    title: 'Configuration Expenditures',
+    children: ConfigurationExpenditures,
+  },
+  {
+    title: 'Categorical Soft KPIs',
+    children: CategoricalSoftKPIs,
   },
   {
     title: 'Macro Average Metrics',
