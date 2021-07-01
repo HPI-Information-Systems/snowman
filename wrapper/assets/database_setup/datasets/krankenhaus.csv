@@ -1,101 +1,131 @@
-id;Vorname;Nachname;Geschlecht;Geburtstag;Alter;PLZ;Ort;Straße;Hausnummer
-1;Gunhard;Klöckner;m;25.11.1984;36;34125;Kassel;Feller Gärten;49
-2;Gereon;Schneck;m;10.04.1997;24;34125;Kassel;Stankt Bernhard Straße;95
-3;Evelyn;Teubner;f;16.07.1993;27;25938;Dunsum;Nimweger Straße;1
-4;Gretlies;Greif;f;20.12.1998;22;56218;Mülheim-Kärlich;Bruhnskoppeler Weg;25
-5;Franz-Peter;Wieser;m;28.07.1986;34;24217;Fiefbergen;Ofenbergstraße;34
-6;Arnfred;Uhlmann;m;15.02.1987;34;4860;Zinna;Östliche Stadtflur;44
-7;Claudia;Matern;f;07.11.1999;21;25572;Sankt Margarethen;Elkenbachstraße;89
-8;Gretlies;Fiebig;f;03.02.1988;33;51371;Leverkusen;Am Kirschenbäumchen;3
-9;Ernstine;Henschel;f;05.09.1995;25;71139;Ehningen;Lietheweg;31
-10;Wiglaf;Glock;m;13.09.1983;37;6449;Drohndorf;Schollstraße;5
-11;Laurenz;Paulus;m;07.01.2004;17;34388;Trendelburg;Neue Rabenstraße;78
-12;Fanny;Klöckner;f;14.09.1995;25;16259;Beiersdorf-Freudenberg;Amöneburger Straße;28
-13;Janette;Schlemmer;f;12.04.2005;16;65795;Hattersheim am Main;Amazonstraße;14
-14;Laurenz;Brosch;m;29.03.1999;22;24217;Fiefbergen;Ernst-Eduard-Hirsch-Straße;37
-15;Gudula;Klöckner;f;07.03.1996;25;27327;Martfeld;Milbertshofener Straße;53
-16;Michaela;Stenger;f;05.11.1993;27;42107;Wuppertal;Lauerbacher Weg;40
-17;Veit;Wegner;m;08.03.1983;38;77656;Offenburg;Reisertstraße;9
-18;Annegold;Schmieder;f;10.07.1983;37;17379;Rothemühl;Hinterbrühl;7
-19;Christamaria;Pauly;f;18.05.1997;24;87668;Rieden;Großbottwarer Straße;0
-20;Sissy;Breyer;f;23.08.1994;26;56218;Mülheim-Kärlich;Sonnenlängstraße;86
-21;Anastasia;Baldauf;f;08.11.2001;19;19230;Moraas;Gutenzellerstraße;67
-22;Anastasia;Linke;f;25.02.1989;32;6632;Größnitz;Achim-von-Arnim-Straße;51
-23;Marlene;Matern;f;06.11.2004;16;54570;Rockeskyll;Herzogstraße;20
-24;Egbert;Pelzer;m;15.07.1993;27;47546;Kalkar;Istanbulstraße;96
-25;Ekhard;Linke;m;20.07.1996;24;87497;Wertach;Neuenlander Straße;66
-26;Sissy;Geis;f;28.02.1987;34;7926;Gefell;Ploogkamp;79
-27;Dagobert;Schwaiger;m;23.01.1997;24;25578;Dägeling;Im Hasengarten;43
-28;Claudia;Rohde;f;16.05.2002;19;55469;Ohlweiler;Karchestraße;12
-29;Gabriel;Sedlmeier;m;14.08.1985;35;17379;Rothemühl;Königsbergerstraße;82
-30;Irlanda;Glock;f;28.09.1986;34;97292;Holzkirchen;Am Hagenbach;82
-31;Meinfriede;Böhnke;f;15.11.1997;23;3099;Kolkwitz;Hebbergring;22
-32;Gretlies;Hasse;f;05.10.1994;26;2829;Markersdorf;Lamsfelder Straße;73
-33;Eleonora;Henschel;f;21.04.1985;36;25889;Uelvesbüll;Roettgenstraße;17
-34;Ottwin;Göhler;m;11.12.1993;27;7926;Gefell;Kaiser-Friedrich-Straße;37
-35;Mechtild;Rohde;f;13.06.2004;17;17121;Loitz;Richard-Oskar-Mattern-Straße;39
-36;Desiree;Hauck;f;21.11.1995;25;20095;Hampuri;Bürgermeister-Kraus-Straße;10
-37;Theofried;Breyer;m;02.03.2005;16;23936;Hanshagen;Dieburer Straße;31
-38;Ehrentraud;Kaiser;f;04.02.1987;34;54552;Sarmersbach;Wegskamp;36
-39;Birgit;Mester;f;16.04.2001;20;39615;Neulingen;Reisigstraße;59
-40;Arno;Drewes;m;27.02.1989;32;35288;Wohratal;Altnauer Straße;41
-41;Fabienne;Hundt;f;01.11.1985;35;21394;Kirchgellersen;An der Reihe;52
-42;Heidebert;Knorr;m;05.10.1997;23;25794;Pahlen;Negeleinstraße;36
-43;Theofried;Rohrbach;m;13.05.1986;35;77656;Offenburg;Markhege;100
-44;Eleonora;Geyer;f;20.07.1993;27;24398;Karby;Bauernpriel;94
-45;Teresa;Pauly;f;11.03.1989;32;55624;Bollenbach;St.-Peter-Straße;16
-46;Egbert;Steffens;m;11.06.2000;21;27419;Lengenbostel;Gottlieb-Hess-Straße;63
-47;Hubertus;Steffens;m;04.11.1994;26;6449;Drohndorf;Nansenstraße;90
-48;Edward;Matheis;m;04.02.2005;16;91278;Pottenstein;Im Strang;60
-49;Sissy;Kupka;f;02.12.1981;39;54570;Rockeskyll;Rauschenplatstraße;23
-50;Hans-Hermann;Schindler;m;23.08.2004;16;99885;Luisenthal;Wittenburger Straße;63
-51;Egbert;Faber;m;28.01.1994;27;27327;Martfeld;An der Schiffslände;20
-52;Eleonora;Resch;f;01.06.1989;32;56348;Bornich;Timmeler Straße;3
-53;Jan-Peter;Benecke;m;07.02.2005;16;3099;Kolkwitz;Ostdeutsche Straße;26
-54;Annegold;Schmieder;f;31.12.1992;28;91278;Pottenstein;Natrup;10
-55;Michl;Schultheiß;m;27.11.2003;17;78126;Königsfeld im Schwarzwald;Eigenheimsiedlung;10
-56;Rigobert;Benecke;m;11.11.1992;28;55469;Holzbach;Herwigredder;1
-57;Jolanda;Steffens;f;18.11.1996;24;52355;Düren;Auf dem Alzerberg;2
-58;Hellfried;Singer;m;21.01.1982;39;24576;Hitzhusen;Fernstraße;26
-59;Jennifer;Dose;f;29.07.1997;23;39291;Dörnitz;Trunstadter Straße;73
-60;Elsemarie;Geis;f;06.07.1995;25;49596;Gehrde;Schäferwinkel;45
-61;Nermin;Rohde;f;12.08.1996;24;6449;Drohndorf;Helmstettstraße;62
-62;Gunhard;Blume;m;29.09.2003;17;34388;Trendelburg;Neusalzer Straße;47
-63;Veit;Kühl;m;06.08.1981;39;19230;Moraas;Droote;69
-64;Hanshermann;Greif;m;22.04.1997;24;71032;Böblingen;Marktredwitzer Straße;66
-65;Oxana;Kleinschmidt;f;07.03.2000;21;56348;Bornich;Kräutergarten;4
-66;Marietheres;Zoller;f;22.04.2005;16;2829;Markersdorf;Joseph-Kehrein-Straße;54
-67;Wiglaf;Georg;m;22.06.1992;29;23996;Bobitz;Wellersbergstraße;88
-68;Ottwin;Michler;m;26.01.1991;30;17091;Röckwitz;Autobahn A5;71
-69;Sissy;Dahms;f;30.06.1991;30;56753;Welling;Saaleckstraße;83
-70;Eva;Volkert;f;08.04.1985;36;29549;Bad Bevensen;Wawerner Straße;76
-71;Susi;Faber;f;03.02.1982;39;23936;Hanshagen;Bonifatiusstraße;74
-72;Heidebert;Hausner;m;21.10.1983;37;14778;Planebruch;Kantorweg;71
-73;Mirella;Hasse;f;07.10.1981;39;98673;Brünn;Eulenkrugstraße;5
-74;Eckhard;Kaufmann;m;25.05.1984;37;6632;Größnitz;Averhoffstraße;90
-75;Arnfred;Henschel;m;04.09.1999;21;6632;Größnitz;Garnholter Straße;94
-76;Freia;Kleinschmidt;f;12.04.1996;25;58802;Balve;Am Sättel;49
-77;Elsemarie;Paulus;f;12.03.1994;27;77656;Offenburg;Mauritiuskirchstraße;51
-78;Ekhard;Glock;m;17.01.1987;34;14913;Niederer Fläming;Westendplatz;78
-79;Erhart;Schindler;m;14.11.1987;33;55469;Ohlweiler;Buckelstraße;19
-80;Wiglaf;Freund;m;16.03.1997;24;56340;Dachsenhausen;Dickebank;59
-81;Diethardt;Hasse;m;06.12.1985;35;65795;Hattersheim am Main;Wilhelm-Sinsteden-Straße;62
-82;Ottheinz;Hundt;m;09.11.1989;31;91278;Pottenstein;Zum Steinknock;41
-83;Lidija;Kaiser;f;10.09.1981;39;54570;Rockeskyll;Im Kohl;7
-84;Rothmund;Rohde;m;20.02.1999;22;19230;Moraas;Am Ahrensberg;54
-85;Waltraut;Stenger;f;14.11.1993;27;20095;Hampuri;Hinterm Schloß;27
-86;Franz-Peter;Drewes;m;03.06.1985;36;47546;Kalkar;Auf der Beune;12
-87;Herwig;Kleinschmidt;m;19.02.1993;28;91278;Pottenstein;Malscher Straße;28
-88;Ehrentraud;Steffens;f;27.10.1986;34;87497;Wertach;Gertraudenstraße;90
-89;Karlhans;Kühl;m;25.06.2000;21;22397;Hamburg;Eschelbronner Straße;90
-90;Lilibeth;Brosch;f;04.07.2004;16;98673;Brünn;Seemühlestraße;41
-91;Wiglaf;Knorr;m;08.08.2004;16;94548;Innernzell;Gartower Straße;84
-92;Fanny;Heinisch;f;31.07.1992;28;99885;Luisenthal;Kuthweg;93
-93;Sophie;Freund;f;11.09.2001;19;6449;Drohndorf;Dr.-Hammacher-Straße;34
-94;Waltraut;Volkert;f;22.12.1985;35;56477;Zehnhausen;Straße am Schaltwerk;78
-95;Hanshermann;Klinger;m;29.07.1984;36;7747;Jena;Oberschleems;7
-96;Gabriel;Böhnke;m;17.07.1995;25;91278;Pottenstein;Kippholz;56
-97;Geraldine;Linke;f;17.03.1986;35;78126;Königsfeld im Schwarzwald;Johannes-Göderitz-Straße;43
-98;Susi;Kamp;f;26.08.1988;32;56753;Welling;Im Breul;26
-99;Grimbert;Lührs;m;27.05.2000;21;40667;Meerbusch;Ludwig-Chronegk-Straße;4
-100;Cetin;Jablonski;m;08.05.1992;29;86757;Wallerstein;Anholtseweg;41
+﻿id,Vorname,Nachname,Alter,PLZ,Medikament
+96,Gabriel,Böhnke,25,91278,
+13,Janette,Schlemmer,16,65795,
+45,Teresa,Pauly,32,55624,
+72,Heidebert,Hausner,37,14778,"Amoxicillin, Cyclizin"
+59,Jennifer,Dose,23,39291,
+94,Waltraut,Volkert,35,56477,"Pentosanpolysulfat-Natrium, Belimumab"
+62,Gunhard,Blume,17,34388,
+170,Vir,Wegner,,77656,
+66,Marietheres,Zoller,16,2829,
+53,Jan-Peter,Benecke,16,3099,Dasatinib
+280,Claudia,Rohde,,55496,
+180,Annegokd,Schmieder,37,17397,
+57,Jolanda,Steffens,24,52355,"Rizatriptan, Amoxicillin"
+67,Wiglaf,Georg,29,23996,Cefditoren
+202,Sissd,Breyer,,56218,
+41,Fabienne,Hundt,35,21394,Fosamprenavir
+200,Sijsy,Breyer,,56218,
+201,Sossy,Breyer,,56218,
+16,Michaela,Stenger,27,42107,Encorafenib
+98,Susi,Kamp,32,56753,
+43,Theofried,Rohrbach,35,77656,
+970,Geraldinr,Linke,35,78126,Cefazoiin
+971,Geraldine,Linke,35,78216,Cefazolim
+54,Annegold,Schmieder,28,91278,
+11,Laurenz,Paulus,17,34388,Conivaptan
+75,Arnfred,Henschel,21,6632,
+71,Susi,Faber,39,23936,
+26,Sissy,Geis,34,7926,"Medroxyprogesteron, Bosutinib, Andexanet alfa"
+171,Veot,Wegner,83,77656,
+730,Mirela,Hasse,,98673,Nadroparin
+731,Mkrellw,Hasse,39,98673,Nadrooarin
+22,Anastasia,Linke,32,6632,
+76,Freia,Kleinschmidt,25,58802,Cyclizin
+480,Edward,Matheis,16,91728,"Nadroparon, Disulfiram"
+21,Anastasia,Baldauf,19,19230,"Edrophonium, Iodoquinol"
+510,Ekbert,Faber,27,27327,Clindamvcin
+84,Rothmund,Rohde,22,19230,
+63,Veit,Kühl,39,19230,"Nabumeton, Acetazolamid"
+10,Wiglaf,Glock,37,6449,"Apixaban, Cefpodoxim"
+420,Heitebert,Knorr,23,25974,
+421,Heidebert,Knorr,,,
+35,Mechtild,Rohde,17,17121,
+150,Gutula,Klöckner,52,27327,
+151,Gurula,Klöckner,25,,
+12,Fanny,Klöckner,25,16259,
+77,Elsemarie,Paulus,27,77656,
+282,Cla8dia,Rohde,19,,
+28,Claudia,Rohde,19,55469,
+24,Egbert,Pelzer,27,47546,
+601,Elsenzrie,Geis,52,49596,
+91,Wiglaf,Knorr,16,94548,Clorazepat
+79,Erhart,Schindler,33,55469,
+281,Ckaudya,Rohde,91,55469,
+81,Diethardt,Hasse,35,65795,
+30,Irlanda,Glock,34,97292,"Etomidat, Doxepin"
+182,Annegood,Schmieder,,17379,
+181,Annegolt,Schmieder,73,17379,
+69,Sissy,Dahms,30,56753,Diphenhydramin
+88,Ehrentraud,Steffens,34,87497,
+97,Geraldine,Linke,35,78126,Cefazolin
+74,Eckhard,Kaufmann,37,6632,
+37,Theofried,Breyer,16,23936,Eisenfumarat
+940,Waltro5,Volkert,35,56477,"Pentosanpolysulfst-Natrium, Belimumab"
+29,Gabriel,Sedlmeier,35,17379,
+90,Lilibeth,Brosch,16,98673,
+40,Arno,Drewes,32,35288,
+44,Eleonora,Geyer,27,24398,Diazepam
+401,Arbo,Drewes,32,35828,
+99,Grimbert,Lührs,21,40667,Kalziumchlorid
+47,Hubertus,Steffens,26,6449,
+95,Hanshermann,Klinger,36,7747,
+55,Michl,Schultheiß,17,78126,
+36,Desiree,Hauck,25,20095,Capsaicin
+17,Veit,Wegner,38,77656,
+581,Hellfrird,Singer,39,24756,
+580,Hellgr9ed,Singer,39,25476,
+34,Ottwin,Göhler,27,7926,"Teniposid, Baclofen"
+42,Heidebert,Knorr,23,25794,
+14,Laurenz,Brosch,22,24217,"Doxorubicin (liposomal), Cyproheptadin"
+152,Gudula,Klöckner,,27237,
+61,Nermin,Rohde,24,6449,
+20,Sissy,Breyer,26,56218,
+89,Karlhans,Kühl,21,22397,
+15,Gudula,Klöckner,25,27327,
+56,Rigobert,Benecke,28,55469,"Ciclosporin, Eletriptan"
+60,Elsemarie,Geis,25,49596,
+51,Egbert,Faber,27,27327,Clindamycin
+82,Ottheinz,Hundt,31,91278,"Chlorpromazin, Cyclophosphamid"
+70,Eva,Volkert,36,29549,Eliglustat
+600,Elsemari,Geis,,49596,
+52,Eleonora,Resch,32,56348,
+220,Anasttasia,Linke,32,6623,
+221,Anastwsia,Linke,,6632,
+222,Anajtasia,Linke,,6632,
+50,Hans-Hermann,Schindler,16,99885,
+80,Wiglaf,Freund,24,56340,Daclatsvir
+31,Meinfriede,Böhnke,23,3099,
+23,Marlene,Matern,16,54570,Sorafenib
+39,Birgit,Mester,20,39615,
+48,Edward,Matheis,16,91278,"Nadroparin, Disulfiram"
+64,Hanshermann,Greif,24,71032,
+83,Lidija,Kaiser,39,54570,
+68,Ottwin,Michler,30,17091,
+32,Gretlies,Hasse,26,2829,
+27,Dagobert,Schwaiger,24,25578,
+19,Christamaria,Pauly,24,87668,
+500,Hanz-Hermann,Schindler,,99885,
+25,Ekhard,Linke,24,87497,
+86,Franz-Peter,Drewes,36,47546,
+560,Rigobert,Benecke,,55469,"Ciclosporin, Eletruptan"
+46,Egbert,Steffens,21,27419,Alteplase
+93,Sophie,Freund,19,6449,
+33,Eleonora,Henschel,36,25889,
+511,Egbert,Faber,72,23727,Clindamycin
+85,Waltraut,Stenger,27,20095,
+78,Ekhard,Glock,34,14913,
+65,Oxana,Kleinschmidt,21,56348,
+87,Herwig,Kleinschmidt,28,91278,Perindopril-Erbumin
+400,Arbo,Drewes,23,35288,
+38,Ehrentraud,Kaiser,34,54552,
+73,Mirella,Hasse,39,98673,Nadroparin
+920,Fajny,Heinisch,82,99885,
+18,Annegold,Schmieder,37,17379,
+92,Fanny,Heinisch,28,99885,
+58,Hellfried,Singer,39,24576,
+250,Ekhard,Linke,42,,
+650,Oxzna,Kleinschmidt,21,56384,
+49,Sissy,Kupka,39,54570,
+990,Grinbert,Lührs,12,40667,Kalziumchlorid
+501,Hans-Herman,Schindler,16,99858,

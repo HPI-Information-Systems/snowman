@@ -1,0 +1,91 @@
+﻿id;Vorname;Nachname;Alter;PLZ;Medikament
+10;Wiglaf;Glock;37;6449;Apixaban, Cefpodoxim
+11;Laurenz;Paulus;17;34388;Conivaptan
+12;Fanny;Klöckner;25;16259;
+13;Janette;Schlemmer;16;65795;
+14;Laurenz;Brosch;22;24217;Doxorubicin (liposomal), Cyproheptadin
+15;Gudula;Klöckner;25;27327;
+16;Michaela;Stenger;27;42107;Encorafenib
+17;Veit;Wegner;38;77656;
+18;Annegold;Schmieder;37;17379;
+19;Christamaria;Pauly;24;87668;
+20;Sissy;Breyer;26;56218;
+21;Anastasia;Baldauf;19;19230;Edrophonium, Iodoquinol
+22;Anastasia;Linke;32;6632;
+23;Marlene;Matern;16;54570;Sorafenib
+24;Egbert;Pelzer;27;47546;
+25;Ekhard;Linke;24;87497;
+26;Sissy;Geis;34;7926;Medroxyprogesteron, Bosutinib, Andexanet alfa
+27;Dagobert;Schwaiger;24;25578;
+28;Claudia;Rohde;19;55469;
+29;Gabriel;Sedlmeier;35;17379;
+30;Irlanda;Glock;34;97292;Etomidat, Doxepin
+31;Meinfriede;Böhnke;23;3099;
+32;Gretlies;Hasse;26;2829;
+33;Eleonora;Henschel;36;25889;
+34;Ottwin;Göhler;27;7926;Teniposid, Baclofen
+35;Mechtild;Rohde;17;17121;
+36;Desiree;Hauck;25;20095;Capsaicin
+37;Theofried;Breyer;16;23936;Eisenfumarat
+38;Ehrentraud;Kaiser;34;54552;
+39;Birgit;Mester;20;39615;
+40;Arno;Drewes;32;35288;
+41;Fabienne;Hundt;35;21394;Fosamprenavir
+42;Heidebert;Knorr;23;25794;
+43;Theofried;Rohrbach;35;77656;
+44;Eleonora;Geyer;27;24398;Diazepam
+45;Teresa;Pauly;32;55624;
+46;Egbert;Steffens;21;27419;Alteplase
+47;Hubertus;Steffens;26;6449;
+48;Edward;Matheis;16;91278;Nadroparin, Disulfiram
+49;Sissy;Kupka;39;54570;
+50;Hans-Hermann;Schindler;16;99885;
+51;Egbert;Faber;27;27327;Clindamycin
+52;Eleonora;Resch;32;56348;
+53;Jan-Peter;Benecke;16;3099;Dasatinib
+54;Annegold;Schmieder;28;91278;
+55;Michl;Schultheiß;17;78126;
+56;Rigobert;Benecke;28;55469;Ciclosporin, Eletriptan
+57;Jolanda;Steffens;24;52355;Rizatriptan, Amoxicillin
+58;Hellfried;Singer;39;24576;
+59;Jennifer;Dose;23;39291;
+60;Elsemarie;Geis;25;49596;
+61;Nermin;Rohde;24;6449;
+62;Gunhard;Blume;17;34388;
+63;Veit;Kühl;39;19230;Nabumeton, Acetazolamid
+64;Hanshermann;Greif;24;71032;
+65;Oxana;Kleinschmidt;21;56348;
+66;Marietheres;Zoller;16;2829;
+67;Wiglaf;Georg;29;23996;Cefditoren
+68;Ottwin;Michler;30;17091;
+69;Sissy;Dahms;30;56753;Diphenhydramin
+70;Eva;Volkert;36;29549;Eliglustat
+71;Susi;Faber;39;23936;
+72;Heidebert;Hausner;37;14778;Amoxicillin, Cyclizin
+73;Mirella;Hasse;39;98673;Nadroparin
+74;Eckhard;Kaufmann;37;6632;
+75;Arnfred;Henschel;21;6632;
+76;Freia;Kleinschmidt;25;58802;Cyclizin
+77;Elsemarie;Paulus;27;77656;
+78;Ekhard;Glock;34;14913;
+79;Erhart;Schindler;33;55469;
+80;Wiglaf;Freund;24;56340;Daclatsvir
+81;Diethardt;Hasse;35;65795;
+82;Ottheinz;Hundt;31;91278;Chlorpromazin, Cyclophosphamid
+83;Lidija;Kaiser;39;54570;
+84;Rothmund;Rohde;22;19230;
+85;Waltraut;Stenger;27;20095;
+86;Franz-Peter;Drewes;36;47546;
+87;Herwig;Kleinschmidt;28;91278;Perindopril-Erbumin
+88;Ehrentraud;Steffens;34;87497;
+89;Karlhans;Kühl;21;22397;
+90;Lilibeth;Brosch;16;98673;
+91;Wiglaf;Knorr;16;94548;Clorazepat
+92;Fanny;Heinisch;28;99885;
+93;Sophie;Freund;19;6449;
+94;Waltraut;Volkert;35;56477;Pentosanpolysulfat-Natrium, Belimumab
+95;Hanshermann;Klinger;36;7747;
+96;Gabriel;Böhnke;25;91278;
+97;Geraldine;Linke;35;78126;Cefazolin
+98;Susi;Kamp;32;56753;
+99;Grimbert;Lührs;21;40667;Kalziumchlorid

@@ -57,7 +57,7 @@ export const exampleDatasets = assertType<ExampleDatasets>()({
       numberOfRecords: 100,
       path: path.join(EXAMPLE_DATASET_DIR, 'krankenhaus.csv'),
       quote: '"',
-      separator: ';',
+      separator: ',',
     },
   },
 });
