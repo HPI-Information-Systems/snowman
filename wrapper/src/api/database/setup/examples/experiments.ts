@@ -46,184 +46,63 @@ export async function loadExampleExperiments(
 }
 
 export const exampleExperiments = assertType<ExampleExperiments>()({
-  restaurantGoldstandard1: {
+  gold: {
+    id: 1,
     meta: {
-      name: 'goldstandard',
-      description:
-        'Complete list of all duplicate pairs found in the original dataset.',
       algorithmId: exampleAlgorithms.gold.id,
-      datasetId: exampleDatasets.restaurants.id,
+      datasetId: exampleDatasets.krankenhaus.id,
+      name: 'Echte Duplikate',
+      description: 'vollständige Liste aller Duplikate',
     },
-    id: -1,
     file: {
       format: SetExperimentFileFormatEnum.Pilot,
-      path: path.join(
-        EXAMPLE_EXPERIMENT_DIR,
-        'hpi_restaurants_goldstandard.csv'
-      ),
-      numberOfPairs: 112,
+      numberOfPairs: 30,
+      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'gold.csv'),
     },
   },
-  restaurantExampleRun: {
+
+  alpha: {
+    id: 2,
     meta: {
-      name: 'examplerun',
-      description: 'Randomly picked pairs - for testing purposes only!',
-      algorithmId: exampleAlgorithms.mock.id,
-      datasetId: exampleDatasets.restaurants.id,
+      algorithmId: exampleAlgorithms.alpha.id,
+      datasetId: exampleDatasets.krankenhaus.id,
+      name: 'Alpha',
+      description: 'von Alpha vermutete Duplikate',
     },
-    id: -2,
     file: {
       format: SetExperimentFileFormatEnum.Pilot,
-      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'hpi_restaurants_examplerun.csv'),
-      numberOfPairs: 100,
+      numberOfPairs: 25,
+      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'alpha.csv'),
     },
   },
-  notebookToySigmodGoldstandard1: {
+
+  beta: {
+    id: 3,
     meta: {
-      name: 'SIGMOD-notebookToy-goldstandard-Y1',
-      description:
-        'Complete list of duplicate pairs in the NotebookToy dataset (X1) of the SIGMOD contest.',
-      algorithmId: exampleAlgorithms.gold.id,
-      datasetId: exampleDatasets.notebookToy.id,
+      algorithmId: exampleAlgorithms.beta.id,
+      datasetId: exampleDatasets.krankenhaus.id,
+      name: 'Beta',
+      description: 'von Beta vermutete Duplikate',
     },
-    id: -3,
-    file: {
-      format: SetExperimentFileFormatEnum.Sigmod2021,
-      path: path.join(
-        EXAMPLE_EXPERIMENT_DIR,
-        'sigmod_notebooktoy_goldstandard.csv'
-      ),
-      numberOfPairs: 903,
-    },
-  },
-  notebookSigmodGoldstandard: {
-    meta: {
-      name: 'SIGMOD-notebook-goldstandard-Y2',
-      description:
-        'Complete list of duplicate pairs in the notebook dataset (X2) of the SIGMOD contest.',
-      algorithmId: exampleAlgorithms.gold.id,
-      datasetId: exampleDatasets.notebook.id,
-    },
-    id: -4,
-    file: {
-      format: SetExperimentFileFormatEnum.Sigmod2021,
-      path: path.join(
-        EXAMPLE_EXPERIMENT_DIR,
-        'sigmod_notebook_goldstandard.csv'
-      ),
-      numberOfPairs: 58653,
-    },
-  },
-  magellanGoldstandard: {
-    meta: {
-      name: 'goldstandard',
-      description:
-        'Complete list of all duplicate pairs found in the original dataset.',
-      algorithmId: exampleAlgorithms.gold.id,
-      datasetId: exampleDatasets.magellanSongs.id,
-    },
-    id: -5,
     file: {
       format: SetExperimentFileFormatEnum.Pilot,
-      path: path.join(
-        EXAMPLE_EXPERIMENT_DIR,
-        'magellan_songs_goldstandard.csv'
-      ),
-      numberOfPairs: 1292022,
+      numberOfPairs: 6,
+      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'beta.csv'),
     },
   },
-  freedbCdsGoldstandard: {
+
+  gamma: {
+    id: 4,
     meta: {
-      name: 'goldstandard',
-      description:
-        'Complete list of all duplicate pairs found in the original dataset.',
-      algorithmId: exampleAlgorithms.gold.id,
-      datasetId: exampleDatasets.freedbCds.id,
+      algorithmId: exampleAlgorithms.gamma.id,
+      datasetId: exampleDatasets.krankenhaus.id,
+      name: 'Gamma',
+      description: 'von Gamma vermutete Duplikate',
     },
-    id: -6,
     file: {
       format: SetExperimentFileFormatEnum.Pilot,
-      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'freedb_cds_goldstandard.csv'),
-      numberOfPairs: 300,
-    },
-  },
-  freedbCdsExampleRun: {
-    meta: {
-      name: 'examplerun',
-      description: 'Randomly picked pairs - for testing purposes only!',
-      algorithmId: exampleAlgorithms.mock.id,
-      datasetId: exampleDatasets.freedbCds.id,
-    },
-    id: -7,
-    file: {
-      format: SetExperimentFileFormatEnum.Pilot,
-      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'freedb_cds_examplerun.csv'),
-      numberOfPairs: 124,
-    },
-  },
-  hpiCoraGoldstandard: {
-    meta: {
-      name: 'goldstandard',
-      description:
-        'Complete list of all duplicate pairs found in the original dataset.',
-      algorithmId: exampleAlgorithms.gold.id,
-      datasetId: exampleDatasets.cora.id,
-    },
-    id: -8,
-    file: {
-      format: SetExperimentFileFormatEnum.Pilot,
-      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'hpi_cora_goldstandard.csv'),
-      numberOfPairs: 64578,
-    },
-  },
-  hpiCoraExampleRun: {
-    meta: {
-      name: 'examplerun',
-      description: 'Randomly picked pairs - for testing purposes only!',
-      algorithmId: exampleAlgorithms.mock.id,
-      datasetId: exampleDatasets.cora.id,
-    },
-    id: -9,
-    file: {
-      format: SetExperimentFileFormatEnum.Pilot,
-      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'hpi_cora_examplerun.csv'),
-      numberOfPairs: 767,
-    },
-  },
-  notebookLargeSigmodGoldstandard: {
-    meta: {
-      name: 'SIGMOD-notebooklarge-goldstandard-Y3',
-      description:
-        'Complete list of duplicate pairs in the notebook large dataset (X3) of the SIGMOD contest.',
-      algorithmId: exampleAlgorithms.gold.id,
-      datasetId: exampleDatasets.notebookLarge.id,
-    },
-    id: -10,
-    file: {
-      format: SetExperimentFileFormatEnum.Sigmod2021,
-      path: path.join(
-        EXAMPLE_EXPERIMENT_DIR,
-        'sigmod_notebooklarge_goldstandard.csv'
-      ),
-      numberOfPairs: 56616,
-    },
-  },
-  altoSightSigmodGoldstandard: {
-    meta: {
-      name: 'SIGMOD-altosight-goldstandard-Y4',
-      description:
-        'Complete list of duplicate pairs in the altoSight dataset (X4) of the SIGMOD contest.',
-      algorithmId: exampleAlgorithms.gold.id,
-      datasetId: exampleDatasets.altoSight.id,
-    },
-    id: -11,
-    file: {
-      format: SetExperimentFileFormatEnum.Sigmod2021,
-      path: path.join(
-        EXAMPLE_EXPERIMENT_DIR,
-        'sigmod_altosight_goldstandard.csv'
-      ),
-      numberOfPairs: 348195,
+      numberOfPairs: 50,
+      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'gamma.csv'),
     },
   },
 });

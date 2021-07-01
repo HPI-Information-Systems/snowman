@@ -1,4 +1,4 @@
-import { GoldStandardId, SilverStandardId } from 'snowman-library';
+import { GoldStandardId } from 'snowman-library';
 import { assertType } from 'snowman-library';
 
 import { providers } from '../../../providers';
@@ -19,25 +19,32 @@ export function loadExampleAlgorithms(algorithms: ExampleAlgorithms): void {
 }
 
 export const exampleAlgorithms = assertType<ExampleAlgorithms>()({
-  silver: {
-    meta: {
-      name: 'Silver Standard',
-      description: 'Incomplete list of all duplicates a dataset contains.',
-    },
-    id: SilverStandardId,
-  },
   gold: {
     meta: {
-      name: 'Gold Standard',
-      description: 'Complete list of all duplicates a dataset contains.',
+      name: 'Echte Duplikate',
+      description: 'vollständige Liste aller echten Duplikte',
     },
     id: GoldStandardId,
   },
-  mock: {
+  alpha: {
     meta: {
-      name: 'Mock Solution',
-      description: 'Experiments constructed for testing purposes only.',
+      name: 'Alpha',
+      description: 'ein open-source System zum Finden von Duplikaten',
     },
-    id: -3,
+    id: 1,
+  },
+  beta: {
+    meta: {
+      name: 'Beta',
+      description: 'kommerzielle Duplikaterkennungslösung',
+    },
+    id: 2,
+  },
+  gamma: {
+    meta: {
+      name: 'Gamma',
+      description: 'cloud-basierte on-demand Matchingplatform',
+    },
+    id: 3,
   },
 });

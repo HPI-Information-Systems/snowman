@@ -62,10 +62,11 @@ class DatabaseSetup {
 
   protected resetIfRequired(): void {
     if (
-      !this.isInitialSetup &&
-      latest.migrationRequiresReset(
-        SchemaVersion.getInstalledVersion(this.options.appPath)
-      )
+      this.options.usePreBuiltDatabase ||
+      (!this.isInitialSetup &&
+        latest.migrationRequiresReset(
+          SchemaVersion.getInstalledVersion(this.options.appPath)
+        ))
     ) {
       removeSync(databaseFolder(this.options.appPath));
       this.isInitialSetup = true;
