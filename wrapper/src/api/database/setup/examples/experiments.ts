@@ -67,6 +67,9 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       datasetId: exampleDatasets.krankenhaus.id,
       name: 'Alpha',
       description: 'von Alpha vermutete Duplikate',
+      softKPIs: {
+        // TODO SoftKPIs here
+      },
     },
     file: {
       format: SetExperimentFileFormatEnum.Pilot,

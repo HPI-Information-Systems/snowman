@@ -30,6 +30,9 @@ export const exampleAlgorithms = assertType<ExampleAlgorithms>()({
     meta: {
       name: 'Alpha',
       description: 'ein open-source System zum Finden von Duplikaten',
+      softKPIs: {
+        // TODO SoftKPIs here
+      },
     },
     id: 1,
   },
