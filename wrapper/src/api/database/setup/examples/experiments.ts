@@ -56,11 +56,10 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     file: {
       format: SetExperimentFileFormatEnum.Pilot,
-      numberOfPairs: 30,
+      numberOfPairs: NaN,
       path: path.join(EXAMPLE_EXPERIMENT_DIR, 'gold.csv'),
     },
   },
-
   alpha: {
     id: 2,
     meta: {
@@ -71,11 +70,10 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     file: {
       format: SetExperimentFileFormatEnum.Pilot,
-      numberOfPairs: 25,
+      numberOfPairs: NaN,
       path: path.join(EXAMPLE_EXPERIMENT_DIR, 'alpha.csv'),
     },
   },
-
   beta: {
     id: 3,
     meta: {
@@ -86,11 +84,10 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     file: {
       format: SetExperimentFileFormatEnum.Pilot,
-      numberOfPairs: 6,
+      numberOfPairs: NaN,
       path: path.join(EXAMPLE_EXPERIMENT_DIR, 'beta.csv'),
     },
   },
-
   gamma: {
     id: 4,
     meta: {
@@ -101,7 +98,7 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
     },
     file: {
       format: SetExperimentFileFormatEnum.Pilot,
-      numberOfPairs: 50,
+      numberOfPairs: NaN,
       path: path.join(EXAMPLE_EXPERIMENT_DIR, 'gamma.csv'),
     },
   },

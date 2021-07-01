@@ -54,10 +54,13 @@ class DatabaseSetup {
   }
 
   async setup(): Promise<void> {
-    this.resetIfRequired();
-    this.importPrebuiltDatabaseIfRequired();
-    this.loadDatabaseBackend();
-    await this.initialSetupOrMigrate();
+    if (this.options.usePreBuiltDatabase) {
+      this.resetIfRequired();
+      this.options.usePreBuiltDatabase = false;
+      this.importPrebuiltDatabaseIfRequired();
+      this.loadDatabaseBackend();
+      await this.initialSetupOrMigrate();
+    }
   }
 
   protected resetIfRequired(): void {
