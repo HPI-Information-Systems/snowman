@@ -44,7 +44,7 @@ export default class GenericChart extends Component<ChartConfiguration> {
   render(): JSX.Element {
     return (
       <div>
-        <canvas ref={this.chartRef} />
+        <canvas ref={this.chartRef} height="120" />
       </div>
     );
   }
