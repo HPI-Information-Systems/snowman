@@ -104,22 +104,24 @@ const BenchmarkConfigurator = ({
     }, 500);
   }, []);
   return (
-    <IonMenu contentId={contentId} type="push" className={'doNotPrint'}>
-      <IonHeader>
-        <IonToolbar color="primary">
-          <IonTitle>Configurator</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent>
-        <DefaultPlaceholderConfigurator />
-        <BinaryMetricsConfigurator />
-        <NMetricsConfigurator />
-        <IntersectionConfigurator />
-        <KPIDiagramConfigurator />
-        <DecisionMatrixConfigurator />
-        <SimilarityDiagramConfigurator />
-      </IonContent>
-    </IonMenu>
+    <>
+      {/* <IonMenu contentId={contentId} type="push" className={'doNotPrint'}>
+        <IonHeader>
+          <IonToolbar color="primary">
+            <IonTitle>Configurator</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent>
+          <DefaultPlaceholderConfigurator />
+          <BinaryMetricsConfigurator />
+          <NMetricsConfigurator />
+          <IntersectionConfigurator />
+          <KPIDiagramConfigurator />
+          <DecisionMatrixConfigurator />
+          <SimilarityDiagramConfigurator />
+        </IonContent>
+      </IonMenu> */}
+    </>
   );
 };
 
