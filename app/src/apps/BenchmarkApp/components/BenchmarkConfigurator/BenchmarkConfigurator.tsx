@@ -48,8 +48,8 @@ const BenchmarkConfigurator = ({
           ).cacheKey,
           newSelection: [
             {
-              currentIds: [0, 1, 2],
-              nextId: 3,
+              currentIds: [0, 1],
+              nextId: 2,
             },
           ],
           allowMultiple: false,
@@ -69,13 +69,6 @@ const BenchmarkConfigurator = ({
           allowMultiple: false,
         }) as unknown) as SnowmanAction<unknown>
       );
-      BenchmarkAppStoreMagistrate.getStore().dispatch(
-        (updateSelection({
-          aCacheKey: algorithmCacheKeyAndFilter(2).cacheKey,
-          newSelection: [3],
-          allowMultiple: false,
-        }) as unknown) as SnowmanAction<unknown>
-      );
 
       BenchmarkAppStoreMagistrate.getStore().dispatch(
         (updateSelection({
@@ -87,7 +80,7 @@ const BenchmarkConfigurator = ({
           ).cacheKey,
           newSelection: [
             {
-              currentIds: [0, 1, 2],
+              currentIds: [0, 1],
               nextId: 3,
             },
           ],
@@ -105,13 +98,6 @@ const BenchmarkConfigurator = ({
         (updateSelection({
           aCacheKey: experimentCacheKeyAndFilter(0, 1).cacheKey,
           newSelection: [3],
-          allowMultiple: false,
-        }) as unknown) as SnowmanAction<unknown>
-      );
-      BenchmarkAppStoreMagistrate.getStore().dispatch(
-        (updateSelection({
-          aCacheKey: experimentCacheKeyAndFilter(0, 2).cacheKey,
-          newSelection: [4],
           allowMultiple: false,
         }) as unknown) as SnowmanAction<unknown>
       );

@@ -91,18 +91,4 @@ export const exampleExperiments = assertType<ExampleExperiments>()({
       path: path.join(EXAMPLE_EXPERIMENT_DIR, 'beta.csv'),
     },
   },
-  gamma: {
-    id: 4,
-    meta: {
-      algorithmId: exampleAlgorithms.gamma.id,
-      datasetId: exampleDatasets.krankenhaus.id,
-      name: 'Gamma',
-      description: 'von Gamma vermutete Duplikate',
-    },
-    file: {
-      format: SetExperimentFileFormatEnum.Pilot,
-      numberOfPairs: NaN,
-      path: path.join(EXAMPLE_EXPERIMENT_DIR, 'gamma.csv'),
-    },
-  },
 });
