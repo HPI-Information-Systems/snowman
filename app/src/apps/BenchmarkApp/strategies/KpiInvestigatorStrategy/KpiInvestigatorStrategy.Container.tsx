@@ -73,7 +73,7 @@ const mapStateToProps = (
     })
   ),
   xAxis: AllMetricsObject.MultiplyEffort,
-  yAxis: AllMetricsObject.F1Score,
+  yAxis: AllMetricsObject.Precision,
   colorMode: state.colorMode,
   definitionRange: state.definitionRange,
   valueRange: state.valueRange,
