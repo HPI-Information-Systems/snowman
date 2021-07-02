@@ -43,11 +43,4 @@ export const exampleAlgorithms = assertType<ExampleAlgorithms>()({
     },
     id: 2,
   },
-  gamma: {
-    meta: {
-      name: 'Gamma',
-      description: 'cloud-basierte on-demand Matchingplatform',
-    },
-    id: 3,
-  },
 });
