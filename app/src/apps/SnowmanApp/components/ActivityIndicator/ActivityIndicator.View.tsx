@@ -1,6 +1,8 @@
-import { IonSpinner } from '@ionic/react';
+import { IonIcon, IonSpinner } from '@ionic/react';
 import { ActivityIndicatorProps } from 'apps/SnowmanApp/components/ActivityIndicator/ActivityIndicatorProps';
 import styles from 'apps/SnowmanApp/components/ActivityIndicator/ActivityIndicatorStyles.module.css';
+import { doRefreshCentralResources } from 'apps/SnowmanApp/store/CentralResourcesDoActions';
+import { refreshOutline } from 'ionicons/icons';
 import React from 'react';
 
 const ActivityIndicatorView = ({
@@ -9,7 +11,15 @@ const ActivityIndicatorView = ({
   <>
     {existsActiveRequest ? (
       <IonSpinner className={styles.spinnerWhite} />
-    ) : null}
+    ) : (
+      <IonIcon
+        icon={refreshOutline}
+        slot="icon-only"
+        size="large"
+        className={styles.spinnerWhite}
+        onClick={() => doRefreshCentralResources()}
+      />
+    )}
   </>
 );
 
