@@ -16,7 +16,7 @@ const ActivityIndicatorView = ({
         icon={refreshOutline}
         slot="icon-only"
         size="large"
-        className={styles.spinnerWhite}
+        className={styles.buttonWhite}
         onClick={() => doRefreshCentralResources()}
       />
     )}

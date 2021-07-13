@@ -1,3 +1,8 @@
 .spinnerWhite {
   color: #fff !important;
 }
+
+.buttonWhite {
+  color: #fff !important;
+  cursor: pointer;
+}
