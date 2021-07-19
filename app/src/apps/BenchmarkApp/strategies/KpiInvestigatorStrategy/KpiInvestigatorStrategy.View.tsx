@@ -100,14 +100,49 @@ const KpiInvestigatorStrategyView = ({
                   options={{
                     scales: {
                       x: definitionRange
-                        ? { min: definitionRange[0], max: definitionRange[1] }
-                        : undefined,
+                        ? {
+                            min: definitionRange[0],
+                            max: definitionRange[1],
+                            ticks: {
+                              font: {
+                                size: 20,
+                              },
+                            },
+                          }
+                        : {
+                            ticks: {
+                              font: {
+                                size: 20,
+                              },
+                            },
+                          },
                       y: valueRange
-                        ? { min: valueRange[0], max: valueRange[1] }
-                        : undefined,
+                        ? {
+                            min: valueRange[0],
+                            max: valueRange[1],
+                            ticks: {
+                              font: {
+                                size: 20,
+                              },
+                            },
+                          }
+                        : {
+                            ticks: {
+                              font: {
+                                size: 20,
+                              },
+                            },
+                          },
                     },
                     animation: { duration: 0 },
                     plugins: {
+                      legend: {
+                        labels: {
+                          font: {
+                            size: 20,
+                          },
+                        },
+                      },
                       tooltip: {
                         callbacks: {
                           beforeLabel: (anItem: ScatterTooltipItem): string =>
