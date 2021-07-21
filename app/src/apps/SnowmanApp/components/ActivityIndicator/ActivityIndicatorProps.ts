@@ -2,4 +2,9 @@ export interface ActivityIndicatorStateProps {
   existsActiveRequest: boolean;
 }
 
-export type ActivityIndicatorProps = ActivityIndicatorStateProps;
+export interface ActivityIndicatorDispatchProps {
+  triggerRefresh: () => void;
+}
+
+export type ActivityIndicatorProps = ActivityIndicatorStateProps &
+  ActivityIndicatorDispatchProps;
