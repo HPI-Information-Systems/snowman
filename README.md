@@ -15,7 +15,7 @@ _This tool is developed as part of a bachelor's project in collaboration with SA
 
 ## Current state
 
-In Q1 and Q2 of 2021, we aim to reach the following milestones:
+In Q1 and Q2 of 2021, we reached the following milestones:
 
 [x] **Milestone 1:** Ability to add/delete datasets, experiments and matching solutions; binary comparison and basic behavior analysis; executable on all major platform  
 [x] **Milestone 2:** Compare more than two experiments and create new experiments based on results; survey Soft KPIs, allow comparison based on KPIs  
