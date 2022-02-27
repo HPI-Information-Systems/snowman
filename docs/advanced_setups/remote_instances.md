@@ -34,4 +34,4 @@ In this case, the address `http://192.168.12.34:8123` can be used by clients to 
 
 As an alternative, we provide a fully featured Docker image that runs a Snowman server.
 
-`coming soon`
+*This feature is WIP - progress is tracked in issue [#216](https://github.com/HPI-Information-Systems/snowman/issues/216)!*
