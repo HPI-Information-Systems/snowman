@@ -25,6 +25,12 @@ The precise progress is tracked through Github issues and project boards. Please
 
 _After reaching milestone 3, we plan to continue to work on further features which will broaden the tools abilities and features._
 
+## Showcase
+
+To show off some key features that Snowman offers, we created a small introductory video:
+
+[![Snowman Showcase](https://img.youtube.com/vi/wuJkkIByXjw/0.jpg)](https://www.youtube.com/watch?v=wuJkkIByXjw)
+
 ## Contributing
 
 Contribution guidelines will follow soon. Until then, feel free to open an issue to report a bug or request a feature.  
