@@ -54,7 +54,8 @@ jobs:
         with:
           name: snowman-win.zip
           path: ./wrapper/build/*.zip
-        if: matrix.os == 'windows-latest'
+        # TEMPORARY change to windows-2019
+        if: matrix.os == 'windows-2019'
       - name: Upload artifact (MacOS)
         uses: actions/upload-artifact@v2
         with:
