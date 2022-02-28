@@ -15,7 +15,8 @@ jobs:
       fail-fast: false
       matrix:
         # Select platform(s)
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        # TEMPORARY downgrade to windows-2019 until we upgrade better-sqlite3 (& node-gyp)
+        os: [ubuntu-latest, macos-latest, windows-2019]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 14.x
