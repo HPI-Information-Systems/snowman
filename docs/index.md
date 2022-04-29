@@ -13,6 +13,8 @@ _Snowman is developed as part of a bachelor's project in collaboration with SAP 
 
 For a quick first impression, jump directly into the [analyses overview](basic_usage/analyses/overview.md).
 
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wuJkkIByXjw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Usage
 
 If you want to use our benchmark, please consult the section [Basic usage](basic_usage/getting_started.md) for details.

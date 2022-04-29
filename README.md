@@ -15,7 +15,7 @@ _This tool is developed as part of a bachelor's project in collaboration with SA
 
 ## Current state
 
-In Q1 and Q2 of 2021, we aim to reach the following milestones:
+In Q1 and Q2 of 2021, we reached the following milestones:
 
 [x] **Milestone 1:** Ability to add/delete datasets, experiments and matching solutions; binary comparison and basic behavior analysis; executable on all major platform  
 [x] **Milestone 2:** Compare more than two experiments and create new experiments based on results; survey Soft KPIs, allow comparison based on KPIs  
@@ -24,6 +24,12 @@ In Q1 and Q2 of 2021, we aim to reach the following milestones:
 The precise progress is tracked through Github issues and project boards. Please get in touch in case you want a special feature included :)
 
 _After reaching milestone 3, we plan to continue to work on further features which will broaden the tools abilities and features._
+
+## Showcase
+
+To show off some key features that Snowman offers, we created a small introductory video:
+
+[![Snowman Showcase](https://img.youtube.com/vi/wuJkkIByXjw/0.jpg)](https://www.youtube.com/watch?v=wuJkkIByXjw)
 
 ## Contributing
 
