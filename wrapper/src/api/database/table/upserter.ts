@@ -27,13 +27,15 @@ export class TableUpserter<Schema extends TableSchema> {
           .filter((column) => column !== undefined)
           .sort() as (string & keyof typeof row)[];
         insertedRowIds.push(
-          +this.statementCache
-            .get(this.createInsertStatement(columns))
-            .run(
-              ...(columns.map(
-                (column) => row[column] ?? null
-              ) as BasicDataType<DataTypes>[])
-            ).lastInsertRowid
+          +Number(
+            this.statementCache
+              .get(this.createInsertStatement(columns))
+              .run(
+                ...(columns.map(
+                  (column) => row[column] ?? null
+                ) as BasicDataType<DataTypes>[])
+              ).lastInsertRowid
+          )
         );
       }
       return insertedRowIds;
