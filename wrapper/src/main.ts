@@ -81,7 +81,6 @@ function createWindow() {
     webPreferences: {
       preload: path.join(app.getAppPath(), './preload/index.js'),
       contextIsolation: true,
-      nativeWindowOpen: true,
     },
     title: 'Snowman',
   });
