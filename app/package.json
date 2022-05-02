@@ -2,7 +2,7 @@
   "name": "snowman-app",
   "author": "Snowman Team",
   "description": "Compare data matching algorithms with each other",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "license": "MIT",
   "homepage": "./",
   "scripts": {
