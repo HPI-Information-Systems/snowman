@@ -38,7 +38,7 @@ references:
     scope: "Cite this paper if you want to reference the general concepts of the software."
     conference:
       name: "48th International Conference on Very Large Databases"
-      location: "Sydney, Australia"
+      location: "Sydney, Australia (and hybrid)"
     year: 2022
     journal: "Proceedings of the VLDB Endowment"
     volume: 15
