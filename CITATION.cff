@@ -1,0 +1,46 @@
+cff-version: 1.2.0
+message: "Please cite the following works when using this software."
+authors:
+  - family-names: Graf
+    given-names: Martin
+  - family-names: Laskowski
+    given-names: Lukas
+  - family-names: Papsdorf
+    given-names: Florian
+  - family-names: Sold
+    given-names: Florian
+title: "Snowman Data Matching Benchmark"
+version: 3.2.3
+date-released: 2021-02-24
+license: MIT
+license-url: https://github.com/HPI-Information-Systems/snowman/blob/main/LICENSE
+repository: https://github.com/HPI-Information-Systems/snowman
+url: https://hpi-information-systems.github.io/snowman/
+references:
+  - type: article
+    authors:
+      - family-names: Graf
+        given-names: Martin
+      - family-names: Laskowski
+        given-names: Lukas
+      - family-names: Papsdorf
+        given-names: Florian
+      - family-names: Sold
+        given-names: Florian
+      - family-names: Gremmelspacher
+        given-names: Roland
+      - family-names: Naumann
+        given-names: Felix
+      - family-names: Panse
+        given-names: Fabian
+    title: "Frost: Benchmarking and Exploring Data Matching Results"
+    abbreviation: "Frost"
+    scope: "Cite this paper if you want to reference the general concepts of the software."
+    conference:
+      name: "48th International Conference on Very Large Databases"
+      location: "Sydney, Australia"
+    year: 2022
+    journal: "Proceedings of the VLDB Endowment"
+    volume: 15
+    issue: 12
+    doi: 10.14778/3554821.3554823
