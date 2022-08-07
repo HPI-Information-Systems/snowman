@@ -24,4 +24,9 @@ _The data used in this figure is not publicly available._
 
 ## Table 1
 
-To conduct these experiments, we implemented a naive approach that ...
+To conduct these experiments, we implemented a naive approach that calculates each point of the diagram without making use of previous results.
+Concretely, the naive implementation counts the numbers in the confusion matrix by creating an intersection of the clusterings of the ground truth and the experiment.
+
+We timed our custom implementation vs. the naive implementation at the API level measuring the response time until a result was returned from the server.
+We made the measurements on the same machine in the same conditions five times and used their average as the result for the paper.
+
