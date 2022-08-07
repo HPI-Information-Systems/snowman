@@ -4,7 +4,7 @@ This document outlines and explains the experiments conducted for our paper "Fro
 
 ## Figure 3
 
-The data shown in the diagram ...
+The data shown in the diagram is exemplary mock data to outline Snowman's functionalities and a potential workflow.
 
 ## Figure 6
 
