@@ -1,0 +1,1299 @@
+openapi: 3.0.0
+info:
+  description: >
+    _This document describes the REST API of the snowman data matching benchmark
+    tool._
+    Comparing data matching algorithms is still an unsolved topic in both industry and research.
+    With snowman, developers and researchers will be able to compare the performance of different data matching
+    solutions or improve new algorithms.
+  version: 3.0.0
+  title: Snowman API
+  contact:
+    email: snowman@groups.sap.com
+    url: https://github.com/HPI-Information-Systems/snowman
+  license:
+    name: LICENSE (MIT)
+    url: https://github.com/HPI-Information-Systems/snowman/blob/main/LICENSE
+
+servers:
+  - url: "{protocol}://{server}/api/v1"
+    variables:
+      protocol:
+        default: http
+        enum: [http, https]
+      server:
+        default: localhost:8123
+
+tags:
+  - name: Algorithm
+    description: Operations about algorithms
+  - name: Datasets
+    description: Operations about datasets
+  - name: Experiments
+    description: Operations about experiments
+  - name: Similarity Thresholds
+    description: Operations about similarity thresholds of experiments
+  - name: Benchmark
+    description: Operations about comparing multiple experiments
+
+paths:
+  #### ALGORITHM ####
+  /algorithms:
+    get:
+      tags:
+        - Algorithm
+      summary: Get all algorithms
+      operationId: getAlgorithms
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Algorithm"
+
+    post:
+      tags:
+        - Algorithm
+      summary: Creates a new algorithm
+      operationId: addAlgorithm
+      x-codegen-request-body-name: algorithm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlgorithmValues"
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlgorithmId"
+        400:
+          description: Bad Request
+
+  /algorithms/{algorithmId}:
+    parameters:
+      - name: algorithmId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/AlgorithmId"
+
+    get:
+      tags:
+        - Algorithm
+      summary: Gets an algorithm by id
+      operationId: getAlgorithm
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Algorithm"
+        404:
+          description: Not Found
+    put:
+      tags:
+        - Algorithm
+      summary: Updates or creates an algorithm
+      operationId: setAlgorithm
+      x-codegen-request-body-name: algorithm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AlgorithmValues"
+        required: true
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+
+    delete:
+      tags:
+        - Algorithm
+      summary: Deletes an algorithm by id
+      operationId: deleteAlgorithm
+      responses:
+        204:
+          description: No Content
+
+    #### DATASET ####
+  /datasets:
+    get:
+      tags:
+        - Datasets
+      summary: Returns all Datasets
+      operationId: getDatasets
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Dataset"
+
+    post:
+      tags:
+        - Datasets
+      summary: Creates a new dataset with metainformation
+      operationId: addDataset
+      x-codegen-request-body-name: dataset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DatasetValues"
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DatasetId"
+        400:
+          description: Bad Request
+
+  /datasets/{datasetId}:
+    parameters:
+      - name: datasetId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/DatasetId"
+
+    get:
+      tags:
+        - Datasets
+      summary: Gets dataset by id
+      operationId: getDataset
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Dataset"
+        404:
+          description: Not Found
+
+    put:
+      tags:
+        - Datasets
+      summary: Updates or creates a dataset
+      operationId: setDataset
+      x-codegen-request-body-name: dataset
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DatasetValues"
+        required: true
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+
+    delete:
+      tags:
+        - Datasets
+      summary: Deletes a whole dataset by id
+      operationId: deleteDataset
+      responses:
+        204:
+          description: No Content
+
+  /datasets/{datasetId}/file:
+    parameters:
+      - name: datasetId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/DatasetId"
+
+    get:
+      tags:
+        - Datasets
+      parameters:
+        - name: startAt
+          in: query
+          schema:
+            type: integer
+            default: 0
+          required: false
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: -1
+          description: -1 returns all remaining records
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+            example: first_name
+          description: startAt and limit can be used without specifying sortBy (guarantees same order of records even if not specified)
+          required: false
+        - in: query
+          name: format
+          schema:
+            $ref: "#/components/schemas/FileResponseFormat"
+          required: false
+      summary: Gets a dataset file by id
+      description: Always returns one row with column names followed by the requested amount of rows. To only return the column names, pass startAt=0 and limit=0.
+      operationId: getDatasetFile
+      responses:
+        200:
+          $ref: "#/components/responses/FileResponse"
+        404:
+          description: Not Found
+
+    put:
+      tags:
+        - Datasets
+      summary: Updates or creates a dataset file
+      operationId: setDatasetFile
+      parameters:
+        - name: idColumn
+          in: query
+          description: The name of the alphanumeric id column in the uploaded dataset.
+          schema:
+            type: string
+            example: id
+          required: true
+        - name: quote
+          in: query
+          schema:
+            type: string
+            example: '"'
+          required: true
+        - name: escape
+          in: query
+          schema:
+            type: string
+            example: "'"
+          required: true
+        - name: separator
+          in: query
+          schema:
+            type: string
+            example: ","
+          required: true
+      x-codegen-request-body-name: file
+      requestBody:
+        content:
+          text/csv:
+            schema:
+              $ref: "#/components/schemas/CSVFile"
+        required: true
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+
+    delete:
+      tags:
+        - Datasets
+      summary: Deletes a dataset file (but not the dataset)
+      operationId: deleteDatasetFile
+      responses:
+        204:
+          description: No Content
+
+  #### EXPERIMENT ####
+  /experiments:
+    get:
+      tags:
+        - Experiments
+      summary: Get all experiments
+      operationId: getExperiments
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Experiment"
+
+    post:
+      tags:
+        - Experiments
+      summary: Creates a new Experiment
+      operationId: addExperiment
+      x-codegen-request-body-name: experiment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExperimentValues"
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExperimentId"
+        400:
+          description: Bad Request
+
+  /experiments/{experimentId}:
+    parameters:
+      - name: experimentId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/ExperimentId"
+
+    get:
+      tags:
+        - Experiments
+      summary: Gets experiment by id
+      operationId: getExperiment
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Experiment"
+        404:
+          description: Not Found
+
+    put:
+      tags:
+        - Experiments
+      summary: Updates or creates an Experiment
+      operationId: setExperiment
+      x-codegen-request-body-name: experiment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExperimentValues"
+        required: true
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+
+    delete:
+      tags:
+        - Experiments
+      summary: Deletes an experiment (including experiment file)
+      operationId: deleteExperiment
+      responses:
+        204:
+          description: No Content
+
+  /experiments/{experimentId}/file:
+    parameters:
+      - name: experimentId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/ExperimentId"
+      - name: similarityThresholdFunction
+        in: query
+        required: false
+        description: only use in combination with similarityThreshold
+        schema:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+      - name: similarityThreshold
+        in: query
+        required: false
+        description: only use in combination with similarityThresholdFunction
+        schema:
+          type: number
+    get:
+      tags:
+        - Experiments
+      summary: Get an experiment file
+      operationId: getExperimentFile
+      parameters:
+        - name: startAt
+          in: query
+          schema:
+            type: integer
+            default: 0
+          required: false
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: -1
+          description: -1 returns all remaining records
+          required: false
+        - in: query
+          name: sortBy
+          schema:
+            type: string
+            example: first_name
+          description: startAt and limit can be used without specifying sortBy (guarantees same order of records even if not specified)
+          required: false
+        - in: query
+          name: format
+          schema:
+            $ref: "#/components/schemas/FileResponseFormat"
+          required: false
+      responses:
+        200:
+          $ref: "#/components/responses/FileResponse"
+        404:
+          description: Not Found
+
+    put:
+      tags:
+        - Experiments
+      summary: Creates an experiment file (cannot overwrite existing)
+      operationId: setExperimentFile
+      parameters:
+        - in: query
+          name: format
+          description: "Documentation on the formats can be found here: https://hpi-information-systems.github.io/snowman/basic_usage/experiments/#import-formats"
+          schema:
+            type: string
+            enum:
+              - magellan
+              - clusterER
+              - pilot
+              - sigmod2021
+              - BHANA
+              - BPIES
+          required: true
+      x-codegen-request-body-name: file
+      requestBody:
+        content:
+          text/csv:
+            schema:
+              $ref: "#/components/schemas/CSVFile"
+        required: true
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+
+  #### SIMILARITY THRESHOLDS ####
+  /similarity-threshold-functions:
+    get:
+      tags:
+        - Similarity Thresholds
+      summary: Get all similarity threshold functions
+      operationId: getSimilarityThresholdFunctions
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SimilarityThresholdFunction"
+        404:
+          description: Not Found
+
+    post:
+      tags:
+        - Similarity Thresholds
+      summary: Creates a new similarity threshold function
+      operationId: addSimilarityThresholdFunction
+      x-codegen-request-body-name: similarityThresholdFunction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+        required: true
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+        400:
+          description: Bad Request
+
+  /similarity-threshold-functions/{functionId}:
+    parameters:
+      - name: functionId
+        in: path
+        required: true
+        schema:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+
+    get:
+      tags:
+        - Similarity Thresholds
+      summary: Get a similarity threshold function
+      operationId: getSimilarityThresholdFunction
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimilarityThresholdFunction"
+        404:
+          description: Not Found
+
+    put:
+      tags:
+        - Similarity Thresholds
+      summary: Updates or creates a similarity threshold function
+      operationId: setSimilarityThresholdFunction
+      x-codegen-request-body-name: similarityThresholdFunction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+        required: true
+      responses:
+        204:
+          description: No Content
+        400:
+          description: Bad Request
+
+    delete:
+      tags:
+        - Similarity Thresholds
+      summary: Deletes a similarity threshold function
+      operationId: deleteSimilarityThresholdFunction
+      responses:
+        204:
+          description: No Content
+
+  #### BENCHMARK ####
+  /benchmark/metrics:
+    get:
+      tags:
+        - Benchmark
+      operationId: getBinaryMetrics
+      parameters:
+        - name: groundTruthExperimentId
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+        - name: groundTruthSimilarityThresholdFunction
+          in: query
+          required: false
+          description: only use in combination with groundTruthSimilarityThreshold
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+        - name: groundTruthSimilarityThreshold
+          in: query
+          required: false
+          description: only use in combination with groundTruthSimilarityThresholdFunction
+          schema:
+            type: number
+        - name: predictedExperimentId
+          in: query
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+        - name: predictedSimilarityThresholdFunction
+          in: query
+          required: false
+          description: only use in combination with predictedSimilarityThreshold
+          schema:
+            $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+        - name: predictedSimilarityThreshold
+          in: query
+          required: false
+          description: only use in combination with predictedSimilarityThresholdFunction
+          schema:
+            type: number
+      summary: Compares two experiments and returns binary metrics
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Metric"
+        404:
+          description: Not Found
+
+  /benchmark/experiment-intersection/records:
+    post:
+      tags:
+        - Benchmark
+      summary:
+        intersects multiple experiments and returns the resulting records. This
+        can be used to calculate the confusion-matrix.
+      operationId: calculateExperimentIntersectionRecords
+      parameters:
+        - name: startAt
+          in: query
+          schema:
+            type: integer
+            default: 0
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: -1
+          description: -1 returns all remaining records
+        - in: query
+          name: format
+          schema:
+            $ref: "#/components/schemas/FileResponseFormat"
+          required: false
+      x-codegen-request-body-name: intersection
+      requestBody:
+        $ref: "#/components/requestBodies/ExperimentIntersection"
+      responses:
+        200:
+          $ref: "#/components/responses/FileResponse"
+        404:
+          description: Not Found
+
+  /benchmark/experiment-intersection/count:
+    post:
+      tags:
+        - Benchmark
+      summary:
+        Intersects multiple experiments and returns the count of pairs and the count of rows.
+        This can be used to calculate the confusion-matrix.
+      operationId: calculateExperimentIntersectionCount
+      x-codegen-request-body-name: intersection
+      requestBody:
+        $ref: "#/components/requestBodies/ExperimentIntersection"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExperimentIntersectionCount"
+        404:
+          description: Not Found
+
+  /benchmark/experiment-intersection/counts:
+    post:
+      tags:
+        - Benchmark
+      description: Returns the pair and row counts of all possible intersections of the given experiments.
+      operationId: calculateExperimentIntersectionCounts
+      x-codegen-request-body-name: experiments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: "#/components/schemas/ExperimentConfigItem"
+              type: array
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/ExperimentIntersectionCount"
+                type: array
+        404:
+          description: Not Found
+  /benchmark/diagram:
+    post:
+      tags:
+        - Benchmark
+      description: returns diagram data based on two metrics and multiple experiments
+      operationId: calculateDiagramData
+      parameters:
+        - name: xAxis
+          in: query
+          schema:
+            anyOf:
+              - $ref: "#/components/schemas/softKPIsAlgorithmEnum"
+              - $ref: "#/components/schemas/MetricsEnum"
+              - $ref: "#/components/schemas/softKPIsExperimentEnum"
+          required: true
+          description: metric to be visualised on the x-axis of the diagram
+        - name: yAxis
+          in: query
+          schema:
+            anyOf:
+              - $ref: "#/components/schemas/softKPIsAlgorithmEnum"
+              - $ref: "#/components/schemas/MetricsEnum"
+              - $ref: "#/components/schemas/softKPIsExperimentEnum"
+          description: metric to be visualised on the y-axis of the diagram
+          required: true
+      x-codegen-request-body-name: diagram
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                multipleExperiments:
+                  $ref: "#/components/schemas/DiagramExperiments"
+                similarityThresholds:
+                  $ref: "#/components/schemas/ExperimentSimilarityConfig"
+              type: object
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiagramResponse"
+
+        403:
+          description: Forbidden
+        404:
+          description: Experiments or metrics not found
+
+components:
+  requestBodies:
+    #### EXPERIMENT ####
+    ExperimentIntersection:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ExperimentIntersection"
+      required: true
+  responses:
+    FileResponse:
+      description: OK
+      content:
+        text/csv:
+          schema:
+            type: string
+            format: binary
+        application/json:
+          schema:
+            $ref: "#/components/schemas/JSONFileResponse"
+  schemas:
+    #### ALGORITHM ####
+    AlgorithmId:
+      type: integer
+      example: 1
+
+    AlgorithmValues:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          example: Magellan
+        description:
+          type: string
+          example: This is an open source python library
+        softKPIs:
+          properties:
+            integrationEffort:
+              properties:
+                installationEffort:
+                  $ref: "#/components/schemas/EffortParts"
+                deploymentType:
+                  items:
+                    type: string
+                    example: "cloud"
+                  type: array
+                solutionType:
+                  items:
+                    type: string
+                    example: "rulebased"
+                  type: array
+                useCase:
+                  items:
+                    type: string
+                    example: "merging"
+                  type: array
+                generalCosts:
+                  type: number
+              type: object
+            configurationEffort:
+              properties:
+                matchingSolution:
+                  $ref: "#/components/schemas/EffortParts"
+                domain:
+                  $ref: "#/components/schemas/EffortParts"
+                interfaces:
+                  items:
+                    type: string
+                    example: "GUI"
+                  type: array
+                supportedOSs:
+                  items:
+                    type: string
+                    example: "Windows"
+                  type: array
+              type: object
+          type: object
+    Algorithm:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              $ref: "#/components/schemas/AlgorithmId"
+            matchingSolutionEffort:
+              items:
+                $ref: "#/components/schemas/Metric"
+              type: array
+            domainEffort:
+              items:
+                $ref: "#/components/schemas/Metric"
+            installationEffort:
+              items:
+                $ref: "#/components/schemas/Metric"
+              type: array
+        - $ref: "#/components/schemas/AlgorithmValues"
+
+    #### DATASET ####
+    DatasetId:
+      type: integer
+      example: 1
+
+    DatasetValues:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          example: Dataset1
+        description:
+          type: string
+          example: This is a dataset file about Restaurants.
+        numberOfRecords:
+          type: integer
+          example: 500
+        tags:
+          type: array
+          items:
+            type: string
+            example: restaurants
+
+    Dataset:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              $ref: "#/components/schemas/DatasetId"
+            numberOfUploadedRecords:
+              type: integer
+              example: 2005
+        - $ref: "#/components/schemas/DatasetValues"
+      #### EXPERIMENT ####
+    ExperimentId:
+      type: integer
+      example: 1
+
+    ExperimentValues:
+      type: object
+      required:
+        - name
+        - datasetId
+        - algorithmId
+      properties:
+        name:
+          type: string
+          minLength: 1
+          example: Experiment1
+        description:
+          type: string
+          example: This is an experiment using a fancy algorithm
+        datasetId:
+          $ref: "#/components/schemas/DatasetId"
+        algorithmId:
+          $ref: "#/components/schemas/AlgorithmId"
+        softKPIs:
+          type: object
+          properties:
+            effort:
+              $ref: "#/components/schemas/EffortParts"
+            runtime:
+              type: number
+    Experiment:
+      allOf:
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              $ref: "#/components/schemas/ExperimentId"
+            numberOfUploadedRecords:
+              type: integer
+              example: 2005
+            effort:
+              items:
+                $ref: "#/components/schemas/Metric"
+              type: array
+        - $ref: "#/components/schemas/ExperimentValues"
+
+    #### SIMILARITY THRESHOLDS ####
+    SimilarityThresholdFunctionId:
+      type: integer
+
+    SimilarityThreshold:
+      type: string
+
+    SimilarityThresholdFunctionConstant:
+      type: number
+
+    SimilarityThresholdFunctionOperator:
+      type: object
+      properties:
+        left:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionDefinition"
+        right:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionDefinition"
+        operator:
+          type: string
+          enum: [ADD, SUBTRACT, MULTIPLY, DIVIDE, POWER, POW, ATAN2, LOG, MOD]
+      required:
+        - left
+        - right
+        - operator
+
+    SimilarityThresholdFunctionUnaryOperator:
+      type: object
+      properties:
+        func:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionDefinition"
+        operator:
+          type: string
+          enum:
+            - ACOS
+            - ACOSH
+            - ASIN
+            - ASINH
+            - ATAN
+            - ATANH
+            - CEIL
+            - CEILING
+            - COS
+            - COSH
+            - DEGREES
+            - EXP
+            - FLOOR
+            - LN
+            - LOG
+            - LOG10
+            - LOG2
+            - RADIANS
+            - SIN
+            - SINH
+            - SQRT
+            - TAN
+            - TANH
+            - TRUNC
+      required:
+        - func
+        - operator
+
+    SimilarityThresholdFunctionDefinition:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [SimilarityThreshold, Operator, Constant, UnaryOperator]
+        similarityThreshold:
+          $ref: "#/components/schemas/SimilarityThreshold"
+        operator:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionOperator"
+        constant:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionConstant"
+        unaryOperator:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionUnaryOperator"
+      required:
+        - type
+
+    SimilarityThresholdFunctionValues:
+      allOf:
+        - properties:
+            name:
+              type: string
+            experimentId:
+              $ref: "#/components/schemas/ExperimentId"
+            definition:
+              $ref: "#/components/schemas/SimilarityThresholdFunctionDefinition"
+          required:
+            - name
+            - experimentId
+            - definition
+
+    SimilarityThresholdFunction:
+      allOf:
+        - properties:
+            id:
+              $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+          required:
+            - id
+          type: object
+        - $ref: "#/components/schemas/SimilarityThresholdFunctionValues"
+
+    #### BENCHMARK ####
+    Metric:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "precision"
+        id:
+          type: string
+        formula:
+          type: string
+          example: "\\frac{truePositives}{truePositives + falsePositives}"
+        info:
+          type: string
+          example: The meaningfulness of the f1 score is debated in the research community.
+        infoLink:
+          type: string
+          example: https://link.springer.com/article/10.1007/s11222-017-9746-6
+        value:
+          type: number
+          example: 0.75
+        range:
+          type: array
+          items:
+            type: number
+          minItems: 2
+          maxItems: 2
+          example: [0, 1]
+      required:
+        - name
+        - formula
+        - value
+
+    ExperimentConfigItem:
+      type: object
+      properties:
+        experimentId:
+          $ref: "#/components/schemas/ExperimentId"
+        similarity:
+          type: object
+          properties:
+            func:
+              $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+            threshold:
+              type: number
+          required:
+            - func
+            - threshold
+      required:
+        - experimentId
+
+    ExperimentIntersectionItem:
+      allOf:
+        - $ref: "#/components/schemas/ExperimentConfigItem"
+        - type: object
+          properties:
+            predictedCondition:
+              type: boolean
+          required:
+            - predictedCondition
+    ExperimentIntersection:
+      type: array
+      items:
+        $ref: "#/components/schemas/ExperimentIntersectionItem"
+
+    ExperimentIntersectionCount:
+      type: object
+      properties:
+        numberRows:
+          type: integer
+          example: 5
+        numberPairs:
+          type: integer
+          example: 10
+        experiments:
+          $ref: "#/components/schemas/ExperimentIntersection"
+      required:
+        - numberRows
+        - numberPairs
+        - experiments
+    EffortParts:
+      properties:
+        expertise:
+          type: number
+        hrAmount:
+          type: number
+      type: object
+    ExperimentSimilarityConfig:
+      properties:
+        experimentId:
+          $ref: "#/components/schemas/ExperimentId"
+        groundTruthId:
+          $ref: "#/components/schemas/ExperimentId"
+        steps:
+          type: integer
+        func:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+      required:
+        - func
+        - experimentId
+        - groundTruthId
+        - steps
+    DiagramExperimentItem:
+      properties:
+        experiment:
+          $ref: "#/components/schemas/ExperimentConfigItem"
+        groundTruth:
+          $ref: "#/components/schemas/ExperimentConfigItem"
+      required:
+        - experiment
+      type: object
+    DiagramExperiments:
+      items:
+        $ref: "#/components/schemas/DiagramExperimentItem"
+      type: array
+    DiagramCoordinates:
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+        funcId:
+          $ref: "#/components/schemas/SimilarityThresholdFunctionId"
+        experimentId:
+          $ref: "#/components/schemas/ExperimentId"
+        threshold:
+          type: number
+      required:
+        - "x"
+        - "y"
+    softKPIsAlgorithmEnum:
+      type: string
+      enum:
+        - domainExpertise
+        - domainHrAmount
+        - domainManhattanDistanceBasedEffort
+        - domainHrAmountWeightedEffort
+        - domainMultiplyEffort
+        - domainExpertiseWeightedEffort
+        - matchingSolutionExpertise
+        - matchingSolutionHrAmount
+        - matchingSolutionManhattanDistanceBasedEffort
+        - matchingSolutionHrAmountWeightedEffort
+        - matchingSolutionMultiplyEffort
+        - matchingSolutionExpertiseWeightedEffort
+        - generalCosts
+        - installationExpertise
+        - installationHrAmount
+        - installationManhattanDistanceBasedEffort
+        - installationHrAmountWeightedEffort
+        - installationMultiplyEffort
+        - installationExpertiseWeightedEffort
+    softKPIsExperimentEnum:
+      type: string
+      enum:
+        - expertise
+        - hrAmount
+        - manhattanDistanceBasedEffort
+        - hrAmountWeightedEffort
+        - multiplyEffort
+        - expertiseWeightedEffort
+        - runtime
+    MetricsEnum:
+      type: string
+      enum:
+        - similarity
+        - falseDiscoveryRate
+        - falseNegativeRate
+        - falseOmissionRate
+        - falsePositiveRate
+        - negativePredictiveValue
+        - precision
+        - prevalenceThreshold
+        - recall
+        - specificity
+        - threatScore
+        - accuracy
+        - balancedAccuracy
+        - bookmakerInformedness
+        - fStarScore
+        - f1Score
+        - fowlkesMallowsIndex
+        - markedness
+        - matthewsCorrelationCoefficient
+
+    DiagramResponse:
+      properties:
+        coordinates:
+          items:
+            $ref: "#/components/schemas/DiagramCoordinates"
+          type: array
+        definitionRange:
+          type: array
+          items:
+            type: number
+          minItems: 2
+          maxItems: 2
+          example: [0, 1]
+        valueRange:
+          type: array
+          items:
+            type: number
+          minItems: 2
+          maxItems: 2
+          example: [0, 1]
+      required:
+        - coordinates
+
+    #### GENERAL ####
+    CSVFile:
+      type: string
+      format: binary
+
+    FileResponseFormat:
+      type: string
+      enum: [json, csv]
+      default: json
+
+    JSONFileResponse:
+      type: object
+      properties:
+        header:
+          type: array
+          items:
+            type: string
+          example: ["id", "testColumn1", "testColumn2"]
+        data:
+          type: array
+          example:
+            [
+              ["1", "test value 1", "test value 2"],
+              ["2", "test value 1", "test value 2"],
+              [],
+              ["3", "other", "group"],
+            ]
+          items:
+            type: array
+            example: ["1", "test value 1", "test value 2"]
+            items:
+              type: string
+      required:
+        - header
+        - data
