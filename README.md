@@ -13,6 +13,12 @@ Besides traditional metrics, the tool also considers economic aspects like Soft 
 
 _This tool is developed as part of a bachelor's project in collaboration with SAP SE._
 
+## Research Project
+This tool is part of the research project "Frost: A Platform for Benchmarking and Exploring Data Matching Results". Its results will be published at the 48th International Conference on Very Large Databases.
+
+### Reproducibility
+An explanation of the experiments conducted in the paper can be found [here](FROST_REPRODUCIBILITY.md).
+
 ## Current state
 
 In Q1 and Q2 of 2021, we reached the following milestones:
