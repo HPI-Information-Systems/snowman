@@ -13,14 +13,9 @@ Besides traditional metrics, the tool also considers economic aspects like Soft 
 
 _This tool is developed as part of a bachelor's project in collaboration with SAP SE._
 
-## Research Project
-This tool has been published as part of the following papers:
+### Research Project
 
-- "Frost: Benchmarking and Exploring Data Matching Results" (2022)
-
-### Reproducibility
-
-More details on reproducing results shown within the above papers can found [here](FROST_REPRODUCIBILITY.md).
+This tool has been published as part of the the paper "Frost: Benchmarking and Exploring Data Matching Results" (2022) at VLDB. More details on reproducing results shown within the paper can found [here](FROST_REPRODUCIBILITY.md).
 
 ## Current state
 
