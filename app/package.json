@@ -18,7 +18,7 @@
     "@types/react-window": "^1.8.2",
     "auto-bind": "^4.0.0",
     "chart.js": "^3.0.2",
-    "d3": "^6.6.0",
+    "d3": "^7.6.1",
     "file-saver": "^2.0.5",
     "immer": "^9.0.6",
     "immutable": "^4.0.0-rc.12",
